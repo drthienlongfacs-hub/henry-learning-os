@@ -1,0 +1,502 @@
+{
+  "version": "2026-04-27",
+  "purpose": "Machine-readable external resource and benchmark catalog for Long Learning OS.",
+  "modules": [
+    {
+      "id": "adaptive_engine",
+      "name": "Dynamic Ability and Adaptive Acceleration",
+      "benchmarks": [
+        "Khan Academy mastery",
+        "ALEKS adaptive assessment",
+        "Carnegie cognitive tutors",
+        "NWEA MAP growth",
+        "curriculum compacting"
+      ],
+      "resources": [
+        {
+          "name": "py-irt",
+          "type": "github",
+          "use": "Prototype item response theory models",
+          "url": "https://github.com/nd-ball/py-irt",
+          "license_check": "required"
+        },
+        {
+          "name": "catsim",
+          "type": "github",
+          "use": "Simulate computerized adaptive tests",
+          "url": "https://github.com/douglasrizzo/catsim",
+          "license_check": "required"
+        },
+        {
+          "name": "Learning Locker",
+          "type": "github",
+          "use": "xAPI LRS reference",
+          "url": "https://github.com/LearningLocker/learninglocker",
+          "license": "GPL-3.0"
+        },
+        {
+          "name": "Caliper Analytics",
+          "type": "standard",
+          "use": "Learning telemetry vocabulary",
+          "url": "https://www.1edtech.org/standards/caliper"
+        }
+      ]
+    },
+    {
+      "id": "ai_tutor",
+      "name": "AI Tutor and Socratic Hinting",
+      "benchmarks": [
+        "Khanmigo",
+        "Open edX adaptive hints",
+        "Brilliant interactive problem solving",
+        "Duolingo Max Explain My Answer"
+      ],
+      "resources": [
+        {
+          "name": "LiteLLM",
+          "type": "github",
+          "use": "AI gateway",
+          "url": "https://github.com/BerriAI/litellm",
+          "license_check": "required"
+        },
+        {
+          "name": "LlamaIndex",
+          "type": "github",
+          "use": "RAG framework",
+          "url": "https://github.com/run-llama/llama_index"
+        },
+        {
+          "name": "Ollama",
+          "type": "github",
+          "use": "Local LLM runtime",
+          "url": "https://github.com/ollama/ollama"
+        },
+        {
+          "name": "Guardrails AI",
+          "type": "github",
+          "use": "LLM input/output guards",
+          "url": "https://github.com/guardrails-ai/guardrails"
+        },
+        {
+          "name": "Microsoft Presidio",
+          "type": "github",
+          "use": "PII detection/redaction",
+          "url": "https://github.com/microsoft/presidio"
+        },
+        {
+          "name": "Open Policy Agent",
+          "type": "github",
+          "use": "Policy enforcement",
+          "url": "https://github.com/open-policy-agent/opa"
+        }
+      ]
+    },
+    {
+      "id": "memory_engine",
+      "name": "Spacing, Retrieval, and Memory",
+      "benchmarks": [
+        "Anki",
+        "Quizlet",
+        "SuperMemo",
+        "RemNote"
+      ],
+      "resources": [
+        {
+          "name": "FSRS",
+          "type": "github",
+          "use": "Advanced spaced repetition scheduling",
+          "url": "https://github.com/open-spaced-repetition/fsrs4anki"
+        },
+        {
+          "name": "H5P Dialog Cards",
+          "type": "github",
+          "use": "Interactive flashcard content type",
+          "url": "https://github.com/h5p/h5p-dialogcards"
+        }
+      ]
+    },
+    {
+      "id": "reading_bilingual",
+      "name": "Reading, Vietnamese, and Bilingual Depth",
+      "benchmarks": [
+        "Epic",
+        "Libby",
+        "CommonLit",
+        "ReadWorks",
+        "Newsela",
+        "LanguageTool"
+      ],
+      "resources": [
+        {
+          "name": "Open Library API",
+          "type": "api",
+          "use": "Book metadata and covers",
+          "url": "https://openlibrary.org/dev/docs/api/search"
+        },
+        {
+          "name": "Gutendex",
+          "type": "api/github",
+          "use": "Project Gutenberg metadata",
+          "url": "https://github.com/garethbjohnson/gutendex"
+        },
+        {
+          "name": "Wikimedia APIs",
+          "type": "api",
+          "use": "Multilingual encyclopedia content",
+          "url": "https://api.wikimedia.org/wiki/Main_Page"
+        },
+        {
+          "name": "Wikidata Query Service",
+          "type": "sparql",
+          "use": "Knowledge graph",
+          "url": "https://query.wikidata.org/"
+        },
+        {
+          "name": "Openverse API",
+          "type": "api",
+          "use": "CC/public-domain media",
+          "url": "https://api.openverse.org/"
+        },
+        {
+          "name": "Free Dictionary API",
+          "type": "api",
+          "use": "English definitions",
+          "url": "https://dictionaryapi.dev/"
+        },
+        {
+          "name": "Datamuse API",
+          "type": "api",
+          "use": "Synonyms/rhymes/word finding",
+          "url": "https://www.datamuse.com/api/"
+        },
+        {
+          "name": "LanguageTool",
+          "type": "github/api",
+          "use": "Grammar and style checks",
+          "url": "https://github.com/languagetool-org/languagetool"
+        }
+      ]
+    },
+    {
+      "id": "math_data_ai",
+      "name": "Math, Probability, Data, and AI Thinking",
+      "benchmarks": [
+        "Brilliant",
+        "Khan Academy",
+        "Desmos",
+        "GeoGebra",
+        "AoPS",
+        "Kaggle Learn"
+      ],
+      "resources": [
+        {
+          "name": "SymPy",
+          "type": "github",
+          "use": "Symbolic math",
+          "url": "https://github.com/sympy/sympy"
+        },
+        {
+          "name": "SageMath",
+          "type": "github",
+          "use": "Advanced math system",
+          "url": "https://github.com/sagemath/sage"
+        },
+        {
+          "name": "MathJax",
+          "type": "github",
+          "use": "Accessible math rendering",
+          "url": "https://github.com/mathjax/MathJax"
+        },
+        {
+          "name": "JupyterLite",
+          "type": "github",
+          "use": "Browser Python notebooks",
+          "url": "https://github.com/jupyterlite/jupyterlite"
+        },
+        {
+          "name": "FRED API",
+          "type": "api",
+          "use": "Economic time series",
+          "url": "https://fred.stlouisfed.org/docs/api/fred/"
+        },
+        {
+          "name": "World Bank API",
+          "type": "api",
+          "use": "Global development indicators",
+          "url": "https://data.worldbank.org/"
+        }
+      ]
+    },
+    {
+      "id": "science_maker",
+      "name": "Science and Maker Lab",
+      "benchmarks": [
+        "PhET",
+        "Mystery Science",
+        "Science Buddies",
+        "Tinkercad Circuits",
+        "Arduino Education"
+      ],
+      "resources": [
+        {
+          "name": "PhET GitHub",
+          "type": "github",
+          "use": "Open simulation code and architecture",
+          "url": "https://github.com/phetsims"
+        },
+        {
+          "name": "PhET Source Code",
+          "type": "docs",
+          "use": "Simulation build/reference",
+          "url": "https://phet.colorado.edu/en/about/source-code"
+        },
+        {
+          "name": "OpenStax",
+          "type": "oer",
+          "use": "Science reference texts",
+          "url": "https://openstax.org/"
+        },
+        {
+          "name": "H5P",
+          "type": "github",
+          "use": "Interactive labs/content",
+          "url": "https://github.com/h5p"
+        },
+        {
+          "name": "Openverse",
+          "type": "api",
+          "use": "Open media",
+          "url": "https://openverse.org/"
+        }
+      ]
+    },
+    {
+      "id": "coding_ai_literacy",
+      "name": "Coding and AI Literacy",
+      "benchmarks": [
+        "Scratch",
+        "ScratchJr",
+        "Code.org",
+        "Replit",
+        "CodeCombat",
+        "GitHub Skills"
+      ],
+      "resources": [
+        {
+          "name": "Scratch REST API",
+          "type": "github",
+          "use": "Scratch metadata docs",
+          "url": "https://github.com/scratchfoundation/scratch-rest-api"
+        },
+        {
+          "name": "Blockly",
+          "type": "github",
+          "use": "Block coding editor",
+          "url": "https://github.com/google/blockly"
+        },
+        {
+          "name": "JupyterLite",
+          "type": "github",
+          "use": "Teen Python/data coding",
+          "url": "https://github.com/jupyterlite/jupyterlite"
+        },
+        {
+          "name": "CodeMirror",
+          "type": "github",
+          "use": "Code editor",
+          "url": "https://github.com/codemirror/dev"
+        },
+        {
+          "name": "Monaco Editor",
+          "type": "github",
+          "use": "Advanced code editor",
+          "url": "https://github.com/microsoft/monaco-editor"
+        }
+      ]
+    },
+    {
+      "id": "civic_history_law",
+      "name": "History, Law, Policy, Civic Reasoning, and Geopolitics",
+      "benchmarks": [
+        "iCivics",
+        "Stanford Civic Online Reasoning",
+        "C3 Framework",
+        "Oyez",
+        "Model UN"
+      ],
+      "resources": [
+        {
+          "name": "iCivics",
+          "type": "free resources",
+          "use": "Civics games and lessons benchmark",
+          "url": "https://www.icivics.org/"
+        },
+        {
+          "name": "Oyez",
+          "type": "archive",
+          "use": "Court cases/audio",
+          "url": "https://www.oyez.org/"
+        },
+        {
+          "name": "Wikidata",
+          "type": "api",
+          "use": "Timelines and entities",
+          "url": "https://query.wikidata.org/"
+        },
+        {
+          "name": "World Bank API",
+          "type": "api",
+          "use": "Geopolitical/economic data",
+          "url": "https://data.worldbank.org/"
+        },
+        {
+          "name": "OpenFisca",
+          "type": "github",
+          "use": "Rules as code/policy simulation",
+          "url": "https://github.com/openfisca"
+        }
+      ]
+    },
+    {
+      "id": "finance_capital",
+      "name": "Finance, Accounting, Assets, and Capital Allocation",
+      "benchmarks": [
+        "Khan Academy Personal Finance",
+        "Investopedia Simulator",
+        "YNAB",
+        "QuickBooks concepts"
+      ],
+      "resources": [
+        {
+          "name": "FRED API",
+          "type": "api",
+          "use": "Macro data",
+          "url": "https://fred.stlouisfed.org/docs/api/fred/"
+        },
+        {
+          "name": "World Bank API",
+          "type": "api",
+          "use": "Global economic indicators",
+          "url": "https://data.worldbank.org/"
+        },
+        {
+          "name": "Alpha Vantage",
+          "type": "api",
+          "use": "Market data for paper simulations",
+          "url": "https://www.alphavantage.co/documentation/"
+        },
+        {
+          "name": "SEC EDGAR APIs",
+          "type": "api",
+          "use": "Company filings and XBRL facts",
+          "url": "https://www.sec.gov/search-filings/edgar-application-programming-interfaces"
+        },
+        {
+          "name": "OpenFisca",
+          "type": "github/api",
+          "use": "Tax/benefit rules-as-code concepts",
+          "url": "https://openfisca.org/en/"
+        }
+      ]
+    },
+    {
+      "id": "sel_ethics_pressure",
+      "name": "SEL, Ethics, Self-Regulation, and Pressure",
+      "benchmarks": [
+        "CASEL",
+        "Greater Good in Education",
+        "Project Zero",
+        "AAP Family Media Plan",
+        "habit trackers"
+      ],
+      "resources": [
+        {
+          "name": "CASEL",
+          "type": "framework",
+          "use": "SEL competency map",
+          "url": "https://casel.org/"
+        },
+        {
+          "name": "Project Zero Thinking Routines",
+          "type": "framework",
+          "use": "Thinking/reflection routines",
+          "url": "https://pz.harvard.edu/thinking-routines"
+        },
+        {
+          "name": "Greater Good in Education",
+          "type": "resource hub",
+          "use": "Research-based wellbeing practices",
+          "url": "https://ggie.berkeley.edu/"
+        },
+        {
+          "name": "OpenHabitTracker",
+          "type": "oss",
+          "use": "Habit UX benchmark",
+          "url": "https://openhabittracker.net/"
+        },
+        {
+          "name": "Trakit",
+          "type": "oss",
+          "use": "Privacy-first habit tracker benchmark",
+          "url": "https://gettrakit.app/"
+        }
+      ]
+    },
+    {
+      "id": "platform_lms_analytics",
+      "name": "Platform, LMS, Offline, Analytics, and Authoring",
+      "benchmarks": [
+        "Kolibri",
+        "Moodle",
+        "Open edX",
+        "H5P",
+        "PostHog",
+        "OpenTelemetry"
+      ],
+      "resources": [
+        {
+          "name": "Kolibri",
+          "type": "github",
+          "use": "Offline-first learning platform reference",
+          "url": "https://github.com/learningequality/kolibri"
+        },
+        {
+          "name": "Moodle",
+          "type": "github",
+          "use": "Open-source LMS reference",
+          "url": "https://github.com/moodle/moodle"
+        },
+        {
+          "name": "Open edX",
+          "type": "github",
+          "use": "Assessment/LMS reference",
+          "url": "https://github.com/openedx/openedx-platform"
+        },
+        {
+          "name": "H5P",
+          "type": "github",
+          "use": "Interactive content framework",
+          "url": "https://github.com/h5p"
+        },
+        {
+          "name": "PostHog",
+          "type": "github",
+          "use": "Self-hosted product analytics/feature flags",
+          "url": "https://github.com/PostHog/posthog"
+        },
+        {
+          "name": "OpenTelemetry",
+          "type": "github",
+          "use": "Observability",
+          "url": "https://github.com/open-telemetry"
+        },
+        {
+          "name": "Learning Locker",
+          "type": "github",
+          "use": "xAPI Learning Record Store",
+          "url": "https://github.com/LearningLocker/learninglocker"
+        }
+      ]
+    }
+  ]
+}

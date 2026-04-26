@@ -5,7 +5,7 @@ import { useTranslation } from '@/lib/i18n';
 import { LangToggle } from '@/components/LangToggle';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { BookOpen, Brain, Clock, AlertTriangle, Bookmark, RotateCcw, Home, Sparkles } from 'lucide-react';
+import { BookOpen, Brain, Clock, AlertTriangle, Bookmark, RotateCcw, Home, Sparkles, Search, Type } from 'lucide-react';
 
 export default function ChildDashboard() {
     const router = useRouter();
@@ -90,6 +90,40 @@ export default function ChildDashboard() {
                         <div style={{ fontWeight: 700, color: '#8b5cf6', fontSize: '1.5rem' }}>→</div>
                     </div>
                 </Link>
+
+                {/* New modules: Discover + Vocab */}
+                <div className="animate-fade-in" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '2rem' }}>
+                    <Link href="/child/discover" style={{ textDecoration: 'none' }}>
+                        <div className="card card-interactive" style={{
+                            textAlign: 'center', padding: '1.25rem',
+                            background: 'linear-gradient(135deg, #06b6d422, #0ea5e922)',
+                            border: '2px solid #06b6d444',
+                        }}>
+                            <Search size={28} color="#06b6d4" />
+                            <div style={{ fontWeight: 700, marginTop: '0.5rem', fontSize: '0.9rem' }}>
+                                {t('discover_title') || 'Discover Books'}
+                            </div>
+                            <div style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)', marginTop: '0.25rem' }}>
+                                {t('discover_desc') || 'Open Library & Gutenberg'}
+                            </div>
+                        </div>
+                    </Link>
+                    <Link href="/child/vocab" style={{ textDecoration: 'none' }}>
+                        <div className="card card-interactive" style={{
+                            textAlign: 'center', padding: '1.25rem',
+                            background: 'linear-gradient(135deg, #f59e0b22, #f97316​22)',
+                            border: '2px solid #f59e0b44',
+                        }}>
+                            <Type size={28} color="#f59e0b" />
+                            <div style={{ fontWeight: 700, marginTop: '0.5rem', fontSize: '0.9rem' }}>
+                                {t('vocab_title') || 'Vocabulary Builder'}
+                            </div>
+                            <div style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)', marginTop: '0.25rem' }}>
+                                {t('vocab_desc') || 'Learn & quiz words'}
+                            </div>
+                        </div>
+                    </Link>
+                </div>
 
                 {/* Today's learning plan */}
                 <div className="animate-fade-in">

@@ -10,6 +10,7 @@ import { generateAIResponse, classifyError } from '@/lib/ai/provider';
 import { createReviewItem } from '@/lib/spaced-repetition';
 import type { Exercise, SessionStep, Attempt, Mistake } from '@/types';
 import { ArrowRight, Lightbulb, Check, X, MessageCircle, ArrowLeft } from 'lucide-react';
+import { emitLearningEvent } from '@/lib/events/learning-events';
 
 function SessionContent() {
     const router = useRouter();
@@ -106,6 +107,18 @@ function SessionContent() {
                 lastAttemptAt: new Date().toISOString(),
             });
         }
+
+        // Emit xAPI-compatible learning event
+        emitLearningEvent({
+            childId: childProfile.id,
+            verb: correct ? 'completed' : 'attempted',
+            object: `exercise:${currentEx.id}`,
+            module: lesson.subject.toLowerCase(),
+            resourceProvider: 'internal',
+            success: correct,
+            score: correct ? 1.0 : 0,
+            aiAssistanceLevel: hintLevel > 0 ? `hint_L${hintLevel}` : undefined,
+        });
     };
 
     const requestHint = () => {
@@ -147,6 +160,16 @@ function SessionContent() {
         }
         endSession();
         setSessionComplete(true);
+
+        // Emit session-level learning event
+        emitLearningEvent({
+            childId: childProfile.id,
+            verb: 'completed',
+            object: `session:${lesson.id}`,
+            module: lesson.subject.toLowerCase(),
+            resourceProvider: 'internal',
+            success: true,
+        });
     };
 
     if (sessionComplete) {

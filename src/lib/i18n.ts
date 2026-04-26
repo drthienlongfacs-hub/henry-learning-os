@@ -204,6 +204,28 @@ const dict: Record<string, Record<Lang, string>> = {
     session_7min: { vi: '7 phút', en: '7 min' },
     session_8min: { vi: '8 phút', en: '8 min' },
     session_loading: { vi: 'Đang tải...', en: 'Loading...' },
+
+    // --- Discover page ---
+    discover_title: { vi: 'Khám phá Sách', en: 'Discover Books' },
+    discover_desc: { vi: 'Open Library & Gutenberg', en: 'Open Library & Gutenberg' },
+    discover_search_placeholder: { vi: 'Tìm kiếm sách...', en: 'Search for books...' },
+    discover_searching: { vi: 'Đang tìm kiếm...', en: 'Searching...' },
+    discover_no_results: { vi: 'Không tìm thấy sách', en: 'No books found' },
+    discover_try_another: { vi: 'Thử từ khóa khác nhé', en: 'Try a different search term' },
+    discover_welcome: { vi: 'Tìm cuộc phiêu lưu tiếp theo', en: 'Find your next adventure' },
+    discover_welcome_sub: { vi: 'Tìm hàng triệu cuốn sách từ Open Library và Project Gutenberg', en: 'Search millions of books from Open Library and Project Gutenberg' },
+
+    // --- Vocab page ---
+    vocab_title: { vi: 'Xây Từ Vựng', en: 'Vocabulary Builder' },
+    vocab_desc: { vi: 'Tra từ & Trắc nghiệm', en: 'Learn & quiz words' },
+    vocab_search_word: { vi: 'Tra một từ', en: 'Look up a word' },
+    vocab_type_word: { vi: 'Nhập từ tiếng Anh...', en: 'Type an English word...' },
+    vocab_test_me: { vi: 'Kiểm tra con!', en: 'Test me!' },
+    vocab_new_word: { vi: 'Từ mới', en: 'New word' },
+    vocab_quiz_question: { vi: 'Từ này nghĩa là gì?', en: 'What does this word mean?' },
+    vocab_correct: { vi: 'Chính xác!', en: 'Correct!' },
+    vocab_incorrect: { vi: 'Chưa đúng!', en: 'Not quite!' },
+    vocab_next: { vi: 'Từ tiếp theo', en: 'Next word' },
 };
 
 // ========================================

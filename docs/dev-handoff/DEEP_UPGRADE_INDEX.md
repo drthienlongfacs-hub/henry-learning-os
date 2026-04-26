@@ -1,0 +1,12 @@
+# Deep Upgrade Index
+
+- docs/RESEARCH_TO_PRODUCT_BLUEPRINT.md
+- docs/DEEP_MODULE_SPECS.md
+- docs/OWNER_TRACK_DEEP_DIVE.md
+- benchmarks/BENCHMARK_MATRIX_DEEP.md
+- schemas/METRICS_AND_ADAPTIVE_MODEL.md
+- architecture/AI_AGENT_BEHAVIOR_SPEC.md
+- docs/KEYWORD_TAXONOMY.md
+- docs/SOURCE_REGISTRY.json
+- issues/DEEP_RESEARCH_BACKLOG.md
+- prompts/RESEARCH_HARVEST_MISSION.md
