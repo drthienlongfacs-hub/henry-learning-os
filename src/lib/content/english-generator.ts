@@ -53,14 +53,14 @@ const VOCAB_BANKS = [
     },
     {
         theme: 'Animals', pairs: [
-            { en: 'dog', vi: 'chó', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Collage_of_Nine_Dogs.jpg/800px-Collage_of_Nine_Dogs.jpg' },
-            { en: 'cat', vi: 'mèo', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Cat_poster_1.jpg/800px-Cat_poster_1.jpg' },
+            { en: 'dog', vi: 'chó', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Collage_of_Nine_Dogs.jpg?width=800' },
+            { en: 'cat', vi: 'mèo', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Cat_poster_1.jpg?width=800' },
             { en: 'bird', vi: 'chim' },
             { en: 'fish', vi: 'cá' },
-            { en: 'elephant', vi: 'voi', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/African_Bush_Elephant.jpg/800px-African_Bush_Elephant.jpg' },
+            { en: 'elephant', vi: 'voi', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/African_Bush_Elephant.jpg?width=800' },
             { en: 'monkey', vi: 'khỉ' },
-            { en: 'rabbit', vi: 'thỏ', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Oryctolagus_cuniculus_Tasmania_2.jpg/800px-Oryctolagus_cuniculus_Tasmania_2.jpg' },
-            { en: 'tiger', vi: 'hổ', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Walking_tiger_female.jpg/800px-Walking_tiger_female.jpg' },
+            { en: 'rabbit', vi: 'thỏ', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Oryctolagus_cuniculus_Tasmania_2.jpg?width=800' },
+            { en: 'tiger', vi: 'hổ', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Walking_tiger_female.jpg?width=800' },
             { en: 'dolphin', vi: 'cá heo' },
         ]
     },
