@@ -10,6 +10,7 @@ import { allMathExercises, subtractionWithin10 } from './exercises-math';
 import { allVietnameseExercises } from './exercises-vietnamese';
 import { englishExercises } from './exercises-english';
 import { eliteExercises } from './exercises-elite';
+import { massiveMathGenerated, massiveEliteGenerated } from './exercises-generated';
 
 // =============================================
 // SEED DATA — Grade 1 Math, Vietnamese, English
@@ -307,7 +308,7 @@ export const lessons: Lesson[] = [
         title: 'Thử thách Toán Học 100x (Quân Sự)',
         objective: 'Luyện tập tổng hợp các kỹ năng toán học.',
         contentBlocks: [{ id: 'cb-mega-m-1', type: 'text', content: 'Căn cứ đang chờ lệnh! Chỉ huy hãy giải các bài toán để củng cố phòng thủ!' }],
-        exercises: allMathExercises, // contains all 200+
+        exercises: [...allMathExercises, ...massiveMathGenerated], // massive 4000+ dataset
         rubric: ['Chính xác tuyệt đối'],
     },
     {
@@ -340,7 +341,7 @@ export const lessons: Lesson[] = [
         title: 'CHỈ HUY TRƯỞNG LÊN LỆNH (Trò Chơi Chiến Thuật)',
         objective: 'Rèn luyện khả năng quản lý tài nguyên, xác suất và chiến thuật tác chiến.',
         contentBlocks: [{ id: 'cb-mega-elite-1', type: 'text', content: 'Chào Chỉ huy Henry! Kẻ địch đang áp sát căn cứ. Hãy dùng tư duy sắc bén để bảo vệ cứ điểm!' }],
-        exercises: eliteExercises, // contains 100 Elite gamified
+        exercises: [...eliteExercises, ...massiveEliteGenerated], // massive 300+ dataset
         rubric: ['Quyết định chính xác', 'Quản lý tài nguyên giỏi'],
     },
 ];
