@@ -1,0 +1,1 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,57761,t=>{"use strict";async function e(t){try{let e=await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(t.trim().toLowerCase())}`);if(!e.ok)return null;return(await e.json())[0]??null}catch{return null}}t.s(["lookupWord",0,e])}]);
