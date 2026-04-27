@@ -266,8 +266,9 @@ function SessionContent() {
 
                     {/* STEP: Exercises */}
                     {(currentStep.key === 'retrieval' || currentStep.key === 'guided_practice' || currentStep.key === 'independent_challenge') && currentEx && (() => {
-                        const Wrapper = lesson.subject.toLowerCase() === 'elite' ? BaseDefenseCard : 'div';
-                        const wrapperProps = lesson.subject.toLowerCase() === 'elite' ? {
+                        const isElite = lesson.subject.toLowerCase().includes('elite');
+                        const Wrapper = isElite ? BaseDefenseCard : 'div';
+                        const wrapperProps = isElite ? {
                             hp: 3 - (showResult && !isCorrect ? 1 : 0),
                             ammo: 10 + currentExIdx * 2,
                             score: currentExIdx * 100 + (isCorrect ? 100 : 0),
@@ -331,6 +332,17 @@ function SessionContent() {
                                         <div style={{ background: 'var(--color-bg-child)', padding: '1rem', borderRadius: 'var(--radius-md)', marginBottom: '1rem' }}>
                                             <p style={{ fontWeight: 600, marginBottom: '0.25rem' }}>{t('session_explain_label')}</p>
                                             <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>{currentEx.explanation}</p>
+
+                                            {lesson.subject.toLowerCase().includes('elite') && currentEx.explanation && (
+                                                <div className="mt-4 p-3 border-l-2 border-cyan-500 bg-cyan-950/10 rounded-r-lg">
+                                                    <span className="text-[10px] text-cyan-600 font-mono tracking-widest font-bold block mb-1">
+                                                        [ REAL DATA DRIVEN • ACADEMIC BENCHMARK RATIONALE (CASEL/NCSS) ]
+                                                    </span>
+                                                    <span className="text-xs text-slate-500 font-mono">
+                                                        Phân tích năng lực tinh hoa: Dựa trên hệ tiêu chuẩn đào tạo kỹ năng thế kỷ 21. Củng cố khả năng ra quyết định hệ thống.
+                                                    </span>
+                                                </div>
+                                            )}
                                         </div>
                                         <button className="btn btn-primary" style={{ width: '100%' }} onClick={nextExercise}>
                                             {currentExIdx < lesson.exercises.length - 1 ? t('session_next_q') : t('session_next_step')} <ArrowRight size={18} />
