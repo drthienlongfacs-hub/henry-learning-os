@@ -12,6 +12,7 @@ import type { Exercise, SessionStep, Attempt, Mistake } from '@/types';
 import { ArrowRight, Lightbulb, Check, X, MessageCircle, ArrowLeft } from 'lucide-react';
 import { emitLearningEvent } from '@/lib/events/learning-events';
 import { BaseDefenseCard } from '@/components/gamification/BaseDefenseCard';
+import { VisualMathManipulative } from '@/components/interactive/VisualMathManipulative';
 import { allExercises } from '@/data/seed';
 
 type ExtendedExercise = Exercise & { tags?: string[], competencyId?: string };
@@ -279,9 +280,13 @@ function SessionContent() {
                                 <div style={{ marginBottom: '0.5rem', fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
                                     {t('session_question_n')} {currentExIdx + 1} / {lesson.exercises.length}
                                 </div>
-                                <p style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '1.5rem', lineHeight: 1.6 }}>
-                                    {currentEx.question}
-                                </p>
+                                {lesson.subject.toLowerCase() === 'toán' && currentEx.type === 'multiple_choice' ? (
+                                    <VisualMathManipulative question={currentEx.question} />
+                                ) : (
+                                    <p style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '1.5rem', lineHeight: 1.6 }}>
+                                        {currentEx.question}
+                                    </p>
+                                )}
 
                                 {!showResult && (
                                     <>

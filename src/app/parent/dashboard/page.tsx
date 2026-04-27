@@ -13,6 +13,14 @@ export default function ParentDashboard() {
         completeParentMission, aiInteractionLogs,
     } = useAppStore();
 
+    // CASEL & Civic Domains calculation
+    const domainScores = {
+        'Tự nhận thức (Self-Aware)': Math.min(100, reflections.length * 10 + 20),
+        'Quyết định (Decision Making)': Math.min(100, attempts.filter(a => a.lessonId.includes('elite')).length * 5 + 10),
+        'Tài chính (Finance)': Math.min(100, masteryStates.filter(ms => ms.competencyId.includes('finance') && ms.state === 'mastered').length * 20 + 10),
+        'Luật lệ (Civics)': Math.min(100, masteryStates.filter(ms => ms.competencyId.includes('civics') && ms.state === 'mastered').length * 20 + 10),
+    };
+
     if (!childProfile || !parentProfile) {
         router.push('/parent/onboarding');
         return null;
@@ -116,6 +124,34 @@ export default function ParentDashboard() {
                             <div style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)' }}>{stat.label}</div>
                         </div>
                     ))}
+                </div>
+
+                {/* Longitudinal Portfolio (CASEL/WEF Framework) */}
+                <h2 style={{ fontWeight: 700, fontSize: '1.1rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <Shield size={18} color="var(--color-info)" /> Trực quan Phát triển (CASEL/WEF)
+                </h2>
+                <div className="card" style={{ marginBottom: '2rem', padding: '1.5rem', background: 'var(--color-bg)' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        {Object.entries(domainScores).map(([domain, score]) => (
+                            <div key={domain}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.25rem' }}>
+                                    <span style={{ fontWeight: 600 }}>{domain}</span>
+                                    <span style={{ color: 'var(--color-text-secondary)' }}>{score}/100</span>
+                                </div>
+                                <div style={{ width: '100%', height: '8px', background: 'var(--color-bg-session)', borderRadius: '4px', overflow: 'hidden' }}>
+                                    <div style={{
+                                        width: `\${score}%`,
+                                        height: '100%',
+                                        background: score > 70 ? 'var(--color-success)' : score > 40 ? 'var(--color-primary)' : 'var(--color-warning)',
+                                        transition: 'width 1s ease-in-out'
+                                    }} />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <div style={{ marginTop: '1.5rem', fontSize: '0.85rem', color: 'var(--color-text-secondary)', fontStyle: 'italic' }}>
+                        * Phân tích dựa trên {reflections.length} quyết định Elite và câu trả lời tự luận trong suốt lộ trình học.
+                    </div>
                 </div>
 
                 {/* Parent Mission */}
