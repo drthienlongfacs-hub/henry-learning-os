@@ -308,7 +308,7 @@ export const lessons: Lesson[] = [
         title: 'Thử thách Toán Học 100x (Quân Sự)',
         objective: 'Luyện tập tổng hợp các kỹ năng toán học.',
         contentBlocks: [{ id: 'cb-mega-m-1', type: 'text', content: 'Căn cứ đang chờ lệnh! Chỉ huy hãy giải các bài toán để củng cố phòng thủ!' }],
-        exercises: [...allMathExercises, ...massiveMathGenerated], // massive 4000+ dataset
+        exercises: [...massiveMathGenerated, ...allMathExercises], // massive 4000+ dataset shows first
         rubric: ['Chính xác tuyệt đối'],
     },
     {
@@ -341,7 +341,7 @@ export const lessons: Lesson[] = [
         title: 'CHỈ HUY TRƯỞNG LÊN LỆNH (Trò Chơi Chiến Thuật)',
         objective: 'Rèn luyện khả năng quản lý tài nguyên, xác suất và chiến thuật tác chiến.',
         contentBlocks: [{ id: 'cb-mega-elite-1', type: 'text', content: 'Chào Chỉ huy Henry! Kẻ địch đang áp sát căn cứ. Hãy dùng tư duy sắc bén để bảo vệ cứ điểm!' }],
-        exercises: [...eliteExercises, ...massiveEliteGenerated], // massive 300+ dataset
+        exercises: [...massiveEliteGenerated, ...eliteExercises], // massive 300+ dataset shows first
         rubric: ['Quyết định chính xác', 'Quản lý tài nguyên giỏi'],
     },
 ];
