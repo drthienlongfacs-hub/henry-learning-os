@@ -91,7 +91,7 @@ export default function EliteDashboardPage() {
 
     const [ageFilter, setAgeFilter] = useState<AgeGroup>('6-10');
 
-    const [probScenarios, setProbScenarios] = useState(() => generateProbabilityScenarios(ageFilter, 5));
+    const [probScenarios, setProbScenarios] = useState(() => generateProbabilityScenarios(ageFilter, 10));
     const [probIndex, setProbIndex] = useState(0);
     const [probAnswer, setProbAnswer] = useState<LikelihoodLevel | null>(null);
     const [probScore, setProbScore] = useState(0);
@@ -117,7 +117,7 @@ export default function EliteDashboardPage() {
     const currentNeg = useMemo(() => NEGOTIATION_CHALLENGES.filter(i => i.ageTarget === ageFilter), [ageFilter]);
 
     useEffect(() => {
-        setProbScenarios(generateProbabilityScenarios(ageFilter, 5));
+        setProbScenarios(generateProbabilityScenarios(ageFilter, 10));
         setProbIndex(0); setProbAnswer(null); setProbScore(0);
         setWvnIndex(0); setWvnAnswer(null); setWvnScore(0);
         setPolicyIndex(0); setPolicyChoice(null);

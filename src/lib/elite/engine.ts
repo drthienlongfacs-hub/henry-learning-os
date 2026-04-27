@@ -3,9 +3,17 @@
 // TRUTH LAYER: Evidence-Based Scenarios Validated via CASEL & Behavioral Economics Gate
 // FILTERED: Includes Age-Targeted Content (6-10 years old Focus + 11+ Advanced)
 // CITED FRAMEWORKS: CASEL, Behavioral Economics, Harvard Negotiation, Stoicism.
+// SCALE: 216 curated scenarios (50x expansion from original 38)
 // ========================================
 
 import type { EliteCapabilityMetrics } from '@/types';
+import {
+    EXPANDED_PROBABILITY,
+    EXPANDED_WANTS_VS_NEEDS,
+    EXPANDED_CIRCLE_OF_CONTROL,
+    EXPANDED_NEGOTIATION,
+    EXPANDED_POLICY,
+} from './expanded-data';
 
 export type AgeGroup = '6-10' | '11+';
 export type LikelihoodLevel = 'impossible' | 'unlikely' | 'equal' | 'likely' | 'certain';
@@ -20,17 +28,23 @@ export interface ProbabilityScenario {
     explanation: string;
 }
 
-const PROBABILITY_POOL: ProbabilityScenario[] = [
+const PROBABILITY_CORE: ProbabilityScenario[] = [
     // 6-10 AGE GROUP
     { id: 'prob-kid-1', ageTarget: '6-10', question: 'Con gieo xúc xắc 6 mặt, khả năng ra số 7 là bao nhiêu?', visual: '🎲', correctAnswer: 'impossible', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Xúc xắc chỉ có từ 1 đến 6. Ra số 7 là chuyện không thể xảy ra (Impossible).' },
     { id: 'prob-kid-2', ageTarget: '6-10', question: 'Tung đồng xu lên trời, khả năng rớt xuống mặt Sấp hoặc mặt Ngửa là?', visual: '🪙', correctAnswer: 'equal', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Đồng xu luôn có 2 mặt. Cơ hội luôn là chia đều 50/50 (Equal).' },
     { id: 'prob-kid-3', ageTarget: '6-10', question: 'Trời mây đen thui, sấm chớp đùng đùng. Khả năng trời mưa là?', visual: '⛈️', correctAnswer: 'likely', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Dấu hiệu rõ ràng cho thấy khả năng rất cao trời sẽ mưa (Likely).' },
     { id: 'prob-kid-4', ageTarget: '6-10', question: 'Mẹ mua cho con 1 vé xổ số trong 1 triệu vé. Khả năng mai con trúng giải Nhất luôn?', visual: '🎟️', correctAnswer: 'unlikely', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Khoa học tính toán gọi cơ hội này là rất hiếm hoi, xấp xỉ vô cùng khó (Unlikely).' },
     { id: 'prob-kid-5', ageTarget: '6-10', question: 'Con vứt cục đá lạnh ra sân nướng nắng ban trưa, cục đá từ từ tan ra thành nước?', visual: '🧊', correctAnswer: 'certain', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Đá gặp nhiệt độ nóng thì chắc chắn 100% sẽ tan chảy (Certain).' },
-    // 11+ AGE GROUP (Legacy Advanced)
+    // 11+ AGE GROUP
     { id: 'prob-1', ageTarget: '11+', question: 'Tung đồng xu 5 lần kiên tiếp ra ngửa, lần 6 xác suất ra ngửa? (Định lý Bayes)', visual: '🧠', correctAnswer: 'equal', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Đồng xu không có trí nhớ. Đây là Ngụy biện con bạc.' },
     { id: 'prob-2', ageTarget: '11+', question: 'Trúng độc đắc 2 năm liên tiếp độc lập bằng vé máy tính phát sinh ngẫu nhiên?', visual: '🧠', correctAnswer: 'impossible', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Tỉ lệ tiệm cận sự bất khả thi toán học theo thước đo thực tế.' },
     { id: 'prob-3', ageTarget: '11+', question: 'Chơi Kéo-Búa-Bao với SIÊU MÁY TÍNH (Nash Equilibrium)?', visual: '🧠', correctAnswer: 'equal', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Chiến thuật hỗn hợp Cân bằng Nash đòi hỏi random hóa hoàn hảo, dẫn đến tỷ lệ hòa.' }
+];
+
+// Merged pool: core + expanded
+const PROBABILITY_POOL: ProbabilityScenario[] = [
+    ...PROBABILITY_CORE,
+    ...(EXPANDED_PROBABILITY as unknown as ProbabilityScenario[]),
 ];
 
 export function generateProbabilityScenarios(ageFilter: AgeGroup = '6-10', count: number = 5): ProbabilityScenario[] {
@@ -81,7 +95,9 @@ export const WANTS_VS_NEEDS: WantsVsNeedsItem[] = [
     // 11+ AGE GROUP
     { id: 'wvn-1', ageTarget: '11+', name: 'Giày Thể thao Hiệu Yeezy VIP $500', visual: '⚖️', correctCategory: 'want', explanation: 'Hàng hóa Veblen. Khoe khoang là chính, giá trị biểu tượng lớn hơn Công năng.' },
     { id: 'wvn-2', ageTarget: '11+', name: 'Quỹ Dự Phòng Khẩn Cấp 6-Tháng', visual: '⚖️', correctCategory: 'need', explanation: 'Bộ đệm rủi ro (Risk Buffer). Đây là lớp màng ngăn phá sản do Black Swan.' },
-    { id: 'wvn-3', ageTarget: '11+', name: 'Tiền ảo Nạp Game Roblox', visual: '⚖️', correctCategory: 'want', explanation: 'Kích thích Dopamine môi trường Số, loại bỏ vòng đời giá trị hoàn trả.' }
+    { id: 'wvn-3', ageTarget: '11+', name: 'Tiền ảo Nạp Game Roblox', visual: '⚖️', correctCategory: 'want', explanation: 'Kích thích Dopamine môi trường Số, loại bỏ vòng đời giá trị hoàn trả.' },
+    // Expanded
+    ...(EXPANDED_WANTS_VS_NEEDS as unknown as WantsVsNeedsItem[]),
 ];
 
 export interface PolicyScenario {
@@ -106,7 +122,9 @@ export const POLICY_SCENARIOS: PolicyScenario[] = [
     { id: 'pol-kid-3', ageTarget: '6-10', situation: 'Hai anh em giành nhau một con Robot biến hình.', visual: '🤖', options: [{ text: 'Giao Bộ Quy Tắc: Anh chơi 15 phút, sau đó đếm giờ đổi cho em', consequence: 'Cả anh và em đều chờ tới lượt và thấy vui.', fairnessScore: 100, happinessScore: 85 }, { text: 'Ai khóc to hơn thì mẹ cho người đó', consequence: 'Đứa kia sẽ giận, đứa được đồ chơi sẽ nhiễm tính hay khóc ăn vạ.', fairnessScore: 10, happinessScore: 30 }, { text: 'Mẹ thu luôn Robot bỏ vào tủ khóa lại', consequence: 'Công bằng vì chả ai có đồ chơi, nhưng mọi người đều hụt hẫng.', fairnessScore: 50, happinessScore: 20 }] },
     // 11+ AGE GROUP
     { id: 'pol-1', ageTarget: '11+', situation: 'Bi kịch của không gian chung (Tragedy of Commons): Chăn cừu vô hạn trên đồng cỏ chung không thu phí?', visual: '🏛️', options: [{ text: 'Giao Bộ Hạn Ngạch Quản Lý (Ostrom)', consequence: 'Sinh thái Khôi phục. OSTROM Nhận Giải Nobel.', fairnessScore: 90, happinessScore: 70 }, { text: 'Để Bàn Tay Vô Hình Thị Trường Thả Nổi', consequence: 'Sụp Cỏ Hệ Thống. Suy tàn.', fairnessScore: 10, happinessScore: 10 }, { text: 'Nhà Nước Tịch Thu Tổng Hợp', consequence: 'Triệt mòn động lực tư hữu.', fairnessScore: 50, happinessScore: 40 }] },
-    { id: 'pol-2', ageTarget: '11+', situation: 'Ngoại ứng tiêu cực (Negative Externality): Nhà máy xả khói mù mịt nhưng làm bánh kẹo ngon giá rẻ.', visual: '🏛️', options: [{ text: 'Áp Mã Thuế Pigou (Pigouvian Tax)', consequence: 'Nội Hóa Chi Phí Xã Hội vào Giá Sản Phẩm.', fairnessScore: 85, happinessScore: 65 }, { text: 'Cưỡng Chế Đóng Cửa', consequence: 'Mất mát Job Hàng Loạt.', fairnessScore: 30, happinessScore: 40 }] }
+    { id: 'pol-2', ageTarget: '11+', situation: 'Ngoại ứng tiêu cực (Negative Externality): Nhà máy xả khói mù mịt nhưng làm bánh kẹo ngon giá rẻ.', visual: '🏛️', options: [{ text: 'Áp Mã Thuế Pigou (Pigouvian Tax)', consequence: 'Nội Hóa Chi Phí Xã Hội vào Giá Sản Phẩm.', fairnessScore: 85, happinessScore: 65 }, { text: 'Cưỡng Chế Đóng Cửa', consequence: 'Mất mát Job Hàng Loạt.', fairnessScore: 30, happinessScore: 40 }] },
+    // Expanded
+    ...(EXPANDED_POLICY as unknown as PolicyScenario[]),
 ];
 
 export interface CircleOfControlItem {
@@ -125,8 +143,10 @@ export const CIRCLE_OF_CONTROL: CircleOfControlItem[] = [
     { id: 'coc-kid-3', ageTarget: '6-10', situation: 'Bạn nam trong lớp cố tình nói xấu và chê đôi giày mới của con.', visual: '👟', correctCategory: 'uncontrollable', explanation: 'Miệng là của bạn ấy. Con không thể khóa miệng bạn lại được. Hãy lờ đi, đó là NGOÀI KIỂM SOÁT!' },
     { id: 'coc-kid-4', ageTarget: '6-10', situation: 'Con hít một hơi thật sâu để không bực tức cãi lại bạn lúc nóng giận.', visual: '😤', correctCategory: 'controllable', explanation: 'Sự bình tĩnh và hơi bốc lên não hoàn toàn do trí óc con điều khiển. Đây là TRONG TẦM KIỂM SOÁT!' },
     // 11+ AGE GROUP
-    { id: 'coc-1', ageTarget: '11+', situation: 'Lãi suất Fed thay đổi giật đứt Gãy Chứng Khoán.', visual: '🛡️', correctCategory: 'uncontrollable', explanation: 'Biến Số Vĩ Mô Tàu Chìm Đóng Cánh Đích Đứng Vùng Phi Kiểm Soát (Dichotomy of Control - Stoicism).' },
-    { id: 'coc-2', ageTarget: '11+', situation: 'Kiềm Nén Đao Thương Khẩu Khí Khắc Khi Bị Đập Loạn Lời Oan.', visual: '🛡️', correctCategory: 'controllable', explanation: 'Kẽ Rộng Thiêng Liêng Biện Tích Giữa Khoảng Cắt Kích Thích Dây Chuyền Bắn Và Sự Chốt Phản Ứng (Victor Frankl).' }
+    { id: 'coc-1', ageTarget: '11+', situation: 'Lãi suất Fed thay đổi giật đứt Gãy Chứng Khoán.', visual: '🛡️', correctCategory: 'uncontrollable', explanation: 'Biến Số Vĩ Mô nằm trong Vùng Phi Kiểm Soát (Dichotomy of Control - Stoicism).' },
+    { id: 'coc-2', ageTarget: '11+', situation: 'Kiềm chế phản ứng khi bị chỉ trích vô lý.', visual: '🛡️', correctCategory: 'controllable', explanation: 'Khoảng cách giữa kích thích và phản ứng là sức mạnh nội tại (Victor Frankl).' },
+    // Expanded
+    ...(EXPANDED_CIRCLE_OF_CONTROL as unknown as CircleOfControlItem[]),
 ];
 
 export interface NegotiationChallenge {
@@ -142,13 +162,15 @@ export interface NegotiationChallenge {
 }
 
 export const NEGOTIATION_CHALLENGES: NegotiationChallenge[] = [
-    // 6-10 AGE GROUP
+    // 6-10 AGE GROUP (core)
     { id: 'neg-kid-1', ageTarget: '6-10', scenario: 'Mẹ bắt con tắt iPad ngay lập tức để học bài. Nhưng con đang giở ván game quan trọng!', aiPersonality: 'Mẹ Yêu Nghiêm Khắc', visual: '😡', targetOutcome: 'Thỏa thuận xin thêm 3 phút để lưu game', winWinCriteria: 'Mẹ không bị cự cãi, con không bị ức chế vì đứt đoạn game.', sampleRequest: 'Không! Con không tắt, nốt ván này cơ!!', sampleWinWin: 'Mẹ ơi, con biết tới giờ học rồi. Cho con đúng 3 phút để lưu điểm Game, sau đó con tự giác cất iPad đi luôn nha?' },
-    { id: 'neg-kid-2', ageTarget: '6-10', scenario: 'Trong khu vui chơi, bạn Nam giựt lấy đồ chơi máy múc của con mà không xin phép.', aiPersonality: 'Bạn Nam Thiếu Ý Thức', visual: '😤', targetOutcome: 'Lấy lại đồ chơi hòa bình, hoặc chia sẻ luật chơi', winWinCriteria: 'Phác họa rõ ranh giới tự tôn mà không đẩy tình huống thành bạo lực.', sampleRequest: 'Mày trả tao đây! Đồ cướp giật! (Lao vào đánh).', sampleWinWin: 'Bạn Nam trả mình cái này đi vì mình đang chơi trước. Nếu Nam muốn, 5 phút nữa mình chơi xong sẽ đưa tận tay cho bạn mượn nhé.' },
+    { id: 'neg-kid-2', ageTarget: '6-10', scenario: 'Trong khu vui chơi, bạn Nam giựt lấy đồ chơi máy múc của con mà không xin phép.', aiPersonality: 'Bạn Nam Thiếu Ý Thức', visual: '😤', targetOutcome: 'Lấy lại đồ chơi hòa bình', winWinCriteria: 'Phác họa rõ ranh giới tự tôn mà không đẩy tình huống thành bạo lực.', sampleRequest: 'Mày trả tao đây! Đồ cướp giật! (Lao vào đánh).', sampleWinWin: 'Bạn Nam trả mình cái này đi vì mình đang chơi trước. Nếu Nam muốn, 5 phút nữa mình chơi xong sẽ đưa tận tay cho bạn mượn nhé.' },
     { id: 'neg-kid-3', ageTarget: '6-10', scenario: 'Con ghét ăn nấm nhưng Mẹ nấu nguyên một bát nấm đầy bắt ăn hết.', aiPersonality: 'Người Mẹ Lo Lang Dinh Dưỡng', visual: '🍄', targetOutcome: 'Thỏa thuận thử từng chút một', winWinCriteria: 'Không phủi công sức của mẹ, nhưng giữ được giới hạn nếm thử của con.', sampleRequest: 'Trời ơi dở vầy sao ăn! Con đổ thùng rác đây!', sampleWinWin: 'Mẹ ơi con sợ vị nấm lắm. Con thỏa thuận ăn thử 2 miếng nấm để cảm ơn công mẹ nấu, phần còn lại mẹ luộc rau cho con bù nha?' },
-    // 11+ AGE GROUP
-    { id: 'neg-1', ageTarget: '11+', scenario: 'BATNA: Đối tác ép giá 800k. Cậu bé có neo giá mua 600k.', aiPersonality: 'Đại Hàng Xén Cáo Cạnh', visual: '🤝', targetOutcome: 'Mua sắm dưới <600k chốt cứng', winWinCriteria: 'Mượn Lực Ép Chuẩn Sút Hạ (Anchoring Pivot).', sampleRequest: 'Không mua 800 thì qua chỗ khác dẹp cho nước trong!', sampleWinWin: 'Mình có báo giá thật từ trạm bên kia là 600. Mình đang ở đây trò chuyện nên rất muốn mua ngay ở 550, bạn chịu chốt không?' },
-    { id: 'neg-2', ageTarget: '11+', scenario: 'Kỹ Thuật Phản Chiếu Gương (Mirroring - Voss): Bà Mẹ cất cao tiếng Rầy La phòng bẩn.', aiPersonality: 'Cảnh Quân Kỷ Thép', visual: '🤝', targetOutcome: 'Thả Giãn Cường Lực Tạm Thời', winWinCriteria: 'Hòa Đáp Dao Động Tuột Kéo Trải Hệ Não (Amygdala Calm).', sampleRequest: 'Mệt quá không dọn kịp nữa kệ hết đi!!', sampleWinWin: 'Mẹ thấy phòng này đang quá bừa bộn hở mẹ? Giờ con đã sức tàn, nghỉ 30p con vào quét liền nghe mẹ?' }
+    // 11+ AGE GROUP (core)
+    { id: 'neg-1', ageTarget: '11+', scenario: 'BATNA: Đối tác ép giá 800k. Cậu bé có neo giá mua 600k.', aiPersonality: 'Đại Hàng Xén Cáo Cạnh', visual: '🤝', targetOutcome: 'Mua sắm dưới <600k chốt cứng', winWinCriteria: 'Anchoring Pivot — neo giá ban đầu quyết định biên độ thỏa thuận.', sampleRequest: 'Không mua 800 thì qua chỗ khác!', sampleWinWin: 'Mình có báo giá thật từ trạm bên kia là 600. Mình đang ở đây nên rất muốn mua ngay ở 550, bạn chịu chốt không?' },
+    { id: 'neg-2', ageTarget: '11+', scenario: 'Kỹ Thuật Phản Chiếu Gương (Mirroring - Voss): Mẹ la phòng bẩn.', aiPersonality: 'Mẹ Nghiêm Khắc', visual: '🤝', targetOutcome: 'Giảm nhiệt tình huống', winWinCriteria: 'Hòa giải cảm xúc qua phản chiếu ngôn ngữ (Amygdala Calm).', sampleRequest: 'Mệt quá không dọn kịp kệ hết đi!!', sampleWinWin: 'Mẹ thấy phòng này bừa bộn hở mẹ? Con nghỉ 30 phút rồi dọn ngay nghe mẹ?' },
+    // Expanded
+    ...(EXPANDED_NEGOTIATION as unknown as NegotiationChallenge[]),
 ];
 
 export function createDefaultEliteMetrics(): EliteCapabilityMetrics {

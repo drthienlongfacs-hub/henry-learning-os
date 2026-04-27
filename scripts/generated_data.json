@@ -1,0 +1,2105 @@
+{
+  "probability": [
+    {
+      "id": "prob-gen-kid-1",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 4 mặt. Khả năng ra số 2?",
+      "visual": "🎲",
+      "correctAnswer": "likely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 4 mặt: xác suất ra 2 là 1/4 = 25%."
+    },
+    {
+      "id": "prob-gen-kid-2",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 6 mặt. Khả năng ra số 6?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 6 mặt: xác suất ra 6 là 1/6 = 17%."
+    },
+    {
+      "id": "prob-gen-kid-3",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 8 mặt. Khả năng ra số 7?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 8 mặt: xác suất ra 7 là 1/8 = 13%."
+    },
+    {
+      "id": "prob-gen-kid-4",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 10 mặt. Khả năng ra số 2?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 10 mặt: xác suất ra 2 là 1/10 = 10%."
+    },
+    {
+      "id": "prob-gen-kid-5",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 12 mặt. Khả năng ra số 3?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 12 mặt: xác suất ra 3 là 1/12 = 8%."
+    },
+    {
+      "id": "prob-gen-kid-6",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 20 mặt. Khả năng ra số 13?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 20 mặt: xác suất ra 13 là 1/20 = 5%."
+    },
+    {
+      "id": "prob-gen-kid-7",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 4 mặt. Khả năng ra số 4?",
+      "visual": "🎲",
+      "correctAnswer": "likely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 4 mặt: xác suất ra 4 là 1/4 = 25%."
+    },
+    {
+      "id": "prob-gen-kid-8",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 6 mặt. Khả năng ra số 3?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 6 mặt: xác suất ra 3 là 1/6 = 17%."
+    },
+    {
+      "id": "prob-gen-kid-9",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 8 mặt. Khả năng ra số 7?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 8 mặt: xác suất ra 7 là 1/8 = 13%."
+    },
+    {
+      "id": "prob-gen-kid-10",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 10 mặt. Khả năng ra số 5?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 10 mặt: xác suất ra 5 là 1/10 = 10%."
+    },
+    {
+      "id": "prob-gen-kid-11",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 12 mặt. Khả năng ra số 4?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 12 mặt: xác suất ra 4 là 1/12 = 8%."
+    },
+    {
+      "id": "prob-gen-kid-12",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 20 mặt. Khả năng ra số 4?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 20 mặt: xác suất ra 4 là 1/20 = 5%."
+    },
+    {
+      "id": "prob-gen-kid-13",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 4 mặt. Khả năng ra số 4?",
+      "visual": "🎲",
+      "correctAnswer": "likely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 4 mặt: xác suất ra 4 là 1/4 = 25%."
+    },
+    {
+      "id": "prob-gen-kid-14",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 6 mặt. Khả năng ra số 2?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 6 mặt: xác suất ra 2 là 1/6 = 17%."
+    },
+    {
+      "id": "prob-gen-kid-15",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 8 mặt. Khả năng ra số 7?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 8 mặt: xác suất ra 7 là 1/8 = 13%."
+    },
+    {
+      "id": "prob-gen-kid-16",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 10 mặt. Khả năng ra số 3?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 10 mặt: xác suất ra 3 là 1/10 = 10%."
+    },
+    {
+      "id": "prob-gen-kid-17",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 12 mặt. Khả năng ra số 11?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 12 mặt: xác suất ra 11 là 1/12 = 8%."
+    },
+    {
+      "id": "prob-gen-kid-18",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 20 mặt. Khả năng ra số 6?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 20 mặt: xác suất ra 6 là 1/20 = 5%."
+    },
+    {
+      "id": "prob-gen-kid-19",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 4 mặt. Khả năng ra số 3?",
+      "visual": "🎲",
+      "correctAnswer": "likely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 4 mặt: xác suất ra 3 là 1/4 = 25%."
+    },
+    {
+      "id": "prob-gen-kid-20",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 6 mặt. Khả năng ra số 5?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 6 mặt: xác suất ra 5 là 1/6 = 17%."
+    },
+    {
+      "id": "prob-gen-kid-21",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 8 mặt. Khả năng ra số 3?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 8 mặt: xác suất ra 3 là 1/8 = 13%."
+    },
+    {
+      "id": "prob-gen-kid-22",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 10 mặt. Khả năng ra số 1?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 10 mặt: xác suất ra 1 là 1/10 = 10%."
+    },
+    {
+      "id": "prob-gen-kid-23",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 12 mặt. Khả năng ra số 9?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 12 mặt: xác suất ra 9 là 1/12 = 8%."
+    },
+    {
+      "id": "prob-gen-kid-24",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 20 mặt. Khả năng ra số 14?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 20 mặt: xác suất ra 14 là 1/20 = 5%."
+    },
+    {
+      "id": "prob-gen-kid-25",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 4 mặt. Khả năng ra số 1?",
+      "visual": "🎲",
+      "correctAnswer": "likely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 4 mặt: xác suất ra 1 là 1/4 = 25%."
+    },
+    {
+      "id": "prob-gen-kid-26",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 6 mặt. Khả năng ra số 3?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 6 mặt: xác suất ra 3 là 1/6 = 17%."
+    },
+    {
+      "id": "prob-gen-kid-27",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 8 mặt. Khả năng ra số 1?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 8 mặt: xác suất ra 1 là 1/8 = 13%."
+    },
+    {
+      "id": "prob-gen-kid-28",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 10 mặt. Khả năng ra số 4?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 10 mặt: xác suất ra 4 là 1/10 = 10%."
+    },
+    {
+      "id": "prob-gen-kid-29",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 12 mặt. Khả năng ra số 5?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 12 mặt: xác suất ra 5 là 1/12 = 8%."
+    },
+    {
+      "id": "prob-gen-kid-30",
+      "ageTarget": "6-10",
+      "question": "Con gieo xúc xắc 20 mặt. Khả năng ra số 5?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xúc xắc 20 mặt: xác suất ra 5 là 1/20 = 5%."
+    },
+    {
+      "id": "prob-gen-kid-31",
+      "ageTarget": "6-10",
+      "question": "Trời nắng chang chang, không một gợn mây. Khả năng mưa?",
+      "visual": "☀️",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Không có mây = không có mưa. Rất khó xảy ra."
+    },
+    {
+      "id": "prob-gen-kid-32",
+      "ageTarget": "6-10",
+      "question": "Bầu trời xám xịt, gió thổi mạnh. Khả năng mưa?",
+      "visual": "🌪️",
+      "correctAnswer": "likely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Gió mạnh + mây xám = dấu hiệu mưa rõ ràng."
+    },
+    {
+      "id": "prob-gen-kid-33",
+      "ageTarget": "6-10",
+      "question": "Mùa hè nóng bức, con bỏ kem ra ngoài. Kem có tan không?",
+      "visual": "🍦",
+      "correctAnswer": "certain",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Kem gặp nóng chắc chắn tan chảy 100%."
+    },
+    {
+      "id": "prob-gen-kid-34",
+      "ageTarget": "6-10",
+      "question": "Con bỏ đá vào nước nóng. Đá có tan không?",
+      "visual": "🧊",
+      "correctAnswer": "certain",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Đá gặp nhiệt luôn tan."
+    },
+    {
+      "id": "prob-gen-kid-35",
+      "ageTarget": "6-10",
+      "question": "Con thả bóng bay lên trời. Bóng có bay lên không?",
+      "visual": "🎈",
+      "correctAnswer": "certain",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Bóng bay chứa khí nhẹ hơn không khí, chắc chắn bay lên."
+    },
+    {
+      "id": "prob-gen-kid-36",
+      "ageTarget": "6-10",
+      "question": "Con gieo 2 xúc xắc cùng lúc. Cả 2 đều ra số 6?",
+      "visual": "🎲",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xác suất = 1/6 × 1/6 = 1/36 ≈ 2.8%. Rất khó."
+    },
+    {
+      "id": "prob-gen-kid-37",
+      "ageTarget": "6-10",
+      "question": "Bốc ngẫu nhiên 1 viên bi từ túi 10 bi xanh. Được bi xanh?",
+      "visual": "🔵",
+      "correctAnswer": "certain",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Tất cả đều xanh = 100% chắc chắn."
+    },
+    {
+      "id": "prob-gen-kid-38",
+      "ageTarget": "6-10",
+      "question": "Bốc 1 viên bi từ túi có 5 bi đỏ và 5 bi xanh. Được bi đỏ?",
+      "visual": "🔴",
+      "correctAnswer": "equal",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "50% đỏ, 50% xanh = cơ hội ngang nhau."
+    },
+    {
+      "id": "prob-gen-kid-39",
+      "ageTarget": "6-10",
+      "question": "Con tung đồng xu 10 lần. Cả 10 lần đều ngửa?",
+      "visual": "🪙",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xác suất = (1/2)^10 = 1/1024. Cực kỳ hiếm."
+    },
+    {
+      "id": "prob-gen-kid-40",
+      "ageTarget": "6-10",
+      "question": "Mặt trời có mọc vào sáng mai không?",
+      "visual": "🌅",
+      "correctAnswer": "certain",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Trái đất quay quanh mặt trời, sáng mai chắc chắn có ánh sáng."
+    },
+    {
+      "id": "prob-gen-kid-41",
+      "ageTarget": "6-10",
+      "question": "Con nhắm mắt bốc 1 bút từ hộp 3 bút đỏ, 1 bút xanh. Được bút đỏ?",
+      "visual": "🖊️",
+      "correctAnswer": "likely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "3/4 = 75% cơ hội. Rất có khả năng."
+    },
+    {
+      "id": "prob-gen-kid-42",
+      "ageTarget": "6-10",
+      "question": "Thả 1 hòn đá xuống nước. Đá nổi lên mặt nước?",
+      "visual": "🪨",
+      "correctAnswer": "impossible",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Đá nặng hơn nước, không thể nổi."
+    },
+    {
+      "id": "prob-gen-kid-43",
+      "ageTarget": "6-10",
+      "question": "Con người nhảy từ mặt đất lên tới mặt trăng?",
+      "visual": "🌙",
+      "correctAnswer": "impossible",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Lực hấp dẫn quá mạnh, con người không thể nhảy tới mặt trăng."
+    },
+    {
+      "id": "prob-gen-kid-44",
+      "ageTarget": "6-10",
+      "question": "Con có thể chạy nhanh hơn xe hơi trên đường cao tốc?",
+      "visual": "🏎️",
+      "correctAnswer": "impossible",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Tốc độ tối đa của con người ~45km/h, xe hơi ~120km/h."
+    },
+    {
+      "id": "prob-gen-kid-45",
+      "ageTarget": "6-10",
+      "question": "Mèo nhà rơi từ trên cao xuống đất, nó đáp bằng 4 chân?",
+      "visual": "🐱",
+      "correctAnswer": "likely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Mèo có phản xạ xoay người rất tốt, thường đáp bằng chân."
+    },
+    {
+      "id": "prob-gen-kid-46",
+      "ageTarget": "6-10",
+      "question": "Con cá sống được trên cạn không có nước?",
+      "visual": "🐟",
+      "correctAnswer": "impossible",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Cá cần nước để thở bằng mang. Không thể sống trên cạn."
+    },
+    {
+      "id": "prob-gen-kid-47",
+      "ageTarget": "6-10",
+      "question": "Trồng hạt đậu tưới nước đều, cây mọc lên?",
+      "visual": "🌱",
+      "correctAnswer": "certain",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Có đất, nước, ánh sáng = cây chắc chắn mọc."
+    },
+    {
+      "id": "prob-gen-kid-48",
+      "ageTarget": "6-10",
+      "question": "Chim cánh cụt biết bay?",
+      "visual": "🐧",
+      "correctAnswer": "impossible",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Cánh cụt không có khả năng bay dù là loài chim."
+    },
+    {
+      "id": "prob-gen-kid-49",
+      "ageTarget": "6-10",
+      "question": "Bỏ muối vào nước, nước có vị mặn?",
+      "visual": "🧂",
+      "correctAnswer": "certain",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Muối tan trong nước tạo vị mặn chắc chắn."
+    },
+    {
+      "id": "prob-gen-kid-50",
+      "ageTarget": "6-10",
+      "question": "Ăn ớt cay nhưng miệng không cay?",
+      "visual": "🌶️",
+      "correctAnswer": "impossible",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Capsaicin trong ớt luôn kích thích vị giác gây cay."
+    },
+    {
+      "id": "prob-gen-kid-51",
+      "ageTarget": "6-10",
+      "question": "Bỏ bánh mì vào lò nướng, bánh có nóng giòn?",
+      "visual": "🍞",
+      "correctAnswer": "certain",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Nhiệt từ lò sẽ làm bánh nóng và giòn."
+    },
+    {
+      "id": "prob-gen-kid-52",
+      "ageTarget": "6-10",
+      "question": "Đổ nước vào cát, nước có thấm xuống?",
+      "visual": "🏖️",
+      "correctAnswer": "certain",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Cát có khe hở, nước chắc chắn thấm qua."
+    },
+    {
+      "id": "prob-gen-kid-53",
+      "ageTarget": "6-10",
+      "question": "Xe đạp không ai đạp, tự chạy trên đường bằng?",
+      "visual": "🚲",
+      "correctAnswer": "impossible",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Không có lực tác động, xe không thể tự chạy."
+    },
+    {
+      "id": "prob-gen-adv-1",
+      "ageTarget": "11+",
+      "question": "Monty Hall Problem: Đổi cửa sau khi MC mở 1 cửa trống?",
+      "visual": "🚪",
+      "correctAnswer": "likely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Đổi cửa tăng xác suất thắng từ 1/3 lên 2/3."
+    },
+    {
+      "id": "prob-gen-adv-2",
+      "ageTarget": "11+",
+      "question": "Birthday Paradox: 23 người, 2 người trùng sinh nhật?",
+      "visual": "🎂",
+      "correctAnswer": "equal",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Xác suất ≈ 50.7%. Phản trực giác nhưng đúng toán học."
+    },
+    {
+      "id": "prob-gen-adv-3",
+      "ageTarget": "11+",
+      "question": "Gambler's Fallacy: Roulette ra đỏ 10 lần, lần 11 ra đen?",
+      "visual": "🎰",
+      "correctAnswer": "equal",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Mỗi lần quay độc lập. Quá khứ không ảnh hưởng."
+    },
+    {
+      "id": "prob-gen-adv-4",
+      "ageTarget": "11+",
+      "question": "Law of Large Numbers: Tung xu 10,000 lần, tỉ lệ ngửa gần 50%?",
+      "visual": "📊",
+      "correctAnswer": "certain",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Luật số lớn đảm bảo hội tụ về xác suất lý thuyết."
+    },
+    {
+      "id": "prob-gen-adv-5",
+      "ageTarget": "11+",
+      "question": "Bayes Theorem: Xét nghiệm 99% chính xác, bệnh hiếm 1/10000. Dương tính thật = ?",
+      "visual": "🧬",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "P(bệnh|+) ≈ 1% do tỉ lệ dương tính giả cao hơn."
+    },
+    {
+      "id": "prob-gen-adv-6",
+      "ageTarget": "11+",
+      "question": "Central Limit Theorem: Trung bình mẫu n=30 phân phối chuẩn?",
+      "visual": "📈",
+      "correctAnswer": "likely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "CLT: n≥30 thì phân phối mẫu xấp xỉ chuẩn."
+    },
+    {
+      "id": "prob-gen-adv-7",
+      "ageTarget": "11+",
+      "question": "St. Petersburg Paradox: Trả bao nhiêu cho trò chơi kỳ vọng vô hạn?",
+      "visual": "💰",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Mặc dù kỳ vọng vô hạn, thực tế ít ai trả >$25."
+    },
+    {
+      "id": "prob-gen-adv-8",
+      "ageTarget": "11+",
+      "question": "Simpson's Paradox: Xu hướng đảo ngược khi gộp dữ liệu?",
+      "visual": "🔄",
+      "correctAnswer": "likely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Dữ liệu tổng hợp có thể cho kết luận ngược."
+    },
+    {
+      "id": "prob-gen-adv-9",
+      "ageTarget": "11+",
+      "question": "Regression to the Mean: Lần thi đầu điểm cực cao, lần sau?",
+      "visual": "📉",
+      "correctAnswer": "likely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Điểm cực đoan có xu hướng quay về trung bình."
+    },
+    {
+      "id": "prob-gen-adv-10",
+      "ageTarget": "11+",
+      "question": "Poisson Distribution: 2 tai nạn/tuần, xác suất 0 tai nạn tuần sau?",
+      "visual": "🚗",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "P(X=0) = e^(-2) ≈ 13.5%. Khá thấp."
+    },
+    {
+      "id": "prob-gen-adv-11",
+      "ageTarget": "11+",
+      "question": "Hot Hand Fallacy: Cầu thủ ghi 5 bàn liên tiếp, bàn 6 chắc chắn?",
+      "visual": "⚽",
+      "correctAnswer": "equal",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Hiệu ứng tay nóng thường là ảo giác thống kê."
+    },
+    {
+      "id": "prob-gen-adv-12",
+      "ageTarget": "11+",
+      "question": "Binomial: Tung xu 4 lần, đúng 3 ngửa?",
+      "visual": "🪙",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "C(4,3)×(0.5)^4 = 25%. Có thể nhưng không phổ biến."
+    },
+    {
+      "id": "prob-gen-adv-13",
+      "ageTarget": "11+",
+      "question": "Conditional Probability: Mưa hôm nay 60%, mưa liền 2 ngày = ?",
+      "visual": "🌧️",
+      "correctAnswer": "unlikely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "P = 0.6 × 0.6 = 0.36 = 36%."
+    },
+    {
+      "id": "prob-gen-adv-14",
+      "ageTarget": "11+",
+      "question": "Expected Value: Xổ số 1 triệu, 1/million thắng. Kỳ vọng = ?",
+      "visual": "🎫",
+      "correctAnswer": "equal",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "EV = 1tr × 1/1tr - giá vé ≈ 0 hoặc âm."
+    },
+    {
+      "id": "prob-gen-adv-15",
+      "ageTarget": "11+",
+      "question": "Chi-square test: Xúc xắc gian lận nếu 1000 lần gieo lệch nhiều?",
+      "visual": "📐",
+      "correctAnswer": "likely",
+      "options": [
+        "impossible",
+        "unlikely",
+        "equal",
+        "likely",
+        "certain"
+      ],
+      "explanation": "Chi-square phát hiện bất thường phân phối."
+    }
+  ],
+  "wantsVsNeeds": [
+    {
+      "id": "wvn-gen-kid-1",
+      "ageTarget": "6-10",
+      "name": "Sữa tươi uống mỗi ngày",
+      "visual": "🥛",
+      "correctCategory": "need",
+      "explanation": "Canxi giúp xương chắc khỏe. Cần thiết cho sức khỏe!"
+    },
+    {
+      "id": "wvn-gen-kid-2",
+      "ageTarget": "6-10",
+      "name": "Bộ Lego Star Wars giới hạn",
+      "visual": "🧱",
+      "correctCategory": "want",
+      "explanation": "Vui nhưng không cần thiết cho sức khỏe hay học tập."
+    },
+    {
+      "id": "wvn-gen-kid-3",
+      "ageTarget": "6-10",
+      "name": "Áo ấm mùa đông",
+      "visual": "🧥",
+      "correctCategory": "need",
+      "explanation": "Giữ ấm cơ thể là nhu cầu thiết yếu khi trời lạnh."
+    },
+    {
+      "id": "wvn-gen-kid-4",
+      "ageTarget": "6-10",
+      "name": "Đôi giày thể thao đi học",
+      "visual": "👟",
+      "correctCategory": "need",
+      "explanation": "Cần giày để bảo vệ chân và đi lại an toàn."
+    },
+    {
+      "id": "wvn-gen-kid-5",
+      "ageTarget": "6-10",
+      "name": "Kẹo mút size khổng lồ",
+      "visual": "🍭",
+      "correctCategory": "want",
+      "explanation": "Chỉ là đồ ăn vặt, không cần cho sức khỏe."
+    },
+    {
+      "id": "wvn-gen-kid-6",
+      "ageTarget": "6-10",
+      "name": "Kem que 3 tầng",
+      "visual": "🍦",
+      "correctCategory": "want",
+      "explanation": "Giải khát vui miệng nhưng không phải nhu cầu."
+    },
+    {
+      "id": "wvn-gen-kid-7",
+      "ageTarget": "6-10",
+      "name": "Sách Toán lớp 1",
+      "visual": "📘",
+      "correctCategory": "need",
+      "explanation": "Sách giáo khoa cần thiết cho việc học."
+    },
+    {
+      "id": "wvn-gen-kid-8",
+      "ageTarget": "6-10",
+      "name": "Sticker dán lên mũ bảo hiểm",
+      "visual": "⭐",
+      "correctCategory": "want",
+      "explanation": "Trang trí vui thôi, không ảnh hưởng an toàn."
+    },
+    {
+      "id": "wvn-gen-kid-9",
+      "ageTarget": "6-10",
+      "name": "Cơm trưa ở trường",
+      "visual": "🍱",
+      "correctCategory": "need",
+      "explanation": "Ăn trưa giúp con có năng lượng học buổi chiều."
+    },
+    {
+      "id": "wvn-gen-kid-10",
+      "ageTarget": "6-10",
+      "name": "Điện thoại iPhone đời mới nhất",
+      "visual": "📱",
+      "correctCategory": "want",
+      "explanation": "Trẻ nhỏ không cần điện thoại đắt tiền."
+    },
+    {
+      "id": "wvn-gen-kid-11",
+      "ageTarget": "6-10",
+      "name": "Thuốc nhỏ mắt khi đau mắt",
+      "visual": "💧",
+      "correctCategory": "need",
+      "explanation": "Thuốc chữa bệnh là nhu cầu y tế."
+    },
+    {
+      "id": "wvn-gen-kid-12",
+      "ageTarget": "6-10",
+      "name": "Búp bê Barbie phiên bản giới hạn",
+      "visual": "👸",
+      "correctCategory": "want",
+      "explanation": "Đồ chơi giới hạn = muốn, không phải cần."
+    },
+    {
+      "id": "wvn-gen-kid-13",
+      "ageTarget": "6-10",
+      "name": "Nước uống sạch mỗi ngày",
+      "visual": "🚰",
+      "correctCategory": "need",
+      "explanation": "Nước sinh tồn, không thể thiếu."
+    },
+    {
+      "id": "wvn-gen-kid-14",
+      "ageTarget": "6-10",
+      "name": "Băng vệ sinh vết thương khi bị đứt tay",
+      "visual": "🩹",
+      "correctCategory": "need",
+      "explanation": "Cầm máu và bảo vệ vết thương rất cần thiết."
+    },
+    {
+      "id": "wvn-gen-kid-15",
+      "ageTarget": "6-10",
+      "name": "Pháo hoa bông nhỏ đốt chơi",
+      "visual": "🎇",
+      "correctCategory": "want",
+      "explanation": "Chỉ là trò vui, không phải nhu cầu."
+    },
+    {
+      "id": "wvn-gen-kid-16",
+      "ageTarget": "6-10",
+      "name": "Mũ bảo hiểm khi đi xe đạp",
+      "visual": "⛑️",
+      "correctCategory": "need",
+      "explanation": "Bảo vệ đầu khỏi chấn thương, cần thiết!"
+    },
+    {
+      "id": "wvn-gen-kid-17",
+      "ageTarget": "6-10",
+      "name": "Kính mát thời trang hình trái tim",
+      "visual": "😎",
+      "correctCategory": "want",
+      "explanation": "Trang trí thôi, không bảo vệ thị lực tốt."
+    },
+    {
+      "id": "wvn-gen-kid-18",
+      "ageTarget": "6-10",
+      "name": "Kem chống nắng khi ra biển",
+      "visual": "🧴",
+      "correctCategory": "need",
+      "explanation": "Bảo vệ da khỏi cháy nắng, rất cần."
+    },
+    {
+      "id": "wvn-gen-kid-19",
+      "ageTarget": "6-10",
+      "name": "Máy chơi game Nintendo Switch",
+      "visual": "🎮",
+      "correctCategory": "want",
+      "explanation": "Giải trí vui nhưng không thiết yếu."
+    },
+    {
+      "id": "wvn-gen-kid-20",
+      "ageTarget": "6-10",
+      "name": "Chăn ấm khi ngủ mùa lạnh",
+      "visual": "🛏️",
+      "correctCategory": "need",
+      "explanation": "Giữ ấm khi ngủ là nhu cầu cơ bản."
+    },
+    {
+      "id": "wvn-gen-kid-21",
+      "ageTarget": "6-10",
+      "name": "Bút chì viết bài",
+      "visual": "✏️",
+      "correctCategory": "need",
+      "explanation": "Dụng cụ học tập cơ bản không thể thiếu."
+    },
+    {
+      "id": "wvn-gen-kid-22",
+      "ageTarget": "6-10",
+      "name": "Bình nước uống mang theo",
+      "visual": "🍶",
+      "correctCategory": "need",
+      "explanation": "Uống nước suốt ngày rất cần bình chứa."
+    },
+    {
+      "id": "wvn-gen-kid-23",
+      "ageTarget": "6-10",
+      "name": "Gấu bông khổng lồ 2 mét",
+      "visual": "🧸",
+      "correctCategory": "want",
+      "explanation": "Dễ thương nhưng chỉ là đồ chơi."
+    },
+    {
+      "id": "wvn-gen-kid-24",
+      "ageTarget": "6-10",
+      "name": "Dù che mưa khi đi bộ",
+      "visual": "☂️",
+      "correctCategory": "need",
+      "explanation": "Tránh ướt và cảm lạnh, cần thiết!"
+    },
+    {
+      "id": "wvn-gen-kid-25",
+      "ageTarget": "6-10",
+      "name": "Bộ tô màu 120 cây bút",
+      "visual": "🖍️",
+      "correctCategory": "want",
+      "explanation": "12 màu cơ bản đủ rồi, 120 chỉ là muốn thêm."
+    },
+    {
+      "id": "wvn-gen-kid-26",
+      "ageTarget": "6-10",
+      "name": "Giấy vệ sinh",
+      "visual": "🧻",
+      "correctCategory": "need",
+      "explanation": "Nhu cầu vệ sinh cá nhân bắt buộc."
+    },
+    {
+      "id": "wvn-gen-kid-27",
+      "ageTarget": "6-10",
+      "name": "Đồng hồ thông minh Apple Watch",
+      "visual": "⌚",
+      "correctCategory": "want",
+      "explanation": "Trẻ em không cần đồng hồ đắt tiền."
+    },
+    {
+      "id": "wvn-gen-kid-28",
+      "ageTarget": "6-10",
+      "name": "Rau xanh ăn kèm cơm",
+      "visual": "🥬",
+      "correctCategory": "need",
+      "explanation": "Rau cung cấp vitamin và chất xơ cần thiết."
+    },
+    {
+      "id": "wvn-gen-kid-29",
+      "ageTarget": "6-10",
+      "name": "Bong bóng nước chơi mùa hè",
+      "visual": "💦",
+      "correctCategory": "want",
+      "explanation": "Trò chơi vui nhưng không thiết yếu."
+    },
+    {
+      "id": "wvn-gen-kid-30",
+      "ageTarget": "6-10",
+      "name": "Xà phòng rửa tay",
+      "visual": "🧼",
+      "correctCategory": "need",
+      "explanation": "Rửa tay sạch sẽ phòng bệnh rất quan trọng."
+    },
+    {
+      "id": "wvn-gen-adv-1",
+      "ageTarget": "11+",
+      "name": "Bảo hiểm y tế",
+      "visual": "🏥",
+      "correctCategory": "need",
+      "explanation": "Mạng lưới an toàn tài chính khi ốm đau."
+    },
+    {
+      "id": "wvn-gen-adv-2",
+      "ageTarget": "11+",
+      "name": "Túi xách hiệu Louis Vuitton",
+      "visual": "👜",
+      "correctCategory": "want",
+      "explanation": "Hàng xa xỉ Veblen, giá trị biểu tượng > công năng."
+    },
+    {
+      "id": "wvn-gen-adv-3",
+      "ageTarget": "11+",
+      "name": "Quỹ hưu trí",
+      "visual": "🏦",
+      "correctCategory": "need",
+      "explanation": "Thu nhập thay thế khi không còn làm việc."
+    },
+    {
+      "id": "wvn-gen-adv-4",
+      "ageTarget": "11+",
+      "name": "Xe thể thao Lamborghini",
+      "visual": "🏎️",
+      "correctCategory": "want",
+      "explanation": "Di chuyển có xe bình dân đủ rồi."
+    },
+    {
+      "id": "wvn-gen-adv-5",
+      "ageTarget": "11+",
+      "name": "Internet cáp quang gia đình",
+      "visual": "📡",
+      "correctCategory": "need",
+      "explanation": "Thời đại số, kết nối là nhu cầu cơ bản."
+    },
+    {
+      "id": "wvn-gen-adv-6",
+      "ageTarget": "11+",
+      "name": "Vé VIP concert K-pop",
+      "visual": "🎤",
+      "correctCategory": "want",
+      "explanation": "Giải trí không ảnh hưởng sinh tồn."
+    },
+    {
+      "id": "wvn-gen-adv-7",
+      "ageTarget": "11+",
+      "name": "Vitamin tổng hợp hàng ngày",
+      "visual": "💊",
+      "correctCategory": "want",
+      "explanation": "Ăn uống cân bằng thì không cần bổ sung."
+    },
+    {
+      "id": "wvn-gen-adv-8",
+      "ageTarget": "11+",
+      "name": "Giáo dục cơ bản 12 năm",
+      "visual": "🎓",
+      "correctCategory": "need",
+      "explanation": "Nền tảng kiến thức và cơ hội việc làm."
+    },
+    {
+      "id": "wvn-gen-adv-9",
+      "ageTarget": "11+",
+      "name": "Phần mềm Microsoft Office bản quyền",
+      "visual": "💻",
+      "correctCategory": "want",
+      "explanation": "Có nhiều phần mềm miễn phí thay thế."
+    },
+    {
+      "id": "wvn-gen-adv-10",
+      "ageTarget": "11+",
+      "name": "Nước sạch hệ thống lọc",
+      "visual": "🚰",
+      "correctCategory": "need",
+      "explanation": "Nước sạch là quyền cơ bản của mọi người."
+    },
+    {
+      "id": "wvn-gen-adv-11",
+      "ageTarget": "11+",
+      "name": "Đồng hồ Rolex Submariner",
+      "visual": "⌚",
+      "correctCategory": "want",
+      "explanation": "Xem giờ có điện thoại. Rolex = biểu tượng địa vị."
+    },
+    {
+      "id": "wvn-gen-adv-12",
+      "ageTarget": "11+",
+      "name": "Tiêm phòng vaccine cơ bản",
+      "visual": "💉",
+      "correctCategory": "need",
+      "explanation": "Phòng bệnh truyền nhiễm, bảo vệ cộng đồng."
+    },
+    {
+      "id": "wvn-gen-adv-13",
+      "ageTarget": "11+",
+      "name": "Giày sneaker limited edition",
+      "visual": "👠",
+      "correctCategory": "want",
+      "explanation": "Resale culture, không phải nhu cầu đi lại."
+    },
+    {
+      "id": "wvn-gen-adv-14",
+      "ageTarget": "11+",
+      "name": "Nhà ở che mưa che nắng",
+      "visual": "🏠",
+      "correctCategory": "need",
+      "explanation": "Nơi trú ẩn an toàn là nhu cầu Maslow bậc 1."
+    },
+    {
+      "id": "wvn-gen-adv-15",
+      "ageTarget": "11+",
+      "name": "Subscription Netflix Premium",
+      "visual": "📺",
+      "correctCategory": "want",
+      "explanation": "Giải trí, không ảnh hưởng chất lượng sống."
+    }
+  ],
+  "circleOfControl": [
+    {
+      "id": "coc-gen-kid-1",
+      "ageTarget": "6-10",
+      "situation": "Bạn thân chuyển trường đi xa.",
+      "visual": "😢",
+      "correctCategory": "uncontrollable",
+      "explanation": "Quyết định của gia đình bạn, con không thể thay đổi."
+    },
+    {
+      "id": "coc-gen-kid-2",
+      "ageTarget": "6-10",
+      "situation": "Con chọn đọc sách thay vì xem TV.",
+      "visual": "📖",
+      "correctCategory": "controllable",
+      "explanation": "Lựa chọn cá nhân hoàn toàn do con quyết."
+    },
+    {
+      "id": "coc-gen-kid-3",
+      "ageTarget": "6-10",
+      "situation": "Cô giáo cho bài kiểm tra bất ngờ.",
+      "visual": "📝",
+      "correctCategory": "uncontrollable",
+      "explanation": "Lịch kiểm tra do cô quyết định."
+    },
+    {
+      "id": "coc-gen-kid-4",
+      "ageTarget": "6-10",
+      "situation": "Con ôn bài chuẩn bị cho kiểm tra.",
+      "visual": "📚",
+      "correctCategory": "controllable",
+      "explanation": "Nỗ lực học tập là của con."
+    },
+    {
+      "id": "coc-gen-kid-5",
+      "ageTarget": "6-10",
+      "situation": "Trời nóng quá không thể ra ngoài chơi.",
+      "visual": "🥵",
+      "correctCategory": "uncontrollable",
+      "explanation": "Thời tiết nằm ngoài tầm kiểm soát."
+    },
+    {
+      "id": "coc-gen-kid-6",
+      "ageTarget": "6-10",
+      "situation": "Con uống đủ nước khi trời nóng.",
+      "visual": "💧",
+      "correctCategory": "controllable",
+      "explanation": "Chăm sóc bản thân là việc con làm được."
+    },
+    {
+      "id": "coc-gen-kid-7",
+      "ageTarget": "6-10",
+      "situation": "Em bé khóc ré lên lúc nửa đêm.",
+      "visual": "👶",
+      "correctCategory": "uncontrollable",
+      "explanation": "Em bé chưa biết kiểm soát, con không thể bắt em ngừng."
+    },
+    {
+      "id": "coc-gen-kid-8",
+      "ageTarget": "6-10",
+      "situation": "Con nói lời cảm ơn khi được cho quà.",
+      "visual": "🎁",
+      "correctCategory": "controllable",
+      "explanation": "Lời nói lễ phép do con chọn."
+    },
+    {
+      "id": "coc-gen-kid-9",
+      "ageTarget": "6-10",
+      "situation": "Xe buýt đến trễ làm con muộn học.",
+      "visual": "🚌",
+      "correctCategory": "uncontrollable",
+      "explanation": "Lịch xe buýt không do con điều khiển."
+    },
+    {
+      "id": "coc-gen-kid-10",
+      "ageTarget": "6-10",
+      "situation": "Con dậy sớm 15 phút để không vội.",
+      "visual": "⏰",
+      "correctCategory": "controllable",
+      "explanation": "Thói quen buổi sáng con tự quyết."
+    },
+    {
+      "id": "coc-gen-kid-11",
+      "ageTarget": "6-10",
+      "situation": "WiFi nhà bị mất khi đang học online.",
+      "visual": "📶",
+      "correctCategory": "uncontrollable",
+      "explanation": "Sự cố kỹ thuật ngoài tầm con."
+    },
+    {
+      "id": "coc-gen-kid-12",
+      "ageTarget": "6-10",
+      "situation": "Con xếp ngăn nắp góc học tập.",
+      "visual": "🗂️",
+      "correctCategory": "controllable",
+      "explanation": "Không gian học là do con sắp xếp."
+    },
+    {
+      "id": "coc-gen-kid-13",
+      "ageTarget": "6-10",
+      "situation": "Bạn cùng bàn quay cóp bài con.",
+      "visual": "👀",
+      "correctCategory": "uncontrollable",
+      "explanation": "Hành vi của bạn, con không kiểm soát được."
+    },
+    {
+      "id": "coc-gen-kid-14",
+      "ageTarget": "6-10",
+      "situation": "Con che bài mình và tập trung làm.",
+      "visual": "✋",
+      "correctCategory": "controllable",
+      "explanation": "Bảo vệ bài của mình là quyết định đúng."
+    },
+    {
+      "id": "coc-gen-kid-15",
+      "ageTarget": "6-10",
+      "situation": "Mẹ bận việc không đón con đúng giờ.",
+      "visual": "⏳",
+      "correctCategory": "uncontrollable",
+      "explanation": "Lịch làm việc của mẹ ngoài tầm con."
+    },
+    {
+      "id": "coc-gen-kid-16",
+      "ageTarget": "6-10",
+      "situation": "Con ngồi chờ mẹ ở chỗ an toàn.",
+      "visual": "🏫",
+      "correctCategory": "controllable",
+      "explanation": "Chọn nơi an toàn để chờ là quyết định thông minh."
+    },
+    {
+      "id": "coc-gen-kid-17",
+      "ageTarget": "6-10",
+      "situation": "Cún con nhà hàng xóm sủa to suốt đêm.",
+      "visual": "🐕",
+      "correctCategory": "uncontrollable",
+      "explanation": "Con vật không nghe lời con."
+    },
+    {
+      "id": "coc-gen-kid-18",
+      "ageTarget": "6-10",
+      "situation": "Con đeo tai nghe để không bị ồn.",
+      "visual": "🎧",
+      "correctCategory": "controllable",
+      "explanation": "Tìm cách thích ứng là trong tầm kiểm soát."
+    },
+    {
+      "id": "coc-gen-kid-19",
+      "ageTarget": "6-10",
+      "situation": "Trận đấu bóng đá bị hủy vì mưa.",
+      "visual": "⚽",
+      "correctCategory": "uncontrollable",
+      "explanation": "Thời tiết quyết định, không phải con."
+    },
+    {
+      "id": "coc-gen-kid-20",
+      "ageTarget": "6-10",
+      "situation": "Con tập thể dục trong nhà thay thế.",
+      "visual": "🤸",
+      "correctCategory": "controllable",
+      "explanation": "Tìm phương án thay thế là kỹ năng tốt."
+    },
+    {
+      "id": "coc-gen-kid-21",
+      "ageTarget": "6-10",
+      "situation": "Bài thi được điểm thấp hơn mong đợi.",
+      "visual": "😞",
+      "correctCategory": "uncontrollable",
+      "explanation": "Kết quả đã công bố, không thay đổi được."
+    },
+    {
+      "id": "coc-gen-kid-22",
+      "ageTarget": "6-10",
+      "situation": "Con xem lại bài làm sai để rút kinh nghiệm.",
+      "visual": "📖",
+      "correctCategory": "controllable",
+      "explanation": "Học hỏi từ sai lầm là trong tầm kiểm soát."
+    },
+    {
+      "id": "coc-gen-kid-23",
+      "ageTarget": "6-10",
+      "situation": "Anh/chị trêu chọc con.",
+      "visual": "😤",
+      "correctCategory": "uncontrollable",
+      "explanation": "Lời nói của người khác con không kiểm soát."
+    },
+    {
+      "id": "coc-gen-kid-24",
+      "ageTarget": "6-10",
+      "situation": "Con rời đi calmly thay vì cãi lại.",
+      "visual": "🚶",
+      "correctCategory": "controllable",
+      "explanation": "Phản ứng bình tĩnh là sức mạnh nội tại."
+    },
+    {
+      "id": "coc-gen-kid-25",
+      "ageTarget": "6-10",
+      "situation": "Món đồ yêu thích bị hết hàng.",
+      "visual": "🛒",
+      "correctCategory": "uncontrollable",
+      "explanation": "Tồn kho không do con quyết."
+    },
+    {
+      "id": "coc-gen-kid-26",
+      "ageTarget": "6-10",
+      "situation": "Con chọn món đồ khác phù hợp.",
+      "visual": "🔄",
+      "correctCategory": "controllable",
+      "explanation": "Linh hoạt thay đổi lựa chọn."
+    },
+    {
+      "id": "coc-gen-kid-27",
+      "ageTarget": "6-10",
+      "situation": "Bạn không mời con dự tiệc sinh nhật.",
+      "visual": "🎂",
+      "correctCategory": "uncontrollable",
+      "explanation": "Quyết định mời ai là của bạn đó."
+    },
+    {
+      "id": "coc-gen-kid-28",
+      "ageTarget": "6-10",
+      "situation": "Con vẫn chúc mừng sinh nhật bạn.",
+      "visual": "💌",
+      "correctCategory": "controllable",
+      "explanation": "Tử tế dù không được mời."
+    },
+    {
+      "id": "coc-gen-adv-1",
+      "ageTarget": "11+",
+      "situation": "Lạm phát tăng 15% làm giá xăng tăng gấp đôi.",
+      "visual": "📈",
+      "correctCategory": "uncontrollable",
+      "explanation": "Chính sách tiền tệ vĩ mô ngoài tầm cá nhân."
+    },
+    {
+      "id": "coc-gen-adv-2",
+      "ageTarget": "11+",
+      "situation": "Tự học coding 1 tiếng mỗi ngày.",
+      "visual": "💻",
+      "correctCategory": "controllable",
+      "explanation": "Đầu tư vào bản thân hoàn toàn do mình."
+    },
+    {
+      "id": "coc-gen-adv-3",
+      "ageTarget": "11+",
+      "situation": "AI thay thế nhiều việc làm truyền thống.",
+      "visual": "🤖",
+      "correctCategory": "uncontrollable",
+      "explanation": "Xu hướng công nghệ toàn cầu."
+    },
+    {
+      "id": "coc-gen-adv-4",
+      "ageTarget": "11+",
+      "situation": "Chủ động học kỹ năng mới để thích ứng.",
+      "visual": "📚",
+      "correctCategory": "controllable",
+      "explanation": "Upskilling là quyết định cá nhân."
+    },
+    {
+      "id": "coc-gen-adv-5",
+      "ageTarget": "11+",
+      "situation": "Đại dịch COVID bùng phát toàn cầu.",
+      "visual": "🦠",
+      "correctCategory": "uncontrollable",
+      "explanation": "Dịch bệnh là biến cố vĩ mô."
+    },
+    {
+      "id": "coc-gen-adv-6",
+      "ageTarget": "11+",
+      "situation": "Đeo khẩu trang và rửa tay thường xuyên.",
+      "visual": "😷",
+      "correctCategory": "controllable",
+      "explanation": "Biện pháp phòng ngừa cá nhân."
+    },
+    {
+      "id": "coc-gen-adv-7",
+      "ageTarget": "11+",
+      "situation": "Bạn bè unfriend trên mạng xã hội.",
+      "visual": "📱",
+      "correctCategory": "uncontrollable",
+      "explanation": "Quyết định kết bạn của người khác."
+    },
+    {
+      "id": "coc-gen-adv-8",
+      "ageTarget": "11+",
+      "situation": "Tập trung xây dựng mối quan hệ ngoài đời.",
+      "visual": "🤝",
+      "correctCategory": "controllable",
+      "explanation": "Chất lượng quan hệ do mình tạo."
+    },
+    {
+      "id": "coc-gen-adv-9",
+      "ageTarget": "11+",
+      "situation": "Động đất xảy ra bất ngờ.",
+      "visual": "🌍",
+      "correctCategory": "uncontrollable",
+      "explanation": "Thiên tai ngoài tầm kiểm soát."
+    },
+    {
+      "id": "coc-gen-adv-10",
+      "ageTarget": "11+",
+      "situation": "Chuẩn bị túi khẩn cấp sẵn sàng.",
+      "visual": "🎒",
+      "correctCategory": "controllable",
+      "explanation": "Sẵn sàng ứng phó là trong tầm kiểm soát."
+    },
+    {
+      "id": "coc-gen-adv-11",
+      "ageTarget": "11+",
+      "situation": "Giá Bitcoin lao dốc 50% qua đêm.",
+      "visual": "₿",
+      "correctCategory": "uncontrollable",
+      "explanation": "Thị trường crypto biến động cực đoan."
+    },
+    {
+      "id": "coc-gen-adv-12",
+      "ageTarget": "11+",
+      "situation": "Chỉ đầu tư số tiền sẵn sàng mất.",
+      "visual": "💰",
+      "correctCategory": "controllable",
+      "explanation": "Quản lý rủi ro là trách nhiệm cá nhân."
+    },
+    {
+      "id": "coc-gen-adv-13",
+      "ageTarget": "11+",
+      "situation": "Giáo viên đánh giá không công bằng.",
+      "visual": "👨‍🏫",
+      "correctCategory": "uncontrollable",
+      "explanation": "Nhận xét chủ quan của người khác."
+    },
+    {
+      "id": "coc-gen-adv-14",
+      "ageTarget": "11+",
+      "situation": "Chuẩn bị bài kỹ lưỡng với bằng chứng.",
+      "visual": "📋",
+      "correctCategory": "controllable",
+      "explanation": "Sự chuẩn bị là vũ khí tốt nhất."
+    }
+  ],
+  "negotiation": [
+    {
+      "id": "neg-gen-kid-1",
+      "ageTarget": "6-10",
+      "scenario": "Ba muốn con ngủ trưa nhưng con muốn chơi.",
+      "aiPersonality": "Ba Kiên Quyết",
+      "visual": "😴",
+      "targetOutcome": "Thỏa thuận chơi 10 phút rồi ngủ",
+      "winWinCriteria": "Ba không bị con cãi, con không bị ép ngay.",
+      "sampleRequest": "Ba ơi con không ngủ! Chơi tiếp đi!",
+      "sampleWinWin": "Ba ơi cho con chơi thêm 10 phút rồi con tự ngủ, được không ạ?"
+    },
+    {
+      "id": "neg-gen-kid-2",
+      "ageTarget": "6-10",
+      "scenario": "Mẹ bảo ăn bông cải xanh nhưng con ghét.",
+      "aiPersonality": "Mẹ Lo Dinh Dưỡng",
+      "visual": "🥦",
+      "targetOutcome": "Thử ăn 3 miếng nhỏ",
+      "winWinCriteria": "Mẹ hài lòng con thử, con không phải ăn hết.",
+      "sampleRequest": "Con không ăn cái này! Dở lắm!",
+      "sampleWinWin": "Mẹ ơi con sẽ thử 3 miếng nhỏ. Nếu con ăn hết, mẹ cho con ăn thêm trái cây tráng miệng nha?"
+    },
+    {
+      "id": "neg-gen-kid-3",
+      "ageTarget": "6-10",
+      "scenario": "Con muốn nuôi chó nhưng ba mẹ chưa đồng ý.",
+      "aiPersonality": "Ba Mẹ Thận Trọng",
+      "visual": "🐶",
+      "targetOutcome": "Chứng minh trách nhiệm",
+      "winWinCriteria": "Ba mẹ thấy con đủ trách nhiệm, con có bạn đồng hành.",
+      "sampleRequest": "Ba mẹ tệ quá! Ai cũng có chó hết!",
+      "sampleWinWin": "Con hứa sẽ tự dọn, tự cho ăn, và tự đi dạo chó mỗi ngày. Con viết cam kết cho ba mẹ kiểm tra 1 tháng trước khi mua được không?"
+    },
+    {
+      "id": "neg-gen-kid-4",
+      "ageTarget": "6-10",
+      "scenario": "Bạn mượn đồ chơi nhưng không trả.",
+      "aiPersonality": "Bạn Hay Quên",
+      "visual": "🤔",
+      "targetOutcome": "Nhắc nhẹ và thỏa thuận hạn trả",
+      "winWinCriteria": "Bạn không bị xấu hổ, con lấy lại được đồ.",
+      "sampleRequest": "Mày ăn cắp đồ chơi tao!",
+      "sampleWinWin": "Mình cho bạn mượn tuần trước nè. Ngày mai bạn mang trả mình nhé, mình cũng muốn chơi."
+    },
+    {
+      "id": "neg-gen-kid-5",
+      "ageTarget": "6-10",
+      "scenario": "Con muốn thức khuya xem phim hoạt hình.",
+      "aiPersonality": "Mẹ Nghiêm Khắc",
+      "visual": "📺",
+      "targetOutcome": "Thỏa thuận xem 1 tập rồi ngủ",
+      "winWinCriteria": "Mẹ không lo con thức quá khuya, con vẫn được xem.",
+      "sampleRequest": "Mẹ ác quá! Con muốn xem hết!",
+      "sampleWinWin": "Mẹ cho con xem đúng 1 tập (20 phút) rồi con tự tắt TV nha? Con hứa sáng mai dậy đúng giờ."
+    },
+    {
+      "id": "neg-gen-kid-6",
+      "ageTarget": "6-10",
+      "scenario": "Con muốn mua đồ chơi nhưng tiết kiệm chưa đủ.",
+      "aiPersonality": "Ba Dạy Tài Chính",
+      "visual": "💰",
+      "targetOutcome": "Lập kế hoạch tiết kiệm",
+      "winWinCriteria": "Ba ủng hộ, con học được kiên nhẫn.",
+      "sampleRequest": "Ba mua cho con đi! Con muốn ngay!",
+      "sampleWinWin": "Ba ơi con thiếu 50k nữa. Con sẽ tiết kiệm mỗi tuần 10k. 5 tuần nữa con mua được. Ba giữ tiền cho con nhé?"
+    },
+    {
+      "id": "neg-gen-kid-7",
+      "ageTarget": "6-10",
+      "scenario": "Hai chị em tranh TV, mỗi người muốn xem kênh khác.",
+      "aiPersonality": "Chị Gái",
+      "visual": "📺",
+      "targetOutcome": "Chia sẻ thời gian",
+      "winWinCriteria": "Cả hai đều được xem chương trình mình thích.",
+      "sampleRequest": "Em xem trước! Đưa điều khiển đây!",
+      "sampleWinWin": "Chị ơi mình chia nhé: chị xem 30 phút rồi đổi em 30 phút. Ai đi trước đi sau đoán số chẵn lẻ nha?"
+    },
+    {
+      "id": "neg-gen-kid-8",
+      "ageTarget": "6-10",
+      "scenario": "Con muốn đi công viên nhưng mẹ bảo phải làm bài xong.",
+      "aiPersonality": "Mẹ Coi Trọng Học",
+      "visual": "🏞️",
+      "targetOutcome": "Hoàn thành bài rồi đi chơi",
+      "winWinCriteria": "Mẹ yên tâm về bài vở, con được đi chơi.",
+      "sampleRequest": "Con ghét học! Đi chơi thôi!",
+      "sampleWinWin": "Mẹ cho con 45 phút làm xong bài Toán. Xong rồi mình đi công viên 1 tiếng nha mẹ?"
+    },
+    {
+      "id": "neg-gen-kid-9",
+      "ageTarget": "6-10",
+      "scenario": "Con muốn ăn pizza nhưng mẹ nấu cơm rồi.",
+      "aiPersonality": "Mẹ Đã Nấu Cơm",
+      "visual": "🍕",
+      "targetOutcome": "Ăn cơm hôm nay, pizza cuối tuần",
+      "winWinCriteria": "Mẹ không phí công nấu, con có pizza cuối tuần.",
+      "sampleRequest": "Con không ăn cơm! Pizza pizza!",
+      "sampleWinWin": "Mẹ nấu cơm ngon rồi con ăn hôm nay. Cuối tuần mình đặt pizza thưởng cho cả nhà nha mẹ?"
+    },
+    {
+      "id": "neg-gen-kid-10",
+      "ageTarget": "6-10",
+      "scenario": "Bạn muốn con cho chép bài kiểm tra.",
+      "aiPersonality": "Bạn Lười Học",
+      "visual": "📝",
+      "targetOutcome": "Từ chối nhẹ nhàng và đề nghị giúp ôn",
+      "winWinCriteria": "Bạn không giận, con giữ được sự công bằng.",
+      "sampleRequest": "Được thôi, chép đi (đưa bài).",
+      "sampleWinWin": "Mình không cho chép được vì cô phát hiện là cả hai bị phạt. Nhưng chiều nay mình ôn bài cùng nhau nhé?"
+    },
+    {
+      "id": "neg-gen-adv-1",
+      "ageTarget": "11+",
+      "scenario": "Thỏa thuận lương với nhà tuyển dụng.",
+      "aiPersonality": "HR Director",
+      "visual": "💼",
+      "targetOutcome": "Lương cao hơn offer 15%",
+      "winWinCriteria": "Cả hai đều hài lòng với gói bồi thường.",
+      "sampleRequest": "Offer này quá thấp, tôi từ chối!",
+      "sampleWinWin": "Tôi rất hứng thú với vị trí. Dựa trên kinh nghiệm và benchmark thị trường, mức X sẽ phù hợp hơn. Bạn nghĩ sao?"
+    },
+    {
+      "id": "neg-gen-adv-2",
+      "ageTarget": "11+",
+      "scenario": "Mua xe secondhand, người bán hét giá cao.",
+      "aiPersonality": "Người Bán Xe Cũ",
+      "visual": "🚗",
+      "targetOutcome": "Giảm 20% giá niêm yết",
+      "winWinCriteria": "Chốt giá hợp lý cho cả hai bên.",
+      "sampleRequest": "Giá này điên rồ, tôi đi chỗ khác!",
+      "sampleWinWin": "Tôi thấy xe tương tự trên chợ tốt giá X. Nếu bạn chốt ở mức Y, tôi thanh toán tiền mặt ngay hôm nay."
+    },
+    {
+      "id": "neg-gen-adv-3",
+      "ageTarget": "11+",
+      "scenario": "Chia công việc nhóm không đều.",
+      "aiPersonality": "Bạn Nhóm Ỷ Lại",
+      "visual": "👥",
+      "targetOutcome": "Phân chia công bằng",
+      "winWinCriteria": "Mọi người đều đóng góp, sản phẩm tốt hơn.",
+      "sampleRequest": "Tao làm hết mày ngồi chơi à? Báo thầy!",
+      "sampleWinWin": "Mình chia công việc ra thành 4 phần, mỗi người chọn 1 phần mình giỏi nhé. Ai cũng có deadline chung."
+    },
+    {
+      "id": "neg-gen-adv-4",
+      "ageTarget": "11+",
+      "scenario": "Thuê nhà, chủ nhà tăng giá 30%.",
+      "aiPersonality": "Landlord Tham",
+      "visual": "🏠",
+      "targetOutcome": "Giữ giá hoặc tăng <10%",
+      "winWinCriteria": "Chủ nhà giữ tenant tốt, bạn tiết kiệm.",
+      "sampleRequest": "Giá này vô lý! Tôi dọn ngay!",
+      "sampleWinWin": "Tôi đã ở đây 3 năm, luôn trả đúng hạn. Tăng 30% vượt xa thị trường. Mức 5-8% phù hợp hơn. Tôi sẵn sàng ký dài hạn 2 năm."
+    },
+    {
+      "id": "neg-gen-adv-5",
+      "ageTarget": "11+",
+      "scenario": "Trả lại sản phẩm lỗi, cửa hàng từ chối.",
+      "aiPersonality": "Quản Lý Cửa Hàng",
+      "visual": "🛍️",
+      "targetOutcome": "Đổi hoặc hoàn tiền",
+      "winWinCriteria": "Bạn được công bằng, cửa hàng giữ uy tín.",
+      "sampleRequest": "Tôi sẽ đăng lên Facebook tố cáo!",
+      "sampleWinWin": "Theo luật bảo vệ người tiêu dùng, sản phẩm lỗi được đổi trong 7 ngày. Đây là hóa đơn. Tôi muốn đổi sản phẩm mới."
+    }
+  ],
+  "policy": [
+    {
+      "id": "pol-gen-kid-1",
+      "ageTarget": "6-10",
+      "situation": "Trong lớp chỉ có 2 máy tính nhưng 10 bạn muốn dùng.",
+      "visual": "💻",
+      "options": [
+        {
+          "text": "Lập bảng đăng ký luân phiên 15 phút/bạn",
+          "consequence": "Mọi người đều có lượt, rất công bằng.",
+          "fairnessScore": 95,
+          "happinessScore": 85
+        },
+        {
+          "text": "Ai chạy nhanh tới trước thì được dùng",
+          "consequence": "Bạn chậm chân bị thiệt, không công bằng.",
+          "fairnessScore": 15,
+          "happinessScore": 30
+        },
+        {
+          "text": "Cô giáo chọn 2 bạn giỏi nhất xài cả ngày",
+          "consequence": "Có vẻ tuyên dương nhưng 8 bạn khác buồn.",
+          "fairnessScore": 30,
+          "happinessScore": 25
+        }
+      ]
+    },
+    {
+      "id": "pol-gen-kid-2",
+      "ageTarget": "6-10",
+      "situation": "Bạn mới chuyển trường đến, không ai chơi cùng.",
+      "visual": "🧒",
+      "options": [
+        {
+          "text": "Rủ bạn mới vào nhóm chơi của mình",
+          "consequence": "Bạn mới vui vẻ hòa nhập, mình có thêm bạn.",
+          "fairnessScore": 90,
+          "happinessScore": 95
+        },
+        {
+          "text": "Mặc kệ, ai quen thì chơi",
+          "consequence": "Bạn mới cô đơn, có thể bị bắt nạt.",
+          "fairnessScore": 20,
+          "happinessScore": 20
+        },
+        {
+          "text": "Chờ bạn mới tự hòa nhập",
+          "consequence": "Mất thời gian, bạn mới lo lắng.",
+          "fairnessScore": 50,
+          "happinessScore": 40
+        }
+      ]
+    },
+    {
+      "id": "pol-gen-kid-3",
+      "ageTarget": "6-10",
+      "situation": "Lớp bầu lớp trưởng, 2 bạn gần nhau phiếu bầu.",
+      "visual": "🗳️",
+      "options": [
+        {
+          "text": "Bầu lại công khai, mỗi người 1 phiếu kín",
+          "consequence": "Kết quả dân chủ, ai cũng chấp nhận.",
+          "fairnessScore": 100,
+          "happinessScore": 80
+        },
+        {
+          "text": "Cô giáo tự chọn luôn",
+          "consequence": "Nhanh nhưng các bạn không phục.",
+          "fairnessScore": 40,
+          "happinessScore": 30
+        },
+        {
+          "text": "Hai bạn oẳn tù tì quyết định",
+          "consequence": "Vui nhưng lãnh đạo nên được chọn bằng năng lực.",
+          "fairnessScore": 50,
+          "happinessScore": 60
+        }
+      ]
+    },
+    {
+      "id": "pol-gen-kid-4",
+      "ageTarget": "6-10",
+      "situation": "Sân bóng nhỏ, đội lớn chiếm hết không cho đội nhỏ chơi.",
+      "visual": "⚽",
+      "options": [
+        {
+          "text": "Chia giờ: đội lớn 30 phút, đội nhỏ 30 phút",
+          "consequence": "Công bằng cho cả hai đội.",
+          "fairnessScore": 90,
+          "happinessScore": 85
+        },
+        {
+          "text": "Đội nào to hơn thì chơi trước",
+          "consequence": "Bắt nạt kẻ yếu, không công bằng.",
+          "fairnessScore": 10,
+          "happinessScore": 15
+        },
+        {
+          "text": "Gộp thành 1 đội chung chơi chung",
+          "consequence": "Vui nhưng đội nhỏ yếu hơn sẽ không hòa nhập.",
+          "fairnessScore": 60,
+          "happinessScore": 50
+        }
+      ]
+    },
+    {
+      "id": "pol-gen-kid-5",
+      "ageTarget": "6-10",
+      "situation": "Căn tin hết suất cơm, 5 bạn cuối hàng không được ăn.",
+      "visual": "🍽️",
+      "options": [
+        {
+          "text": "Chia sẻ: mỗi bạn có suất bớt lại 1 phần cho bạn thiếu",
+          "consequence": "Mọi người đều ăn no, tình bạn gắn bó.",
+          "fairnessScore": 85,
+          "happinessScore": 75
+        },
+        {
+          "text": "Ai xui thì nhịn, lần sau tới sớm",
+          "consequence": "Bạn đói buồn, mất tinh thần học.",
+          "fairnessScore": 20,
+          "happinessScore": 10
+        },
+        {
+          "text": "Gọi ngoài canteen mua thêm cơm",
+          "consequence": "Tốn tiền thêm nhưng giải quyết được.",
+          "fairnessScore": 70,
+          "happinessScore": 70
+        }
+      ]
+    },
+    {
+      "id": "pol-gen-kid-6",
+      "ageTarget": "6-10",
+      "situation": "Nhóm trưởng giao hết việc khó cho 1 bạn.",
+      "visual": "📋",
+      "options": [
+        {
+          "text": "Chia việc đều theo khả năng mỗi người",
+          "consequence": "Mọi người cùng học, sản phẩm tốt hơn.",
+          "fairnessScore": 95,
+          "happinessScore": 85
+        },
+        {
+          "text": "Ai giỏi nhất thì làm việc khó",
+          "consequence": "Bạn giỏi quá tải, bạn yếu không được học.",
+          "fairnessScore": 40,
+          "happinessScore": 30
+        },
+        {
+          "text": "Rút thăm ngẫu nhiên",
+          "consequence": "Công bằng cơ hội nhưng có thể không hiệu quả.",
+          "fairnessScore": 70,
+          "happinessScore": 55
+        }
+      ]
+    },
+    {
+      "id": "pol-gen-kid-7",
+      "ageTarget": "6-10",
+      "situation": "Hộp bút màu dùng chung bị gãy mất 3 cây.",
+      "visual": "🖍️",
+      "options": [
+        {
+          "text": "Cả lớp góp tiền mua bộ mới",
+          "consequence": "Công bằng chia sẻ, ai cũng dùng được.",
+          "fairnessScore": 85,
+          "happinessScore": 80
+        },
+        {
+          "text": "Tìm bạn làm gãy bắt đền",
+          "consequence": "Có thể đúng thủ phạm nhưng gây mâu thuẫn.",
+          "fairnessScore": 50,
+          "happinessScore": 40
+        },
+        {
+          "text": "Dùng bút còn lại, kệ đi",
+          "consequence": "Thiếu màu ảnh hưởng bài vẽ.",
+          "fairnessScore": 40,
+          "happinessScore": 30
+        }
+      ]
+    },
+    {
+      "id": "pol-gen-kid-8",
+      "ageTarget": "6-10",
+      "situation": "Con mèo hoang đói nằm trước cổng trường.",
+      "visual": "🐱",
+      "options": [
+        {
+          "text": "Các bạn góp đồ ăn thừa cho mèo",
+          "consequence": "Mèo được ăn, các bạn học lòng thương.",
+          "fairnessScore": 85,
+          "happinessScore": 90
+        },
+        {
+          "text": "Đuổi mèo đi cho sạch cổng trường",
+          "consequence": "Mèo đói thêm, thiếu lòng trắc ẩn.",
+          "fairnessScore": 20,
+          "happinessScore": 15
+        },
+        {
+          "text": "Gọi cơ sở cứu hộ đến",
+          "consequence": "Giải pháp chuyên nghiệp nhưng mất thời gian.",
+          "fairnessScore": 75,
+          "happinessScore": 70
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "total": 178,
+    "generated": "2026-04-27T04:25:00.618Z"
+  }
+}
