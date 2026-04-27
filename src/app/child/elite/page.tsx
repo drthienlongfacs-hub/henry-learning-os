@@ -48,6 +48,10 @@ export default function EliteDashboardPage() {
     const [cocAnswer, setCocAnswer] = useState<'controllable' | 'uncontrollable' | null>(null);
     const [cocScore, setCocScore] = useState(0);
 
+    const [negIndex, setNegIndex] = useState(0);
+    const [negAnswer, setNegAnswer] = useState<'win' | 'lose' | null>(null);
+    const [negScore, setNegScore] = useState(0);
+
     const metrics = childProfile?.eliteMetrics ?? {
         bilingual_agility: 0, stochastic_intuition: 0, systemic_reasoning: 0,
         investor_quotient: 50, empathy_persuasion: 0, stoic_resilience: 50,
@@ -207,94 +211,145 @@ export default function EliteDashboardPage() {
                 )}
 
                 {/* CIVICS */}
-                {activeTab === 'civics' && (
-                    <div className="card animate-fade-in">
-                        <h2 style={{ fontWeight: 700, marginBottom: '0.5rem' }}>{t('civ_title')}</h2>
-                        <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', marginBottom: '1rem' }}>
-                            {t('civ_scenario')} {policyIndex + 1} / {POLICY_SCENARIOS.length}
+                {activeTab === 'civics' && policyIndex < POLICY_SCENARIOS.length && (
+                    <div className="card animate-fade-in" style={{ background: '#18181b', border: '1px solid #27272a', borderRadius: '8px' }}>
+                        <h2 style={{ fontWeight: 700, marginBottom: '0.5rem', color: '#10b981', fontFamily: 'monospace' }}>🟢 TÌNH HUỐNG CHÍNH SÁCH [PHÂN TÍCH VĨ MÔ]</h2>
+                        <p style={{ color: '#a1a1aa', fontSize: '0.85rem', marginBottom: '1rem', fontFamily: 'monospace' }}>
+                            DỮ LIỆU {policyIndex + 1} / {POLICY_SCENARIOS.length}
                         </p>
-                        <div style={{ textAlign: 'center', fontSize: '2.5rem', marginBottom: '0.5rem' }}>{POLICY_SCENARIOS[policyIndex].visual}</div>
-                        <p style={{ fontWeight: 600, marginBottom: '1rem' }}>{POLICY_SCENARIOS[policyIndex].situation}</p>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <div style={{ textAlign: 'center', fontSize: '3rem', marginBottom: '0.5rem' }}>{POLICY_SCENARIOS[policyIndex].visual}</div>
+                        <p style={{ fontWeight: 600, marginBottom: '1rem', fontSize: '1.2rem', textAlign: 'center' }}>{POLICY_SCENARIOS[policyIndex].situation}</p>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                             {POLICY_SCENARIOS[policyIndex].options.map((opt, idx) => (
-                                <button key={idx} onClick={() => setPolicyChoice(idx)} className="card" style={{ textAlign: 'left', cursor: 'pointer', border: policyChoice === idx ? '2px solid var(--color-primary)' : '2px solid var(--color-border-light)', background: policyChoice === idx ? 'rgba(99,102,241,0.05)' : 'white' }}>
-                                    <div style={{ fontWeight: 600, marginBottom: '0.25rem' }}>{opt.text}</div>
+                                <button key={idx} onClick={() => setPolicyChoice(idx)} className="card" style={{ textAlign: 'left', cursor: 'pointer', border: policyChoice === idx ? '2px solid #10b981' : '1px solid #3f3f46', background: policyChoice === idx ? 'rgba(16,185,129,0.1)' : '#27272a', padding: '1rem' }}>
+                                    <div style={{ fontWeight: 600, marginBottom: '0.25rem', color: '#e4e4e7', fontFamily: 'monospace' }}>{opt.text}</div>
                                     {policyChoice === idx && (
-                                        <div style={{ marginTop: '0.5rem' }}>
-                                            <p style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', marginBottom: '0.5rem' }}>{opt.consequence}</p>
-                                            <div style={{ display: 'flex', gap: '1rem', fontSize: '0.8rem' }}>
-                                                <span>{t('civ_fairness')}: <strong style={{ color: opt.fairnessScore > 60 ? '#10b981' : '#ef4444' }}>{opt.fairnessScore}%</strong></span>
-                                                <span>{t('civ_happiness')}: <strong style={{ color: opt.happinessScore > 60 ? '#10b981' : '#ef4444' }}>{opt.happinessScore}%</strong></span>
+                                        <div style={{ marginTop: '0.75rem', padding: '0.5rem', background: '#064e3b', borderRadius: '6px' }}>
+                                            <p style={{ fontSize: '0.9rem', color: '#a7f3d0', marginBottom: '0.5rem', fontWeight: 600 }}>{opt.consequence}</p>
+                                            <div style={{ display: 'flex', gap: '1rem', fontSize: '0.85rem' }}>
+                                                <span style={{ color: '#fff' }}>CÔNG BẰNG: <strong style={{ color: opt.fairnessScore > 60 ? '#34d399' : '#f87171' }}>{opt.fairnessScore}%</strong></span>
+                                                <span style={{ color: '#fff' }}>HẠNH PHÚC: <strong style={{ color: opt.happinessScore > 60 ? '#34d399' : '#f87171' }}>{opt.happinessScore}%</strong></span>
                                             </div>
                                         </div>
                                     )}
                                 </button>
                             ))}
                         </div>
-                        {policyChoice !== null && policyIndex < POLICY_SCENARIOS.length - 1 && (
-                            <button className="btn btn-primary" style={{ marginTop: '1rem' }} onClick={() => { setPolicyChoice(null); setPolicyIndex((i) => i + 1); }}>{t('next')}</button>
+                        {policyChoice !== null && (
+                            <button className="btn" style={{ marginTop: '1rem', background: '#10b981', color: '#000', border: 'none', fontFamily: 'monospace', fontWeight: 700 }} onClick={() => { setPolicyChoice(null); setPolicyIndex((i) => i + 1); }}>{t('next').toUpperCase()} LỆNH</button>
                         )}
+                    </div>
+                )}
+                {activeTab === 'civics' && policyIndex >= POLICY_SCENARIOS.length && (
+                    <div className="card animate-fade-in" style={{ textAlign: 'center', background: '#18181b', border: '1px solid #27272a' }}>
+                        <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>⚖️</div>
+                        <h2 style={{ fontWeight: 700, color: '#10b981', fontFamily: 'monospace' }}>VĨ MÔ HOÀN TẤT</h2>
+                        <button className="btn" style={{ marginTop: '1rem', background: '#3f3f46', color: '#fff', fontFamily: 'monospace' }} onClick={() => { setPolicyIndex(0); setPolicyChoice(null); }}>[RE-SCAN] QUÉT LẠI CỨ ĐIỂM</button>
                     </div>
                 )}
 
                 {/* ETHICS */}
                 {activeTab === 'ethics' && cocIndex < CIRCLE_OF_CONTROL.length && (
-                    <div className="card animate-fade-in">
-                        <h2 style={{ fontWeight: 700, marginBottom: '0.5rem' }}>{t('eth_title')}</h2>
-                        <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', marginBottom: '1rem' }}>
-                            {t('q_label')} {cocIndex + 1} / {CIRCLE_OF_CONTROL.length} — {t('score_label')}: {cocScore}
+                    <div className="card animate-fade-in" style={{ background: '#18181b', border: '1px solid #27272a', borderRadius: '8px' }}>
+                        <h2 style={{ fontWeight: 700, marginBottom: '0.5rem', color: '#a78bfa', fontFamily: 'monospace' }}>🟣 {t('eth_title').toUpperCase()} [STOICISM]</h2>
+                        <p style={{ color: '#a1a1aa', fontSize: '0.85rem', marginBottom: '1rem', fontFamily: 'monospace' }}>
+                            DỮ LIỆU {cocIndex + 1} / {CIRCLE_OF_CONTROL.length} — CẤP BẬC: {cocScore}
                         </p>
-                        <div style={{ textAlign: 'center', fontSize: '3rem', marginBottom: '0.5rem' }}>{CIRCLE_OF_CONTROL[cocIndex].visual}</div>
-                        <p style={{ fontWeight: 600, textAlign: 'center', marginBottom: '1rem' }}>{CIRCLE_OF_CONTROL[cocIndex].situation}</p>
+                        <div style={{ textAlign: 'center', fontSize: '4rem', marginBottom: '0.5rem' }}>{CIRCLE_OF_CONTROL[cocIndex].visual}</div>
+                        <p style={{ fontWeight: 600, textAlign: 'center', marginBottom: '1.5rem', fontSize: '1.2rem' }}>{CIRCLE_OF_CONTROL[cocIndex].situation}</p>
                         <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
                             {(['controllable', 'uncontrollable'] as const).map((opt) => {
                                 const isCorrect = cocAnswer && opt === CIRCLE_OF_CONTROL[cocIndex].correctCategory;
                                 const isWrong = cocAnswer === opt && opt !== CIRCLE_OF_CONTROL[cocIndex].correctCategory;
                                 return (
                                     <button key={opt} onClick={() => { if (cocAnswer) return; setCocAnswer(opt); if (opt === CIRCLE_OF_CONTROL[cocIndex].correctCategory) setCocScore((s) => s + 16); }}
-                                        className="btn" style={{ flex: 1, padding: '1rem', fontSize: '0.95rem', fontWeight: 700, background: isCorrect ? '#d1fae5' : isWrong ? '#fee2e2' : opt === 'controllable' ? '#dbeafe' : '#fef3c7', border: isCorrect ? '2px solid #10b981' : isWrong ? '2px solid #ef4444' : '2px solid transparent' }}>
-                                        {opt === 'controllable' ? t('eth_ctrl') : t('eth_no_ctrl')}
+                                        className="btn" style={{ flex: 1, padding: '1rem', fontSize: '1rem', fontWeight: 700, fontFamily: 'monospace', textTransform: 'uppercase', background: isCorrect ? 'rgba(16,185,129,0.2)' : isWrong ? 'rgba(239,68,68,0.2)' : '#27272a', border: isCorrect ? '1px solid #10b981' : isWrong ? '1px solid #ef4444' : '1px solid #3f3f46', color: '#e4e4e7' }}>
+                                        {opt === 'controllable' ? 'VÙNG KIỂM SOÁT' : 'NGOÀI KIỂM SOÁT'}
                                     </button>
                                 );
                             })}
                         </div>
                         {cocAnswer && (
-                            <div style={{ marginTop: '1rem', padding: '1rem', background: '#eef2ff', borderRadius: '12px' }}>
-                                <p style={{ fontWeight: 600 }}>{cocAnswer === CIRCLE_OF_CONTROL[cocIndex].correctCategory ? t('correct') : t('wrong')}</p>
-                                <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)' }}>{CIRCLE_OF_CONTROL[cocIndex].explanation}</p>
-                                <button className="btn btn-primary" style={{ marginTop: '0.75rem' }} onClick={() => { setCocAnswer(null); setCocIndex((i) => i + 1); }}>{t('next')}</button>
+                            <div style={{ marginTop: '1.5rem', padding: '1rem', background: '#312e81', borderRadius: '8px', borderLeft: '4px solid #818cf8' }}>
+                                <p style={{ fontWeight: 600, color: '#c7d2fe', fontFamily: 'monospace', marginBottom: '0.5rem' }}>[STOIC] {cocAnswer === CIRCLE_OF_CONTROL[cocIndex].correctCategory ? 'GIÁC NGỘ CHUẨN MỰC' : 'NHẬN THỨC SAI LỆCH'}</p>
+                                <p style={{ fontSize: '0.95rem', color: '#e0e7ff' }}>{CIRCLE_OF_CONTROL[cocIndex].explanation}</p>
+                                <button className="btn" style={{ marginTop: '1rem', background: '#818cf8', color: '#000', border: 'none', fontFamily: 'monospace', fontWeight: 700 }} onClick={() => { setCocAnswer(null); setCocIndex((i) => i + 1); }}>{t('next').toUpperCase()} LỆNH</button>
                             </div>
                         )}
                     </div>
                 )}
                 {activeTab === 'ethics' && cocIndex >= CIRCLE_OF_CONTROL.length && (
-                    <div className="card animate-fade-in" style={{ textAlign: 'center' }}>
+                    <div className="card animate-fade-in" style={{ textAlign: 'center', background: '#18181b', border: '1px solid #27272a' }}>
                         <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>🛡️</div>
-                        <h2 style={{ fontWeight: 700 }}>{t('done')} {t('score_label')}: {cocScore}/{CIRCLE_OF_CONTROL.length * 16}</h2>
-                        <button className="btn btn-primary" style={{ marginTop: '1rem' }} onClick={() => { setCocIndex(0); setCocScore(0); setCocAnswer(null); }}>{t('eth_retry')}</button>
+                        <h2 style={{ fontWeight: 700, color: '#a78bfa', fontFamily: 'monospace' }}>ĐẠO ĐỨC HOÀN TẤT. {t('score_label')}: {cocScore}/{CIRCLE_OF_CONTROL.length * 16}</h2>
+                        <button className="btn" style={{ marginTop: '1rem', background: '#3f3f46', color: '#fff', fontFamily: 'monospace' }} onClick={() => { setCocIndex(0); setCocScore(0); setCocAnswer(null); }}>[RE-SCAN] QUÉT LẠI CỨ ĐIỂM</button>
                     </div>
                 )}
 
                 {/* NEGOTIATION */}
-                {activeTab === 'negotiation' && (
-                    <div className="card animate-fade-in">
-                        <h2 style={{ fontWeight: 700, marginBottom: '0.5rem' }}>{t('neg_title')}</h2>
-                        <div style={{ textAlign: 'center', fontSize: '2.5rem', marginBottom: '0.5rem' }}>{NEGOTIATION_CHALLENGES[0].visual}</div>
-                        <div style={{ padding: '1rem', background: '#fef3c7', borderRadius: '12px', marginBottom: '1rem' }}>
-                            <p style={{ fontWeight: 600 }}>{NEGOTIATION_CHALLENGES[0].scenario}</p>
-                            <p style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', marginTop: '0.5rem' }}>AI: {NEGOTIATION_CHALLENGES[0].aiPersonality}</p>
+                {activeTab === 'negotiation' && negIndex < NEGOTIATION_CHALLENGES.length && (
+                    <div className="card animate-fade-in" style={{ background: '#18181b', border: '1px solid #27272a', borderRadius: '8px' }}>
+                        <h2 style={{ fontWeight: 700, marginBottom: '0.5rem', color: '#f87171', fontFamily: 'monospace' }}>🔴 THƯƠNG LƯỢNG [HARVARD NEGOTIATION]</h2>
+                        <p style={{ color: '#a1a1aa', fontSize: '0.85rem', marginBottom: '1rem', fontFamily: 'monospace' }}>
+                            DỮ LIỆU {negIndex + 1} / {NEGOTIATION_CHALLENGES.length} — CẤP BẬC: {negScore}
+                        </p>
+                        <div style={{ textAlign: 'center', fontSize: '4rem', marginBottom: '1rem' }}>{NEGOTIATION_CHALLENGES[negIndex].visual}</div>
+
+                        <div style={{ padding: '1rem', background: '#450a0a', borderRadius: '8px', borderLeft: '4px solid #f87171', marginBottom: '1.5rem' }}>
+                            <p style={{ fontWeight: 600, color: '#fecaca', fontSize: '1.1rem', marginBottom: '0.5rem' }}>{NEGOTIATION_CHALLENGES[negIndex].scenario}</p>
+                            <p style={{ fontSize: '0.85rem', color: '#fca5a5', fontFamily: 'monospace' }}>ĐỐI THỦ: {NEGOTIATION_CHALLENGES[negIndex].aiPersonality}</p>
+                            <p style={{ fontSize: '0.85rem', color: '#fca5a5', fontFamily: 'monospace' }}>MỤC TIÊU: {NEGOTIATION_CHALLENGES[negIndex].targetOutcome}</p>
                         </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                            <div className="card" style={{ background: '#fee2e2', border: '2px solid #fca5a5' }}>
-                                <p style={{ fontSize: '0.8rem', fontWeight: 600, color: '#b91c1c' }}>{t('neg_common')}</p>
-                                <p style={{ fontSize: '0.9rem' }}>{NEGOTIATION_CHALLENGES[0].sampleRequest}</p>
-                            </div>
-                            <div className="card" style={{ background: '#d1fae5', border: '2px solid #6ee7b7' }}>
-                                <p style={{ fontSize: '0.8rem', fontWeight: 600, color: '#065f46' }}>{t('neg_winwin')}</p>
-                                <p style={{ fontSize: '0.9rem' }}>{NEGOTIATION_CHALLENGES[0].sampleWinWin}</p>
-                            </div>
+
+                        <p style={{ fontWeight: 600, marginBottom: '0.75rem', fontFamily: 'monospace', color: '#a1a1aa', textAlign: 'center' }}>CHỌN CHIẾN THUẬT PHẢN TỰ</p>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                            {/* Option A: Lose-Lose / Aggressive */}
+                            <button
+                                onClick={() => { if (negAnswer) return; setNegAnswer('lose'); }}
+                                className="card"
+                                style={{
+                                    textAlign: 'left', cursor: negAnswer ? 'default' : 'pointer',
+                                    border: negAnswer === 'lose' ? '2px solid #ef4444' : '1px solid #3f3f46',
+                                    background: negAnswer === 'lose' ? 'rgba(239,68,68,0.1)' : '#27272a',
+                                    padding: '1rem'
+                                }}
+                            >
+                                <p style={{ fontSize: '0.8rem', fontWeight: 600, color: '#f87171', fontFamily: 'monospace', marginBottom: '0.25rem' }}>CHIẾN THUẬT QUYỀN LỰC (ZERO-SUM)</p>
+                                <p style={{ fontSize: '1rem', color: '#e4e4e7' }}>{NEGOTIATION_CHALLENGES[negIndex].sampleRequest}</p>
+                            </button>
+
+                            {/* Option B: Win-Win */}
+                            <button
+                                onClick={() => { if (negAnswer) return; setNegAnswer('win'); setNegScore(s => s + 20); }}
+                                className="card"
+                                style={{
+                                    textAlign: 'left', cursor: negAnswer ? 'default' : 'pointer',
+                                    border: negAnswer === 'win' ? '2px solid #10b981' : '1px solid #3f3f46',
+                                    background: negAnswer === 'win' ? 'rgba(16,185,129,0.1)' : '#27272a',
+                                    padding: '1rem'
+                                }}
+                            >
+                                <p style={{ fontSize: '0.8rem', fontWeight: 600, color: '#34d399', fontFamily: 'monospace', marginBottom: '0.25rem' }}>CHIẾN THUẬT WIN-WIN (HARVARD)</p>
+                                <p style={{ fontSize: '1rem', color: '#e4e4e7' }}>{NEGOTIATION_CHALLENGES[negIndex].sampleWinWin}</p>
+                            </button>
                         </div>
-                        <p style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', marginTop: '1rem', textAlign: 'center' }}>{t('neg_learn')}</p>
+
+                        {negAnswer && (
+                            <div style={{ marginTop: '1.5rem', padding: '1rem', background: '#022c22', borderRadius: '8px', borderLeft: '4px solid #34d399' }}>
+                                <p style={{ fontWeight: 600, color: '#6ee7b7', fontFamily: 'monospace', marginBottom: '0.5rem' }}>
+                                    [NGUYÊN LÝ] {negAnswer === 'win' ? 'THÀNH CÔNG RỰC RỠ' : 'THẤT BẠI CHIẾN DỊCH'}
+                                </p>
+                                <p style={{ fontSize: '0.95rem', color: '#d1fae5' }}>{NEGOTIATION_CHALLENGES[negIndex].winWinCriteria}</p>
+                                <button className="btn" style={{ marginTop: '1rem', background: '#34d399', color: '#000', border: 'none', fontFamily: 'monospace', fontWeight: 700 }} onClick={() => { setNegAnswer(null); setNegIndex((i) => i + 1); }}>{t('next').toUpperCase()} LỆNH</button>
+                            </div>
+                        )}
+                    </div>
+                )}
+                {activeTab === 'negotiation' && negIndex >= NEGOTIATION_CHALLENGES.length && (
+                    <div className="card animate-fade-in" style={{ textAlign: 'center', background: '#18181b', border: '1px solid #27272a' }}>
+                        <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>🤝</div>
+                        <h2 style={{ fontWeight: 700, color: '#f87171', fontFamily: 'monospace' }}>THƯƠNG LƯỢNG KẾT THÚC. {t('score_label')}: {negScore}/{NEGOTIATION_CHALLENGES.length * 20}</h2>
+                        <button className="btn" style={{ marginTop: '1rem', background: '#3f3f46', color: '#fff', fontFamily: 'monospace' }} onClick={() => { setNegIndex(0); setNegScore(0); setNegAnswer(null); }}>[RE-SCAN] QUÉT LẠI CỨ ĐIỂM</button>
                     </div>
                 )}
             </div>
