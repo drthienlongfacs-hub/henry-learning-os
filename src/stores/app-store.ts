@@ -222,6 +222,9 @@ export const useAppStore = create<AppState>()(
         }),
         {
             name: 'henry-learning-os-store',
+            partialize: (state) => Object.fromEntries(
+                Object.entries(state).filter(([key]) => !['lessons', 'competencies', 'parentMissions'].includes(key))
+            ),
         }
     )
 );
