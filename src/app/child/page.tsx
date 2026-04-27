@@ -91,6 +91,28 @@ export default function ChildDashboard() {
                     </div>
                 </Link>
 
+                {/* Curriculum Navigator - Full CT 2018 */}
+                <Link href="/child/learn" style={{ textDecoration: 'none', display: 'block', marginBottom: '1rem' }}>
+                    <div className="card card-interactive animate-fade-in" style={{
+                        background: 'linear-gradient(135deg, #3b82f622, #10b98122)',
+                        border: '2px solid #3b82f644',
+                        display: 'flex', alignItems: 'center', gap: '1rem',
+                    }}>
+                        <div style={{
+                            width: '48px', height: '48px', borderRadius: 'var(--radius-md)',
+                            background: 'linear-gradient(135deg, #3b82f6, #10b981)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        }}>
+                            <BookOpen size={24} color="white" />
+                        </div>
+                        <div style={{ flex: 1 }}>
+                            <div style={{ fontWeight: 700, fontSize: '1rem' }}>Chương trình học</div>
+                            <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.8rem' }}>Toán • Tiếng Việt • Tiếng Anh • Khoa học — Lớp 1-5</div>
+                        </div>
+                        <div style={{ fontWeight: 700, color: '#3b82f6', fontSize: '1.5rem' }}>→</div>
+                    </div>
+                </Link>
+
                 {/* New modules: Discover + Vocab */}
                 <div className="animate-fade-in" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '2rem' }}>
                     <Link href="/child/discover" style={{ textDecoration: 'none' }}>
