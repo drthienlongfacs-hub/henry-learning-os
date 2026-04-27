@@ -16,6 +16,9 @@ type Subject = 'math' | 'vietnamese' | 'english' | 'science' | 'hisgeo' | 'compu
 type Problem = MathProblem | VietnameseProblem | EnglishProblem | ScienceProblem | HisGeoProblem | ComputingProblem;
 type AnyTopicInfo = TopicInfo | VnTopicInfo | EnTopicInfo | SciTopicInfo | HisGeoTopicInfo | CompTopicInfo;
 
+// Augment problem types to support illustration
+type ProblemWithViz = Problem & { illustration?: React.ReactNode | string };
+
 const SUBJECTS: { key: Subject; name: string; icon: React.ReactNode; color: string; grades: number[] }[] = [
     { key: 'math', name: 'Toán', icon: <Calculator size={28} />, color: '#3b82f6', grades: [1, 2, 3, 4, 5] },
     { key: 'vietnamese', name: 'Tiếng Việt', icon: <BookOpen size={28} />, color: '#8b5cf6', grades: [1, 2, 3, 4, 5] },
@@ -101,7 +104,7 @@ export default function LearnPage() {
         startTime.current = Date.now();
     };
 
-    const currentProblem = problems[index];
+    const currentProblem = problems[index] as ProblemWithViz;
     const topics = subject === 'math' ? MATH_TOPICS.filter(t => t.gradeLevel === grade)
         : subject === 'vietnamese' ? VIETNAMESE_TOPICS.filter(t => t.gradeLevel <= grade)
             : subject === 'english' ? ENGLISH_TOPICS.filter(t => t.gradeLevel <= grade)
@@ -213,6 +216,17 @@ export default function LearnPage() {
                         {'passage' in currentProblem && (currentProblem as VietnameseProblem).passage && (
                             <div style={{ background: 'rgba(139,92,246,0.08)', borderRadius: 12, padding: 16, marginBottom: 16, fontSize: 14, lineHeight: 1.8, whiteSpace: 'pre-line' }}>
                                 {(currentProblem as VietnameseProblem).passage}
+                            </div>
+                        )}
+
+                        {/* Illustration */}
+                        {currentProblem.illustration && (
+                            <div style={{ marginBottom: 20, display: 'flex', justifyContent: 'center' }}>
+                                {typeof currentProblem.illustration === 'string' ? (
+                                    <img src={currentProblem.illustration} alt="Illustration" style={{ maxHeight: 180, borderRadius: 12, border: '1px solid #e2e8f0', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }} />
+                                ) : (
+                                    currentProblem.illustration
+                                )}
                             </div>
                         )}
 

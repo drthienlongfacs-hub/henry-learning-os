@@ -16,6 +16,7 @@ export interface EnglishProblem {
     topic: string;
     topicKey: string;
     passage?: string;
+    illustration?: any;
 }
 
 const rand = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
@@ -52,9 +53,15 @@ const VOCAB_BANKS = [
     },
     {
         theme: 'Animals', pairs: [
-            { en: 'dog', vi: 'chó' }, { en: 'cat', vi: 'mèo' }, { en: 'bird', vi: 'chim' },
-            { en: 'fish', vi: 'cá' }, { en: 'elephant', vi: 'voi' }, { en: 'monkey', vi: 'khỉ' },
-            { en: 'rabbit', vi: 'thỏ' }, { en: 'tiger', vi: 'hổ' }, { en: 'dolphin', vi: 'cá heo' },
+            { en: 'dog', vi: 'chó', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Collage_of_Nine_Dogs.jpg/800px-Collage_of_Nine_Dogs.jpg' },
+            { en: 'cat', vi: 'mèo', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Cat_poster_1.jpg/800px-Cat_poster_1.jpg' },
+            { en: 'bird', vi: 'chim' },
+            { en: 'fish', vi: 'cá' },
+            { en: 'elephant', vi: 'voi', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/African_Bush_Elephant.jpg/800px-African_Bush_Elephant.jpg' },
+            { en: 'monkey', vi: 'khỉ' },
+            { en: 'rabbit', vi: 'thỏ', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Oryctolagus_cuniculus_Tasmania_2.jpg/800px-Oryctolagus_cuniculus_Tasmania_2.jpg' },
+            { en: 'tiger', vi: 'hổ', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Walking_tiger_female.jpg/800px-Walking_tiger_female.jpg' },
+            { en: 'dolphin', vi: 'cá heo' },
         ]
     },
     {
@@ -103,6 +110,7 @@ export function genVocabEn(): EnglishProblem {
         options: opts,
         explanation: `${pair.en} = ${pair.vi} (Theme: ${bank.theme}).`,
         hints: [`Topic: ${bank.theme}`, `Answer: ${direction ? pair.vi : pair.en}`],
+        illustration: (pair as any).img,
     };
 }
 
