@@ -221,7 +221,7 @@ export const useAppStore = create<AppState>()(
                 })),
         }),
         {
-            name: 'henry-learning-os-store',
+            name: 'henry-os-v2', // bumped version to wipe old cached lessons
             partialize: (state) => Object.fromEntries(
                 Object.entries(state).filter(([key]) => !['lessons', 'competencies', 'parentMissions'].includes(key))
             ),
