@@ -12,6 +12,9 @@ import type { Exercise, SessionStep, Attempt, Mistake } from '@/types';
 import { ArrowRight, Lightbulb, Check, X, MessageCircle, ArrowLeft } from 'lucide-react';
 import { emitLearningEvent } from '@/lib/events/learning-events';
 import { BaseDefenseCard } from '@/components/gamification/BaseDefenseCard';
+import { allExercises } from '@/data/seed';
+
+type ExtendedExercise = Exercise & { tags?: string[], competencyId?: string };
 
 function SessionContent() {
     const router = useRouter();
@@ -137,6 +140,29 @@ function SessionContent() {
     };
 
     const nextExercise = () => {
+        if (!isCorrect && !currentEx.tags?.includes('step_back')) {
+            // Adaptive Correction Loop (Step-back)
+            const stepBackEx = allExercises.find(
+                ex => ex.subject === currentEx.subject &&
+                    (ex.difficulty || 2) < (currentEx.difficulty || 2) &&
+                    ex.id !== currentEx.id
+            );
+
+            if (stepBackEx) {
+                // Determine competency intelligently if not present
+                const competencyId = lesson.competencyIds[0] || 'math-01';
+                const clonedStepBack: ExtendedExercise = {
+                    ...stepBackEx,
+                    tags: [...(stepBackEx.tags || []), 'step_back'],
+                    competencyId
+                };
+                // Inject right after the current fail
+                const updatedExercises = [...lesson.exercises];
+                updatedExercises.splice(currentExIdx + 1, 0, clonedStepBack);
+                lesson.exercises = updatedExercises;
+            }
+        }
+
         if (currentExIdx < lesson.exercises.length - 1) {
             setCurrentExIdx(currentExIdx + 1);
             setAnswer(''); setShowResult(false); setHintLevel(0); setShowHint(false); setAiMessage('');

@@ -398,3 +398,12 @@ export const parentMissions: ParentMission[] = [
         completedAt: null,
     },
 ];
+
+export const allExercises: Exercise[] = [
+    ...allMathExercises,
+    ...allVietnameseExercises,
+    ...englishExercises,
+    ...eliteExercises,
+    ...massiveMathGenerated,
+    ...massiveEliteGenerated,
+];
