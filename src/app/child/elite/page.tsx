@@ -14,6 +14,9 @@ import {
     type LikelihoodLevel,
     type AgeGroup
 } from '@/lib/elite/engine';
+import { pickRandom } from '@/lib/variation-engine';
+
+const SESSION_SIZE = 10; // questions per pillar per session
 import { ArrowLeft, Brain, Coins, Globe, Handshake, Shield, Sparkles, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
@@ -158,13 +161,18 @@ export default function EliteDashboardPage() {
     const [negAnswer, setNegAnswer] = useState<'win' | 'lose' | null>(null);
     const [negScore, setNegScore] = useState(0);
 
-    const currentWvn = useMemo(() => WANTS_VS_NEEDS.filter(i => i.ageTarget === ageFilter), [ageFilter]);
-    const currentPol = useMemo(() => POLICY_SCENARIOS.filter(i => i.ageTarget === ageFilter), [ageFilter]);
-    const currentCoc = useMemo(() => CIRCLE_OF_CONTROL.filter(i => i.ageTarget === ageFilter), [ageFilter]);
-    const currentNeg = useMemo(() => NEGOTIATION_CHALLENGES.filter(i => i.ageTarget === ageFilter), [ageFilter]);
+    // Random subset per session from full pool (not ALL items)
+    const [currentWvn, setCurrentWvn] = useState(() => pickRandom(WANTS_VS_NEEDS.filter(i => i.ageTarget === ageFilter), SESSION_SIZE));
+    const [currentPol, setCurrentPol] = useState(() => pickRandom(POLICY_SCENARIOS.filter(i => i.ageTarget === ageFilter), SESSION_SIZE));
+    const [currentCoc, setCurrentCoc] = useState(() => pickRandom(CIRCLE_OF_CONTROL.filter(i => i.ageTarget === ageFilter), SESSION_SIZE));
+    const [currentNeg, setCurrentNeg] = useState(() => pickRandom(NEGOTIATION_CHALLENGES.filter(i => i.ageTarget === ageFilter), SESSION_SIZE));
 
     useEffect(() => {
-        setProbScenarios(generateProbabilityScenarios(ageFilter, 10));
+        setProbScenarios(generateProbabilityScenarios(ageFilter, SESSION_SIZE));
+        setCurrentWvn(pickRandom(WANTS_VS_NEEDS.filter(i => i.ageTarget === ageFilter), SESSION_SIZE));
+        setCurrentPol(pickRandom(POLICY_SCENARIOS.filter(i => i.ageTarget === ageFilter), SESSION_SIZE));
+        setCurrentCoc(pickRandom(CIRCLE_OF_CONTROL.filter(i => i.ageTarget === ageFilter), SESSION_SIZE));
+        setCurrentNeg(pickRandom(NEGOTIATION_CHALLENGES.filter(i => i.ageTarget === ageFilter), SESSION_SIZE));
         setProbIndex(0); setProbAnswer(null); setProbScore(0);
         setWvnIndex(0); setWvnAnswer(null); setWvnScore(0);
         setPolicyIndex(0); setPolicyChoice(null);
@@ -365,7 +373,7 @@ export default function EliteDashboardPage() {
                     </div>
                 )}
                 {activeTab === 'probability' && probIndex >= probScenarios.length && (
-                    <CompletionCard emoji="🎯" title="Hoàn thành Xác suất!" score={probScore} total={100} onReplay={() => { setProbIndex(0); setProbScore(0); setProbAnswer(null); }} />
+                    <CompletionCard emoji="🎯" title="Hoàn thành Xác suất!" score={probScore} total={probScenarios.length * 20} onReplay={() => { setProbScenarios(generateProbabilityScenarios(ageFilter, SESSION_SIZE)); setProbIndex(0); setProbScore(0); setProbAnswer(null); }} />
                 )}
 
                 {/* ═══════ FINANCE ═══════ */}
@@ -408,7 +416,7 @@ export default function EliteDashboardPage() {
                     </div>
                 )}
                 {activeTab === 'finance' && wvnIndex >= currentWvn.length && (
-                    <CompletionCard emoji="💰" title="Hoàn thành Tài chính!" score={wvnScore} total={currentWvn.length * 12} onReplay={() => { setWvnIndex(0); setWvnScore(0); setWvnAnswer(null); }} />
+                    <CompletionCard emoji="💰" title="Hoàn thành Tài chính!" score={wvnScore} total={currentWvn.length * 12} onReplay={() => { setCurrentWvn(pickRandom(WANTS_VS_NEEDS.filter(i => i.ageTarget === ageFilter), SESSION_SIZE)); setWvnIndex(0); setWvnScore(0); setWvnAnswer(null); }} />
                 )}
 
                 {/* ═══════ CIVICS ═══════ */}
@@ -451,7 +459,7 @@ export default function EliteDashboardPage() {
                     </div>
                 )}
                 {activeTab === 'civics' && policyIndex >= currentPol.length && (
-                    <CompletionCard emoji="⚖️" title="Hoàn thành Công dân!" score={0} total={0} onReplay={() => { setPolicyIndex(0); setPolicyChoice(null); }} />
+                    <CompletionCard emoji="⚖️" title="Hoàn thành Công dân!" score={0} total={0} onReplay={() => { setCurrentPol(pickRandom(POLICY_SCENARIOS.filter(i => i.ageTarget === ageFilter), SESSION_SIZE)); setPolicyIndex(0); setPolicyChoice(null); }} />
                 )}
 
                 {/* ═══════ ETHICS ═══════ */}
@@ -493,7 +501,7 @@ export default function EliteDashboardPage() {
                     </div>
                 )}
                 {activeTab === 'ethics' && cocIndex >= currentCoc.length && (
-                    <CompletionCard emoji="🛡️" title="Hoàn thành Đạo đức!" score={cocScore} total={currentCoc.length * 16} onReplay={() => { setCocIndex(0); setCocScore(0); setCocAnswer(null); }} />
+                    <CompletionCard emoji="🛡️" title="Hoàn thành Đạo đức!" score={cocScore} total={currentCoc.length * 16} onReplay={() => { setCurrentCoc(pickRandom(CIRCLE_OF_CONTROL.filter(i => i.ageTarget === ageFilter), SESSION_SIZE)); setCocIndex(0); setCocScore(0); setCocAnswer(null); }} />
                 )}
 
                 {/* ═══════ NEGOTIATION ═══════ */}
@@ -551,7 +559,7 @@ export default function EliteDashboardPage() {
                     </div>
                 )}
                 {activeTab === 'negotiation' && negIndex >= currentNeg.length && (
-                    <CompletionCard emoji="🤝" title="Hoàn thành Thương lượng!" score={negScore} total={currentNeg.length * 20} onReplay={() => { setNegIndex(0); setNegScore(0); setNegAnswer(null); }} />
+                    <CompletionCard emoji="🤝" title="Hoàn thành Thương lượng!" score={negScore} total={currentNeg.length * 20} onReplay={() => { setCurrentNeg(pickRandom(NEGOTIATION_CHALLENGES.filter(i => i.ageTarget === ageFilter), SESSION_SIZE)); setNegIndex(0); setNegScore(0); setNegAnswer(null); }} />
                 )}
             </div>
         </div>

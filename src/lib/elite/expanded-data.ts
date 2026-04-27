@@ -1,6 +1,7 @@
 // AUTO-GENERATED: 50x Content Expansion Bank
-// Generated: 2026-04-27T04:56:32.879Z
-// DO NOT EDIT MANUALLY — regenerate via scripts/merge_all2.js
+// Generated: 2026-04-27T12:55:28.260Z
+// Sources: CASEL, Jump\$tart/CFPB, Harvard PON, Kohlberg, Alliance for Decision Ed
+// DO NOT EDIT MANUALLY
 
 import type { AgeGroup, LikelihoodLevel } from "./engine";
 
@@ -4389,167 +4390,447 @@ export const EXPANDED_WANTS_VS_NEEDS = [
     "explanation": "Giải trí, không ảnh hưởng chất lượng sống."
   },
   {
-    "id": "wvn-mega-kid-1",
+    "id": "wvn-exp-kid-1",
     "ageTarget": "6-10",
-    "name": "Giày dép đi mưa",
-    "visual": "🥾",
+    "name": "Xà bông tắm hàng ngày",
+    "visual": "🧴",
     "correctCategory": "need",
-    "explanation": "Bảo vệ chân khi trời mưa."
+    "explanation": "Vệ sinh cơ thể cần thiết."
   },
   {
-    "id": "wvn-mega-kid-2",
+    "id": "wvn-exp-kid-2",
     "ageTarget": "6-10",
-    "name": "Máy bay điều khiển từ xa",
-    "visual": "✈️",
+    "name": "Truyện tranh Doraemon bộ mới",
+    "visual": "📕",
     "correctCategory": "want",
-    "explanation": "Đồ chơi vui nhưng không thiết yếu."
+    "explanation": "Giải trí vui nhưng không ảnh hưởng sống."
   },
   {
-    "id": "wvn-mega-kid-3",
+    "id": "wvn-exp-kid-3",
     "ageTarget": "6-10",
-    "name": "Kem đánh răng cho trẻ em",
-    "visual": "🪥",
+    "name": "Dầu gội đầu cho trẻ em",
+    "visual": "🧴",
     "correctCategory": "need",
-    "explanation": "Vệ sinh răng miệng hàng ngày."
+    "explanation": "Tóc sạch, da đầu khỏe mạnh."
   },
   {
-    "id": "wvn-mega-kid-4",
+    "id": "wvn-exp-kid-4",
     "ageTarget": "6-10",
-    "name": "Bộ Pokemon cards sưu tầm",
-    "visual": "🃏",
+    "name": "Xe scooter điện",
+    "visual": "🛴",
     "correctCategory": "want",
-    "explanation": "Sưu tầm giải trí, không cần thiết."
+    "explanation": "Phương tiện vui chơi, không thiết yếu."
   },
   {
-    "id": "wvn-mega-kid-5",
+    "id": "wvn-exp-kid-5",
     "ageTarget": "6-10",
-    "name": "Cặp kính cận khi mắt yếu",
-    "visual": "👓",
+    "name": "Thuốc ho khi bị cảm",
+    "visual": "💊",
     "correctCategory": "need",
-    "explanation": "Nhìn rõ bảng cần thiết cho việc học."
+    "explanation": "Thuốc chữa bệnh là nhu cầu y tế."
   },
   {
-    "id": "wvn-mega-kid-6",
+    "id": "wvn-exp-kid-6",
     "ageTarget": "6-10",
-    "name": "Tai nghe Bluetooth xịn",
-    "visual": "🎧",
+    "name": "Máy chiếu phim mini",
+    "visual": "🎥",
     "correctCategory": "want",
-    "explanation": "Nghe nhạc vui nhưng tai nghe dây cũng được."
+    "explanation": "Giải trí tại nhà, không cần thiết."
   },
   {
-    "id": "wvn-mega-kid-7",
+    "id": "wvn-exp-kid-7",
     "ageTarget": "6-10",
-    "name": "Áo khoác đi học mùa mưa",
+    "name": "Ống hút tre thay nhựa",
+    "visual": "🎋",
+    "correctCategory": "want",
+    "explanation": "Bảo vệ môi trường nhưng không thiết yếu."
+  },
+  {
+    "id": "wvn-exp-kid-8",
+    "ageTarget": "6-10",
+    "name": "Quần áo đồng phục đi học",
+    "visual": "👔",
+    "correctCategory": "need",
+    "explanation": "Đồng phục là yêu cầu bắt buộc."
+  },
+  {
+    "id": "wvn-exp-kid-9",
+    "ageTarget": "6-10",
+    "name": "Bể bơi phao bơm hơi",
+    "visual": "🏊",
+    "correctCategory": "want",
+    "explanation": "Chơi mùa hè vui nhưng không cần."
+  },
+  {
+    "id": "wvn-exp-kid-10",
+    "ageTarget": "6-10",
+    "name": "Thước kẻ và compa học hình",
+    "visual": "📐",
+    "correctCategory": "need",
+    "explanation": "Dụng cụ học tập toán hình học."
+  },
+  {
+    "id": "wvn-exp-kid-11",
+    "ageTarget": "6-10",
+    "name": "Bộ LEGO Creator Expert",
+    "visual": "🧱",
+    "correctCategory": "want",
+    "explanation": "Đắt tiền, bộ bình thường đủ chơi."
+  },
+  {
+    "id": "wvn-exp-kid-12",
+    "ageTarget": "6-10",
+    "name": "Mũ lưỡi trai chống nắng",
+    "visual": "🧢",
+    "correctCategory": "need",
+    "explanation": "Bảo vệ đầu và mắt dưới nắng."
+  },
+  {
+    "id": "wvn-exp-kid-13",
+    "ageTarget": "6-10",
+    "name": "Kính VR thực tế ảo",
+    "visual": "🥽",
+    "correctCategory": "want",
+    "explanation": "Công nghệ giải trí, không thiết yếu."
+  },
+  {
+    "id": "wvn-exp-kid-14",
+    "ageTarget": "6-10",
+    "name": "Bình giữ nhiệt đựng nước",
+    "visual": "🫗",
+    "correctCategory": "need",
+    "explanation": "Uống nước ấm/mát suốt ngày."
+  },
+  {
+    "id": "wvn-exp-kid-15",
+    "ageTarget": "6-10",
+    "name": "Thú bông Pusheen khổng lồ",
+    "visual": "🐱",
+    "correctCategory": "want",
+    "explanation": "Dễ thương nhưng chỉ là đồ chơi."
+  },
+  {
+    "id": "wvn-mega2-kid-1",
+    "ageTarget": "6-10",
+    "name": "Nước uống sạch mỗi ngày",
+    "visual": "💧",
+    "correctCategory": "need",
+    "explanation": "Maslow bậc 1: nước là thiết yếu sinh tồn."
+  },
+  {
+    "id": "wvn-mega2-kid-2",
+    "ageTarget": "6-10",
+    "name": "Cơm trưa ở trường",
+    "visual": "🍱",
+    "correctCategory": "need",
+    "explanation": "Dinh dưỡng cần cho học tập và phát triển."
+  },
+  {
+    "id": "wvn-mega2-kid-3",
+    "ageTarget": "6-10",
+    "name": "Áo ấm mùa đông",
     "visual": "🧥",
     "correctCategory": "need",
-    "explanation": "Giữ ấm và khô ráo, cần thiết."
+    "explanation": "Bảo vệ cơ thể khỏi lạnh — nhu cầu sinh lý."
   },
   {
-    "id": "wvn-mega-kid-8",
+    "id": "wvn-mega2-kid-4",
     "ageTarget": "6-10",
-    "name": "Slime đất nặn màu loại xịn",
-    "visual": "🟢",
-    "correctCategory": "want",
-    "explanation": "Chơi vui nhưng không ảnh hưởng cuộc sống."
-  },
-  {
-    "id": "wvn-mega-kid-9",
-    "ageTarget": "6-10",
-    "name": "Cặp sách đi học bền chắc",
-    "visual": "💼",
+    "name": "Giày thể dục đi học",
+    "visual": "👟",
     "correctCategory": "need",
-    "explanation": "Đựng sách vở đi học mỗi ngày."
+    "explanation": "Bảo vệ chân, cần cho thể chất."
   },
   {
-    "id": "wvn-mega-kid-10",
+    "id": "wvn-mega2-kid-5",
     "ageTarget": "6-10",
-    "name": "Vòng tay phát sáng",
-    "visual": "💫",
-    "correctCategory": "want",
-    "explanation": "Đẹp mắt nhưng không cần thiết."
+    "name": "Vở viết bài tập",
+    "visual": "📓",
+    "correctCategory": "need",
+    "explanation": "Dụng cụ học tập cơ bản bắt buộc."
   },
   {
-    "id": "wvn-mega-kid-11",
+    "id": "wvn-mega2-kid-6",
     "ageTarget": "6-10",
-    "name": "Khăn mặt sạch hàng ngày",
+    "name": "Bút chì và tẩy",
+    "visual": "✏️",
+    "correctCategory": "need",
+    "explanation": "Không có bút thì không viết bài được."
+  },
+  {
+    "id": "wvn-mega2-kid-7",
+    "ageTarget": "6-10",
+    "name": "Hộp bút màu 12 màu cơ bản",
+    "visual": "🖍️",
+    "correctCategory": "need",
+    "explanation": "Môn mỹ thuật yêu cầu bút màu."
+  },
+  {
+    "id": "wvn-mega2-kid-8",
+    "ageTarget": "6-10",
+    "name": "Khăn mặt sạch",
     "visual": "🧣",
     "correctCategory": "need",
-    "explanation": "Vệ sinh cá nhân cơ bản."
+    "explanation": "Vệ sinh mặt hàng ngày."
   },
   {
-    "id": "wvn-mega-kid-12",
+    "id": "wvn-mega2-kid-9",
     "ageTarget": "6-10",
-    "name": "Bộ lắp ráp xe tăng mô hình",
-    "visual": "🔧",
-    "correctCategory": "want",
-    "explanation": "Sáng tạo nhưng không thiết yếu."
-  },
-  {
-    "id": "wvn-mega-kid-13",
-    "ageTarget": "6-10",
-    "name": "Đèn bàn học buổi tối",
-    "visual": "💡",
+    "name": "Kem đánh răng trẻ em",
+    "visual": "🪥",
     "correctCategory": "need",
-    "explanation": "Ánh sáng đủ bảo vệ mắt khi học."
+    "explanation": "Sức khỏe răng miệng cần thiết."
   },
   {
-    "id": "wvn-mega-kid-14",
+    "id": "wvn-mega2-kid-10",
     "ageTarget": "6-10",
-    "name": "Kẹp tóc đính đá kim sa",
-    "visual": "💎",
-    "correctCategory": "want",
-    "explanation": "Trang trí xinh nhưng không cần."
-  },
-  {
-    "id": "wvn-mega-kid-15",
-    "ageTarget": "6-10",
-    "name": "Giấy vở viết bài hàng ngày",
-    "visual": "📝",
+    "name": "Dầu gội đầu",
+    "visual": "🧴",
     "correctCategory": "need",
-    "explanation": "Dụng cụ học tập thiết yếu."
+    "explanation": "Tóc sạch, da đầu khỏe."
   },
   {
-    "id": "wvn-mega-kid-16",
+    "id": "wvn-mega2-kid-11",
     "ageTarget": "6-10",
-    "name": "Đồ chơi fidget spinner",
-    "visual": "🌀",
-    "correctCategory": "want",
-    "explanation": "Giải stress nhưng không phải nhu cầu."
+    "name": "Quần áo đồng phục",
+    "visual": "👔",
+    "correctCategory": "need",
+    "explanation": "Trường bắt buộc mặc đồng phục."
   },
   {
-    "id": "wvn-mega-kid-17",
+    "id": "wvn-mega2-kid-12",
     "ageTarget": "6-10",
-    "name": "Nón bảo hiểm đi xe đạp",
+    "name": "Cặp sách đi học",
+    "visual": "🎒",
+    "correctCategory": "need",
+    "explanation": "Đựng sách vở thiết yếu."
+  },
+  {
+    "id": "wvn-mega2-kid-13",
+    "ageTarget": "6-10",
+    "name": "Mũ bảo hiểm đi xe",
     "visual": "⛑️",
     "correctCategory": "need",
     "explanation": "An toàn giao thông bắt buộc."
   },
   {
-    "id": "wvn-mega-kid-18",
+    "id": "wvn-mega2-kid-14",
     "ageTarget": "6-10",
-    "name": "Sticker hoạt hình dán tập",
-    "visual": "🌟",
-    "correctCategory": "want",
-    "explanation": "Trang trí vui nhưng không thiết yếu."
+    "name": "Thuốc cảm khi bị ốm",
+    "visual": "💊",
+    "correctCategory": "need",
+    "explanation": "Sức khỏe là nhu cầu cơ bản."
   },
   {
-    "id": "wvn-mega-kid-19",
+    "id": "wvn-mega2-kid-15",
     "ageTarget": "6-10",
-    "name": "Tất/vớ đi giày hàng ngày",
+    "name": "Đèn bàn học buổi tối",
+    "visual": "💡",
+    "correctCategory": "need",
+    "explanation": "Ánh sáng đủ bảo vệ mắt."
+  },
+  {
+    "id": "wvn-mega2-kid-16",
+    "ageTarget": "6-10",
+    "name": "Bình nước mang theo",
+    "visual": "🫗",
+    "correctCategory": "need",
+    "explanation": "Uống đủ nước suốt ngày."
+  },
+  {
+    "id": "wvn-mega2-kid-17",
+    "ageTarget": "6-10",
+    "name": "Kem chống nắng",
+    "visual": "🧴",
+    "correctCategory": "need",
+    "explanation": "Bảo vệ da khi ra ngoài nắng."
+  },
+  {
+    "id": "wvn-mega2-kid-18",
+    "ageTarget": "6-10",
+    "name": "Nón che nắng đi học",
+    "visual": "🧢",
+    "correctCategory": "need",
+    "explanation": "Tránh nắng nóng đầu."
+  },
+  {
+    "id": "wvn-mega2-kid-19",
+    "ageTarget": "6-10",
+    "name": "Tất/vớ sạch mỗi ngày",
     "visual": "🧦",
     "correctCategory": "need",
-    "explanation": "Giữ vệ sinh, tránh phồng rộp."
+    "explanation": "Vệ sinh chân, tránh nấm."
   },
   {
-    "id": "wvn-mega-kid-20",
+    "id": "wvn-mega2-kid-20",
     "ageTarget": "6-10",
-    "name": "Robot đồ chơi biến hình Transformer",
+    "name": "Thước kẻ học toán",
+    "visual": "📏",
+    "correctCategory": "need",
+    "explanation": "Dụng cụ học tập cần thiết."
+  },
+  {
+    "id": "wvn-mega2-kid-21",
+    "ageTarget": "6-10",
+    "name": "iPhone 16 Pro Max",
+    "visual": "📱",
+    "correctCategory": "want",
+    "explanation": "Điện thoại bình dân đủ dùng, đây là xa xỉ."
+  },
+  {
+    "id": "wvn-mega2-kid-22",
+    "ageTarget": "6-10",
+    "name": "Bộ LEGO Star Wars 5000 mảnh",
+    "visual": "🧱",
+    "correctCategory": "want",
+    "explanation": "Đồ chơi đắt tiền, bộ nhỏ đủ vui."
+  },
+  {
+    "id": "wvn-mega2-kid-23",
+    "ageTarget": "6-10",
+    "name": "Giày Nike Air Jordan limited",
+    "visual": "👟",
+    "correctCategory": "want",
+    "explanation": "Giày bình thường đủ đi, Jordan = thời trang."
+  },
+  {
+    "id": "wvn-mega2-kid-24",
+    "ageTarget": "6-10",
+    "name": "Kem 3 tầng topping socola",
+    "visual": "🍦",
+    "correctCategory": "want",
+    "explanation": "Ngon nhưng 1 tầng cũng đủ."
+  },
+  {
+    "id": "wvn-mega2-kid-25",
+    "ageTarget": "6-10",
+    "name": "Robot điều khiển từ xa",
     "visual": "🤖",
     "correctCategory": "want",
-    "explanation": "Đồ chơi giải trí không ảnh hưởng sống còn."
+    "explanation": "Đồ chơi giải trí không thiết yếu."
   },
   {
-    "id": "wvn-mega-adv-1",
+    "id": "wvn-mega2-kid-26",
+    "ageTarget": "6-10",
+    "name": "Máy chơi game Nintendo Switch",
+    "visual": "🎮",
+    "correctCategory": "want",
+    "explanation": "Giải trí, không ảnh hưởng sinh tồn."
+  },
+  {
+    "id": "wvn-mega2-kid-27",
+    "ageTarget": "6-10",
+    "name": "Đồng hồ Apple Watch",
+    "visual": "⌚",
+    "correctCategory": "want",
+    "explanation": "Xem giờ có điện thoại rồi."
+  },
+  {
+    "id": "wvn-mega2-kid-28",
+    "ageTarget": "6-10",
+    "name": "Búp bê Barbie sưu tầm",
+    "visual": "👸",
+    "correctCategory": "want",
+    "explanation": "Sưu tầm thú vị nhưng không cần."
+  },
+  {
+    "id": "wvn-mega2-kid-29",
+    "ageTarget": "6-10",
+    "name": "Kẹo mút khổng lồ",
+    "visual": "🍭",
+    "correctCategory": "want",
+    "explanation": "Ngon nhưng ăn nhiều sâu răng."
+  },
+  {
+    "id": "wvn-mega2-kid-30",
+    "ageTarget": "6-10",
+    "name": "Xe điện scooter",
+    "visual": "🛴",
+    "correctCategory": "want",
+    "explanation": "Di chuyển vui nhưng đi bộ được."
+  },
+  {
+    "id": "wvn-mega2-kid-31",
+    "ageTarget": "6-10",
+    "name": "Sticker hoạt hình lấp lánh",
+    "visual": "⭐",
+    "correctCategory": "want",
+    "explanation": "Trang trí xinh nhưng không cần."
+  },
+  {
+    "id": "wvn-mega2-kid-32",
+    "ageTarget": "6-10",
+    "name": "Slime đất nặn loại xịn",
+    "visual": "🟢",
+    "correctCategory": "want",
+    "explanation": "Chơi vui nhưng hết cũng không sao."
+  },
+  {
+    "id": "wvn-mega2-kid-33",
+    "ageTarget": "6-10",
+    "name": "Máy chiếu phim mini",
+    "visual": "🎥",
+    "correctCategory": "want",
+    "explanation": "Xem phim trên TV đủ rồi."
+  },
+  {
+    "id": "wvn-mega2-kid-34",
+    "ageTarget": "6-10",
+    "name": "Kính VR thực tế ảo",
+    "visual": "🥽",
+    "correctCategory": "want",
+    "explanation": "Công nghệ giải trí cao cấp."
+  },
+  {
+    "id": "wvn-mega2-kid-35",
+    "ageTarget": "6-10",
+    "name": "Bể bơi phao bơm hơi",
+    "visual": "🏊",
+    "correctCategory": "want",
+    "explanation": "Mùa hè vui nhưng không thiết yếu."
+  },
+  {
+    "id": "wvn-mega2-kid-36",
+    "ageTarget": "6-10",
+    "name": "Pokemon cards sưu tầm",
+    "visual": "🃏",
+    "correctCategory": "want",
+    "explanation": "Sưu tầm phổ biến nhưng không cần."
+  },
+  {
+    "id": "wvn-mega2-kid-37",
+    "ageTarget": "6-10",
+    "name": "Headphone Bluetooth xịn",
+    "visual": "🎧",
+    "correctCategory": "want",
+    "explanation": "Tai nghe dây cũng nghe nhạc được."
+  },
+  {
+    "id": "wvn-mega2-kid-38",
+    "ageTarget": "6-10",
+    "name": "Fidget spinner đắt tiền",
+    "visual": "🌀",
+    "correctCategory": "want",
+    "explanation": "Đồ chơi giải stress, không thiết yếu."
+  },
+  {
+    "id": "wvn-mega2-kid-39",
+    "ageTarget": "6-10",
+    "name": "Thú bông gấu bông khổng lồ",
+    "visual": "🧸",
+    "correctCategory": "want",
+    "explanation": "Dễ thương nhưng không ảnh hưởng sống."
+  },
+  {
+    "id": "wvn-mega2-kid-40",
+    "ageTarget": "6-10",
+    "name": "Vòng tay phát sáng",
+    "visual": "��",
+    "correctCategory": "want",
+    "explanation": "Trang sức vui nhưng không cần."
+  },
+  {
+    "id": "wvn-mega2-adv-1",
     "ageTarget": "11+",
     "name": "Laptop cho việc học",
     "visual": "💻",
@@ -4557,73 +4838,73 @@ export const EXPANDED_WANTS_VS_NEEDS = [
     "explanation": "Công cụ học tập thời đại số."
   },
   {
-    "id": "wvn-mega-adv-2",
+    "id": "wvn-mega2-adv-2",
     "ageTarget": "11+",
-    "name": "Đồng hồ Casio G-Shock limited",
-    "visual": "⌚",
-    "correctCategory": "want",
-    "explanation": "Xem giờ có điện thoại, G-Shock = phong cách."
-  },
-  {
-    "id": "wvn-mega-adv-3",
-    "ageTarget": "11+",
-    "name": "Tiền phòng trọ ở gần trường",
-    "visual": "🏠",
-    "correctCategory": "need",
-    "explanation": "Nơi ở an toàn là Maslow bậc 1."
-  },
-  {
-    "id": "wvn-mega-adv-4",
-    "ageTarget": "11+",
-    "name": "Túi xách hiệu Gucci",
-    "visual": "👜",
-    "correctCategory": "want",
-    "explanation": "Xa xỉ phẩm, túi bình dân đủ đựng."
-  },
-  {
-    "id": "wvn-mega-adv-5",
-    "ageTarget": "11+",
-    "name": "Bảo hiểm tai nạn cá nhân",
+    "name": "Bảo hiểm y tế BHXH",
     "visual": "🛡️",
     "correctCategory": "need",
-    "explanation": "Mạng lưới an toàn tài chính."
+    "explanation": "Mạng lưới an toàn tài chính y tế."
   },
   {
-    "id": "wvn-mega-adv-6",
+    "id": "wvn-mega2-adv-3",
     "ageTarget": "11+",
-    "name": "PlayStation 5 Pro",
-    "visual": "🎮",
-    "correctCategory": "want",
-    "explanation": "Giải trí, không ảnh hưởng sinh tồn."
-  },
-  {
-    "id": "wvn-mega-adv-7",
-    "ageTarget": "11+",
-    "name": "Khám sức khỏe định kỳ hàng năm",
+    "name": "Khám sức khỏe định kỳ",
     "visual": "🏥",
     "correctCategory": "need",
-    "explanation": "Phát hiện bệnh sớm, cần thiết."
+    "explanation": "Phát hiện bệnh sớm cần thiết."
   },
   {
-    "id": "wvn-mega-adv-8",
+    "id": "wvn-mega2-adv-4",
     "ageTarget": "11+",
-    "name": "Áo hoodie brand Supreme",
-    "visual": "👕",
-    "correctCategory": "want",
-    "explanation": "Áo giữ ấm bình dân đủ rồi."
-  },
-  {
-    "id": "wvn-mega-adv-9",
-    "ageTarget": "11+",
-    "name": "Sách giáo khoa và tài liệu ôn thi",
+    "name": "Sách tham khảo ôn thi",
     "visual": "📚",
     "correctCategory": "need",
     "explanation": "Kiến thức quyết định tương lai."
   },
   {
-    "id": "wvn-mega-adv-10",
+    "id": "wvn-mega2-adv-5",
     "ageTarget": "11+",
-    "name": "Vé concert Taylor Swift VIP",
+    "name": "Xe đạp đi học 2km",
+    "visual": "🚲",
+    "correctCategory": "need",
+    "explanation": "Phương tiện đi lại hàng ngày."
+  },
+  {
+    "id": "wvn-mega2-adv-6",
+    "ageTarget": "11+",
+    "name": "Đồng hồ Rolex",
+    "visual": "⌚",
+    "correctCategory": "want",
+    "explanation": "Casio xem giờ đủ rồi."
+  },
+  {
+    "id": "wvn-mega2-adv-7",
+    "ageTarget": "11+",
+    "name": "Túi xách hiệu Gucci",
+    "visual": "👜",
+    "correctCategory": "want",
+    "explanation": "Túi bình dân đủ đựng."
+  },
+  {
+    "id": "wvn-mega2-adv-8",
+    "ageTarget": "11+",
+    "name": "PlayStation 5 Pro",
+    "visual": "🎮",
+    "correctCategory": "want",
+    "explanation": "Giải trí cao cấp, không thiết yếu."
+  },
+  {
+    "id": "wvn-mega2-adv-9",
+    "ageTarget": "11+",
+    "name": "Áo hoodie Supreme",
+    "visual": "👕",
+    "correctCategory": "want",
+    "explanation": "Áo bình dân giữ ấm đủ."
+  },
+  {
+    "id": "wvn-mega2-adv-10",
+    "ageTarget": "11+",
+    "name": "Vé concert VIP",
     "visual": "🎵",
     "correctCategory": "want",
     "explanation": "Trải nghiệm 1 lần, không thiết yếu."
@@ -4968,196 +5249,324 @@ export const EXPANDED_CIRCLE_OF_CONTROL = [
     "explanation": "Sự chuẩn bị là vũ khí tốt nhất."
   },
   {
-    "id": "coc-mega-kid-1",
+    "id": "coc-mega2-kid-1",
     "ageTarget": "6-10",
-    "situation": "Cô giáo cho điểm không công bằng.",
-    "visual": "📋",
+    "situation": "Trời mưa to không đi được công viên.",
+    "visual": "🌧️",
     "correctCategory": "uncontrollable",
-    "explanation": "Cách chấm điểm là quyền của cô."
+    "explanation": "Thời tiết ngoài tầm kiểm soát."
   },
   {
-    "id": "coc-mega-kid-2",
+    "id": "coc-mega2-kid-2",
     "ageTarget": "6-10",
-    "situation": "Con học thuộc bài trước khi thi.",
+    "situation": "Con chọn đọc sách trước khi ngủ.",
     "visual": "📖",
     "correctCategory": "controllable",
-    "explanation": "Nỗ lực ôn bài là việc con làm."
+    "explanation": "Thói quen tốt từ quyết định cá nhân."
   },
   {
-    "id": "coc-mega-kid-3",
+    "id": "coc-mega2-kid-3",
     "ageTarget": "6-10",
-    "situation": "Ba mẹ cãi nhau ở nhà.",
-    "visual": "😟",
+    "situation": "Bạn thân chuyển trường đi xa.",
+    "visual": "😢",
     "correctCategory": "uncontrollable",
-    "explanation": "Mâu thuẫn người lớn ngoài tầm con."
+    "explanation": "Quyết định gia đình bạn, con không can thiệp."
   },
   {
-    "id": "coc-mega-kid-4",
+    "id": "coc-mega2-kid-4",
     "ageTarget": "6-10",
-    "situation": "Con viết nhật ký mỗi tối trước ngủ.",
-    "visual": "📔",
+    "situation": "Con tập viết chữ đẹp mỗi ngày.",
+    "visual": "✍️",
     "correctCategory": "controllable",
-    "explanation": "Thói quen tốt từ ý chí cá nhân."
+    "explanation": "Rèn luyện từ nỗ lực bản thân."
   },
   {
-    "id": "coc-mega-kid-5",
+    "id": "coc-mega2-kid-5",
     "ageTarget": "6-10",
-    "situation": "Bạn thân không muốn chơi chung nữa.",
-    "visual": "💔",
+    "situation": "Cúp điện giữa chừng xem phim.",
+    "visual": "🔌",
     "correctCategory": "uncontrollable",
-    "explanation": "Cảm xúc bạn ấy, con không ép được."
+    "explanation": "Sự cố điện ngoài tầm kiểm soát."
   },
   {
-    "id": "coc-mega-kid-6",
+    "id": "coc-mega2-kid-6",
     "ageTarget": "6-10",
-    "situation": "Con mỉm cười chào mọi người mỗi sáng.",
-    "visual": "😊",
+    "situation": "Con uống đủ 8 ly nước mỗi ngày.",
+    "visual": "💧",
     "correctCategory": "controllable",
-    "explanation": "Thái độ tích cực do con chọn."
+    "explanation": "Sức khỏe từ kỷ luật bản thân."
   },
   {
-    "id": "coc-mega-kid-7",
+    "id": "coc-mega2-kid-7",
     "ageTarget": "6-10",
-    "situation": "Nhà hàng xóm phá đồ chơi bên ngoài.",
-    "visual": "🏚️",
-    "correctCategory": "uncontrollable",
-    "explanation": "Hành vi hàng xóm ngoài tầm kiểm soát."
-  },
-  {
-    "id": "coc-mega-kid-8",
-    "ageTarget": "6-10",
-    "situation": "Con khóa cửa cẩn thận trước khi đi.",
-    "visual": "🔐",
-    "correctCategory": "controllable",
-    "explanation": "Cẩn thận bảo vệ đồ là việc con."
-  },
-  {
-    "id": "coc-mega-kid-9",
-    "ageTarget": "6-10",
-    "situation": "Máy tính bị hỏng giữa chừng bài tập.",
-    "visual": "💻",
-    "correctCategory": "uncontrollable",
-    "explanation": "Sự cố kỹ thuật bất ngờ."
-  },
-  {
-    "id": "coc-mega-kid-10",
-    "ageTarget": "6-10",
-    "situation": "Con lưu bài thường xuyên để không mất.",
-    "visual": "💾",
-    "correctCategory": "controllable",
-    "explanation": "Thói quen backup là phòng ngừa thông minh."
-  },
-  {
-    "id": "coc-mega-kid-11",
-    "ageTarget": "6-10",
-    "situation": "Sân bóng bị chiếm bởi đội lớn hơn.",
+    "situation": "Đội bóng con thích thua trận chung kết.",
     "visual": "⚽",
     "correctCategory": "uncontrollable",
-    "explanation": "Đội khác quyết định, con không kiểm soát."
+    "explanation": "Kết quả thi đấu do nhiều yếu tố."
   },
   {
-    "id": "coc-mega-kid-12",
+    "id": "coc-mega2-kid-8",
     "ageTarget": "6-10",
-    "situation": "Con tập thể dục 10 phút mỗi sáng.",
-    "visual": "🏋️",
+    "situation": "Con ăn rau xanh mỗi bữa cơm.",
+    "visual": "🥬",
     "correctCategory": "controllable",
-    "explanation": "Rèn luyện sức khỏe từ kỷ luật bản thân."
+    "explanation": "Dinh dưỡng là lựa chọn tốt."
   },
   {
-    "id": "coc-mega-kid-13",
+    "id": "coc-mega2-kid-9",
     "ageTarget": "6-10",
-    "situation": "Trường thay đổi lịch học đột ngột.",
-    "visual": "📅",
+    "situation": "Máy bay bị delay 3 tiếng.",
+    "visual": "✈️",
     "correctCategory": "uncontrollable",
-    "explanation": "Quyết định nhà trường."
+    "explanation": "Lịch bay do hãng hàng không quyết định."
   },
   {
-    "id": "coc-mega-kid-14",
+    "id": "coc-mega2-kid-10",
     "ageTarget": "6-10",
-    "situation": "Con chuẩn bị sách vở từ tối hôm trước.",
-    "visual": "🎒",
+    "situation": "Con sắp xếp bàn học gọn gàng.",
+    "visual": "🗂️",
     "correctCategory": "controllable",
-    "explanation": "Chuẩn bị sẵn sàng là lựa chọn."
+    "explanation": "Tổ chức không gian là quyết định."
   },
   {
-    "id": "coc-mega-kid-15",
+    "id": "coc-mega2-kid-11",
     "ageTarget": "6-10",
-    "situation": "Bé em lấy đồ chơi của con mà không hỏi.",
-    "visual": "👶",
+    "situation": "Ba mẹ phải đi công tác xa.",
+    "visual": "🧳",
     "correctCategory": "uncontrollable",
-    "explanation": "Em bé chưa hiểu luật."
+    "explanation": "Công việc ba mẹ ngoài tầm con."
   },
   {
-    "id": "coc-mega-kid-16",
+    "id": "coc-mega2-kid-12",
     "ageTarget": "6-10",
-    "situation": "Con nói \"em ơi, hỏi anh/chị trước nhé\".",
-    "visual": "🗣️",
+    "situation": "Con nói \"cảm ơn\" khi nhận quà.",
+    "visual": "🎁",
     "correctCategory": "controllable",
-    "explanation": "Dạy em bé cách xin phép là trong tầm tay."
+    "explanation": "Lễ phép là thái độ con chọn."
   },
   {
-    "id": "coc-mega-adv-1",
-    "ageTarget": "11+",
-    "situation": "Công ty cắt giảm nhân sự hàng loạt.",
-    "visual": "🏢",
+    "id": "coc-mega2-kid-13",
+    "ageTarget": "6-10",
+    "situation": "Siêu thị hết đồ chơi con muốn mua.",
+    "visual": "🏪",
     "correctCategory": "uncontrollable",
-    "explanation": "Quyết định doanh nghiệp ở cấp lãnh đạo."
+    "explanation": "Tồn kho siêu thị ngoài tầm."
   },
   {
-    "id": "coc-mega-adv-2",
-    "ageTarget": "11+",
-    "situation": "Đọc 30 phút sách chuyên ngành mỗi ngày.",
+    "id": "coc-mega2-kid-14",
+    "ageTarget": "6-10",
+    "situation": "Con giúp mẹ dọn nhà mỗi cuối tuần.",
+    "visual": "🏠",
+    "correctCategory": "controllable",
+    "explanation": "Phụ giúp gia đình là lựa chọn."
+  },
+  {
+    "id": "coc-mega2-kid-15",
+    "ageTarget": "6-10",
+    "situation": "Cô giáo bị ốm, thay giáo viên mới.",
+    "visual": "📋",
+    "correctCategory": "uncontrollable",
+    "explanation": "Sức khỏe cô giáo ngoài tầm."
+  },
+  {
+    "id": "coc-mega2-kid-16",
+    "ageTarget": "6-10",
+    "situation": "Con luyện tập piano 20 phút mỗi ngày.",
+    "visual": "🎹",
+    "correctCategory": "controllable",
+    "explanation": "Kỹ năng từ sự kiên nhẫn."
+  },
+  {
+    "id": "coc-mega2-kid-17",
+    "ageTarget": "6-10",
+    "situation": "Trận động đất làm trường hư hại.",
+    "visual": "🌍",
+    "correctCategory": "uncontrollable",
+    "explanation": "Thiên tai hoàn toàn ngoài tầm."
+  },
+  {
+    "id": "coc-mega2-kid-18",
+    "ageTarget": "6-10",
+    "situation": "Con xin lỗi khi làm sai.",
+    "visual": "🙏",
+    "correctCategory": "controllable",
+    "explanation": "Nhận lỗi là hành động can đảm."
+  },
+  {
+    "id": "coc-mega2-kid-19",
+    "ageTarget": "6-10",
+    "situation": "Hàng xóm nuôi gà gáy sáng sớm.",
+    "visual": "🐓",
+    "correctCategory": "uncontrollable",
+    "explanation": "Hành vi hàng xóm ngoài tầm."
+  },
+  {
+    "id": "coc-mega2-kid-20",
+    "ageTarget": "6-10",
+    "situation": "Con tắt máy tính đúng giờ quy định.",
+    "visual": "💻",
+    "correctCategory": "controllable",
+    "explanation": "Kỷ luật thời gian do con quyết."
+  },
+  {
+    "id": "coc-mega2-kid-21",
+    "ageTarget": "6-10",
+    "situation": "Bạn nói xấu con sau lưng.",
+    "visual": "😤",
+    "correctCategory": "uncontrollable",
+    "explanation": "Lời nói của bạn, con không kiểm soát."
+  },
+  {
+    "id": "coc-mega2-kid-22",
+    "ageTarget": "6-10",
+    "situation": "Con chọn không nói xấu lại.",
+    "visual": "🤐",
+    "correctCategory": "controllable",
+    "explanation": "Phản ứng của con là lựa chọn."
+  },
+  {
+    "id": "coc-mega2-kid-23",
+    "ageTarget": "6-10",
+    "situation": "Giá xăng tăng, xe buýt đông hơn.",
+    "visual": "⛽",
+    "correctCategory": "uncontrollable",
+    "explanation": "Giá năng lượng do thị trường."
+  },
+  {
+    "id": "coc-mega2-kid-24",
+    "ageTarget": "6-10",
+    "situation": "Con đi bộ đến trường để khỏe hơn.",
+    "visual": "🚶",
+    "correctCategory": "controllable",
+    "explanation": "Chọn đi bộ là quyết định tốt."
+  },
+  {
+    "id": "coc-mega2-kid-25",
+    "ageTarget": "6-10",
+    "situation": "Wifi nhà yếu tín hiệu.",
+    "visual": "📶",
+    "correctCategory": "uncontrollable",
+    "explanation": "Hạ tầng mạng ngoài tầm con."
+  },
+  {
+    "id": "coc-mega2-kid-26",
+    "ageTarget": "6-10",
+    "situation": "Con đọc sách thay vì chờ wifi.",
     "visual": "📚",
     "correctCategory": "controllable",
-    "explanation": "Đầu tư tri thức là quyết định."
+    "explanation": "Thích ứng thông minh."
   },
   {
-    "id": "coc-mega-adv-3",
+    "id": "coc-mega2-kid-27",
+    "ageTarget": "6-10",
+    "situation": "Ông bà bị bệnh phải nằm viện.",
+    "visual": "🏥",
+    "correctCategory": "uncontrollable",
+    "explanation": "Sức khỏe ông bà ngoài tầm."
+  },
+  {
+    "id": "coc-mega2-kid-28",
+    "ageTarget": "6-10",
+    "situation": "Con gọi điện hỏi thăm ông bà.",
+    "visual": "📞",
+    "correctCategory": "controllable",
+    "explanation": "Quan tâm gia đình là lựa chọn."
+  },
+  {
+    "id": "coc-mega2-kid-29",
+    "ageTarget": "6-10",
+    "situation": "Em bé khóc to giữa đêm.",
+    "visual": "👶",
+    "correctCategory": "uncontrollable",
+    "explanation": "Em bé chưa tự kiểm soát."
+  },
+  {
+    "id": "coc-mega2-kid-30",
+    "ageTarget": "6-10",
+    "situation": "Con đeo tai nghe để ngủ ngon.",
+    "visual": "😴",
+    "correctCategory": "controllable",
+    "explanation": "Giải pháp thông minh."
+  },
+  {
+    "id": "coc-mega2-adv-1",
     "ageTarget": "11+",
-    "situation": "Biến đổi khí hậu gây lũ lụt.",
+    "situation": "Lạm phát khiến đồ ăn đắt hơn.",
+    "visual": "📈",
+    "correctCategory": "uncontrollable",
+    "explanation": "Kinh tế vĩ mô ngoài tầm."
+  },
+  {
+    "id": "coc-mega2-adv-2",
+    "ageTarget": "11+",
+    "situation": "Lập ngân sách chi tiêu hàng tháng.",
+    "visual": "📊",
+    "correctCategory": "controllable",
+    "explanation": "Quản lý tài chính cá nhân."
+  },
+  {
+    "id": "coc-mega2-adv-3",
+    "ageTarget": "11+",
+    "situation": "Biến đổi khí hậu gây bão mạnh hơn.",
     "visual": "🌊",
     "correctCategory": "uncontrollable",
     "explanation": "Hiện tượng toàn cầu."
   },
   {
-    "id": "coc-mega-adv-4",
+    "id": "coc-mega2-adv-4",
     "ageTarget": "11+",
     "situation": "Giảm rác thải nhựa cá nhân.",
     "visual": "♻️",
     "correctCategory": "controllable",
-    "explanation": "Đóng góp nhỏ nhưng trong tầm tay."
+    "explanation": "Đóng góp nhỏ trong tầm tay."
   },
   {
-    "id": "coc-mega-adv-5",
+    "id": "coc-mega2-adv-5",
     "ageTarget": "11+",
-    "situation": "Thi trượt do đề quá khó.",
-    "visual": "📝",
+    "situation": "Công ty cắt giảm nhân sự.",
+    "visual": "🏢",
     "correctCategory": "uncontrollable",
-    "explanation": "Độ khó đề thi không do mình."
+    "explanation": "Quyết định cấp lãnh đạo."
   },
   {
-    "id": "coc-mega-adv-6",
+    "id": "coc-mega2-adv-6",
     "ageTarget": "11+",
-    "situation": "Rút kinh nghiệm và ôn lại bài chưa vững.",
-    "visual": "🔄",
+    "situation": "Học thêm kỹ năng mới mỗi tháng.",
+    "visual": "📚",
     "correctCategory": "controllable",
-    "explanation": "Học từ thất bại."
+    "explanation": "Đầu tư bản thân."
   },
   {
-    "id": "coc-mega-adv-7",
+    "id": "coc-mega2-adv-7",
     "ageTarget": "11+",
-    "situation": "Tỉ giá ngoại tệ biến động mạnh.",
+    "situation": "Tỉ giá ngoại tệ biến động.",
     "visual": "💱",
     "correctCategory": "uncontrollable",
     "explanation": "Chính sách tiền tệ quốc gia."
   },
   {
-    "id": "coc-mega-adv-8",
+    "id": "coc-mega2-adv-8",
     "ageTarget": "11+",
-    "situation": "Đa dạng hóa danh mục đầu tư.",
+    "situation": "Đa dạng hóa đầu tư tiết kiệm.",
     "visual": "📊",
     "correctCategory": "controllable",
     "explanation": "Quản trị rủi ro cá nhân."
+  },
+  {
+    "id": "coc-mega2-adv-9",
+    "ageTarget": "11+",
+    "situation": "Dịch bệnh bùng phát bất ngờ.",
+    "visual": "🦠",
+    "correctCategory": "uncontrollable",
+    "explanation": "Y tế cộng đồng ngoài tầm."
+  },
+  {
+    "id": "coc-mega2-adv-10",
+    "ageTarget": "11+",
+    "situation": "Rửa tay thường xuyên, đeo khẩu trang.",
+    "visual": "😷",
+    "correctCategory": "controllable",
+    "explanation": "Phòng ngừa cá nhân."
   }
 ] as const;
 
@@ -5328,59 +5737,246 @@ export const EXPANDED_NEGOTIATION = [
     "sampleWinWin": "Theo luật bảo vệ người tiêu dùng, sản phẩm lỗi được đổi trong 7 ngày. Đây là hóa đơn. Tôi muốn đổi sản phẩm mới."
   },
   {
-    "id": "neg-mega-kid-1",
+    "id": "neg-exp-kid-1",
     "ageTarget": "6-10",
-    "scenario": "Con muốn xem phim nhưng chị đang xem.",
-    "aiPersonality": "Chị Gái",
+    "scenario": "Con muốn nuôi cún nhưng mẹ sợ bẩn.",
+    "aiPersonality": "Mẹ Lo Lắng",
+    "visual": "🐕",
+    "targetOutcome": "Thương lượng trách nhiệm",
+    "winWinCriteria": "Con cam kết tắm và dọn vệ sinh cho cún.",
+    "sampleRequest": "Mua cún ngay! Con thích!",
+    "sampleWinWin": "Mẹ ơi con hứa sáng nào cũng dắt cún đi, chiều dọn vệ sinh. Nếu 1 tháng con làm tốt, mẹ cho nuôi nhé?"
+  },
+  {
+    "id": "neg-exp-kid-2",
+    "ageTarget": "6-10",
+    "scenario": "Bạn rủ chơi game nhưng con chưa xong bài.",
+    "aiPersonality": "Bạn Thân",
+    "visual": "📱",
+    "targetOutcome": "Hoàn thành bài trước",
+    "winWinCriteria": "Bạn đợi, con học xong rồi chơi vui hơn.",
+    "sampleRequest": "Chơi liền! Bài mai làm!",
+    "sampleWinWin": "Cho mình 25 phút nữa xong bài. Rồi mình chơi tới chiều luôn, khỏi lo gì!"
+  },
+  {
+    "id": "neg-exp-kid-3",
+    "ageTarget": "6-10",
+    "scenario": "Con muốn ở nhà bạn chơi qua đêm.",
+    "aiPersonality": "Ba Bảo Thủ",
+    "visual": "🏠",
+    "targetOutcome": "Lập kế hoạch an toàn",
+    "winWinCriteria": "Ba yên tâm khi biết người lớn nào trông.",
+    "sampleRequest": "Con đi! Đừng cấm!",
+    "sampleWinWin": "Ba ơi, nhà bạn có bác Hoa trông. Ba gọi hỏi bác trước nhé? Con hứa ngủ đúng 9 giờ."
+  },
+  {
+    "id": "neg-exp-kid-4",
+    "ageTarget": "6-10",
+    "scenario": "Hai anh em giành remote TV.",
+    "aiPersonality": "Anh Trai",
     "visual": "📺",
-    "targetOutcome": "Chia thời gian",
-    "winWinCriteria": "Cả hai đều được xem.",
-    "sampleRequest": "Em xem trước!",
-    "sampleWinWin": "Chị xem 30 phút rồi đổi em nhé? Mình oẳn tù tì ai trước."
+    "targetOutcome": "Luân phiên xem",
+    "winWinCriteria": "Mỗi người xem 30 phút.",
+    "sampleRequest": "Tao xem trước! Em đi chỗ khác!",
+    "sampleWinWin": "Anh xem trước 30 phút, sau đó em xem 30 phút. Ai đúng giờ thì ngày mai được chọn trước."
   },
   {
-    "id": "neg-mega-kid-2",
+    "id": "neg-exp-kid-5",
     "ageTarget": "6-10",
-    "scenario": "Bạn muốn đổi sandwich nhưng con thích sandwich mình.",
-    "aiPersonality": "Bạn Cùng Bàn",
-    "visual": "🥪",
-    "targetOutcome": "Từ chối lịch sự",
-    "winWinCriteria": "Bạn không buồn, con giữ đồ ăn.",
-    "sampleRequest": "Không đổi! Của tao!",
-    "sampleWinWin": "Mình thích sandwich mình lắm. Nhưng mai mình mang thêm bánh chia bạn nhé?"
+    "scenario": "Con muốn đi sinh nhật bạn nhưng ba mẹ bận.",
+    "aiPersonality": "Ba Mẹ Bận",
+    "visual": "🎂",
+    "targetOutcome": "Tìm giải pháp vận chuyển",
+    "winWinCriteria": "Con đi được, ba mẹ không phải sắp xếp.",
+    "sampleRequest": "Ba chở con đi! Bận thì nghỉ!",
+    "sampleWinWin": "Ba mẹ ơi, bác Tú nhà bạn nói chở con đi chung. 3 giờ ba đón con nhé?"
   },
   {
-    "id": "neg-mega-kid-3",
+    "id": "neg-exp-kid-6",
     "ageTarget": "6-10",
-    "scenario": "Con muốn đi bơi nhưng ba bảo phải dọn phòng.",
-    "aiPersonality": "Ba Nghiêm Túc",
-    "visual": "🏊",
-    "targetOutcome": "Dọn xong rồi đi bơi",
-    "winWinCriteria": "Ba hài lòng, con được đi bơi.",
-    "sampleRequest": "Con không dọn! Đi bơi ngay!",
-    "sampleWinWin": "Ba cho con 30 phút dọn phòng sạch. Xong ba chở con đi bơi 1 tiếng nha ba?"
+    "scenario": "Cô giáo giao bài nhóm, con không muốn làm với bạn A.",
+    "aiPersonality": "Cô Giáo",
+    "visual": "📚",
+    "targetOutcome": "Đề xuất nhóm khác",
+    "winWinCriteria": "Cô đồng ý, con học hiệu quả hơn.",
+    "sampleRequest": "Con không làm với A! Đổi ngay!",
+    "sampleWinWin": "Cô ơi, con nghĩ con và bạn B phối hợp tốt hơn vì hai đứa giỏi khác môn. Cô cho đổi nhóm được không ạ?"
   },
   {
-    "id": "neg-mega-kid-4",
+    "id": "neg-exp-kid-7",
     "ageTarget": "6-10",
-    "scenario": "Mẹ muốn con học đàn nhưng con thích vẽ.",
-    "aiPersonality": "Mẹ Kỳ Vọng",
+    "scenario": "Con muốn mua sách mới nhưng hết tiền tiêu vặt.",
+    "aiPersonality": "Mẹ Tiết Kiệm",
+    "visual": "📖",
+    "targetOutcome": "Đề xuất làm việc nhà kiếm thêm",
+    "winWinCriteria": "Mẹ hài lòng, con học giá trị lao động.",
+    "sampleRequest": "Mẹ mua cho con!",
+    "sampleWinWin": "Mẹ ơi, con rửa bát 1 tuần thì mẹ cho con thêm tiền mua sách nhé? Sách này về khoa học hay lắm."
+  },
+  {
+    "id": "neg-exp-kid-8",
+    "ageTarget": "6-10",
+    "scenario": "Bạn muốn ngồi chỗ của con.",
+    "aiPersonality": "Bạn Cùng Lớp",
+    "visual": "🪑",
+    "targetOutcome": "Thỏa thuận luân phiên",
+    "winWinCriteria": "Cả hai đều hài lòng.",
+    "sampleRequest": "Chỗ tao! Đi chỗ khác!",
+    "sampleWinWin": "Tuần này bạn ngồi đây, tuần sau mình đổi. Vậy công bằng cho cả hai nhé?"
+  },
+  {
+    "id": "neg-exp-kid-9",
+    "ageTarget": "6-10",
+    "scenario": "Con muốn đi công viên nhưng trời nóng.",
+    "aiPersonality": "Mẹ Cẩn Thận",
+    "visual": "☀️",
+    "targetOutcome": "Đi vào buổi chiều mát",
+    "winWinCriteria": "Mẹ yên tâm, con vẫn được đi.",
+    "sampleRequest": "Đi ngay! Nóng kệ!",
+    "sampleWinWin": "Mẹ ơi, 4 giờ chiều mát hơn. Con đội mũ + mang nước. Mẹ cho con đi 4 giờ nhé?"
+  },
+  {
+    "id": "neg-exp-kid-10",
+    "ageTarget": "6-10",
+    "scenario": "Bạn không muốn chia banh khi chơi.",
+    "aiPersonality": "Bạn Ích Kỷ",
+    "visual": "⚽",
+    "targetOutcome": "Đề xuất luật chung",
+    "winWinCriteria": "Ai cũng được chơi.",
+    "sampleRequest": "Trả banh đây!",
+    "sampleWinWin": "Mỗi đội chơi 5 phút rồi đổi. Bạn nào ghi bàn đẹp nhất thì được MVP. Vui hơn!"
+  },
+  {
+    "id": "neg-exp-kid-11",
+    "ageTarget": "6-10",
+    "scenario": "Con muốn học vẽ online nhưng ba mẹ lo internet.",
+    "aiPersonality": "Ba Mẹ Lo Mạng",
     "visual": "🎨",
-    "targetOutcome": "Thử cả hai",
-    "winWinCriteria": "Mẹ hài lòng con mở rộng, con vẫn được vẽ.",
-    "sampleRequest": "Con ghét đàn! Chỉ thích vẽ!",
-    "sampleWinWin": "Mẹ ơi con thử học đàn 1 tháng. Nếu con không thích thì cho con chuyển sang vẽ nhé?"
+    "targetOutcome": "Giải pháp an toàn",
+    "winWinCriteria": "Ba mẹ kiểm soát, con được học.",
+    "sampleRequest": "Cho con WiFi!",
+    "sampleWinWin": "Ba mẹ cài app kiểm soát, chỉ cho vào trang học vẽ. Mỗi buổi 45 phút. Ba mẹ check được mọi lúc."
   },
   {
-    "id": "neg-mega-kid-5",
+    "id": "neg-exp-kid-12",
     "ageTarget": "6-10",
-    "scenario": "Bạn rủ con chơi nhưng con đang làm bài.",
-    "aiPersonality": "Bạn Háo Hức",
-    "visual": "🎮",
-    "targetOutcome": "Hẹn chơi sau",
-    "winWinCriteria": "Bạn không buồn, con hoàn thành bài.",
-    "sampleRequest": "Được rồi bỏ bài chơi luôn!",
-    "sampleWinWin": "Mình cần 20 phút nữa làm xong bài. Sau đó mình chơi thoải mái nhé!"
+    "scenario": "Mẹ muốn con ăn rau nhưng con ghét rau.",
+    "aiPersonality": "Mẹ Dinh Dưỡng",
+    "visual": "🥬",
+    "targetOutcome": "Tìm loại rau con thích",
+    "winWinCriteria": "Con ăn rau dạng con thích, mẹ yên tâm.",
+    "sampleRequest": "Con không ăn rau!",
+    "sampleWinWin": "Mẹ ơi con ăn được rau cải luộc chấm nước mắm. Mẹ nấu kiểu đó nhé? Con hứa ăn hết."
+  },
+  {
+    "id": "neg-mega2-kid-1",
+    "ageTarget": "6-10",
+    "scenario": "3 bạn muốn làm đội trưởng trò chơi.",
+    "aiPersonality": "Hai Bạn Khác",
+    "visual": "👑",
+    "targetOutcome": "Bầu cử/luân phiên",
+    "winWinCriteria": "Ai cũng được cơ hội lãnh đạo.",
+    "sampleRequest": "Tao làm đội trưởng! Tao giỏi nhất!",
+    "sampleWinWin": "Mỗi trò chơi 1 đội trưởng khác. Trò này bạn A, trò sau bạn B, con làm trò tiếp. Ai cũng được!"
+  },
+  {
+    "id": "neg-mega2-kid-2",
+    "ageTarget": "6-10",
+    "scenario": "Em muốn mẹ đi ngủ cùng nhưng mẹ mệt.",
+    "aiPersonality": "Mẹ Mệt Mỏi",
+    "visual": "😴",
+    "targetOutcome": "Thỏa hiệp thời gian",
+    "winWinCriteria": "Mẹ nghỉ ngơi, em vẫn thấy an toàn.",
+    "sampleRequest": "Mẹ ngủ với con! Bây giờ!",
+    "sampleWinWin": "Mẹ ơi, mẹ kể cho con 1 câu chuyện ngắn rồi mẹ nghỉ nhé. Con ôm gấu bông ngủ."
+  },
+  {
+    "id": "neg-mega2-kid-3",
+    "ageTarget": "6-10",
+    "scenario": "Con muốn nuôi hamster, ba nói nhà chật.",
+    "aiPersonality": "Ba Thực Tế",
+    "visual": "🐹",
+    "targetOutcome": "Chứng minh khả năng chăm sóc",
+    "winWinCriteria": "Ba thấy con có trách nhiệm.",
+    "sampleRequest": "Ba mua cho con!",
+    "sampleWinWin": "Ba ơi, con nuôi hamster nhỏ trong hộp 30cm thôi. Con dọn mỗi ngày. Thử 2 tuần nếu hôi ba cho trả nhé?"
+  },
+  {
+    "id": "neg-mega2-kid-4",
+    "ageTarget": "6-10",
+    "scenario": "Bạn muốn con cho copy bài kiểm tra.",
+    "aiPersonality": "Bạn Nhờ Vả",
+    "visual": "📝",
+    "targetOutcome": "Giúp bạn hiểu bài, không cho copy",
+    "winWinCriteria": "Bạn học được, con không gian lận.",
+    "sampleRequest": "Không cho copy!",
+    "sampleWinWin": "Mình giải thích cách làm cho bạn hiểu. Mai trước giờ thi mình ôn chung 15 phút nhé?"
+  },
+  {
+    "id": "neg-mega2-kid-5",
+    "ageTarget": "6-10",
+    "scenario": "2 bạn tranh nhau ngồi cạnh cửa sổ xe buýt.",
+    "aiPersonality": "Bạn Cãi Nhau",
+    "visual": "🚌",
+    "targetOutcome": "Luân phiên theo chặng",
+    "winWinCriteria": "Cả hai đều ngồi cửa sổ.",
+    "sampleRequest": "Tao ngồi trước!",
+    "sampleWinWin": "Nửa đường đầu bạn ngồi, nửa sau mình đổi. Vậy ai cũng ngắm cảnh nhé!"
+  },
+  {
+    "id": "neg-mega2-kid-6",
+    "ageTarget": "6-10",
+    "scenario": "Con muốn mua kem nhưng chỉ đủ tiền 1 cây, em cũng muốn.",
+    "aiPersonality": "Em Bé",
+    "visual": "🍦",
+    "targetOutcome": "Chia sẻ 1 cây kem",
+    "winWinCriteria": "Cả hai đều được ăn kem.",
+    "sampleRequest": "Kem của tao!",
+    "sampleWinWin": "Mình mua 1 cây to rồi chia đôi. Em thích vị gì? Nửa em nửa anh nhé!"
+  },
+  {
+    "id": "neg-mega2-kid-7",
+    "ageTarget": "6-10",
+    "scenario": "Cô giao bài nhóm 4, nhưng 5 bạn muốn vào.",
+    "aiPersonality": "Bạn Thứ 5",
+    "visual": "👥",
+    "targetOutcome": "Xin cô cho nhóm 5",
+    "winWinCriteria": "Không ai bị loại ra.",
+    "sampleRequest": "Đủ 4 rồi, bạn đi chỗ khác!",
+    "sampleWinWin": "Cô ơi, nhóm con có 5 bạn muốn làm chung. Cho chúng con nhóm 5 được không ạ? Con hứa ai cũng làm."
+  },
+  {
+    "id": "neg-mega2-kid-8",
+    "ageTarget": "6-10",
+    "scenario": "Anh lớn chiếm hết ghế sofa xem TV.",
+    "aiPersonality": "Anh Trai Lớn",
+    "visual": "🛋️",
+    "targetOutcome": "Chia thời gian sofa",
+    "winWinCriteria": "Cả hai đều thoải mái.",
+    "sampleRequest": "Em đi chỗ khác!",
+    "sampleWinWin": "Anh xem 30 phút nữa rồi em ngồi nhé. Em mang gối ra ngồi cạnh anh luôn, cùng xem."
+  },
+  {
+    "id": "neg-mega2-kid-9",
+    "ageTarget": "6-10",
+    "scenario": "Mẹ bảo đi ngủ 8 giờ nhưng phim chưa hết.",
+    "aiPersonality": "Mẹ Nghiêm Khắc",
+    "visual": "🌙",
+    "targetOutcome": "Xem nốt + ngủ sớm mai",
+    "winWinCriteria": "Mẹ đồng ý, con giữ kỷ luật.",
+    "sampleRequest": "Con xem hết đã!",
+    "sampleWinWin": "Mẹ ơi phim còn 15 phút. Con xem nốt rồi ngủ ngay, mai con dậy sớm 15 phút bù lại."
+  },
+  {
+    "id": "neg-mega2-kid-10",
+    "ageTarget": "6-10",
+    "scenario": "Bạn rủ đi chơi xa nhưng con chưa xin phép ba mẹ.",
+    "aiPersonality": "Bạn Hào Hứng",
+    "visual": "🏖️",
+    "targetOutcome": "Xin phép trước khi đi",
+    "winWinCriteria": "Ba mẹ yên tâm, con được đi.",
+    "sampleRequest": "Đi luôn! Về nói sau!",
+    "sampleWinWin": "Bạn ơi đợi mình hỏi ba mẹ 5 phút. Nếu ba mẹ OK thì đi ngay. Mình gọi điện luôn nhé!"
   }
 ] as const;
 
@@ -5590,6 +6186,630 @@ export const EXPANDED_POLICY = [
         "consequence": "Giải pháp chuyên nghiệp nhưng mất thời gian.",
         "fairnessScore": 75,
         "happinessScore": 70
+      }
+    ]
+  },
+  {
+    "id": "pol-exp-kid-1",
+    "ageTarget": "6-10",
+    "situation": "Ai dọn bàn ăn sau bữa cơm?",
+    "visual": "🍽️",
+    "options": [
+      {
+        "text": "Chia đều: hôm nay anh, mai em",
+        "consequence": "Ai cũng học trách nhiệm.",
+        "fairnessScore": 95,
+        "happinessScore": 85
+      },
+      {
+        "text": "Ai ăn xong trước thì dọn",
+        "consequence": "Bạn ăn chậm thiệt thòi.",
+        "fairnessScore": 40,
+        "happinessScore": 50
+      },
+      {
+        "text": "Thuê người dọn",
+        "consequence": "Tốn tiền và các em không học được.",
+        "fairnessScore": 30,
+        "happinessScore": 60
+      }
+    ]
+  },
+  {
+    "id": "pol-exp-kid-2",
+    "ageTarget": "6-10",
+    "situation": "Lớp có 1 chỗ ngồi đầu, 3 bạn muốn?",
+    "visual": "💺",
+    "options": [
+      {
+        "text": "Luân phiên mỗi tuần 1 bạn",
+        "consequence": "Công bằng, ai cũng được.",
+        "fairnessScore": 95,
+        "happinessScore": 90
+      },
+      {
+        "text": "Ai điểm cao nhất thì ngồi",
+        "consequence": "Chỉ ưu tiên giỏi, bạn khác buồn.",
+        "fairnessScore": 50,
+        "happinessScore": 40
+      },
+      {
+        "text": "Cô giáo chọn bạn cô thích",
+        "consequence": "Thiên vị, gây bất mãn.",
+        "fairnessScore": 15,
+        "happinessScore": 20
+      }
+    ]
+  },
+  {
+    "id": "pol-exp-kid-3",
+    "ageTarget": "6-10",
+    "situation": "Bạn mới chuyển trường, không ai chơi cùng?",
+    "visual": "👋",
+    "options": [
+      {
+        "text": "Rủ bạn mới chơi chung giờ ra chơi",
+        "consequence": "Bạn mới vui, lớp đoàn kết hơn.",
+        "fairnessScore": 90,
+        "happinessScore": 95
+      },
+      {
+        "text": "Mặc kệ, tự bạn ấy quen",
+        "consequence": "Bạn ấy buồn và cô đơn lâu.",
+        "fairnessScore": 20,
+        "happinessScore": 30
+      },
+      {
+        "text": "Nói bạn mới phải tự hòa nhập",
+        "consequence": "Đúng 1 phần, nhưng thiếu tình người.",
+        "fairnessScore": 45,
+        "happinessScore": 40
+      }
+    ]
+  },
+  {
+    "id": "pol-exp-kid-4",
+    "ageTarget": "6-10",
+    "situation": "Thùng rác lớp đầy, ai đổ?",
+    "visual": "🗑️",
+    "options": [
+      {
+        "text": "Bạn trực nhật hôm nay đổ",
+        "consequence": "Có quy tắc rõ ràng.",
+        "fairnessScore": 85,
+        "happinessScore": 80
+      },
+      {
+        "text": "Ai ngồi gần thùng rác thì đổ",
+        "consequence": "Không công bằng cho bạn ngồi gần.",
+        "fairnessScore": 40,
+        "happinessScore": 35
+      },
+      {
+        "text": "Chờ lao công đổ",
+        "consequence": "Lớp bốc mùi cả buổi.",
+        "fairnessScore": 20,
+        "happinessScore": 15
+      }
+    ]
+  },
+  {
+    "id": "pol-exp-kid-5",
+    "ageTarget": "6-10",
+    "situation": "Có 3 quả bóng, 10 bạn muốn chơi?",
+    "visual": "⚽",
+    "options": [
+      {
+        "text": "Chia 3 đội, luân phiên dùng bóng",
+        "consequence": "Ai cũng được chơi.",
+        "fairnessScore": 90,
+        "happinessScore": 85
+      },
+      {
+        "text": "Ai đến sân trước dùng trước",
+        "consequence": "Bạn ở xa thiệt thòi.",
+        "fairnessScore": 35,
+        "happinessScore": 40
+      },
+      {
+        "text": "Chỉ cho bạn giỏi bóng chơi",
+        "consequence": "Phân biệt, gây buồn.",
+        "fairnessScore": 15,
+        "happinessScore": 20
+      }
+    ]
+  },
+  {
+    "id": "pol-exp-kid-6",
+    "ageTarget": "6-10",
+    "situation": "Bạn A đánh bạn B, cô giáo hỏi ai thấy?",
+    "visual": "👀",
+    "options": [
+      {
+        "text": "Kể thật cho cô giáo nghe",
+        "consequence": "Bảo vệ bạn B, cô xử lý đúng.",
+        "fairnessScore": 85,
+        "happinessScore": 70
+      },
+      {
+        "text": "Im lặng vì sợ bạn A",
+        "consequence": "Bạn B tiếp tục bị bắt nạt.",
+        "fairnessScore": 30,
+        "happinessScore": 25
+      },
+      {
+        "text": "Nói bạn B trêu trước (không đúng)",
+        "consequence": "Bạn B bị oan, A không rút kinh nghiệm.",
+        "fairnessScore": 10,
+        "happinessScore": 10
+      }
+    ]
+  },
+  {
+    "id": "pol-exp-kid-7",
+    "ageTarget": "6-10",
+    "situation": "Cả lớp muốn đi picnic nhưng 1 bạn bệnh?",
+    "visual": "🏥",
+    "options": [
+      {
+        "text": "Đợi bạn khỏe rồi cả lớp đi",
+        "consequence": "Đoàn kết, không bỏ ai lại.",
+        "fairnessScore": 90,
+        "happinessScore": 80
+      },
+      {
+        "text": "Đi luôn, bạn bệnh ở nhà",
+        "consequence": "Bạn ấy buồn vì bị bỏ rơi.",
+        "fairnessScore": 40,
+        "happinessScore": 60
+      },
+      {
+        "text": "Hủy luôn chuyến picnic",
+        "consequence": "Cả lớp thất vọng vì 1 người.",
+        "fairnessScore": 50,
+        "happinessScore": 20
+      }
+    ]
+  },
+  {
+    "id": "pol-exp-kid-8",
+    "ageTarget": "6-10",
+    "situation": "Mẹ cho tiền mua 1 món, em muốn 2?",
+    "visual": "💰",
+    "options": [
+      {
+        "text": "Chọn 1 món cần hơn, để dành tiền",
+        "consequence": "Học cách ưu tiên và tiết kiệm.",
+        "fairnessScore": 85,
+        "happinessScore": 75
+      },
+      {
+        "text": "Xin mẹ thêm tiền",
+        "consequence": "Mẹ có thể không có thêm.",
+        "fairnessScore": 50,
+        "happinessScore": 60
+      },
+      {
+        "text": "Lấy trộm tiền mua thêm",
+        "consequence": "Sai trái, mất niềm tin.",
+        "fairnessScore": 5,
+        "happinessScore": 10
+      }
+    ]
+  },
+  {
+    "id": "pol-exp-kid-9",
+    "ageTarget": "6-10",
+    "situation": "Bạn mượn đồ chơi rồi không trả?",
+    "visual": "🧸",
+    "options": [
+      {
+        "text": "Nhắc nhẹ bạn trả, nếu quên thì nói cô",
+        "consequence": "Giải quyết hòa bình.",
+        "fairnessScore": 85,
+        "happinessScore": 80
+      },
+      {
+        "text": "Giật lại đồ chơi",
+        "consequence": "Gây đánh nhau.",
+        "fairnessScore": 20,
+        "happinessScore": 30
+      },
+      {
+        "text": "Không cho ai mượn nữa",
+        "consequence": "Mất bạn, cô đơn.",
+        "fairnessScore": 40,
+        "happinessScore": 40
+      }
+    ]
+  },
+  {
+    "id": "pol-exp-kid-10",
+    "ageTarget": "6-10",
+    "situation": "Hai nhóm muốn dùng sân bóng cùng lúc?",
+    "visual": "🏟️",
+    "options": [
+      {
+        "text": "Chia sân làm 2 hoặc chơi luân phiên",
+        "consequence": "Cả 2 nhóm đều được chơi.",
+        "fairnessScore": 90,
+        "happinessScore": 85
+      },
+      {
+        "text": "Nhóm nào đông hơn thì được",
+        "consequence": "Nhóm ít người thiệt thòi.",
+        "fairnessScore": 40,
+        "happinessScore": 45
+      },
+      {
+        "text": "Đá banh chung 1 đội to",
+        "consequence": "Quá đông, khó chơi.",
+        "fairnessScore": 50,
+        "happinessScore": 50
+      }
+    ]
+  },
+  {
+    "id": "pol-exp-kid-11",
+    "ageTarget": "6-10",
+    "situation": "Cô phát phần thưởng chỉ cho bạn giỏi?",
+    "visual": "🏆",
+    "options": [
+      {
+        "text": "Đề xuất thêm giải \"Tiến bộ nhất\"",
+        "consequence": "Khuyến khích mọi người cố gắng.",
+        "fairnessScore": 90,
+        "happinessScore": 90
+      },
+      {
+        "text": "Chỉ giỏi mới xứng đáng",
+        "consequence": "Bạn yếu mất động lực.",
+        "fairnessScore": 40,
+        "happinessScore": 35
+      },
+      {
+        "text": "Không phát giải cho ai",
+        "consequence": "Không ai có động lực.",
+        "fairnessScore": 20,
+        "happinessScore": 20
+      }
+    ]
+  },
+  {
+    "id": "pol-exp-kid-12",
+    "ageTarget": "6-10",
+    "situation": "Bạn bị chê béo ở trường?",
+    "visual": "😢",
+    "options": [
+      {
+        "text": "Nói chuyện với cô, bảo vệ bạn",
+        "consequence": "Chống bắt nạt, bạn ấy được an toàn.",
+        "fairnessScore": 90,
+        "happinessScore": 85
+      },
+      {
+        "text": "Chê lại bạn kia",
+        "consequence": "Leo thang bạo lực lời nói.",
+        "fairnessScore": 10,
+        "happinessScore": 15
+      },
+      {
+        "text": "Cười theo đám đông",
+        "consequence": "Bạn bị tổn thương nặng hơn.",
+        "fairnessScore": 5,
+        "happinessScore": 5
+      }
+    ]
+  },
+  {
+    "id": "pol-exp-kid-13",
+    "ageTarget": "6-10",
+    "situation": "Em út đòi xem TV khi anh đang học?",
+    "visual": "📺",
+    "options": [
+      {
+        "text": "Thỏa thuận: anh học 30 phút, sau đó em xem",
+        "consequence": "Cả hai được thỏa mãn.",
+        "fairnessScore": 85,
+        "happinessScore": 85
+      },
+      {
+        "text": "Tắt TV luôn",
+        "consequence": "Em khóc, nhà ồn hơn.",
+        "fairnessScore": 40,
+        "happinessScore": 30
+      },
+      {
+        "text": "Cho em xem to, anh đeo tai nghe",
+        "consequence": "Anh phân tâm, học kém.",
+        "fairnessScore": 50,
+        "happinessScore": 55
+      }
+    ]
+  },
+  {
+    "id": "pol-exp-kid-14",
+    "ageTarget": "6-10",
+    "situation": "Bạn quên mang bút, hỏi mượn?",
+    "visual": "✏️",
+    "options": [
+      {
+        "text": "Cho bạn mượn 1 cây dự phòng",
+        "consequence": "Giúp đỡ bạn, tình bạn tốt hơn.",
+        "fairnessScore": 90,
+        "happinessScore": 90
+      },
+      {
+        "text": "Không cho vì sợ bạn làm hỏng",
+        "consequence": "Bạn không có bút viết bài.",
+        "fairnessScore": 40,
+        "happinessScore": 30
+      },
+      {
+        "text": "Bảo bạn tự xin cô",
+        "consequence": "Đúng nhưng thiếu tình đồng đội.",
+        "fairnessScore": 55,
+        "happinessScore": 50
+      }
+    ]
+  },
+  {
+    "id": "pol-exp-kid-15",
+    "ageTarget": "6-10",
+    "situation": "Mưa lớn, chỉ có 1 ô dù cho 3 bạn?",
+    "visual": "☂️",
+    "options": [
+      {
+        "text": "3 bạn che chung dù, đi chậm",
+        "consequence": "Ai cũng ít ướt nhất có thể.",
+        "fairnessScore": 90,
+        "happinessScore": 80
+      },
+      {
+        "text": "Bạn có dù giữ cho mình",
+        "consequence": "2 bạn bị ướt sũng.",
+        "fairnessScore": 20,
+        "happinessScore": 30
+      },
+      {
+        "text": "Ai chạy nhanh nhất đến trước",
+        "consequence": "Bạn chậm bị ướt nhất.",
+        "fairnessScore": 30,
+        "happinessScore": 35
+      }
+    ]
+  },
+  {
+    "id": "pol-exp-kid-16",
+    "ageTarget": "6-10",
+    "situation": "Cả tổ làm bài nhóm, 1 bạn không làm?",
+    "visual": "📋",
+    "options": [
+      {
+        "text": "Nói chuyện riêng, hỏi bạn gặp khó gì",
+        "consequence": "Hiểu lý do, giúp bạn tham gia.",
+        "fairnessScore": 85,
+        "happinessScore": 80
+      },
+      {
+        "text": "Mách cô giáo ngay",
+        "consequence": "Bạn bị phạt nhưng chưa hiểu lý do.",
+        "fairnessScore": 50,
+        "happinessScore": 40
+      },
+      {
+        "text": "Làm phần bạn ấy luôn",
+        "consequence": "Bạn ấy không học được gì.",
+        "fairnessScore": 30,
+        "happinessScore": 50
+      }
+    ]
+  },
+  {
+    "id": "pol-exp-adv-1",
+    "ageTarget": "11+",
+    "situation": "Tragedy of Commons: Hồ cá chung, ai cũng câu không giới hạn?",
+    "visual": "🐟",
+    "options": [
+      {
+        "text": "Đặt hạn ngạch câu cá theo mùa (Ostrom)",
+        "consequence": "Tài nguyên phục hồi bền vững.",
+        "fairnessScore": 90,
+        "happinessScore": 70
+      },
+      {
+        "text": "Để tự do khai thác",
+        "consequence": "Cá cạn kiệt, mọi người đều thiệt.",
+        "fairnessScore": 10,
+        "happinessScore": 10
+      },
+      {
+        "text": "Cấm câu hoàn toàn",
+        "consequence": "Mất nguồn sống, dân phản đối.",
+        "fairnessScore": 40,
+        "happinessScore": 30
+      }
+    ]
+  },
+  {
+    "id": "pol-exp-adv-2",
+    "ageTarget": "11+",
+    "situation": "Ngoại ứng: Nhà máy xả khói nhưng tạo 500 việc làm?",
+    "visual": "🏭",
+    "options": [
+      {
+        "text": "Thuế Pigou + bộ lọc khói bắt buộc",
+        "consequence": "Giảm ô nhiễm, giữ việc làm.",
+        "fairnessScore": 85,
+        "happinessScore": 75
+      },
+      {
+        "text": "Đóng cửa nhà máy",
+        "consequence": "500 người mất việc.",
+        "fairnessScore": 30,
+        "happinessScore": 30
+      },
+      {
+        "text": "Để công nhân biểu quyết",
+        "consequence": "Thiên vị vì họ cần thu nhập.",
+        "fairnessScore": 50,
+        "happinessScore": 55
+      }
+    ]
+  },
+  {
+    "id": "pol-exp-adv-3",
+    "ageTarget": "11+",
+    "situation": "Public Goods: Ai trả tiền đèn đường?",
+    "visual": "💡",
+    "options": [
+      {
+        "text": "Thuế chung, nhà nước quản lý",
+        "consequence": "Mọi người đều hưởng lợi.",
+        "fairnessScore": 85,
+        "happinessScore": 80
+      },
+      {
+        "text": "Ai dùng đường thì đóng phí",
+        "consequence": "Khó thu, nhiều người trốn.",
+        "fairnessScore": 40,
+        "happinessScore": 40
+      },
+      {
+        "text": "Doanh nghiệp tài trợ đổi quảng cáo",
+        "consequence": "Phụ thuộc tư nhân, không bền.",
+        "fairnessScore": 55,
+        "happinessScore": 60
+      }
+    ]
+  },
+  {
+    "id": "pol-exp-adv-4",
+    "ageTarget": "11+",
+    "situation": "Moral Hazard: Bảo hiểm toàn phần → lái xe ẩu?",
+    "visual": "🚗",
+    "options": [
+      {
+        "text": "Đặt mức khấu trừ + thưởng lái an toàn",
+        "consequence": "Khuyến khích cẩn thận.",
+        "fairnessScore": 85,
+        "happinessScore": 75
+      },
+      {
+        "text": "Bảo hiểm trả 100% mọi thiệt hại",
+        "consequence": "Không ai cẩn thận nữa.",
+        "fairnessScore": 20,
+        "happinessScore": 40
+      },
+      {
+        "text": "Bỏ bảo hiểm hoàn toàn",
+        "consequence": "Tai nạn = phá sản.",
+        "fairnessScore": 15,
+        "happinessScore": 15
+      }
+    ]
+  },
+  {
+    "id": "pol-exp-adv-5",
+    "ageTarget": "11+",
+    "situation": "Prisoner's Dilemma: 2 nước cùng tăng vũ khí?",
+    "visual": "⚔️",
+    "options": [
+      {
+        "text": "Hiệp ước giải trừ vũ khí (Nash Eq.)",
+        "consequence": "Cả 2 bên giảm chi phí, hòa bình.",
+        "fairnessScore": 90,
+        "happinessScore": 80
+      },
+      {
+        "text": "Tăng vũ khí để \"mạnh hơn\"",
+        "consequence": "Chạy đua vũ trang, thêm nguy hiểm.",
+        "fairnessScore": 10,
+        "happinessScore": 20
+      },
+      {
+        "text": "1 bên giải giáp đơn phương",
+        "consequence": "Rủi ro bị tấn công.",
+        "fairnessScore": 30,
+        "happinessScore": 35
+      }
+    ]
+  },
+  {
+    "id": "pol-exp-adv-6",
+    "ageTarget": "11+",
+    "situation": "Free Rider: Dự án nhóm, 1 người không làm vẫn được điểm?",
+    "visual": "📝",
+    "options": [
+      {
+        "text": "Chấm điểm cá nhân + nhóm (Peer review)",
+        "consequence": "Công bằng, ai cũng phải đóng góp.",
+        "fairnessScore": 90,
+        "happinessScore": 80
+      },
+      {
+        "text": "Điểm chung cho cả nhóm",
+        "consequence": "Người lười được lợi.",
+        "fairnessScore": 20,
+        "happinessScore": 40
+      },
+      {
+        "text": "Đuổi bạn lười ra khỏi nhóm",
+        "consequence": "Khắc nghiệt, không giải quyết gốc.",
+        "fairnessScore": 40,
+        "happinessScore": 35
+      }
+    ]
+  },
+  {
+    "id": "pol-exp-adv-7",
+    "ageTarget": "11+",
+    "situation": "Discrimination: Công ty chỉ tuyển nam giới?",
+    "visual": "⚖️",
+    "options": [
+      {
+        "text": "Luật bình đẳng giới + giám sát",
+        "consequence": "Mọi người có cơ hội ngang nhau.",
+        "fairnessScore": 95,
+        "happinessScore": 85
+      },
+      {
+        "text": "Để thị trường tự điều chỉnh",
+        "consequence": "Bất bình đẳng kéo dài.",
+        "fairnessScore": 20,
+        "happinessScore": 25
+      },
+      {
+        "text": "Quota bắt buộc 50/50",
+        "consequence": "Có thể tuyển người chưa đủ năng lực.",
+        "fairnessScore": 60,
+        "happinessScore": 55
+      }
+    ]
+  },
+  {
+    "id": "pol-exp-adv-8",
+    "ageTarget": "11+",
+    "situation": "Information Asymmetry: Bán xe cũ, che giấu lỗi?",
+    "visual": "🚙",
+    "options": [
+      {
+        "text": "Luật bắt buộc công khai lịch sử xe",
+        "consequence": "Người mua được bảo vệ.",
+        "fairnessScore": 90,
+        "happinessScore": 80
+      },
+      {
+        "text": "Người mua tự kiểm tra",
+        "consequence": "Không phải ai cũng biết kiểm tra.",
+        "fairnessScore": 40,
+        "happinessScore": 40
+      },
+      {
+        "text": "Bảo hành bắt buộc 6 tháng",
+        "consequence": "Chi phí cao, giá xe tăng.",
+        "fairnessScore": 60,
+        "happinessScore": 60
       }
     ]
   }
