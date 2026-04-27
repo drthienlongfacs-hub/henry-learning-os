@@ -6,14 +6,12 @@
 
 import type { EliteCapabilityMetrics } from '@/types';
 
-// --- Pillar 2: Probability & Data (Batanero 2016 / Singapore CPA) ---
-
 export type LikelihoodLevel = 'impossible' | 'unlikely' | 'equal' | 'likely' | 'certain';
 
 export interface ProbabilityScenario {
     id: string;
     question: string;
-    visual: string;           // emoji or text visual
+    visual: string;
     correctAnswer: LikelihoodLevel;
     options: LikelihoodLevel[];
     explanation: string;
@@ -21,70 +19,41 @@ export interface ProbabilityScenario {
 
 export function generateProbabilityScenarios(count: number = 5): ProbabilityScenario[] {
     const pool: ProbabilityScenario[] = [
-        {
-            id: 'prob-001',
-            question: 'Nếu tung một đồng xu, mặt ngửa sẽ xuất hiện?',
-            visual: '🪙',
-            correctAnswer: 'equal',
-            options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'],
-            explanation: 'Đồng xu có 2 mặt bằng nhau, nên xác suất là Ngang nhau (50/50).',
-        },
-        {
-            id: 'prob-002',
-            question: 'Mặt trời sẽ mọc vào ngày mai?',
-            visual: '☀️🌅',
-            correctAnswer: 'certain',
-            options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'],
-            explanation: 'Mặt trời mọc mỗi ngày — đây là điều Chắc chắn!',
-        },
-        {
-            id: 'prob-003',
-            question: 'Con sẽ gặp một con khủng long sống trên đường đi học?',
-            visual: '🦕🚫',
-            correctAnswer: 'impossible',
-            options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'],
-            explanation: 'Khủng long đã tuyệt chủng hàng triệu năm — Không thể xảy ra!',
-        },
-        {
-            id: 'prob-004',
-            question: 'Trong túi có 9 viên bi đỏ và 1 viên bi xanh. Lấy ra 1 viên, viên đó sẽ là màu đỏ?',
-            visual: '🔴🔴🔴🔴🔴🔴🔴🔴🔴🔵',
-            correctAnswer: 'likely',
-            options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'],
-            explanation: '9 trong 10 viên bi là đỏ — Có khả năng cao lấy được bi đỏ!',
-        },
-        {
-            id: 'prob-005',
-            question: 'Trời mưa vào ngày nắng đẹp, không mây?',
-            visual: '☀️💧❓',
-            correctAnswer: 'unlikely',
-            options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'],
-            explanation: 'Trời không mây thì mưa rất ít khi xảy ra — Ít khi!',
-        },
-        {
-            id: 'prob-006',
-            question: 'Gieo xúc xắc, ra số 7?',
-            visual: '🎲',
-            correctAnswer: 'impossible',
-            options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'],
-            explanation: 'Xúc xắc chỉ có số 1-6, không có số 7 — Không thể!',
-        },
-        {
-            id: 'prob-007',
-            question: 'Bốc 1 lá bài từ bộ bài, nó sẽ là lá bài (không phải là trang trắng)?',
-            visual: '🃏',
-            correctAnswer: 'certain',
-            options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'],
-            explanation: 'Mọi lá trong bộ bài đều là lá bài — Chắc chắn!',
-        },
-    ];
+        { id: 'prob-gen-0', question: 'Trong hộp có 10 bi xanh và 1 bi đỏ. Lấy 1 viên, nó sẽ là bi đỏ?', visual: '🎲', correctAnswer: 'unlikely', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Tỉ lệ lấy được bi đỏ rất nhỏ.' },
+        { id: 'prob-gen-1', question: 'Ngày mai sau thứ Ba sẽ là thứ Tư?', visual: '🎲', correctAnswer: 'certain', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Thứ tự các ngày trong tuần là cố định.' },
+        { id: 'prob-gen-2', question: 'Con tung một viên xúc xắc 8 mặt, nó sẽ ra số 100?', visual: '🎲', correctAnswer: 'impossible', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Không có số 100 trên xúc xắc này.' },
+        { id: 'prob-gen-3', question: 'Tung một đồng xu bình thường, nó sẽ ra mặt sấp?', visual: '🎲', correctAnswer: 'equal', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Xác suất là 50/50.' },
+        { id: 'prob-gen-4', question: 'Trong túi có 24 kẹo dâu và 2 kẹo chanh. Lấy 1 cái, nó sẽ là kẹo dâu?', visual: '🎲', correctAnswer: 'likely', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Có rất nhiều kẹo dâu nên xác suất cao.' },
+        { id: 'prob-gen-5', question: 'Trong hộp có 15 bi xanh và 1 bi đỏ. Lấy 1 viên, nó sẽ là bi đỏ?', visual: '🎲', correctAnswer: 'unlikely', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Tỉ lệ lấy được bi đỏ rất nhỏ.' },
+        { id: 'prob-gen-6', question: 'Ngày mai sau thứ Ba sẽ là thứ Tư?', visual: '🎲', correctAnswer: 'certain', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Thứ tự các ngày trong tuần là cố định.' },
+        { id: 'prob-gen-7', question: 'Con tung một viên xúc xắc 7 mặt, nó sẽ ra số 100?', visual: '🎲', correctAnswer: 'impossible', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Không có số 100 trên xúc xắc này.' },
+        { id: 'prob-gen-8', question: 'Tung một đồng xu bình thường, nó sẽ ra mặt sấp?', visual: '🎲', correctAnswer: 'equal', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Xác suất là 50/50.' },
+        { id: 'prob-gen-9', question: 'Trong túi có 29 kẹo dâu và 2 kẹo chanh. Lấy 1 cái, nó sẽ là kẹo dâu?', visual: '🎲', correctAnswer: 'likely', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Có rất nhiều kẹo dâu nên xác suất cao.' },
+        { id: 'prob-gen-10', question: 'Trong hộp có 20 bi xanh và 1 bi đỏ. Lấy 1 viên, nó sẽ là bi đỏ?', visual: '🎲', correctAnswer: 'unlikely', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Tỉ lệ lấy được bi đỏ rất nhỏ.' },
+        { id: 'prob-gen-11', question: 'Ngày mai sau thứ Ba sẽ là thứ Tư?', visual: '🎲', correctAnswer: 'certain', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Thứ tự các ngày trong tuần là cố định.' },
+        { id: 'prob-gen-12', question: 'Con tung một viên xúc xắc 6 mặt, nó sẽ ra số 100?', visual: '🎲', correctAnswer: 'impossible', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Không có số 100 trên xúc xắc này.' },
+        { id: 'prob-gen-13', question: 'Tung một đồng xu bình thường, nó sẽ ra mặt sấp?', visual: '🎲', correctAnswer: 'equal', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Xác suất là 50/50.' },
+        { id: 'prob-gen-14', question: 'Trong túi có 34 kẹo dâu và 2 kẹo chanh. Lấy 1 cái, nó sẽ là kẹo dâu?', visual: '🎲', correctAnswer: 'likely', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Có rất nhiều kẹo dâu nên xác suất cao.' },
+        { id: 'prob-gen-15', question: 'Trong hộp có 25 bi xanh và 1 bi đỏ. Lấy 1 viên, nó sẽ là bi đỏ?', visual: '🎲', correctAnswer: 'unlikely', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Tỉ lệ lấy được bi đỏ rất nhỏ.' },
+        { id: 'prob-gen-16', question: 'Ngày mai sau thứ Ba sẽ là thứ Tư?', visual: '🎲', correctAnswer: 'certain', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Thứ tự các ngày trong tuần là cố định.' },
+        { id: 'prob-gen-17', question: 'Con tung một viên xúc xắc 8 mặt, nó sẽ ra số 100?', visual: '🎲', correctAnswer: 'impossible', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Không có số 100 trên xúc xắc này.' },
+        { id: 'prob-gen-18', question: 'Tung một đồng xu bình thường, nó sẽ ra mặt sấp?', visual: '🎲', correctAnswer: 'equal', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Xác suất là 50/50.' },
+        { id: 'prob-gen-19', question: 'Trong túi có 39 kẹo dâu và 2 kẹo chanh. Lấy 1 cái, nó sẽ là kẹo dâu?', visual: '🎲', correctAnswer: 'likely', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Có rất nhiều kẹo dâu nên xác suất cao.' },
+        { id: 'prob-gen-20', question: 'Trong hộp có 30 bi xanh và 1 bi đỏ. Lấy 1 viên, nó sẽ là bi đỏ?', visual: '🎲', correctAnswer: 'unlikely', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Tỉ lệ lấy được bi đỏ rất nhỏ.' },
+        { id: 'prob-gen-21', question: 'Ngày mai sau thứ Ba sẽ là thứ Tư?', visual: '🎲', correctAnswer: 'certain', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Thứ tự các ngày trong tuần là cố định.' },
+        { id: 'prob-gen-22', question: 'Con tung một viên xúc xắc 7 mặt, nó sẽ ra số 100?', visual: '🎲', correctAnswer: 'impossible', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Không có số 100 trên xúc xắc này.' },
+        { id: 'prob-gen-23', question: 'Tung một đồng xu bình thường, nó sẽ ra mặt sấp?', visual: '🎲', correctAnswer: 'equal', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Xác suất là 50/50.' },
+        { id: 'prob-gen-24', question: 'Trong túi có 44 kẹo dâu và 2 kẹo chanh. Lấy 1 cái, nó sẽ là kẹo dâu?', visual: '🎲', correctAnswer: 'likely', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Có rất nhiều kẹo dâu nên xác suất cao.' },
+        { id: 'prob-gen-25', question: 'Trong hộp có 35 bi xanh và 1 bi đỏ. Lấy 1 viên, nó sẽ là bi đỏ?', visual: '🎲', correctAnswer: 'unlikely', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Tỉ lệ lấy được bi đỏ rất nhỏ.' },
+        { id: 'prob-gen-26', question: 'Ngày mai sau thứ Ba sẽ là thứ Tư?', visual: '🎲', correctAnswer: 'certain', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Thứ tự các ngày trong tuần là cố định.' },
+        { id: 'prob-gen-27', question: 'Con tung một viên xúc xắc 6 mặt, nó sẽ ra số 100?', visual: '🎲', correctAnswer: 'impossible', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Không có số 100 trên xúc xắc này.' },
+        { id: 'prob-gen-28', question: 'Tung một đồng xu bình thường, nó sẽ ra mặt sấp?', visual: '🎲', correctAnswer: 'equal', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Xác suất là 50/50.' },
+        { id: 'prob-gen-29', question: 'Trong túi có 49 kẹo dâu và 2 kẹo chanh. Lấy 1 cái, nó sẽ là kẹo dâu?', visual: '🎲', correctAnswer: 'likely', options: ['impossible', 'unlikely', 'equal', 'likely', 'certain'], explanation: 'Có rất nhiều kẹo dâu nên xác suất cao.' },
 
-    // Shuffle and return requested count
+    ];
     const shuffled = [...pool].sort(() => Math.random() - 0.5);
     return shuffled.slice(0, Math.min(count, pool.length));
 }
-
-// --- Pillar 4: Finance & Assets (Jump$tart 2015) ---
 
 export interface FinanceItem {
     id: string;
@@ -98,42 +67,9 @@ export interface FinanceItem {
 }
 
 export const FINANCE_ITEMS: FinanceItem[] = [
-    {
-        id: 'fin-seed-001',
-        name: 'Hạt giống Cây Tri Thức',
-        cost: 5,
-        type: 'asset',
-        description: 'Tưới mỗi ngày bằng cách làm bài tập. Sau 7 ngày cây cho 10 xu!',
-        visual: '🌱',
-        returnAfterDays: 7,
-        returnMultiplier: 2,
-    },
-    {
-        id: 'fin-seed-002',
-        name: 'Cây Lãi Kép Vàng',
-        cost: 10,
-        type: 'asset',
-        description: 'Cây đặc biệt: sau 14 ngày cho 30 xu! Nhưng phải tưới mỗi ngày.',
-        visual: '🌳✨',
-        returnAfterDays: 14,
-        returnMultiplier: 3,
-    },
-    {
-        id: 'fin-avatar-001',
-        name: 'Avatar Phi Hành Gia',
-        cost: 8,
-        type: 'consumable',
-        description: 'Avatar đẹp nhưng xu sẽ biến mất. Đây là "Muốn" hay "Cần"?',
-        visual: '👨‍🚀',
-    },
-    {
-        id: 'fin-avatar-002',
-        name: 'Sticker Ngôi Sao',
-        cost: 3,
-        type: 'consumable',
-        description: 'Sticker trang trí. Xu mất ngay khi mua.',
-        visual: '⭐',
-    },
+    { id: 'fin-seed-001', name: 'Hạt giống Cây Tri Thức', cost: 5, type: 'asset', description: 'Tưới mỗi ngày. 7 ngày cho 10 xu!', visual: '🌱', returnAfterDays: 7, returnMultiplier: 2 },
+    { id: 'fin-seed-002', name: 'Cây Lãi Kép Vàng', cost: 10, type: 'asset', description: '14 ngày cho 30 xu!', visual: '🌳✨', returnAfterDays: 14, returnMultiplier: 3 },
+    { id: 'fin-avatar-001', name: 'Avatar Phi Hành Gia', cost: 8, type: 'consumable', description: 'Trang trí đẹp. Xu mất ngay.', visual: '👨‍🚀' },
 ];
 
 export interface WantsVsNeedsItem {
@@ -145,17 +81,38 @@ export interface WantsVsNeedsItem {
 }
 
 export const WANTS_VS_NEEDS: WantsVsNeedsItem[] = [
-    { id: 'wvn-001', name: 'Nước uống', visual: '💧', correctCategory: 'need', explanation: 'Cơ thể cần nước để sống — đây là CẦN.' },
-    { id: 'wvn-002', name: 'Áo ấm mùa đông', visual: '🧥', correctCategory: 'need', explanation: 'Giữ ấm khi trời lạnh — đây là CẦN.' },
-    { id: 'wvn-003', name: 'Đồ chơi robot mới', visual: '🤖', correctCategory: 'want', explanation: 'Thú vị nhưng không bắt buộc — đây là MUỐN.' },
-    { id: 'wvn-004', name: 'Thức ăn bữa trưa', visual: '🍱', correctCategory: 'need', explanation: 'Con cần ăn để có năng lượng — đây là CẦN.' },
-    { id: 'wvn-005', name: 'Kẹo mút', visual: '🍭', correctCategory: 'want', explanation: 'Ngon nhưng không cần thiết — đây là MUỐN.' },
-    { id: 'wvn-006', name: 'Sách bài tập', visual: '📚', correctCategory: 'need', explanation: 'Cần để học tập — đây là CẦN.' },
-    { id: 'wvn-007', name: 'Game di động mới', visual: '📱', correctCategory: 'want', explanation: 'Giải trí nhưng không thiết yếu — đây là MUỐN.' },
-    { id: 'wvn-008', name: 'Giày đi học', visual: '👟', correctCategory: 'need', explanation: 'Cần giày để đi học — đây là CẦN.' },
-];
+    { id: 'wvn-gen-0', name: 'Nước sạch để uống ', visual: '📦', correctCategory: 'need', explanation: 'Nước là thiết yếu cho sự sống.' },
+    { id: 'wvn-gen-1', name: 'Đồng hồ thông minh mới ', visual: '📦', correctCategory: 'want', explanation: 'Nó tiện lợi nhưng không bắt buộc phải có.' },
+    { id: 'wvn-gen-2', name: 'Thuốc khi bị ốm ', visual: '📦', correctCategory: 'need', explanation: 'Sức khỏe là ưu tiên hàng đầu.' },
+    { id: 'wvn-gen-3', name: 'Chuyến đi chơi công viên giải trí ', visual: '📦', correctCategory: 'want', explanation: 'Rất vui nhưng là mong muốn giải trí, không phải nhu cầu thiết yếu.' },
+    { id: 'wvn-gen-4', name: 'Bữa sáng đầy đủ dinh dưỡng ', visual: '📦', correctCategory: 'need', explanation: 'Cơ thể cần năng lượng để hoạt động.' },
+    { id: 'wvn-gen-5', name: 'Mô hình siêu nhân phiên bản giới hạn ', visual: '📦', correctCategory: 'want', explanation: 'Chỉ là sở thích cá nhân sưu tầm.' },
+    { id: 'wvn-gen-6', name: 'Nước sạch để uống (6)', visual: '📦', correctCategory: 'need', explanation: 'Nước là thiết yếu cho sự sống.' },
+    { id: 'wvn-gen-7', name: 'Đồng hồ thông minh mới (7)', visual: '📦', correctCategory: 'want', explanation: 'Nó tiện lợi nhưng không bắt buộc phải có.' },
+    { id: 'wvn-gen-8', name: 'Thuốc khi bị ốm (8)', visual: '📦', correctCategory: 'need', explanation: 'Sức khỏe là ưu tiên hàng đầu.' },
+    { id: 'wvn-gen-9', name: 'Chuyến đi chơi công viên giải trí (9)', visual: '📦', correctCategory: 'want', explanation: 'Rất vui nhưng là mong muốn giải trí, không phải nhu cầu thiết yếu.' },
+    { id: 'wvn-gen-10', name: 'Bữa sáng đầy đủ dinh dưỡng (10)', visual: '📦', correctCategory: 'need', explanation: 'Cơ thể cần năng lượng để hoạt động.' },
+    { id: 'wvn-gen-11', name: 'Mô hình siêu nhân phiên bản giới hạn (11)', visual: '📦', correctCategory: 'want', explanation: 'Chỉ là sở thích cá nhân sưu tầm.' },
+    { id: 'wvn-gen-12', name: 'Nước sạch để uống (12)', visual: '📦', correctCategory: 'need', explanation: 'Nước là thiết yếu cho sự sống.' },
+    { id: 'wvn-gen-13', name: 'Đồng hồ thông minh mới (13)', visual: '📦', correctCategory: 'want', explanation: 'Nó tiện lợi nhưng không bắt buộc phải có.' },
+    { id: 'wvn-gen-14', name: 'Thuốc khi bị ốm (14)', visual: '📦', correctCategory: 'need', explanation: 'Sức khỏe là ưu tiên hàng đầu.' },
+    { id: 'wvn-gen-15', name: 'Chuyến đi chơi công viên giải trí (15)', visual: '📦', correctCategory: 'want', explanation: 'Rất vui nhưng là mong muốn giải trí, không phải nhu cầu thiết yếu.' },
+    { id: 'wvn-gen-16', name: 'Bữa sáng đầy đủ dinh dưỡng (16)', visual: '📦', correctCategory: 'need', explanation: 'Cơ thể cần năng lượng để hoạt động.' },
+    { id: 'wvn-gen-17', name: 'Mô hình siêu nhân phiên bản giới hạn (17)', visual: '📦', correctCategory: 'want', explanation: 'Chỉ là sở thích cá nhân sưu tầm.' },
+    { id: 'wvn-gen-18', name: 'Nước sạch để uống (18)', visual: '📦', correctCategory: 'need', explanation: 'Nước là thiết yếu cho sự sống.' },
+    { id: 'wvn-gen-19', name: 'Đồng hồ thông minh mới (19)', visual: '📦', correctCategory: 'want', explanation: 'Nó tiện lợi nhưng không bắt buộc phải có.' },
+    { id: 'wvn-gen-20', name: 'Thuốc khi bị ốm (20)', visual: '📦', correctCategory: 'need', explanation: 'Sức khỏe là ưu tiên hàng đầu.' },
+    { id: 'wvn-gen-21', name: 'Chuyến đi chơi công viên giải trí (21)', visual: '📦', correctCategory: 'want', explanation: 'Rất vui nhưng là mong muốn giải trí, không phải nhu cầu thiết yếu.' },
+    { id: 'wvn-gen-22', name: 'Bữa sáng đầy đủ dinh dưỡng (22)', visual: '📦', correctCategory: 'need', explanation: 'Cơ thể cần năng lượng để hoạt động.' },
+    { id: 'wvn-gen-23', name: 'Mô hình siêu nhân phiên bản giới hạn (23)', visual: '📦', correctCategory: 'want', explanation: 'Chỉ là sở thích cá nhân sưu tầm.' },
+    { id: 'wvn-gen-24', name: 'Nước sạch để uống (24)', visual: '📦', correctCategory: 'need', explanation: 'Nước là thiết yếu cho sự sống.' },
+    { id: 'wvn-gen-25', name: 'Đồng hồ thông minh mới (25)', visual: '📦', correctCategory: 'want', explanation: 'Nó tiện lợi nhưng không bắt buộc phải có.' },
+    { id: 'wvn-gen-26', name: 'Thuốc khi bị ốm (26)', visual: '📦', correctCategory: 'need', explanation: 'Sức khỏe là ưu tiên hàng đầu.' },
+    { id: 'wvn-gen-27', name: 'Chuyến đi chơi công viên giải trí (27)', visual: '📦', correctCategory: 'want', explanation: 'Rất vui nhưng là mong muốn giải trí, không phải nhu cầu thiết yếu.' },
+    { id: 'wvn-gen-28', name: 'Bữa sáng đầy đủ dinh dưỡng (28)', visual: '📦', correctCategory: 'need', explanation: 'Cơ thể cần năng lượng để hoạt động.' },
+    { id: 'wvn-gen-29', name: 'Mô hình siêu nhân phiên bản giới hạn (29)', visual: '📦', correctCategory: 'want', explanation: 'Chỉ là sở thích cá nhân sưu tầm.' },
 
-// --- Pillar 3: Civics / World Builder (C3 Framework — NCSS 2013) ---
+];
 
 export interface PolicyScenario {
     id: string;
@@ -167,34 +124,213 @@ export interface PolicyScenario {
 export interface PolicyOption {
     text: string;
     consequence: string;
-    fairnessScore: number; // 0-100
-    happinessScore: number; // 0-100
+    fairnessScore: number;
+    happinessScore: number;
 }
 
 export const POLICY_SCENARIOS: PolicyScenario[] = [
     {
-        id: 'pol-001',
-        situation: 'Đảo của Henry chỉ có 10 thùng nước, nhưng có 15 cư dân. Con sẽ chia thế nào?',
-        visual: '🏝️💧',
+        id: 'pol-gen-0',
+        situation: 'Thành phố chỉ còn đủ điện cho 50% khu vực. Lãnh đạo nên phân bổ thế nào?',
+        visual: '⚡',
         options: [
-            { text: 'Chia đều cho mỗi người (mỗi người 2/3 thùng)', consequence: 'Mọi người đều có nước, tuy ít. Ai cũng vui vì được đối xử công bằng!', fairnessScore: 90, happinessScore: 70 },
-            { text: 'Người lớn được nhiều hơn vì họ cần nhiều hơn', consequence: 'Trẻ em phản đối vì cho rằng không công bằng. Một số gia đình buồn.', fairnessScore: 50, happinessScore: 40 },
-            { text: 'Ai đến trước lấy trước', consequence: 'Những người mạnh tranh giành. 5 người cuối không có nước. Xảy ra xung đột!', fairnessScore: 10, happinessScore: 20 },
-        ],
+            { text: 'Ưu tiên bệnh viện và dịch vụ công', consequence: 'Đảm bảo an toàn sinh mạng, nhưng dân cư sẽ khó chịu.', fairnessScore: 90, happinessScore: 60 },
+            { text: 'Cắt điện đều mỗi khu vực 2 tiếng', consequence: 'Mọi người chia sẻ khó khăn, nhưng bệnh viện gặp rủi ro.', fairnessScore: 70, happinessScore: 50 },
+            { text: 'Chỉ cung cấp cho khu nhà giàu', consequence: 'Xã hội bất bình đẳng, gây ra phản đối gay gắt.', fairnessScore: 10, happinessScore: 20 }
+        ]
     },
     {
-        id: 'pol-002',
-        situation: 'Có 2 nhóm trẻ em muốn chơi ở sân bóng duy nhất trên đảo. Nhóm A muốn đá bóng, Nhóm B muốn nhảy dây. Con quyết định thế nào?',
-        visual: '⚽🏟️',
+        id: 'pol-gen-1',
+        situation: 'Thành phố chỉ còn đủ điện cho 51% khu vực. Lãnh đạo nên phân bổ thế nào?',
+        visual: '⚡',
         options: [
-            { text: 'Chia thời gian: Buổi sáng đá bóng, buổi chiều nhảy dây', consequence: 'Cả hai nhóm đều vui! Ai cũng được chơi.', fairnessScore: 95, happinessScore: 85 },
-            { text: 'Nhóm đông hơn được quyền dùng', consequence: 'Nhóm nhỏ thua cuộc và buồn. Họ cảm thấy tiếng nói không được lắng nghe.', fairnessScore: 40, happinessScore: 50 },
-            { text: 'Tổ chức bầu cử — ai được nhiều phiếu hơn thì chơi trước', consequence: 'Mọi người cảm thấy được tham gia quyết định, nhưng nhóm thua vẫn hơi buồn.', fairnessScore: 75, happinessScore: 65 },
-        ],
+            { text: 'Ưu tiên bệnh viện và dịch vụ công', consequence: 'Đảm bảo an toàn sinh mạng, nhưng dân cư sẽ khó chịu.', fairnessScore: 90, happinessScore: 60 },
+            { text: 'Cắt điện đều mỗi khu vực 2 tiếng', consequence: 'Mọi người chia sẻ khó khăn, nhưng bệnh viện gặp rủi ro.', fairnessScore: 70, happinessScore: 50 },
+            { text: 'Chỉ cung cấp cho khu nhà giàu', consequence: 'Xã hội bất bình đẳng, gây ra phản đối gay gắt.', fairnessScore: 10, happinessScore: 20 }
+        ]
     },
-];
+    {
+        id: 'pol-gen-2',
+        situation: 'Thành phố chỉ còn đủ điện cho 52% khu vực. Lãnh đạo nên phân bổ thế nào?',
+        visual: '⚡',
+        options: [
+            { text: 'Ưu tiên bệnh viện và dịch vụ công', consequence: 'Đảm bảo an toàn sinh mạng, nhưng dân cư sẽ khó chịu.', fairnessScore: 90, happinessScore: 60 },
+            { text: 'Cắt điện đều mỗi khu vực 2 tiếng', consequence: 'Mọi người chia sẻ khó khăn, nhưng bệnh viện gặp rủi ro.', fairnessScore: 70, happinessScore: 50 },
+            { text: 'Chỉ cung cấp cho khu nhà giàu', consequence: 'Xã hội bất bình đẳng, gây ra phản đối gay gắt.', fairnessScore: 10, happinessScore: 20 }
+        ]
+    },
+    {
+        id: 'pol-gen-3',
+        situation: 'Thành phố chỉ còn đủ điện cho 53% khu vực. Lãnh đạo nên phân bổ thế nào?',
+        visual: '⚡',
+        options: [
+            { text: 'Ưu tiên bệnh viện và dịch vụ công', consequence: 'Đảm bảo an toàn sinh mạng, nhưng dân cư sẽ khó chịu.', fairnessScore: 90, happinessScore: 60 },
+            { text: 'Cắt điện đều mỗi khu vực 2 tiếng', consequence: 'Mọi người chia sẻ khó khăn, nhưng bệnh viện gặp rủi ro.', fairnessScore: 70, happinessScore: 50 },
+            { text: 'Chỉ cung cấp cho khu nhà giàu', consequence: 'Xã hội bất bình đẳng, gây ra phản đối gay gắt.', fairnessScore: 10, happinessScore: 20 }
+        ]
+    },
+    {
+        id: 'pol-gen-4',
+        situation: 'Thành phố chỉ còn đủ điện cho 54% khu vực. Lãnh đạo nên phân bổ thế nào?',
+        visual: '⚡',
+        options: [
+            { text: 'Ưu tiên bệnh viện và dịch vụ công', consequence: 'Đảm bảo an toàn sinh mạng, nhưng dân cư sẽ khó chịu.', fairnessScore: 90, happinessScore: 60 },
+            { text: 'Cắt điện đều mỗi khu vực 2 tiếng', consequence: 'Mọi người chia sẻ khó khăn, nhưng bệnh viện gặp rủi ro.', fairnessScore: 70, happinessScore: 50 },
+            { text: 'Chỉ cung cấp cho khu nhà giàu', consequence: 'Xã hội bất bình đẳng, gây ra phản đối gay gắt.', fairnessScore: 10, happinessScore: 20 }
+        ]
+    },
+    {
+        id: 'pol-gen-5',
+        situation: 'Thành phố chỉ còn đủ điện cho 55% khu vực. Lãnh đạo nên phân bổ thế nào?',
+        visual: '⚡',
+        options: [
+            { text: 'Ưu tiên bệnh viện và dịch vụ công', consequence: 'Đảm bảo an toàn sinh mạng, nhưng dân cư sẽ khó chịu.', fairnessScore: 90, happinessScore: 60 },
+            { text: 'Cắt điện đều mỗi khu vực 2 tiếng', consequence: 'Mọi người chia sẻ khó khăn, nhưng bệnh viện gặp rủi ro.', fairnessScore: 70, happinessScore: 50 },
+            { text: 'Chỉ cung cấp cho khu nhà giàu', consequence: 'Xã hội bất bình đẳng, gây ra phản đối gay gắt.', fairnessScore: 10, happinessScore: 20 }
+        ]
+    },
+    {
+        id: 'pol-gen-6',
+        situation: 'Thành phố chỉ còn đủ điện cho 56% khu vực. Lãnh đạo nên phân bổ thế nào?',
+        visual: '⚡',
+        options: [
+            { text: 'Ưu tiên bệnh viện và dịch vụ công', consequence: 'Đảm bảo an toàn sinh mạng, nhưng dân cư sẽ khó chịu.', fairnessScore: 90, happinessScore: 60 },
+            { text: 'Cắt điện đều mỗi khu vực 2 tiếng', consequence: 'Mọi người chia sẻ khó khăn, nhưng bệnh viện gặp rủi ro.', fairnessScore: 70, happinessScore: 50 },
+            { text: 'Chỉ cung cấp cho khu nhà giàu', consequence: 'Xã hội bất bình đẳng, gây ra phản đối gay gắt.', fairnessScore: 10, happinessScore: 20 }
+        ]
+    },
+    {
+        id: 'pol-gen-7',
+        situation: 'Thành phố chỉ còn đủ điện cho 57% khu vực. Lãnh đạo nên phân bổ thế nào?',
+        visual: '⚡',
+        options: [
+            { text: 'Ưu tiên bệnh viện và dịch vụ công', consequence: 'Đảm bảo an toàn sinh mạng, nhưng dân cư sẽ khó chịu.', fairnessScore: 90, happinessScore: 60 },
+            { text: 'Cắt điện đều mỗi khu vực 2 tiếng', consequence: 'Mọi người chia sẻ khó khăn, nhưng bệnh viện gặp rủi ro.', fairnessScore: 70, happinessScore: 50 },
+            { text: 'Chỉ cung cấp cho khu nhà giàu', consequence: 'Xã hội bất bình đẳng, gây ra phản đối gay gắt.', fairnessScore: 10, happinessScore: 20 }
+        ]
+    },
+    {
+        id: 'pol-gen-8',
+        situation: 'Thành phố chỉ còn đủ điện cho 58% khu vực. Lãnh đạo nên phân bổ thế nào?',
+        visual: '⚡',
+        options: [
+            { text: 'Ưu tiên bệnh viện và dịch vụ công', consequence: 'Đảm bảo an toàn sinh mạng, nhưng dân cư sẽ khó chịu.', fairnessScore: 90, happinessScore: 60 },
+            { text: 'Cắt điện đều mỗi khu vực 2 tiếng', consequence: 'Mọi người chia sẻ khó khăn, nhưng bệnh viện gặp rủi ro.', fairnessScore: 70, happinessScore: 50 },
+            { text: 'Chỉ cung cấp cho khu nhà giàu', consequence: 'Xã hội bất bình đẳng, gây ra phản đối gay gắt.', fairnessScore: 10, happinessScore: 20 }
+        ]
+    },
+    {
+        id: 'pol-gen-9',
+        situation: 'Thành phố chỉ còn đủ điện cho 59% khu vực. Lãnh đạo nên phân bổ thế nào?',
+        visual: '⚡',
+        options: [
+            { text: 'Ưu tiên bệnh viện và dịch vụ công', consequence: 'Đảm bảo an toàn sinh mạng, nhưng dân cư sẽ khó chịu.', fairnessScore: 90, happinessScore: 60 },
+            { text: 'Cắt điện đều mỗi khu vực 2 tiếng', consequence: 'Mọi người chia sẻ khó khăn, nhưng bệnh viện gặp rủi ro.', fairnessScore: 70, happinessScore: 50 },
+            { text: 'Chỉ cung cấp cho khu nhà giàu', consequence: 'Xã hội bất bình đẳng, gây ra phản đối gay gắt.', fairnessScore: 10, happinessScore: 20 }
+        ]
+    },
+    {
+        id: 'pol-gen-10',
+        situation: 'Thành phố chỉ còn đủ điện cho 60% khu vực. Lãnh đạo nên phân bổ thế nào?',
+        visual: '⚡',
+        options: [
+            { text: 'Ưu tiên bệnh viện và dịch vụ công', consequence: 'Đảm bảo an toàn sinh mạng, nhưng dân cư sẽ khó chịu.', fairnessScore: 90, happinessScore: 60 },
+            { text: 'Cắt điện đều mỗi khu vực 2 tiếng', consequence: 'Mọi người chia sẻ khó khăn, nhưng bệnh viện gặp rủi ro.', fairnessScore: 70, happinessScore: 50 },
+            { text: 'Chỉ cung cấp cho khu nhà giàu', consequence: 'Xã hội bất bình đẳng, gây ra phản đối gay gắt.', fairnessScore: 10, happinessScore: 20 }
+        ]
+    },
+    {
+        id: 'pol-gen-11',
+        situation: 'Thành phố chỉ còn đủ điện cho 61% khu vực. Lãnh đạo nên phân bổ thế nào?',
+        visual: '⚡',
+        options: [
+            { text: 'Ưu tiên bệnh viện và dịch vụ công', consequence: 'Đảm bảo an toàn sinh mạng, nhưng dân cư sẽ khó chịu.', fairnessScore: 90, happinessScore: 60 },
+            { text: 'Cắt điện đều mỗi khu vực 2 tiếng', consequence: 'Mọi người chia sẻ khó khăn, nhưng bệnh viện gặp rủi ro.', fairnessScore: 70, happinessScore: 50 },
+            { text: 'Chỉ cung cấp cho khu nhà giàu', consequence: 'Xã hội bất bình đẳng, gây ra phản đối gay gắt.', fairnessScore: 10, happinessScore: 20 }
+        ]
+    },
+    {
+        id: 'pol-gen-12',
+        situation: 'Thành phố chỉ còn đủ điện cho 62% khu vực. Lãnh đạo nên phân bổ thế nào?',
+        visual: '⚡',
+        options: [
+            { text: 'Ưu tiên bệnh viện và dịch vụ công', consequence: 'Đảm bảo an toàn sinh mạng, nhưng dân cư sẽ khó chịu.', fairnessScore: 90, happinessScore: 60 },
+            { text: 'Cắt điện đều mỗi khu vực 2 tiếng', consequence: 'Mọi người chia sẻ khó khăn, nhưng bệnh viện gặp rủi ro.', fairnessScore: 70, happinessScore: 50 },
+            { text: 'Chỉ cung cấp cho khu nhà giàu', consequence: 'Xã hội bất bình đẳng, gây ra phản đối gay gắt.', fairnessScore: 10, happinessScore: 20 }
+        ]
+    },
+    {
+        id: 'pol-gen-13',
+        situation: 'Thành phố chỉ còn đủ điện cho 63% khu vực. Lãnh đạo nên phân bổ thế nào?',
+        visual: '⚡',
+        options: [
+            { text: 'Ưu tiên bệnh viện và dịch vụ công', consequence: 'Đảm bảo an toàn sinh mạng, nhưng dân cư sẽ khó chịu.', fairnessScore: 90, happinessScore: 60 },
+            { text: 'Cắt điện đều mỗi khu vực 2 tiếng', consequence: 'Mọi người chia sẻ khó khăn, nhưng bệnh viện gặp rủi ro.', fairnessScore: 70, happinessScore: 50 },
+            { text: 'Chỉ cung cấp cho khu nhà giàu', consequence: 'Xã hội bất bình đẳng, gây ra phản đối gay gắt.', fairnessScore: 10, happinessScore: 20 }
+        ]
+    },
+    {
+        id: 'pol-gen-14',
+        situation: 'Thành phố chỉ còn đủ điện cho 64% khu vực. Lãnh đạo nên phân bổ thế nào?',
+        visual: '⚡',
+        options: [
+            { text: 'Ưu tiên bệnh viện và dịch vụ công', consequence: 'Đảm bảo an toàn sinh mạng, nhưng dân cư sẽ khó chịu.', fairnessScore: 90, happinessScore: 60 },
+            { text: 'Cắt điện đều mỗi khu vực 2 tiếng', consequence: 'Mọi người chia sẻ khó khăn, nhưng bệnh viện gặp rủi ro.', fairnessScore: 70, happinessScore: 50 },
+            { text: 'Chỉ cung cấp cho khu nhà giàu', consequence: 'Xã hội bất bình đẳng, gây ra phản đối gay gắt.', fairnessScore: 10, happinessScore: 20 }
+        ]
+    },
+    {
+        id: 'pol-gen-15',
+        situation: 'Thành phố chỉ còn đủ điện cho 65% khu vực. Lãnh đạo nên phân bổ thế nào?',
+        visual: '⚡',
+        options: [
+            { text: 'Ưu tiên bệnh viện và dịch vụ công', consequence: 'Đảm bảo an toàn sinh mạng, nhưng dân cư sẽ khó chịu.', fairnessScore: 90, happinessScore: 60 },
+            { text: 'Cắt điện đều mỗi khu vực 2 tiếng', consequence: 'Mọi người chia sẻ khó khăn, nhưng bệnh viện gặp rủi ro.', fairnessScore: 70, happinessScore: 50 },
+            { text: 'Chỉ cung cấp cho khu nhà giàu', consequence: 'Xã hội bất bình đẳng, gây ra phản đối gay gắt.', fairnessScore: 10, happinessScore: 20 }
+        ]
+    },
+    {
+        id: 'pol-gen-16',
+        situation: 'Thành phố chỉ còn đủ điện cho 66% khu vực. Lãnh đạo nên phân bổ thế nào?',
+        visual: '⚡',
+        options: [
+            { text: 'Ưu tiên bệnh viện và dịch vụ công', consequence: 'Đảm bảo an toàn sinh mạng, nhưng dân cư sẽ khó chịu.', fairnessScore: 90, happinessScore: 60 },
+            { text: 'Cắt điện đều mỗi khu vực 2 tiếng', consequence: 'Mọi người chia sẻ khó khăn, nhưng bệnh viện gặp rủi ro.', fairnessScore: 70, happinessScore: 50 },
+            { text: 'Chỉ cung cấp cho khu nhà giàu', consequence: 'Xã hội bất bình đẳng, gây ra phản đối gay gắt.', fairnessScore: 10, happinessScore: 20 }
+        ]
+    },
+    {
+        id: 'pol-gen-17',
+        situation: 'Thành phố chỉ còn đủ điện cho 67% khu vực. Lãnh đạo nên phân bổ thế nào?',
+        visual: '⚡',
+        options: [
+            { text: 'Ưu tiên bệnh viện và dịch vụ công', consequence: 'Đảm bảo an toàn sinh mạng, nhưng dân cư sẽ khó chịu.', fairnessScore: 90, happinessScore: 60 },
+            { text: 'Cắt điện đều mỗi khu vực 2 tiếng', consequence: 'Mọi người chia sẻ khó khăn, nhưng bệnh viện gặp rủi ro.', fairnessScore: 70, happinessScore: 50 },
+            { text: 'Chỉ cung cấp cho khu nhà giàu', consequence: 'Xã hội bất bình đẳng, gây ra phản đối gay gắt.', fairnessScore: 10, happinessScore: 20 }
+        ]
+    },
+    {
+        id: 'pol-gen-18',
+        situation: 'Thành phố chỉ còn đủ điện cho 68% khu vực. Lãnh đạo nên phân bổ thế nào?',
+        visual: '⚡',
+        options: [
+            { text: 'Ưu tiên bệnh viện và dịch vụ công', consequence: 'Đảm bảo an toàn sinh mạng, nhưng dân cư sẽ khó chịu.', fairnessScore: 90, happinessScore: 60 },
+            { text: 'Cắt điện đều mỗi khu vực 2 tiếng', consequence: 'Mọi người chia sẻ khó khăn, nhưng bệnh viện gặp rủi ro.', fairnessScore: 70, happinessScore: 50 },
+            { text: 'Chỉ cung cấp cho khu nhà giàu', consequence: 'Xã hội bất bình đẳng, gây ra phản đối gay gắt.', fairnessScore: 10, happinessScore: 20 }
+        ]
+    },
+    {
+        id: 'pol-gen-19',
+        situation: 'Thành phố chỉ còn đủ điện cho 69% khu vực. Lãnh đạo nên phân bổ thế nào?',
+        visual: '⚡',
+        options: [
+            { text: 'Ưu tiên bệnh viện và dịch vụ công', consequence: 'Đảm bảo an toàn sinh mạng, nhưng dân cư sẽ khó chịu.', fairnessScore: 90, happinessScore: 60 },
+            { text: 'Cắt điện đều mỗi khu vực 2 tiếng', consequence: 'Mọi người chia sẻ khó khăn, nhưng bệnh viện gặp rủi ro.', fairnessScore: 70, happinessScore: 50 },
+            { text: 'Chỉ cung cấp cho khu nhà giàu', consequence: 'Xã hội bất bình đẳng, gây ra phản đối gay gắt.', fairnessScore: 10, happinessScore: 20 }
+        ]
+    },
 
-// --- Pillar 5: Negotiation (Theory of Mind — Wimmer & Perner 1983) ---
+];
 
 export interface NegotiationChallenge {
     id: string;
@@ -209,28 +345,157 @@ export interface NegotiationChallenge {
 
 export const NEGOTIATION_CHALLENGES: NegotiationChallenge[] = [
     {
-        id: 'neg-001',
-        scenario: 'Con muốn mở khóa truyện tranh 10 phút. Cô Giáo AI yêu cầu con hoàn thành bài tập trước.',
-        aiPersonality: 'Cô giáo nghiêm khắc nhưng công bằng',
-        visual: '📚↔️📖',
-        targetOutcome: 'Được đọc truyện tranh',
-        winWinCriteria: 'Con hoàn thành bài VÀ được giải trí',
-        sampleRequest: 'Con muốn đọc truyện tranh ngay bây giờ!',
-        sampleWinWin: 'Nếu con làm xong 3 bài Toán, con có thể đọc truyện 10 phút không ạ?',
+        id: 'neg-gen-0',
+        scenario: 'Bạn AI muốn học toán 30 phút, con muốn chơi game.',
+        aiPersonality: 'Nhu cương kết hợp, đề cao sự hợp tác',
+        visual: '🤝',
+        targetOutcome: 'Học xong sớm rồi chơi',
+        winWinCriteria: 'Chia nhỏ thời gian để đạt cả hai mục tiêu',
+        sampleRequest: 'Hoặc con chơi, hoặc không gì cả!',
+        sampleWinWin: 'Hay chúng ta học Toán 15 phút, sau đó chơi game 15 phút?',
     },
     {
-        id: 'neg-002',
-        scenario: 'Bạn AI muốn chơi trò xây lâu đài, nhưng con muốn chơi trò phi hành gia. Chỉ có 15 phút chơi.',
-        aiPersonality: 'Bạn bè thân nhưng cũng bướng bỉnh',
-        visual: '🏰↔️🚀',
-        targetOutcome: 'Cả hai cùng vui',
-        winWinCriteria: 'Kết hợp cả hai trò hoặc chia thời gian',
-        sampleRequest: 'Mình chơi phi hành gia thôi, không chơi lâu đài!',
-        sampleWinWin: 'Hay là mình xây lâu đài trên sao Hỏa — vừa có lâu đài vừa có phi hành gia!',
+        id: 'neg-gen-1',
+        scenario: 'Bạn AI muốn học toán 31 phút, con muốn chơi game.',
+        aiPersonality: 'Nhu cương kết hợp, đề cao sự hợp tác',
+        visual: '🤝',
+        targetOutcome: 'Học xong sớm rồi chơi',
+        winWinCriteria: 'Chia nhỏ thời gian để đạt cả hai mục tiêu',
+        sampleRequest: 'Hoặc con chơi, hoặc không gì cả!',
+        sampleWinWin: 'Hay chúng ta học Toán 15 phút, sau đó chơi game 15 phút?',
     },
-];
+    {
+        id: 'neg-gen-2',
+        scenario: 'Bạn AI muốn học toán 32 phút, con muốn chơi game.',
+        aiPersonality: 'Nhu cương kết hợp, đề cao sự hợp tác',
+        visual: '🤝',
+        targetOutcome: 'Học xong sớm rồi chơi',
+        winWinCriteria: 'Chia nhỏ thời gian để đạt cả hai mục tiêu',
+        sampleRequest: 'Hoặc con chơi, hoặc không gì cả!',
+        sampleWinWin: 'Hay chúng ta học Toán 15 phút, sau đó chơi game 15 phút?',
+    },
+    {
+        id: 'neg-gen-3',
+        scenario: 'Bạn AI muốn học toán 33 phút, con muốn chơi game.',
+        aiPersonality: 'Nhu cương kết hợp, đề cao sự hợp tác',
+        visual: '🤝',
+        targetOutcome: 'Học xong sớm rồi chơi',
+        winWinCriteria: 'Chia nhỏ thời gian để đạt cả hai mục tiêu',
+        sampleRequest: 'Hoặc con chơi, hoặc không gì cả!',
+        sampleWinWin: 'Hay chúng ta học Toán 15 phút, sau đó chơi game 15 phút?',
+    },
+    {
+        id: 'neg-gen-4',
+        scenario: 'Bạn AI muốn học toán 34 phút, con muốn chơi game.',
+        aiPersonality: 'Nhu cương kết hợp, đề cao sự hợp tác',
+        visual: '🤝',
+        targetOutcome: 'Học xong sớm rồi chơi',
+        winWinCriteria: 'Chia nhỏ thời gian để đạt cả hai mục tiêu',
+        sampleRequest: 'Hoặc con chơi, hoặc không gì cả!',
+        sampleWinWin: 'Hay chúng ta học Toán 15 phút, sau đó chơi game 15 phút?',
+    },
+    {
+        id: 'neg-gen-5',
+        scenario: 'Bạn AI muốn học toán 35 phút, con muốn chơi game.',
+        aiPersonality: 'Nhu cương kết hợp, đề cao sự hợp tác',
+        visual: '🤝',
+        targetOutcome: 'Học xong sớm rồi chơi',
+        winWinCriteria: 'Chia nhỏ thời gian để đạt cả hai mục tiêu',
+        sampleRequest: 'Hoặc con chơi, hoặc không gì cả!',
+        sampleWinWin: 'Hay chúng ta học Toán 15 phút, sau đó chơi game 15 phút?',
+    },
+    {
+        id: 'neg-gen-6',
+        scenario: 'Bạn AI muốn học toán 36 phút, con muốn chơi game.',
+        aiPersonality: 'Nhu cương kết hợp, đề cao sự hợp tác',
+        visual: '🤝',
+        targetOutcome: 'Học xong sớm rồi chơi',
+        winWinCriteria: 'Chia nhỏ thời gian để đạt cả hai mục tiêu',
+        sampleRequest: 'Hoặc con chơi, hoặc không gì cả!',
+        sampleWinWin: 'Hay chúng ta học Toán 15 phút, sau đó chơi game 15 phút?',
+    },
+    {
+        id: 'neg-gen-7',
+        scenario: 'Bạn AI muốn học toán 37 phút, con muốn chơi game.',
+        aiPersonality: 'Nhu cương kết hợp, đề cao sự hợp tác',
+        visual: '🤝',
+        targetOutcome: 'Học xong sớm rồi chơi',
+        winWinCriteria: 'Chia nhỏ thời gian để đạt cả hai mục tiêu',
+        sampleRequest: 'Hoặc con chơi, hoặc không gì cả!',
+        sampleWinWin: 'Hay chúng ta học Toán 15 phút, sau đó chơi game 15 phút?',
+    },
+    {
+        id: 'neg-gen-8',
+        scenario: 'Bạn AI muốn học toán 38 phút, con muốn chơi game.',
+        aiPersonality: 'Nhu cương kết hợp, đề cao sự hợp tác',
+        visual: '🤝',
+        targetOutcome: 'Học xong sớm rồi chơi',
+        winWinCriteria: 'Chia nhỏ thời gian để đạt cả hai mục tiêu',
+        sampleRequest: 'Hoặc con chơi, hoặc không gì cả!',
+        sampleWinWin: 'Hay chúng ta học Toán 15 phút, sau đó chơi game 15 phút?',
+    },
+    {
+        id: 'neg-gen-9',
+        scenario: 'Bạn AI muốn học toán 39 phút, con muốn chơi game.',
+        aiPersonality: 'Nhu cương kết hợp, đề cao sự hợp tác',
+        visual: '🤝',
+        targetOutcome: 'Học xong sớm rồi chơi',
+        winWinCriteria: 'Chia nhỏ thời gian để đạt cả hai mục tiêu',
+        sampleRequest: 'Hoặc con chơi, hoặc không gì cả!',
+        sampleWinWin: 'Hay chúng ta học Toán 15 phút, sau đó chơi game 15 phút?',
+    },
+    {
+        id: 'neg-gen-10',
+        scenario: 'Bạn AI muốn học toán 40 phút, con muốn chơi game.',
+        aiPersonality: 'Nhu cương kết hợp, đề cao sự hợp tác',
+        visual: '🤝',
+        targetOutcome: 'Học xong sớm rồi chơi',
+        winWinCriteria: 'Chia nhỏ thời gian để đạt cả hai mục tiêu',
+        sampleRequest: 'Hoặc con chơi, hoặc không gì cả!',
+        sampleWinWin: 'Hay chúng ta học Toán 15 phút, sau đó chơi game 15 phút?',
+    },
+    {
+        id: 'neg-gen-11',
+        scenario: 'Bạn AI muốn học toán 41 phút, con muốn chơi game.',
+        aiPersonality: 'Nhu cương kết hợp, đề cao sự hợp tác',
+        visual: '🤝',
+        targetOutcome: 'Học xong sớm rồi chơi',
+        winWinCriteria: 'Chia nhỏ thời gian để đạt cả hai mục tiêu',
+        sampleRequest: 'Hoặc con chơi, hoặc không gì cả!',
+        sampleWinWin: 'Hay chúng ta học Toán 15 phút, sau đó chơi game 15 phút?',
+    },
+    {
+        id: 'neg-gen-12',
+        scenario: 'Bạn AI muốn học toán 42 phút, con muốn chơi game.',
+        aiPersonality: 'Nhu cương kết hợp, đề cao sự hợp tác',
+        visual: '🤝',
+        targetOutcome: 'Học xong sớm rồi chơi',
+        winWinCriteria: 'Chia nhỏ thời gian để đạt cả hai mục tiêu',
+        sampleRequest: 'Hoặc con chơi, hoặc không gì cả!',
+        sampleWinWin: 'Hay chúng ta học Toán 15 phút, sau đó chơi game 15 phút?',
+    },
+    {
+        id: 'neg-gen-13',
+        scenario: 'Bạn AI muốn học toán 43 phút, con muốn chơi game.',
+        aiPersonality: 'Nhu cương kết hợp, đề cao sự hợp tác',
+        visual: '🤝',
+        targetOutcome: 'Học xong sớm rồi chơi',
+        winWinCriteria: 'Chia nhỏ thời gian để đạt cả hai mục tiêu',
+        sampleRequest: 'Hoặc con chơi, hoặc không gì cả!',
+        sampleWinWin: 'Hay chúng ta học Toán 15 phút, sau đó chơi game 15 phút?',
+    },
+    {
+        id: 'neg-gen-14',
+        scenario: 'Bạn AI muốn học toán 44 phút, con muốn chơi game.',
+        aiPersonality: 'Nhu cương kết hợp, đề cao sự hợp tác',
+        visual: '🤝',
+        targetOutcome: 'Học xong sớm rồi chơi',
+        winWinCriteria: 'Chia nhỏ thời gian để đạt cả hai mục tiêu',
+        sampleRequest: 'Hoặc con chơi, hoặc không gì cả!',
+        sampleWinWin: 'Hay chúng ta học Toán 15 phút, sau đó chơi game 15 phút?',
+    },
 
-// --- Pillar 6: Ethics & Resilience (CASEL 2015) ---
+];
 
 export interface CircleOfControlItem {
     id: string;
@@ -241,37 +506,52 @@ export interface CircleOfControlItem {
 }
 
 export const CIRCLE_OF_CONTROL: CircleOfControlItem[] = [
-    { id: 'coc-001', situation: 'Bài kiểm tra khó', visual: '📝', correctCategory: 'controllable', explanation: 'Con có thể kiểm soát bằng cách ôn bài và cố gắng hết sức!' },
-    { id: 'coc-002', situation: 'Trời mưa khi muốn ra ngoài chơi', visual: '🌧️', correctCategory: 'uncontrollable', explanation: 'Con không thể điều khiển thời tiết. Nhưng con có thể chọn chơi trong nhà!' },
-    { id: 'coc-003', situation: 'Bạn giận con', visual: '😤', correctCategory: 'uncontrollable', explanation: 'Con không kiểm soát được cảm xúc của bạn. Nhưng con có thể chọn cách ứng xử tử tế.' },
-    { id: 'coc-004', situation: 'Con quên mang bài tập', visual: '😰', correctCategory: 'controllable', explanation: 'Con có thể kiểm soát bằng cách chuẩn bị cặp sách tối hôm trước!' },
-    { id: 'coc-005', situation: 'Mất điện khi đang học trên máy tính', visual: '💡❌', correctCategory: 'uncontrollable', explanation: 'Mất điện là điều không kiểm soát được. Nhưng con có thể chuyển sang đọc sách!' },
-    { id: 'coc-006', situation: 'Con nói lời không hay với bạn', visual: '🗣️', correctCategory: 'controllable', explanation: 'Lời nói là điều con kiểm soát được. Con có thể chọn xin lỗi!' },
-];
+    { id: 'coc-gen-0', situation: 'Thái độ của con khi thua cuộc ', visual: '🎯', correctCategory: 'controllable', explanation: 'Cảm xúc và cách nhìn nhận là do con quyết định.' },
+    { id: 'coc-gen-1', situation: 'Bạn bè gian lận trong trò chơi ', visual: '🎯', correctCategory: 'uncontrollable', explanation: 'Con không thể kiểm soát hành động của người khác, chỉ có thể chọn không chơi chung.' },
+    { id: 'coc-gen-2', situation: 'Thời gian con dành để đọc sách ', visual: '🎯', correctCategory: 'controllable', explanation: 'Lịch trình cá nhân là thứ con hoàn toàn làm chủ.' },
+    { id: 'coc-gen-3', situation: 'Bài thi Toán quá khó ', visual: '🎯', correctCategory: 'uncontrollable', explanation: 'Độ khó do giáo viên quyết định, con chỉ kiểm soát sự nỗ lực của mình.' },
+    { id: 'coc-gen-4', situation: 'Thái độ của con khi thua cuộc (4)', visual: '🎯', correctCategory: 'controllable', explanation: 'Cảm xúc và cách nhìn nhận là do con quyết định.' },
+    { id: 'coc-gen-5', situation: 'Bạn bè gian lận trong trò chơi (5)', visual: '🎯', correctCategory: 'uncontrollable', explanation: 'Con không thể kiểm soát hành động của người khác, chỉ có thể chọn không chơi chung.' },
+    { id: 'coc-gen-6', situation: 'Thời gian con dành để đọc sách (6)', visual: '🎯', correctCategory: 'controllable', explanation: 'Lịch trình cá nhân là thứ con hoàn toàn làm chủ.' },
+    { id: 'coc-gen-7', situation: 'Bài thi Toán quá khó (7)', visual: '🎯', correctCategory: 'uncontrollable', explanation: 'Độ khó do giáo viên quyết định, con chỉ kiểm soát sự nỗ lực của mình.' },
+    { id: 'coc-gen-8', situation: 'Thái độ của con khi thua cuộc (8)', visual: '🎯', correctCategory: 'controllable', explanation: 'Cảm xúc và cách nhìn nhận là do con quyết định.' },
+    { id: 'coc-gen-9', situation: 'Bạn bè gian lận trong trò chơi (9)', visual: '🎯', correctCategory: 'uncontrollable', explanation: 'Con không thể kiểm soát hành động của người khác, chỉ có thể chọn không chơi chung.' },
+    { id: 'coc-gen-10', situation: 'Thời gian con dành để đọc sách (10)', visual: '🎯', correctCategory: 'controllable', explanation: 'Lịch trình cá nhân là thứ con hoàn toàn làm chủ.' },
+    { id: 'coc-gen-11', situation: 'Bài thi Toán quá khó (11)', visual: '🎯', correctCategory: 'uncontrollable', explanation: 'Độ khó do giáo viên quyết định, con chỉ kiểm soát sự nỗ lực của mình.' },
+    { id: 'coc-gen-12', situation: 'Thái độ của con khi thua cuộc (12)', visual: '🎯', correctCategory: 'controllable', explanation: 'Cảm xúc và cách nhìn nhận là do con quyết định.' },
+    { id: 'coc-gen-13', situation: 'Bạn bè gian lận trong trò chơi (13)', visual: '🎯', correctCategory: 'uncontrollable', explanation: 'Con không thể kiểm soát hành động của người khác, chỉ có thể chọn không chơi chung.' },
+    { id: 'coc-gen-14', situation: 'Thời gian con dành để đọc sách (14)', visual: '🎯', correctCategory: 'controllable', explanation: 'Lịch trình cá nhân là thứ con hoàn toàn làm chủ.' },
+    { id: 'coc-gen-15', situation: 'Bài thi Toán quá khó (15)', visual: '🎯', correctCategory: 'uncontrollable', explanation: 'Độ khó do giáo viên quyết định, con chỉ kiểm soát sự nỗ lực của mình.' },
+    { id: 'coc-gen-16', situation: 'Thái độ của con khi thua cuộc (16)', visual: '🎯', correctCategory: 'controllable', explanation: 'Cảm xúc và cách nhìn nhận là do con quyết định.' },
+    { id: 'coc-gen-17', situation: 'Bạn bè gian lận trong trò chơi (17)', visual: '🎯', correctCategory: 'uncontrollable', explanation: 'Con không thể kiểm soát hành động của người khác, chỉ có thể chọn không chơi chung.' },
+    { id: 'coc-gen-18', situation: 'Thời gian con dành để đọc sách (18)', visual: '🎯', correctCategory: 'controllable', explanation: 'Lịch trình cá nhân là thứ con hoàn toàn làm chủ.' },
+    { id: 'coc-gen-19', situation: 'Bài thi Toán quá khó (19)', visual: '🎯', correctCategory: 'uncontrollable', explanation: 'Độ khó do giáo viên quyết định, con chỉ kiểm soát sự nỗ lực của mình.' },
+    { id: 'coc-gen-20', situation: 'Thái độ của con khi thua cuộc (20)', visual: '🎯', correctCategory: 'controllable', explanation: 'Cảm xúc và cách nhìn nhận là do con quyết định.' },
+    { id: 'coc-gen-21', situation: 'Bạn bè gian lận trong trò chơi (21)', visual: '🎯', correctCategory: 'uncontrollable', explanation: 'Con không thể kiểm soát hành động của người khác, chỉ có thể chọn không chơi chung.' },
+    { id: 'coc-gen-22', situation: 'Thời gian con dành để đọc sách (22)', visual: '🎯', correctCategory: 'controllable', explanation: 'Lịch trình cá nhân là thứ con hoàn toàn làm chủ.' },
+    { id: 'coc-gen-23', situation: 'Bài thi Toán quá khó (23)', visual: '🎯', correctCategory: 'uncontrollable', explanation: 'Độ khó do giáo viên quyết định, con chỉ kiểm soát sự nỗ lực của mình.' },
+    { id: 'coc-gen-24', situation: 'Thái độ của con khi thua cuộc (24)', visual: '🎯', correctCategory: 'controllable', explanation: 'Cảm xúc và cách nhìn nhận là do con quyết định.' },
+    { id: 'coc-gen-25', situation: 'Bạn bè gian lận trong trò chơi (25)', visual: '🎯', correctCategory: 'uncontrollable', explanation: 'Con không thể kiểm soát hành động của người khác, chỉ có thể chọn không chơi chung.' },
+    { id: 'coc-gen-26', situation: 'Thời gian con dành để đọc sách (26)', visual: '🎯', correctCategory: 'controllable', explanation: 'Lịch trình cá nhân là thứ con hoàn toàn làm chủ.' },
+    { id: 'coc-gen-27', situation: 'Bài thi Toán quá khó (27)', visual: '🎯', correctCategory: 'uncontrollable', explanation: 'Độ khó do giáo viên quyết định, con chỉ kiểm soát sự nỗ lực của mình.' },
+    { id: 'coc-gen-28', situation: 'Thái độ của con khi thua cuộc (28)', visual: '🎯', correctCategory: 'controllable', explanation: 'Cảm xúc và cách nhìn nhận là do con quyết định.' },
+    { id: 'coc-gen-29', situation: 'Bạn bè gian lận trong trò chơi (29)', visual: '🎯', correctCategory: 'uncontrollable', explanation: 'Con không thể kiểm soát hành động của người khác, chỉ có thể chọn không chơi chung.' },
 
-// --- Metrics Calculator ---
+];
 
 export function createDefaultEliteMetrics(): EliteCapabilityMetrics {
     return {
         bilingual_agility: 0,
         stochastic_intuition: 0,
         systemic_reasoning: 0,
-        investor_quotient: 50, // Start at 50 = neutral (neither consumer nor investor)
+        investor_quotient: 50,
         empathy_persuasion: 0,
-        stoic_resilience: 50,  // Start at 50 = baseline
+        stoic_resilience: 50,
     };
 }
 
-export function updateMetricFromActivity(
-    current: EliteCapabilityMetrics,
-    pillar: keyof EliteCapabilityMetrics,
-    score: number, // 0-100 for this activity
-    weight: number = 0.2 // How much this activity influences the aggregate
-): EliteCapabilityMetrics {
+export function updateMetricFromActivity(current: EliteCapabilityMetrics, pillar: keyof EliteCapabilityMetrics, score: number, weight: number = 0.2): EliteCapabilityMetrics {
     const oldVal = current[pillar];
     const newVal = Math.round(oldVal * (1 - weight) + score * weight);
-    return {
-        ...current,
-        [pillar]: Math.max(0, Math.min(100, newVal)),
-    };
+    return { ...current, [pillar]: Math.max(0, Math.min(100, newVal)) };
 }
