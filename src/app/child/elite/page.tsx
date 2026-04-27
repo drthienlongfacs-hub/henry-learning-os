@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useAppStore } from '@/stores/app-store';
+import { generateId } from '@/lib/utils';
 import { useTranslation, useLangStore } from '@/lib/i18n';
 import { LangToggle } from '@/components/LangToggle';
 import {
@@ -84,7 +85,53 @@ const LIKELIHOOD_EN: Record<LikelihoodLevel, string> = {
 
 export default function EliteDashboardPage() {
     const childProfile = useAppStore((s) => s.childProfile);
+    const addAttempt = useAppStore((s) => s.addAttempt);
+    const addMistake = useAppStore((s) => s.addMistake);
     const [activeTab, setActiveTab] = useState<EliteTab>('overview');
+
+    // Timer for tracking time spent per question
+    const questionStartTime = useRef<number>(Date.now());
+    useEffect(() => { questionStartTime.current = Date.now(); }, [activeTab]);
+
+    // Analytics helper: record every answer to Zustand store
+    const trackEliteAttempt = useCallback((pillar: string, exerciseId: string, answer: string, correctAnswer: string) => {
+        const isCorrect = answer === correctAnswer;
+        const timeSpent = Math.round((Date.now() - questionStartTime.current) / 1000);
+        const childId = childProfile?.id ?? 'henry';
+
+        addAttempt({
+            id: generateId(),
+            childId,
+            lessonId: `elite-${pillar}`,
+            competencyId: `elite-${pillar}`,
+            exerciseId,
+            answer,
+            isCorrect,
+            errorType: isCorrect ? null : 'concept',
+            hintLevelUsed: 0,
+            timeSpentSeconds: timeSpent,
+            confidenceSelfRating: 3,
+            aiRoleUsed: 'tutor',
+            createdAt: new Date().toISOString(),
+        });
+
+        if (!isCorrect) {
+            addMistake({
+                id: generateId(),
+                childId,
+                competencyId: `elite-${pillar}`,
+                attemptId: exerciseId,
+                errorType: 'concept',
+                explanation: `Wrong: ${answer}, Correct: ${correctAnswer}`,
+                correctionPlan: 'Review this topic',
+                reviewSchedule: [new Date(Date.now() + 86400000).toISOString()],
+                resolvedAt: null,
+            });
+        }
+
+        // Reset timer for next question
+        questionStartTime.current = Date.now();
+    }, [childProfile, addAttempt, addMistake]);
     const { t } = useTranslation();
     const lang = useLangStore((s) => s.lang);
     const likelihoodLabel = lang === 'vi' ? LIKELIHOOD_VI : LIKELIHOOD_EN;
@@ -300,7 +347,7 @@ export default function EliteDashboardPage() {
                                 const isWrong = probAnswer === opt && opt !== probScenarios[probIndex].correctAnswer;
                                 return (
                                     <button key={opt}
-                                        onClick={() => { if (probAnswer) return; setProbAnswer(opt); if (opt === probScenarios[probIndex].correctAnswer) setProbScore(s => s + 20); }}
+                                        onClick={() => { if (probAnswer) return; setProbAnswer(opt); if (opt === probScenarios[probIndex].correctAnswer) setProbScore(s => s + 20); trackEliteAttempt('probability', probScenarios[probIndex].id, opt, probScenarios[probIndex].correctAnswer); }}
                                         style={btnOption(!!probAnswer, isCorrect || false, isWrong || false)}
                                     >
                                         {likelihoodLabel[opt]}
@@ -335,7 +382,7 @@ export default function EliteDashboardPage() {
                                 const isWrong = wvnAnswer === opt && opt !== currentWvn[wvnIndex].correctCategory;
                                 return (
                                     <button key={opt}
-                                        onClick={() => { if (wvnAnswer) return; setWvnAnswer(opt); if (opt === currentWvn[wvnIndex].correctCategory) setWvnScore(s => s + 12); }}
+                                        onClick={() => { if (wvnAnswer) return; setWvnAnswer(opt); if (opt === currentWvn[wvnIndex].correctCategory) setWvnScore(s => s + 12); trackEliteAttempt('finance', currentWvn[wvnIndex].id, opt, currentWvn[wvnIndex].correctCategory); }}
                                         style={{
                                             flex: 1, padding: '16px 12px', borderRadius: '12px', border: 'none',
                                             background: isCorrect ? '#F0FFF4' : isWrong ? '#FFF5F5' : ios.surface,
@@ -421,7 +468,7 @@ export default function EliteDashboardPage() {
                                 const isWrong = cocAnswer === opt && opt !== currentCoc[cocIndex].correctCategory;
                                 return (
                                     <button key={opt}
-                                        onClick={() => { if (cocAnswer) return; setCocAnswer(opt); if (opt === currentCoc[cocIndex].correctCategory) setCocScore(s => s + 16); }}
+                                        onClick={() => { if (cocAnswer) return; setCocAnswer(opt); if (opt === currentCoc[cocIndex].correctCategory) setCocScore(s => s + 16); trackEliteAttempt('ethics', currentCoc[cocIndex].id, opt, currentCoc[cocIndex].correctCategory); }}
                                         style={{
                                             flex: 1, padding: '16px 12px', borderRadius: '12px', border: 'none',
                                             background: isCorrect ? '#F0FFF4' : isWrong ? '#FFF5F5' : ios.surface,
@@ -473,7 +520,7 @@ export default function EliteDashboardPage() {
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                             {/* Zero-sum option */}
                             <button
-                                onClick={() => { if (negAnswer) return; setNegAnswer('lose'); }}
+                                onClick={() => { if (negAnswer) return; setNegAnswer('lose'); trackEliteAttempt('negotiation', currentNeg[negIndex].id, 'lose', 'win'); }}
                                 style={{
                                     ...btnOption(!!negAnswer, false, negAnswer === 'lose'),
                                     borderColor: negAnswer === 'lose' ? ios.red : ios.border,
@@ -484,7 +531,7 @@ export default function EliteDashboardPage() {
                             </button>
                             {/* Win-win option */}
                             <button
-                                onClick={() => { if (negAnswer) return; setNegAnswer('win'); setNegScore(s => s + 20); }}
+                                onClick={() => { if (negAnswer) return; setNegAnswer('win'); setNegScore(s => s + 20); trackEliteAttempt('negotiation', currentNeg[negIndex].id, 'win', 'win'); }}
                                 style={{
                                     ...btnOption(!!negAnswer, negAnswer === 'win', false),
                                     borderColor: negAnswer === 'win' ? ios.green : ios.border,
