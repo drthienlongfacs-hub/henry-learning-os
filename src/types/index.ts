@@ -218,6 +218,8 @@ export interface Exercise {
   difficulty: number; // 1-5
   hints: string[];
   variations?: string[];
+  tags?: string[];
+  subject?: string;
 }
 
 export interface Attempt {

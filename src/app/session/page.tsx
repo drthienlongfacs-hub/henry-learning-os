@@ -11,6 +11,7 @@ import { createReviewItem } from '@/lib/spaced-repetition';
 import type { Exercise, SessionStep, Attempt, Mistake } from '@/types';
 import { ArrowRight, Lightbulb, Check, X, MessageCircle, ArrowLeft } from 'lucide-react';
 import { emitLearningEvent } from '@/lib/events/learning-events';
+import { BaseDefenseCard } from '@/components/gamification/BaseDefenseCard';
 
 function SessionContent() {
     const router = useRouter();
@@ -237,81 +238,92 @@ function SessionContent() {
                     )}
 
                     {/* STEP: Exercises */}
-                    {(currentStep.key === 'retrieval' || currentStep.key === 'guided_practice' || currentStep.key === 'independent_challenge') && currentEx && (
-                        <div>
-                            <div style={{ marginBottom: '0.5rem', fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
-                                {t('session_question_n')} {currentExIdx + 1} / {lesson.exercises.length}
-                            </div>
-                            <p style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '1.5rem', lineHeight: 1.6 }}>
-                                {currentEx.question}
-                            </p>
+                    {(currentStep.key === 'retrieval' || currentStep.key === 'guided_practice' || currentStep.key === 'independent_challenge') && currentEx && (() => {
+                        const Wrapper = lesson.subject.toLowerCase() === 'elite' ? BaseDefenseCard : 'div';
+                        const wrapperProps = lesson.subject.toLowerCase() === 'elite' ? {
+                            hp: 3 - (showResult && !isCorrect ? 1 : 0),
+                            ammo: 10 + currentExIdx * 2,
+                            score: currentExIdx * 100 + (isCorrect ? 100 : 0),
+                            isCorrect,
+                            showResult
+                        } : {};
 
-                            {!showResult && (
-                                <>
-                                    {currentEx.type === 'multiple_choice' && currentEx.options && (
-                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                            {currentEx.options.map((opt) => (
-                                                <button key={opt} className="btn btn-secondary" style={{ justifyContent: 'flex-start', textAlign: 'left' }} onClick={() => handleAnswer(opt)}>
-                                                    {opt}
+                        return (
+                            <Wrapper {...(wrapperProps as any)}>
+                                <div style={{ marginBottom: '0.5rem', fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
+                                    {t('session_question_n')} {currentExIdx + 1} / {lesson.exercises.length}
+                                </div>
+                                <p style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '1.5rem', lineHeight: 1.6 }}>
+                                    {currentEx.question}
+                                </p>
+
+                                {!showResult && (
+                                    <>
+                                        {currentEx.type === 'multiple_choice' && currentEx.options && (
+                                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                                {currentEx.options.map((opt) => (
+                                                    <button key={opt} className="btn btn-secondary" style={{ justifyContent: 'flex-start', textAlign: 'left' }} onClick={() => handleAnswer(opt)}>
+                                                        {opt}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        )}
+                                        {(currentEx.type === 'free_text' || currentEx.type === 'explain') && (
+                                            <div>
+                                                <textarea className="textarea-field" value={answer} onChange={(e) => setAnswer(e.target.value)} placeholder={currentEx.type === 'explain' ? t('session_explain_ph') : t('session_answer_ph')} />
+                                                <button className="btn btn-primary" style={{ marginTop: '1rem', width: '100%' }} onClick={() => handleAnswer(answer)} disabled={!answer.trim()}>
+                                                    {t('session_submit')} <Check size={18} />
                                                 </button>
-                                            ))}
-                                        </div>
-                                    )}
-                                    {(currentEx.type === 'free_text' || currentEx.type === 'explain') && (
-                                        <div>
-                                            <textarea className="textarea-field" value={answer} onChange={(e) => setAnswer(e.target.value)} placeholder={currentEx.type === 'explain' ? t('session_explain_ph') : t('session_answer_ph')} />
-                                            <button className="btn btn-primary" style={{ marginTop: '1rem', width: '100%' }} onClick={() => handleAnswer(answer)} disabled={!answer.trim()}>
-                                                {t('session_submit')} <Check size={18} />
+                                            </div>
+                                        )}
+                                        {currentStep.key !== 'independent_challenge' && (
+                                            <button className="btn btn-accent btn-sm" style={{ marginTop: '1rem' }} onClick={requestHint}>
+                                                <Lightbulb size={16} /> {t('session_hint_btn')} (L{hintLevel + 1})
                                             </button>
+                                        )}
+                                    </>
+                                )}
+
+                                {showResult && (
+                                    <div className="animate-fade-in">
+                                        <div style={{
+                                            display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '1rem',
+                                            borderRadius: 'var(--radius-md)', marginBottom: '1rem',
+                                            background: isCorrect ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)',
+                                            border: `2px solid ${isCorrect ? 'var(--color-success)' : 'var(--color-danger)'}`,
+                                        }}>
+                                            {isCorrect ? <Check size={20} color="var(--color-success)" /> : <X size={20} color="var(--color-danger)" />}
+                                            <span style={{ fontWeight: 700, color: isCorrect ? 'var(--color-success)' : 'var(--color-danger)' }}>
+                                                {isCorrect ? t('session_correct') : t('session_wrong')}
+                                            </span>
                                         </div>
-                                    )}
-                                    {currentStep.key !== 'independent_challenge' && (
-                                        <button className="btn btn-accent btn-sm" style={{ marginTop: '1rem' }} onClick={requestHint}>
-                                            <Lightbulb size={16} /> {t('session_hint_btn')} (L{hintLevel + 1})
+                                        <div style={{ background: 'var(--color-bg-child)', padding: '1rem', borderRadius: 'var(--radius-md)', marginBottom: '1rem' }}>
+                                            <p style={{ fontWeight: 600, marginBottom: '0.25rem' }}>{t('session_explain_label')}</p>
+                                            <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>{currentEx.explanation}</p>
+                                        </div>
+                                        <button className="btn btn-primary" style={{ width: '100%' }} onClick={nextExercise}>
+                                            {currentExIdx < lesson.exercises.length - 1 ? t('session_next_q') : t('session_next_step')} <ArrowRight size={18} />
                                         </button>
-                                    )}
-                                </>
-                            )}
+                                    </div>
+                                )}
 
-                            {showResult && (
-                                <div className="animate-fade-in">
-                                    <div style={{
-                                        display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '1rem',
-                                        borderRadius: 'var(--radius-md)', marginBottom: '1rem',
-                                        background: isCorrect ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)',
-                                        border: `2px solid ${isCorrect ? 'var(--color-success)' : 'var(--color-danger)'}`,
-                                    }}>
-                                        {isCorrect ? <Check size={20} color="var(--color-success)" /> : <X size={20} color="var(--color-danger)" />}
-                                        <span style={{ fontWeight: 700, color: isCorrect ? 'var(--color-success)' : 'var(--color-danger)' }}>
-                                            {isCorrect ? t('session_correct') : t('session_wrong')}
-                                        </span>
+                                {showHint && aiMessage && (
+                                    <div className="hint-card animate-fade-in">
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                                            <MessageCircle size={16} color="var(--color-accent)" />
+                                            <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--color-accent)' }}>{t('session_hint_label')} L{hintLevel}</span>
+                                        </div>
+                                        <p style={{ fontSize: '0.9rem', color: '#92400e' }}>{aiMessage}</p>
                                     </div>
-                                    <div style={{ background: 'var(--color-bg-child)', padding: '1rem', borderRadius: 'var(--radius-md)', marginBottom: '1rem' }}>
-                                        <p style={{ fontWeight: 600, marginBottom: '0.25rem' }}>{t('session_explain_label')}</p>
-                                        <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>{currentEx.explanation}</p>
+                                )}
+                                {showHint && hintLevel > 0 && currentEx.hints[hintLevel - 1] && (
+                                    <div className="hint-card" style={{ marginTop: '0.5rem' }}>
+                                        <p style={{ fontSize: '0.9rem', color: '#92400e' }}>{currentEx.hints[hintLevel - 1]}</p>
                                     </div>
-                                    <button className="btn btn-primary" style={{ width: '100%' }} onClick={nextExercise}>
-                                        {currentExIdx < lesson.exercises.length - 1 ? t('session_next_q') : t('session_next_step')} <ArrowRight size={18} />
-                                    </button>
-                                </div>
-                            )}
-
-                            {showHint && aiMessage && (
-                                <div className="hint-card animate-fade-in">
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                                        <MessageCircle size={16} color="var(--color-accent)" />
-                                        <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--color-accent)' }}>{t('session_hint_label')} L{hintLevel}</span>
-                                    </div>
-                                    <p style={{ fontSize: '0.9rem', color: '#92400e' }}>{aiMessage}</p>
-                                </div>
-                            )}
-                            {showHint && hintLevel > 0 && currentEx.hints[hintLevel - 1] && (
-                                <div className="hint-card" style={{ marginTop: '0.5rem' }}>
-                                    <p style={{ fontSize: '0.9rem', color: '#92400e' }}>{currentEx.hints[hintLevel - 1]}</p>
-                                </div>
-                            )}
-                        </div>
-                    )}
+                                )}
+                            </Wrapper>
+                        );
+                    })()}
 
                     {/* STEP: New Concept */}
                     {currentStep.key === 'new_concept' && (
@@ -363,7 +375,7 @@ function SessionContent() {
                             </button>
                         </div>
                     )}
-                </div>
+                </div >
             </div>
         </div>
     );

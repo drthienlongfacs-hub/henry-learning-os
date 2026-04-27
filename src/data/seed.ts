@@ -6,6 +6,11 @@ import type {
     ParentMission,
 } from '@/types';
 
+import { allMathExercises, subtractionWithin10 } from './exercises-math';
+import { allVietnameseExercises } from './exercises-vietnamese';
+import { englishExercises } from './exercises-english';
+import { eliteExercises } from './exercises-elite';
+
 // =============================================
 // SEED DATA — Grade 1 Math, Vietnamese, English
 // For child: Henry, born 2020, Grade 1, TP.HCM
@@ -202,134 +207,7 @@ export const competencies: Competency[] = [
     },
 ];
 
-// --- Exercises ---
-
-const mathExercises: Exercise[] = [
-    {
-        id: 'ex-math-001',
-        question: '3 + 5 = ?',
-        type: 'multiple_choice',
-        options: ['6', '7', '8', '9'],
-        correctAnswer: '8',
-        explanation: '3 + 5 = 8. Con đếm thêm 5 từ số 3: 4, 5, 6, 7, 8.',
-        difficulty: 1,
-        hints: [
-            'Con thử đếm trên ngón tay xem nào!',
-            'Bắt đầu từ số 3, đếm thêm 5 ngón tay.',
-            '3 → 4 → 5 → 6 → 7 → 8. Vậy đáp án là 8!',
-        ],
-    },
-    {
-        id: 'ex-math-002',
-        question: '7 + 2 = ?',
-        type: 'multiple_choice',
-        options: ['8', '9', '10', '5'],
-        correctAnswer: '9',
-        explanation: '7 + 2 = 9. Bắt đầu từ 7, đếm thêm 2: 8, 9.',
-        difficulty: 1,
-        hints: [
-            'Bắt đầu từ số lớn hơn nhé!',
-            'Từ 7, đếm thêm 2 số nữa.',
-            '7 → 8 → 9. Đáp án là 9.',
-        ],
-    },
-    {
-        id: 'ex-math-003',
-        question: 'Lan có 4 quả táo. Mẹ cho thêm 3 quả. Hỏi Lan có tất cả bao nhiêu quả táo?',
-        type: 'free_text',
-        correctAnswer: '7',
-        explanation: '4 + 3 = 7. Lan có 4 quả, được thêm 3 quả, tổng cộng 7 quả táo.',
-        difficulty: 2,
-        hints: [
-            'Đây là bài toán cộng. Con tìm xem có bao nhiêu quả tất cả.',
-            'Lan có 4 quả táo + thêm 3 quả = ?',
-            '4 + 3 = 7. Lan có tất cả 7 quả táo.',
-        ],
-    },
-    {
-        id: 'ex-math-004',
-        question: '10 - 4 = ?',
-        type: 'multiple_choice',
-        options: ['4', '5', '6', '7'],
-        correctAnswer: '6',
-        explanation: '10 - 4 = 6. Từ 10, bớt đi 4: 9, 8, 7, 6.',
-        difficulty: 1,
-        hints: [
-            'Bắt đầu từ 10, đếm lùi 4 bước.',
-            '10 → 9 → 8 → 7 → 6.',
-            '10 - 4 = 6.',
-        ],
-    },
-    {
-        id: 'ex-math-005',
-        question: 'Con hãy giải thích: Tại sao 2 + 3 = 3 + 2?',
-        type: 'explain',
-        correctAnswer: 'Vì khi ta đổi chỗ hai số hạng, tổng không thay đổi.',
-        explanation: 'Đây là tính chất giao hoán của phép cộng. 2 + 3 = 5 và 3 + 2 = 5, kết quả giống nhau.',
-        difficulty: 3,
-        hints: [
-            'Con thử tính cả hai xem kết quả có giống nhau không?',
-            '2 + 3 = ? và 3 + 2 = ? Giống nhau không?',
-            'Khi đổi chỗ hai số cộng, kết quả vẫn giống nhau.',
-        ],
-    },
-];
-
-const vietnameseExercises: Exercise[] = [
-    {
-        id: 'ex-viet-001',
-        question: 'Ghép vần: b + a = ?',
-        type: 'free_text',
-        correctAnswer: 'ba',
-        explanation: 'Chữ b ghép với vần a thành "ba".',
-        difficulty: 1,
-        hints: [
-            'Con đọc chữ b rồi thêm vần a nhé!',
-            'b + a = ba, như ba (bố) của con vậy!',
-        ],
-    },
-    {
-        id: 'ex-viet-002',
-        question: '"Bé đi học." Trong câu này, ai đi học?',
-        type: 'multiple_choice',
-        options: ['Bé', 'Mẹ', 'Ba', 'Cô giáo'],
-        correctAnswer: 'Bé',
-        explanation: 'Câu nói "Bé đi học" — người đi học là "Bé".',
-        difficulty: 1,
-        hints: [
-            'Con đọc lại câu và tìm xem AI đi học nhé!',
-            'Từ đầu tiên trong câu cho con biết ai đi học.',
-        ],
-    },
-];
-
-const englishExercises: Exercise[] = [
-    {
-        id: 'ex-eng-001',
-        question: 'What color is this? 🍎 (red apple)',
-        type: 'multiple_choice',
-        options: ['Blue', 'Red', 'Green', 'Yellow'],
-        correctAnswer: 'Red',
-        explanation: 'An apple is RED. Quả táo màu ĐỎ.',
-        difficulty: 1,
-        hints: [
-            'Look at the apple. What color is it?',
-            'It is the same color as a fire truck!',
-        ],
-    },
-    {
-        id: 'ex-eng-002',
-        question: 'How do you say "xin chào" in English?',
-        type: 'free_text',
-        correctAnswer: 'Hello',
-        explanation: '"Xin chào" in English is "Hello".',
-        difficulty: 1,
-        hints: [
-            'It starts with the letter H!',
-            'H-E-L-L-O!',
-        ],
-    },
-];
+// The exercises arrays are now imported from their respective expanded files.
 
 // --- Content Blocks ---
 
@@ -362,7 +240,7 @@ export const lessons: Lesson[] = [
         title: 'Phép cộng trong phạm vi 10',
         objective: 'Bé biết cộng hai số có tổng không quá 10 và giải thích cách làm.',
         contentBlocks: mathContent,
-        exercises: mathExercises.slice(0, 3),
+        exercises: allMathExercises.slice(0, 10),
         rubric: ['Tính đúng', 'Giải thích được bước', 'Không cần gợi ý quá nhiều'],
     },
     {
@@ -384,7 +262,7 @@ export const lessons: Lesson[] = [
                 content: 'Con có 8 cái kẹo 🍬🍬🍬🍬🍬🍬🍬🍬\nCon ăn 3 cái: 🍬🍬🍬 ❌\nCòn lại: 🍬🍬🍬🍬🍬 = 5 cái',
             },
         ],
-        exercises: [mathExercises[3], mathExercises[4]],
+        exercises: subtractionWithin10.slice(0, 5),
         rubric: ['Tính đúng', 'Hiểu ý nghĩa trừ', 'Bài toán có lời văn'],
     },
     {
@@ -401,7 +279,7 @@ export const lessons: Lesson[] = [
                 content: 'Hôm nay chúng ta sẽ ghép chữ cái thành vần, rồi đọc câu ngắn nhé!',
             },
         ],
-        exercises: vietnameseExercises,
+        exercises: allVietnameseExercises.slice(0, 10),
         rubric: ['Ghép vần đúng', 'Đọc trôi chảy', 'Trả lời câu hỏi nội dung'],
     },
     {
@@ -418,8 +296,52 @@ export const lessons: Lesson[] = [
                 content: 'Today we will learn colors and greetings! Hôm nay chúng ta học màu sắc và cách chào hỏi bằng tiếng Anh!',
             },
         ],
-        exercises: englishExercises,
+        exercises: englishExercises.slice(0, 10),
         rubric: ['Nói đúng từ', 'Hiểu nghĩa'],
+    },
+    {
+        id: 'lesson-mega-math-100x',
+        subject: 'Toán',
+        ageBand: '6-8',
+        competencyIds: ['comp-math-001', 'comp-math-002', 'comp-math-003', 'comp-math-004'],
+        title: 'Thử thách Toán Học 100x (Quân Sự)',
+        objective: 'Luyện tập tổng hợp các kỹ năng toán học.',
+        contentBlocks: [{ id: 'cb-mega-m-1', type: 'text', content: 'Căn cứ đang chờ lệnh! Chỉ huy hãy giải các bài toán để củng cố phòng thủ!' }],
+        exercises: allMathExercises, // contains all 200+
+        rubric: ['Chính xác tuyệt đối'],
+    },
+    {
+        id: 'lesson-mega-viet-100x',
+        subject: 'Tiếng Việt',
+        ageBand: '6-8',
+        competencyIds: ['comp-viet-001', 'comp-viet-002', 'comp-viet-003'],
+        title: 'Thử thách Tiếng Việt 100x',
+        objective: 'Đọc thông viết thạo.',
+        contentBlocks: [{ id: 'cb-mega-v-1', type: 'text', content: 'Làm giàu vốn ngôn ngữ!' }],
+        exercises: allVietnameseExercises, // contains all 70+
+        rubric: ['Đọc thông', 'Hiểu giỏi'],
+    },
+    {
+        id: 'lesson-mega-eng-100x',
+        subject: 'Tiếng Anh',
+        ageBand: '6-8',
+        competencyIds: ['comp-eng-001', 'comp-eng-002'],
+        title: 'Thử thách Tiếng Anh 100x',
+        objective: 'Thành thạo từ vựng.',
+        contentBlocks: [{ id: 'cb-mega-e-1', type: 'text', content: 'English mastery!' }],
+        exercises: englishExercises, // contains 160
+        rubric: ['Vocabulary mastery'],
+    },
+    {
+        id: 'lesson-mega-elite-100x',
+        subject: 'Năng lực tinh hoa (Elite)',
+        ageBand: '6-8',
+        competencyIds: ['comp-elite-probability-001', 'comp-elite-civics-001', 'comp-elite-finance-001'],
+        title: 'CHỈ HUY TRƯỞNG LÊN LỆNH (Trò Chơi Chiến Thuật)',
+        objective: 'Rèn luyện khả năng quản lý tài nguyên, xác suất và chiến thuật tác chiến.',
+        contentBlocks: [{ id: 'cb-mega-elite-1', type: 'text', content: 'Chào Chỉ huy Henry! Kẻ địch đang áp sát căn cứ. Hãy dùng tư duy sắc bén để bảo vệ cứ điểm!' }],
+        exercises: eliteExercises, // contains 100 Elite gamified
+        rubric: ['Quyết định chính xác', 'Quản lý tài nguyên giỏi'],
     },
 ];
 
