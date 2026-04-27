@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useAppStore } from '@/stores/app-store';
 import { useTranslation, useLangStore } from '@/lib/i18n';
 import { LangToggle } from '@/components/LangToggle';
@@ -11,6 +11,7 @@ import {
     CIRCLE_OF_CONTROL,
     NEGOTIATION_CHALLENGES,
     type LikelihoodLevel,
+    type AgeGroup
 } from '@/lib/elite/engine';
 import { ArrowLeft, Brain, Coins, Globe, Handshake, Shield, Sparkles } from 'lucide-react';
 import Link from 'next/link';
@@ -31,8 +32,11 @@ export default function EliteDashboardPage() {
     const lang = useLangStore((s) => s.lang);
     const likelihoodLabel = lang === 'vi' ? LIKELIHOOD_VI : LIKELIHOOD_EN;
 
+    // Age Filter 
+    const [ageFilter, setAgeFilter] = useState<AgeGroup>('6-10');
+
     // Game states
-    const [probScenarios] = useState(() => generateProbabilityScenarios(5));
+    const [probScenarios, setProbScenarios] = useState(() => generateProbabilityScenarios(ageFilter, 5));
     const [probIndex, setProbIndex] = useState(0);
     const [probAnswer, setProbAnswer] = useState<LikelihoodLevel | null>(null);
     const [probScore, setProbScore] = useState(0);
@@ -51,6 +55,22 @@ export default function EliteDashboardPage() {
     const [negIndex, setNegIndex] = useState(0);
     const [negAnswer, setNegAnswer] = useState<'win' | 'lose' | null>(null);
     const [negScore, setNegScore] = useState(0);
+
+    // Filtered Arrays mapped dynamically
+    const currentWvn = useMemo(() => WANTS_VS_NEEDS.filter(i => i.ageTarget === ageFilter), [ageFilter]);
+    const currentPol = useMemo(() => POLICY_SCENARIOS.filter(i => i.ageTarget === ageFilter), [ageFilter]);
+    const currentCoc = useMemo(() => CIRCLE_OF_CONTROL.filter(i => i.ageTarget === ageFilter), [ageFilter]);
+    const currentNeg = useMemo(() => NEGOTIATION_CHALLENGES.filter(i => i.ageTarget === ageFilter), [ageFilter]);
+
+    // Reset loop when age shifts
+    useEffect(() => {
+        setProbScenarios(generateProbabilityScenarios(ageFilter, 5));
+        setProbIndex(0); setProbAnswer(null); setProbScore(0);
+        setWvnIndex(0); setWvnAnswer(null); setWvnScore(0);
+        setPolicyIndex(0); setPolicyChoice(null);
+        setCocIndex(0); setCocAnswer(null); setCocScore(0);
+        setNegIndex(0); setNegAnswer(null); setNegScore(0);
+    }, [ageFilter]);
 
     const metrics = childProfile?.eliteMetrics ?? {
         bilingual_agility: 0, stochastic_intuition: 0, systemic_reasoning: 0,
@@ -89,7 +109,13 @@ export default function EliteDashboardPage() {
                             <h1 className="page-title" style={{ fontSize: '1.5rem', color: '#38bdf8', textShadow: '0 0 10px rgba(56, 189, 248, 0.5)', fontFamily: 'monospace' }}>MỤC TIÊU: {t('elite_page_title').toUpperCase()}</h1>
                             <p className="page-subtitle" style={{ color: '#71717a', fontFamily: 'monospace' }}>[RADAR ACTIVE] Phân tích Rủi ro Hệ thống theo chuẩn CASEL ...</p>
                         </div>
-                        <LangToggle />
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'flex-end' }}>
+                            <LangToggle />
+                            <div style={{ display: 'flex', gap: '0.25rem', background: '#27272a', padding: '0.25rem', borderRadius: '8px' }}>
+                                <button onClick={() => setAgeFilter('6-10')} style={{ border: 'none', background: ageFilter === '6-10' ? '#10b981' : 'transparent', color: ageFilter === '6-10' ? '#000' : '#a1a1aa', padding: '0.25rem 0.75rem', borderRadius: '4px', fontWeight: 600, cursor: 'pointer', fontFamily: 'monospace', fontSize: '0.8rem' }}>🔰 6-10T</button>
+                                <button onClick={() => setAgeFilter('11+')} style={{ border: 'none', background: ageFilter === '11+' ? '#ef4444' : 'transparent', color: ageFilter === '11+' ? '#fff' : '#a1a1aa', padding: '0.25rem 0.75rem', borderRadius: '4px', fontWeight: 600, cursor: 'pointer', fontFamily: 'monospace', fontSize: '0.8rem' }}>🎓 11+</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -173,20 +199,20 @@ export default function EliteDashboardPage() {
                 )}
 
                 {/* FINANCE */}
-                {activeTab === 'finance' && wvnIndex < WANTS_VS_NEEDS.length && (
+                {activeTab === 'finance' && wvnIndex < currentWvn.length && (
                     <div className="card animate-fade-in" style={{ background: '#18181b', border: '1px solid #27272a', borderRadius: '8px' }}>
                         <h2 style={{ fontWeight: 700, marginBottom: '0.5rem', color: '#fbbf24', fontFamily: 'monospace' }}>🟡 PHÂN TÍCH NHU CẦU [TÀI CHÍNH / CẦN & MUỐN]</h2>
                         <p style={{ color: '#a1a1aa', fontSize: '0.85rem', marginBottom: '1rem', fontFamily: 'monospace' }}>
-                            DỮ LIỆU {wvnIndex + 1} / {WANTS_VS_NEEDS.length} — CẤP BẬC: {wvnScore}
+                            DỮ LIỆU {wvnIndex + 1} / {currentWvn.length} — CẤP BẬC: {wvnScore}
                         </p>
-                        <div style={{ textAlign: 'center', fontSize: '4rem', marginBottom: '0.5rem' }}>{WANTS_VS_NEEDS[wvnIndex].visual}</div>
-                        <p style={{ fontWeight: 600, textAlign: 'center', marginBottom: '1rem', fontSize: '1.2rem' }}>{WANTS_VS_NEEDS[wvnIndex].name}</p>
+                        <div style={{ textAlign: 'center', fontSize: '4rem', marginBottom: '0.5rem' }}>{currentWvn[wvnIndex].visual}</div>
+                        <p style={{ fontWeight: 600, textAlign: 'center', marginBottom: '1rem', fontSize: '1.2rem' }}>{currentWvn[wvnIndex].name}</p>
                         <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
                             {(['want', 'need'] as const).map((opt) => {
-                                const isCorrect = wvnAnswer && opt === WANTS_VS_NEEDS[wvnIndex].correctCategory;
-                                const isWrong = wvnAnswer === opt && opt !== WANTS_VS_NEEDS[wvnIndex].correctCategory;
+                                const isCorrect = wvnAnswer && opt === currentWvn[wvnIndex].correctCategory;
+                                const isWrong = wvnAnswer === opt && opt !== currentWvn[wvnIndex].correctCategory;
                                 return (
-                                    <button key={opt} onClick={() => { if (wvnAnswer) return; setWvnAnswer(opt); if (opt === WANTS_VS_NEEDS[wvnIndex].correctCategory) setWvnScore((s) => s + 12); }}
+                                    <button key={opt} onClick={() => { if (wvnAnswer) return; setWvnAnswer(opt); if (opt === currentWvn[wvnIndex].correctCategory) setWvnScore((s) => s + 12); }}
                                         className="btn" style={{ flex: 1, padding: '1rem', fontSize: '1.1rem', fontWeight: 700, background: isCorrect ? 'rgba(16,185,129,0.2)' : isWrong ? 'rgba(239,68,68,0.2)' : '#27272a', border: isCorrect ? '1px solid #10b981' : isWrong ? '1px solid #ef4444' : '1px solid #3f3f46', color: '#e4e4e7', fontFamily: 'monospace', textTransform: 'uppercase' }}>
                                         {opt === 'want' ? 'MỤC TIÊU MUỐN' : 'CHI PHÍ THIẾT YẾU'}
                                     </button>
@@ -195,32 +221,32 @@ export default function EliteDashboardPage() {
                         </div>
                         {wvnAnswer && (
                             <div style={{ marginTop: '1rem', padding: '1rem', background: '#fffbeb', borderRadius: '12px' }}>
-                                <p style={{ fontWeight: 600 }}>{wvnAnswer === WANTS_VS_NEEDS[wvnIndex].correctCategory ? t('correct') : t('wrong')}</p>
-                                <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)' }}>{WANTS_VS_NEEDS[wvnIndex].explanation}</p>
+                                <p style={{ fontWeight: 600 }}>{wvnAnswer === currentWvn[wvnIndex].correctCategory ? t('correct') : t('wrong')}</p>
+                                <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)' }}>{currentWvn[wvnIndex].explanation}</p>
                                 <button className="btn btn-primary" style={{ marginTop: '0.75rem' }} onClick={() => { setWvnAnswer(null); setWvnIndex((i) => i + 1); }}>{t('next')}</button>
                             </div>
                         )}
                     </div>
                 )}
-                {activeTab === 'finance' && wvnIndex >= WANTS_VS_NEEDS.length && (
+                {activeTab === 'finance' && wvnIndex >= currentWvn.length && (
                     <div className="card animate-fade-in" style={{ textAlign: 'center' }}>
                         <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>💰</div>
-                        <h2 style={{ fontWeight: 700 }}>{t('done')} {t('score_label')}: {wvnScore}/{WANTS_VS_NEEDS.length * 12}</h2>
+                        <h2 style={{ fontWeight: 700 }}>{t('done')} {t('score_label')}: {wvnScore}/{currentWvn.length * 12}</h2>
                         <button className="btn btn-primary" style={{ marginTop: '1rem' }} onClick={() => { setWvnIndex(0); setWvnScore(0); setWvnAnswer(null); }}>{t('replay')}</button>
                     </div>
                 )}
 
                 {/* CIVICS */}
-                {activeTab === 'civics' && policyIndex < POLICY_SCENARIOS.length && (
+                {activeTab === 'civics' && policyIndex < currentPol.length && (
                     <div className="card animate-fade-in" style={{ background: '#18181b', border: '1px solid #27272a', borderRadius: '8px' }}>
                         <h2 style={{ fontWeight: 700, marginBottom: '0.5rem', color: '#10b981', fontFamily: 'monospace' }}>🟢 TÌNH HUỐNG CHÍNH SÁCH [PHÂN TÍCH VĨ MÔ]</h2>
                         <p style={{ color: '#a1a1aa', fontSize: '0.85rem', marginBottom: '1rem', fontFamily: 'monospace' }}>
-                            DỮ LIỆU {policyIndex + 1} / {POLICY_SCENARIOS.length}
+                            DỮ LIỆU {policyIndex + 1} / {currentPol.length}
                         </p>
-                        <div style={{ textAlign: 'center', fontSize: '3rem', marginBottom: '0.5rem' }}>{POLICY_SCENARIOS[policyIndex].visual}</div>
-                        <p style={{ fontWeight: 600, marginBottom: '1rem', fontSize: '1.2rem', textAlign: 'center' }}>{POLICY_SCENARIOS[policyIndex].situation}</p>
+                        <div style={{ textAlign: 'center', fontSize: '3rem', marginBottom: '0.5rem' }}>{currentPol[policyIndex].visual}</div>
+                        <p style={{ fontWeight: 600, marginBottom: '1rem', fontSize: '1.2rem', textAlign: 'center' }}>{currentPol[policyIndex].situation}</p>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                            {POLICY_SCENARIOS[policyIndex].options.map((opt, idx) => (
+                            {currentPol[policyIndex].options.map((opt, idx) => (
                                 <button key={idx} onClick={() => setPolicyChoice(idx)} className="card" style={{ textAlign: 'left', cursor: 'pointer', border: policyChoice === idx ? '2px solid #10b981' : '1px solid #3f3f46', background: policyChoice === idx ? 'rgba(16,185,129,0.1)' : '#27272a', padding: '1rem' }}>
                                     <div style={{ fontWeight: 600, marginBottom: '0.25rem', color: '#e4e4e7', fontFamily: 'monospace' }}>{opt.text}</div>
                                     {policyChoice === idx && (
@@ -240,7 +266,7 @@ export default function EliteDashboardPage() {
                         )}
                     </div>
                 )}
-                {activeTab === 'civics' && policyIndex >= POLICY_SCENARIOS.length && (
+                {activeTab === 'civics' && policyIndex >= currentPol.length && (
                     <div className="card animate-fade-in" style={{ textAlign: 'center', background: '#18181b', border: '1px solid #27272a' }}>
                         <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>⚖️</div>
                         <h2 style={{ fontWeight: 700, color: '#10b981', fontFamily: 'monospace' }}>VĨ MÔ HOÀN TẤT</h2>
@@ -249,20 +275,20 @@ export default function EliteDashboardPage() {
                 )}
 
                 {/* ETHICS */}
-                {activeTab === 'ethics' && cocIndex < CIRCLE_OF_CONTROL.length && (
+                {activeTab === 'ethics' && cocIndex < currentCoc.length && (
                     <div className="card animate-fade-in" style={{ background: '#18181b', border: '1px solid #27272a', borderRadius: '8px' }}>
                         <h2 style={{ fontWeight: 700, marginBottom: '0.5rem', color: '#a78bfa', fontFamily: 'monospace' }}>🟣 {t('eth_title').toUpperCase()} [STOICISM]</h2>
                         <p style={{ color: '#a1a1aa', fontSize: '0.85rem', marginBottom: '1rem', fontFamily: 'monospace' }}>
-                            DỮ LIỆU {cocIndex + 1} / {CIRCLE_OF_CONTROL.length} — CẤP BẬC: {cocScore}
+                            DỮ LIỆU {cocIndex + 1} / {currentCoc.length} — CẤP BẬC: {cocScore}
                         </p>
-                        <div style={{ textAlign: 'center', fontSize: '4rem', marginBottom: '0.5rem' }}>{CIRCLE_OF_CONTROL[cocIndex].visual}</div>
-                        <p style={{ fontWeight: 600, textAlign: 'center', marginBottom: '1.5rem', fontSize: '1.2rem' }}>{CIRCLE_OF_CONTROL[cocIndex].situation}</p>
+                        <div style={{ textAlign: 'center', fontSize: '4rem', marginBottom: '0.5rem' }}>{currentCoc[cocIndex].visual}</div>
+                        <p style={{ fontWeight: 600, textAlign: 'center', marginBottom: '1.5rem', fontSize: '1.2rem' }}>{currentCoc[cocIndex].situation}</p>
                         <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
                             {(['controllable', 'uncontrollable'] as const).map((opt) => {
-                                const isCorrect = cocAnswer && opt === CIRCLE_OF_CONTROL[cocIndex].correctCategory;
-                                const isWrong = cocAnswer === opt && opt !== CIRCLE_OF_CONTROL[cocIndex].correctCategory;
+                                const isCorrect = cocAnswer && opt === currentCoc[cocIndex].correctCategory;
+                                const isWrong = cocAnswer === opt && opt !== currentCoc[cocIndex].correctCategory;
                                 return (
-                                    <button key={opt} onClick={() => { if (cocAnswer) return; setCocAnswer(opt); if (opt === CIRCLE_OF_CONTROL[cocIndex].correctCategory) setCocScore((s) => s + 16); }}
+                                    <button key={opt} onClick={() => { if (cocAnswer) return; setCocAnswer(opt); if (opt === currentCoc[cocIndex].correctCategory) setCocScore((s) => s + 16); }}
                                         className="btn" style={{ flex: 1, padding: '1rem', fontSize: '1rem', fontWeight: 700, fontFamily: 'monospace', textTransform: 'uppercase', background: isCorrect ? 'rgba(16,185,129,0.2)' : isWrong ? 'rgba(239,68,68,0.2)' : '#27272a', border: isCorrect ? '1px solid #10b981' : isWrong ? '1px solid #ef4444' : '1px solid #3f3f46', color: '#e4e4e7' }}>
                                         {opt === 'controllable' ? 'VÙNG KIỂM SOÁT' : 'NGOÀI KIỂM SOÁT'}
                                     </button>
@@ -271,34 +297,34 @@ export default function EliteDashboardPage() {
                         </div>
                         {cocAnswer && (
                             <div style={{ marginTop: '1.5rem', padding: '1rem', background: '#312e81', borderRadius: '8px', borderLeft: '4px solid #818cf8' }}>
-                                <p style={{ fontWeight: 600, color: '#c7d2fe', fontFamily: 'monospace', marginBottom: '0.5rem' }}>[STOIC] {cocAnswer === CIRCLE_OF_CONTROL[cocIndex].correctCategory ? 'GIÁC NGỘ CHUẨN MỰC' : 'NHẬN THỨC SAI LỆCH'}</p>
-                                <p style={{ fontSize: '0.95rem', color: '#e0e7ff' }}>{CIRCLE_OF_CONTROL[cocIndex].explanation}</p>
+                                <p style={{ fontWeight: 600, color: '#c7d2fe', fontFamily: 'monospace', marginBottom: '0.5rem' }}>[STOIC] {cocAnswer === currentCoc[cocIndex].correctCategory ? 'GIÁC NGỘ CHUẨN MỰC' : 'NHẬN THỨC SAI LỆCH'}</p>
+                                <p style={{ fontSize: '0.95rem', color: '#e0e7ff' }}>{currentCoc[cocIndex].explanation}</p>
                                 <button className="btn" style={{ marginTop: '1rem', background: '#818cf8', color: '#000', border: 'none', fontFamily: 'monospace', fontWeight: 700 }} onClick={() => { setCocAnswer(null); setCocIndex((i) => i + 1); }}>{t('next').toUpperCase()} LỆNH</button>
                             </div>
                         )}
                     </div>
                 )}
-                {activeTab === 'ethics' && cocIndex >= CIRCLE_OF_CONTROL.length && (
+                {activeTab === 'ethics' && cocIndex >= currentCoc.length && (
                     <div className="card animate-fade-in" style={{ textAlign: 'center', background: '#18181b', border: '1px solid #27272a' }}>
                         <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>🛡️</div>
-                        <h2 style={{ fontWeight: 700, color: '#a78bfa', fontFamily: 'monospace' }}>ĐẠO ĐỨC HOÀN TẤT. {t('score_label')}: {cocScore}/{CIRCLE_OF_CONTROL.length * 16}</h2>
+                        <h2 style={{ fontWeight: 700, color: '#a78bfa', fontFamily: 'monospace' }}>ĐẠO ĐỨC HOÀN TẤT. {t('score_label')}: {cocScore}/{currentCoc.length * 16}</h2>
                         <button className="btn" style={{ marginTop: '1rem', background: '#3f3f46', color: '#fff', fontFamily: 'monospace' }} onClick={() => { setCocIndex(0); setCocScore(0); setCocAnswer(null); }}>[RE-SCAN] QUÉT LẠI CỨ ĐIỂM</button>
                     </div>
                 )}
 
                 {/* NEGOTIATION */}
-                {activeTab === 'negotiation' && negIndex < NEGOTIATION_CHALLENGES.length && (
+                {activeTab === 'negotiation' && negIndex < currentNeg.length && (
                     <div className="card animate-fade-in" style={{ background: '#18181b', border: '1px solid #27272a', borderRadius: '8px' }}>
                         <h2 style={{ fontWeight: 700, marginBottom: '0.5rem', color: '#f87171', fontFamily: 'monospace' }}>🔴 THƯƠNG LƯỢNG [HARVARD NEGOTIATION]</h2>
                         <p style={{ color: '#a1a1aa', fontSize: '0.85rem', marginBottom: '1rem', fontFamily: 'monospace' }}>
-                            DỮ LIỆU {negIndex + 1} / {NEGOTIATION_CHALLENGES.length} — CẤP BẬC: {negScore}
+                            DỮ LIỆU {negIndex + 1} / {currentNeg.length} — CẤP BẬC: {negScore}
                         </p>
-                        <div style={{ textAlign: 'center', fontSize: '4rem', marginBottom: '1rem' }}>{NEGOTIATION_CHALLENGES[negIndex].visual}</div>
+                        <div style={{ textAlign: 'center', fontSize: '4rem', marginBottom: '1rem' }}>{currentNeg[negIndex].visual}</div>
 
                         <div style={{ padding: '1rem', background: '#450a0a', borderRadius: '8px', borderLeft: '4px solid #f87171', marginBottom: '1.5rem' }}>
-                            <p style={{ fontWeight: 600, color: '#fecaca', fontSize: '1.1rem', marginBottom: '0.5rem' }}>{NEGOTIATION_CHALLENGES[negIndex].scenario}</p>
-                            <p style={{ fontSize: '0.85rem', color: '#fca5a5', fontFamily: 'monospace' }}>ĐỐI THỦ: {NEGOTIATION_CHALLENGES[negIndex].aiPersonality}</p>
-                            <p style={{ fontSize: '0.85rem', color: '#fca5a5', fontFamily: 'monospace' }}>MỤC TIÊU: {NEGOTIATION_CHALLENGES[negIndex].targetOutcome}</p>
+                            <p style={{ fontWeight: 600, color: '#fecaca', fontSize: '1.1rem', marginBottom: '0.5rem' }}>{currentNeg[negIndex].scenario}</p>
+                            <p style={{ fontSize: '0.85rem', color: '#fca5a5', fontFamily: 'monospace' }}>ĐỐI THỦ: {currentNeg[negIndex].aiPersonality}</p>
+                            <p style={{ fontSize: '0.85rem', color: '#fca5a5', fontFamily: 'monospace' }}>MỤC TIÊU: {currentNeg[negIndex].targetOutcome}</p>
                         </div>
 
                         <p style={{ fontWeight: 600, marginBottom: '0.75rem', fontFamily: 'monospace', color: '#a1a1aa', textAlign: 'center' }}>CHỌN CHIẾN THUẬT PHẢN TỰ</p>
@@ -315,7 +341,7 @@ export default function EliteDashboardPage() {
                                 }}
                             >
                                 <p style={{ fontSize: '0.8rem', fontWeight: 600, color: '#f87171', fontFamily: 'monospace', marginBottom: '0.25rem' }}>CHIẾN THUẬT QUYỀN LỰC (ZERO-SUM)</p>
-                                <p style={{ fontSize: '1rem', color: '#e4e4e7' }}>{NEGOTIATION_CHALLENGES[negIndex].sampleRequest}</p>
+                                <p style={{ fontSize: '1rem', color: '#e4e4e7' }}>{currentNeg[negIndex].sampleRequest}</p>
                             </button>
 
                             {/* Option B: Win-Win */}
@@ -330,7 +356,7 @@ export default function EliteDashboardPage() {
                                 }}
                             >
                                 <p style={{ fontSize: '0.8rem', fontWeight: 600, color: '#34d399', fontFamily: 'monospace', marginBottom: '0.25rem' }}>CHIẾN THUẬT WIN-WIN (HARVARD)</p>
-                                <p style={{ fontSize: '1rem', color: '#e4e4e7' }}>{NEGOTIATION_CHALLENGES[negIndex].sampleWinWin}</p>
+                                <p style={{ fontSize: '1rem', color: '#e4e4e7' }}>{currentNeg[negIndex].sampleWinWin}</p>
                             </button>
                         </div>
 
@@ -339,16 +365,16 @@ export default function EliteDashboardPage() {
                                 <p style={{ fontWeight: 600, color: '#6ee7b7', fontFamily: 'monospace', marginBottom: '0.5rem' }}>
                                     [NGUYÊN LÝ] {negAnswer === 'win' ? 'THÀNH CÔNG RỰC RỠ' : 'THẤT BẠI CHIẾN DỊCH'}
                                 </p>
-                                <p style={{ fontSize: '0.95rem', color: '#d1fae5' }}>{NEGOTIATION_CHALLENGES[negIndex].winWinCriteria}</p>
+                                <p style={{ fontSize: '0.95rem', color: '#d1fae5' }}>{currentNeg[negIndex].winWinCriteria}</p>
                                 <button className="btn" style={{ marginTop: '1rem', background: '#34d399', color: '#000', border: 'none', fontFamily: 'monospace', fontWeight: 700 }} onClick={() => { setNegAnswer(null); setNegIndex((i) => i + 1); }}>{t('next').toUpperCase()} LỆNH</button>
                             </div>
                         )}
                     </div>
                 )}
-                {activeTab === 'negotiation' && negIndex >= NEGOTIATION_CHALLENGES.length && (
+                {activeTab === 'negotiation' && negIndex >= currentNeg.length && (
                     <div className="card animate-fade-in" style={{ textAlign: 'center', background: '#18181b', border: '1px solid #27272a' }}>
                         <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>🤝</div>
-                        <h2 style={{ fontWeight: 700, color: '#f87171', fontFamily: 'monospace' }}>THƯƠNG LƯỢNG KẾT THÚC. {t('score_label')}: {negScore}/{NEGOTIATION_CHALLENGES.length * 20}</h2>
+                        <h2 style={{ fontWeight: 700, color: '#f87171', fontFamily: 'monospace' }}>THƯƠNG LƯỢNG KẾT THÚC. {t('score_label')}: {negScore}/{currentNeg.length * 20}</h2>
                         <button className="btn" style={{ marginTop: '1rem', background: '#3f3f46', color: '#fff', fontFamily: 'monospace' }} onClick={() => { setNegIndex(0); setNegScore(0); setNegAnswer(null); }}>[RE-SCAN] QUÉT LẠI CỨ ĐIỂM</button>
                     </div>
                 )}
