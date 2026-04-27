@@ -13,8 +13,65 @@ import {
     type LikelihoodLevel,
     type AgeGroup
 } from '@/lib/elite/engine';
-import { ArrowLeft, Brain, Coins, Globe, Handshake, Shield, Sparkles } from 'lucide-react';
+import { ArrowLeft, Brain, Coins, Globe, Handshake, Shield, Sparkles, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+
+/* ─── iOS 26 Liquid Glass Design Tokens ─── */
+const ios = {
+    bg: '#FFFFFF',
+    surface: '#F2F2F7',
+    card: 'rgba(255, 255, 255, 0.25)',
+    text: '#1D1D1F',
+    secondary: '#6E6E73',
+    muted: '#8E8E93',
+    border: 'rgba(255, 255, 255, 0.3)',
+    borderSolid: '#E5E5EA',
+    blue: '#007AFF',
+    green: '#34C759',
+    red: '#FF3B30',
+    orange: '#FF9500',
+    purple: '#AF52DE',
+    indigo: '#5856D6',
+    teal: '#5AC8FA',
+    radius: '20px',
+    radiusSm: '14px',
+    font: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+    shadow: '0 8px 32px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.8)',
+    shadowLg: '0 8px 32px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.15)',
+};
+
+/* ─── Shared Styles ─── */
+const cardStyle: React.CSSProperties = {
+    background: ios.card,
+    backdropFilter: 'blur(20px) saturate(180%) brightness(1.1)',
+    WebkitBackdropFilter: 'blur(20px) saturate(180%) brightness(1.1)',
+    borderRadius: ios.radius,
+    border: `1px solid ${ios.border}`,
+    boxShadow: ios.shadow,
+    padding: '20px',
+    marginBottom: '16px',
+};
+
+const btnPrimary = (color: string): React.CSSProperties => ({
+    display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+    padding: '12px 24px', borderRadius: ios.radiusSm, border: 'none',
+    background: color, color: '#fff', fontWeight: 600, fontSize: '0.95rem',
+    cursor: 'pointer', fontFamily: ios.font,
+    transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+    boxShadow: `0 4px 16px ${color}30, inset 0 1px 0 rgba(255,255,255,0.3)`,
+});
+
+const btnOption = (selected: boolean, correct: boolean | null, wrong: boolean | null): React.CSSProperties => ({
+    textAlign: 'left' as const, padding: '14px 16px', borderRadius: '16px',
+    border: correct ? `2px solid ${ios.green}` : wrong ? `2px solid ${ios.red}` : `1px solid ${ios.borderSolid}`,
+    background: correct ? '#F0FFF4' : wrong ? '#FFF5F5' : 'rgba(255,255,255,0.7)',
+    backdropFilter: 'blur(12px) saturate(150%)',
+    WebkitBackdropFilter: 'blur(12px) saturate(150%)',
+    cursor: selected ? 'default' : 'pointer', fontFamily: ios.font,
+    fontWeight: 500, fontSize: '0.95rem', color: ios.text,
+    transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+    boxShadow: selected ? 'none' : '0 2px 8px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)',
+});
 
 type EliteTab = 'overview' | 'probability' | 'finance' | 'civics' | 'negotiation' | 'ethics';
 
@@ -32,10 +89,8 @@ export default function EliteDashboardPage() {
     const lang = useLangStore((s) => s.lang);
     const likelihoodLabel = lang === 'vi' ? LIKELIHOOD_VI : LIKELIHOOD_EN;
 
-    // Age Filter 
     const [ageFilter, setAgeFilter] = useState<AgeGroup>('6-10');
 
-    // Game states
     const [probScenarios, setProbScenarios] = useState(() => generateProbabilityScenarios(ageFilter, 5));
     const [probIndex, setProbIndex] = useState(0);
     const [probAnswer, setProbAnswer] = useState<LikelihoodLevel | null>(null);
@@ -56,13 +111,11 @@ export default function EliteDashboardPage() {
     const [negAnswer, setNegAnswer] = useState<'win' | 'lose' | null>(null);
     const [negScore, setNegScore] = useState(0);
 
-    // Filtered Arrays mapped dynamically
     const currentWvn = useMemo(() => WANTS_VS_NEEDS.filter(i => i.ageTarget === ageFilter), [ageFilter]);
     const currentPol = useMemo(() => POLICY_SCENARIOS.filter(i => i.ageTarget === ageFilter), [ageFilter]);
     const currentCoc = useMemo(() => CIRCLE_OF_CONTROL.filter(i => i.ageTarget === ageFilter), [ageFilter]);
     const currentNeg = useMemo(() => NEGOTIATION_CHALLENGES.filter(i => i.ageTarget === ageFilter), [ageFilter]);
 
-    // Reset loop when age shifts
     useEffect(() => {
         setProbScenarios(generateProbabilityScenarios(ageFilter, 5));
         setProbIndex(0); setProbAnswer(null); setProbScore(0);
@@ -77,82 +130,155 @@ export default function EliteDashboardPage() {
         investor_quotient: 50, empathy_persuasion: 0, stoic_resilience: 50,
     };
 
-    const metricLabels: { key: keyof typeof metrics; i18nKey: string; color: string }[] = [
-        { key: 'bilingual_agility', i18nKey: 'm_bilingual', color: '#8b5cf6' },
-        { key: 'stochastic_intuition', i18nKey: 'm_stochastic', color: '#3b82f6' },
-        { key: 'systemic_reasoning', i18nKey: 'm_systemic', color: '#10b981' },
-        { key: 'investor_quotient', i18nKey: 'm_investor', color: '#f59e0b' },
-        { key: 'empathy_persuasion', i18nKey: 'm_persuasion', color: '#ef4444' },
-        { key: 'stoic_resilience', i18nKey: 'm_resilience', color: '#6366f1' },
+    const metricLabels: { key: keyof typeof metrics; label: string; color: string }[] = [
+        { key: 'bilingual_agility', label: t('m_bilingual'), color: ios.purple },
+        { key: 'stochastic_intuition', label: t('m_stochastic'), color: ios.blue },
+        { key: 'systemic_reasoning', label: t('m_systemic'), color: ios.green },
+        { key: 'investor_quotient', label: t('m_investor'), color: ios.orange },
+        { key: 'empathy_persuasion', label: t('m_persuasion'), color: ios.red },
+        { key: 'stoic_resilience', label: t('m_resilience'), color: ios.indigo },
     ];
 
-    const TAB_CONFIG: { key: EliteTab; i18nKey: string; icon: React.ReactNode; color: string }[] = [
-        { key: 'overview', i18nKey: 'tab_overview', icon: <Sparkles size={18} />, color: '#8b5cf6' },
-        { key: 'probability', i18nKey: 'tab_probability', icon: <Brain size={18} />, color: '#3b82f6' },
-        { key: 'finance', i18nKey: 'tab_finance', icon: <Coins size={18} />, color: '#f59e0b' },
-        { key: 'civics', i18nKey: 'tab_civics', icon: <Globe size={18} />, color: '#10b981' },
-        { key: 'negotiation', i18nKey: 'tab_negotiation', icon: <Handshake size={18} />, color: '#ef4444' },
-        { key: 'ethics', i18nKey: 'tab_ethics', icon: <Shield size={18} />, color: '#6366f1' },
+    const TAB_CONFIG: { key: EliteTab; label: string; icon: React.ReactNode; color: string }[] = [
+        { key: 'overview', label: t('tab_overview'), icon: <Sparkles size={16} />, color: ios.purple },
+        { key: 'probability', label: t('tab_probability'), icon: <Brain size={16} />, color: ios.blue },
+        { key: 'finance', label: t('tab_finance'), icon: <Coins size={16} />, color: ios.orange },
+        { key: 'civics', label: t('tab_civics'), icon: <Globe size={16} />, color: ios.green },
+        { key: 'negotiation', label: t('tab_negotiation'), icon: <Handshake size={16} />, color: ios.red },
+        { key: 'ethics', label: t('tab_ethics'), icon: <Shield size={16} />, color: ios.indigo },
     ];
+
+    /* ─── Feedback card after answering ─── */
+    const FeedbackCard = ({ correct, explanation, onNext }: { correct: boolean; explanation: string; onNext: () => void }) => (
+        <div style={{
+            marginTop: '16px', padding: '16px', borderRadius: '12px',
+            background: correct ? '#F0FFF4' : '#FFF5F5',
+            border: `1px solid ${correct ? '#C6F6D5' : '#FED7D7'}`,
+        }}>
+            <p style={{ fontWeight: 700, fontSize: '0.9rem', color: correct ? '#22543D' : '#9B2C2C', marginBottom: '6px', fontFamily: ios.font }}>
+                {correct ? '✓ Chính xác!' : '✗ Chưa đúng rồi'}
+            </p>
+            <p style={{ fontSize: '0.9rem', color: ios.secondary, lineHeight: 1.5, fontFamily: ios.font }}>{explanation}</p>
+            <button style={{ ...btnPrimary(correct ? ios.green : ios.blue), marginTop: '12px', padding: '10px 20px', fontSize: '0.9rem' }} onClick={onNext}>
+                Câu tiếp theo <ChevronRight size={16} />
+            </button>
+        </div>
+    );
+
+    /* ─── Completion card ─── */
+    const CompletionCard = ({ emoji, title, score, total, onReplay }: { emoji: string; title: string; score: number; total: number; onReplay: () => void }) => (
+        <div style={{ ...cardStyle, textAlign: 'center', padding: '32px 20px' }}>
+            <div style={{ fontSize: '3.5rem', marginBottom: '12px' }}>{emoji}</div>
+            <h2 style={{ fontWeight: 700, fontSize: '1.25rem', color: ios.text, fontFamily: ios.font, marginBottom: '4px' }}>{title}</h2>
+            <p style={{ fontSize: '2rem', fontWeight: 800, color: ios.blue, fontFamily: ios.font, marginBottom: '16px' }}>
+                {score} / {total}
+            </p>
+            <button style={btnPrimary(ios.blue)} onClick={onReplay}>Chơi lại</button>
+        </div>
+    );
+
+    /* ─── Progress pill ─── */
+    const ProgressPill = ({ current, total, score, color }: { current: number; total: number; score?: number; color: string }) => (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+            <div style={{ flex: 1, height: '4px', background: ios.borderSolid, borderRadius: '2px', overflow: 'hidden' }}>
+                <div style={{ width: `${(current / total) * 100}%`, height: '100%', background: color, borderRadius: '2px', transition: 'width 0.3s ease' }} />
+            </div>
+            <span style={{ fontSize: '0.8rem', fontWeight: 600, color: ios.secondary, fontFamily: ios.font, whiteSpace: 'nowrap' }}>
+                {current}/{total} {score !== undefined && `· ${score} đ`}
+            </span>
+        </div>
+    );
 
     return (
-        <div style={{ paddingTop: '1rem', background: '#09090b', minHeight: '100vh', color: '#d4d4d8', backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '30px 30px', position: 'relative' }}>
-            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'radial-gradient(circle at center, transparent 30%, #09090b 100%)', pointerEvents: 'none' }} />
-            <div className="page-container" style={{ position: 'relative', zIndex: 10 }}>
-                {/* Header */}
-                <div className="page-header" style={{ marginBottom: '1rem', borderBottom: '1px solid #27272a', paddingBottom: '1rem' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                        <div>
-                            <Link href="/child" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: '#a1a1aa', textDecoration: 'none', marginBottom: '0.5rem' }}>
-                                <ArrowLeft size={16} /> TRUNG TÂM CHỈ HUY KIỂM SOÁT
-                            </Link>
-                            <h1 className="page-title" style={{ fontSize: '1.5rem', color: '#38bdf8', textShadow: '0 0 10px rgba(56, 189, 248, 0.5)', fontFamily: 'monospace' }}>MỤC TIÊU: {t('elite_page_title').toUpperCase()}</h1>
-                            <p className="page-subtitle" style={{ color: '#71717a', fontFamily: 'monospace' }}>[RADAR ACTIVE] Phân tích Rủi ro Hệ thống theo chuẩn CASEL ...</p>
-                        </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'flex-end' }}>
+        <div style={{ minHeight: '100vh', background: ios.surface, fontFamily: ios.font }}>
+            {/* ─── iOS Nav Bar ─── */}
+            <div style={{
+                position: 'sticky', top: 0, zIndex: 100,
+                background: 'rgba(242,242,247,0.55)',
+                backdropFilter: 'blur(28px) saturate(200%) brightness(1.05)',
+                WebkitBackdropFilter: 'blur(28px) saturate(200%) brightness(1.05)',
+                borderBottom: `0.5px solid rgba(255,255,255,0.35)`,
+                borderRadius: '0 0 20px 20px',
+                boxShadow: '0 2px 12px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,1)',
+                padding: '12px 16px',
+            }}>
+                <div style={{ maxWidth: '640px', margin: '0 auto' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                        <Link href="/child" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', color: ios.blue, textDecoration: 'none', fontSize: '0.95rem', fontWeight: 500 }}>
+                            <ArrowLeft size={18} /> Trang chủ
+                        </Link>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                             <LangToggle />
-                            <div style={{ display: 'flex', gap: '0.25rem', background: '#27272a', padding: '0.25rem', borderRadius: '8px' }}>
-                                <button onClick={() => setAgeFilter('6-10')} style={{ border: 'none', background: ageFilter === '6-10' ? '#10b981' : 'transparent', color: ageFilter === '6-10' ? '#000' : '#a1a1aa', padding: '0.25rem 0.75rem', borderRadius: '4px', fontWeight: 600, cursor: 'pointer', fontFamily: 'monospace', fontSize: '0.8rem' }}>🔰 6-10T</button>
-                                <button onClick={() => setAgeFilter('11+')} style={{ border: 'none', background: ageFilter === '11+' ? '#ef4444' : 'transparent', color: ageFilter === '11+' ? '#fff' : '#a1a1aa', padding: '0.25rem 0.75rem', borderRadius: '4px', fontWeight: 600, cursor: 'pointer', fontFamily: 'monospace', fontSize: '0.8rem' }}>🎓 11+</button>
+                            <div style={{
+                                display: 'flex', background: 'rgba(255,255,255,0.3)',
+                                backdropFilter: 'blur(16px) contrast(1.1)',
+                                WebkitBackdropFilter: 'blur(16px) contrast(1.1)',
+                                borderRadius: '10px',
+                                border: `1px solid rgba(255,255,255,0.4)`,
+                                boxShadow: '0 2px 8px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.9)',
+                                overflow: 'hidden',
+                            }}>
+                                {(['6-10', '11+'] as AgeGroup[]).map(age => (
+                                    <button key={age} onClick={() => setAgeFilter(age)} style={{
+                                        border: 'none', padding: '5px 12px', fontSize: '0.8rem', fontWeight: 600,
+                                        fontFamily: ios.font, cursor: 'pointer',
+                                        background: ageFilter === age ? ios.blue : 'transparent',
+                                        color: ageFilter === age ? '#fff' : ios.secondary,
+                                        transition: 'all 0.2s',
+                                    }}>
+                                        {age === '6-10' ? '6-10 tuổi' : '11+ tuổi'}
+                                    </button>
+                                ))}
                             </div>
                         </div>
                     </div>
+                    <h1 style={{ fontSize: '1.6rem', fontWeight: 700, color: ios.text, letterSpacing: '-0.02em', margin: 0 }}>
+                        {t('elite_page_title')}
+                    </h1>
                 </div>
+            </div>
 
-                {/* Tab Bar */}
-                <div style={{ display: 'flex', gap: '0.5rem', overflowX: 'auto', paddingBottom: '0.75rem', marginBottom: '1rem' }}>
+            {/* ─── Main Content ─── */}
+            <div style={{ maxWidth: '640px', margin: '0 auto', padding: '12px 16px 32px' }}>
+                {/* Tab Bar — iOS Segmented Control style */}
+                <div style={{
+                    display: 'flex', gap: '6px', overflowX: 'auto', paddingBottom: '12px',
+                    WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none',
+                }}>
                     {TAB_CONFIG.map((tab) => (
-                        <button
-                            key={tab.key}
-                            onClick={() => setActiveTab(tab.key)}
-                            style={{
-                                display: 'flex', alignItems: 'center', gap: '0.4rem',
-                                padding: '0.5rem 1rem', borderRadius: '999px', border: 'none',
-                                background: activeTab === tab.key ? tab.color : 'white',
-                                color: activeTab === tab.key ? 'white' : 'var(--color-text-secondary)',
-                                fontWeight: 600, fontSize: '0.85rem', cursor: 'pointer',
-                                whiteSpace: 'nowrap', transition: 'all 0.2s',
-                                boxShadow: activeTab === tab.key ? `0 2px 8px ${tab.color}40` : '0 1px 3px rgba(0,0,0,0.1)',
-                            }}
-                        >
-                            {tab.icon} {t(tab.i18nKey)}
+                        <button key={tab.key} onClick={() => setActiveTab(tab.key)} style={{
+                            display: 'flex', alignItems: 'center', gap: '5px',
+                            padding: '8px 14px', borderRadius: '20px', border: 'none',
+                            background: activeTab === tab.key ? tab.color : 'rgba(255,255,255,0.4)',
+                            backdropFilter: 'blur(12px) saturate(150%)',
+                            WebkitBackdropFilter: 'blur(12px) saturate(150%)',
+                            color: activeTab === tab.key ? '#fff' : ios.secondary,
+                            fontWeight: 600, fontSize: '0.82rem', cursor: 'pointer',
+                            whiteSpace: 'nowrap',
+                            transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                            fontFamily: ios.font,
+                            boxShadow: activeTab === tab.key
+                                ? `0 4px 16px ${tab.color}40, inset 0 1px 0 rgba(255,255,255,0.3)`
+                                : '0 2px 8px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.8)',
+                        }}>
+                            {tab.icon} {tab.label}
                         </button>
                     ))}
                 </div>
 
-                {/* OVERVIEW */}
+                {/* ═══════ OVERVIEW ═══════ */}
                 {activeTab === 'overview' && (
-                    <div className="card animate-fade-in">
-                        <h2 style={{ fontWeight: 700, marginBottom: '1rem' }}>{t('metrics_title')}</h2>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                    <div style={cardStyle}>
+                        <h2 style={{ fontWeight: 700, fontSize: '1.15rem', color: ios.text, marginBottom: '16px', fontFamily: ios.font }}>{t('metrics_title')}</h2>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                             {metricLabels.map((m) => (
                                 <div key={m.key}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
-                                        <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>{t(m.i18nKey)}</span>
-                                        <span style={{ fontWeight: 700, color: m.color }}>{metrics[m.key]}/100</span>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                                        <span style={{ fontWeight: 500, fontSize: '0.9rem', color: ios.text, fontFamily: ios.font }}>{m.label}</span>
+                                        <span style={{ fontWeight: 700, fontSize: '0.9rem', color: m.color, fontFamily: ios.font }}>{metrics[m.key]}</span>
                                     </div>
-                                    <div style={{ background: '#e5e7eb', borderRadius: '999px', height: '10px', overflow: 'hidden' }}>
-                                        <div style={{ width: `${metrics[m.key]}%`, background: m.color, height: '100%', borderRadius: '999px', transition: 'width 0.5s ease' }} />
+                                    <div style={{ background: ios.surface, borderRadius: '4px', height: '6px', overflow: 'hidden' }}>
+                                        <div style={{ width: `${metrics[m.key]}%`, background: m.color, height: '100%', borderRadius: '4px', transition: 'width 0.5s ease' }} />
                                     </div>
                                 </div>
                             ))}
@@ -160,101 +286,108 @@ export default function EliteDashboardPage() {
                     </div>
                 )}
 
-                {/* PROBABILITY */}
+                {/* ═══════ PROBABILITY ═══════ */}
                 {activeTab === 'probability' && probIndex < probScenarios.length && (
-                    <div className="card animate-fade-in" style={{ background: '#18181b', border: '1px solid #27272a', borderRadius: '8px' }}>
-                        <h2 style={{ fontWeight: 700, marginBottom: '0.5rem', color: '#60a5fa', fontFamily: 'monospace' }}>🔴 {t('prob_title').toUpperCase()} [GAME THEORY]</h2>
-                        <p style={{ color: '#a1a1aa', fontSize: '0.85rem', marginBottom: '1rem', fontFamily: 'monospace' }}>
-                            TẬP DỮ LIỆU {probIndex + 1} / {probScenarios.length} — CẤP BẬC: {probScore}
+                    <div style={cardStyle}>
+                        <ProgressPill current={probIndex + 1} total={probScenarios.length} score={probScore} color={ios.blue} />
+                        <div style={{ textAlign: 'center', fontSize: '3.5rem', marginBottom: '8px' }}>{probScenarios[probIndex].visual}</div>
+                        <p style={{ fontWeight: 600, fontSize: '1.05rem', textAlign: 'center', color: ios.text, marginBottom: '16px', lineHeight: 1.5, fontFamily: ios.font }}>
+                            {probScenarios[probIndex].question}
                         </p>
-                        <div style={{ textAlign: 'center', fontSize: '3rem', marginBottom: '0.5rem' }}>{probScenarios[probIndex].visual}</div>
-                        <p style={{ fontWeight: 600, marginBottom: '1rem', textAlign: 'center' }}>{probScenarios[probIndex].question}</p>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                             {probScenarios[probIndex].options.map((opt) => {
                                 const isCorrect = probAnswer && opt === probScenarios[probIndex].correctAnswer;
                                 const isWrong = probAnswer === opt && opt !== probScenarios[probIndex].correctAnswer;
                                 return (
-                                    <button key={opt} onClick={() => { if (probAnswer) return; setProbAnswer(opt); if (opt === probScenarios[probIndex].correctAnswer) setProbScore((s) => s + 20); }}
-                                        className="btn" style={{ textAlign: 'left', padding: '0.75rem 1rem', background: isCorrect ? 'rgba(16,185,129,0.1)' : isWrong ? 'rgba(239,68,68,0.1)' : '#27272a', border: isCorrect ? '1px solid #10b981' : isWrong ? '1px solid #ef4444' : '1px solid #3f3f46', color: '#e4e4e7', fontFamily: 'monospace', fontWeight: 600 }}>
-                                        ► {likelihoodLabel[opt]}
+                                    <button key={opt}
+                                        onClick={() => { if (probAnswer) return; setProbAnswer(opt); if (opt === probScenarios[probIndex].correctAnswer) setProbScore(s => s + 20); }}
+                                        style={btnOption(!!probAnswer, isCorrect || false, isWrong || false)}
+                                    >
+                                        {likelihoodLabel[opt]}
                                     </button>
                                 );
                             })}
                         </div>
                         {probAnswer && (
-                            <div style={{ marginTop: '1rem', padding: '1rem', background: '#064e3b', borderLeft: '4px solid #34d399' }}>
-                                <p style={{ fontWeight: 600, marginBottom: '0.5rem', color: '#a7f3d0', fontFamily: 'monospace' }}>[HỆ THỐNG] {probAnswer === probScenarios[probIndex].correctAnswer ? 'PHÂN TÍCH CHUẨN XÁC' : 'TÍNH TOÁN SAI LỆCH'}</p>
-                                <p style={{ fontSize: '0.9rem', color: '#d1fae5' }}>{probScenarios[probIndex].explanation}</p>
-                                <button className="btn btn-primary" style={{ marginTop: '0.75rem', background: '#34d399', color: '#000', border: 'none', fontFamily: 'monospace' }} onClick={() => { setProbAnswer(null); setProbIndex((i) => i + 1); }}>{t('next').toUpperCase()} LỆNH</button>
-                            </div>
+                            <FeedbackCard
+                                correct={probAnswer === probScenarios[probIndex].correctAnswer}
+                                explanation={probScenarios[probIndex].explanation}
+                                onNext={() => { setProbAnswer(null); setProbIndex(i => i + 1); }}
+                            />
                         )}
                     </div>
                 )}
                 {activeTab === 'probability' && probIndex >= probScenarios.length && (
-                    <div className="card animate-fade-in" style={{ textAlign: 'center', background: '#18181b', border: '1px solid #27272a' }}>
-                        <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>📡</div>
-                        <h2 style={{ fontWeight: 700, color: '#38bdf8', fontFamily: 'monospace' }}>NHIỆM VỤ HOÀN THẤT. ĐIỂM: {probScore}/100</h2>
-                        <button className="btn" style={{ marginTop: '1rem', background: '#3f3f46', color: '#fff', fontFamily: 'monospace' }} onClick={() => { setProbIndex(0); setProbScore(0); setProbAnswer(null); }}>[RE-SCAN] QUÉT LẠI CỨ ĐIỂM</button>
-                    </div>
+                    <CompletionCard emoji="🎯" title="Hoàn thành Xác suất!" score={probScore} total={100} onReplay={() => { setProbIndex(0); setProbScore(0); setProbAnswer(null); }} />
                 )}
 
-                {/* FINANCE */}
+                {/* ═══════ FINANCE ═══════ */}
                 {activeTab === 'finance' && wvnIndex < currentWvn.length && (
-                    <div className="card animate-fade-in" style={{ background: '#18181b', border: '1px solid #27272a', borderRadius: '8px' }}>
-                        <h2 style={{ fontWeight: 700, marginBottom: '0.5rem', color: '#fbbf24', fontFamily: 'monospace' }}>🟡 PHÂN TÍCH NHU CẦU [TÀI CHÍNH / CẦN & MUỐN]</h2>
-                        <p style={{ color: '#a1a1aa', fontSize: '0.85rem', marginBottom: '1rem', fontFamily: 'monospace' }}>
-                            DỮ LIỆU {wvnIndex + 1} / {currentWvn.length} — CẤP BẬC: {wvnScore}
+                    <div style={cardStyle}>
+                        <ProgressPill current={wvnIndex + 1} total={currentWvn.length} score={wvnScore} color={ios.orange} />
+                        <div style={{ textAlign: 'center', fontSize: '4rem', marginBottom: '8px' }}>{currentWvn[wvnIndex].visual}</div>
+                        <p style={{ fontWeight: 700, textAlign: 'center', fontSize: '1.15rem', color: ios.text, marginBottom: '20px', fontFamily: ios.font }}>
+                            {currentWvn[wvnIndex].name}
                         </p>
-                        <div style={{ textAlign: 'center', fontSize: '4rem', marginBottom: '0.5rem' }}>{currentWvn[wvnIndex].visual}</div>
-                        <p style={{ fontWeight: 600, textAlign: 'center', marginBottom: '1rem', fontSize: '1.2rem' }}>{currentWvn[wvnIndex].name}</p>
-                        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-                            {(['want', 'need'] as const).map((opt) => {
+                        <div style={{ display: 'flex', gap: '12px' }}>
+                            {(['want', 'need'] as const).map(opt => {
                                 const isCorrect = wvnAnswer && opt === currentWvn[wvnIndex].correctCategory;
                                 const isWrong = wvnAnswer === opt && opt !== currentWvn[wvnIndex].correctCategory;
                                 return (
-                                    <button key={opt} onClick={() => { if (wvnAnswer) return; setWvnAnswer(opt); if (opt === currentWvn[wvnIndex].correctCategory) setWvnScore((s) => s + 12); }}
-                                        className="btn" style={{ flex: 1, padding: '1rem', fontSize: '1.1rem', fontWeight: 700, background: isCorrect ? 'rgba(16,185,129,0.2)' : isWrong ? 'rgba(239,68,68,0.2)' : '#27272a', border: isCorrect ? '1px solid #10b981' : isWrong ? '1px solid #ef4444' : '1px solid #3f3f46', color: '#e4e4e7', fontFamily: 'monospace', textTransform: 'uppercase' }}>
-                                        {opt === 'want' ? 'MỤC TIÊU MUỐN' : 'CHI PHÍ THIẾT YẾU'}
+                                    <button key={opt}
+                                        onClick={() => { if (wvnAnswer) return; setWvnAnswer(opt); if (opt === currentWvn[wvnIndex].correctCategory) setWvnScore(s => s + 12); }}
+                                        style={{
+                                            flex: 1, padding: '16px 12px', borderRadius: '12px', border: 'none',
+                                            background: isCorrect ? '#F0FFF4' : isWrong ? '#FFF5F5' : ios.surface,
+                                            outline: isCorrect ? `2px solid ${ios.green}` : isWrong ? `2px solid ${ios.red}` : 'none',
+                                            cursor: wvnAnswer ? 'default' : 'pointer', fontFamily: ios.font,
+                                            fontSize: '1rem', fontWeight: 700, color: ios.text,
+                                            transition: 'all 0.15s',
+                                            boxShadow: wvnAnswer ? 'none' : ios.shadow,
+                                        }}
+                                    >
+                                        {opt === 'want' ? '💎 Muốn' : '🏠 Cần'}
                                     </button>
                                 );
                             })}
                         </div>
                         {wvnAnswer && (
-                            <div style={{ marginTop: '1rem', padding: '1rem', background: '#fffbeb', borderRadius: '12px' }}>
-                                <p style={{ fontWeight: 600 }}>{wvnAnswer === currentWvn[wvnIndex].correctCategory ? t('correct') : t('wrong')}</p>
-                                <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)' }}>{currentWvn[wvnIndex].explanation}</p>
-                                <button className="btn btn-primary" style={{ marginTop: '0.75rem' }} onClick={() => { setWvnAnswer(null); setWvnIndex((i) => i + 1); }}>{t('next')}</button>
-                            </div>
+                            <FeedbackCard
+                                correct={wvnAnswer === currentWvn[wvnIndex].correctCategory}
+                                explanation={currentWvn[wvnIndex].explanation}
+                                onNext={() => { setWvnAnswer(null); setWvnIndex(i => i + 1); }}
+                            />
                         )}
                     </div>
                 )}
                 {activeTab === 'finance' && wvnIndex >= currentWvn.length && (
-                    <div className="card animate-fade-in" style={{ textAlign: 'center' }}>
-                        <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>💰</div>
-                        <h2 style={{ fontWeight: 700 }}>{t('done')} {t('score_label')}: {wvnScore}/{currentWvn.length * 12}</h2>
-                        <button className="btn btn-primary" style={{ marginTop: '1rem' }} onClick={() => { setWvnIndex(0); setWvnScore(0); setWvnAnswer(null); }}>{t('replay')}</button>
-                    </div>
+                    <CompletionCard emoji="💰" title="Hoàn thành Tài chính!" score={wvnScore} total={currentWvn.length * 12} onReplay={() => { setWvnIndex(0); setWvnScore(0); setWvnAnswer(null); }} />
                 )}
 
-                {/* CIVICS */}
+                {/* ═══════ CIVICS ═══════ */}
                 {activeTab === 'civics' && policyIndex < currentPol.length && (
-                    <div className="card animate-fade-in" style={{ background: '#18181b', border: '1px solid #27272a', borderRadius: '8px' }}>
-                        <h2 style={{ fontWeight: 700, marginBottom: '0.5rem', color: '#10b981', fontFamily: 'monospace' }}>🟢 TÌNH HUỐNG CHÍNH SÁCH [PHÂN TÍCH VĨ MÔ]</h2>
-                        <p style={{ color: '#a1a1aa', fontSize: '0.85rem', marginBottom: '1rem', fontFamily: 'monospace' }}>
-                            DỮ LIỆU {policyIndex + 1} / {currentPol.length}
+                    <div style={cardStyle}>
+                        <ProgressPill current={policyIndex + 1} total={currentPol.length} color={ios.green} />
+                        <div style={{ textAlign: 'center', fontSize: '3.5rem', marginBottom: '8px' }}>{currentPol[policyIndex].visual}</div>
+                        <p style={{ fontWeight: 600, fontSize: '1.05rem', textAlign: 'center', color: ios.text, marginBottom: '20px', lineHeight: 1.5, fontFamily: ios.font }}>
+                            {currentPol[policyIndex].situation}
                         </p>
-                        <div style={{ textAlign: 'center', fontSize: '3rem', marginBottom: '0.5rem' }}>{currentPol[policyIndex].visual}</div>
-                        <p style={{ fontWeight: 600, marginBottom: '1rem', fontSize: '1.2rem', textAlign: 'center' }}>{currentPol[policyIndex].situation}</p>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                             {currentPol[policyIndex].options.map((opt, idx) => (
-                                <button key={idx} onClick={() => setPolicyChoice(idx)} className="card" style={{ textAlign: 'left', cursor: 'pointer', border: policyChoice === idx ? '2px solid #10b981' : '1px solid #3f3f46', background: policyChoice === idx ? 'rgba(16,185,129,0.1)' : '#27272a', padding: '1rem' }}>
-                                    <div style={{ fontWeight: 600, marginBottom: '0.25rem', color: '#e4e4e7', fontFamily: 'monospace' }}>{opt.text}</div>
+                                <button key={idx} onClick={() => setPolicyChoice(idx)} style={{
+                                    textAlign: 'left', padding: '14px 16px', borderRadius: '12px',
+                                    border: policyChoice === idx ? `2px solid ${ios.green}` : `1px solid ${ios.border}`,
+                                    background: policyChoice === idx ? '#F0FFF4' : '#fff',
+                                    cursor: 'pointer', fontFamily: ios.font, transition: 'all 0.15s',
+                                    boxShadow: policyChoice === idx ? 'none' : '0 1px 2px rgba(0,0,0,0.04)',
+                                }}>
+                                    <p style={{ fontWeight: 600, fontSize: '0.95rem', color: ios.text, marginBottom: policyChoice === idx ? '10px' : 0 }}>{opt.text}</p>
                                     {policyChoice === idx && (
-                                        <div style={{ marginTop: '0.75rem', padding: '0.5rem', background: '#064e3b', borderRadius: '6px' }}>
-                                            <p style={{ fontSize: '0.9rem', color: '#a7f3d0', marginBottom: '0.5rem', fontWeight: 600 }}>{opt.consequence}</p>
-                                            <div style={{ display: 'flex', gap: '1rem', fontSize: '0.85rem' }}>
-                                                <span style={{ color: '#fff' }}>CÔNG BẰNG: <strong style={{ color: opt.fairnessScore > 60 ? '#34d399' : '#f87171' }}>{opt.fairnessScore}%</strong></span>
-                                                <span style={{ color: '#fff' }}>HẠNH PHÚC: <strong style={{ color: opt.happinessScore > 60 ? '#34d399' : '#f87171' }}>{opt.happinessScore}%</strong></span>
+                                        <div style={{ paddingTop: '10px', borderTop: `1px solid ${ios.border}` }}>
+                                            <p style={{ fontSize: '0.85rem', color: ios.secondary, marginBottom: '8px', lineHeight: 1.5 }}>{opt.consequence}</p>
+                                            <div style={{ display: 'flex', gap: '16px', fontSize: '0.82rem' }}>
+                                                <span style={{ color: ios.text }}>Công bằng: <strong style={{ color: opt.fairnessScore > 60 ? ios.green : ios.red }}>{opt.fairnessScore}%</strong></span>
+                                                <span style={{ color: ios.text }}>Hạnh phúc: <strong style={{ color: opt.happinessScore > 60 ? ios.green : ios.red }}>{opt.happinessScore}%</strong></span>
                                             </div>
                                         </div>
                                     )}
@@ -262,121 +395,116 @@ export default function EliteDashboardPage() {
                             ))}
                         </div>
                         {policyChoice !== null && (
-                            <button className="btn" style={{ marginTop: '1rem', background: '#10b981', color: '#000', border: 'none', fontFamily: 'monospace', fontWeight: 700 }} onClick={() => { setPolicyChoice(null); setPolicyIndex((i) => i + 1); }}>{t('next').toUpperCase()} LỆNH</button>
+                            <div style={{ marginTop: '16px', textAlign: 'center' }}>
+                                <button style={btnPrimary(ios.green)} onClick={() => { setPolicyChoice(null); setPolicyIndex(i => i + 1); }}>
+                                    Câu tiếp theo <ChevronRight size={16} />
+                                </button>
+                            </div>
                         )}
                     </div>
                 )}
                 {activeTab === 'civics' && policyIndex >= currentPol.length && (
-                    <div className="card animate-fade-in" style={{ textAlign: 'center', background: '#18181b', border: '1px solid #27272a' }}>
-                        <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>⚖️</div>
-                        <h2 style={{ fontWeight: 700, color: '#10b981', fontFamily: 'monospace' }}>VĨ MÔ HOÀN TẤT</h2>
-                        <button className="btn" style={{ marginTop: '1rem', background: '#3f3f46', color: '#fff', fontFamily: 'monospace' }} onClick={() => { setPolicyIndex(0); setPolicyChoice(null); }}>[RE-SCAN] QUÉT LẠI CỨ ĐIỂM</button>
-                    </div>
+                    <CompletionCard emoji="⚖️" title="Hoàn thành Công dân!" score={0} total={0} onReplay={() => { setPolicyIndex(0); setPolicyChoice(null); }} />
                 )}
 
-                {/* ETHICS */}
+                {/* ═══════ ETHICS ═══════ */}
                 {activeTab === 'ethics' && cocIndex < currentCoc.length && (
-                    <div className="card animate-fade-in" style={{ background: '#18181b', border: '1px solid #27272a', borderRadius: '8px' }}>
-                        <h2 style={{ fontWeight: 700, marginBottom: '0.5rem', color: '#a78bfa', fontFamily: 'monospace' }}>🟣 {t('eth_title').toUpperCase()} [STOICISM]</h2>
-                        <p style={{ color: '#a1a1aa', fontSize: '0.85rem', marginBottom: '1rem', fontFamily: 'monospace' }}>
-                            DỮ LIỆU {cocIndex + 1} / {currentCoc.length} — CẤP BẬC: {cocScore}
+                    <div style={cardStyle}>
+                        <ProgressPill current={cocIndex + 1} total={currentCoc.length} score={cocScore} color={ios.indigo} />
+                        <div style={{ textAlign: 'center', fontSize: '4rem', marginBottom: '8px' }}>{currentCoc[cocIndex].visual}</div>
+                        <p style={{ fontWeight: 600, fontSize: '1.05rem', textAlign: 'center', color: ios.text, marginBottom: '20px', lineHeight: 1.5, fontFamily: ios.font }}>
+                            {currentCoc[cocIndex].situation}
                         </p>
-                        <div style={{ textAlign: 'center', fontSize: '4rem', marginBottom: '0.5rem' }}>{currentCoc[cocIndex].visual}</div>
-                        <p style={{ fontWeight: 600, textAlign: 'center', marginBottom: '1.5rem', fontSize: '1.2rem' }}>{currentCoc[cocIndex].situation}</p>
-                        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-                            {(['controllable', 'uncontrollable'] as const).map((opt) => {
+                        <div style={{ display: 'flex', gap: '12px' }}>
+                            {(['controllable', 'uncontrollable'] as const).map(opt => {
                                 const isCorrect = cocAnswer && opt === currentCoc[cocIndex].correctCategory;
                                 const isWrong = cocAnswer === opt && opt !== currentCoc[cocIndex].correctCategory;
                                 return (
-                                    <button key={opt} onClick={() => { if (cocAnswer) return; setCocAnswer(opt); if (opt === currentCoc[cocIndex].correctCategory) setCocScore((s) => s + 16); }}
-                                        className="btn" style={{ flex: 1, padding: '1rem', fontSize: '1rem', fontWeight: 700, fontFamily: 'monospace', textTransform: 'uppercase', background: isCorrect ? 'rgba(16,185,129,0.2)' : isWrong ? 'rgba(239,68,68,0.2)' : '#27272a', border: isCorrect ? '1px solid #10b981' : isWrong ? '1px solid #ef4444' : '1px solid #3f3f46', color: '#e4e4e7' }}>
-                                        {opt === 'controllable' ? 'VÙNG KIỂM SOÁT' : 'NGOÀI KIỂM SOÁT'}
+                                    <button key={opt}
+                                        onClick={() => { if (cocAnswer) return; setCocAnswer(opt); if (opt === currentCoc[cocIndex].correctCategory) setCocScore(s => s + 16); }}
+                                        style={{
+                                            flex: 1, padding: '16px 12px', borderRadius: '12px', border: 'none',
+                                            background: isCorrect ? '#F0FFF4' : isWrong ? '#FFF5F5' : ios.surface,
+                                            outline: isCorrect ? `2px solid ${ios.green}` : isWrong ? `2px solid ${ios.red}` : 'none',
+                                            cursor: cocAnswer ? 'default' : 'pointer', fontFamily: ios.font,
+                                            fontSize: '0.9rem', fontWeight: 700, color: ios.text,
+                                            transition: 'all 0.15s', boxShadow: cocAnswer ? 'none' : ios.shadow,
+                                        }}
+                                    >
+                                        {opt === 'controllable' ? '🎯 Mình quyết' : '🌧️ Trời quyết'}
                                     </button>
                                 );
                             })}
                         </div>
                         {cocAnswer && (
-                            <div style={{ marginTop: '1.5rem', padding: '1rem', background: '#312e81', borderRadius: '8px', borderLeft: '4px solid #818cf8' }}>
-                                <p style={{ fontWeight: 600, color: '#c7d2fe', fontFamily: 'monospace', marginBottom: '0.5rem' }}>[STOIC] {cocAnswer === currentCoc[cocIndex].correctCategory ? 'GIÁC NGỘ CHUẨN MỰC' : 'NHẬN THỨC SAI LỆCH'}</p>
-                                <p style={{ fontSize: '0.95rem', color: '#e0e7ff' }}>{currentCoc[cocIndex].explanation}</p>
-                                <button className="btn" style={{ marginTop: '1rem', background: '#818cf8', color: '#000', border: 'none', fontFamily: 'monospace', fontWeight: 700 }} onClick={() => { setCocAnswer(null); setCocIndex((i) => i + 1); }}>{t('next').toUpperCase()} LỆNH</button>
-                            </div>
+                            <FeedbackCard
+                                correct={cocAnswer === currentCoc[cocIndex].correctCategory}
+                                explanation={currentCoc[cocIndex].explanation}
+                                onNext={() => { setCocAnswer(null); setCocIndex(i => i + 1); }}
+                            />
                         )}
                     </div>
                 )}
                 {activeTab === 'ethics' && cocIndex >= currentCoc.length && (
-                    <div className="card animate-fade-in" style={{ textAlign: 'center', background: '#18181b', border: '1px solid #27272a' }}>
-                        <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>🛡️</div>
-                        <h2 style={{ fontWeight: 700, color: '#a78bfa', fontFamily: 'monospace' }}>ĐẠO ĐỨC HOÀN TẤT. {t('score_label')}: {cocScore}/{currentCoc.length * 16}</h2>
-                        <button className="btn" style={{ marginTop: '1rem', background: '#3f3f46', color: '#fff', fontFamily: 'monospace' }} onClick={() => { setCocIndex(0); setCocScore(0); setCocAnswer(null); }}>[RE-SCAN] QUÉT LẠI CỨ ĐIỂM</button>
-                    </div>
+                    <CompletionCard emoji="🛡️" title="Hoàn thành Đạo đức!" score={cocScore} total={currentCoc.length * 16} onReplay={() => { setCocIndex(0); setCocScore(0); setCocAnswer(null); }} />
                 )}
 
-                {/* NEGOTIATION */}
+                {/* ═══════ NEGOTIATION ═══════ */}
                 {activeTab === 'negotiation' && negIndex < currentNeg.length && (
-                    <div className="card animate-fade-in" style={{ background: '#18181b', border: '1px solid #27272a', borderRadius: '8px' }}>
-                        <h2 style={{ fontWeight: 700, marginBottom: '0.5rem', color: '#f87171', fontFamily: 'monospace' }}>🔴 THƯƠNG LƯỢNG [HARVARD NEGOTIATION]</h2>
-                        <p style={{ color: '#a1a1aa', fontSize: '0.85rem', marginBottom: '1rem', fontFamily: 'monospace' }}>
-                            DỮ LIỆU {negIndex + 1} / {currentNeg.length} — CẤP BẬC: {negScore}
-                        </p>
-                        <div style={{ textAlign: 'center', fontSize: '4rem', marginBottom: '1rem' }}>{currentNeg[negIndex].visual}</div>
+                    <div style={cardStyle}>
+                        <ProgressPill current={negIndex + 1} total={currentNeg.length} score={negScore} color={ios.red} />
+                        <div style={{ textAlign: 'center', fontSize: '4rem', marginBottom: '12px' }}>{currentNeg[negIndex].visual}</div>
 
-                        <div style={{ padding: '1rem', background: '#450a0a', borderRadius: '8px', borderLeft: '4px solid #f87171', marginBottom: '1.5rem' }}>
-                            <p style={{ fontWeight: 600, color: '#fecaca', fontSize: '1.1rem', marginBottom: '0.5rem' }}>{currentNeg[negIndex].scenario}</p>
-                            <p style={{ fontSize: '0.85rem', color: '#fca5a5', fontFamily: 'monospace' }}>ĐỐI THỦ: {currentNeg[negIndex].aiPersonality}</p>
-                            <p style={{ fontSize: '0.85rem', color: '#fca5a5', fontFamily: 'monospace' }}>MỤC TIÊU: {currentNeg[negIndex].targetOutcome}</p>
+                        {/* Scenario briefing */}
+                        <div style={{
+                            padding: '16px', borderRadius: '12px', marginBottom: '20px',
+                            background: '#FFF5F5', border: `1px solid #FED7D7`,
+                        }}>
+                            <p style={{ fontWeight: 600, fontSize: '1rem', color: ios.text, marginBottom: '8px', lineHeight: 1.5, fontFamily: ios.font }}>
+                                {currentNeg[negIndex].scenario}
+                            </p>
+                            <p style={{ fontSize: '0.82rem', color: ios.secondary, fontFamily: ios.font }}>Đối phương: {currentNeg[negIndex].aiPersonality}</p>
+                            <p style={{ fontSize: '0.82rem', color: ios.secondary, fontFamily: ios.font }}>Mục tiêu: {currentNeg[negIndex].targetOutcome}</p>
                         </div>
 
-                        <p style={{ fontWeight: 600, marginBottom: '0.75rem', fontFamily: 'monospace', color: '#a1a1aa', textAlign: 'center' }}>CHỌN CHIẾN THUẬT PHẢN TỰ</p>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                            {/* Option A: Lose-Lose / Aggressive */}
+                        <p style={{ fontWeight: 600, fontSize: '0.85rem', color: ios.muted, textAlign: 'center', marginBottom: '12px', fontFamily: ios.font }}>
+                            Chọn cách xử lý
+                        </p>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                            {/* Zero-sum option */}
                             <button
                                 onClick={() => { if (negAnswer) return; setNegAnswer('lose'); }}
-                                className="card"
                                 style={{
-                                    textAlign: 'left', cursor: negAnswer ? 'default' : 'pointer',
-                                    border: negAnswer === 'lose' ? '2px solid #ef4444' : '1px solid #3f3f46',
-                                    background: negAnswer === 'lose' ? 'rgba(239,68,68,0.1)' : '#27272a',
-                                    padding: '1rem'
+                                    ...btnOption(!!negAnswer, false, negAnswer === 'lose'),
+                                    borderColor: negAnswer === 'lose' ? ios.red : ios.border,
                                 }}
                             >
-                                <p style={{ fontSize: '0.8rem', fontWeight: 600, color: '#f87171', fontFamily: 'monospace', marginBottom: '0.25rem' }}>CHIẾN THUẬT QUYỀN LỰC (ZERO-SUM)</p>
-                                <p style={{ fontSize: '1rem', color: '#e4e4e7' }}>{currentNeg[negIndex].sampleRequest}</p>
+                                <p style={{ fontSize: '0.75rem', fontWeight: 700, color: ios.red, marginBottom: '4px', letterSpacing: '0.02em' }}>ÉP BUỘC</p>
+                                <p style={{ fontSize: '0.95rem', color: ios.text }}>{currentNeg[negIndex].sampleRequest}</p>
                             </button>
-
-                            {/* Option B: Win-Win */}
+                            {/* Win-win option */}
                             <button
                                 onClick={() => { if (negAnswer) return; setNegAnswer('win'); setNegScore(s => s + 20); }}
-                                className="card"
                                 style={{
-                                    textAlign: 'left', cursor: negAnswer ? 'default' : 'pointer',
-                                    border: negAnswer === 'win' ? '2px solid #10b981' : '1px solid #3f3f46',
-                                    background: negAnswer === 'win' ? 'rgba(16,185,129,0.1)' : '#27272a',
-                                    padding: '1rem'
+                                    ...btnOption(!!negAnswer, negAnswer === 'win', false),
+                                    borderColor: negAnswer === 'win' ? ios.green : ios.border,
                                 }}
                             >
-                                <p style={{ fontSize: '0.8rem', fontWeight: 600, color: '#34d399', fontFamily: 'monospace', marginBottom: '0.25rem' }}>CHIẾN THUẬT WIN-WIN (HARVARD)</p>
-                                <p style={{ fontSize: '1rem', color: '#e4e4e7' }}>{currentNeg[negIndex].sampleWinWin}</p>
+                                <p style={{ fontSize: '0.75rem', fontWeight: 700, color: ios.green, marginBottom: '4px', letterSpacing: '0.02em' }}>HỢP TÁC</p>
+                                <p style={{ fontSize: '0.95rem', color: ios.text }}>{currentNeg[negIndex].sampleWinWin}</p>
                             </button>
                         </div>
-
                         {negAnswer && (
-                            <div style={{ marginTop: '1.5rem', padding: '1rem', background: '#022c22', borderRadius: '8px', borderLeft: '4px solid #34d399' }}>
-                                <p style={{ fontWeight: 600, color: '#6ee7b7', fontFamily: 'monospace', marginBottom: '0.5rem' }}>
-                                    [NGUYÊN LÝ] {negAnswer === 'win' ? 'THÀNH CÔNG RỰC RỠ' : 'THẤT BẠI CHIẾN DỊCH'}
-                                </p>
-                                <p style={{ fontSize: '0.95rem', color: '#d1fae5' }}>{currentNeg[negIndex].winWinCriteria}</p>
-                                <button className="btn" style={{ marginTop: '1rem', background: '#34d399', color: '#000', border: 'none', fontFamily: 'monospace', fontWeight: 700 }} onClick={() => { setNegAnswer(null); setNegIndex((i) => i + 1); }}>{t('next').toUpperCase()} LỆNH</button>
-                            </div>
+                            <FeedbackCard
+                                correct={negAnswer === 'win'}
+                                explanation={currentNeg[negIndex].winWinCriteria}
+                                onNext={() => { setNegAnswer(null); setNegIndex(i => i + 1); }}
+                            />
                         )}
                     </div>
                 )}
                 {activeTab === 'negotiation' && negIndex >= currentNeg.length && (
-                    <div className="card animate-fade-in" style={{ textAlign: 'center', background: '#18181b', border: '1px solid #27272a' }}>
-                        <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>🤝</div>
-                        <h2 style={{ fontWeight: 700, color: '#f87171', fontFamily: 'monospace' }}>THƯƠNG LƯỢNG KẾT THÚC. {t('score_label')}: {negScore}/{currentNeg.length * 20}</h2>
-                        <button className="btn" style={{ marginTop: '1rem', background: '#3f3f46', color: '#fff', fontFamily: 'monospace' }} onClick={() => { setNegIndex(0); setNegScore(0); setNegAnswer(null); }}>[RE-SCAN] QUÉT LẠI CỨ ĐIỂM</button>
-                    </div>
+                    <CompletionCard emoji="🤝" title="Hoàn thành Thương lượng!" score={negScore} total={currentNeg.length * 20} onReplay={() => { setNegIndex(0); setNegScore(0); setNegAnswer(null); }} />
                 )}
             </div>
         </div>
