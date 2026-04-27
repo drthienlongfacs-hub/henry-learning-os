@@ -1,6 +1,6 @@
 // AUTO-GENERATED: 50x Content Expansion Bank
-// Generated: 2026-04-27T04:25:32.894Z
-// DO NOT EDIT MANUALLY — regenerate via scripts/generate_50x.js
+// Generated: 2026-04-27T04:56:32.879Z
+// DO NOT EDIT MANUALLY — regenerate via scripts/merge_all2.js
 
 import type { AgeGroup, LikelihoodLevel } from "./engine";
 
@@ -1024,6 +1024,3006 @@ export const EXPANDED_PROBABILITY = [
       "certain"
     ],
     "explanation": "Chi-square phát hiện bất thường phân phối."
+  },
+  {
+    "id": "prob-cont-1",
+    "ageTarget": "6-10",
+    "question": "Trong túi có 3 vật, 1 cái là bi xanh. Bốc ngẫu nhiên 1 cái, được bi xanh?",
+    "visual": "🔴",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/3 = 33%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-2",
+    "ageTarget": "6-10",
+    "question": "Trong túi có 3 vật, 2 cái là bi vàng. Bốc ngẫu nhiên 1 cái, được bi vàng?",
+    "visual": "🔴",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/3 = 67%. Khả năng cao."
+  },
+  {
+    "id": "prob-cont-3",
+    "ageTarget": "6-10",
+    "question": "Trong túi có 3 vật, 3 cái là bi trắng. Bốc ngẫu nhiên 1 cái, được bi trắng?",
+    "visual": "🔴",
+    "correctAnswer": "certain",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/3 = 100%. Gần như chắc chắn!"
+  },
+  {
+    "id": "prob-cont-4",
+    "ageTarget": "6-10",
+    "question": "Trong túi có 4 vật, 1 cái là bi xanh. Bốc ngẫu nhiên 1 cái, được bi xanh?",
+    "visual": "🔴",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/4 = 25%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-5",
+    "ageTarget": "6-10",
+    "question": "Trong túi có 4 vật, 2 cái là bi vàng. Bốc ngẫu nhiên 1 cái, được bi vàng?",
+    "visual": "🔴",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/4 = 50%. Khả năng cao."
+  },
+  {
+    "id": "prob-cont-6",
+    "ageTarget": "6-10",
+    "question": "Trong túi có 4 vật, 3 cái là bi trắng. Bốc ngẫu nhiên 1 cái, được bi trắng?",
+    "visual": "🔴",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/4 = 75%. Khả năng cao."
+  },
+  {
+    "id": "prob-cont-7",
+    "ageTarget": "6-10",
+    "question": "Trong túi có 5 vật, 1 cái là bi xanh. Bốc ngẫu nhiên 1 cái, được bi xanh?",
+    "visual": "🔴",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/5 = 20%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-8",
+    "ageTarget": "6-10",
+    "question": "Trong túi có 5 vật, 2 cái là bi vàng. Bốc ngẫu nhiên 1 cái, được bi vàng?",
+    "visual": "🔴",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/5 = 40%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-9",
+    "ageTarget": "6-10",
+    "question": "Trong túi có 5 vật, 3 cái là bi trắng. Bốc ngẫu nhiên 1 cái, được bi trắng?",
+    "visual": "🔴",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/5 = 60%. Khả năng cao."
+  },
+  {
+    "id": "prob-cont-10",
+    "ageTarget": "6-10",
+    "question": "Trong túi có 6 vật, 1 cái là bi xanh. Bốc ngẫu nhiên 1 cái, được bi xanh?",
+    "visual": "🔴",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/6 = 17%. Rất hiếm."
+  },
+  {
+    "id": "prob-cont-11",
+    "ageTarget": "6-10",
+    "question": "Trong túi có 6 vật, 2 cái là bi vàng. Bốc ngẫu nhiên 1 cái, được bi vàng?",
+    "visual": "🔴",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/6 = 33%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-12",
+    "ageTarget": "6-10",
+    "question": "Trong túi có 6 vật, 3 cái là bi trắng. Bốc ngẫu nhiên 1 cái, được bi trắng?",
+    "visual": "🔴",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/6 = 50%. Khả năng cao."
+  },
+  {
+    "id": "prob-cont-13",
+    "ageTarget": "6-10",
+    "question": "Trong túi có 7 vật, 1 cái là bi xanh. Bốc ngẫu nhiên 1 cái, được bi xanh?",
+    "visual": "🔴",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/7 = 14%. Rất hiếm."
+  },
+  {
+    "id": "prob-cont-14",
+    "ageTarget": "6-10",
+    "question": "Trong túi có 7 vật, 2 cái là bi vàng. Bốc ngẫu nhiên 1 cái, được bi vàng?",
+    "visual": "🔴",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/7 = 29%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-15",
+    "ageTarget": "6-10",
+    "question": "Trong túi có 7 vật, 3 cái là bi trắng. Bốc ngẫu nhiên 1 cái, được bi trắng?",
+    "visual": "🔴",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/7 = 43%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-16",
+    "ageTarget": "6-10",
+    "question": "Trong túi có 8 vật, 1 cái là bi xanh. Bốc ngẫu nhiên 1 cái, được bi xanh?",
+    "visual": "🔴",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/8 = 13%. Rất hiếm."
+  },
+  {
+    "id": "prob-cont-17",
+    "ageTarget": "6-10",
+    "question": "Trong túi có 8 vật, 2 cái là bi vàng. Bốc ngẫu nhiên 1 cái, được bi vàng?",
+    "visual": "🔴",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/8 = 25%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-18",
+    "ageTarget": "6-10",
+    "question": "Trong túi có 8 vật, 3 cái là bi trắng. Bốc ngẫu nhiên 1 cái, được bi trắng?",
+    "visual": "🔴",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/8 = 38%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-19",
+    "ageTarget": "6-10",
+    "question": "Trong túi có 9 vật, 1 cái là bi xanh. Bốc ngẫu nhiên 1 cái, được bi xanh?",
+    "visual": "🔴",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/9 = 11%. Rất hiếm."
+  },
+  {
+    "id": "prob-cont-20",
+    "ageTarget": "6-10",
+    "question": "Trong túi có 9 vật, 2 cái là bi vàng. Bốc ngẫu nhiên 1 cái, được bi vàng?",
+    "visual": "🔴",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/9 = 22%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-21",
+    "ageTarget": "6-10",
+    "question": "Trong túi có 9 vật, 3 cái là bi trắng. Bốc ngẫu nhiên 1 cái, được bi trắng?",
+    "visual": "🔴",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/9 = 33%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-22",
+    "ageTarget": "6-10",
+    "question": "Trong túi có 10 vật, 1 cái là bi xanh. Bốc ngẫu nhiên 1 cái, được bi xanh?",
+    "visual": "🔴",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/10 = 10%. Rất hiếm."
+  },
+  {
+    "id": "prob-cont-23",
+    "ageTarget": "6-10",
+    "question": "Trong túi có 10 vật, 2 cái là bi vàng. Bốc ngẫu nhiên 1 cái, được bi vàng?",
+    "visual": "🔴",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/10 = 20%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-24",
+    "ageTarget": "6-10",
+    "question": "Trong túi có 10 vật, 3 cái là bi trắng. Bốc ngẫu nhiên 1 cái, được bi trắng?",
+    "visual": "🔴",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/10 = 30%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-25",
+    "ageTarget": "6-10",
+    "question": "Trong hộp có 3 vật, 1 cái là kẹo sô-cô-la. Bốc ngẫu nhiên 1 cái, được kẹo sô-cô-la?",
+    "visual": "🍬",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/3 = 33%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-26",
+    "ageTarget": "6-10",
+    "question": "Trong hộp có 3 vật, 2 cái là kẹo bạc hà. Bốc ngẫu nhiên 1 cái, được kẹo bạc hà?",
+    "visual": "🍬",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/3 = 67%. Khả năng cao."
+  },
+  {
+    "id": "prob-cont-27",
+    "ageTarget": "6-10",
+    "question": "Trong hộp có 3 vật, 3 cái là kẹo cam. Bốc ngẫu nhiên 1 cái, được kẹo cam?",
+    "visual": "🍬",
+    "correctAnswer": "certain",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/3 = 100%. Gần như chắc chắn!"
+  },
+  {
+    "id": "prob-cont-28",
+    "ageTarget": "6-10",
+    "question": "Trong hộp có 4 vật, 1 cái là kẹo sô-cô-la. Bốc ngẫu nhiên 1 cái, được kẹo sô-cô-la?",
+    "visual": "🍬",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/4 = 25%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-29",
+    "ageTarget": "6-10",
+    "question": "Trong hộp có 4 vật, 2 cái là kẹo bạc hà. Bốc ngẫu nhiên 1 cái, được kẹo bạc hà?",
+    "visual": "🍬",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/4 = 50%. Khả năng cao."
+  },
+  {
+    "id": "prob-cont-30",
+    "ageTarget": "6-10",
+    "question": "Trong hộp có 4 vật, 3 cái là kẹo cam. Bốc ngẫu nhiên 1 cái, được kẹo cam?",
+    "visual": "🍬",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/4 = 75%. Khả năng cao."
+  },
+  {
+    "id": "prob-cont-31",
+    "ageTarget": "6-10",
+    "question": "Trong hộp có 5 vật, 1 cái là kẹo sô-cô-la. Bốc ngẫu nhiên 1 cái, được kẹo sô-cô-la?",
+    "visual": "🍬",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/5 = 20%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-32",
+    "ageTarget": "6-10",
+    "question": "Trong hộp có 5 vật, 2 cái là kẹo bạc hà. Bốc ngẫu nhiên 1 cái, được kẹo bạc hà?",
+    "visual": "🍬",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/5 = 40%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-33",
+    "ageTarget": "6-10",
+    "question": "Trong hộp có 5 vật, 3 cái là kẹo cam. Bốc ngẫu nhiên 1 cái, được kẹo cam?",
+    "visual": "🍬",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/5 = 60%. Khả năng cao."
+  },
+  {
+    "id": "prob-cont-34",
+    "ageTarget": "6-10",
+    "question": "Trong hộp có 6 vật, 1 cái là kẹo sô-cô-la. Bốc ngẫu nhiên 1 cái, được kẹo sô-cô-la?",
+    "visual": "🍬",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/6 = 17%. Rất hiếm."
+  },
+  {
+    "id": "prob-cont-35",
+    "ageTarget": "6-10",
+    "question": "Trong hộp có 6 vật, 2 cái là kẹo bạc hà. Bốc ngẫu nhiên 1 cái, được kẹo bạc hà?",
+    "visual": "🍬",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/6 = 33%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-36",
+    "ageTarget": "6-10",
+    "question": "Trong hộp có 6 vật, 3 cái là kẹo cam. Bốc ngẫu nhiên 1 cái, được kẹo cam?",
+    "visual": "🍬",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/6 = 50%. Khả năng cao."
+  },
+  {
+    "id": "prob-cont-37",
+    "ageTarget": "6-10",
+    "question": "Trong hộp có 7 vật, 1 cái là kẹo sô-cô-la. Bốc ngẫu nhiên 1 cái, được kẹo sô-cô-la?",
+    "visual": "🍬",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/7 = 14%. Rất hiếm."
+  },
+  {
+    "id": "prob-cont-38",
+    "ageTarget": "6-10",
+    "question": "Trong hộp có 7 vật, 2 cái là kẹo bạc hà. Bốc ngẫu nhiên 1 cái, được kẹo bạc hà?",
+    "visual": "🍬",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/7 = 29%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-39",
+    "ageTarget": "6-10",
+    "question": "Trong hộp có 7 vật, 3 cái là kẹo cam. Bốc ngẫu nhiên 1 cái, được kẹo cam?",
+    "visual": "🍬",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/7 = 43%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-40",
+    "ageTarget": "6-10",
+    "question": "Trong hộp có 8 vật, 1 cái là kẹo sô-cô-la. Bốc ngẫu nhiên 1 cái, được kẹo sô-cô-la?",
+    "visual": "🍬",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/8 = 13%. Rất hiếm."
+  },
+  {
+    "id": "prob-cont-41",
+    "ageTarget": "6-10",
+    "question": "Trong hộp có 8 vật, 2 cái là kẹo bạc hà. Bốc ngẫu nhiên 1 cái, được kẹo bạc hà?",
+    "visual": "🍬",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/8 = 25%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-42",
+    "ageTarget": "6-10",
+    "question": "Trong hộp có 8 vật, 3 cái là kẹo cam. Bốc ngẫu nhiên 1 cái, được kẹo cam?",
+    "visual": "🍬",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/8 = 38%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-43",
+    "ageTarget": "6-10",
+    "question": "Trong hộp có 9 vật, 1 cái là kẹo sô-cô-la. Bốc ngẫu nhiên 1 cái, được kẹo sô-cô-la?",
+    "visual": "🍬",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/9 = 11%. Rất hiếm."
+  },
+  {
+    "id": "prob-cont-44",
+    "ageTarget": "6-10",
+    "question": "Trong hộp có 9 vật, 2 cái là kẹo bạc hà. Bốc ngẫu nhiên 1 cái, được kẹo bạc hà?",
+    "visual": "🍬",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/9 = 22%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-45",
+    "ageTarget": "6-10",
+    "question": "Trong hộp có 9 vật, 3 cái là kẹo cam. Bốc ngẫu nhiên 1 cái, được kẹo cam?",
+    "visual": "🍬",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/9 = 33%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-46",
+    "ageTarget": "6-10",
+    "question": "Trong hộp có 10 vật, 1 cái là kẹo sô-cô-la. Bốc ngẫu nhiên 1 cái, được kẹo sô-cô-la?",
+    "visual": "🍬",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/10 = 10%. Rất hiếm."
+  },
+  {
+    "id": "prob-cont-47",
+    "ageTarget": "6-10",
+    "question": "Trong hộp có 10 vật, 2 cái là kẹo bạc hà. Bốc ngẫu nhiên 1 cái, được kẹo bạc hà?",
+    "visual": "🍬",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/10 = 20%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-48",
+    "ageTarget": "6-10",
+    "question": "Trong hộp có 10 vật, 3 cái là kẹo cam. Bốc ngẫu nhiên 1 cái, được kẹo cam?",
+    "visual": "🍬",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/10 = 30%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-49",
+    "ageTarget": "6-10",
+    "question": "Trong rổ có 3 vật, 1 cái là quả cam. Bốc ngẫu nhiên 1 cái, được quả cam?",
+    "visual": "🍎",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/3 = 33%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-50",
+    "ageTarget": "6-10",
+    "question": "Trong rổ có 3 vật, 2 cái là quả lê. Bốc ngẫu nhiên 1 cái, được quả lê?",
+    "visual": "🍎",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/3 = 67%. Khả năng cao."
+  },
+  {
+    "id": "prob-cont-51",
+    "ageTarget": "6-10",
+    "question": "Trong rổ có 3 vật, 3 cái là quả chuối. Bốc ngẫu nhiên 1 cái, được quả chuối?",
+    "visual": "🍎",
+    "correctAnswer": "certain",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/3 = 100%. Gần như chắc chắn!"
+  },
+  {
+    "id": "prob-cont-52",
+    "ageTarget": "6-10",
+    "question": "Trong rổ có 4 vật, 1 cái là quả cam. Bốc ngẫu nhiên 1 cái, được quả cam?",
+    "visual": "🍎",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/4 = 25%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-53",
+    "ageTarget": "6-10",
+    "question": "Trong rổ có 4 vật, 2 cái là quả lê. Bốc ngẫu nhiên 1 cái, được quả lê?",
+    "visual": "🍎",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/4 = 50%. Khả năng cao."
+  },
+  {
+    "id": "prob-cont-54",
+    "ageTarget": "6-10",
+    "question": "Trong rổ có 4 vật, 3 cái là quả chuối. Bốc ngẫu nhiên 1 cái, được quả chuối?",
+    "visual": "🍎",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/4 = 75%. Khả năng cao."
+  },
+  {
+    "id": "prob-cont-55",
+    "ageTarget": "6-10",
+    "question": "Trong rổ có 5 vật, 1 cái là quả cam. Bốc ngẫu nhiên 1 cái, được quả cam?",
+    "visual": "🍎",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/5 = 20%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-56",
+    "ageTarget": "6-10",
+    "question": "Trong rổ có 5 vật, 2 cái là quả lê. Bốc ngẫu nhiên 1 cái, được quả lê?",
+    "visual": "🍎",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/5 = 40%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-57",
+    "ageTarget": "6-10",
+    "question": "Trong rổ có 5 vật, 3 cái là quả chuối. Bốc ngẫu nhiên 1 cái, được quả chuối?",
+    "visual": "🍎",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/5 = 60%. Khả năng cao."
+  },
+  {
+    "id": "prob-cont-58",
+    "ageTarget": "6-10",
+    "question": "Trong rổ có 6 vật, 1 cái là quả cam. Bốc ngẫu nhiên 1 cái, được quả cam?",
+    "visual": "🍎",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/6 = 17%. Rất hiếm."
+  },
+  {
+    "id": "prob-cont-59",
+    "ageTarget": "6-10",
+    "question": "Trong rổ có 6 vật, 2 cái là quả lê. Bốc ngẫu nhiên 1 cái, được quả lê?",
+    "visual": "🍎",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/6 = 33%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-60",
+    "ageTarget": "6-10",
+    "question": "Trong rổ có 6 vật, 3 cái là quả chuối. Bốc ngẫu nhiên 1 cái, được quả chuối?",
+    "visual": "🍎",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/6 = 50%. Khả năng cao."
+  },
+  {
+    "id": "prob-cont-61",
+    "ageTarget": "6-10",
+    "question": "Trong rổ có 7 vật, 1 cái là quả cam. Bốc ngẫu nhiên 1 cái, được quả cam?",
+    "visual": "🍎",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/7 = 14%. Rất hiếm."
+  },
+  {
+    "id": "prob-cont-62",
+    "ageTarget": "6-10",
+    "question": "Trong rổ có 7 vật, 2 cái là quả lê. Bốc ngẫu nhiên 1 cái, được quả lê?",
+    "visual": "🍎",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/7 = 29%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-63",
+    "ageTarget": "6-10",
+    "question": "Trong rổ có 7 vật, 3 cái là quả chuối. Bốc ngẫu nhiên 1 cái, được quả chuối?",
+    "visual": "🍎",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/7 = 43%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-64",
+    "ageTarget": "6-10",
+    "question": "Trong rổ có 8 vật, 1 cái là quả cam. Bốc ngẫu nhiên 1 cái, được quả cam?",
+    "visual": "🍎",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/8 = 13%. Rất hiếm."
+  },
+  {
+    "id": "prob-cont-65",
+    "ageTarget": "6-10",
+    "question": "Trong rổ có 8 vật, 2 cái là quả lê. Bốc ngẫu nhiên 1 cái, được quả lê?",
+    "visual": "🍎",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/8 = 25%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-66",
+    "ageTarget": "6-10",
+    "question": "Trong rổ có 8 vật, 3 cái là quả chuối. Bốc ngẫu nhiên 1 cái, được quả chuối?",
+    "visual": "🍎",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/8 = 38%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-67",
+    "ageTarget": "6-10",
+    "question": "Trong rổ có 9 vật, 1 cái là quả cam. Bốc ngẫu nhiên 1 cái, được quả cam?",
+    "visual": "🍎",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/9 = 11%. Rất hiếm."
+  },
+  {
+    "id": "prob-cont-68",
+    "ageTarget": "6-10",
+    "question": "Trong rổ có 9 vật, 2 cái là quả lê. Bốc ngẫu nhiên 1 cái, được quả lê?",
+    "visual": "🍎",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/9 = 22%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-69",
+    "ageTarget": "6-10",
+    "question": "Trong rổ có 9 vật, 3 cái là quả chuối. Bốc ngẫu nhiên 1 cái, được quả chuối?",
+    "visual": "🍎",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/9 = 33%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-70",
+    "ageTarget": "6-10",
+    "question": "Trong rổ có 10 vật, 1 cái là quả cam. Bốc ngẫu nhiên 1 cái, được quả cam?",
+    "visual": "🍎",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/10 = 10%. Rất hiếm."
+  },
+  {
+    "id": "prob-cont-71",
+    "ageTarget": "6-10",
+    "question": "Trong rổ có 10 vật, 2 cái là quả lê. Bốc ngẫu nhiên 1 cái, được quả lê?",
+    "visual": "🍎",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/10 = 20%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-72",
+    "ageTarget": "6-10",
+    "question": "Trong rổ có 10 vật, 3 cái là quả chuối. Bốc ngẫu nhiên 1 cái, được quả chuối?",
+    "visual": "🍎",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/10 = 30%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-73",
+    "ageTarget": "6-10",
+    "question": "Trong ngăn kéo có 3 vật, 1 cái là bút xanh. Bốc ngẫu nhiên 1 cái, được bút xanh?",
+    "visual": "🖊️",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/3 = 33%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-74",
+    "ageTarget": "6-10",
+    "question": "Trong ngăn kéo có 3 vật, 2 cái là bút đen. Bốc ngẫu nhiên 1 cái, được bút đen?",
+    "visual": "🖊️",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/3 = 67%. Khả năng cao."
+  },
+  {
+    "id": "prob-cont-75",
+    "ageTarget": "6-10",
+    "question": "Trong ngăn kéo có 3 vật, 3 cái là bút tím. Bốc ngẫu nhiên 1 cái, được bút tím?",
+    "visual": "🖊️",
+    "correctAnswer": "certain",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/3 = 100%. Gần như chắc chắn!"
+  },
+  {
+    "id": "prob-cont-76",
+    "ageTarget": "6-10",
+    "question": "Trong ngăn kéo có 4 vật, 1 cái là bút xanh. Bốc ngẫu nhiên 1 cái, được bút xanh?",
+    "visual": "🖊️",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/4 = 25%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-77",
+    "ageTarget": "6-10",
+    "question": "Trong ngăn kéo có 4 vật, 2 cái là bút đen. Bốc ngẫu nhiên 1 cái, được bút đen?",
+    "visual": "🖊️",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/4 = 50%. Khả năng cao."
+  },
+  {
+    "id": "prob-cont-78",
+    "ageTarget": "6-10",
+    "question": "Trong ngăn kéo có 4 vật, 3 cái là bút tím. Bốc ngẫu nhiên 1 cái, được bút tím?",
+    "visual": "🖊️",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/4 = 75%. Khả năng cao."
+  },
+  {
+    "id": "prob-cont-79",
+    "ageTarget": "6-10",
+    "question": "Trong ngăn kéo có 5 vật, 1 cái là bút xanh. Bốc ngẫu nhiên 1 cái, được bút xanh?",
+    "visual": "🖊️",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/5 = 20%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-80",
+    "ageTarget": "6-10",
+    "question": "Trong ngăn kéo có 5 vật, 2 cái là bút đen. Bốc ngẫu nhiên 1 cái, được bút đen?",
+    "visual": "🖊️",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/5 = 40%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-81",
+    "ageTarget": "6-10",
+    "question": "Trong ngăn kéo có 5 vật, 3 cái là bút tím. Bốc ngẫu nhiên 1 cái, được bút tím?",
+    "visual": "🖊️",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/5 = 60%. Khả năng cao."
+  },
+  {
+    "id": "prob-cont-82",
+    "ageTarget": "6-10",
+    "question": "Trong ngăn kéo có 6 vật, 1 cái là bút xanh. Bốc ngẫu nhiên 1 cái, được bút xanh?",
+    "visual": "🖊️",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/6 = 17%. Rất hiếm."
+  },
+  {
+    "id": "prob-cont-83",
+    "ageTarget": "6-10",
+    "question": "Trong ngăn kéo có 6 vật, 2 cái là bút đen. Bốc ngẫu nhiên 1 cái, được bút đen?",
+    "visual": "🖊️",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/6 = 33%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-84",
+    "ageTarget": "6-10",
+    "question": "Trong ngăn kéo có 6 vật, 3 cái là bút tím. Bốc ngẫu nhiên 1 cái, được bút tím?",
+    "visual": "🖊️",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/6 = 50%. Khả năng cao."
+  },
+  {
+    "id": "prob-cont-85",
+    "ageTarget": "6-10",
+    "question": "Trong ngăn kéo có 7 vật, 1 cái là bút xanh. Bốc ngẫu nhiên 1 cái, được bút xanh?",
+    "visual": "🖊️",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/7 = 14%. Rất hiếm."
+  },
+  {
+    "id": "prob-cont-86",
+    "ageTarget": "6-10",
+    "question": "Trong ngăn kéo có 7 vật, 2 cái là bút đen. Bốc ngẫu nhiên 1 cái, được bút đen?",
+    "visual": "🖊️",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/7 = 29%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-87",
+    "ageTarget": "6-10",
+    "question": "Trong ngăn kéo có 7 vật, 3 cái là bút tím. Bốc ngẫu nhiên 1 cái, được bút tím?",
+    "visual": "🖊️",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/7 = 43%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-88",
+    "ageTarget": "6-10",
+    "question": "Trong ngăn kéo có 8 vật, 1 cái là bút xanh. Bốc ngẫu nhiên 1 cái, được bút xanh?",
+    "visual": "🖊️",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/8 = 13%. Rất hiếm."
+  },
+  {
+    "id": "prob-cont-89",
+    "ageTarget": "6-10",
+    "question": "Trong ngăn kéo có 8 vật, 2 cái là bút đen. Bốc ngẫu nhiên 1 cái, được bút đen?",
+    "visual": "🖊️",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/8 = 25%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-90",
+    "ageTarget": "6-10",
+    "question": "Trong ngăn kéo có 8 vật, 3 cái là bút tím. Bốc ngẫu nhiên 1 cái, được bút tím?",
+    "visual": "🖊️",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/8 = 38%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-91",
+    "ageTarget": "6-10",
+    "question": "Trong ngăn kéo có 9 vật, 1 cái là bút xanh. Bốc ngẫu nhiên 1 cái, được bút xanh?",
+    "visual": "🖊️",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/9 = 11%. Rất hiếm."
+  },
+  {
+    "id": "prob-cont-92",
+    "ageTarget": "6-10",
+    "question": "Trong ngăn kéo có 9 vật, 2 cái là bút đen. Bốc ngẫu nhiên 1 cái, được bút đen?",
+    "visual": "🖊️",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/9 = 22%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-93",
+    "ageTarget": "6-10",
+    "question": "Trong ngăn kéo có 9 vật, 3 cái là bút tím. Bốc ngẫu nhiên 1 cái, được bút tím?",
+    "visual": "🖊️",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/9 = 33%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-94",
+    "ageTarget": "6-10",
+    "question": "Trong ngăn kéo có 10 vật, 1 cái là bút xanh. Bốc ngẫu nhiên 1 cái, được bút xanh?",
+    "visual": "🖊️",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "1/10 = 10%. Rất hiếm."
+  },
+  {
+    "id": "prob-cont-95",
+    "ageTarget": "6-10",
+    "question": "Trong ngăn kéo có 10 vật, 2 cái là bút đen. Bốc ngẫu nhiên 1 cái, được bút đen?",
+    "visual": "🖊️",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "2/10 = 20%. Khá thấp."
+  },
+  {
+    "id": "prob-cont-96",
+    "ageTarget": "6-10",
+    "question": "Trong ngăn kéo có 10 vật, 3 cái là bút tím. Bốc ngẫu nhiên 1 cái, được bút tím?",
+    "visual": "🖊️",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "3/10 = 30%. Khá thấp."
+  },
+  {
+    "id": "prob-dice-97",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 4 mặt. Khả năng ra số 1?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/4 = 25.0%."
+  },
+  {
+    "id": "prob-dice-98",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 4 mặt. Khả năng ra số 2?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/4 = 25.0%."
+  },
+  {
+    "id": "prob-dice-99",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 4 mặt. Khả năng ra số 3?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/4 = 25.0%."
+  },
+  {
+    "id": "prob-dice-100",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 4 mặt. Khả năng ra số 4?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/4 = 25.0%."
+  },
+  {
+    "id": "prob-dice-101",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 4 mặt. Khả năng ra số 5?",
+    "visual": "🎲",
+    "correctAnswer": "impossible",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xúc xắc 4 mặt chỉ có 1-4. Số 5 không tồn tại."
+  },
+  {
+    "id": "prob-dice-102",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 6 mặt. Khả năng ra số 1?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/6 = 16.7%."
+  },
+  {
+    "id": "prob-dice-103",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 6 mặt. Khả năng ra số 2?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/6 = 16.7%."
+  },
+  {
+    "id": "prob-dice-104",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 6 mặt. Khả năng ra số 3?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/6 = 16.7%."
+  },
+  {
+    "id": "prob-dice-105",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 6 mặt. Khả năng ra số 4?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/6 = 16.7%."
+  },
+  {
+    "id": "prob-dice-106",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 6 mặt. Khả năng ra số 5?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/6 = 16.7%."
+  },
+  {
+    "id": "prob-dice-107",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 6 mặt. Khả năng ra số 6?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/6 = 16.7%."
+  },
+  {
+    "id": "prob-dice-108",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 6 mặt. Khả năng ra số 7?",
+    "visual": "🎲",
+    "correctAnswer": "impossible",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xúc xắc 6 mặt chỉ có 1-6. Số 7 không tồn tại."
+  },
+  {
+    "id": "prob-dice-109",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 8 mặt. Khả năng ra số 1?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/8 = 12.5%."
+  },
+  {
+    "id": "prob-dice-110",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 8 mặt. Khả năng ra số 2?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/8 = 12.5%."
+  },
+  {
+    "id": "prob-dice-111",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 8 mặt. Khả năng ra số 3?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/8 = 12.5%."
+  },
+  {
+    "id": "prob-dice-112",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 8 mặt. Khả năng ra số 4?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/8 = 12.5%."
+  },
+  {
+    "id": "prob-dice-113",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 8 mặt. Khả năng ra số 5?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/8 = 12.5%."
+  },
+  {
+    "id": "prob-dice-114",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 8 mặt. Khả năng ra số 6?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/8 = 12.5%."
+  },
+  {
+    "id": "prob-dice-115",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 8 mặt. Khả năng ra số 9?",
+    "visual": "🎲",
+    "correctAnswer": "impossible",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xúc xắc 8 mặt chỉ có 1-8. Số 9 không tồn tại."
+  },
+  {
+    "id": "prob-dice-116",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 10 mặt. Khả năng ra số 1?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/10 = 10.0%."
+  },
+  {
+    "id": "prob-dice-117",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 10 mặt. Khả năng ra số 2?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/10 = 10.0%."
+  },
+  {
+    "id": "prob-dice-118",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 10 mặt. Khả năng ra số 3?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/10 = 10.0%."
+  },
+  {
+    "id": "prob-dice-119",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 10 mặt. Khả năng ra số 4?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/10 = 10.0%."
+  },
+  {
+    "id": "prob-dice-120",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 10 mặt. Khả năng ra số 5?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/10 = 10.0%."
+  },
+  {
+    "id": "prob-dice-121",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 10 mặt. Khả năng ra số 6?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/10 = 10.0%."
+  },
+  {
+    "id": "prob-dice-122",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 10 mặt. Khả năng ra số 11?",
+    "visual": "🎲",
+    "correctAnswer": "impossible",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xúc xắc 10 mặt chỉ có 1-10. Số 11 không tồn tại."
+  },
+  {
+    "id": "prob-dice-123",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 12 mặt. Khả năng ra số 1?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/12 = 8.3%."
+  },
+  {
+    "id": "prob-dice-124",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 12 mặt. Khả năng ra số 2?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/12 = 8.3%."
+  },
+  {
+    "id": "prob-dice-125",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 12 mặt. Khả năng ra số 3?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/12 = 8.3%."
+  },
+  {
+    "id": "prob-dice-126",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 12 mặt. Khả năng ra số 4?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/12 = 8.3%."
+  },
+  {
+    "id": "prob-dice-127",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 12 mặt. Khả năng ra số 5?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/12 = 8.3%."
+  },
+  {
+    "id": "prob-dice-128",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 12 mặt. Khả năng ra số 6?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/12 = 8.3%."
+  },
+  {
+    "id": "prob-dice-129",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 12 mặt. Khả năng ra số 13?",
+    "visual": "🎲",
+    "correctAnswer": "impossible",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xúc xắc 12 mặt chỉ có 1-12. Số 13 không tồn tại."
+  },
+  {
+    "id": "prob-dice-130",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 20 mặt. Khả năng ra số 1?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/20 = 5.0%."
+  },
+  {
+    "id": "prob-dice-131",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 20 mặt. Khả năng ra số 2?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/20 = 5.0%."
+  },
+  {
+    "id": "prob-dice-132",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 20 mặt. Khả năng ra số 3?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/20 = 5.0%."
+  },
+  {
+    "id": "prob-dice-133",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 20 mặt. Khả năng ra số 4?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/20 = 5.0%."
+  },
+  {
+    "id": "prob-dice-134",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 20 mặt. Khả năng ra số 5?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/20 = 5.0%."
+  },
+  {
+    "id": "prob-dice-135",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 20 mặt. Khả năng ra số 6?",
+    "visual": "🎲",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = 1/20 = 5.0%."
+  },
+  {
+    "id": "prob-dice-136",
+    "ageTarget": "6-10",
+    "question": "Gieo xúc xắc 20 mặt. Khả năng ra số 21?",
+    "visual": "🎲",
+    "correctAnswer": "impossible",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xúc xắc 20 mặt chỉ có 1-20. Số 21 không tồn tại."
+  },
+  {
+    "id": "prob-coin-137",
+    "ageTarget": "6-10",
+    "question": "Tung đồng xu 1 lần. Cả 1 lần đều ngửa?",
+    "visual": "🪙",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = (1/2)^1 = 1/2 = 50.00%."
+  },
+  {
+    "id": "prob-coin-138",
+    "ageTarget": "6-10",
+    "question": "Tung đồng xu 2 lần. Cả 2 lần đều ngửa?",
+    "visual": "🪙",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = (1/2)^2 = 1/4 = 25.00%."
+  },
+  {
+    "id": "prob-coin-139",
+    "ageTarget": "6-10",
+    "question": "Tung đồng xu 3 lần. Cả 3 lần đều ngửa?",
+    "visual": "🪙",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = (1/2)^3 = 1/8 = 12.50%."
+  },
+  {
+    "id": "prob-coin-140",
+    "ageTarget": "6-10",
+    "question": "Tung đồng xu 4 lần. Cả 4 lần đều ngửa?",
+    "visual": "🪙",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = (1/2)^4 = 1/16 = 6.25%."
+  },
+  {
+    "id": "prob-coin-141",
+    "ageTarget": "6-10",
+    "question": "Tung đồng xu 5 lần. Cả 5 lần đều ngửa?",
+    "visual": "🪙",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = (1/2)^5 = 1/32 = 3.13%."
+  },
+  {
+    "id": "prob-coin-142",
+    "ageTarget": "6-10",
+    "question": "Tung đồng xu 6 lần. Cả 6 lần đều ngửa?",
+    "visual": "🪙",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = (1/2)^6 = 1/64 = 1.56%."
+  },
+  {
+    "id": "prob-coin-143",
+    "ageTarget": "6-10",
+    "question": "Tung đồng xu 7 lần. Cả 7 lần đều ngửa?",
+    "visual": "🪙",
+    "correctAnswer": "impossible",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = (1/2)^7 = 1/128 = 0.78%."
+  },
+  {
+    "id": "prob-coin-144",
+    "ageTarget": "6-10",
+    "question": "Tung đồng xu 8 lần. Cả 8 lần đều ngửa?",
+    "visual": "🪙",
+    "correctAnswer": "impossible",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Xác suất = (1/2)^8 = 1/256 = 0.39%."
+  },
+  {
+    "id": "prob-cert-145",
+    "ageTarget": "6-10",
+    "question": "Thả đá vào nước, đá chìm?",
+    "visual": "🪨",
+    "correctAnswer": "certain",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Đá nặng hơn nước, chắc chắn chìm."
+  },
+  {
+    "id": "prob-cert-146",
+    "ageTarget": "6-10",
+    "question": "Đun nước 100°C, nước sôi?",
+    "visual": "🫖",
+    "correctAnswer": "certain",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Nước sôi ở 100°C ở áp suất tiêu chuẩn."
+  },
+  {
+    "id": "prob-cert-147",
+    "ageTarget": "6-10",
+    "question": "Bật công tắc đèn, đèn sáng?",
+    "visual": "💡",
+    "correctAnswer": "certain",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Nếu bóng đèn tốt và có điện, chắc chắn sáng."
+  },
+  {
+    "id": "prob-cert-148",
+    "ageTarget": "6-10",
+    "question": "Trồng cây tưới nước đủ, cây mọc?",
+    "visual": "🌱",
+    "correctAnswer": "certain",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Đủ nước + đất + ánh sáng = chắc chắn."
+  },
+  {
+    "id": "prob-cert-149",
+    "ageTarget": "6-10",
+    "question": "Mở tủ lạnh lấy kem ra ngoài nắng, kem tan?",
+    "visual": "🍦",
+    "correctAnswer": "certain",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Nhiệt cao chắc chắn làm kem tan."
+  },
+  {
+    "id": "prob-cert-150",
+    "ageTarget": "6-10",
+    "question": "Bóng cao su thả xuống sàn, bóng nảy?",
+    "visual": "🏀",
+    "correctAnswer": "certain",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Cao su đàn hồi, chắc chắn nảy."
+  },
+  {
+    "id": "prob-cert-151",
+    "ageTarget": "6-10",
+    "question": "Muối bỏ vào nước, nước mặn?",
+    "visual": "🧂",
+    "correctAnswer": "certain",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Muối tan = nước mặn 100%."
+  },
+  {
+    "id": "prob-cert-152",
+    "ageTarget": "6-10",
+    "question": "Mặt trời mọc sáng mai?",
+    "visual": "🌅",
+    "correctAnswer": "certain",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Trái đất quay, chắc chắn có bình minh."
+  },
+  {
+    "id": "prob-cert-153",
+    "ageTarget": "6-10",
+    "question": "Đá lạnh ở 0°C biến thành nước?",
+    "visual": "🧊",
+    "correctAnswer": "certain",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Nhiệt > 0°C, đá tan thành nước."
+  },
+  {
+    "id": "prob-cert-154",
+    "ageTarget": "6-10",
+    "question": "Gió thổi mạnh, lá cây rung?",
+    "visual": "🍃",
+    "correctAnswer": "certain",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Lực gió tác động lá, chắc chắn rung."
+  },
+  {
+    "id": "prob-imp-155",
+    "ageTarget": "6-10",
+    "question": "Con người tự bay không cần máy bay?",
+    "visual": "🦸",
+    "correctAnswer": "impossible",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Không có cánh, lực hấp dẫn quá mạnh."
+  },
+  {
+    "id": "prob-imp-156",
+    "ageTarget": "6-10",
+    "question": "Cá sống dưới nước biết nói tiếng người?",
+    "visual": "🐟",
+    "correctAnswer": "impossible",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Cá không có dây thanh quản."
+  },
+  {
+    "id": "prob-imp-157",
+    "ageTarget": "6-10",
+    "question": "Cục đá nổi trên mặt nước?",
+    "visual": "🪨",
+    "correctAnswer": "impossible",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Đá nặng hơn nước, không thể nổi."
+  },
+  {
+    "id": "prob-imp-158",
+    "ageTarget": "6-10",
+    "question": "Con mèo giải được bài toán lớp 5?",
+    "visual": "🐱",
+    "correctAnswer": "impossible",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Mèo không có tư duy toán học."
+  },
+  {
+    "id": "prob-imp-159",
+    "ageTarget": "6-10",
+    "question": "Tuyết rơi ở sa mạc Sahara giữa mùa hè?",
+    "visual": "🏜️",
+    "correctAnswer": "impossible",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Nhiệt độ 50°C+, không thể có tuyết."
+  },
+  {
+    "id": "prob-imp-160",
+    "ageTarget": "6-10",
+    "question": "Xe đạp tự chạy không ai đạp trên mặt phẳng?",
+    "visual": "🚲",
+    "correctAnswer": "impossible",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Không có lực, xe không tự chạy."
+  },
+  {
+    "id": "prob-imp-161",
+    "ageTarget": "6-10",
+    "question": "Viết bằng bút hết mực?",
+    "visual": "🖊️",
+    "correctAnswer": "impossible",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Bút hết mực không ra được chữ."
+  },
+  {
+    "id": "prob-imp-162",
+    "ageTarget": "6-10",
+    "question": "Đứng dưới mưa nhưng không bị ướt (không dù)?",
+    "visual": "🌧️",
+    "correctAnswer": "impossible",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Nước rơi trúng người = ướt."
+  },
+  {
+    "id": "prob-imp-163",
+    "ageTarget": "6-10",
+    "question": "Nấu cơm không có gạo?",
+    "visual": "🍚",
+    "correctAnswer": "impossible",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Không gạo = không cơm."
+  },
+  {
+    "id": "prob-imp-164",
+    "ageTarget": "6-10",
+    "question": "Uống nước biển không thấy mặn?",
+    "visual": "🌊",
+    "correctAnswer": "impossible",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Nước biển luôn chứa muối."
+  },
+  {
+    "id": "prob-adv-165",
+    "ageTarget": "11+",
+    "question": "Monty Hall: Sau khi MC mở cửa trống, đổi cửa tốt hơn?",
+    "visual": "🧠",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Đổi cửa: P=2/3 > giữ: P=1/3."
+  },
+  {
+    "id": "prob-adv-166",
+    "ageTarget": "11+",
+    "question": "Birthday Paradox: 30 người có trùng sinh nhật?",
+    "visual": "🧠",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "P ≈ 70.6%. Phản trực giác nhưng đúng."
+  },
+  {
+    "id": "prob-adv-167",
+    "ageTarget": "11+",
+    "question": "Gambler's Fallacy: Đỏ 15 lần liền, đen lần 16?",
+    "visual": "🧠",
+    "correctAnswer": "equal",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Mỗi lần quay độc lập, P luôn = 18/37."
+  },
+  {
+    "id": "prob-adv-168",
+    "ageTarget": "11+",
+    "question": "Law of Large Numbers: 100,000 lần tung xu → 50% ngửa?",
+    "visual": "🧠",
+    "correctAnswer": "certain",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "LLN đảm bảo hội tụ về xác suất lý thuyết."
+  },
+  {
+    "id": "prob-adv-169",
+    "ageTarget": "11+",
+    "question": "Bayes: Xét nghiệm 99%, bệnh 0.1%. Dương tính thật?",
+    "visual": "🧠",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "PPV ≈ 9% do tỉ lệ cơ bản rất thấp."
+  },
+  {
+    "id": "prob-adv-170",
+    "ageTarget": "11+",
+    "question": "CLT: Trung bình 50 mẫu xấp xỉ phân phối chuẩn?",
+    "visual": "🧠",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "n=50 >> 30, CLT áp dụng mạnh."
+  },
+  {
+    "id": "prob-adv-171",
+    "ageTarget": "11+",
+    "question": "St. Petersburg: Kỳ vọng vô hạn, trả $100?",
+    "visual": "🧠",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Dù EV=∞, utility giảm logarithmic."
+  },
+  {
+    "id": "prob-adv-172",
+    "ageTarget": "11+",
+    "question": "Simpson's Paradox: Gộp data đảo ngược kết luận?",
+    "visual": "🧠",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Confounding variables gây đảo xu hướng."
+  },
+  {
+    "id": "prob-adv-173",
+    "ageTarget": "11+",
+    "question": "Regression to Mean: Điểm thi cực cao lần 1?",
+    "visual": "🧠",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Extreme scores tend to revert."
+  },
+  {
+    "id": "prob-adv-174",
+    "ageTarget": "11+",
+    "question": "Poisson: λ=3, P(X=0)?",
+    "visual": "🧠",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "P=e^(-3) ≈ 4.98%."
+  },
+  {
+    "id": "prob-adv-175",
+    "ageTarget": "11+",
+    "question": "Binomial: 10 xu tung, đúng 5 ngửa?",
+    "visual": "🧠",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "C(10,5)×0.5^10 ≈ 24.6%."
+  },
+  {
+    "id": "prob-adv-176",
+    "ageTarget": "11+",
+    "question": "Conditional: P(A|B) khi A,B độc lập?",
+    "visual": "🧠",
+    "correctAnswer": "equal",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Độc lập → P(A|B) = P(A)."
+  },
+  {
+    "id": "prob-adv-177",
+    "ageTarget": "11+",
+    "question": "Chi-square: 200 gieo xúc xắc lệch phân phối?",
+    "visual": "🧠",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Chi-square test phát hiện bất thường."
+  },
+  {
+    "id": "prob-adv-178",
+    "ageTarget": "11+",
+    "question": "Expected Value âm: Mua xổ số kỳ vọng lãi?",
+    "visual": "🧠",
+    "correctAnswer": "impossible",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "EV < 0 → trung bình luôn lỗ."
+  },
+  {
+    "id": "prob-adv-179",
+    "ageTarget": "11+",
+    "question": "Coupon Collector: Thu đủ 6 sticker từ 6 gói?",
+    "visual": "🧠",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "E[n] ≈ 14.7 gói. Cần gấp 2.5x."
+  },
+  {
+    "id": "prob-adv-180",
+    "ageTarget": "11+",
+    "question": "Hypergeometric: 5 bi đỏ/20 bi, rút 3, cả 3 đỏ?",
+    "visual": "🧠",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "C(5,3)/C(20,3) ≈ 0.88%."
+  },
+  {
+    "id": "prob-adv-181",
+    "ageTarget": "11+",
+    "question": "Normal dist: IQ > 145 (3σ)?",
+    "visual": "🧠",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "P ≈ 0.13%. Rất hiếm."
+  },
+  {
+    "id": "prob-adv-182",
+    "ageTarget": "11+",
+    "question": "Variance: 2 danh mục có mean=10, σ khác nhau?",
+    "visual": "🧠",
+    "correctAnswer": "equal",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Mean bằng nhau, risk khác nhau."
+  },
+  {
+    "id": "prob-adv-183",
+    "ageTarget": "11+",
+    "question": "Monte Carlo: 10,000 simulation hội tụ π?",
+    "visual": "🧠",
+    "correctAnswer": "certain",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "MC converges với n đủ lớn."
+  },
+  {
+    "id": "prob-adv-184",
+    "ageTarget": "11+",
+    "question": "Markov Chain: Trạng thái ổn định tồn tại?",
+    "visual": "🧠",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Ergodic chain → stationary dist tồn tại."
+  },
+  {
+    "id": "prob-wea-185",
+    "ageTarget": "6-10",
+    "question": "Trời trong xanh không mây, mưa?",
+    "visual": "☀️",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Không mây = rất khó mưa."
+  },
+  {
+    "id": "prob-wea-186",
+    "ageTarget": "6-10",
+    "question": "Mây đen kéo tới, sấm chớp, mưa?",
+    "visual": "⛈️",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Dấu hiệu mưa rõ ràng."
+  },
+  {
+    "id": "prob-wea-187",
+    "ageTarget": "6-10",
+    "question": "Mùa đông Hà Nội 5°C, ra mồ hôi?",
+    "visual": "❄️",
+    "correctAnswer": "impossible",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Quá lạnh để đổ mồ hôi."
+  },
+  {
+    "id": "prob-wea-188",
+    "ageTarget": "6-10",
+    "question": "Mùa hè 40°C, kem để ngoài tan?",
+    "visual": "🌡️",
+    "correctAnswer": "certain",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Nhiệt cao = kem tan."
+  },
+  {
+    "id": "prob-wea-189",
+    "ageTarget": "6-10",
+    "question": "Gió bão cấp 10, thả diều?",
+    "visual": "🌪️",
+    "correctAnswer": "impossible",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Gió quá mạnh, diều rách."
+  },
+  {
+    "id": "prob-wea-190",
+    "ageTarget": "6-10",
+    "question": "Cầu vồng sau mưa khi có nắng?",
+    "visual": "🌈",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Ánh sáng khúc xạ qua giọt nước."
+  },
+  {
+    "id": "prob-wea-191",
+    "ageTarget": "6-10",
+    "question": "Sương mù buổi sáng, trời nóng?",
+    "visual": "🌫️",
+    "correctAnswer": "unlikely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Sương mù = độ ẩm cao, trời mát."
+  },
+  {
+    "id": "prob-wea-192",
+    "ageTarget": "6-10",
+    "question": "Mặt trăng biến mất vĩnh viễn?",
+    "visual": "🌙",
+    "correctAnswer": "impossible",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Mặt trăng quay quanh Trái đất ổn định."
+  },
+  {
+    "id": "prob-ani-193",
+    "ageTarget": "6-10",
+    "question": "Chim cánh cụt bay trên trời?",
+    "visual": "🐧",
+    "correctAnswer": "impossible",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Cánh cụt cánh nhỏ, không bay được."
+  },
+  {
+    "id": "prob-ani-194",
+    "ageTarget": "6-10",
+    "question": "Cá heo nhảy qua vòng khi huấn luyện?",
+    "visual": "🐬",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Cá heo thông minh, dễ huấn luyện."
+  },
+  {
+    "id": "prob-ani-195",
+    "ageTarget": "6-10",
+    "question": "Mèo rơi từ cao, đáp bằng chân?",
+    "visual": "🐱",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Reflex xoay người cực tốt."
+  },
+  {
+    "id": "prob-ani-196",
+    "ageTarget": "6-10",
+    "question": "Chó nghe lệnh \"ngồi\" sau 1 tuần tập?",
+    "visual": "🐕",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Chó học nhanh với phần thưởng."
+  },
+  {
+    "id": "prob-ani-197",
+    "ageTarget": "6-10",
+    "question": "Rùa chạy nhanh hơn thỏ?",
+    "visual": "🐢",
+    "correctAnswer": "impossible",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Rùa chậm hơn thỏ rất nhiều."
+  },
+  {
+    "id": "prob-ani-198",
+    "ageTarget": "6-10",
+    "question": "Voi nhớ đường sau 10 năm?",
+    "visual": "🐘",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Voi có trí nhớ xuất sắc."
+  },
+  {
+    "id": "prob-ani-199",
+    "ageTarget": "6-10",
+    "question": "Cá vàng nhớ việc 3 phút trước?",
+    "visual": "🐠",
+    "correctAnswer": "likely",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Cá vàng nhớ được vài tháng, không phải 3 giây."
+  },
+  {
+    "id": "prob-ani-200",
+    "ageTarget": "6-10",
+    "question": "Kiến kéo vật nặng gấp 50 lần?",
+    "visual": "🐜",
+    "correctAnswer": "certain",
+    "options": [
+      "impossible",
+      "unlikely",
+      "equal",
+      "likely",
+      "certain"
+    ],
+    "explanation": "Kiến khỏe gấp 50 lần trọng lượng."
   }
 ] as const;
 
@@ -1387,6 +4387,246 @@ export const EXPANDED_WANTS_VS_NEEDS = [
     "visual": "📺",
     "correctCategory": "want",
     "explanation": "Giải trí, không ảnh hưởng chất lượng sống."
+  },
+  {
+    "id": "wvn-mega-kid-1",
+    "ageTarget": "6-10",
+    "name": "Giày dép đi mưa",
+    "visual": "🥾",
+    "correctCategory": "need",
+    "explanation": "Bảo vệ chân khi trời mưa."
+  },
+  {
+    "id": "wvn-mega-kid-2",
+    "ageTarget": "6-10",
+    "name": "Máy bay điều khiển từ xa",
+    "visual": "✈️",
+    "correctCategory": "want",
+    "explanation": "Đồ chơi vui nhưng không thiết yếu."
+  },
+  {
+    "id": "wvn-mega-kid-3",
+    "ageTarget": "6-10",
+    "name": "Kem đánh răng cho trẻ em",
+    "visual": "🪥",
+    "correctCategory": "need",
+    "explanation": "Vệ sinh răng miệng hàng ngày."
+  },
+  {
+    "id": "wvn-mega-kid-4",
+    "ageTarget": "6-10",
+    "name": "Bộ Pokemon cards sưu tầm",
+    "visual": "🃏",
+    "correctCategory": "want",
+    "explanation": "Sưu tầm giải trí, không cần thiết."
+  },
+  {
+    "id": "wvn-mega-kid-5",
+    "ageTarget": "6-10",
+    "name": "Cặp kính cận khi mắt yếu",
+    "visual": "👓",
+    "correctCategory": "need",
+    "explanation": "Nhìn rõ bảng cần thiết cho việc học."
+  },
+  {
+    "id": "wvn-mega-kid-6",
+    "ageTarget": "6-10",
+    "name": "Tai nghe Bluetooth xịn",
+    "visual": "🎧",
+    "correctCategory": "want",
+    "explanation": "Nghe nhạc vui nhưng tai nghe dây cũng được."
+  },
+  {
+    "id": "wvn-mega-kid-7",
+    "ageTarget": "6-10",
+    "name": "Áo khoác đi học mùa mưa",
+    "visual": "🧥",
+    "correctCategory": "need",
+    "explanation": "Giữ ấm và khô ráo, cần thiết."
+  },
+  {
+    "id": "wvn-mega-kid-8",
+    "ageTarget": "6-10",
+    "name": "Slime đất nặn màu loại xịn",
+    "visual": "🟢",
+    "correctCategory": "want",
+    "explanation": "Chơi vui nhưng không ảnh hưởng cuộc sống."
+  },
+  {
+    "id": "wvn-mega-kid-9",
+    "ageTarget": "6-10",
+    "name": "Cặp sách đi học bền chắc",
+    "visual": "💼",
+    "correctCategory": "need",
+    "explanation": "Đựng sách vở đi học mỗi ngày."
+  },
+  {
+    "id": "wvn-mega-kid-10",
+    "ageTarget": "6-10",
+    "name": "Vòng tay phát sáng",
+    "visual": "💫",
+    "correctCategory": "want",
+    "explanation": "Đẹp mắt nhưng không cần thiết."
+  },
+  {
+    "id": "wvn-mega-kid-11",
+    "ageTarget": "6-10",
+    "name": "Khăn mặt sạch hàng ngày",
+    "visual": "🧣",
+    "correctCategory": "need",
+    "explanation": "Vệ sinh cá nhân cơ bản."
+  },
+  {
+    "id": "wvn-mega-kid-12",
+    "ageTarget": "6-10",
+    "name": "Bộ lắp ráp xe tăng mô hình",
+    "visual": "🔧",
+    "correctCategory": "want",
+    "explanation": "Sáng tạo nhưng không thiết yếu."
+  },
+  {
+    "id": "wvn-mega-kid-13",
+    "ageTarget": "6-10",
+    "name": "Đèn bàn học buổi tối",
+    "visual": "💡",
+    "correctCategory": "need",
+    "explanation": "Ánh sáng đủ bảo vệ mắt khi học."
+  },
+  {
+    "id": "wvn-mega-kid-14",
+    "ageTarget": "6-10",
+    "name": "Kẹp tóc đính đá kim sa",
+    "visual": "💎",
+    "correctCategory": "want",
+    "explanation": "Trang trí xinh nhưng không cần."
+  },
+  {
+    "id": "wvn-mega-kid-15",
+    "ageTarget": "6-10",
+    "name": "Giấy vở viết bài hàng ngày",
+    "visual": "📝",
+    "correctCategory": "need",
+    "explanation": "Dụng cụ học tập thiết yếu."
+  },
+  {
+    "id": "wvn-mega-kid-16",
+    "ageTarget": "6-10",
+    "name": "Đồ chơi fidget spinner",
+    "visual": "🌀",
+    "correctCategory": "want",
+    "explanation": "Giải stress nhưng không phải nhu cầu."
+  },
+  {
+    "id": "wvn-mega-kid-17",
+    "ageTarget": "6-10",
+    "name": "Nón bảo hiểm đi xe đạp",
+    "visual": "⛑️",
+    "correctCategory": "need",
+    "explanation": "An toàn giao thông bắt buộc."
+  },
+  {
+    "id": "wvn-mega-kid-18",
+    "ageTarget": "6-10",
+    "name": "Sticker hoạt hình dán tập",
+    "visual": "🌟",
+    "correctCategory": "want",
+    "explanation": "Trang trí vui nhưng không thiết yếu."
+  },
+  {
+    "id": "wvn-mega-kid-19",
+    "ageTarget": "6-10",
+    "name": "Tất/vớ đi giày hàng ngày",
+    "visual": "🧦",
+    "correctCategory": "need",
+    "explanation": "Giữ vệ sinh, tránh phồng rộp."
+  },
+  {
+    "id": "wvn-mega-kid-20",
+    "ageTarget": "6-10",
+    "name": "Robot đồ chơi biến hình Transformer",
+    "visual": "🤖",
+    "correctCategory": "want",
+    "explanation": "Đồ chơi giải trí không ảnh hưởng sống còn."
+  },
+  {
+    "id": "wvn-mega-adv-1",
+    "ageTarget": "11+",
+    "name": "Laptop cho việc học",
+    "visual": "💻",
+    "correctCategory": "need",
+    "explanation": "Công cụ học tập thời đại số."
+  },
+  {
+    "id": "wvn-mega-adv-2",
+    "ageTarget": "11+",
+    "name": "Đồng hồ Casio G-Shock limited",
+    "visual": "⌚",
+    "correctCategory": "want",
+    "explanation": "Xem giờ có điện thoại, G-Shock = phong cách."
+  },
+  {
+    "id": "wvn-mega-adv-3",
+    "ageTarget": "11+",
+    "name": "Tiền phòng trọ ở gần trường",
+    "visual": "🏠",
+    "correctCategory": "need",
+    "explanation": "Nơi ở an toàn là Maslow bậc 1."
+  },
+  {
+    "id": "wvn-mega-adv-4",
+    "ageTarget": "11+",
+    "name": "Túi xách hiệu Gucci",
+    "visual": "👜",
+    "correctCategory": "want",
+    "explanation": "Xa xỉ phẩm, túi bình dân đủ đựng."
+  },
+  {
+    "id": "wvn-mega-adv-5",
+    "ageTarget": "11+",
+    "name": "Bảo hiểm tai nạn cá nhân",
+    "visual": "🛡️",
+    "correctCategory": "need",
+    "explanation": "Mạng lưới an toàn tài chính."
+  },
+  {
+    "id": "wvn-mega-adv-6",
+    "ageTarget": "11+",
+    "name": "PlayStation 5 Pro",
+    "visual": "🎮",
+    "correctCategory": "want",
+    "explanation": "Giải trí, không ảnh hưởng sinh tồn."
+  },
+  {
+    "id": "wvn-mega-adv-7",
+    "ageTarget": "11+",
+    "name": "Khám sức khỏe định kỳ hàng năm",
+    "visual": "🏥",
+    "correctCategory": "need",
+    "explanation": "Phát hiện bệnh sớm, cần thiết."
+  },
+  {
+    "id": "wvn-mega-adv-8",
+    "ageTarget": "11+",
+    "name": "Áo hoodie brand Supreme",
+    "visual": "👕",
+    "correctCategory": "want",
+    "explanation": "Áo giữ ấm bình dân đủ rồi."
+  },
+  {
+    "id": "wvn-mega-adv-9",
+    "ageTarget": "11+",
+    "name": "Sách giáo khoa và tài liệu ôn thi",
+    "visual": "📚",
+    "correctCategory": "need",
+    "explanation": "Kiến thức quyết định tương lai."
+  },
+  {
+    "id": "wvn-mega-adv-10",
+    "ageTarget": "11+",
+    "name": "Vé concert Taylor Swift VIP",
+    "visual": "🎵",
+    "correctCategory": "want",
+    "explanation": "Trải nghiệm 1 lần, không thiết yếu."
   }
 ] as const;
 
@@ -1726,6 +4966,198 @@ export const EXPANDED_CIRCLE_OF_CONTROL = [
     "visual": "📋",
     "correctCategory": "controllable",
     "explanation": "Sự chuẩn bị là vũ khí tốt nhất."
+  },
+  {
+    "id": "coc-mega-kid-1",
+    "ageTarget": "6-10",
+    "situation": "Cô giáo cho điểm không công bằng.",
+    "visual": "📋",
+    "correctCategory": "uncontrollable",
+    "explanation": "Cách chấm điểm là quyền của cô."
+  },
+  {
+    "id": "coc-mega-kid-2",
+    "ageTarget": "6-10",
+    "situation": "Con học thuộc bài trước khi thi.",
+    "visual": "📖",
+    "correctCategory": "controllable",
+    "explanation": "Nỗ lực ôn bài là việc con làm."
+  },
+  {
+    "id": "coc-mega-kid-3",
+    "ageTarget": "6-10",
+    "situation": "Ba mẹ cãi nhau ở nhà.",
+    "visual": "😟",
+    "correctCategory": "uncontrollable",
+    "explanation": "Mâu thuẫn người lớn ngoài tầm con."
+  },
+  {
+    "id": "coc-mega-kid-4",
+    "ageTarget": "6-10",
+    "situation": "Con viết nhật ký mỗi tối trước ngủ.",
+    "visual": "📔",
+    "correctCategory": "controllable",
+    "explanation": "Thói quen tốt từ ý chí cá nhân."
+  },
+  {
+    "id": "coc-mega-kid-5",
+    "ageTarget": "6-10",
+    "situation": "Bạn thân không muốn chơi chung nữa.",
+    "visual": "💔",
+    "correctCategory": "uncontrollable",
+    "explanation": "Cảm xúc bạn ấy, con không ép được."
+  },
+  {
+    "id": "coc-mega-kid-6",
+    "ageTarget": "6-10",
+    "situation": "Con mỉm cười chào mọi người mỗi sáng.",
+    "visual": "😊",
+    "correctCategory": "controllable",
+    "explanation": "Thái độ tích cực do con chọn."
+  },
+  {
+    "id": "coc-mega-kid-7",
+    "ageTarget": "6-10",
+    "situation": "Nhà hàng xóm phá đồ chơi bên ngoài.",
+    "visual": "🏚️",
+    "correctCategory": "uncontrollable",
+    "explanation": "Hành vi hàng xóm ngoài tầm kiểm soát."
+  },
+  {
+    "id": "coc-mega-kid-8",
+    "ageTarget": "6-10",
+    "situation": "Con khóa cửa cẩn thận trước khi đi.",
+    "visual": "🔐",
+    "correctCategory": "controllable",
+    "explanation": "Cẩn thận bảo vệ đồ là việc con."
+  },
+  {
+    "id": "coc-mega-kid-9",
+    "ageTarget": "6-10",
+    "situation": "Máy tính bị hỏng giữa chừng bài tập.",
+    "visual": "💻",
+    "correctCategory": "uncontrollable",
+    "explanation": "Sự cố kỹ thuật bất ngờ."
+  },
+  {
+    "id": "coc-mega-kid-10",
+    "ageTarget": "6-10",
+    "situation": "Con lưu bài thường xuyên để không mất.",
+    "visual": "💾",
+    "correctCategory": "controllable",
+    "explanation": "Thói quen backup là phòng ngừa thông minh."
+  },
+  {
+    "id": "coc-mega-kid-11",
+    "ageTarget": "6-10",
+    "situation": "Sân bóng bị chiếm bởi đội lớn hơn.",
+    "visual": "⚽",
+    "correctCategory": "uncontrollable",
+    "explanation": "Đội khác quyết định, con không kiểm soát."
+  },
+  {
+    "id": "coc-mega-kid-12",
+    "ageTarget": "6-10",
+    "situation": "Con tập thể dục 10 phút mỗi sáng.",
+    "visual": "🏋️",
+    "correctCategory": "controllable",
+    "explanation": "Rèn luyện sức khỏe từ kỷ luật bản thân."
+  },
+  {
+    "id": "coc-mega-kid-13",
+    "ageTarget": "6-10",
+    "situation": "Trường thay đổi lịch học đột ngột.",
+    "visual": "📅",
+    "correctCategory": "uncontrollable",
+    "explanation": "Quyết định nhà trường."
+  },
+  {
+    "id": "coc-mega-kid-14",
+    "ageTarget": "6-10",
+    "situation": "Con chuẩn bị sách vở từ tối hôm trước.",
+    "visual": "🎒",
+    "correctCategory": "controllable",
+    "explanation": "Chuẩn bị sẵn sàng là lựa chọn."
+  },
+  {
+    "id": "coc-mega-kid-15",
+    "ageTarget": "6-10",
+    "situation": "Bé em lấy đồ chơi của con mà không hỏi.",
+    "visual": "👶",
+    "correctCategory": "uncontrollable",
+    "explanation": "Em bé chưa hiểu luật."
+  },
+  {
+    "id": "coc-mega-kid-16",
+    "ageTarget": "6-10",
+    "situation": "Con nói \"em ơi, hỏi anh/chị trước nhé\".",
+    "visual": "🗣️",
+    "correctCategory": "controllable",
+    "explanation": "Dạy em bé cách xin phép là trong tầm tay."
+  },
+  {
+    "id": "coc-mega-adv-1",
+    "ageTarget": "11+",
+    "situation": "Công ty cắt giảm nhân sự hàng loạt.",
+    "visual": "🏢",
+    "correctCategory": "uncontrollable",
+    "explanation": "Quyết định doanh nghiệp ở cấp lãnh đạo."
+  },
+  {
+    "id": "coc-mega-adv-2",
+    "ageTarget": "11+",
+    "situation": "Đọc 30 phút sách chuyên ngành mỗi ngày.",
+    "visual": "📚",
+    "correctCategory": "controllable",
+    "explanation": "Đầu tư tri thức là quyết định."
+  },
+  {
+    "id": "coc-mega-adv-3",
+    "ageTarget": "11+",
+    "situation": "Biến đổi khí hậu gây lũ lụt.",
+    "visual": "🌊",
+    "correctCategory": "uncontrollable",
+    "explanation": "Hiện tượng toàn cầu."
+  },
+  {
+    "id": "coc-mega-adv-4",
+    "ageTarget": "11+",
+    "situation": "Giảm rác thải nhựa cá nhân.",
+    "visual": "♻️",
+    "correctCategory": "controllable",
+    "explanation": "Đóng góp nhỏ nhưng trong tầm tay."
+  },
+  {
+    "id": "coc-mega-adv-5",
+    "ageTarget": "11+",
+    "situation": "Thi trượt do đề quá khó.",
+    "visual": "📝",
+    "correctCategory": "uncontrollable",
+    "explanation": "Độ khó đề thi không do mình."
+  },
+  {
+    "id": "coc-mega-adv-6",
+    "ageTarget": "11+",
+    "situation": "Rút kinh nghiệm và ôn lại bài chưa vững.",
+    "visual": "🔄",
+    "correctCategory": "controllable",
+    "explanation": "Học từ thất bại."
+  },
+  {
+    "id": "coc-mega-adv-7",
+    "ageTarget": "11+",
+    "situation": "Tỉ giá ngoại tệ biến động mạnh.",
+    "visual": "💱",
+    "correctCategory": "uncontrollable",
+    "explanation": "Chính sách tiền tệ quốc gia."
+  },
+  {
+    "id": "coc-mega-adv-8",
+    "ageTarget": "11+",
+    "situation": "Đa dạng hóa danh mục đầu tư.",
+    "visual": "📊",
+    "correctCategory": "controllable",
+    "explanation": "Quản trị rủi ro cá nhân."
   }
 ] as const;
 
@@ -1894,6 +5326,61 @@ export const EXPANDED_NEGOTIATION = [
     "winWinCriteria": "Bạn được công bằng, cửa hàng giữ uy tín.",
     "sampleRequest": "Tôi sẽ đăng lên Facebook tố cáo!",
     "sampleWinWin": "Theo luật bảo vệ người tiêu dùng, sản phẩm lỗi được đổi trong 7 ngày. Đây là hóa đơn. Tôi muốn đổi sản phẩm mới."
+  },
+  {
+    "id": "neg-mega-kid-1",
+    "ageTarget": "6-10",
+    "scenario": "Con muốn xem phim nhưng chị đang xem.",
+    "aiPersonality": "Chị Gái",
+    "visual": "📺",
+    "targetOutcome": "Chia thời gian",
+    "winWinCriteria": "Cả hai đều được xem.",
+    "sampleRequest": "Em xem trước!",
+    "sampleWinWin": "Chị xem 30 phút rồi đổi em nhé? Mình oẳn tù tì ai trước."
+  },
+  {
+    "id": "neg-mega-kid-2",
+    "ageTarget": "6-10",
+    "scenario": "Bạn muốn đổi sandwich nhưng con thích sandwich mình.",
+    "aiPersonality": "Bạn Cùng Bàn",
+    "visual": "🥪",
+    "targetOutcome": "Từ chối lịch sự",
+    "winWinCriteria": "Bạn không buồn, con giữ đồ ăn.",
+    "sampleRequest": "Không đổi! Của tao!",
+    "sampleWinWin": "Mình thích sandwich mình lắm. Nhưng mai mình mang thêm bánh chia bạn nhé?"
+  },
+  {
+    "id": "neg-mega-kid-3",
+    "ageTarget": "6-10",
+    "scenario": "Con muốn đi bơi nhưng ba bảo phải dọn phòng.",
+    "aiPersonality": "Ba Nghiêm Túc",
+    "visual": "🏊",
+    "targetOutcome": "Dọn xong rồi đi bơi",
+    "winWinCriteria": "Ba hài lòng, con được đi bơi.",
+    "sampleRequest": "Con không dọn! Đi bơi ngay!",
+    "sampleWinWin": "Ba cho con 30 phút dọn phòng sạch. Xong ba chở con đi bơi 1 tiếng nha ba?"
+  },
+  {
+    "id": "neg-mega-kid-4",
+    "ageTarget": "6-10",
+    "scenario": "Mẹ muốn con học đàn nhưng con thích vẽ.",
+    "aiPersonality": "Mẹ Kỳ Vọng",
+    "visual": "🎨",
+    "targetOutcome": "Thử cả hai",
+    "winWinCriteria": "Mẹ hài lòng con mở rộng, con vẫn được vẽ.",
+    "sampleRequest": "Con ghét đàn! Chỉ thích vẽ!",
+    "sampleWinWin": "Mẹ ơi con thử học đàn 1 tháng. Nếu con không thích thì cho con chuyển sang vẽ nhé?"
+  },
+  {
+    "id": "neg-mega-kid-5",
+    "ageTarget": "6-10",
+    "scenario": "Bạn rủ con chơi nhưng con đang làm bài.",
+    "aiPersonality": "Bạn Háo Hức",
+    "visual": "🎮",
+    "targetOutcome": "Hẹn chơi sau",
+    "winWinCriteria": "Bạn không buồn, con hoàn thành bài.",
+    "sampleRequest": "Được rồi bỏ bài chơi luôn!",
+    "sampleWinWin": "Mình cần 20 phút nữa làm xong bài. Sau đó mình chơi thoải mái nhé!"
   }
 ] as const;
 
