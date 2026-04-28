@@ -274,11 +274,16 @@ export default function LearnPage() {
 
                         {/* Hint */}
                         {!selected && (
-                            <div style={{ display: 'flex', justifyContent: 'center', marginTop: 24 }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 24, gap: 12 }}>
                                 <button onClick={() => setShowHint(!showHint)}
-                                    style={{ padding: '10px 20px', borderRadius: 20, border: '1px solid rgba(245,158,11,0.4)', background: 'rgba(245,158,11,0.1)', color: '#b45309', fontSize: 15, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, transition: 'all .2s' }}>
-                                    <Lightbulb size={18} /> {showHint ? currentProblem.hints[0] : '💡 Mở gợi ý siêu cấp'}
+                                    style={{ padding: '10px 20px', borderRadius: 20, border: '1px solid rgba(245,158,11,0.4)', background: 'rgba(245,158,11,0.1)', color: '#b45309', fontSize: 16, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, transition: 'all .2s' }}>
+                                    <Lightbulb size={18} /> 💡 Mở gợi ý siêu cấp
                                 </button>
+                                {showHint && (
+                                    <div style={{ padding: '16px 24px', borderRadius: 16, background: '#fffbeb', border: '2px solid #fde68a', color: '#b45309', fontSize: 18, fontWeight: 600, maxWidth: '80%', textAlign: 'center', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' }}>
+                                        🌟 {currentProblem.hints[0]}
+                                    </div>
+                                )}
                             </div>
                         )}
 

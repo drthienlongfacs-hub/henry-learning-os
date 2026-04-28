@@ -51,7 +51,7 @@ export function genAddSub10(): MathProblem {
         question: `${a} ${op} ${b} = ?`,
         correctAnswer: String(ans),
         options: makeOptions(ans, 3),
-        illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Addition.svg/512px-Addition.svg.png',
+        illustration: '/images/core/addition.png',
         explanation: `${a} ${op} ${b} = ${ans}`,
         hints: [isAdd ? 'Đếm thêm từ số lớn' : 'Đếm lùi từ số đầu', `Đáp số: ${ans}`],
     };
@@ -69,7 +69,7 @@ export function genCount20(): MathProblem {
         type: 'comparison', topic: 'Số đến 20', topicKey: 'count_20',
         question: t.q, correctAnswer: String(t.a),
         options: makeOptions(t.a, 3),
-        illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/100_Apples_%284564882193%29.jpg/512px-100_Apples_%284564882193%29.jpg',
+        illustration: '/images/core/apples_100.jpg',
         explanation: t.e, hints: ['Dùng ngón tay đếm', `Đáp số: ${t.a}`],
     };
 }
@@ -93,7 +93,7 @@ export function genShapesG1(): MathProblem {
         type: 'geometry', topic: 'Hình học cơ bản', topicKey: 'shapes_g1',
         question: t.q, correctAnswer: t.a,
         options: opts,
-        illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Shapes-basic.svg/512px-Shapes-basic.svg.png',
+        illustration: '/images/core/shapes_g1.png',
         explanation: t.e, hints: ['Đếm số cạnh', `Đáp số: ${t.a}`],
     };
 }
@@ -107,7 +107,7 @@ export function genCompareG1(): MathProblem {
         question: `Điền dấu (>, <, =): ${a} ___ ${b}`,
         correctAnswer: sign,
         options: ['>', '<', '='],
-        illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Greater_than_less_than_equals_signs.png/512px-Greater_than_less_than_equals_signs.png',
+        illustration: '/images/core/compare.png',
         explanation: `${a} ${sign} ${b} vì ${a > b ? `${a} lớn hơn ${b}` : a < b ? `${a} nhỏ hơn ${b}` : 'hai số bằng nhau'}.`,
         hints: ['Số nào xa 0 hơn thì lớn hơn', `Đáp số: ${sign}`],
     };
@@ -130,7 +130,7 @@ export function genAddSubCarry(): MathProblem {
         topicKey: 'add_sub_carry',
         question: `${a} ${op} ${b} = ?`, correctAnswer: String(ans),
         options: makeOptions(ans, 10),
-        illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Column_addition.svg/512px-Column_addition.svg.png',
+        illustration: '/images/core/column_addition.png',
         explanation: `Đặt tính: ${a} ${op} ${b} = ${ans}.${hasCarry ? (isAdd ? ' Nhớ 1 sang hàng chục.' : ' Mượn 1 từ hàng chục.') : ''}`,
         hints: ['Đặt tính dọc, tính từ hàng đơn vị', hasCarry ? 'Chú ý nhớ/mượn!' : 'Phép tính đơn giản', `Đáp số: ${ans}`],
     };
@@ -152,7 +152,7 @@ export function genClock(): MathProblem {
         type: 'measurement', topic: 'Xem đồng hồ', topicKey: 'clock',
         question: t.q, correctAnswer: t.a,
         options: t.q.includes('số') ? [t.a, `${hour}:${(mins + 15) % 60 === 0 ? '00' : mins + 15}`, `${(hour % 12) + 1}:${mins === 0 ? '00' : mins}`] : [t.a, `${hour + 1} giờ đúng`, '12 giờ đúng'],
-        illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Clock.svg/512px-Clock.svg.png',
+        illustration: '/images/core/clock.png',
         explanation: t.e, hints: ['Kim ngắn = giờ, kim dài = phút', `Đáp số: ${t.a}`],
     };
 }
@@ -171,7 +171,7 @@ export function genMeasureCm(): MathProblem {
         type: 'measurement', topic: 'Đo độ dài (cm, mm)', topicKey: 'measure_cm',
         question: t.q, correctAnswer: String(t.a),
         options: makeOptions(t.a, 10),
-        illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Wooden_ruler.jpg/512px-Wooden_ruler.jpg',
+        illustration: '/images/core/wooden_ruler.jpg',
         explanation: t.e, hints: ['1 cm = 10 mm', `Đáp số: ${t.a}`],
     };
 }
@@ -190,7 +190,7 @@ export function genWordProbG2(): MathProblem {
         type: 'word_problem', topic: 'Toán đố lớp 2', topicKey: 'word_g2',
         question: c.q, correctAnswer: String(c.a),
         options: makeOptions(c.a, 10),
-        illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Girl_thinking_clip_art.svg/512px-Girl_thinking_clip_art.svg.png',
+        illustration: '/images/core/girl_thinking.png',
         explanation: c.e, hints: ['Tìm từ khóa: "thêm" = cộng, "bớt/nghỉ" = trừ', `Đáp số: ${c.a}`],
     };
 }
@@ -209,7 +209,7 @@ export function genMultDiv(): MathProblem {
             type: 'arithmetic', topic: 'Phép nhân', topicKey: 'mult_div',
             question: `${a} × ${b} = ?`, correctAnswer: String(ans),
             options: makeOptions(ans, 10),
-            illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Multiplication_sign.svg/512px-Multiplication_sign.svg.png',
+            illustration: '/images/core/multiplication.png',
             explanation: `${a} × ${b} = ${ans} (${a} nhóm, mỗi nhóm ${b}).`,
             hints: [`Đếm ${a} lần ${b}`, `Bảng nhân ${a}`, `Đáp số: ${ans}`],
         };
@@ -221,7 +221,7 @@ export function genMultDiv(): MathProblem {
             type: 'arithmetic', topic: 'Phép chia', topicKey: 'mult_div',
             question: `${a} ÷ ${b} = ?`, correctAnswer: String(ans),
             options: makeOptions(ans, 5),
-            illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Division_sign.svg/512px-Division_sign.svg.png',
+            illustration: '/images/core/division.png',
             explanation: `${a} ÷ ${b} = ${ans} (chia ${a} thành ${b} nhóm bằng nhau).`,
             hints: ['Phép chia ngược lại nhân', `${b} × ? = ${a}`, `Đáp số: ${ans}`],
         };
@@ -240,7 +240,7 @@ export function genPerimeter(): MathProblem {
         type: 'geometry', topic: 'Chu vi', topicKey: 'perimeter',
         question: t.q, correctAnswer: String(t.a),
         options: makeOptions(t.a, 10),
-        illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Triangle.svg/512px-Triangle.svg.png',
+        illustration: '/images/core/triangle.png',
         explanation: t.e, hints: ['Chu vi = tổng tất cả các cạnh', `Đáp số: ${t.a}`],
     };
 }
@@ -256,7 +256,7 @@ export function genPatterns(): MathProblem {
         type: 'pattern', topic: 'Quy luật dãy số', topicKey: 'patterns',
         question: t.q, correctAnswer: String(t.a),
         options: makeOptions(t.a, 5),
-        illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Fibonacci_spiral_34.svg/512px-Fibonacci_spiral_34.svg.png',
+        illustration: '/images/core/fibonacci.png',
         explanation: t.e, hints: ['Tìm sự thay đổi giữa 2 số liên tiếp', `Đáp số: ${t.a}`],
     };
 }
@@ -275,7 +275,7 @@ export function genWordProbG3(): MathProblem {
         type: 'word_problem', topic: 'Toán đố lớp 3', topicKey: 'word_g3',
         question: c.q, correctAnswer: String(c.a),
         options: makeOptions(c.a, 10),
-        illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Girl_thinking_clip_art.svg/512px-Girl_thinking_clip_art.svg.png',
+        illustration: '/images/core/girl_thinking.png',
         explanation: c.e, hints: ['Xác định phép tính phù hợp', `Đáp số: ${c.a}`],
     };
 }
@@ -296,7 +296,7 @@ export function genFractions(): MathProblem {
         type: 'fraction', topic: 'Phân số', topicKey: 'fractions',
         question: t.q, correctAnswer: t.a,
         options: t.q.includes('So sánh') ? shuffle(['>', '<', '=']) : shuffle([t.a, t.a.replace(/\d+$/, '3'), t.a.replace(/^\d+/, '1')]),
-        illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Fraction_1_4.svg/512px-Fraction_1_4.svg.png',
+        illustration: '/images/core/fraction_1_4.png',
         explanation: t.e, hints: ['Cùng mẫu → cộng/trừ tử số', `Đáp số: ${t.a}`],
     };
 }
@@ -312,7 +312,7 @@ export function genArea(): MathProblem {
         type: 'geometry', topic: 'Diện tích', topicKey: 'area',
         question: t.q, correctAnswer: `${t.a} ${t.u}`,
         options: shuffle([`${t.a} ${t.u}`, `${t.a + rand(1, 10)} ${t.u}`, `${Math.max(1, t.a - rand(1, 5))} ${t.u}`, `${t.a * 2} ${t.u}`]),
-        illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Square.svg/512px-Square.svg.png',
+        illustration: '/images/core/square.png',
         explanation: t.e, hints: ['S hình vuông = cạnh²', 'S HCN = dài × rộng', `Đáp số: ${t.a} ${t.u}`],
     };
 }
@@ -329,7 +329,7 @@ export function genLargeNumbers(): MathProblem {
         type: 'arithmetic', topic: 'Số lớn (đến 100.000)', topicKey: 'large_numbers',
         question: t.q, correctAnswer: t.a,
         options: t.q.includes('So sánh') ? ['>', '<', '='] : shuffle([t.a, String(parseFloat(t.a) + rand(1, 9)), String(Math.abs(parseFloat(t.a) - rand(1, 5)))]),
-        illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/White_10_and_20_sided_dice.jpg/512px-White_10_and_20_sided_dice.jpg',
+        illustration: '/images/core/dice_10_20.jpg',
         explanation: t.e, hints: ['Nhớ thứ tự hàng: đơn vị, chục, trăm, nghìn, chục nghìn', `Đáp số: ${t.a}`],
     };
 }
@@ -346,7 +346,7 @@ export function genMass(): MathProblem {
         type: 'measurement', topic: 'Khối lượng & Thể tích', topicKey: 'mass',
         question: t.q, correctAnswer: String(t.a),
         options: makeOptions(t.a, 500),
-        illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Weight.jpg/512px-Weight.jpg',
+        illustration: '/images/core/weight.jpg',
         explanation: t.e, hints: ['1 kg = 1000 g', '1 lít = 1000 ml', `Đáp số: ${t.a}`],
     };
 }
@@ -367,7 +367,7 @@ export function genDecimals(): MathProblem {
         type: 'arithmetic', topic: 'Số thập phân', topicKey: 'decimals',
         question: t.q, correctAnswer: t.a,
         options: shuffle([t.a, String(+(parseFloat(t.a) + 0.1).toFixed(1)), String(+(parseFloat(t.a) - 0.1).toFixed(1)), String(+(parseFloat(t.a) + 0.5).toFixed(1))]),
-        illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Number_line_with_decimals.png/512px-Number_line_with_decimals.png',
+        illustration: '/images/core/number_line.png',
         explanation: t.e, hints: ['Thẳng hàng dấu phẩy khi cộng/trừ', `Đáp số: ${t.a}`],
     };
 }
@@ -383,7 +383,7 @@ export function genPercent(): MathProblem {
         type: 'arithmetic', topic: 'Phần trăm', topicKey: 'percent',
         question: t.q, correctAnswer: String(t.a),
         options: makeOptions(t.a, 10),
-        illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Percent_18e.svg/512px-Percent_18e.svg.png',
+        illustration: '/images/core/percent.png',
         explanation: t.e, hints: ['% = phần trăm = /100', `Đáp số: ${t.a}`],
     };
 }
@@ -398,7 +398,7 @@ export function genRatio(): MathProblem {
         question: `Chia ${total} viên kẹo theo tỉ lệ ${a}:${b}. Phần nhiều được bao nhiêu viên?`,
         correctAnswer: String(Math.max(partA, partB)),
         options: makeOptions(Math.max(partA, partB), 5),
-        illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Ratio_in_fraction_%281%29.jpg/512px-Ratio_in_fraction_%281%29.jpg',
+        illustration: '/images/core/ratio.jpg',
         explanation: `Tổng tỉ = ${a + b}. Phần nhiều = ${total} × ${Math.max(a, b)}/${a + b} = ${Math.max(partA, partB)}.`,
         hints: ['Bước 1: tổng phần tỉ lệ', 'Bước 2: chia tổng cho tổng tỉ', `Đáp số: ${Math.max(partA, partB)}`],
     };
@@ -419,7 +419,7 @@ export function genCharts(): MathProblem {
         type: 'data', topic: 'Biểu đồ & Thống kê', topicKey: 'charts',
         question: t.q, correctAnswer: t.a,
         options: t.q.includes('Môn') ? shuffle([...subjects]).slice(0, 4) : makeOptions(Number(t.a), 3),
-        illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Bar_chart_example.svg/512px-Bar_chart_example.svg.png',
+        illustration: '/images/core/bar_chart.png',
         explanation: t.e, hints: ['Đọc kỹ dữ liệu', `Đáp số: ${t.a}`],
     };
 }
