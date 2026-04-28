@@ -146,6 +146,7 @@ export function genEcosystem(): ScienceProblem {
         type: 'ecosystem', topic: 'Hệ sinh thái & Môi trường', topicKey: 'ecosystem',
         question: item.q, correctAnswer: item.a, options: item.opts,
         explanation: item.e, hints: ['Nghĩ về mối quan hệ trong tự nhiên', `Đáp án: ${item.a}`],
+        illustration: item.illustration,
     };
 }
 

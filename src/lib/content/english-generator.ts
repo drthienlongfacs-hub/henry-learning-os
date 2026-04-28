@@ -31,62 +31,65 @@ const shuffle = <T>(arr: T[]): T[] => {
 
 const VOCAB_BANKS = [
     {
-        theme: 'Family', pairs: [
+        theme: 'Family', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Family_portrait.jpg?width=800', pairs: [
             { en: 'mother', vi: 'mẹ' }, { en: 'father', vi: 'bố' }, { en: 'brother', vi: 'anh/em trai' },
             { en: 'sister', vi: 'chị/em gái' }, { en: 'grandmother', vi: 'bà' }, { en: 'grandfather', vi: 'ông' },
             { en: 'uncle', vi: 'chú/cậu' }, { en: 'aunt', vi: 'cô/dì' }, { en: 'cousin', vi: 'anh chị em họ' },
         ]
     },
     {
-        theme: 'School', pairs: [
+        theme: 'School', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Classroom_in_Vietnam.jpg?width=800', pairs: [
             { en: 'teacher', vi: 'giáo viên' }, { en: 'student', vi: 'học sinh' }, { en: 'classroom', vi: 'phòng học' },
             { en: 'pencil', vi: 'bút chì' }, { en: 'book', vi: 'sách' }, { en: 'ruler', vi: 'thước' },
             { en: 'eraser', vi: 'cục tẩy' }, { en: 'notebook', vi: 'vở' }, { en: 'backpack', vi: 'ba lô' },
         ]
     },
     {
-        theme: 'Colors & Shapes', pairs: [
+        theme: 'Colors & Shapes', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Colouring_pencils.jpg?width=800', pairs: [
             { en: 'red', vi: 'đỏ' }, { en: 'blue', vi: 'xanh dương' }, { en: 'green', vi: 'xanh lá' },
             { en: 'yellow', vi: 'vàng' }, { en: 'purple', vi: 'tím' }, { en: 'orange', vi: 'cam' },
             { en: 'circle', vi: 'hình tròn' }, { en: 'square', vi: 'hình vuông' }, { en: 'triangle', vi: 'hình tam giác' },
         ]
     },
     {
-        theme: 'Animals', pairs: [
+        theme: 'Animals', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Collage_of_Nine_Dogs.jpg?width=800', pairs: [
             { en: 'dog', vi: 'chó', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Collage_of_Nine_Dogs.jpg?width=800' },
             { en: 'cat', vi: 'mèo', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Cat_poster_1.jpg?width=800' },
-            { en: 'bird', vi: 'chim' },
-            { en: 'fish', vi: 'cá' },
+            { en: 'bird', vi: 'chim', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/House_Sparrow_mar08.jpg?width=800' },
+            { en: 'fish', vi: 'cá', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Clown_fish_in_the_Maldives.jpg?width=800' },
             { en: 'elephant', vi: 'voi', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/African_Bush_Elephant.jpg?width=800' },
-            { en: 'monkey', vi: 'khỉ' },
+            { en: 'monkey', vi: 'khỉ', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Macaca_fuscata_fuscata1.jpg?width=800' },
             { en: 'rabbit', vi: 'thỏ', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Oryctolagus_cuniculus_Tasmania_2.jpg?width=800' },
             { en: 'tiger', vi: 'hổ', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Walking_tiger_female.jpg?width=800' },
-            { en: 'dolphin', vi: 'cá heo' },
+            { en: 'dolphin', vi: 'cá heo', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Dolphin_Pod.jpg?width=800' },
         ]
     },
     {
-        theme: 'Food & Drink', pairs: [
-            { en: 'rice', vi: 'cơm/gạo' }, { en: 'milk', vi: 'sữa' }, { en: 'bread', vi: 'bánh mì' },
-            { en: 'water', vi: 'nước' }, { en: 'apple', vi: 'táo' }, { en: 'chicken', vi: 'gà' },
+        theme: 'Food & Drink', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Vietnamese_Pho.jpg?width=800', pairs: [
+            { en: 'rice', vi: 'cơm/gạo', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Bowl_of_Rice.jpg?width=800' },
+            { en: 'milk', vi: 'sữa', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Glass_of_Milk_%2833657535532%29.jpg?width=800' },
+            { en: 'bread', vi: 'bánh mì', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Banh_mi_Vietnam.jpg?width=800' },
+            { en: 'water', vi: 'nước' }, { en: 'apple', vi: 'táo', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Red_Apple.jpg?width=800' },
+            { en: 'chicken', vi: 'gà' },
             { en: 'egg', vi: 'trứng' }, { en: 'juice', vi: 'nước ép' }, { en: 'noodle', vi: 'mì/phở' },
         ]
     },
     {
-        theme: 'Body Parts', pairs: [
+        theme: 'Body Parts', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Human_body_features.png?width=800', pairs: [
             { en: 'head', vi: 'đầu' }, { en: 'hand', vi: 'bàn tay' }, { en: 'eye', vi: 'mắt' },
             { en: 'ear', vi: 'tai' }, { en: 'nose', vi: 'mũi' }, { en: 'mouth', vi: 'miệng' },
             { en: 'leg', vi: 'chân' }, { en: 'arm', vi: 'cánh tay' }, { en: 'finger', vi: 'ngón tay' },
         ]
     },
     {
-        theme: 'Weather & Nature', pairs: [
+        theme: 'Weather & Nature', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Thunderstorm_in_Ansan.jpg?width=800', pairs: [
             { en: 'sunny', vi: 'nắng' }, { en: 'rainy', vi: 'mưa' }, { en: 'cloudy', vi: 'nhiều mây' },
             { en: 'windy', vi: 'có gió' }, { en: 'hot', vi: 'nóng' }, { en: 'cold', vi: 'lạnh' },
             { en: 'river', vi: 'sông' }, { en: 'mountain', vi: 'núi' }, { en: 'forest', vi: 'rừng' },
         ]
     },
     {
-        theme: 'Daily Activities', pairs: [
+        theme: 'Daily Activities', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Children_reading_together.jpg?width=800', pairs: [
             { en: 'wake up', vi: 'thức dậy' }, { en: 'brush teeth', vi: 'đánh răng' }, { en: 'eat breakfast', vi: 'ăn sáng' },
             { en: 'go to school', vi: 'đi học' }, { en: 'do homework', vi: 'làm bài tập' }, { en: 'play', vi: 'chơi' },
             { en: 'read', vi: 'đọc' }, { en: 'sleep', vi: 'ngủ' }, { en: 'take a shower', vi: 'tắm' },
@@ -110,7 +113,7 @@ export function genVocabEn(): EnglishProblem {
         options: opts,
         explanation: `${pair.en} = ${pair.vi} (Theme: ${bank.theme}).`,
         hints: [`Topic: ${bank.theme}`, `Answer: ${direction ? pair.vi : pair.en}`],
-        illustration: (pair as any).img,
+        illustration: (pair as any).img || (bank as any).img,
     };
 }
 
