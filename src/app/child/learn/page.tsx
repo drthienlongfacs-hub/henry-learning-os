@@ -223,10 +223,20 @@ export default function LearnPage() {
                         {currentProblem.illustration && (
                             <div style={{ marginBottom: 20, display: 'flex', justifyContent: 'center' }}>
                                 {typeof currentProblem.illustration === 'string' ? (
-                                    <img src={currentProblem.illustration} alt="Illustration" style={{ maxHeight: 180, borderRadius: 12, border: '1px solid #e2e8f0', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }} />
+                                    <img src={currentProblem.illustration} alt="Illustration"
+                                        onError={(e) => {
+                                            const target = e.currentTarget;
+                                            target.style.display = 'none';
+                                            const fallback = target.nextElementSibling as HTMLElement;
+                                            if (fallback) fallback.style.display = 'flex';
+                                        }}
+                                        style={{ maxHeight: 180, maxWidth: '100%', borderRadius: 12, border: '1px solid #e2e8f0', boxShadow: '0 2px 10px rgba(0,0,0,0.05)', objectFit: 'cover' }} />
                                 ) : (
                                     currentProblem.illustration
                                 )}
+                                <div style={{ display: 'none', width: 180, height: 120, borderRadius: 12, background: 'linear-gradient(135deg, #e0e7ff, #fce7f3)', alignItems: 'center', justifyContent: 'center', fontSize: 48 }}>
+                                    {subject === 'hisgeo' ? '🏛️' : subject === 'science' ? '🔬' : subject === 'english' ? '📚' : subject === 'computing' ? '💻' : '📖'}
+                                </div>
                             </div>
                         )}
 

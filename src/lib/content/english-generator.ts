@@ -31,65 +31,65 @@ const shuffle = <T>(arr: T[]): T[] => {
 
 const VOCAB_BANKS = [
     {
-        theme: 'Family', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Family_portrait.jpg?width=800', pairs: [
+        theme: 'Family', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Huskiesatrest.jpg/400px-Huskiesatrest.jpg', pairs: [
             { en: 'mother', vi: 'mẹ' }, { en: 'father', vi: 'bố' }, { en: 'brother', vi: 'anh/em trai' },
             { en: 'sister', vi: 'chị/em gái' }, { en: 'grandmother', vi: 'bà' }, { en: 'grandfather', vi: 'ông' },
             { en: 'uncle', vi: 'chú/cậu' }, { en: 'aunt', vi: 'cô/dì' }, { en: 'cousin', vi: 'anh chị em họ' },
         ]
     },
     {
-        theme: 'School', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Classroom_in_Vietnam.jpg?width=800', pairs: [
+        theme: 'School', pairs: [
             { en: 'teacher', vi: 'giáo viên' }, { en: 'student', vi: 'học sinh' }, { en: 'classroom', vi: 'phòng học' },
             { en: 'pencil', vi: 'bút chì' }, { en: 'book', vi: 'sách' }, { en: 'ruler', vi: 'thước' },
             { en: 'eraser', vi: 'cục tẩy' }, { en: 'notebook', vi: 'vở' }, { en: 'backpack', vi: 'ba lô' },
         ]
     },
     {
-        theme: 'Colors & Shapes', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Colouring_pencils.jpg?width=800', pairs: [
+        theme: 'Colors & Shapes', pairs: [
             { en: 'red', vi: 'đỏ' }, { en: 'blue', vi: 'xanh dương' }, { en: 'green', vi: 'xanh lá' },
             { en: 'yellow', vi: 'vàng' }, { en: 'purple', vi: 'tím' }, { en: 'orange', vi: 'cam' },
             { en: 'circle', vi: 'hình tròn' }, { en: 'square', vi: 'hình vuông' }, { en: 'triangle', vi: 'hình tam giác' },
         ]
     },
     {
-        theme: 'Animals', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Collage_of_Nine_Dogs.jpg?width=800', pairs: [
-            { en: 'dog', vi: 'chó', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Collage_of_Nine_Dogs.jpg?width=800' },
-            { en: 'cat', vi: 'mèo', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Cat_poster_1.jpg?width=800' },
-            { en: 'bird', vi: 'chim', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/House_Sparrow_mar08.jpg?width=800' },
-            { en: 'fish', vi: 'cá', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Clown_fish_in_the_Maldives.jpg?width=800' },
-            { en: 'elephant', vi: 'voi', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/African_Bush_Elephant.jpg?width=800' },
-            { en: 'monkey', vi: 'khỉ', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Macaca_fuscata_fuscata1.jpg?width=800' },
-            { en: 'rabbit', vi: 'thỏ', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Oryctolagus_cuniculus_Tasmania_2.jpg?width=800' },
-            { en: 'tiger', vi: 'hổ', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Walking_tiger_female.jpg?width=800' },
-            { en: 'dolphin', vi: 'cá heo', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Dolphin_Pod.jpg?width=800' },
+        theme: 'Animals', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Huskiesatrest.jpg/400px-Huskiesatrest.jpg', pairs: [
+            { en: 'dog', vi: 'chó', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Huskiesatrest.jpg/400px-Huskiesatrest.jpg' },
+            { en: 'cat', vi: 'mèo', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/400px-Cat_August_2010-4.jpg' },
+            { en: 'bird', vi: 'chim', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Passer_domesticus_male_%2815%29.jpg/400px-Passer_domesticus_male_%2815%29.jpg' },
+            { en: 'fish', vi: 'cá', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Amphiprion_ocellaris_%28Clown_anemonefish%29_by_Nick_Hobgood.jpg/400px-Amphiprion_ocellaris_%28Clown_anemonefish%29_by_Nick_Hobgood.jpg' },
+            { en: 'elephant', vi: 'voi', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/African_Elephant_%28Loxodonta_africana%29_male_%2817289351322%29.jpg/400px-African_Elephant_%28Loxodonta_africana%29_male_%2817289351322%29.jpg' },
+            { en: 'monkey', vi: 'khỉ', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Japanese_Snow_Monkey_%28Macaque%29_Mother_Grooms_Her_Young.jpg/400px-Japanese_Snow_Monkey_%28Macaque%29_Mother_Grooms_Her_Young.jpg' },
+            { en: 'rabbit', vi: 'thỏ', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Oryctolagus_cuniculus_Rcdo.jpg/400px-Oryctolagus_cuniculus_Rcdo.jpg' },
+            { en: 'tiger', vi: 'hổ', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Bengal_tiger_%28Panthera_tigris_tigris%29_female_3_crop.jpg/400px-Bengal_tiger_%28Panthera_tigris_tigris%29_female_3_crop.jpg' },
+            { en: 'dolphin', vi: 'cá heo', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Tursiops_truncatus_01.jpg/400px-Tursiops_truncatus_01.jpg' },
         ]
     },
     {
-        theme: 'Food & Drink', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Vietnamese_Pho.jpg?width=800', pairs: [
-            { en: 'rice', vi: 'cơm/gạo', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Bowl_of_Rice.jpg?width=800' },
-            { en: 'milk', vi: 'sữa', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Glass_of_Milk_%2833657535532%29.jpg?width=800' },
-            { en: 'bread', vi: 'bánh mì', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Banh_mi_Vietnam.jpg?width=800' },
-            { en: 'water', vi: 'nước' }, { en: 'apple', vi: 'táo', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Red_Apple.jpg?width=800' },
+        theme: 'Food & Drink', pairs: [
+            { en: 'rice', vi: 'cơm/gạo', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/20201102.Hengnan.Hybrid_rice_Sanyou-1.6.jpg/400px-20201102.Hengnan.Hybrid_rice_Sanyou-1.6.jpg' },
+            { en: 'milk', vi: 'sữa' },
+            { en: 'bread', vi: 'bánh mì', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Korb_mit_Br%C3%B6tchen.JPG/400px-Korb_mit_Br%C3%B6tchen.JPG' },
+            { en: 'water', vi: 'nước' }, { en: 'apple', vi: 'táo', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Pink_lady_and_cross_section.jpg/400px-Pink_lady_and_cross_section.jpg' },
             { en: 'chicken', vi: 'gà' },
             { en: 'egg', vi: 'trứng' }, { en: 'juice', vi: 'nước ép' }, { en: 'noodle', vi: 'mì/phở' },
         ]
     },
     {
-        theme: 'Body Parts', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Human_body_features.png?width=800', pairs: [
+        theme: 'Body Parts', pairs: [
             { en: 'head', vi: 'đầu' }, { en: 'hand', vi: 'bàn tay' }, { en: 'eye', vi: 'mắt' },
             { en: 'ear', vi: 'tai' }, { en: 'nose', vi: 'mũi' }, { en: 'mouth', vi: 'miệng' },
             { en: 'leg', vi: 'chân' }, { en: 'arm', vi: 'cánh tay' }, { en: 'finger', vi: 'ngón tay' },
         ]
     },
     {
-        theme: 'Weather & Nature', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Thunderstorm_in_Ansan.jpg?width=800', pairs: [
+        theme: 'Weather & Nature', pairs: [
             { en: 'sunny', vi: 'nắng' }, { en: 'rainy', vi: 'mưa' }, { en: 'cloudy', vi: 'nhiều mây' },
             { en: 'windy', vi: 'có gió' }, { en: 'hot', vi: 'nóng' }, { en: 'cold', vi: 'lạnh' },
             { en: 'river', vi: 'sông' }, { en: 'mountain', vi: 'núi' }, { en: 'forest', vi: 'rừng' },
         ]
     },
     {
-        theme: 'Daily Activities', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Children_reading_together.jpg?width=800', pairs: [
+        theme: 'Daily Activities', pairs: [
             { en: 'wake up', vi: 'thức dậy' }, { en: 'brush teeth', vi: 'đánh răng' }, { en: 'eat breakfast', vi: 'ăn sáng' },
             { en: 'go to school', vi: 'đi học' }, { en: 'do homework', vi: 'làm bài tập' }, { en: 'play', vi: 'chơi' },
             { en: 'read', vi: 'đọc' }, { en: 'sleep', vi: 'ngủ' }, { en: 'take a shower', vi: 'tắm' },

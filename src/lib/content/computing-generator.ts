@@ -30,15 +30,15 @@ const shuffle = <T>(arr: T[]): T[] => {
 // ══════════════════════════════════════════════
 
 const HARDWARE_QS = [
-    { q: 'Bộ phận nào hiển thị hình ảnh từ máy tính?', a: 'Màn hình', opts: ['Màn hình', 'Bàn phím', 'Chuột', 'Loa'], e: 'Màn hình (monitor) dùng để hiển thị hình ảnh, chữ viết.', illustration: 'https://commons.wikimedia.org/wiki/Special:FilePath/Computer_monitor.jpg?width=800' },
-    { q: 'Thiết bị nào dùng để điều khiển con trỏ và nhấp chọn trên màn hình?', a: 'Chuột', opts: ['Chuột', 'Bàn phím', 'Loa', 'Máy in'], e: 'Chuột máy tính giúp ta di chuyển con trỏ, nhấp (click) để chọn.', illustration: 'https://commons.wikimedia.org/wiki/Special:FilePath/Computer_mouse.jpg?width=800' },
-    { q: 'Bộ phận nào dùng để gõ chữ và số vào máy tính?', a: 'Bàn phím', opts: ['Bàn phím', 'Chuột', 'Màn hình', 'Microphone'], e: 'Bàn phím (keyboard) có các phím chữ, số để nhập văn bản.', illustration: 'https://commons.wikimedia.org/wiki/Special:FilePath/Computer_keyboard.jpg?width=800' },
+    { q: 'Bộ phận nào hiển thị hình ảnh từ máy tính?', a: 'Màn hình', opts: ['Màn hình', 'Bàn phím', 'Chuột', 'Loa'], e: 'Màn hình (monitor) dùng để hiển thị hình ảnh, chữ viết.' },
+    { q: 'Thiết bị nào dùng để điều khiển con trỏ và nhấp chọn trên màn hình?', a: 'Chuột', opts: ['Chuột', 'Bàn phím', 'Loa', 'Máy in'], e: 'Chuột máy tính giúp ta di chuyển con trỏ, nhấp (click) để chọn.' },
+    { q: 'Bộ phận nào dùng để gõ chữ và số vào máy tính?', a: 'Bàn phím', opts: ['Bàn phím', 'Chuột', 'Màn hình', 'Microphone'], e: 'Bàn phím (keyboard) có các phím chữ, số để nhập văn bản.' },
     { q: 'Khi gõ xong một đoạn văn, phím nào giúp xuống dòng?', a: 'Phím Enter', opts: ['Phím Enter', 'Phím Space', 'Phím Shift', 'Phím Ctrl'], e: 'Phím Enter có chức năng xuống dòng mới hoặc xác nhận lệnh.' },
     { q: 'Phím nào dùng để tạo khoảng trắng giữa các chữ?', a: 'Phím Space (dấu cách)', opts: ['Phím Space (dấu cách)', 'Phím Enter', 'Phím Tab', 'Phím Shift'], e: 'Phím dài nhất trên bàn phím là phím Space (dấu cách), để tạo khoảng trống.' },
     { q: 'Đâu không phải là máy tính?', a: 'Tủ lạnh', opts: ['Tủ lạnh', 'Điện thoại thông minh', 'Máy tính bảng', 'Máy tính xách tay (Laptop)'], e: 'Điện thoại thông minh và máy tính bảng cũng là những dạng máy tính thu nhỏ.' },
-    { q: 'Thiết bị nào giúp in tài liệu từ máy tính ra giấy?', a: 'Máy in (Printer)', opts: ['Máy in (Printer)', 'Loa', 'Webcam', 'Chuột'], e: 'Máy in nhận dữ liệu từ máy tính và in ra giấy (văn bản, hình ảnh).', illustration: 'https://commons.wikimedia.org/wiki/Special:FilePath/Printer.jpg?width=800' },
+    { q: 'Thiết bị nào giúp in tài liệu từ máy tính ra giấy?', a: 'Máy in (Printer)', opts: ['Máy in (Printer)', 'Loa', 'Webcam', 'Chuột'], e: 'Máy in nhận dữ liệu từ máy tính và in ra giấy (văn bản, hình ảnh).' },
     { q: '"Bộ nhớ" của máy tính giống như cái gì?', a: 'Hộc tủ đựng tài liệu', opts: ['Hộc tủ đựng tài liệu', 'Bút viết', 'Tivi', 'Cái kéo'], e: 'Bộ nhớ (ổ cứng) lưu trữ dữ liệu giống như tủ hồ sơ lưu giấy tờ.' },
-    { q: 'CPU của máy tính có vai trò gì?', a: 'Bộ não xử lý mọi lệnh', opts: ['Bộ não xử lý mọi lệnh', 'Hiển thị hình ảnh', 'Phát âm thanh', 'Kết nối mạng'], e: 'CPU (Central Processing Unit) là bộ xử lý trung tâm — bộ não điều khiển mọi thứ.', illustration: 'https://commons.wikimedia.org/wiki/Special:FilePath/Intel_CPU_Core_i7_2600K_Sandy_Bridge_top.jpg?width=800' },
+    { q: 'CPU của máy tính có vai trò gì?', a: 'Bộ não xử lý mọi lệnh', opts: ['Bộ não xử lý mọi lệnh', 'Hiển thị hình ảnh', 'Phát âm thanh', 'Kết nối mạng'], e: 'CPU (Central Processing Unit) là bộ xử lý trung tâm — bộ não điều khiển mọi thứ.', illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/NXP_PCF8577C_LCD_driver_with_I%C2%B2C_%28Colour_Corrected%29.jpg/400px-NXP_PCF8577C_LCD_driver_with_I%C2%B2C_%28Colour_Corrected%29.jpg' },
     { q: 'Khi muốn lưu bài làm trong máy tính, ta dùng lệnh gì?', a: 'Save (Lưu)', opts: ['Save (Lưu)', 'Delete (Xóa)', 'Print (In)', 'Copy (Sao chép)'], e: 'Lệnh Save (Ctrl + S) giúp lưu lại công việc để không bị mất.' },
 ];
 
@@ -49,7 +49,7 @@ export function genHardware(): ComputingProblem {
         type: 'hardware', topic: 'Phần cứng Căn bản', topicKey: 'hardware',
         question: item.q, correctAnswer: item.a, options: item.opts,
         explanation: item.e, hints: ['Hãy nhìn vào máy tính của bạn', `Đáp án: ${item.a}`],
-        illustration: item.illustration,
+        illustration: (item as any).illustration,
     };
 }
 
@@ -58,7 +58,7 @@ export function genHardware(): ComputingProblem {
 // ══════════════════════════════════════════════
 
 const SAFETY_QS = [
-    { q: 'Mật khẩu (Password) mạnh là mật khẩu như thế nào?', a: 'Dài, có chữ, số, và ký tự đặc biệt', opts: ['Dài, có chữ, số, và ký tự đặc biệt', 'Chỉ dùng số 123456', 'Dùng tên của mình', 'Dùng ngày sinh'], e: 'Mật khẩu mạnh cần khó đoán (trên 8 ký tự, có chữ hoa, chữ thường, số, ký tự đặc biệt).', illustration: 'https://commons.wikimedia.org/wiki/Special:FilePath/Password_strength.svg?width=800' },
+    { q: 'Mật khẩu (Password) mạnh là mật khẩu như thế nào?', a: 'Dài, có chữ, số, và ký tự đặc biệt', opts: ['Dài, có chữ, số, và ký tự đặc biệt', 'Chỉ dùng số 123456', 'Dùng tên của mình', 'Dùng ngày sinh'], e: 'Mật khẩu mạnh cần khó đoán (trên 8 ký tự, có chữ hoa, chữ thường, số, ký tự đặc biệt).' },
     { q: 'Nếu ai đó trên mạng xin mật khẩu của bạn, bạn nên làm gì?', a: 'Tuyệt đối không cho và báo bố mẹ', opts: ['Tuyệt đối không cho và báo bố mẹ', 'Cho họ nếu họ là bạn', 'Cho nhưng đổi ngay sau đó', 'Cho một nửa'], e: 'Không bao giờ chia sẻ mật khẩu cho bất cứ ai ngoài bố mẹ.' },
     { q: 'Khi thấy tin nhắn từ người lạ nói bạn trúng thưởng, bạn nên:', a: 'Bỏ qua và không nhấn vào link', opts: ['Bỏ qua và không nhấn vào link', 'Nhấn vào link xem thử', 'Nhắn lại để nhận quà', 'Làm theo hướng dẫn'], e: 'Đó có thể là tin nhắn lừa đảo (phishing) để ăn cắp thông tin cá nhân.' },
     { q: 'Thông tin cá nhân nào KHÔNG NÊN chia sẻ công khai trên mạng?', a: 'Địa chỉ nhà và trường học', opts: ['Địa chỉ nhà và trường học', 'Sách yêu thích', 'Món ăn yêu thích', 'Sở thích thể thao'], e: 'Địa chỉ nhà, số điện thoại, mật khẩu là những thông tin cần được giữ kín.' },
@@ -77,7 +77,7 @@ export function genCyberSafety(): ComputingProblem {
         type: 'safety', topic: 'An toàn mạng', topicKey: 'cyber_safety',
         question: item.q, correctAnswer: item.a, options: item.opts,
         explanation: item.e, hints: ['Nghĩ về cách bảo vệ bản thân trên mạng', `Đáp án: ${item.a}`],
-        illustration: item.illustration,
+        illustration: (item as any).illustration,
     };
 }
 
@@ -86,7 +86,7 @@ export function genCyberSafety(): ComputingProblem {
 // ══════════════════════════════════════════════
 
 const LOGIC_QS = [
-    { q: 'Thuật toán (Algorithm) là gì?', a: 'Một tập hợp các bước để giải quyết vấn đề', opts: ['Một tập hợp các bước để giải quyết vấn đề', 'Một bộ phận máy tính', 'Một loại vi-rút', 'Một mật khẩu'], e: 'Thuật toán giống như "công thức nấu ăn", chỉ dẫn máy tính làm gì từng bước một.', illustration: 'https://commons.wikimedia.org/wiki/Special:FilePath/Flowchart_example.svg?width=800' },
+    { q: 'Thuật toán (Algorithm) là gì?', a: 'Một tập hợp các bước để giải quyết vấn đề', opts: ['Một tập hợp các bước để giải quyết vấn đề', 'Một bộ phận máy tính', 'Một loại vi-rút', 'Một mật khẩu'], e: 'Thuật toán giống như "công thức nấu ăn", chỉ dẫn máy tính làm gì từng bước một.' },
     { q: 'Trong lập trình, lỗi sai trong code được gọi là gì?', a: 'Bug', opts: ['Bug', 'Ant', 'Spider', 'Fly'], e: 'Lỗi phần mềm được gọi là "Bug". Sửa lỗi gọi là "Debugging".' },
     { q: 'Thứ tự đúng để pha cốc nước chanh: 1.Khuấy, 2.Vắt chanh, 3.Thêm đường, 4.Thêm nước', a: '2, 3, 4, 1', opts: ['2, 3, 4, 1', '1, 2, 3, 4', '4, 3, 2, 1', '2, 4, 1, 3'], e: 'Thuật toán cần thứ tự hợp lý: Vắt chanh → Thêm đường → Thêm nước → Khuấy.' },
     { q: 'Lặp lại "Tiến 1 bước, Quay phải" 4 lần, nhân vật tạo hình gì?', a: 'Hình vuông', opts: ['Hình vuông', 'Hình tròn', 'Hình tam giác', 'Đường thẳng'], e: 'Tiến và quay phải 90° lặp 4 lần → tạo hình vuông (4 cạnh bằng nhau, 4 góc vuông).' },
@@ -94,8 +94,8 @@ const LOGIC_QS = [
     { q: 'Lệnh "IF (nếu)... THEN (thì)..." trong lập trình dùng để làm gì?', a: 'Kiểm tra điều kiện rồi quyết định', opts: ['Kiểm tra điều kiện rồi quyết định', 'Lặp lại nhiều lần', 'Lưu dữ liệu', 'Xóa chương trình'], e: 'IF...THEN: NẾU mưa THÌ mang ô. Máy tính kiểm tra điều kiện rồi hành động.' },
     { q: 'Hệ nhị phân (Binary) dùng bao nhiêu chữ số?', a: '2 (chỉ dùng 0 và 1)', opts: ['2 (chỉ dùng 0 và 1)', '10', '8', '16'], e: 'Máy tính dùng hệ nhị phân: chỉ có 0 (tắt) và 1 (bật) để xử lý mọi thông tin.' },
     { q: 'Ai được gọi là "cha đẻ" của máy tính hiện đại?', a: 'Alan Turing', opts: ['Alan Turing', 'Steve Jobs', 'Bill Gates', 'Mark Zuckerberg'], e: 'Alan Turing (1912-1954) được coi là cha đẻ khoa học máy tính với máy Turing nổi tiếng.' },
-    { q: 'Internet là gì?', a: 'Mạng lưới kết nối hàng tỷ máy tính trên thế giới', opts: ['Mạng lưới kết nối hàng tỷ máy tính trên thế giới', 'Một phần mềm', 'Một chiếc máy tính lớn', 'Một loại cáp'], e: 'Internet là hệ thống mạng toàn cầu giúp các máy tính trao đổi thông tin.', illustration: 'https://commons.wikimedia.org/wiki/Special:FilePath/Internet_map_1024.jpg?width=800' },
-    { q: 'Scratch là gì?', a: 'Ngôn ngữ lập trình dạng khối cho trẻ em', opts: ['Ngôn ngữ lập trình dạng khối cho trẻ em', 'Một trò chơi điện tử', 'Một mạng xã hội', 'Một loại virus'], e: 'Scratch (MIT) dùng các khối ghép nối để lập trình, phù hợp cho trẻ em từ 8 tuổi.', illustration: 'https://commons.wikimedia.org/wiki/Special:FilePath/Scratch_Logo.svg?width=800' },
+    { q: 'Internet là gì?', a: 'Mạng lưới kết nối hàng tỷ máy tính trên thế giới', opts: ['Mạng lưới kết nối hàng tỷ máy tính trên thế giới', 'Một phần mềm', 'Một chiếc máy tính lớn', 'Một loại cáp'], e: 'Internet là hệ thống mạng toàn cầu giúp các máy tính trao đổi thông tin.', illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Internet_map_1024_-_transparent%2C_inverted.png/400px-Internet_map_1024_-_transparent%2C_inverted.png' },
+    { q: 'Scratch là gì?', a: 'Ngôn ngữ lập trình dạng khối cho trẻ em', opts: ['Ngôn ngữ lập trình dạng khối cho trẻ em', 'Một trò chơi điện tử', 'Một mạng xã hội', 'Một loại virus'], e: 'Scratch (MIT) dùng các khối ghép nối để lập trình, phù hợp cho trẻ em từ 8 tuổi.', illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Scratch_editor_screenshot.png/400px-Scratch_editor_screenshot.png' },
 ];
 
 export function genLogic(): ComputingProblem {
@@ -105,7 +105,7 @@ export function genLogic(): ComputingProblem {
         type: 'logic', topic: 'Tư duy máy tính', topicKey: 'comp_logic',
         question: item.q, correctAnswer: item.a, options: item.opts,
         explanation: item.e, hints: ['Hãy tưởng tượng bạn đang đưa ra chỉ dẫn', `Đáp án: ${item.a}`],
-        illustration: item.illustration,
+        illustration: (item as any).illustration,
     };
 }
 
