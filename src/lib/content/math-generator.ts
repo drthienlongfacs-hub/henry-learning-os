@@ -113,6 +113,181 @@ export function genCompareG1(): MathProblem {
     };
 }
 
+// ── NEW G1: Number Bonds (Tách–ghép số) — CT 2018 + Singapore Math ──
+export function genNumberBonds(): MathProblem {
+    const total = rand(5, 10);
+    const partA = rand(1, total - 1);
+    const partB = total - partA;
+    const templates = [
+        { q: `Tách số: ${total} = ${partA} + ___`, a: partB, e: `${total} = ${partA} + ${partB}. Vì ${partA} + ${partB} = ${total}.` },
+        { q: `Ghép số: ${partA} và ___ gộp lại thành ${total}`, a: partB, e: `${partA} + ${partB} = ${total}.` },
+        { q: `Có ${total} quả táo, chia 2 rổ: rổ 1 có ${partA} quả. Rổ 2 có ___ quả?`, a: partB, e: `${total} - ${partA} = ${partB} quả.` },
+    ];
+    const t = templates[rand(0, templates.length - 1)];
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'arithmetic', topic: 'Tách – ghép số (Number Bonds)', topicKey: 'number_bonds',
+        question: t.q, correctAnswer: String(t.a),
+        options: makeOptions(t.a, 3),
+        illustration: '/images/core/addition.png',
+        explanation: t.e, hints: [`${total} gồm 2 phần cộng lại`, `Đáp số: ${t.a}`],
+    };
+}
+
+// ── NEW G1: Cộng trừ trong phạm vi 20 — CT 2018, Cambridge Stage 1 ──
+export function genAddSub20(): MathProblem {
+    const isAdd = Math.random() > 0.5;
+    const a = rand(5, 18);
+    const b = isAdd ? rand(1, Math.min(20 - a, 12)) : rand(1, Math.min(a, 10));
+    const ans = isAdd ? a + b : a - b;
+    const op = isAdd ? '+' : '-';
+    const hasRegrouping = isAdd ? (a % 10 + b > 9) : (a % 10 < b);
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'arithmetic', topic: 'Cộng trừ trong 20', topicKey: 'add_sub_20',
+        question: `${a} ${op} ${b} = ?`,
+        correctAnswer: String(ans),
+        options: makeOptions(ans, 5),
+        illustration: '/images/core/addition.png',
+        explanation: `${a} ${op} ${b} = ${ans}.${hasRegrouping ? ' (Qua 10 — tách số cho dễ tính!)' : ''}`,
+        hints: [isAdd ? 'Tách để làm tròn 10, rồi cộng tiếp' : 'Tách bớt về 10, rồi trừ tiếp', `Đáp số: ${ans}`],
+    };
+}
+
+// ── NEW G1: Hình khối 3D — CT 2018 đặc trưng (sớm hơn quốc tế) ──
+export function genShapes3D(): MathProblem {
+    const solids = [
+        { name: 'hình hộp chữ nhật', faces: 6, rolls: false, desc: 'có 6 mặt phẳng, 8 đỉnh, 12 cạnh' },
+        { name: 'hình lập phương', faces: 6, rolls: false, desc: 'có 6 mặt vuông bằng nhau' },
+        { name: 'hình trụ', faces: 3, rolls: true, desc: 'có 2 mặt tròn và 1 mặt cong, lăn được' },
+        { name: 'hình cầu', faces: 0, rolls: true, desc: 'hoàn toàn tròn, lăn mọi hướng' },
+        { name: 'hình nón', faces: 2, rolls: true, desc: 'có 1 mặt tròn, 1 đỉnh nhọn' },
+    ];
+    const s = solids[rand(0, solids.length - 1)];
+    const templateType = rand(0, 2);
+    const templates = [
+        { q: `${s.name} có lăn được không?`, a: s.rolls ? 'Có' : 'Không', opts: ['Có', 'Không'], e: `${s.name} ${s.desc}. ${s.rolls ? 'Có mặt cong nên lăn được.' : 'Toàn mặt phẳng nên không lăn được.'}` },
+        { q: `Hình nào lăn được? (${solids.slice(0, 4).map(x => x.name).join(', ')})`, a: solids.filter(x => x.rolls)[rand(0, 1)].name, opts: shuffle(solids.slice(0, 4).map(x => x.name)), e: 'Hình có mặt cong (trụ, cầu, nón) lăn được. Hình hộp, lập phương không lăn được.' },
+        { q: `Hộp sữa hình gì?`, a: 'hình hộp chữ nhật', opts: shuffle(solids.map(x => x.name)).slice(0, 4), e: `Hộp sữa có 6 mặt phẳng → hình hộp chữ nhật.` },
+    ];
+    const t = templates[templateType];
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'geometry', topic: 'Khối hình 3D', topicKey: 'shapes_3d',
+        question: t.q, correctAnswer: t.a,
+        options: t.opts,
+        illustration: '/images/core/shapes_g1.png',
+        explanation: t.e, hints: ['Hình có mặt cong → lăn được', `Đáp số: ${t.a}`],
+    };
+}
+
+// ── NEW G1: Thứ tự & Vị trí (Ordinal + Spatial) — CT 2018 + IB PYP ──
+export function genOrdinalSpatial(): MathProblem {
+    const animals = ['🐶', '🐱', '🐰', '🐻', '🐸', '🦁', '🐧', '🐢'];
+    const lineup = shuffle(animals).slice(0, 5);
+    const pos = rand(0, 4);
+    const ordinals = ['thứ nhất', 'thứ hai', 'thứ ba', 'thứ tư', 'thứ năm'];
+    const ordinalNames: Record<string, string> = { '🐶': 'Chó', '🐱': 'Mèo', '🐰': 'Thỏ', '🐻': 'Gấu', '🐸': 'Ếch', '🦁': 'Sư tử', '🐧': 'Chim cánh cụt', '🐢': 'Rùa' };
+    const templates = [
+        { q: `Hàng: ${lineup.join(' ')}. Con vật đứng ${ordinals[pos]} (từ trái) là con nào?`, a: ordinalNames[lineup[pos]], opts: shuffle(lineup.map(x => ordinalNames[x])).slice(0, 4), e: `Đếm từ trái: vị trí ${ordinals[pos]} là ${lineup[pos]} (${ordinalNames[lineup[pos]]}).` },
+        { q: `Hàng: ${lineup.join(' ')}. ${ordinalNames[lineup[pos]]} ${lineup[pos]} đứng thứ mấy từ trái?`, a: ordinals[pos], opts: shuffle(ordinals).slice(0, 4), e: `${ordinalNames[lineup[pos]]} đứng ở vị trí ${ordinals[pos]} từ trái.` },
+    ];
+    const t = templates[rand(0, 1)];
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'comparison', topic: 'Thứ tự & Vị trí', topicKey: 'ordinal_spatial',
+        question: t.q, correctAnswer: t.a,
+        options: t.opts,
+        illustration: '/images/core/compare.png',
+        explanation: t.e, hints: ['Đếm lần lượt từ trái sang phải', `Đáp số: ${t.a}`],
+    };
+}
+
+// ── NEW G2: Phân tích hàng chục – đơn vị (Place Value) — CT 2018 Core ──
+export function genPlaceValue(): MathProblem {
+    const n = rand(10, 99);
+    const tens = Math.floor(n / 10);
+    const ones = n % 10;
+    const templates = [
+        { q: `Số ${n} có ___ chục ___ đơn vị. Chữ số hàng chục là?`, a: String(tens), e: `${n} = ${tens} chục ${ones} đơn vị. Chữ số hàng chục: ${tens}.` },
+        { q: `${tens} chục ${ones} đơn vị viết thành số mấy?`, a: String(n), e: `${tens} chục ${ones} đơn vị = ${n}.` },
+        { q: `Số ${n}: chữ số ${ones} ở hàng nào?`, a: 'Hàng đơn vị', opts: ['Hàng đơn vị', 'Hàng chục', 'Hàng trăm'], e: `Trong ${n}, chữ số ${ones} nằm ở hàng đơn vị.` },
+        () => { const a2 = rand(10, 99), b2 = rand(10, 99); return { q: `Sắp xếp từ bé đến lớn: ${Math.max(a2, b2)}, ${Math.min(a2, b2)}`, a: `${Math.min(a2, b2)}, ${Math.max(a2, b2)}`, e: `${Math.min(a2, b2)} < ${Math.max(a2, b2)}.` }; },
+    ];
+    const tIdx = rand(0, 2); // Use static templates mostly
+    const t = typeof templates[tIdx] === 'function' ? (templates[tIdx] as Function)() : templates[tIdx];
+    return {
+        id: genId(), gradeLevel: 2, difficulty: 2,
+        type: 'arithmetic', topic: 'Phân tích hàng chục – đơn vị', topicKey: 'place_value',
+        question: t.q, correctAnswer: String(t.a),
+        options: t.opts || makeOptions(Number(t.a) || tens, 3),
+        illustration: '/images/core/dice_10_20.jpg',
+        explanation: t.e, hints: ['Hàng chục ở bên trái, hàng đơn vị ở bên phải', `Đáp số: ${t.a}`],
+    };
+}
+
+// ── NEW G2: Số chẵn – lẻ — CT 2018 + Cambridge ──
+export function genEvenOdd(): MathProblem {
+    const n = rand(1, 50);
+    const isEven = n % 2 === 0;
+    const templates = [
+        { q: `Số ${n} là số chẵn hay số lẻ?`, a: isEven ? 'Số chẵn' : 'Số lẻ', e: `Số ${n} ${isEven ? 'chia hết cho 2 → số chẵn' : 'không chia hết cho 2 → số lẻ'}.` },
+        () => { const evens = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20].filter(() => Math.random() > 0.5).slice(0, 3); const odd = rand(0, 4) * 2 + 1; const mixed = shuffle([...evens, odd]); return { q: `Trong dãy: ${mixed.join(', ')} — số nào là số lẻ?`, a: String(odd), e: `Số lẻ: ${odd} (không chia hết cho 2).` }; },
+        { q: `Đếm tiếp dãy số chẵn: 2, 4, 6, 8, ___`, a: '10', e: 'Dãy số chẵn cách nhau 2 đơn vị: 2, 4, 6, 8, 10.' },
+    ];
+    const tIdx = rand(0, 2);
+    const t = typeof templates[tIdx] === 'function' ? (templates[tIdx] as Function)() : templates[tIdx];
+    return {
+        id: genId(), gradeLevel: 2, difficulty: 2,
+        type: 'comparison', topic: 'Số chẵn – Số lẻ', topicKey: 'even_odd',
+        question: t.q, correctAnswer: String(t.a),
+        options: t.q.includes('chẵn hay') ? ['Số chẵn', 'Số lẻ'] : makeOptions(Number(t.a) || 10, 3),
+        illustration: '/images/core/compare.png',
+        explanation: t.e, hints: ['Số chẵn: 0, 2, 4, 6, 8. Số lẻ: 1, 3, 5, 7, 9', `Đáp số: ${t.a}`],
+    };
+}
+
+// ── NEW G2: Phép nhân sơ khởi (Intro Multiplication) — CT 2018 + Singapore ──
+export function genIntroMult(): MathProblem {
+    const factor = rand(2, 5);
+    const groups = rand(2, 5);
+    const ans = factor * groups;
+    const templates = [
+        { q: `${groups} nhóm, mỗi nhóm ${factor} con chim. Có tất cả bao nhiêu con?`, e: `${groups} × ${factor} = ${ans}. (Cộng ${groups} lần ${factor})` },
+        { q: `Đếm nhảy ${factor}: ${Array.from({ length: groups - 1 }, (_, i) => factor * (i + 1)).join(', ')}, ___. Số tiếp theo?`, e: `Đếm nhảy ${factor}: cứ cộng thêm ${factor}. Số tiếp: ${ans}.` },
+        { q: `${factor} + ${factor} + ${Array(groups - 2).fill(factor).join(' + ')} = ?   (cộng ${groups} lần)`, e: `Cộng ${groups} lần số ${factor}: ${factor} × ${groups} = ${ans}.` },
+    ];
+    const t = templates[rand(0, templates.length - 1)];
+    return {
+        id: genId(), gradeLevel: 2, difficulty: 2,
+        type: 'arithmetic', topic: 'Phép nhân sơ khởi (nhóm bằng nhau)', topicKey: 'intro_mult',
+        question: t.q, correctAnswer: String(ans),
+        options: makeOptions(ans, 5),
+        illustration: '/images/core/multiplication.png',
+        explanation: t.e, hints: [`Mỗi nhóm ${factor}, đếm ${groups} nhóm`, `Đáp số: ${ans}`],
+    };
+}
+
+// ── NEW G2: Phân số sơ khởi (Intro Fractions ½ ¼) — CT 2018 + Cambridge ──
+export function genIntroFractions(): MathProblem {
+    const templates = [
+        () => { const whole = rand(2, 5) * 2; return { q: `Chia đều ${whole} cái bánh cho 2 bạn. Mỗi bạn được mấy cái?`, a: String(whole / 2), e: `${whole} ÷ 2 = ${whole / 2}. Chia đều = chia 2 phần bằng nhau.` }; },
+        { q: 'Chia hình tròn thành 2 phần bằng nhau. Mỗi phần gọi là gì?', a: 'Một nửa (1/2)', opts: ['Một nửa (1/2)', 'Một phần tư (1/4)', 'Một phần ba (1/3)', 'Hai phần (2/2)'], e: '2 phần bằng nhau → mỗi phần = 1/2 (một nửa).' },
+        { q: 'Chia hình vuông thành 4 phần bằng nhau. Mỗi phần gọi là gì?', a: 'Một phần tư (1/4)', opts: ['Một phần tư (1/4)', 'Một nửa (1/2)', 'Một phần ba (1/3)', 'Hai phần (2/4)'], e: '4 phần bằng nhau → mỗi phần = 1/4 (một phần tư).' },
+        { q: 'Hình nào được chia thành 2 phần BẰNG NHAU?\n(A) Đường chia chính giữa  (B) Đường chia lệch một bên', a: 'A', opts: ['A', 'B'], e: 'Chỉ khi đường chia chính giữa thì 2 phần mới bằng nhau → đó mới là \"một nửa\".' },
+    ];
+    const tIdx = rand(0, templates.length - 1);
+    const t = typeof templates[tIdx] === 'function' ? (templates[tIdx] as Function)() : templates[tIdx];
+    return {
+        id: genId(), gradeLevel: 2, difficulty: 2,
+        type: 'fraction', topic: 'Phân số sơ khởi (½, ¼)', topicKey: 'intro_fractions',
+        question: t.q, correctAnswer: String(t.a),
+        options: t.opts || makeOptions(Number(t.a), 3),
+        illustration: '/images/core/fraction_1_4.png',
+        explanation: t.e, hints: ['Chia bằng nhau = chia đôi', `Đáp số: ${t.a}`],
+    };
+}
+
 // ══════════════════════════════════════════════
 // GRADE 2: Numbers to 100, carrying, clock, cm
 // ══════════════════════════════════════════════
@@ -437,13 +612,21 @@ export interface TopicInfo {
 }
 
 export const MATH_TOPICS: TopicInfo[] = [
-    // Grade 1
+    // Grade 1 — CT 2018 + Singapore Math + Cambridge Primary + IB PYP
     { key: 'add_sub_10', name: 'Cộng trừ trong 10', gradeLevel: 1, generator: genAddSub10, icon: '➕' },
+    { key: 'add_sub_20', name: 'Cộng trừ trong 20', gradeLevel: 1, generator: genAddSub20, icon: '✨' },
+    { key: 'number_bonds', name: 'Tách–ghép số', gradeLevel: 1, generator: genNumberBonds, icon: '🔗' },
     { key: 'count_20', name: 'Số đến 20', gradeLevel: 1, generator: genCount20, icon: '🔢' },
-    { key: 'shapes_g1', name: 'Hình học cơ bản', gradeLevel: 1, generator: genShapesG1, icon: '🔷' },
+    { key: 'shapes_g1', name: 'Hình phẳng 2D', gradeLevel: 1, generator: genShapesG1, icon: '🔷' },
+    { key: 'shapes_3d', name: 'Khối hình 3D', gradeLevel: 1, generator: genShapes3D, icon: '🧊' },
     { key: 'compare_g1', name: 'So sánh số', gradeLevel: 1, generator: genCompareG1, icon: '⚖️' },
-    // Grade 2
+    { key: 'ordinal_spatial', name: 'Thứ tự & Vị trí', gradeLevel: 1, generator: genOrdinalSpatial, icon: '📍' },
+    // Grade 2 — CT 2018 + Singapore Math + Cambridge Primary
+    { key: 'place_value', name: 'Hàng chục–đơn vị', gradeLevel: 2, generator: genPlaceValue, icon: '🏗️' },
     { key: 'add_sub_carry', name: 'Cộng trừ có nhớ', gradeLevel: 2, generator: genAddSubCarry, icon: '🧮' },
+    { key: 'even_odd', name: 'Số chẵn – Số lẻ', gradeLevel: 2, generator: genEvenOdd, icon: '🎲' },
+    { key: 'intro_mult', name: 'Nhân sơ khởi', gradeLevel: 2, generator: genIntroMult, icon: '✖️' },
+    { key: 'intro_fractions', name: 'Phân số ½ ¼', gradeLevel: 2, generator: genIntroFractions, icon: '🥧' },
     { key: 'clock', name: 'Xem đồng hồ', gradeLevel: 2, generator: genClock, icon: '🕐' },
     { key: 'measure_cm', name: 'Đo độ dài (cm)', gradeLevel: 2, generator: genMeasureCm, icon: '📏' },
     { key: 'word_g2', name: 'Toán đố lớp 2', gradeLevel: 2, generator: genWordProbG2, icon: '📝' },
