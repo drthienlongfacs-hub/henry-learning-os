@@ -51,7 +51,7 @@ export function genAddSub10(): MathProblem {
         question: `${a} ${op} ${b} = ?`,
         correctAnswer: String(ans),
         options: makeOptions(ans, 3),
-        illustration: '/images/core/addition.png',
+        illustration: '/images/math/addition_within_10.png',
         explanation: `${a} ${op} ${b} = ${ans}`,
         hints: [isAdd ? 'Đếm thêm từ số lớn' : 'Đếm lùi từ số đầu', `Đáp số: ${ans}`],
     };
@@ -69,7 +69,7 @@ export function genCount20(): MathProblem {
         type: 'comparison', topic: 'Số đến 20', topicKey: 'count_20',
         question: t.q, correctAnswer: String(t.a),
         options: makeOptions(t.a, 3),
-        illustration: '/images/core/apples_100.jpg',
+        illustration: '/images/math/place_value.png',
         explanation: t.e, hints: ['Dùng ngón tay đếm', `Đáp số: ${t.a}`],
     };
 }
@@ -93,7 +93,7 @@ export function genShapesG1(): MathProblem {
         type: 'geometry', topic: 'Hình học cơ bản', topicKey: 'shapes_g1',
         question: t.q, correctAnswer: t.a,
         options: opts,
-        illustration: '/images/core/shapes_g1.png',
+        illustration: '/images/math/shapes_2d.png',
         explanation: t.e, hints: ['Đếm số cạnh', `Đáp số: ${t.a}`],
     };
 }
@@ -107,7 +107,7 @@ export function genCompareG1(): MathProblem {
         question: `Điền dấu (>, <, =): ${a} ___ ${b}`,
         correctAnswer: sign,
         options: ['>', '<', '='],
-        illustration: '/images/core/compare.png',
+        illustration: '/images/math/compare_numbers.png',
         explanation: `${a} ${sign} ${b} vì ${a > b ? `${a} lớn hơn ${b}` : a < b ? `${a} nhỏ hơn ${b}` : 'hai số bằng nhau'}.`,
         hints: ['Số nào xa 0 hơn thì lớn hơn', `Đáp số: ${sign}`],
     };
@@ -129,7 +129,7 @@ export function genNumberBonds(): MathProblem {
         type: 'arithmetic', topic: 'Tách – ghép số (Number Bonds)', topicKey: 'number_bonds',
         question: t.q, correctAnswer: String(t.a),
         options: makeOptions(t.a, 3),
-        illustration: '/images/core/addition.png',
+        illustration: '/images/math/number_bonds.png',
         explanation: t.e, hints: [`${total} gồm 2 phần cộng lại`, `Đáp số: ${t.a}`],
     };
 }
@@ -148,7 +148,7 @@ export function genAddSub20(): MathProblem {
         question: `${a} ${op} ${b} = ?`,
         correctAnswer: String(ans),
         options: makeOptions(ans, 5),
-        illustration: '/images/core/addition.png',
+        illustration: '/images/math/add_sub_20.png',
         explanation: `${a} ${op} ${b} = ${ans}.${hasRegrouping ? ' (Qua 10 — tách số cho dễ tính!)' : ''}`,
         hints: [isAdd ? 'Tách để làm tròn 10, rồi cộng tiếp' : 'Tách bớt về 10, rồi trừ tiếp', `Đáp số: ${ans}`],
     };
@@ -176,7 +176,7 @@ export function genShapes3D(): MathProblem {
         type: 'geometry', topic: 'Khối hình 3D', topicKey: 'shapes_3d',
         question: t.q, correctAnswer: t.a,
         options: t.opts,
-        illustration: '/images/core/shapes_g1.png',
+        illustration: '/images/math/shapes_3d.png',
         explanation: t.e, hints: ['Hình có mặt cong → lăn được', `Đáp số: ${t.a}`],
     };
 }
@@ -198,7 +198,7 @@ export function genOrdinalSpatial(): MathProblem {
         type: 'comparison', topic: 'Thứ tự & Vị trí', topicKey: 'ordinal_spatial',
         question: t.q, correctAnswer: t.a,
         options: t.opts,
-        illustration: '/images/core/compare.png',
+        illustration: '/images/math/ordinal_positions.png',
         explanation: t.e, hints: ['Đếm lần lượt từ trái sang phải', `Đáp số: ${t.a}`],
     };
 }
@@ -221,7 +221,7 @@ export function genPlaceValue(): MathProblem {
         type: 'arithmetic', topic: 'Phân tích hàng chục – đơn vị', topicKey: 'place_value',
         question: t.q, correctAnswer: String(t.a),
         options: t.opts || makeOptions(Number(t.a) || tens, 3),
-        illustration: '/images/core/dice_10_20.jpg',
+        illustration: '/images/math/place_value.png',
         explanation: t.e, hints: ['Hàng chục ở bên trái, hàng đơn vị ở bên phải', `Đáp số: ${t.a}`],
     };
 }
@@ -242,7 +242,7 @@ export function genEvenOdd(): MathProblem {
         type: 'comparison', topic: 'Số chẵn – Số lẻ', topicKey: 'even_odd',
         question: t.q, correctAnswer: String(t.a),
         options: t.q.includes('chẵn hay') ? ['Số chẵn', 'Số lẻ'] : makeOptions(Number(t.a) || 10, 3),
-        illustration: '/images/core/compare.png',
+        illustration: '/images/math/even_odd.png',
         explanation: t.e, hints: ['Số chẵn: 0, 2, 4, 6, 8. Số lẻ: 1, 3, 5, 7, 9', `Đáp số: ${t.a}`],
     };
 }
@@ -263,7 +263,7 @@ export function genIntroMult(): MathProblem {
         type: 'arithmetic', topic: 'Phép nhân sơ khởi (nhóm bằng nhau)', topicKey: 'intro_mult',
         question: t.q, correctAnswer: String(ans),
         options: makeOptions(ans, 5),
-        illustration: '/images/core/multiplication.png',
+        illustration: '/images/math/intro_multiplication.png',
         explanation: t.e, hints: [`Mỗi nhóm ${factor}, đếm ${groups} nhóm`, `Đáp số: ${ans}`],
     };
 }
@@ -283,7 +283,7 @@ export function genIntroFractions(): MathProblem {
         type: 'fraction', topic: 'Phân số sơ khởi (½, ¼)', topicKey: 'intro_fractions',
         question: t.q, correctAnswer: String(t.a),
         options: t.opts || makeOptions(Number(t.a), 3),
-        illustration: '/images/core/fraction_1_4.png',
+        illustration: '/images/math/intro_fractions.png',
         explanation: t.e, hints: ['Chia bằng nhau = chia đôi', `Đáp số: ${t.a}`],
     };
 }
@@ -305,7 +305,7 @@ export function genAddSubCarry(): MathProblem {
         topicKey: 'add_sub_carry',
         question: `${a} ${op} ${b} = ?`, correctAnswer: String(ans),
         options: makeOptions(ans, 10),
-        illustration: '/images/core/column_addition.png',
+        illustration: '/images/math/column_addition.png',
         explanation: `Đặt tính: ${a} ${op} ${b} = ${ans}.${hasCarry ? (isAdd ? ' Nhớ 1 sang hàng chục.' : ' Mượn 1 từ hàng chục.') : ''}`,
         hints: ['Đặt tính dọc, tính từ hàng đơn vị', hasCarry ? 'Chú ý nhớ/mượn!' : 'Phép tính đơn giản', `Đáp số: ${ans}`],
     };
@@ -327,7 +327,7 @@ export function genClock(): MathProblem {
         type: 'measurement', topic: 'Xem đồng hồ', topicKey: 'clock',
         question: t.q, correctAnswer: t.a,
         options: t.q.includes('số') ? [t.a, `${hour}:${(mins + 15) % 60 === 0 ? '00' : mins + 15}`, `${(hour % 12) + 1}:${mins === 0 ? '00' : mins}`] : [t.a, `${hour + 1} giờ đúng`, '12 giờ đúng'],
-        illustration: '/images/core/clock.png',
+        illustration: '/images/math/clock_reading.png',
         explanation: t.e, hints: ['Kim ngắn = giờ, kim dài = phút', `Đáp số: ${t.a}`],
     };
 }
@@ -346,7 +346,7 @@ export function genMeasureCm(): MathProblem {
         type: 'measurement', topic: 'Đo độ dài (cm, mm)', topicKey: 'measure_cm',
         question: t.q, correctAnswer: String(t.a),
         options: makeOptions(t.a, 10),
-        illustration: '/images/core/wooden_ruler.jpg',
+        illustration: '/images/math/ruler_measurement.png',
         explanation: t.e, hints: ['1 cm = 10 mm', `Đáp số: ${t.a}`],
     };
 }
@@ -365,7 +365,7 @@ export function genWordProbG2(): MathProblem {
         type: 'word_problem', topic: 'Toán đố lớp 2', topicKey: 'word_g2',
         question: c.q, correctAnswer: String(c.a),
         options: makeOptions(c.a, 10),
-        illustration: '/images/core/girl_thinking.png',
+        illustration: '/images/math/word_problem.png',
         explanation: c.e, hints: ['Tìm từ khóa: "thêm" = cộng, "bớt/nghỉ" = trừ', `Đáp số: ${c.a}`],
     };
 }

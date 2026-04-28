@@ -1,404 +1,413 @@
 // ========================================
-// MATH Grade 1 — Comprehensive Exercise Bank
-// 200+ exercises: counting, addition, subtraction,
-// shapes, patterns, measurement, word problems
-// Curriculum: Vietnamese Grade 1 Math + Singapore CPA
+// HENRY LEARNING OS — MATH GRADES 1-2
+// Integrated benchmark: Vietnam CTGDPT 2018 + Singapore CPA + Cambridge reasoning
+// Focus: number sense, place value, operations, measurement, geometry, data, problem solving
 // ========================================
 
-import type { Exercise, ContentBlock, Lesson } from '@/types';
+import type { Exercise, Lesson } from '@/types';
 
-// ── Helper: generate addition/subtraction exercises ──
-
-function addEx(id: string, a: number, b: number, diff: number): Exercise {
-    const sum = a + b;
-    const opts = shuffledOptions(sum, 20);
-    return {
-        id, question: `${a} + ${b} = ?`, type: 'multiple_choice',
-        options: opts, correctAnswer: String(sum),
-        explanation: `${a} + ${b} = ${sum}. Bắt đầu từ ${a}, đếm thêm ${b}.`,
-        difficulty: diff,
-        hints: [`Bắt đầu từ số ${a}, đếm thêm ${b} bước.`, `${a} → ${Array.from({ length: b }, (_, i) => a + i + 1).join(' → ')}.`, `Đáp án là ${sum}.`],
-    };
+function mc(
+  id: string,
+  question: string,
+  options: string[],
+  correctAnswer: string,
+  explanation: string,
+  difficulty = 1,
+  hints: string[] = [],
+  tags: string[] = []
+): Exercise {
+  return {
+    id,
+    question,
+    type: 'multiple_choice',
+    options,
+    correctAnswer,
+    explanation,
+    difficulty,
+    hints,
+    tags,
+    subject: 'Toán',
+  };
 }
 
-function subEx(id: string, a: number, b: number, diff: number): Exercise {
-    const result = a - b;
-    const opts = shuffledOptions(result, 20);
-    return {
-        id, question: `${a} - ${b} = ?`, type: 'multiple_choice',
-        options: opts, correctAnswer: String(result),
-        explanation: `${a} - ${b} = ${result}. Từ ${a}, bớt đi ${b}.`,
-        difficulty: diff,
-        hints: [`Từ ${a}, đếm lùi ${b} bước.`, `${a} → ${Array.from({ length: b }, (_, i) => a - i - 1).join(' → ')}.`, `Đáp án là ${result}.`],
-    };
+function ft(
+  id: string,
+  question: string,
+  correctAnswer: string,
+  explanation: string,
+  difficulty = 1,
+  hints: string[] = [],
+  tags: string[] = []
+): Exercise {
+  return {
+    id,
+    question,
+    type: 'free_text',
+    correctAnswer,
+    explanation,
+    difficulty,
+    hints,
+    tags,
+    subject: 'Toán',
+  };
 }
 
-function wordProblemAdd(id: string, name: string, item: string, a: number, b: number, diff: number): Exercise {
-    return {
-        id, question: `${name} có ${a} ${item}. Mẹ cho thêm ${b} ${item}. Hỏi ${name} có tất cả bao nhiêu ${item}?`,
-        type: 'free_text', correctAnswer: String(a + b),
-        explanation: `${a} + ${b} = ${a + b}. ${name} có ${a} ${item}, được thêm ${b}, tổng cộng ${a + b} ${item}.`,
-        difficulty: diff,
-        hints: [`Đây là bài cộng: ${a} + ${b} = ?`, `${a} cộng ${b} được bao nhiêu?`, `${a} + ${b} = ${a + b}.`],
-    };
+function ex(
+  id: string,
+  question: string,
+  correctAnswer: string,
+  explanation: string,
+  difficulty = 2,
+  hints: string[] = [],
+  tags: string[] = []
+): Exercise {
+  return {
+    id,
+    question,
+    type: 'explain',
+    correctAnswer,
+    explanation,
+    difficulty,
+    hints,
+    tags,
+    subject: 'Toán',
+  };
 }
-
-function wordProblemSub(id: string, name: string, item: string, a: number, b: number, diff: number): Exercise {
-    return {
-        id, question: `${name} có ${a} ${item}. ${name} cho bạn ${b} ${item}. Hỏi ${name} còn bao nhiêu ${item}?`,
-        type: 'free_text', correctAnswer: String(a - b),
-        explanation: `${a} - ${b} = ${a - b}. ${name} có ${a} ${item}, cho đi ${b}, còn lại ${a - b} ${item}.`,
-        difficulty: diff,
-        hints: [`Đây là bài trừ: ${a} - ${b} = ?`, `${a} bớt ${b} còn bao nhiêu?`, `${a} - ${b} = ${a - b}.`],
-    };
-}
-
-function shuffledOptions(correct: number, max: number): string[] {
-    const set = new Set<number>([correct]);
-    while (set.size < 4) {
-        const offset = Math.floor(Math.random() * 3) + 1;
-        const candidate = Math.random() > 0.5 ? correct + offset : correct - offset;
-        if (candidate >= 0 && candidate <= max) set.add(candidate);
-        else set.add(Math.abs(candidate) % (max + 1));
-    }
-    return [...set].sort(() => Math.random() - 0.5).map(String);
-}
-
-// ═══════════════════════════════════════════
-// COUNTING EXERCISES (1-20)
-// ═══════════════════════════════════════════
 
 export const countingExercises: Exercise[] = [
-    // Count objects
-    ...(['🍎', '🌟', '🐟', '🦋', '🎈', '🏀', '🍌', '🐢', '🌺', '🎵']).map((emoji, i) => {
-        const count = i + 1;
-        const display = emoji.repeat(count);
-        return {
-            id: `ex-count-${String(i + 1).padStart(3, '0')}`,
-            question: `Đếm xem có bao nhiêu? ${display}`,
-            type: 'multiple_choice' as const,
-            options: shuffledOptions(count, 15).map(String),
-            correctAnswer: String(count),
-            explanation: `Có ${count} ${emoji}. Con đếm từ trái sang phải nhé!`,
-            difficulty: 1,
-            hints: ['Con chỉ tay vào từng cái rồi đếm nhé!', `Đếm: 1, 2, 3...`, `Có ${count} cái.`],
-        } as Exercise;
-    }),
-    // Continue counting
-    ...Array.from({ length: 10 }, (_, i) => {
-        const start = i * 2 + 1;
-        const answer = start + 3;
-        return {
-            id: `ex-count-seq-${String(i + 1).padStart(3, '0')}`,
-            question: `Điền số tiếp theo: ${start}, ${start + 1}, ${start + 2}, ?`,
-            type: 'free_text' as const,
-            correctAnswer: String(answer),
-            explanation: `Các số đếm liên tiếp: ${start}, ${start + 1}, ${start + 2}, ${answer}.`,
-            difficulty: 1,
-            hints: ['Đếm tiếp theo số cuối.', `Sau ${start + 2} là số nào?`, `Đáp án là ${answer}.`],
-        } as Exercise;
-    }),
-    // Compare numbers
-    ...Array.from({ length: 10 }, (_, i) => {
-        const a = Math.floor(Math.random() * 15) + 1;
-        let b = a;
-        while (b === a) b = Math.floor(Math.random() * 15) + 1;
-        const bigger = Math.max(a, b);
-        return {
-            id: `ex-compare-${String(i + 1).padStart(3, '0')}`,
-            question: `Số nào lớn hơn: ${a} hay ${b}?`,
-            type: 'multiple_choice' as const,
-            options: [String(a), String(b)],
-            correctAnswer: String(bigger),
-            explanation: `${bigger} > ${Math.min(a, b)}. Số ${bigger} lớn hơn.`,
-            difficulty: 1,
-            hints: ['Số nào nằm xa hơn bên phải trên tia số?', `So sánh: ${a} và ${b}.`, `${bigger} lớn hơn.`],
-        } as Exercise;
-    }),
+  mc('g1-count-01', 'Có bao nhiêu quả táo? 🍎🍎🍎', ['2', '3', '4', '5'], '3', 'Có 3 quả táo.', 1, ['Chỉ vào từng quả rồi đếm.'], ['grade1', 'counting']),
+  mc('g1-count-02', 'Số nào đứng sau 7?', ['6', '7', '8', '9'], '8', 'Sau 7 là 8.', 1, ['Đếm tiếp sau 7.'], ['grade1', 'counting']),
+  ft('g1-count-03', 'Điền số còn thiếu: 4, 5, 6, __', '7', 'Dãy số tăng thêm 1.', 1, ['Sau 6 là số nào?'], ['grade1', 'counting']),
+  mc('g1-count-04', 'Số nào lớn hơn: 9 hay 6?', ['9', '6'], '9', '9 lớn hơn 6.', 1, ['Số lớn hơn ở bên phải trên tia số.'], ['grade1', 'compare']),
+  ft('g1-count-05', 'Viết số liền trước của 10.', '9', 'Số liền trước 10 là 9.', 1, ['Đếm lùi 1 bước từ 10.'], ['grade1', 'before-after']),
+  ft('g1-count-06', 'Viết số liền sau của 14.', '15', 'Số liền sau 14 là 15.', 1, ['Đếm thêm 1 bước.'], ['grade1', 'before-after']),
+  mc('g1-count-07', 'Sắp xếp đúng từ bé đến lớn:', ['3, 5, 8', '8, 5, 3', '5, 3, 8', '8, 3, 5'], '3, 5, 8', '3 nhỏ nhất rồi đến 5 rồi đến 8.', 2, ['Tìm số nhỏ nhất trước.'], ['grade1', 'ordering']),
+  mc('g1-count-08', 'Nhìn nhanh chấm tròn: ●●●●. Có mấy chấm?', ['3', '4', '5', '6'], '4', 'Có 4 chấm.', 1, ['Nhìn và nhận ra ngay nhóm 4.'], ['grade1', 'subitizing']),
 ];
 
-// ═══════════════════════════════════════════
-// ADDITION within 10
-// ═══════════════════════════════════════════
+export const numberBondExercises: Exercise[] = [
+  mc('g1-bond-01', 'Số nào ghép với 3 để thành 5?', ['1', '2', '3', '4'], '2', '3 và 2 ghép thành 5.', 1, ['5 tách thành 3 và mấy?'], ['grade1', 'number-bonds']),
+  mc('g1-bond-02', 'Số nào ghép với 6 để thành 10?', ['2', '3', '4', '5'], '4', '6 + 4 = 10.', 1, ['Hãy nghĩ đến “làm tròn 10”.'], ['grade1', 'make10']),
+  ft('g1-bond-03', 'Điền số thiếu: 7 = 5 + __', '2', '7 tách thành 5 và 2.', 1, ['7 bớt 5 còn mấy?'], ['grade1', 'number-bonds']),
+  ft('g1-bond-04', 'Điền số thiếu: 10 = 8 + __', '2', '8 cần thêm 2 để thành 10.', 1, ['Từ 8 đếm lên 10.'], ['grade1', 'make10']),
+  ex('g1-bond-05', 'Giải thích cách con biết 9 = 4 + 5.', 'Bởi vì 4 và 5 ghép lại thành 9.', 'Bài này rèn khả năng tách-gộp số và diễn đạt bằng lời.', 2, ['Con có thể tưởng tượng 9 đồ vật tách thành 4 và 5.'], ['grade1', 'reasoning', 'number-bonds']),
+  mc('g1-bond-06', 'Cặp số nào tạo thành 10?', ['6 và 4', '6 và 3', '7 và 2', '8 và 1'], '6 và 4', '6 + 4 = 10.', 1, ['Thử cộng từng cặp.'], ['grade1', 'make10']),
+];
+
+export const placeValueExercises: Exercise[] = [
+  mc('g1-place-01', 'Số 14 có mấy chục?', ['0', '1', '2', '4'], '1', '14 có 1 chục và 4 đơn vị.', 2, ['14 = 10 + 4.'], ['grade1', 'place-value']),
+  mc('g1-place-02', 'Số 18 có mấy đơn vị?', ['1', '8', '10', '18'], '8', '18 có 8 đơn vị.', 2, ['Nhìn chữ số hàng đơn vị.'], ['grade1', 'place-value']),
+  ft('g2-place-01', 'Viết số có 3 chục và 4 đơn vị.', '34', '3 chục là 30, thêm 4 đơn vị là 34.', 2, ['30 + 4 = ?'], ['grade2', 'place-value']),
+  ft('g2-place-02', 'Tách số 57 thành chục và đơn vị.', '50 và 7', '57 = 50 + 7.', 2, ['5 chục = 50.'], ['grade2', 'place-value']),
+  mc('g2-place-03', 'Số nào lớn hơn?', ['42', '24'], '42', '42 có 4 chục, còn 24 có 2 chục.', 2, ['So sánh hàng chục trước.'], ['grade2', 'compare', 'place-value']),
+  mc('g2-place-04', 'Số chẵn là:', ['31', '46', '53', '77'], '46', '46 là số chẵn vì tận cùng là 6.', 2, ['Số chẵn có tận cùng 0,2,4,6,8.'], ['grade2', 'even-odd']),
+];
+
+function addMc(id: string, a: number, b: number, options: string[], difficulty = 1, tags: string[] = []) {
+  return mc(id, `${a} + ${b} = ?`, options, String(a + b), `${a} + ${b} = ${a + b}.`, difficulty, ['Đếm thêm từ số lớn hơn.', 'Có thể dùng tách số hoặc làm tròn 10.'], tags);
+}
+
+function subMc(id: string, a: number, b: number, options: string[], difficulty = 1, tags: string[] = []) {
+  return mc(id, `${a} - ${b} = ?`, options, String(a - b), `${a} - ${b} = ${a - b}.`, difficulty, ['Đếm lùi hoặc tách số.', 'Kiểm tra lại bằng phép cộng ngược.'], tags);
+}
 
 export const additionWithin10: Exercise[] = [
-    addEx('ex-add10-001', 1, 1, 1), addEx('ex-add10-002', 1, 2, 1), addEx('ex-add10-003', 2, 1, 1),
-    addEx('ex-add10-004', 2, 2, 1), addEx('ex-add10-005', 2, 3, 1), addEx('ex-add10-006', 3, 2, 1),
-    addEx('ex-add10-007', 3, 3, 1), addEx('ex-add10-008', 3, 4, 1), addEx('ex-add10-009', 4, 3, 1),
-    addEx('ex-add10-010', 4, 4, 1), addEx('ex-add10-011', 4, 5, 1), addEx('ex-add10-012', 5, 4, 1),
-    addEx('ex-add10-013', 5, 5, 2), addEx('ex-add10-014', 1, 5, 1), addEx('ex-add10-015', 5, 1, 1),
-    addEx('ex-add10-016', 1, 6, 1), addEx('ex-add10-017', 6, 1, 1), addEx('ex-add10-018', 2, 6, 1),
-    addEx('ex-add10-019', 6, 2, 1), addEx('ex-add10-020', 3, 6, 2), addEx('ex-add10-021', 6, 3, 2),
-    addEx('ex-add10-022', 1, 7, 1), addEx('ex-add10-023', 7, 1, 1), addEx('ex-add10-024', 2, 7, 2),
-    addEx('ex-add10-025', 7, 2, 2), addEx('ex-add10-026', 1, 8, 1), addEx('ex-add10-027', 8, 1, 1),
-    addEx('ex-add10-028', 1, 9, 2), addEx('ex-add10-029', 9, 1, 2), addEx('ex-add10-030', 0, 5, 1),
-    addEx('ex-add10-031', 5, 0, 1), addEx('ex-add10-032', 0, 10, 1), addEx('ex-add10-033', 4, 6, 2),
-    addEx('ex-add10-034', 6, 4, 2), addEx('ex-add10-035', 3, 7, 2), addEx('ex-add10-036', 7, 3, 2),
-    // Word problems within 10
-    wordProblemAdd('ex-add10-wp01', 'Lan', 'quả táo', 3, 4, 2),
-    wordProblemAdd('ex-add10-wp02', 'An', 'viên kẹo', 5, 2, 2),
-    wordProblemAdd('ex-add10-wp03', 'Hoa', 'con cá', 2, 6, 2),
-    wordProblemAdd('ex-add10-wp04', 'Nam', 'bông hoa', 4, 5, 2),
-    wordProblemAdd('ex-add10-wp05', 'Mai', 'cái bút', 1, 8, 2),
-    wordProblemAdd('ex-add10-wp06', 'Tuấn', 'viên bi', 6, 3, 2),
-    wordProblemAdd('ex-add10-wp07', 'Linh', 'quyển vở', 2, 5, 2),
-    wordProblemAdd('ex-add10-wp08', 'Minh', 'cái kẹo', 7, 2, 2),
-    wordProblemAdd('ex-add10-wp09', 'Henry', 'miếng sticker', 3, 6, 2),
-    wordProblemAdd('ex-add10-wp10', 'Bảo', 'con tem', 4, 4, 2),
+  addMc('g1-add10-01', 2, 3, ['4', '5', '6', '3'], 1, ['grade1', 'addition']),
+  addMc('g1-add10-02', 4, 1, ['3', '4', '5', '6'], 1, ['grade1', 'addition']),
+  addMc('g1-add10-03', 5, 2, ['6', '7', '8', '5'], 1, ['grade1', 'addition']),
+  addMc('g1-add10-04', 6, 3, ['7', '8', '9', '10'], 1, ['grade1', 'addition']),
+  addMc('g1-add10-05', 4, 4, ['6', '7', '8', '9'], 1, ['grade1', 'addition', 'doubles']),
+  addMc('g1-add10-06', 7, 2, ['8', '9', '10', '7'], 1, ['grade1', 'addition']),
+  ft('g1-add10-07', 'Lan có 3 viên bi, mẹ cho thêm 4 viên. Lan có tất cả bao nhiêu viên bi?', '7', '3 + 4 = 7.', 2, ['Từ “thêm” thường là phép cộng.'], ['grade1', 'word-problem', 'addition']),
+  ex('g1-add10-08', 'Con giải thích vì sao 5 + 3 = 8.', 'Vì bắt đầu từ 5 đếm thêm 3 bước được 8.', 'Có thể giải thích bằng đếm thêm hoặc bằng đồ vật.', 2, ['Bắt đầu từ 5: 6, 7, 8.'], ['grade1', 'reasoning', 'addition']),
 ];
-
-// ═══════════════════════════════════════════
-// ADDITION within 20
-// ═══════════════════════════════════════════
-
-export const additionWithin20: Exercise[] = [
-    addEx('ex-add20-001', 9, 2, 2), addEx('ex-add20-002', 8, 3, 2), addEx('ex-add20-003', 7, 4, 2),
-    addEx('ex-add20-004', 6, 5, 2), addEx('ex-add20-005', 9, 3, 2), addEx('ex-add20-006', 8, 4, 2),
-    addEx('ex-add20-007', 7, 5, 2), addEx('ex-add20-008', 6, 6, 2), addEx('ex-add20-009', 9, 4, 2),
-    addEx('ex-add20-010', 8, 5, 2), addEx('ex-add20-011', 7, 6, 2), addEx('ex-add20-012', 9, 5, 3),
-    addEx('ex-add20-013', 8, 6, 3), addEx('ex-add20-014', 7, 7, 3), addEx('ex-add20-015', 9, 6, 3),
-    addEx('ex-add20-016', 8, 7, 3), addEx('ex-add20-017', 9, 7, 3), addEx('ex-add20-018', 8, 8, 3),
-    addEx('ex-add20-019', 9, 8, 3), addEx('ex-add20-020', 9, 9, 3), addEx('ex-add20-021', 10, 1, 2),
-    addEx('ex-add20-022', 10, 2, 2), addEx('ex-add20-023', 10, 3, 2), addEx('ex-add20-024', 10, 5, 2),
-    addEx('ex-add20-025', 10, 7, 2), addEx('ex-add20-026', 10, 10, 3), addEx('ex-add20-027', 11, 5, 3),
-    addEx('ex-add20-028', 12, 4, 3), addEx('ex-add20-029', 13, 3, 3), addEx('ex-add20-030', 15, 5, 3),
-    wordProblemAdd('ex-add20-wp01', 'Henry', 'viên bi', 8, 7, 3),
-    wordProblemAdd('ex-add20-wp02', 'Lan', 'miếng sticker', 9, 6, 3),
-    wordProblemAdd('ex-add20-wp03', 'An', 'con cá origami', 12, 5, 3),
-    wordProblemAdd('ex-add20-wp04', 'Hoa', 'cái kẹp tóc', 11, 4, 3),
-    wordProblemAdd('ex-add20-wp05', 'Bảo', 'trang sách', 13, 7, 3),
-];
-
-// ═══════════════════════════════════════════
-// SUBTRACTION within 10
-// ═══════════════════════════════════════════
 
 export const subtractionWithin10: Exercise[] = [
-    subEx('ex-sub10-001', 2, 1, 1), subEx('ex-sub10-002', 3, 1, 1), subEx('ex-sub10-003', 3, 2, 1),
-    subEx('ex-sub10-004', 4, 1, 1), subEx('ex-sub10-005', 4, 2, 1), subEx('ex-sub10-006', 4, 3, 1),
-    subEx('ex-sub10-007', 5, 1, 1), subEx('ex-sub10-008', 5, 2, 1), subEx('ex-sub10-009', 5, 3, 1),
-    subEx('ex-sub10-010', 5, 4, 1), subEx('ex-sub10-011', 6, 1, 1), subEx('ex-sub10-012', 6, 2, 1),
-    subEx('ex-sub10-013', 6, 3, 1), subEx('ex-sub10-014', 6, 4, 1), subEx('ex-sub10-015', 6, 5, 1),
-    subEx('ex-sub10-016', 7, 1, 1), subEx('ex-sub10-017', 7, 2, 1), subEx('ex-sub10-018', 7, 3, 2),
-    subEx('ex-sub10-019', 7, 4, 2), subEx('ex-sub10-020', 7, 5, 2), subEx('ex-sub10-021', 7, 6, 2),
-    subEx('ex-sub10-022', 8, 1, 1), subEx('ex-sub10-023', 8, 3, 2), subEx('ex-sub10-024', 8, 4, 2),
-    subEx('ex-sub10-025', 8, 5, 2), subEx('ex-sub10-026', 8, 6, 2), subEx('ex-sub10-027', 8, 7, 2),
-    subEx('ex-sub10-028', 9, 2, 2), subEx('ex-sub10-029', 9, 4, 2), subEx('ex-sub10-030', 9, 5, 2),
-    subEx('ex-sub10-031', 9, 7, 2), subEx('ex-sub10-032', 10, 1, 1), subEx('ex-sub10-033', 10, 3, 2),
-    subEx('ex-sub10-034', 10, 5, 2), subEx('ex-sub10-035', 10, 7, 2), subEx('ex-sub10-036', 10, 9, 2),
-    wordProblemSub('ex-sub10-wp01', 'Lan', 'quả cam', 8, 3, 2),
-    wordProblemSub('ex-sub10-wp02', 'An', 'viên bi', 10, 4, 2),
-    wordProblemSub('ex-sub10-wp03', 'Hoa', 'cái kẹo', 7, 5, 2),
-    wordProblemSub('ex-sub10-wp04', 'Henry', 'miếng sticker', 9, 6, 2),
-    wordProblemSub('ex-sub10-wp05', 'Mai', 'bông hoa', 6, 2, 2),
+  subMc('g1-sub10-01', 5, 2, ['2', '3', '4', '5'], 1, ['grade1', 'subtraction']),
+  subMc('g1-sub10-02', 8, 3, ['4', '5', '6', '7'], 1, ['grade1', 'subtraction']),
+  subMc('g1-sub10-03', 9, 4, ['4', '5', '6', '3'], 1, ['grade1', 'subtraction']),
+  subMc('g1-sub10-04', 7, 1, ['5', '6', '7', '8'], 1, ['grade1', 'subtraction']),
+  ft('g1-sub10-05', 'Mai có 10 cái kẹo, ăn 3 cái. Còn lại bao nhiêu cái?', '7', '10 - 3 = 7.', 2, ['Từ “còn lại” thường là phép trừ.'], ['grade1', 'word-problem', 'subtraction']),
+  ft('g1-sub10-06', 'Điền số thiếu: 8 - __ = 5', '3', '8 bớt 3 còn 5.', 2, ['5 thêm mấy để thành 8?'], ['grade1', 'missing-number', 'subtraction']),
+  ex('g1-sub10-07', 'Giải thích vì sao 6 - 2 = 4.', 'Vì lấy bớt 2 khỏi 6 thì còn 4.', 'Có thể minh họa bằng 6 đồ vật rồi cất đi 2.', 2, ['Tưởng tượng 6 quả bóng, bỏ đi 2 quả.'], ['grade1', 'reasoning', 'subtraction']),
 ];
 
-// ═══════════════════════════════════════════
-// SUBTRACTION within 20
-// ═══════════════════════════════════════════
+export const additionWithin20: Exercise[] = [
+  addMc('g1-add20-01', 8, 5, ['12', '13', '14', '15'], 2, ['grade1', 'addition', 'make10']),
+  addMc('g1-add20-02', 9, 6, ['14', '15', '16', '13'], 2, ['grade1', 'addition', 'make10']),
+  addMc('g1-add20-03', 10, 7, ['16', '17', '18', '15'], 2, ['grade1', 'addition']),
+  addMc('g1-add20-04', 12, 4, ['14', '15', '16', '17'], 2, ['grade1', 'addition']),
+  ft('g1-add20-05', 'Có 7 con chim trên cành, thêm 6 con bay tới. Có tất cả bao nhiêu con?', '13', '7 + 6 = 13.', 2, ['7 cần 3 để thành 10, còn 3 nữa.'], ['grade1', 'word-problem', 'addition']),
+  ex('g1-add20-06', 'Giải thích cách tính 8 + 5.', '8 cộng 2 thành 10, còn 3 nên bằng 13.', 'Đây là chiến lược “làm tròn 10”.', 3, ['Tách 5 thành 2 và 3.'], ['grade1', 'reasoning', 'make10']),
+];
 
 export const subtractionWithin20: Exercise[] = [
-    subEx('ex-sub20-001', 11, 2, 2), subEx('ex-sub20-002', 12, 3, 2), subEx('ex-sub20-003', 13, 4, 2),
-    subEx('ex-sub20-004', 14, 5, 2), subEx('ex-sub20-005', 15, 6, 3), subEx('ex-sub20-006', 16, 7, 3),
-    subEx('ex-sub20-007', 17, 8, 3), subEx('ex-sub20-008', 18, 9, 3), subEx('ex-sub20-009', 15, 9, 3),
-    subEx('ex-sub20-010', 14, 8, 3), subEx('ex-sub20-011', 13, 7, 3), subEx('ex-sub20-012', 12, 6, 3),
-    subEx('ex-sub20-013', 11, 5, 2), subEx('ex-sub20-014', 20, 10, 2), subEx('ex-sub20-015', 19, 9, 3),
-    subEx('ex-sub20-016', 16, 8, 3), subEx('ex-sub20-017', 14, 7, 3), subEx('ex-sub20-018', 13, 9, 3),
-    subEx('ex-sub20-019', 17, 9, 3), subEx('ex-sub20-020', 15, 8, 3),
-    wordProblemSub('ex-sub20-wp01', 'Henry', 'viên bi', 15, 7, 3),
-    wordProblemSub('ex-sub20-wp02', 'Lan', 'miếng sticker', 18, 9, 3),
-    wordProblemSub('ex-sub20-wp03', 'An', 'trang sách', 20, 8, 3),
-    wordProblemSub('ex-sub20-wp04', 'Bảo', 'cái kẹo', 14, 6, 3),
-    wordProblemSub('ex-sub20-wp05', 'Minh', 'bông hoa', 16, 9, 3),
+  subMc('g1-sub20-01', 13, 5, ['7', '8', '9', '6'], 2, ['grade1', 'subtraction']),
+  subMc('g1-sub20-02', 15, 7, ['7', '8', '9', '6'], 2, ['grade1', 'subtraction']),
+  subMc('g1-sub20-03', 18, 9, ['8', '9', '10', '7'], 2, ['grade1', 'subtraction']),
+  ft('g1-sub20-04', 'Bé có 14 nhãn dán, cho bạn 6 cái. Bé còn bao nhiêu cái?', '8', '14 - 6 = 8.', 2, ['Có thể tách 6 thành 4 và 2.'], ['grade1', 'word-problem', 'subtraction']),
+  ft('g1-sub20-05', 'Điền số còn thiếu: __ - 4 = 11', '15', '15 - 4 = 11.', 2, ['11 thêm 4 bằng bao nhiêu?'], ['grade1', 'missing-number', 'subtraction']),
+  ex('g1-sub20-06', 'Giải thích cách tính 15 - 7.', '15 bớt 5 còn 10, bớt tiếp 2 còn 8.', 'Đây là chiến lược tách số khi trừ qua 10.', 3, ['Tách 7 thành 5 và 2.'], ['grade1', 'reasoning', 'subtraction']),
 ];
 
-// ═══════════════════════════════════════════
-// SHAPES & GEOMETRY
-// ═══════════════════════════════════════════
-
-export const shapeExercises: Exercise[] = [
-    { id: 'ex-shape-001', question: 'Hình nào có 3 cạnh? 🔺 🔵 🟨', type: 'multiple_choice', options: ['Hình tam giác 🔺', 'Hình tròn 🔵', 'Hình vuông 🟨', 'Hình chữ nhật'], correctAnswer: 'Hình tam giác 🔺', explanation: 'Hình tam giác có 3 cạnh, 3 góc.', difficulty: 1, hints: ['Đếm số cạnh của mỗi hình.', 'Hình nào có ít cạnh nhất?', 'Tam giác = 3 cạnh.'] },
-    { id: 'ex-shape-002', question: 'Hình nào KHÔNG có góc?', type: 'multiple_choice', options: ['Hình tròn', 'Hình vuông', 'Hình tam giác', 'Hình chữ nhật'], correctAnswer: 'Hình tròn', explanation: 'Hình tròn không có cạnh và không có góc.', difficulty: 1, hints: ['Hình nào tròn trơn, không lồi ra?', 'Hình tròn như mặt trời, không có góc.'] },
-    { id: 'ex-shape-003', question: 'Hình vuông có bao nhiêu cạnh?', type: 'free_text', correctAnswer: '4', explanation: 'Hình vuông có 4 cạnh bằng nhau và 4 góc vuông.', difficulty: 1, hints: ['Đếm các cạnh.', 'Hình vuông có 4 cạnh.'] },
-    { id: 'ex-shape-004', question: 'Hình chữ nhật có mấy cạnh?', type: 'free_text', correctAnswer: '4', explanation: 'Hình chữ nhật có 4 cạnh: 2 cạnh dài và 2 cạnh ngắn.', difficulty: 1, hints: ['Giống hình vuông nhưng dài hơn.', 'Có 4 cạnh.'] },
-    { id: 'ex-shape-005', question: 'Đồ vật nào có hình tròn?', type: 'multiple_choice', options: ['Đồng hồ treo tường', 'Quyển sách', 'Cái bàn', 'Cái thước'], correctAnswer: 'Đồng hồ treo tường', explanation: 'Đồng hồ treo tường thường có mặt hình tròn.', difficulty: 2, hints: ['Nghĩ về hình dạng từng đồ vật.', 'Đồng hồ tròn giống mặt trăng.'] },
-    { id: 'ex-shape-006', question: 'Cái TV thường có hình gì?', type: 'multiple_choice', options: ['Hình chữ nhật', 'Hình tròn', 'Hình tam giác', 'Hình vuông'], correctAnswer: 'Hình chữ nhật', explanation: 'TV thường có màn hình hình chữ nhật.', difficulty: 2, hints: ['Nhìn TV nhà con.'] },
-    { id: 'ex-shape-007', question: 'Nóc nhà thường có hình gì?', type: 'multiple_choice', options: ['Hình tam giác', 'Hình tròn', 'Hình vuông', 'Hình thoi'], correctAnswer: 'Hình tam giác', explanation: 'Nóc nhà thường nhọn như hình tam giác.', difficulty: 2, hints: ['Nghĩ về mái nhà.'] },
-    { id: 'ex-shape-008', question: 'Hình nào có 4 cạnh bằng nhau?', type: 'multiple_choice', options: ['Hình vuông', 'Hình chữ nhật', 'Hình tam giác', 'Hình tròn'], correctAnswer: 'Hình vuông', explanation: 'Hình vuông có 4 cạnh bằng nhau.', difficulty: 2, hints: ['Cạnh bằng nhau = đều đều.'] },
-    { id: 'ex-shape-009', question: 'Có bao nhiêu hình tam giác? 🔺🔺🟧🔺🔵🔺', type: 'free_text', correctAnswer: '4', explanation: 'Có 4 hình tam giác 🔺🔺🔺🔺', difficulty: 2, hints: ['Đếm từng hình tam giác.', 'Bỏ qua hình khác.'] },
-    { id: 'ex-shape-010', question: 'Ghép hình: 2 hình tam giác ghép lại thành hình gì?', type: 'multiple_choice', options: ['Hình vuông', 'Hình tròn', 'Hình tam giác to hơn', 'Hình ngôi sao'], correctAnswer: 'Hình vuông', explanation: '2 hình tam giác vuông ghép lại có thể thành hình vuông.', difficulty: 3, hints: ['Thử xếp 2 hình tam giác cạnh nhau.'] },
+export const geometryExercises: Exercise[] = [
+  mc('g1-geo-01', 'Hình nào có 3 cạnh?', ['Hình tròn', 'Hình tam giác', 'Hình vuông', 'Hình chữ nhật'], 'Hình tam giác', 'Hình tam giác có 3 cạnh.', 1, ['Đếm số cạnh.'], ['grade1', 'geometry']),
+  mc('g1-geo-02', 'Đồ vật nào thường có dạng hình tròn?', ['Quyển sách', 'Đồng hồ', 'Cánh cửa', 'Cái bàn'], 'Đồng hồ', 'Mặt đồng hồ thường là hình tròn.', 1, ['Nghĩ đến hình dạng thật ngoài đời.'], ['grade1', 'geometry', 'real-life']),
+  mc('g1-geo-03', 'Bạn gấu đứng ở đâu so với cái hộp? 🧸⬜', ['Bên trái', 'Bên phải', 'Ở trong', 'Ở dưới'], 'Bên trái', 'Bạn gấu đứng bên trái cái hộp.', 1, ['Quan sát vị trí.'], ['grade1', 'spatial']),
+  ft('g1-geo-04', 'Hình vuông có mấy cạnh?', '4', 'Hình vuông có 4 cạnh.', 1, ['Đếm các cạnh.'], ['grade1', 'geometry']),
+  mc('g2-geo-01', 'Vật nào giống khối hộp chữ nhật?', ['Quả bóng', 'Hộp sữa', 'Đĩa tròn', 'Đồng xu'], 'Hộp sữa', 'Hộp sữa giống khối hộp chữ nhật.', 2, ['Phân biệt hình phẳng và khối.'], ['grade2', 'geometry', '3d-shape']),
+  mc('g2-geo-02', 'Chu vi là gì?', ['Số góc của hình', 'Độ dài đường bao quanh hình', 'Màu của hình', 'Diện tích phần ở trong'], 'Độ dài đường bao quanh hình', 'Chu vi là độ dài đường bao quanh hình.', 2, ['Nghĩ đến sợi dây đi quanh mép hình.'], ['grade2', 'perimeter']),
 ];
-
-// ═══════════════════════════════════════════
-// PATTERNS & SEQUENCES
-// ═══════════════════════════════════════════
 
 export const patternExercises: Exercise[] = [
-    { id: 'ex-pattern-001', question: 'Tìm quy luật: 🔴🔵🔴🔵🔴?', type: 'multiple_choice', options: ['🔵', '🔴', '🟢', '🟡'], correctAnswer: '🔵', explanation: 'Quy luật: đỏ-xanh lặp lại. Sau đỏ là xanh.', difficulty: 1, hints: ['Nhìn thứ tự màu.', 'Đỏ-Xanh-Đỏ-Xanh-Đỏ-?'] },
-    { id: 'ex-pattern-002', question: 'Tìm quy luật: 1, 3, 5, 7, ?', type: 'free_text', correctAnswer: '9', explanation: 'Các số lẻ: 1, 3, 5, 7, 9. Mỗi số cách nhau 2.', difficulty: 2, hints: ['Mỗi số tăng thêm bao nhiêu?', '7 + 2 = ?'] },
-    { id: 'ex-pattern-003', question: 'Tìm quy luật: 2, 4, 6, 8, ?', type: 'free_text', correctAnswer: '10', explanation: 'Các số chẵn: 2, 4, 6, 8, 10. Mỗi số cách nhau 2.', difficulty: 2, hints: ['Đây là các số chẵn.', '8 + 2 = ?'] },
-    { id: 'ex-pattern-004', question: '🌟🌙🌟🌙🌟 — Tiếp theo là gì?', type: 'multiple_choice', options: ['🌙', '🌟', '☀️', '⭐'], correctAnswer: '🌙', explanation: 'Sao-Trăng lặp lại. Sau Sao là Trăng.', difficulty: 1, hints: ['Sao rồi Trăng rồi Sao...'] },
-    { id: 'ex-pattern-005', question: '🐱🐶🐱🐶🐱🐶 — Con vật thứ 7?', type: 'multiple_choice', options: ['🐱', '🐶', '🐰', '🐻'], correctAnswer: '🐱', explanation: 'Mèo-Chó lặp lại. Vị trí lẻ là Mèo.', difficulty: 2, hints: ['Mèo ở vị trí 1, 3, 5...'] },
-    { id: 'ex-pattern-006', question: '5, 10, 15, 20, ?', type: 'free_text', correctAnswer: '25', explanation: 'Đếm nhảy 5: 5, 10, 15, 20, 25.', difficulty: 2, hints: ['Mỗi số tăng thêm 5.', '20 + 5 = ?'] },
-    { id: 'ex-pattern-007', question: '🔺🔺🔵🔺🔺🔵🔺🔺?', type: 'multiple_choice', options: ['🔵', '🔺', '🟢', '🟡'], correctAnswer: '🔵', explanation: 'Quy luật: 2 tam giác rồi 1 tròn.', difficulty: 2, hints: ['Nhìn nhóm 3 hình.'] },
-    { id: 'ex-pattern-008', question: '10, 9, 8, 7, ?', type: 'free_text', correctAnswer: '6', explanation: 'Đếm lùi: 10, 9, 8, 7, 6.', difficulty: 1, hints: ['Mỗi số giảm 1.'] },
-    { id: 'ex-pattern-009', question: '1, 2, 4, 7, 11, ?', type: 'free_text', correctAnswer: '16', explanation: 'Khoảng cách tăng: +1, +2, +3, +4, +5. 11 + 5 = 16.', difficulty: 3, hints: ['Xem xét khoảng cách giữa các số.', '2-1=1, 4-2=2, 7-4=3...'] },
-    { id: 'ex-pattern-010', question: 'AB_AB_AB_ — Chữ cái tiếp theo?', type: 'free_text', correctAnswer: 'A', explanation: 'Quy luật: AB lặp lại. Sau _ là A.', difficulty: 2, hints: ['AB rồi lại AB.'] },
+  mc('g1-pattern-01', 'Tìm quy luật: 🔴🔵🔴🔵🔴 __', ['🔴', '🔵', '🟢', '🟡'], '🔵', 'Màu đỏ và xanh lặp lại.', 1, ['Nhìn xem màu nào xuất hiện luân phiên.'], ['grade1', 'pattern']),
+  ft('g1-pattern-02', 'Điền số: 2, 4, 6, __', '8', 'Dãy tăng thêm 2.', 1, ['Mỗi lần cộng thêm 2.'], ['grade1', 'pattern']),
+  ft('g2-pattern-01', 'Điền số: 5, 10, 15, __', '20', 'Đây là đếm nhảy 5.', 2, ['Mỗi lần thêm 5.'], ['grade2', 'skip-counting']),
+  ft('g2-pattern-02', 'Điền số: 20, 30, 40, __', '50', 'Đây là đếm nhảy 10.', 2, ['Mỗi lần thêm 10.'], ['grade2', 'skip-counting']),
 ];
-
-// ═══════════════════════════════════════════
-// MEASUREMENT & TIME (basic)
-// ═══════════════════════════════════════════
 
 export const measurementExercises: Exercise[] = [
-    { id: 'ex-measure-001', question: 'Cái nào DÀI hơn: bút chì hay tẩy?', type: 'multiple_choice', options: ['Bút chì', 'Tẩy', 'Bằng nhau'], correctAnswer: 'Bút chì', explanation: 'Bút chì thường dài hơn cục tẩy.', difficulty: 1, hints: ['Nghĩ về đồ dùng học tập.'] },
-    { id: 'ex-measure-002', question: 'Cái nào NẶNG hơn: quả dưa hấu hay quả táo?', type: 'multiple_choice', options: ['Quả dưa hấu', 'Quả táo', 'Bằng nhau'], correctAnswer: 'Quả dưa hấu', explanation: 'Dưa hấu nặng hơn táo rất nhiều.', difficulty: 1, hints: ['Con thử bưng xem!'] },
-    { id: 'ex-measure-003', question: 'Kim giờ chỉ số 3. Bây giờ là mấy giờ?', type: 'free_text', correctAnswer: '3', explanation: 'Kim giờ (kim ngắn) chỉ số 3 = 3 giờ.', difficulty: 2, hints: ['Kim ngắn là kim giờ.'] },
-    { id: 'ex-measure-004', question: 'Trong 1 tuần có mấy ngày?', type: 'free_text', correctAnswer: '7', explanation: '1 tuần có 7 ngày: Thứ 2, 3, 4, 5, 6, 7, Chủ nhật.', difficulty: 1, hints: ['Đếm từ thứ 2 đến Chủ nhật.'] },
-    { id: 'ex-measure-005', question: 'Tháng nào có 28 hoặc 29 ngày?', type: 'multiple_choice', options: ['Tháng 2', 'Tháng 1', 'Tháng 3', 'Tháng 6'], correctAnswer: 'Tháng 2', explanation: 'Tháng 2 có 28 ngày (năm nhuận: 29 ngày).', difficulty: 2, hints: ['Tháng ngắn nhất.'] },
-    { id: 'ex-measure-006', question: 'Con người nào CAO hơn: em bé hay ba mẹ?', type: 'multiple_choice', options: ['Ba mẹ', 'Em bé', 'Bằng nhau'], correctAnswer: 'Ba mẹ', explanation: 'Người lớn cao hơn em bé.', difficulty: 1, hints: ['Ai cao hơn ai?'] },
-    { id: 'ex-measure-007', question: 'Sắp xếp từ NGẮN đến DÀI: bút, thước, phấn', type: 'multiple_choice', options: ['Phấn, bút, thước', 'Bút, phấn, thước', 'Thước, bút, phấn'], correctAnswer: 'Phấn, bút, thước', explanation: 'Phấn ngắn nhất, thước dài nhất.', difficulty: 2, hints: ['Phấn rất ngắn, thước rất dài.'] },
-    { id: 'ex-measure-008', question: 'Cái ly đựng được nhiều nước hơn hay chén?', type: 'multiple_choice', options: ['Cái ly', 'Cái chén', 'Bằng nhau'], correctAnswer: 'Cái ly', explanation: 'Ly thường to hơn chén, đựng nhiều nước hơn.', difficulty: 1, hints: ['Cái nào to hơn?'] },
+  mc('g1-measure-01', 'Vật nào dài hơn?', ['Bút chì 15cm', 'Cục tẩy 4cm'], 'Bút chì 15cm', '15cm dài hơn 4cm.', 1, ['So sánh số đo.'], ['grade1', 'measurement']),
+  mc('g1-measure-02', 'Vật nào nặng hơn?', ['Quả dưa hấu', 'Chiếc lá'], 'Quả dưa hấu', 'Quả dưa hấu nặng hơn.', 1, ['Dùng kinh nghiệm đời sống.'], ['grade1', 'measurement']),
+  mc('g1-measure-03', 'Đồng hồ chỉ đúng 3 giờ khi nào?', ['Kim ngắn ở 3, kim dài ở 12', 'Kim ngắn ở 12, kim dài ở 3', 'Kim ngắn ở 6, kim dài ở 12', 'Kim ngắn ở 3, kim dài ở 6'], 'Kim ngắn ở 3, kim dài ở 12', 'Giờ đúng thì kim dài chỉ 12.', 2, ['Nhớ quy tắc giờ đúng.'], ['grade1', 'time']),
+  mc('g2-measure-01', 'Đơn vị nào thích hợp để đo chiều dài bàn học?', ['cm', 'kg', 'lít', 'giờ'], 'cm', 'Chiều dài thường đo bằng cm hoặc m.', 2, ['Chọn đơn vị đo độ dài.'], ['grade2', 'measurement']),
+  mc('g2-measure-02', 'Đơn vị nào dùng để đo cân nặng của bé?', ['lít', 'kg', 'cm', 'm'], 'kg', 'Cân nặng thường đo bằng kg.', 2, ['Kg dùng cho nặng nhẹ.'], ['grade2', 'measurement']),
+  mc('g2-measure-03', 'Đơn vị nào dùng để đo nước trong chai?', ['kg', 'cm', 'lít', 'm'], 'lít', 'Dung tích chất lỏng thường đo bằng lít.', 2, ['Lít dùng cho nước, sữa, nước trái cây.'], ['grade2', 'measurement']),
+  ft('g2-measure-04', '30cm + 20cm = __ cm', '50', '30cm + 20cm = 50cm.', 2, ['Cộng các số đo cùng đơn vị.'], ['grade2', 'measurement']),
+  mc('g2-measure-05', '7 giờ 30 phút còn gọi là:', ['7 giờ rưỡi', '7 giờ kém 30', '8 giờ rưỡi', '6 giờ rưỡi'], '7 giờ rưỡi', '30 phút sau 7 giờ là 7 giờ rưỡi.', 2, ['Nửa giờ là 30 phút.'], ['grade2', 'time']),
 ];
 
-// ═══════════════════════════════════════════
-// EXPLAIN / REASONING exercises
-// ═══════════════════════════════════════════
+export const moneyAndDataExercises: Exercise[] = [
+  mc('g2-money-01', 'Tờ tiền nào lớn hơn?', ['2.000đ', '5.000đ'], '5.000đ', '5.000đ lớn hơn 2.000đ.', 2, ['So sánh giá trị số.'], ['grade2', 'money']),
+  ft('g2-money-02', '3.000đ + 2.000đ = __ đ', '5000', '3.000đ cộng 2.000đ bằng 5.000đ.', 2, ['Cộng 3 nghìn và 2 nghìn.'], ['grade2', 'money']),
+  mc('g2-fraction-01', 'Hình nào tô màu 1/2?', ['1 trong 2 phần bằng nhau', '1 trong 3 phần bằng nhau', '2 trong 3 phần', '1 trong 4 phần'], '1 trong 2 phần bằng nhau', 'Một nửa là 1 trong 2 phần bằng nhau.', 2, ['Nửa nghĩa là chia làm 2 phần bằng nhau.'], ['grade2', 'fraction']),
+  mc('g2-data-01', 'Biểu đồ tranh cho biết: Táo 🍎🍎🍎, Cam 🍊🍊. Loại quả nào nhiều hơn?', ['Cam', 'Táo', 'Bằng nhau', 'Không biết'], 'Táo', 'Có 3 quả táo và 2 quả cam nên táo nhiều hơn.', 2, ['Đếm số biểu tượng.'], ['grade2', 'data']),
+  ft('g2-data-02', 'Lớp có 4 bạn thích mèo và 6 bạn thích chó. Có tất cả bao nhiêu bạn?', '10', '4 + 6 = 10.', 2, ['Gộp hai nhóm lại.'], ['grade2', 'data', 'word-problem']),
+];
+
+export const multiplicationDivisionExercises: Exercise[] = [
+  mc('g2-mul-01', 'Có 3 nhóm, mỗi nhóm 2 cái bánh. Có tất cả bao nhiêu cái bánh?', ['5', '6', '7', '8'], '6', '2 + 2 + 2 = 6.', 2, ['Cộng lặp 3 lần số 2.'], ['grade2', 'multiplication']),
+  ft('g2-mul-02', '2 + 2 + 2 + 2 = __', '8', 'Đây là 4 nhóm 2, tổng là 8.', 2, ['Cộng lặp lại.'], ['grade2', 'multiplication']),
+  mc('g2-div-01', 'Có 8 cái kẹo chia đều cho 2 bạn. Mỗi bạn được mấy cái?', ['2', '3', '4', '5'], '4', '8 chia đều cho 2 được 4.', 2, ['Chia thành 2 phần bằng nhau.'], ['grade2', 'division']),
+  mc('g2-div-02', 'Có 12 quả bóng, xếp mỗi nhóm 3 quả. Có mấy nhóm?', ['3', '4', '5', '6'], '4', '12 chia thành các nhóm 3 được 4 nhóm.', 2, ['12 = 3 + 3 + 3 + 3.'], ['grade2', 'division']),
+  ex('g2-muldiv-03', 'Giải thích vì sao 3 nhóm 4 đồ vật thì có 12 đồ vật.', 'Vì 4 + 4 + 4 = 12 nên 3 nhóm 4 là 12.', 'Liên hệ giữa cộng lặp và phép nhân.', 3, ['Viết phép cộng lặp trước.'], ['grade2', 'reasoning', 'multiplication']),
+];
+
+export const problemSolvingExercises: Exercise[] = [
+  ft('g2-problem-01', 'Một giỏ có 24 quả cam, bán 6 quả rồi nhập thêm 10 quả. Giỏ có bao nhiêu quả?', '28', '24 - 6 + 10 = 28.', 3, ['Làm từng bước một.', 'Bước 1: 24 - 6.', 'Bước 2: kết quả + 10.'], ['grade2', 'two-step', 'problem-solving']),
+  ft('g2-problem-02', 'Trên xe có 35 hành khách. 12 người xuống, 8 người lên. Trên xe còn bao nhiêu người?', '31', '35 - 12 + 8 = 31.', 3, ['Xuống là trừ, lên là cộng.'], ['grade2', 'two-step', 'problem-solving']),
+  ex('g2-problem-03', 'Con có thể kiểm tra lại kết quả 46 - 18 = 28 bằng cách nào?', 'Lấy 28 cộng 18, nếu được 46 thì đúng.', 'Dùng phép ngược để kiểm tra.', 3, ['Phép cộng kiểm tra phép trừ.'], ['grade2', 'reasoning', 'inverse-operation']),
+];
 
 export const reasoningExercises: Exercise[] = [
-    { id: 'ex-reason-001', question: 'Tại sao 3 + 4 = 4 + 3?', type: 'explain', correctAnswer: 'Vì khi đổi chỗ hai số hạng, tổng không thay đổi.', explanation: 'Đây là tính chất giao hoán: a + b = b + a.', difficulty: 3, hints: ['Tính 3+4 và 4+3 xem.', 'Kết quả có giống nhau không?', 'Đổi chỗ hai số, kết quả vẫn giống nhau.'] },
-    { id: 'ex-reason-002', question: 'Tại sao 5 + 0 = 5?', type: 'explain', correctAnswer: 'Vì cộng với 0 thì số đó không thay đổi.', explanation: '0 là phần tử trung hòa của phép cộng.', difficulty: 2, hints: ['Cộng thêm 0 có nghĩa là không thêm gì.'] },
-    { id: 'ex-reason-003', question: 'Nếu 5 + ? = 9, thì ? = bao nhiêu?', type: 'free_text', correctAnswer: '4', explanation: '5 + 4 = 9. Vậy ? = 4.', difficulty: 2, hints: ['9 - 5 = ?', 'Cần thêm bao nhiêu từ 5 để được 9?'] },
-    { id: 'ex-reason-004', question: 'Nếu ? - 3 = 7, thì ? = bao nhiêu?', type: 'free_text', correctAnswer: '10', explanation: '10 - 3 = 7. Vậy ? = 10.', difficulty: 3, hints: ['7 + 3 = ?', 'Số bị trừ = hiệu + số trừ.'] },
-    { id: 'ex-reason-005', question: 'Con có 10 viên bi. Con muốn chia đều cho 2 bạn. Mỗi bạn được mấy viên?', type: 'free_text', correctAnswer: '5', explanation: '10 ÷ 2 = 5. Mỗi bạn được 5 viên bi.', difficulty: 3, hints: ['Chia đều 10 cho 2 phần.', '10 chia 2 = ?'] },
+  ex('g1-reason-01', 'Vì sao 10 là một số quan trọng khi học cộng trừ?', 'Vì có thể ghép số để làm tròn 10 rồi tính dễ hơn.', 'Chiến lược make-10 giúp tính nhẩm nhanh và hiểu cấu tạo số.', 2, ['Ví dụ 8 + 5 có thể làm thành 10 + 3.'], ['reasoning', 'make10']),
+  ex('g2-reason-02', 'So sánh 36 + 9 và 39 + 6. Hai phép tính có bằng nhau không?', 'Có, vì đều bằng 45.', 'Cả hai phép tính đều cho kết quả 45.', 3, ['Tính từng phép hoặc đổi bù.'], ['reasoning', 'compare-methods']),
 ];
-
-// ═══════════════════════════════════════════
-// Aggregate all math exercises
-// ═══════════════════════════════════════════
 
 export const allMathExercises: Exercise[] = [
-    ...countingExercises,
-    ...additionWithin10,
-    ...additionWithin20,
-    ...subtractionWithin10,
-    ...subtractionWithin20,
-    ...shapeExercises,
-    ...patternExercises,
-    ...measurementExercises,
-    ...reasoningExercises,
+  ...countingExercises,
+  ...numberBondExercises,
+  ...placeValueExercises,
+  ...additionWithin10,
+  ...subtractionWithin10,
+  ...additionWithin20,
+  ...subtractionWithin20,
+  ...geometryExercises,
+  ...patternExercises,
+  ...measurementExercises,
+  ...moneyAndDataExercises,
+  ...multiplicationDivisionExercises,
+  ...problemSolvingExercises,
+  ...reasoningExercises,
 ];
 
-// ═══════════════════════════════════════════
-// MATH LESSONS
-// ═══════════════════════════════════════════
-
 export const mathLessons: Lesson[] = [
-    {
-        id: 'lesson-math-counting', subject: 'Toán', ageBand: '6-8',
-        competencyIds: ['comp-math-001'],
-        title: 'Đếm & nhận biết số 1-20',
-        objective: 'Bé đếm được, nhận biết và so sánh các số từ 1 đến 20.',
-        contentBlocks: [
-            { id: 'cb-count-01', type: 'text', content: 'Hôm nay chúng ta tập đếm từ 1 đến 20! Đếm là kỹ năng quan trọng nhất trong Toán.' },
-            { id: 'cb-count-02', type: 'visual', content: '1 🍎  2 🍎🍎  3 🍎🍎🍎  4 🍎🍎🍎🍎  5 🍎🍎🍎🍎🍎' },
-            { id: 'cb-count-03', type: 'example', content: 'Đếm ngón tay: giơ 3 ngón → nói "ba". Giơ 5 ngón → nói "năm".' },
-        ],
-        exercises: countingExercises.slice(0, 8),
-        rubric: ['Đếm đúng', 'Nhận biết số', 'So sánh lớn/nhỏ'],
-    },
-    {
-        id: 'lesson-math-add10', subject: 'Toán', ageBand: '6-8',
-        competencyIds: ['comp-math-002'],
-        title: 'Phép cộng trong phạm vi 10',
-        objective: 'Cộng hai số có tổng không quá 10, giải bài toán có lời văn.',
-        contentBlocks: [
-            { id: 'cb-add10-01', type: 'text', content: 'Phép cộng nghĩa là gộp hai nhóm lại. Khi con có 3 viên bi và được thêm 4 viên, con có tất cả 7 viên.' },
-            { id: 'cb-add10-02', type: 'visual', content: '3 + 4 = 7\n🔵🔵🔵 + 🔴🔴🔴🔴 = 🔵🔵🔵🔴🔴🔴🔴' },
-            { id: 'cb-add10-03', type: 'example', content: 'Mẹo: Bắt đầu từ số LỚN hơn, rồi đếm thêm số nhỏ. VD: 4 + 3 → bắt đầu từ 4: 5, 6, 7.' },
-        ],
-        exercises: additionWithin10.slice(0, 12),
-        rubric: ['Tính đúng', 'Giải thích được', 'Giải bài toán có lời văn'],
-    },
-    {
-        id: 'lesson-math-add20', subject: 'Toán', ageBand: '6-8',
-        competencyIds: ['comp-math-002'],
-        title: 'Phép cộng trong phạm vi 20',
-        objective: 'Cộng qua 10 bằng cách tách số, giải bài toán phức tạp hơn.',
-        contentBlocks: [
-            { id: 'cb-add20-01', type: 'text', content: 'Khi cộng qua 10, con có thể tách số để dễ hơn. VD: 8 + 5 = 8 + 2 + 3 = 10 + 3 = 13.' },
-            { id: 'cb-add20-02', type: 'visual', content: '8 + 5 = ?\n→ 8 + 2 = 10\n→ 10 + 3 = 13\n→ Vậy 8 + 5 = 13!' },
-        ],
-        exercises: additionWithin20.slice(0, 10),
-        rubric: ['Tính đúng', 'Dùng phương pháp tách số', 'Bài toán có lời văn'],
-    },
-    {
-        id: 'lesson-math-sub10', subject: 'Toán', ageBand: '6-8',
-        competencyIds: ['comp-math-003'],
-        title: 'Phép trừ trong phạm vi 10',
-        objective: 'Trừ hai số trong phạm vi 10, hiểu ý nghĩa phép trừ.',
-        contentBlocks: [
-            { id: 'cb-sub10-01', type: 'text', content: 'Phép trừ nghĩa là bớt đi. VD: có 8 kẹo, ăn 3, còn 5.' },
-            { id: 'cb-sub10-02', type: 'visual', content: '8 - 3 = 5\n🍬🍬🍬🍬🍬🍬🍬🍬\nĂn: 🍬🍬🍬 ❌\nCòn: 🍬🍬🍬🍬🍬 = 5' },
-        ],
-        exercises: subtractionWithin10.slice(0, 12),
-        rubric: ['Tính đúng', 'Hiểu ý nghĩa trừ', 'Bài toán có lời văn'],
-    },
-    {
-        id: 'lesson-math-sub20', subject: 'Toán', ageBand: '6-8',
-        competencyIds: ['comp-math-003'],
-        title: 'Phép trừ trong phạm vi 20',
-        objective: 'Trừ qua 10 bằng cách tách số.',
-        contentBlocks: [
-            { id: 'cb-sub20-01', type: 'text', content: 'VD: 15 - 7 = ? → tách: 15 - 5 = 10, rồi 10 - 2 = 8. Vậy 15 - 7 = 8.' },
-        ],
-        exercises: subtractionWithin20.slice(0, 10),
-        rubric: ['Tính đúng', 'Phương pháp tách số'],
-    },
-    {
-        id: 'lesson-math-shapes', subject: 'Toán', ageBand: '6-8',
-        competencyIds: ['comp-math-004'],
-        title: 'Nhận biết hình — Tròn, Vuông, Tam giác, Chữ nhật',
-        objective: 'Nhận biết 4 hình cơ bản, tìm hình trong đời thực.',
-        contentBlocks: [
-            { id: 'cb-shape-01', type: 'text', content: '4 hình cơ bản: Tròn (không có góc), Vuông (4 cạnh bằng), Tam giác (3 cạnh), Chữ nhật (2 dài + 2 ngắn).' },
-            { id: 'cb-shape-02', type: 'visual', content: '🔴 Tròn   🟦 Vuông   🔺 Tam giác   📱 Chữ nhật' },
-        ],
-        exercises: shapeExercises,
-        rubric: ['Nhận biết hình', 'Đếm cạnh', 'Tìm hình trong thực tế'],
-    },
-    {
-        id: 'lesson-math-patterns', subject: 'Toán', ageBand: '6-8',
-        competencyIds: ['comp-math-001', 'comp-math-002'],
-        title: 'Quy luật & Dãy số',
-        objective: 'Tìm quy luật của dãy số và hình ảnh, tiếp tục dãy.',
-        contentBlocks: [
-            { id: 'cb-pattern-01', type: 'text', content: 'Tìm quy luật nghĩa là tìm ra "cái gì lặp lại" hoặc "cái gì thay đổi đều đặn".' },
-            { id: 'cb-pattern-02', type: 'example', content: '🔴🔵🔴🔵🔴? → Đỏ-Xanh lặp lại, tiếp theo là 🔵.' },
-        ],
-        exercises: patternExercises,
-        rubric: ['Nhận ra quy luật', 'Tiếp tục dãy số', 'Sáng tạo quy luật mới'],
-    },
-    {
-        id: 'lesson-math-measure', subject: 'Toán', ageBand: '6-8',
-        competencyIds: ['comp-math-004'],
-        title: 'Đo lường & Thời gian cơ bản',
-        objective: 'So sánh dài/ngắn, nặng/nhẹ. Đọc giờ đúng.',
-        contentBlocks: [
-            { id: 'cb-measure-01', type: 'text', content: 'So sánh nghĩa là xem cái nào dài hơn, ngắn hơn, nặng hơn, nhẹ hơn.' },
-        ],
-        exercises: measurementExercises,
-        rubric: ['So sánh đúng', 'Đọc giờ', 'Sắp xếp theo thứ tự'],
-    },
-    {
-        id: 'lesson-math-reasoning', subject: 'Toán', ageBand: '6-8',
-        competencyIds: ['comp-math-002', 'comp-math-003'],
-        title: 'Tư duy & Giải thích',
-        objective: 'Giải thích cách tính, tìm số thiếu, chia đều.',
-        contentBlocks: [
-            { id: 'cb-reason-01', type: 'text', content: 'Giải thích được nghĩa là con thật sự hiểu. Nếu chỉ tính đúng mà không giải thích được, con chưa hiểu.' },
-        ],
-        exercises: reasoningExercises,
-        rubric: ['Giải thích rõ ràng', 'Tìm số thiếu', 'Tư duy logic'],
-    },
+  {
+    id: 'lesson-math-g1-01',
+    subject: 'Toán',
+    ageBand: '6-8',
+    competencyIds: ['comp-math-001'],
+    title: 'Lớp 1 — Số đến 20, đếm, so sánh, thứ tự',
+    objective: 'Nhận biết, đếm, so sánh và sắp xếp các số trong phạm vi 20.',
+    contentBlocks: [
+      { id: 'cb-g1-01-1', type: 'text', content: 'Con học đếm, đọc số, viết số và nhận ra số nào lớn hơn hay bé hơn.' },
+      { id: 'cb-g1-01-2', type: 'visual', content: '1, 2, 3, ... 20 — các số đứng theo thứ tự trên tia số.' },
+      { id: 'cb-g1-01-3', type: 'example', content: '9 lớn hơn 6 vì 9 đứng bên phải 6 trên tia số.' },
+    ],
+    exercises: countingExercises,
+    rubric: ['Đếm đúng', 'So sánh đúng', 'Biết số liền trước/liền sau'],
+  },
+  {
+    id: 'lesson-math-g1-02',
+    subject: 'Toán',
+    ageBand: '6-8',
+    competencyIds: ['comp-math-001'],
+    title: 'Lớp 1 — Tách gộp số và number bonds',
+    objective: 'Tách và gộp số trong phạm vi 10, dùng chiến lược làm tròn 10.',
+    contentBlocks: [
+      { id: 'cb-g1-02-1', type: 'text', content: 'Một số có thể tách thành nhiều cặp số khác nhau. Đây là nền tảng của cộng trừ.' },
+      { id: 'cb-g1-02-2', type: 'example', content: '10 = 6 + 4 = 7 + 3 = 8 + 2.' },
+      { id: 'cb-g1-02-3', type: 'visual', content: '🔵🔵🔵🔵🔵🔵 + 🔴🔴🔴🔴 = 10' },
+    ],
+    exercises: numberBondExercises,
+    rubric: ['Biết tách số', 'Biết ghép số', 'Dùng được make-10'],
+  },
+  {
+    id: 'lesson-math-g1-03',
+    subject: 'Toán',
+    ageBand: '6-8',
+    competencyIds: ['comp-math-002'],
+    title: 'Lớp 1 — Phép cộng trong phạm vi 10',
+    objective: 'Cộng thành thạo trong phạm vi 10 và giải bài toán đơn giản.',
+    contentBlocks: [
+      { id: 'cb-g1-03-1', type: 'text', content: 'Phép cộng là gộp hai nhóm lại với nhau.' },
+      { id: 'cb-g1-03-2', type: 'example', content: '4 + 3 = 7. Bắt đầu từ 4 rồi đếm thêm 3 bước.' },
+      { id: 'cb-g1-03-3', type: 'visual', content: '🔵🔵🔵🔵 + 🔴🔴🔴 = 7' },
+    ],
+    exercises: additionWithin10,
+    rubric: ['Tính đúng', 'Biết đếm thêm', 'Giải được lời văn'],
+  },
+  {
+    id: 'lesson-math-g1-04',
+    subject: 'Toán',
+    ageBand: '6-8',
+    competencyIds: ['comp-math-003'],
+    title: 'Lớp 1 — Phép trừ trong phạm vi 10',
+    objective: 'Hiểu phép trừ là bớt đi và tính đúng trong phạm vi 10.',
+    contentBlocks: [
+      { id: 'cb-g1-04-1', type: 'text', content: 'Phép trừ là lấy bớt đi từ một nhóm ban đầu.' },
+      { id: 'cb-g1-04-2', type: 'visual', content: '🍬🍬🍬🍬🍬🍬 - 🍬🍬 = 4' },
+      { id: 'cb-g1-04-3', type: 'example', content: '8 - 3 = 5 vì từ 8 bớt 3 còn 5.' },
+    ],
+    exercises: subtractionWithin10,
+    rubric: ['Tính đúng', 'Hiểu ý nghĩa bớt đi', 'Giải được lời văn'],
+  },
+  {
+    id: 'lesson-math-g1-05',
+    subject: 'Toán',
+    ageBand: '6-8',
+    competencyIds: ['comp-math-002', 'comp-math-003'],
+    title: 'Lớp 1 — Cộng trừ trong phạm vi 20',
+    objective: 'Biết dùng chiến lược tách số để cộng trừ qua 10.',
+    contentBlocks: [
+      { id: 'cb-g1-05-1', type: 'text', content: 'Khi tính qua 10, con có thể tách số để được 10 trước.' },
+      { id: 'cb-g1-05-2', type: 'example', content: '8 + 5 = 8 + 2 + 3 = 13.' },
+      { id: 'cb-g1-05-3', type: 'example', content: '15 - 7 = 15 - 5 - 2 = 8.' },
+    ],
+    exercises: [...additionWithin20, ...subtractionWithin20],
+    rubric: ['Biết tách số', 'Tính đúng', 'Giải thích được cách làm'],
+  },
+  {
+    id: 'lesson-math-g1-06',
+    subject: 'Toán',
+    ageBand: '6-8',
+    competencyIds: ['comp-math-004'],
+    title: 'Lớp 1 — Hình học và định hướng không gian',
+    objective: 'Nhận biết hình cơ bản và mô tả vị trí trong không gian.',
+    contentBlocks: [
+      { id: 'cb-g1-06-1', type: 'text', content: 'Con học hình tròn, vuông, tam giác, chữ nhật và các vị trí trái/phải/trên/dưới.' },
+      { id: 'cb-g1-06-2', type: 'visual', content: '🔵 hình tròn • 🟦 hình vuông • 🔺 hình tam giác • ▭ hình chữ nhật' },
+    ],
+    exercises: geometryExercises.slice(0, 4),
+    rubric: ['Nhận biết hình', 'Đếm cạnh', 'Mô tả đúng vị trí'],
+  },
+  {
+    id: 'lesson-math-g1-07',
+    subject: 'Toán',
+    ageBand: '6-8',
+    competencyIds: ['comp-math-001', 'comp-math-004'],
+    title: 'Lớp 1 — Quy luật, đo lường, thời gian cơ bản',
+    objective: 'Nhận ra quy luật đơn giản, so sánh độ dài/nặng nhẹ và đọc giờ đúng.',
+    contentBlocks: [
+      { id: 'cb-g1-07-1', type: 'text', content: 'Toán không chỉ là tính. Con còn học quy luật, so sánh và xem giờ.' },
+      { id: 'cb-g1-07-2', type: 'example', content: '🔴🔵🔴🔵 là quy luật lặp; 15cm dài hơn 4cm.' },
+    ],
+    exercises: [...patternExercises.slice(0, 2), ...measurementExercises.slice(0, 3)],
+    rubric: ['Nhận ra quy luật', 'So sánh đúng', 'Đọc được giờ đúng'],
+  },
+  {
+    id: 'lesson-math-g2-01',
+    subject: 'Toán',
+    ageBand: '6-8',
+    competencyIds: ['comp-math-001'],
+    title: 'Lớp 2 — Số đến 100, chục và đơn vị',
+    objective: 'Đọc viết số đến 100, hiểu cấu tạo chục/đơn vị, phân biệt chẵn/lẻ.',
+    contentBlocks: [
+      { id: 'cb-g2-01-1', type: 'text', content: 'Ở lớp 2, con học số đến 100 và hiểu rõ hàng chục, hàng đơn vị.' },
+      { id: 'cb-g2-01-2', type: 'example', content: '57 = 5 chục và 7 đơn vị.' },
+      { id: 'cb-g2-01-3', type: 'visual', content: '34 = 30 + 4' },
+    ],
+    exercises: placeValueExercises,
+    rubric: ['Hiểu chục/đơn vị', 'So sánh số 2 chữ số', 'Nhận biết chẵn/lẻ'],
+  },
+  {
+    id: 'lesson-math-g2-02',
+    subject: 'Toán',
+    ageBand: '6-8',
+    competencyIds: ['comp-math-002', 'comp-math-003'],
+    title: 'Lớp 2 — Cộng trừ trong phạm vi 100',
+    objective: 'Tính nhẩm và tính viết cộng trừ trong phạm vi 100, kiểm tra bằng phép ngược.',
+    contentBlocks: [
+      { id: 'cb-g2-02-1', type: 'text', content: 'Con dùng hàng chục và hàng đơn vị để cộng trừ chính xác hơn.' },
+      { id: 'cb-g2-02-2', type: 'example', content: '46 - 18 = 28. Kiểm tra lại: 28 + 18 = 46.' },
+    ],
+    exercises: [...problemSolvingExercises, ...reasoningExercises.slice(1)],
+    rubric: ['Tính đúng', 'Biết làm từng bước', 'Biết tự kiểm tra'],
+  },
+  {
+    id: 'lesson-math-g2-03',
+    subject: 'Toán',
+    ageBand: '6-8',
+    competencyIds: ['comp-math-002'],
+    title: 'Lớp 2 — Đếm nhảy, quy luật, nhóm bằng nhau',
+    objective: 'Đếm nhảy 2, 5, 10 và hiểu nền tảng của phép nhân.',
+    contentBlocks: [
+      { id: 'cb-g2-03-1', type: 'text', content: 'Đếm nhảy giúp con chuẩn bị cho phép nhân và nhìn thấy cấu trúc của số.' },
+      { id: 'cb-g2-03-2', type: 'example', content: '5, 10, 15, 20 là đếm nhảy 5.' },
+    ],
+    exercises: [...patternExercises.slice(2), ...multiplicationDivisionExercises.slice(0, 2)],
+    rubric: ['Đếm nhảy đúng', 'Nhận ra quy luật', 'Hiểu cộng lặp'],
+  },
+  {
+    id: 'lesson-math-g2-04',
+    subject: 'Toán',
+    ageBand: '6-8',
+    competencyIds: ['comp-math-003'],
+    title: 'Lớp 2 — Phép chia đơn giản và chia đều',
+    objective: 'Hiểu chia đều, chia theo nhóm và liên hệ với phép trừ/cộng lặp.',
+    contentBlocks: [
+      { id: 'cb-g2-04-1', type: 'text', content: 'Chia là tách một nhóm lớn thành các phần bằng nhau hoặc thành các nhóm nhỏ.' },
+      { id: 'cb-g2-04-2', type: 'example', content: '8 cái kẹo chia đều cho 2 bạn thì mỗi bạn được 4 cái.' },
+    ],
+    exercises: multiplicationDivisionExercises.slice(2),
+    rubric: ['Chia đều đúng', 'Hiểu chia theo nhóm', 'Giải thích được bằng lời'],
+  },
+  {
+    id: 'lesson-math-g2-05',
+    subject: 'Toán',
+    ageBand: '6-8',
+    competencyIds: ['comp-math-004'],
+    title: 'Lớp 2 — Đo lường, tiền, thời gian',
+    objective: 'Dùng cm, kg, lít, đọc giờ rưỡi và giải bài toán tiền Việt Nam đơn giản.',
+    contentBlocks: [
+      { id: 'cb-g2-05-1', type: 'text', content: 'Con chọn đúng đơn vị đo và biết áp dụng vào tình huống đời thật.' },
+      { id: 'cb-g2-05-2', type: 'example', content: 'Chiều dài dùng cm/m, cân nặng dùng kg, chất lỏng dùng lít.' },
+    ],
+    exercises: [...measurementExercises.slice(3), ...moneyAndDataExercises.slice(0, 2)],
+    rubric: ['Chọn đúng đơn vị', 'Đọc giờ đúng', 'Tính tiền đơn giản'],
+  },
+  {
+    id: 'lesson-math-g2-06',
+    subject: 'Toán',
+    ageBand: '6-8',
+    competencyIds: ['comp-math-004'],
+    title: 'Lớp 2 — Hình học, phân số trực quan, dữ liệu',
+    objective: 'Nhận biết khối, hiểu một nửa và đọc dữ liệu đơn giản từ biểu đồ.',
+    contentBlocks: [
+      { id: 'cb-g2-06-1', type: 'text', content: 'Con học nhìn hình, chia đều thành các phần bằng nhau và đọc thông tin từ biểu đồ.' },
+      { id: 'cb-g2-06-2', type: 'example', content: '1/2 nghĩa là một trong hai phần bằng nhau.' },
+    ],
+    exercises: [...geometryExercises.slice(4), ...moneyAndDataExercises.slice(2)],
+    rubric: ['Nhận biết khối', 'Hiểu 1/2', 'Đọc dữ liệu đúng'],
+  },
 ];

@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useAppStore } from '@/stores/app-store';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -21,8 +22,11 @@ export default function ParentDashboard() {
         'Luật lệ (Civics)': Math.min(100, masteryStates.filter(ms => ms.competencyId.includes('civics') && ms.state === 'mastered').length * 20 + 10),
     };
 
+    useEffect(() => {
+        if (!childProfile || !parentProfile) router.push('/parent/onboarding');
+    }, [childProfile, parentProfile, router]);
+
     if (!childProfile || !parentProfile) {
-        router.push('/parent/onboarding');
         return null;
     }
 

@@ -6,7 +6,7 @@ import type {
     ParentMission,
 } from '@/types';
 
-import { allMathExercises, subtractionWithin10 } from './exercises-math';
+import { allMathExercises, subtractionWithin10, mathLessons } from './exercises-math';
 import { allVietnameseExercises } from './exercises-vietnamese';
 import { englishExercises } from './exercises-english';
 import { eliteExercises } from './exercises-elite';
@@ -20,50 +20,50 @@ import { massiveMathGenerated, massiveEliteGenerated } from './exercises-generat
 // --- Competencies ---
 
 export const competencies: Competency[] = [
-    // Math — Grade 1
+    // Math — Grades 1-2 integrated foundation
     {
         id: 'comp-math-001',
         domain: 'math',
         subject: 'Toán',
         ageBand: '6-8',
-        gradeBand: '1',
-        title: 'Đếm & nhận biết số từ 1 đến 20',
-        description: 'Bé đếm được, nhận biết và viết được các số từ 1 đến 20.',
+        gradeBand: '1-2',
+        title: 'Số học nền tảng: đếm, nhận biết số, so sánh, thứ tự',
+        description: 'Bé đếm, đọc, viết, so sánh và sắp xếp được số trong phạm vi phù hợp với lớp 1-2.',
         prerequisites: [],
-        evidenceRequired: ['Đếm chính xác', 'Viết số', 'Nhận biết số trong tuần tự'],
+        evidenceRequired: ['Đếm chính xác', 'Nhận biết số', 'So sánh/sắp thứ tự đúng', 'Biết số liền trước/liền sau'],
     },
     {
         id: 'comp-math-002',
         domain: 'math',
         subject: 'Toán',
         ageBand: '6-8',
-        gradeBand: '1',
-        title: 'Phép cộng trong phạm vi 10',
-        description: 'Cộng hai số có tổng không quá 10, giải thích được cách cộng.',
+        gradeBand: '1-2',
+        title: 'Phép cộng và chiến lược tính',
+        description: 'Bé thực hiện phép cộng trong phạm vi phù hợp, biết tách số, làm tròn 10 và giải bài toán lời văn cộng.',
         prerequisites: ['comp-math-001'],
-        evidenceRequired: ['Tính đúng', 'Giải thích bước', 'Áp dụng vào bài toán có lời văn'],
+        evidenceRequired: ['Tính đúng', 'Biết dùng chiến lược', 'Giải thích bước làm', 'Áp dụng vào tình huống thực tế'],
     },
     {
         id: 'comp-math-003',
         domain: 'math',
         subject: 'Toán',
         ageBand: '6-8',
-        gradeBand: '1',
-        title: 'Phép trừ trong phạm vi 10',
-        description: 'Trừ hai số trong phạm vi 10, hiểu ý nghĩa phép trừ.',
+        gradeBand: '1-2',
+        title: 'Phép trừ, quan hệ ngược và giải quyết vấn đề',
+        description: 'Bé thực hiện phép trừ, hiểu quan hệ cộng-trừ, tìm số thiếu và giải bài toán một đến hai bước mức đầu cấp.',
         prerequisites: ['comp-math-001'],
-        evidenceRequired: ['Tính đúng', 'Giải thích', 'Bài toán có lời văn'],
+        evidenceRequired: ['Tính đúng', 'Biết kiểm tra bằng phép ngược', 'Tìm được số thiếu', 'Giải bài toán có lời văn'],
     },
     {
         id: 'comp-math-004',
         domain: 'math',
         subject: 'Toán',
         ageBand: '6-8',
-        gradeBand: '1',
-        title: 'Hình học cơ bản — nhận biết hình',
-        description: 'Nhận biết hình tròn, hình vuông, hình tam giác, hình chữ nhật.',
+        gradeBand: '1-2',
+        title: 'Hình học, đo lường, dữ liệu và ứng dụng',
+        description: 'Bé nhận biết hình, mô tả vị trí, dùng đơn vị đo cơ bản, đọc giờ, dùng tiền, hiểu dữ liệu và phân số trực quan.',
         prerequisites: [],
-        evidenceRequired: ['Nhận biết hình', 'Phân biệt', 'Tìm trong thực tế'],
+        evidenceRequired: ['Nhận biết hình/khối', 'Chọn đúng đơn vị đo', 'Đọc giờ cơ bản', 'Đọc dữ liệu đơn giản', 'Áp dụng vào đời sống'],
     },
     // Vietnamese — Grade 1
     {
@@ -210,62 +210,10 @@ export const competencies: Competency[] = [
 
 // The exercises arrays are now imported from their respective expanded files.
 
-// --- Content Blocks ---
-
-const mathContent: ContentBlock[] = [
-    {
-        id: 'cb-math-001',
-        type: 'text',
-        content: 'Hôm nay chúng ta sẽ học phép cộng trong phạm vi 10. Phép cộng nghĩa là gộp hai nhóm lại với nhau.',
-    },
-    {
-        id: 'cb-math-002',
-        type: 'example',
-        content: 'Ví dụ: Con có 3 viên bi xanh 🔵🔵🔵 và 2 viên bi đỏ 🔴🔴. Gộp lại con có 5 viên bi: 🔵🔵🔵🔴🔴',
-    },
-    {
-        id: 'cb-math-003',
-        type: 'visual',
-        content: '3 + 2 = 5\n\n🟢🟢🟢 + 🟡🟡 = 🟢🟢🟢🟡🟡',
-    },
-];
-
 // --- Lessons ---
 
 export const lessons: Lesson[] = [
-    {
-        id: 'lesson-math-001',
-        subject: 'Toán',
-        ageBand: '6-8',
-        competencyIds: ['comp-math-002'],
-        title: 'Phép cộng trong phạm vi 10',
-        objective: 'Bé biết cộng hai số có tổng không quá 10 và giải thích cách làm.',
-        contentBlocks: mathContent,
-        exercises: allMathExercises.slice(0, 10),
-        rubric: ['Tính đúng', 'Giải thích được bước', 'Không cần gợi ý quá nhiều'],
-    },
-    {
-        id: 'lesson-math-002',
-        subject: 'Toán',
-        ageBand: '6-8',
-        competencyIds: ['comp-math-003'],
-        title: 'Phép trừ trong phạm vi 10',
-        objective: 'Bé biết trừ hai số trong phạm vi 10 và hiểu ý nghĩa phép trừ.',
-        contentBlocks: [
-            {
-                id: 'cb-sub-001',
-                type: 'text',
-                content: 'Phép trừ nghĩa là bớt đi. Khi ta có một nhóm đồ vật rồi lấy bớt đi, số còn lại chính là kết quả phép trừ.',
-            },
-            {
-                id: 'cb-sub-002',
-                type: 'example',
-                content: 'Con có 8 cái kẹo 🍬🍬🍬🍬🍬🍬🍬🍬\nCon ăn 3 cái: 🍬🍬🍬 ❌\nCòn lại: 🍬🍬🍬🍬🍬 = 5 cái',
-            },
-        ],
-        exercises: subtractionWithin10.slice(0, 5),
-        rubric: ['Tính đúng', 'Hiểu ý nghĩa trừ', 'Bài toán có lời văn'],
-    },
+    ...mathLessons,
     {
         id: 'lesson-viet-001',
         subject: 'Tiếng Việt',

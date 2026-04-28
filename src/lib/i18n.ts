@@ -5,7 +5,7 @@
 // ========================================
 
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 export type Lang = 'vi' | 'en';
 
@@ -22,7 +22,10 @@ export const useLangStore = create<LangState>()(
             setLang: (l) => set({ lang: l }),
             toggleLang: () => set({ lang: get().lang === 'vi' ? 'en' : 'vi' }),
         }),
-        { name: 'henry-lang' }
+        {
+            name: 'henry-lang',
+            storage: createJSONStorage(() => localStorage),
+        }
     )
 );
 

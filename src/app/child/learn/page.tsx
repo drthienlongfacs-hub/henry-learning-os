@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ArrowLeft, BookOpen, Calculator, Globe2, FlaskConical, Brain, ChevronRight, RotateCcw, CheckCircle2, XCircle, Lightbulb } from 'lucide-react';
 import { MATH_TOPICS, generateMathSet, type MathProblem, type TopicInfo } from '@/lib/content/math-generator';
 import { VIETNAMESE_TOPICS, generateVietnameseSet, type VietnameseProblem, type VnTopicInfo } from '@/lib/content/vietnamese-generator';
@@ -44,6 +45,7 @@ const glass = {
 };
 
 export default function LearnPage() {
+    const router = useRouter();
     const [subject, setSubject] = useState<Subject | null>(null);
     const [grade, setGrade] = useState(1);
     const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
@@ -126,7 +128,7 @@ export default function LearnPage() {
                         } else if (subject && !selectedTopic) {
                             setSubject(null);
                         } else {
-                            window.location.href = '/henry-learning-os/child';
+                            router.push('/child');
                         }
                     }}>
                         <div style={{ ...glass.card, padding: '8px 16px', display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer', color: '#3b82f6' }}>
@@ -143,7 +145,7 @@ export default function LearnPage() {
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
                         {SUBJECTS.map(s => (
                             <div key={s.key} style={{ ...glass.card, cursor: 'pointer', textAlign: 'center', transition: 'transform .2s' }}
-                                onClick={() => { if (s.key === 'elite') { window.location.href = '/henry-learning-os/child/elite'; return; } setSubject(s.key); setGrade(s.grades[0]); }}
+                                onClick={() => { if (s.key === 'elite') { router.push('/child/elite'); return; } setSubject(s.key); setGrade(s.grades[0]); }}
                                 onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.03)')}
                                 onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}>
                                 <div style={{ width: 56, height: 56, borderRadius: 16, background: s.color, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', margin: '0 auto 12px' }}>

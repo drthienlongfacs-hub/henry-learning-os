@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useAppStore } from '@/stores/app-store';
 import { useTranslation } from '@/lib/i18n';
 import { LangToggle } from '@/components/LangToggle';
@@ -12,8 +13,11 @@ export default function ChildDashboard() {
     const { childProfile, lessons, masteryStates, mistakes, reviewSchedules } = useAppStore();
     const { t } = useTranslation();
 
+    useEffect(() => {
+        if (!childProfile) router.push('/parent/onboarding');
+    }, [childProfile, router]);
+
     if (!childProfile) {
-        router.push('/parent/onboarding');
         return null;
     }
 

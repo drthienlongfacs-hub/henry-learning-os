@@ -4,7 +4,7 @@
 // ========================================
 
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import { generateId } from '@/lib/utils';
 import { competencies, lessons, parentMissions } from '@/data/seed';
 import type {
@@ -222,6 +222,7 @@ export const useAppStore = create<AppState>()(
         }),
         {
             name: 'henry-os-v2', // bumped version to wipe old cached lessons
+            storage: createJSONStorage(() => localStorage),
             partialize: (state) => Object.fromEntries(
                 Object.entries(state).filter(([key]) => !['lessons', 'competencies', 'parentMissions'].includes(key))
             ),
