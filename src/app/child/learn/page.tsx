@@ -223,7 +223,11 @@ export default function LearnPage() {
                         {currentProblem.illustration && (
                             <div style={{ marginBottom: 20, display: 'flex', justifyContent: 'center' }}>
                                 {typeof currentProblem.illustration === 'string' ? (
-                                    <img src={currentProblem.illustration} alt="Illustration"
+                                    <img
+                                        src={(typeof window !== 'undefined' && window.location.hostname.includes('github.io') && currentProblem.illustration.startsWith('/'))
+                                            ? `/henry-learning-os${currentProblem.illustration}`
+                                            : currentProblem.illustration}
+                                        alt="Illustration"
                                         onError={(e) => {
                                             const target = e.currentTarget;
                                             target.style.display = 'none';

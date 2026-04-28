@@ -31,7 +31,7 @@ const shuffle = <T>(arr: T[]): T[] => {
 
 const VOCAB_BANKS = [
     {
-        theme: 'Family', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Huskiesatrest.jpg/400px-Huskiesatrest.jpg', pairs: [
+        theme: 'Family', img: '/images/english/Huskiesatrest.jpg', pairs: [
             { en: 'mother', vi: 'mẹ' }, { en: 'father', vi: 'bố' }, { en: 'brother', vi: 'anh/em trai' },
             { en: 'sister', vi: 'chị/em gái' }, { en: 'grandmother', vi: 'bà' }, { en: 'grandfather', vi: 'ông' },
             { en: 'uncle', vi: 'chú/cậu' }, { en: 'aunt', vi: 'cô/dì' }, { en: 'cousin', vi: 'anh chị em họ' },
@@ -52,24 +52,24 @@ const VOCAB_BANKS = [
         ]
     },
     {
-        theme: 'Animals', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Huskiesatrest.jpg/400px-Huskiesatrest.jpg', pairs: [
-            { en: 'dog', vi: 'chó', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Huskiesatrest.jpg/400px-Huskiesatrest.jpg' },
-            { en: 'cat', vi: 'mèo', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/400px-Cat_August_2010-4.jpg' },
-            { en: 'bird', vi: 'chim', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Passer_domesticus_male_%2815%29.jpg/400px-Passer_domesticus_male_%2815%29.jpg' },
-            { en: 'fish', vi: 'cá', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Amphiprion_ocellaris_%28Clown_anemonefish%29_by_Nick_Hobgood.jpg/400px-Amphiprion_ocellaris_%28Clown_anemonefish%29_by_Nick_Hobgood.jpg' },
-            { en: 'elephant', vi: 'voi', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/African_Elephant_%28Loxodonta_africana%29_male_%2817289351322%29.jpg/400px-African_Elephant_%28Loxodonta_africana%29_male_%2817289351322%29.jpg' },
-            { en: 'monkey', vi: 'khỉ', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Japanese_Snow_Monkey_%28Macaque%29_Mother_Grooms_Her_Young.jpg/400px-Japanese_Snow_Monkey_%28Macaque%29_Mother_Grooms_Her_Young.jpg' },
-            { en: 'rabbit', vi: 'thỏ', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Oryctolagus_cuniculus_Rcdo.jpg/400px-Oryctolagus_cuniculus_Rcdo.jpg' },
-            { en: 'tiger', vi: 'hổ', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Bengal_tiger_%28Panthera_tigris_tigris%29_female_3_crop.jpg/400px-Bengal_tiger_%28Panthera_tigris_tigris%29_female_3_crop.jpg' },
-            { en: 'dolphin', vi: 'cá heo', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Tursiops_truncatus_01.jpg/400px-Tursiops_truncatus_01.jpg' },
+        theme: 'Animals', img: '/images/english/Huskiesatrest.jpg', pairs: [
+            { en: 'dog', vi: 'chó', img: '/images/english/Huskiesatrest.jpg' },
+            { en: 'cat', vi: 'mèo', img: '/images/english/Cat_August_2010-4.jpg' },
+            { en: 'bird', vi: 'chim', img: '/images/english/Passer_domesticus_male__15_.jpg' },
+            { en: 'fish', vi: 'cá', img: '/images/english/Amphiprion_ocellaris__Clown_anemonefish__by_Nick_Hobgood.jpg' },
+            { en: 'elephant', vi: 'voi', img: '/images/english/African_Elephant__Loxodonta_africana__male__17289351322_.jpg' },
+            { en: 'monkey', vi: 'khỉ', img: '/images/english/Japanese_Snow_Monkey__Macaque__Mother_Grooms_Her_Young.jpg' },
+            { en: 'rabbit', vi: 'thỏ', img: '/images/english/Oryctolagus_cuniculus_Rcdo.jpg' },
+            { en: 'tiger', vi: 'hổ', img: '/images/english/Bengal_tiger__Panthera_tigris_tigris__female_3_crop.jpg' },
+            { en: 'dolphin', vi: 'cá heo', img: '/images/english/Tursiops_truncatus_01.jpg' },
         ]
     },
     {
         theme: 'Food & Drink', pairs: [
-            { en: 'rice', vi: 'cơm/gạo', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/20201102.Hengnan.Hybrid_rice_Sanyou-1.6.jpg/400px-20201102.Hengnan.Hybrid_rice_Sanyou-1.6.jpg' },
+            { en: 'rice', vi: 'cơm/gạo', img: '/images/english/20201102.Hengnan.Hybrid_rice_Sanyou-1.6.jpg' },
             { en: 'milk', vi: 'sữa' },
-            { en: 'bread', vi: 'bánh mì', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Korb_mit_Br%C3%B6tchen.JPG/400px-Korb_mit_Br%C3%B6tchen.JPG' },
-            { en: 'water', vi: 'nước' }, { en: 'apple', vi: 'táo', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Pink_lady_and_cross_section.jpg/400px-Pink_lady_and_cross_section.jpg' },
+            { en: 'bread', vi: 'bánh mì', img: '/images/english/Korb_mit_Br_tchen.JPG' },
+            { en: 'water', vi: 'nước' }, { en: 'apple', vi: 'táo', img: '/images/english/Pink_lady_and_cross_section.jpg' },
             { en: 'chicken', vi: 'gà' },
             { en: 'egg', vi: 'trứng' }, { en: 'juice', vi: 'nước ép' }, { en: 'noodle', vi: 'mì/phở' },
         ]
