@@ -224,10 +224,8 @@ export default function LearnPage() {
                             <div style={{ marginBottom: 20, display: 'flex', justifyContent: 'center' }}>
                                 {typeof currentProblem.illustration === 'string' ? (
                                     <img
-                                        src={(typeof window !== 'undefined' && window.location.hostname.includes('github.io') && currentProblem.illustration.startsWith('/'))
-                                            ? `/henry-learning-os${currentProblem.illustration}`
-                                            : currentProblem.illustration}
-                                        alt="Illustration"
+                                        src={currentProblem.illustration.startsWith('/') ? `${process.env.NODE_ENV === 'production' ? '/henry-learning-os' : ''}${currentProblem.illustration}` : currentProblem.illustration}
+                                        alt="Minh hoạ học tập"
                                         onError={(e) => {
                                             const target = e.currentTarget;
                                             target.style.display = 'none';

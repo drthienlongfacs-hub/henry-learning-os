@@ -57,25 +57,25 @@ const IMG = {
 // ══════════════════════════════════════════════
 
 const HIST_G4_QS = [
-    { q: 'Nhà nước đầu tiên của nước ta tên là gì?', a: 'Văn Lang', opts: ['Văn Lang', 'Âu Lạc', 'Đại Việt', 'Đại Ngu'], e: 'Nhà nước Văn Lang do các vua Hùng lập ra, là nhà nước đầu tiên của người Việt.', illustration: IMG.dong_son },
-    { q: 'Người đứng đầu nhà nước Văn Lang gọi là gì?', a: 'Hùng Vương', opts: ['Hùng Vương', 'An Dương Vương', 'Lạc Hầu', 'Lạc Tướng'], e: 'Đứng đầu nhà nước Văn Lang là Hùng Vương, truyền được 18 đời.', illustration: IMG.dong_son },
-    { q: 'Cổ Loa là kinh đô của triều đại nào?', a: 'Âu Lạc', opts: ['Âu Lạc', 'Văn Lang', 'Đại Cồ Việt', 'Đại Việt'], e: 'An Dương Vương lập ra nước Âu Lạc, đóng đô ở Cổ Loa (Đông Anh, Hà Nội nay).', illustration: IMG.co_loa },
-    { q: 'Trống đồng Đông Sơn là biểu tượng của nền văn hóa nào?', a: 'Văn hóa Đông Sơn', opts: ['Văn hóa Đông Sơn', 'Văn hóa Sa Huỳnh', 'Văn hóa Óc Eo', 'Văn hóa Hòa Bình'], e: 'Trống đồng Đông Sơn là hiện vật tiêu biểu nhất của văn hóa Đông Sơn (khoảng 700 TCN - TK I).', illustration: IMG.dong_son },
-    { q: 'Cuộc khởi nghĩa Hai Bà Trưng nổ ra vào năm nào?', a: 'Năm 40', opts: ['Năm 40', 'Năm 248', 'Năm 938', 'Năm 981'], e: 'Mùa xuân năm 40, Hai Bà Trưng phất cờ khởi nghĩa ở Mê Linh.', illustration: IMG.trung_sisters },
-    { q: 'Bà Triệu (Triệu Thị Trinh) khởi nghĩa năm nào?', a: 'Năm 248', opts: ['Năm 248', 'Năm 40', 'Năm 542', 'Năm 938'], e: 'Năm 248, Bà Triệu dấy binh chống quân Đông Ngô, nổi tiếng với câu nói: "Tôi muốn cưỡi cơn gió mạnh...".', illustration: IMG.trung_sisters },
+    { q: 'Nhà nước đầu tiên của nước ta tên là gì?', a: 'Văn Lang', opts: ['Văn Lang', 'Âu Lạc', 'Đại Việt', 'Đại Ngu'], e: 'Nhà nước Văn Lang do các vua Hùng lập ra, là nhà nước đầu tiên của người Việt.', illustration: '/images/core/history.jpg'},
+    { q: 'Người đứng đầu nhà nước Văn Lang gọi là gì?', a: 'Hùng Vương', opts: ['Hùng Vương', 'An Dương Vương', 'Lạc Hầu', 'Lạc Tướng'], e: 'Đứng đầu nhà nước Văn Lang là Hùng Vương, truyền được 18 đời.', illustration: '/images/core/history.jpg'},
+    { q: 'Cổ Loa là kinh đô của triều đại nào?', a: 'Âu Lạc', opts: ['Âu Lạc', 'Văn Lang', 'Đại Cồ Việt', 'Đại Việt'], e: 'An Dương Vương lập ra nước Âu Lạc, đóng đô ở Cổ Loa (Đông Anh, Hà Nội nay).', illustration: '/images/core/history.jpg'},
+    { q: 'Trống đồng Đông Sơn là biểu tượng của nền văn hóa nào?', a: 'Văn hóa Đông Sơn', opts: ['Văn hóa Đông Sơn', 'Văn hóa Sa Huỳnh', 'Văn hóa Óc Eo', 'Văn hóa Hòa Bình'], e: 'Trống đồng Đông Sơn là hiện vật tiêu biểu nhất của văn hóa Đông Sơn (khoảng 700 TCN - TK I).', illustration: '/images/core/history.jpg'},
+    { q: 'Cuộc khởi nghĩa Hai Bà Trưng nổ ra vào năm nào?', a: 'Năm 40', opts: ['Năm 40', 'Năm 248', 'Năm 938', 'Năm 981'], e: 'Mùa xuân năm 40, Hai Bà Trưng phất cờ khởi nghĩa ở Mê Linh.', illustration: '/images/core/history.jpg'},
+    { q: 'Bà Triệu (Triệu Thị Trinh) khởi nghĩa năm nào?', a: 'Năm 248', opts: ['Năm 248', 'Năm 40', 'Năm 542', 'Năm 938'], e: 'Năm 248, Bà Triệu dấy binh chống quân Đông Ngô, nổi tiếng với câu nói: "Tôi muốn cưỡi cơn gió mạnh...".', illustration: '/images/core/history.jpg'},
     { q: 'Ai là người lãnh đạo cuộc khởi nghĩa năm 542 lập ra nước Vạn Xuân?', a: 'Lý Bí (Lý Nam Đế)', opts: ['Lý Bí (Lý Nam Đế)', 'Ngô Quyền', 'Lê Lợi', 'Phùng Hưng'], e: 'Lý Bí khởi nghĩa thành công năm 544, tự xưng là Lý Nam Đế, đặt tên nước là Vạn Xuân.' },
-    { q: 'Ai là người đánh tan quân Nam Hán trên sông Bạch Đằng năm 938?', a: 'Ngô Quyền', opts: ['Ngô Quyền', 'Lý Thường Kiệt', 'Trần Hưng Đạo', 'Lê Lợi'], e: 'Năm 938, Ngô Quyền dùng cọc gỗ cắm dưới sông Bạch Đằng, chấm dứt hơn 1000 năm Bắc thuộc.', illustration: IMG.ngo_quyen },
-    { q: 'Ai là người dời đô từ Hoa Lư về Thăng Long?', a: 'Lý Thái Tổ (Lý Công Uẩn)', opts: ['Lý Thái Tổ (Lý Công Uẩn)', 'Đinh Tiên Hoàng', 'Lê Hoàn', 'Trần Thái Tông'], e: 'Năm 1010, vua Lý Thái Tổ dời đô từ Hoa Lư ra Đại La, đổi tên là Thăng Long.', illustration: IMG.ly_thai_to },
+    { q: 'Ai là người đánh tan quân Nam Hán trên sông Bạch Đằng năm 938?', a: 'Ngô Quyền', opts: ['Ngô Quyền', 'Lý Thường Kiệt', 'Trần Hưng Đạo', 'Lê Lợi'], e: 'Năm 938, Ngô Quyền dùng cọc gỗ cắm dưới sông Bạch Đằng, chấm dứt hơn 1000 năm Bắc thuộc.', illustration: '/images/core/history.jpg'},
+    { q: 'Ai là người dời đô từ Hoa Lư về Thăng Long?', a: 'Lý Thái Tổ (Lý Công Uẩn)', opts: ['Lý Thái Tổ (Lý Công Uẩn)', 'Đinh Tiên Hoàng', 'Lê Hoàn', 'Trần Thái Tông'], e: 'Năm 1010, vua Lý Thái Tổ dời đô từ Hoa Lư ra Đại La, đổi tên là Thăng Long.', illustration: '/images/core/history.jpg'},
     { q: 'Vua Đinh Tiên Hoàng đặt quốc hiệu là gì?', a: 'Đại Cồ Việt', opts: ['Đại Cồ Việt', 'Đại Việt', 'Văn Lang', 'Vạn Xuân'], e: 'Năm 968, Đinh Bộ Lĩnh dẹp loạn 12 sứ quân, đặt quốc hiệu Đại Cồ Việt.' },
     { q: 'Lý Thường Kiệt nổi tiếng với bài thơ "Nam Quốc Sơn Hà" chống quân nước nào?', a: 'Quân Tống', opts: ['Quân Tống', 'Quân Nguyên', 'Quân Minh', 'Quân Thanh'], e: '"Nam quốc sơn hà Nam đế cư" — bản Tuyên ngôn Độc lập đầu tiên.' },
-    { q: 'Tên vị tướng đã 3 lần đánh bại quân Mông - Nguyên?', a: 'Trần Hưng Đạo', opts: ['Trần Hưng Đạo', 'Lý Thường Kiệt', 'Lê Lợi', 'Nguyễn Trãi'], e: 'Trần Hưng Đạo chỉ huy quân dân nhà Trần 3 lần đại thắng quân Mông - Nguyên (1258, 1285, 1288).', illustration: IMG.tran_hung_dao },
-    { q: '"Hịch tướng sĩ" là tác phẩm của ai?', a: 'Trần Hưng Đạo', opts: ['Trần Hưng Đạo', 'Nguyễn Trãi', 'Lê Lợi', 'Lý Thường Kiệt'], e: 'Hưng Đạo Đại Vương viết Hịch tướng sĩ khích lệ tinh thần trước cuộc kháng chiến chống Mông Nguyên.', illustration: IMG.tran_hung_dao },
-    { q: 'Ai là người lãnh đạo cuộc khởi nghĩa Lam Sơn chống quân Minh?', a: 'Lê Lợi', opts: ['Lê Lợi', 'Trần Hưng Đạo', 'Nguyễn Huệ', 'Ngô Quyền'], e: 'Lê Lợi cùng Nguyễn Trãi lãnh đạo cuộc khởi nghĩa Lam Sơn (1418-1428).', illustration: IMG.le_loi },
-    { q: 'Nguyễn Trãi viết "Bình Ngô đại cáo" vào năm nào?', a: '1428', opts: ['1428', '1010', '938', '1789'], e: 'Năm 1428, sau khi đánh đuổi quân Minh, Nguyễn Trãi soạn Bình Ngô đại cáo.', illustration: IMG.le_loi },
-    { q: 'Vua Quang Trung đại phá quân Thanh vào dịp nào?', a: 'Tết Kỷ Dậu 1789', opts: ['Tết Kỷ Dậu 1789', 'Tết Mậu Thân 1968', 'Tết Canh Tý 1240', 'Tết Giáp Ngọ 1414'], e: 'Mùng 5 Tết Kỷ Dậu (1789), vua Quang Trung đại phá 29 vạn quân Thanh.', illustration: IMG.quang_trung },
-    { q: 'Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập tại đâu?', a: 'Quảng trường Ba Đình, Hà Nội', opts: ['Quảng trường Ba Đình, Hà Nội', 'Huế', 'Sài Gòn', 'Hải Phòng'], e: 'Ngày 2/9/1945, Bác Hồ đọc Tuyên ngôn Độc lập tại Quảng trường Ba Đình.', illustration: IMG.ho_chi_minh },
-    { q: 'Chiến thắng Điện Biên Phủ diễn ra vào năm nào?', a: '1954', opts: ['1954', '1945', '1975', '1968'], e: 'Ngày 7/5/1954, Việt Nam chiến thắng tại Điện Biên Phủ, buộc Pháp ký Hiệp định Genève.', illustration: IMG.dien_bien_phu },
-    { q: 'Ngày Giải phóng miền Nam, thống nhất đất nước là ngày nào?', a: '30/4/1975', opts: ['30/4/1975', '2/9/1945', '7/5/1954', '19/8/1945'], e: '30/4/1975, quân giải phóng tiến vào Dinh Độc Lập, đất nước thống nhất.', illustration: IMG.independence_palace },
+    { q: 'Tên vị tướng đã 3 lần đánh bại quân Mông - Nguyên?', a: 'Trần Hưng Đạo', opts: ['Trần Hưng Đạo', 'Lý Thường Kiệt', 'Lê Lợi', 'Nguyễn Trãi'], e: 'Trần Hưng Đạo chỉ huy quân dân nhà Trần 3 lần đại thắng quân Mông - Nguyên (1258, 1285, 1288).', illustration: '/images/core/history.jpg'},
+    { q: '"Hịch tướng sĩ" là tác phẩm của ai?', a: 'Trần Hưng Đạo', opts: ['Trần Hưng Đạo', 'Nguyễn Trãi', 'Lê Lợi', 'Lý Thường Kiệt'], e: 'Hưng Đạo Đại Vương viết Hịch tướng sĩ khích lệ tinh thần trước cuộc kháng chiến chống Mông Nguyên.', illustration: '/images/core/history.jpg'},
+    { q: 'Ai là người lãnh đạo cuộc khởi nghĩa Lam Sơn chống quân Minh?', a: 'Lê Lợi', opts: ['Lê Lợi', 'Trần Hưng Đạo', 'Nguyễn Huệ', 'Ngô Quyền'], e: 'Lê Lợi cùng Nguyễn Trãi lãnh đạo cuộc khởi nghĩa Lam Sơn (1418-1428).', illustration: '/images/core/history.jpg'},
+    { q: 'Nguyễn Trãi viết "Bình Ngô đại cáo" vào năm nào?', a: '1428', opts: ['1428', '1010', '938', '1789'], e: 'Năm 1428, sau khi đánh đuổi quân Minh, Nguyễn Trãi soạn Bình Ngô đại cáo.', illustration: '/images/core/history.jpg'},
+    { q: 'Vua Quang Trung đại phá quân Thanh vào dịp nào?', a: 'Tết Kỷ Dậu 1789', opts: ['Tết Kỷ Dậu 1789', 'Tết Mậu Thân 1968', 'Tết Canh Tý 1240', 'Tết Giáp Ngọ 1414'], e: 'Mùng 5 Tết Kỷ Dậu (1789), vua Quang Trung đại phá 29 vạn quân Thanh.', illustration: '/images/core/history.jpg'},
+    { q: 'Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập tại đâu?', a: 'Quảng trường Ba Đình, Hà Nội', opts: ['Quảng trường Ba Đình, Hà Nội', 'Huế', 'Sài Gòn', 'Hải Phòng'], e: 'Ngày 2/9/1945, Bác Hồ đọc Tuyên ngôn Độc lập tại Quảng trường Ba Đình.', illustration: '/images/core/history.jpg'},
+    { q: 'Chiến thắng Điện Biên Phủ diễn ra vào năm nào?', a: '1954', opts: ['1954', '1945', '1975', '1968'], e: 'Ngày 7/5/1954, Việt Nam chiến thắng tại Điện Biên Phủ, buộc Pháp ký Hiệp định Genève.', illustration: '/images/core/history.jpg'},
+    { q: 'Ngày Giải phóng miền Nam, thống nhất đất nước là ngày nào?', a: '30/4/1975', opts: ['30/4/1975', '2/9/1945', '7/5/1954', '19/8/1945'], e: '30/4/1975, quân giải phóng tiến vào Dinh Độc Lập, đất nước thống nhất.', illustration: '/images/core/history.jpg'},
     { q: 'Ai là vị vua cuối cùng của chế độ phong kiến Việt Nam?', a: 'Bảo Đại', opts: ['Bảo Đại', 'Tự Đức', 'Gia Long', 'Minh Mạng'], e: 'Bảo Đại là vị vua cuối cùng nhà Nguyễn, thoái vị ngày 25/8/1945.' },
 ];
 
@@ -86,7 +86,7 @@ export function genHistoryG4(): HisGeoProblem {
         type: 'history', topic: 'Lịch sử Việt Nam', topicKey: 'history_g4',
         question: item.q, correctAnswer: item.a, options: item.opts,
         explanation: item.e, hints: ['Nhớ lại các bài học lịch sử', `Đáp án: ${item.a}`],
-        illustration: item.illustration,
+        illustration: '/images/core/history.jpg',
     };
 }
 
@@ -95,21 +95,21 @@ export function genHistoryG4(): HisGeoProblem {
 // ══════════════════════════════════════════════
 
 const GEO_QS = [
-    { q: 'Đất nước Việt Nam có hình dạng giống chữ cái nào?', a: 'Chữ S', opts: ['Chữ S', 'Hình vuông', 'Hình tròn', 'Hình tam giác'], e: 'Việt Nam nằm trải dài dọc bờ biển Đông, uốn cong theo hình chữ S.', illustration: IMG.vietnam_map },
-    { q: 'Việt Nam nằm ở khu vực nào trên thế giới?', a: 'Đông Nam Á', opts: ['Đông Nam Á', 'Đông Á', 'Nam Á', 'Tây Á'], e: 'Việt Nam thuộc khu vực Đông Nam Á, nằm trên bán đảo Đông Dương.', illustration: IMG.southeast_asia },
+    { q: 'Đất nước Việt Nam có hình dạng giống chữ cái nào?', a: 'Chữ S', opts: ['Chữ S', 'Hình vuông', 'Hình tròn', 'Hình tam giác'], e: 'Việt Nam nằm trải dài dọc bờ biển Đông, uốn cong theo hình chữ S.', illustration: '/images/core/history.jpg'},
+    { q: 'Việt Nam nằm ở khu vực nào trên thế giới?', a: 'Đông Nam Á', opts: ['Đông Nam Á', 'Đông Á', 'Nam Á', 'Tây Á'], e: 'Việt Nam thuộc khu vực Đông Nam Á, nằm trên bán đảo Đông Dương.', illustration: '/images/core/history.jpg'},
     { q: 'Quần đảo Hoàng Sa và Trường Sa thuộc vùng biển nào?', a: 'Biển Đông', opts: ['Biển Đông', 'Thái Bình Dương', 'Địa Trung Hải', 'Biển Đen'], e: 'Hoàng Sa và Trường Sa thuộc chủ quyền Việt Nam trên Biển Đông.' },
-    { q: 'Núi cao nhất Việt Nam tên là gì?', a: 'Fansipan', opts: ['Fansipan', 'Bạch Mã', 'Lang Biang', 'Ngọc Linh'], e: 'Đỉnh Fansipan cao 3.143m thuộc dãy Hoàng Liên Sơn, mệnh danh "nóc nhà Đông Dương".', illustration: IMG.fansipan },
-    { q: 'Đồng bằng nào lớn nhất miền Bắc?', a: 'Đồng bằng sông Hồng', opts: ['Đồng bằng sông Hồng', 'Đồng bằng sông Cửu Long', 'Đồng bằng Thanh-Nghệ', 'Đồng bằng Bình-Trị'], e: 'Đồng bằng sông Hồng (khoảng 15.000 km²) là vựa lúa lớn nhất miền Bắc.', illustration: IMG.red_river },
-    { q: 'Sông nào lớn nhất miền Nam?', a: 'Sông Cửu Long (Mê Kông)', opts: ['Sông Cửu Long (Mê Kông)', 'Sông Sài Gòn', 'Sông Đồng Nai', 'Sông Hồng'], e: 'Sông Cửu Long đổ ra biển qua 9 cửa — vùng trồng lúa lớn nhất.', illustration: IMG.mekong },
-    { q: 'Thủ đô của nước ta là?', a: 'Hà Nội', opts: ['Hà Nội', 'TP. Hồ Chí Minh', 'Đà Nẵng', 'Huế'], e: 'Hà Nội là thủ đô, trung tâm chính trị, văn hóa, giáo dục của cả nước.', illustration: IMG.hanoi },
-    { q: 'Thành phố lớn nhất nước ta về dân số?', a: 'TP. Hồ Chí Minh', opts: ['TP. Hồ Chí Minh', 'Hà Nội', 'Hải Phòng', 'Cần Thơ'], e: 'TP. Hồ Chí Minh là trung tâm kinh tế năng động và đông dân nhất cả nước.', illustration: IMG.hcm_city },
+    { q: 'Núi cao nhất Việt Nam tên là gì?', a: 'Fansipan', opts: ['Fansipan', 'Bạch Mã', 'Lang Biang', 'Ngọc Linh'], e: 'Đỉnh Fansipan cao 3.143m thuộc dãy Hoàng Liên Sơn, mệnh danh "nóc nhà Đông Dương".', illustration: '/images/core/history.jpg'},
+    { q: 'Đồng bằng nào lớn nhất miền Bắc?', a: 'Đồng bằng sông Hồng', opts: ['Đồng bằng sông Hồng', 'Đồng bằng sông Cửu Long', 'Đồng bằng Thanh-Nghệ', 'Đồng bằng Bình-Trị'], e: 'Đồng bằng sông Hồng (khoảng 15.000 km²) là vựa lúa lớn nhất miền Bắc.', illustration: '/images/core/history.jpg'},
+    { q: 'Sông nào lớn nhất miền Nam?', a: 'Sông Cửu Long (Mê Kông)', opts: ['Sông Cửu Long (Mê Kông)', 'Sông Sài Gòn', 'Sông Đồng Nai', 'Sông Hồng'], e: 'Sông Cửu Long đổ ra biển qua 9 cửa — vùng trồng lúa lớn nhất.', illustration: '/images/core/history.jpg'},
+    { q: 'Thủ đô của nước ta là?', a: 'Hà Nội', opts: ['Hà Nội', 'TP. Hồ Chí Minh', 'Đà Nẵng', 'Huế'], e: 'Hà Nội là thủ đô, trung tâm chính trị, văn hóa, giáo dục của cả nước.', illustration: '/images/core/history.jpg'},
+    { q: 'Thành phố lớn nhất nước ta về dân số?', a: 'TP. Hồ Chí Minh', opts: ['TP. Hồ Chí Minh', 'Hà Nội', 'Hải Phòng', 'Cần Thơ'], e: 'TP. Hồ Chí Minh là trung tâm kinh tế năng động và đông dân nhất cả nước.', illustration: '/images/core/history.jpg'},
     { q: 'Nước ta có bao nhiêu dân tộc anh em?', a: '54', opts: ['54', '50', '60', '45'], e: 'Việt Nam có 54 dân tộc anh em cùng chung sống, đông nhất là dân tộc Kinh.' },
     { q: 'Nước ta có bao nhiêu tỉnh thành?', a: '63', opts: ['63', '54', '58', '72'], e: 'Việt Nam có 63 tỉnh/thành phố trực thuộc trung ương.' },
-    { q: 'Vịnh Hạ Long thuộc tỉnh nào?', a: 'Quảng Ninh', opts: ['Quảng Ninh', 'Hải Phòng', 'Thanh Hóa', 'Nghệ An'], e: 'Vịnh Hạ Long (Quảng Ninh) là Di sản Thiên nhiên Thế giới UNESCO.', illustration: IMG.ha_long },
-    { q: 'Phong Nha - Kẻ Bàng nổi tiếng vì điều gì?', a: 'Hang động lớn nhất thế giới', opts: ['Hang động lớn nhất thế giới', 'Núi cao nhất', 'Biển đẹp nhất', 'Rừng lớn nhất'], e: 'Phong Nha - Kẻ Bàng có hang Sơn Đoòng — hang động tự nhiên lớn nhất thế giới.', illustration: IMG.son_doong },
+    { q: 'Vịnh Hạ Long thuộc tỉnh nào?', a: 'Quảng Ninh', opts: ['Quảng Ninh', 'Hải Phòng', 'Thanh Hóa', 'Nghệ An'], e: 'Vịnh Hạ Long (Quảng Ninh) là Di sản Thiên nhiên Thế giới UNESCO.', illustration: '/images/core/history.jpg'},
+    { q: 'Phong Nha - Kẻ Bàng nổi tiếng vì điều gì?', a: 'Hang động lớn nhất thế giới', opts: ['Hang động lớn nhất thế giới', 'Núi cao nhất', 'Biển đẹp nhất', 'Rừng lớn nhất'], e: 'Phong Nha - Kẻ Bàng có hang Sơn Đoòng — hang động tự nhiên lớn nhất thế giới.', illustration: '/images/core/history.jpg'},
     { q: 'Việt Nam xuất khẩu hàng đầu thế giới mặt hàng nào?', a: 'Gạo và cà phê', opts: ['Gạo và cà phê', 'Dầu mỏ', 'Ô tô', 'Máy bay'], e: 'Việt Nam xuất khẩu gạo thứ 2-3 và cà phê (Robusta) lớn nhất thế giới.' },
     { q: 'Đường bờ biển nước ta dài bao nhiêu?', a: 'Hơn 3.200 km', opts: ['Hơn 3.200 km', 'Hơn 1.000 km', 'Hơn 5.000 km', 'Hơn 500 km'], e: 'Bờ biển VN dài hơn 3.260 km, từ Quảng Ninh đến Kiên Giang.' },
-    { q: 'Thành phố nào là trung tâm miền Trung?', a: 'Đà Nẵng', opts: ['Đà Nẵng', 'Huế', 'Nha Trang', 'Quy Nhơn'], e: 'Đà Nẵng là thành phố trực thuộc trung ương, trung tâm kinh tế miền Trung.', illustration: IMG.da_nang },
+    { q: 'Thành phố nào là trung tâm miền Trung?', a: 'Đà Nẵng', opts: ['Đà Nẵng', 'Huế', 'Nha Trang', 'Quy Nhơn'], e: 'Đà Nẵng là thành phố trực thuộc trung ương, trung tâm kinh tế miền Trung.', illustration: '/images/core/history.jpg'},
 ];
 
 export function genGeography(): HisGeoProblem {
@@ -119,7 +119,7 @@ export function genGeography(): HisGeoProblem {
         type: 'geography', topic: 'Địa lý Việt Nam', topicKey: 'geography',
         question: item.q, correctAnswer: item.a, options: item.opts,
         explanation: item.e, hints: ['Nghĩ về bản đồ Việt Nam', `Đáp án: ${item.a}`],
-        illustration: item.illustration,
+        illustration: '/images/core/history.jpg',
     };
 }
 
