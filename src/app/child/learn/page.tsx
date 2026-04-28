@@ -245,27 +245,27 @@ export default function LearnPage() {
                         )}
 
                         {/* Question */}
-                        <div style={{ fontSize: 17, fontWeight: 700, lineHeight: 1.6, marginBottom: 20, color: '#1e1b4b' }}>
+                        <div style={{ fontSize: 20, fontWeight: 800, lineHeight: 1.5, marginBottom: 24, color: '#1e1b4b', textAlign: 'center' }}>
                             {currentProblem.question}
                         </div>
 
                         {/* Options */}
                         {currentProblem.options && (
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                                 {currentProblem.options.map((opt, i) => {
                                     const isSelected = selected === opt;
                                     const isCorrect = opt === currentProblem.correctAnswer;
                                     const showResult = selected !== null;
-                                    let bg = 'rgba(255,255,255,0.6)';
-                                    let border = '1px solid rgba(0,0,0,0.1)';
+                                    let bg = 'rgba(255,255,255,0.7)';
+                                    let border = '2px solid rgba(0,0,0,0.05)';
                                     if (showResult && isCorrect) { bg = 'rgba(16,185,129,0.15)'; border = '2px solid #10b981'; }
                                     else if (showResult && isSelected && !isCorrect) { bg = 'rgba(239,68,68,0.12)'; border = '2px solid #ef4444'; }
                                     return (
                                         <button key={i} disabled={!!selected} onClick={() => handleAnswer(opt)}
-                                            style={{ padding: '14px 16px', borderRadius: 14, border, background: bg, textAlign: 'left', fontSize: 15, cursor: selected ? 'default' : 'pointer', transition: 'all .2s', display: 'flex', alignItems: 'center', gap: 10 }}>
-                                            {showResult && isCorrect && <CheckCircle2 size={18} color="#10b981" />}
-                                            {showResult && isSelected && !isCorrect && <XCircle size={18} color="#ef4444" />}
-                                            <span style={{ fontWeight: isSelected ? 700 : 500 }}>{opt}</span>
+                                            style={{ padding: '16px 20px', borderRadius: 16, border, background: bg, textAlign: 'left', fontSize: 17, cursor: selected ? 'default' : 'pointer', transition: 'all .2s ease', display: 'flex', alignItems: 'center', gap: 12, boxShadow: '0 2px 8px rgba(0,0,0,0.02)' }}>
+                                            {showResult && isCorrect ? <div style={{ width: 24, height: 24, borderRadius: 12, background: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><CheckCircle2 size={16} color="#fff" /></div> : null}
+                                            {showResult && isSelected && !isCorrect ? <div style={{ width: 24, height: 24, borderRadius: 12, background: '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><XCircle size={16} color="#fff" /></div> : null}
+                                            <span style={{ fontWeight: isSelected ? 800 : 600, color: '#334155' }}>{opt}</span>
                                         </button>
                                     );
                                 })}
@@ -274,21 +274,26 @@ export default function LearnPage() {
 
                         {/* Hint */}
                         {!selected && (
-                            <button onClick={() => setShowHint(!showHint)}
-                                style={{ marginTop: 16, padding: '8px 16px', borderRadius: 12, border: '1px solid rgba(245,158,11,0.3)', background: 'rgba(245,158,11,0.08)', color: '#d97706', fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}>
-                                <Lightbulb size={14} /> {showHint ? currentProblem.hints[0] : 'Xem gợi ý'}
-                            </button>
+                            <div style={{ display: 'flex', justifyContent: 'center', marginTop: 24 }}>
+                                <button onClick={() => setShowHint(!showHint)}
+                                    style={{ padding: '10px 20px', borderRadius: 20, border: '1px solid rgba(245,158,11,0.4)', background: 'rgba(245,158,11,0.1)', color: '#b45309', fontSize: 15, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, transition: 'all .2s' }}>
+                                    <Lightbulb size={18} /> {showHint ? currentProblem.hints[0] : '💡 Mở gợi ý siêu cấp'}
+                                </button>
+                            </div>
                         )}
 
                         {/* Feedback + Next */}
                         {selected && (
-                            <div style={{ marginTop: 16, padding: 16, borderRadius: 14, background: selected === currentProblem.correctAnswer ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.08)', border: `1px solid ${selected === currentProblem.correctAnswer ? 'rgba(16,185,129,0.3)' : 'rgba(239,68,68,0.2)'}` }}>
-                                <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 6, color: selected === currentProblem.correctAnswer ? '#059669' : '#dc2626' }}>
-                                    {selected === currentProblem.correctAnswer ? '✅ Chính xác!' : '❌ Chưa đúng'}
+                            <div style={{ marginTop: 24, padding: 20, borderRadius: 16, background: selected === currentProblem.correctAnswer ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.08)', border: `2px solid ${selected === currentProblem.correctAnswer ? 'rgba(16,185,129,0.4)' : 'rgba(239,68,68,0.3)'}`, position: 'relative' }}>
+                                <div style={{ position: 'absolute', top: -20, left: '50%', transform: 'translateX(-50%)', fontSize: 32, background: '#fff', borderRadius: 40, padding: '0 8px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
+                                    {selected === currentProblem.correctAnswer ? '🌟' : '💪'}
                                 </div>
-                                <div style={{ fontSize: 14, color: '#555', lineHeight: 1.6 }}>{currentProblem.explanation}</div>
-                                <button onClick={nextProblem} style={{ ...glass.btn('#3b82f6'), marginTop: 12, padding: '10px 20px' }}>
-                                    Câu tiếp <ChevronRight size={16} />
+                                <div style={{ fontWeight: 800, fontSize: 18, marginTop: 12, marginBottom: 8, color: selected === currentProblem.correctAnswer ? '#059669' : '#dc2626', textAlign: 'center' }}>
+                                    {selected === currentProblem.correctAnswer ? 'Tuyệt vời! Con làm đúng rồi!' : 'Không sao cả! Cùng xem lại nhé!'}
+                                </div>
+                                <div style={{ fontSize: 16, color: '#475569', lineHeight: 1.6, textAlign: 'center', background: 'rgba(255,255,255,0.6)', padding: 12, borderRadius: 12, marginBottom: 16 }}>{currentProblem.explanation}</div>
+                                <button onClick={nextProblem} style={{ ...glass.btn('#3b82f6'), width: '100%', justifyContent: 'center', padding: '14px', fontSize: 16, borderRadius: 16, boxShadow: '0 4px 14px rgba(59,130,246,0.3)' }}>
+                                    Câu tiếp theo <ChevronRight size={20} />
                                 </button>
                             </div>
                         )}
@@ -297,19 +302,22 @@ export default function LearnPage() {
 
                 {/* ════ COMPLETION ════ */}
                 {problems.length > 0 && index >= problems.length && (
-                    <div style={{ ...glass.card, textAlign: 'center', padding: 40 }}>
-                        <div style={{ fontSize: 56, marginBottom: 16 }}>🎉</div>
-                        <div style={{ fontSize: 22, fontWeight: 800, color: '#1e1b4b' }}>Hoàn thành!</div>
-                        <div style={{ fontSize: 36, fontWeight: 800, color: '#3b82f6', margin: '12px 0' }}>{score}/{problems.length * 10}</div>
-                        <div style={{ fontSize: 14, color: '#666', marginBottom: 20 }}>
-                            {score >= problems.length * 8 ? 'Xuất sắc! 🌟' : score >= problems.length * 6 ? 'Khá tốt! 👍' : 'Cần luyện thêm! 💪'}
+                    <div style={{ ...glass.card, textAlign: 'center', padding: '48px 24px' }}>
+                        <div style={{ fontSize: 72, marginBottom: 20, animation: 'bounce 2s infinite' }}>{score >= problems.length * 8 ? '🏆' : score >= problems.length * 6 ? '⭐' : '🌱'}</div>
+                        <div style={{ fontSize: 26, fontWeight: 800, color: '#1e1b4b', marginBottom: 8 }}>{score >= problems.length * 8 ? 'Xuất sắc quá!' : score >= problems.length * 6 ? 'Làm tốt lắm!' : 'Cố gắng lên nhé!'}</div>
+                        <div style={{ fontSize: 18, color: '#475569', marginBottom: 24 }}>Con đã hoàn thành phiên học luyện tập</div>
+
+                        <div style={{ background: 'rgba(59,130,246,0.1)', borderRadius: 24, padding: '24px', margin: '0 auto 32px', display: 'inline-block', border: '2px dashed rgba(59,130,246,0.3)' }}>
+                            <div style={{ fontSize: 14, color: '#3b82f6', fontWeight: 700, textTransform: 'uppercase', letterSpacing: 2, marginBottom: 8 }}>ĐIỂM SỐ CỦA CON</div>
+                            <div style={{ fontSize: 48, fontWeight: 900, color: '#3b82f6', lineHeight: 1 }}>{score}<span style={{ fontSize: 24, color: '#94a3b8' }}>/{(problems.length * 10)}</span></div>
                         </div>
-                        <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
-                            <button style={glass.btn('#3b82f6')} onClick={() => startExercise(subject!, grade, selectedTopic || undefined)}>
-                                <RotateCcw size={16} /> Luyện lại
+
+                        <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
+                            <button style={{ ...glass.btn('#3b82f6'), padding: '16px 28px', fontSize: 16 }} onClick={() => startExercise(subject!, grade, selectedTopic || undefined)}>
+                                <RotateCcw size={20} /> Chơi lại thử thách này!
                             </button>
-                            <button style={glass.btn('#8b5cf6')} onClick={() => { setProblems([]); setSelectedTopic(null); }}>
-                                Chọn bài khác
+                            <button style={{ ...glass.btn('#8b5cf6'), padding: '16px 28px', fontSize: 16 }} onClick={() => { setProblems([]); setSelectedTopic(null); }}>
+                                Chọn môn khác thui!
                             </button>
                         </div>
                     </div>
