@@ -8,6 +8,7 @@ export interface VietnameseProblem {
     question: string;
     correctAnswer: string;
     options?: string[];
+    illustration?: string;
     explanation: string;
     difficulty: number;
     hints: string[];
@@ -63,6 +64,8 @@ export function genAlphabet(): VietnameseProblem {
         id: genId(), gradeLevel: 1, difficulty: 1,
         type: 'alphabet', topic: 'Bảng chữ cái', topicKey: 'alphabet',
         question: t.q, correctAnswer: t.a,
+        options: t.q.includes('Sắp xếp') ? shuffle([t.a, t.a.split(', ').reverse().join(', '), t.a.replace(/a, ă/, 'ă, a')]) : shuffle([t.a, ALPHABET[rand(0, 10)], ALPHABET[rand(11, 20)], ALPHABET[rand(21, 28)]]).slice(0, 4),
+        illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Letters.svg/512px-Letters.svg.png',
         explanation: t.e, hints: ['Nhớ thứ tự: a, ă, â, b, c, d, đ, e, ê...', `Đáp số: ${t.a}`],
     };
 }
@@ -79,6 +82,7 @@ export function genTones(): VietnameseProblem {
         type: 'tone', topic: 'Dấu thanh', topicKey: 'tones',
         question: t.q, correctAnswer: t.a,
         options: TONES.map(t => t.mark),
+        illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Musical_notes.svg/512px-Musical_notes.svg.png',
         explanation: t.e, hints: ['6 thanh: ngang, sắc, huyền, hỏi, ngã, nặng', `Đáp số: ${t.a}`],
     };
 }
@@ -145,6 +149,7 @@ export function genVocabulary(): VietnameseProblem {
         type: 'vocabulary', topic: `Từ vựng: ${theme.theme}`, topicKey: 'vocabulary',
         question: t.q, correctAnswer: t.a,
         options: t.opts,
+        illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Open_book_icon.svg/512px-Open_book_icon.svg.png',
         explanation: `"${w.word}" = ${w.def}. Chủ đề: ${theme.theme}.`,
         hints: [`Chủ đề: ${theme.theme}`, `Đáp số: ${t.a}`],
     };
@@ -220,6 +225,7 @@ export function genReadingComprehension(): VietnameseProblem {
         passage: `📖 ${p.title}\n\n${p.text}`,
         question: qItem.q, correctAnswer: qItem.a,
         options: qItem.opts,
+        illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Books_HD_%288314929977%29.jpg/512px-Books_HD_%288314929977%29.jpg',
         explanation: `Đáp án: "${qItem.a}" — dựa trên nội dung đoạn văn "${p.title}".`,
         hints: ['Đọc lại đoạn văn thật kỹ', `Đáp số: ${qItem.a}`],
     };
@@ -292,6 +298,7 @@ export function genGrammar(): VietnameseProblem {
         type: 'grammar', topic: 'Ngữ pháp', topicKey: 'grammar',
         question: t.q, correctAnswer: t.a,
         options: t.opts,
+        illustration: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Pencil-icon.svg/512px-Pencil-icon.svg.png',
         explanation: t.e, hints: ['Nhớ quy tắc từ loại và dấu câu', `Đáp số: ${t.a}`],
     };
 }
