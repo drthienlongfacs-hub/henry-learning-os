@@ -143,7 +143,7 @@ export default function LearnPage() {
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
                         {SUBJECTS.map(s => (
                             <div key={s.key} style={{ ...glass.card, cursor: 'pointer', textAlign: 'center', transition: 'transform .2s' }}
-                                onClick={() => { if (s.key === 'elite') { window.location.href = '/henry-learning-os/child/elite'; return; } setSubject(s.key); }}
+                                onClick={() => { if (s.key === 'elite') { window.location.href = '/henry-learning-os/child/elite'; return; } setSubject(s.key); setGrade(s.grades[0]); }}
                                 onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.03)')}
                                 onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}>
                                 <div style={{ width: 56, height: 56, borderRadius: 16, background: s.color, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', margin: '0 auto 12px' }}>
