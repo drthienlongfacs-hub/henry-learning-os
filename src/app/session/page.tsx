@@ -267,17 +267,8 @@ function SessionContent() {
                     {/* STEP: Exercises */}
                     {(currentStep.key === 'retrieval' || currentStep.key === 'guided_practice' || currentStep.key === 'independent_challenge') && currentEx && (() => {
                         const isElite = lesson.subject.toLowerCase().includes('elite');
-                        const Wrapper = isElite ? BaseDefenseCard : 'div';
-                        const wrapperProps = isElite ? {
-                            hp: 3 - (showResult && !isCorrect ? 1 : 0),
-                            ammo: 10 + currentExIdx * 2,
-                            score: currentExIdx * 100 + (isCorrect ? 100 : 0),
-                            isCorrect,
-                            showResult
-                        } : {};
-
-                        return (
-                            <Wrapper {...(wrapperProps as any)}>
+                        const exerciseContent = (
+                            <>
                                 <div style={{ marginBottom: '0.5rem', fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
                                     {t('session_question_n')} {currentExIdx + 1} / {lesson.exercises.length}
                                 </div>
@@ -364,7 +355,27 @@ function SessionContent() {
                                         <p style={{ fontSize: '0.9rem', color: '#92400e' }}>{currentEx.hints[hintLevel - 1]}</p>
                                     </div>
                                 )}
-                            </Wrapper>
+                            </>
+                        );
+
+                        if (isElite) {
+                            return (
+                                <BaseDefenseCard
+                                    hp={3 - (showResult && !isCorrect ? 1 : 0)}
+                                    ammo={10 + currentExIdx * 2}
+                                    score={currentExIdx * 100 + (isCorrect ? 100 : 0)}
+                                    isCorrect={isCorrect}
+                                    showResult={showResult}
+                                >
+                                    {exerciseContent}
+                                </BaseDefenseCard>
+                            );
+                        }
+
+                        return (
+                            <div>
+                                {exerciseContent}
+                            </div>
                         );
                     })()}
 
