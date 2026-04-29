@@ -16,14 +16,11 @@ export interface ComputingProblem {
     gradeLevel: number;
     topic: string;
     topicKey: string;
-    illustration?: any;
+    illustration?: string;
 }
 
 const rand = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
 const genId = () => `comp-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-const shuffle = <T>(arr: T[]): T[] => {
-    const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = rand(0, i);[a[i], a[j]] = [a[j], a[i]]; } return a;
-};
 
 // ══════════════════════════════════════════════
 // Grade 3: Hardware & Basic Operations (10 questions)
@@ -38,7 +35,7 @@ const HARDWARE_QS = [
     { q: 'Đâu không phải là máy tính?', a: 'Tủ lạnh', opts: ['Tủ lạnh', 'Điện thoại thông minh', 'Máy tính bảng', 'Máy tính xách tay (Laptop)'], e: 'Điện thoại thông minh và máy tính bảng cũng là những dạng máy tính thu nhỏ.' },
     { q: 'Thiết bị nào giúp in tài liệu từ máy tính ra giấy?', a: 'Máy in (Printer)', opts: ['Máy in (Printer)', 'Loa', 'Webcam', 'Chuột'], e: 'Máy in nhận dữ liệu từ máy tính và in ra giấy (văn bản, hình ảnh).' },
     { q: '"Bộ nhớ" của máy tính giống như cái gì?', a: 'Hộc tủ đựng tài liệu', opts: ['Hộc tủ đựng tài liệu', 'Bút viết', 'Tivi', 'Cái kéo'], e: 'Bộ nhớ (ổ cứng) lưu trữ dữ liệu giống như tủ hồ sơ lưu giấy tờ.' },
-    { q: 'CPU của máy tính có vai trò gì?', a: 'Bộ não xử lý mọi lệnh', opts: ['Bộ não xử lý mọi lệnh', 'Hiển thị hình ảnh', 'Phát âm thanh', 'Kết nối mạng'], e: 'CPU (Central Processing Unit) là bộ xử lý trung tâm — bộ não điều khiển mọi thứ.', illustration: '/images/core/computing.png'},
+    { q: 'CPU của máy tính có vai trò gì?', a: 'Bộ não xử lý mọi lệnh', opts: ['Bộ não xử lý mọi lệnh', 'Hiển thị hình ảnh', 'Phát âm thanh', 'Kết nối mạng'], e: 'CPU (Central Processing Unit) là bộ xử lý trung tâm — bộ não điều khiển mọi thứ.', illustration: '/images/core/computing.svg'},
     { q: 'Khi muốn lưu bài làm trong máy tính, ta dùng lệnh gì?', a: 'Save (Lưu)', opts: ['Save (Lưu)', 'Delete (Xóa)', 'Print (In)', 'Copy (Sao chép)'], e: 'Lệnh Save (Ctrl + S) giúp lưu lại công việc để không bị mất.' },
 ];
 
@@ -49,7 +46,7 @@ export function genHardware(): ComputingProblem {
         type: 'hardware', topic: 'Phần cứng Căn bản', topicKey: 'hardware',
         question: item.q, correctAnswer: item.a, options: item.opts,
         explanation: item.e, hints: ['Hãy nhìn vào máy tính của bạn', `Đáp án: ${item.a}`],
-        illustration: '/images/core/computing.png',
+        illustration: '/images/core/computing.svg',
     };
 }
 
@@ -77,7 +74,7 @@ export function genCyberSafety(): ComputingProblem {
         type: 'safety', topic: 'An toàn mạng', topicKey: 'cyber_safety',
         question: item.q, correctAnswer: item.a, options: item.opts,
         explanation: item.e, hints: ['Nghĩ về cách bảo vệ bản thân trên mạng', `Đáp án: ${item.a}`],
-        illustration: '/images/core/computing.png',
+        illustration: '/images/core/computing.svg',
     };
 }
 
@@ -94,8 +91,8 @@ const LOGIC_QS = [
     { q: 'Lệnh "IF (nếu)... THEN (thì)..." trong lập trình dùng để làm gì?', a: 'Kiểm tra điều kiện rồi quyết định', opts: ['Kiểm tra điều kiện rồi quyết định', 'Lặp lại nhiều lần', 'Lưu dữ liệu', 'Xóa chương trình'], e: 'IF...THEN: NẾU mưa THÌ mang ô. Máy tính kiểm tra điều kiện rồi hành động.' },
     { q: 'Hệ nhị phân (Binary) dùng bao nhiêu chữ số?', a: '2 (chỉ dùng 0 và 1)', opts: ['2 (chỉ dùng 0 và 1)', '10', '8', '16'], e: 'Máy tính dùng hệ nhị phân: chỉ có 0 (tắt) và 1 (bật) để xử lý mọi thông tin.' },
     { q: 'Ai được gọi là "cha đẻ" của máy tính hiện đại?', a: 'Alan Turing', opts: ['Alan Turing', 'Steve Jobs', 'Bill Gates', 'Mark Zuckerberg'], e: 'Alan Turing (1912-1954) được coi là cha đẻ khoa học máy tính với máy Turing nổi tiếng.' },
-    { q: 'Internet là gì?', a: 'Mạng lưới kết nối hàng tỷ máy tính trên thế giới', opts: ['Mạng lưới kết nối hàng tỷ máy tính trên thế giới', 'Một phần mềm', 'Một chiếc máy tính lớn', 'Một loại cáp'], e: 'Internet là hệ thống mạng toàn cầu giúp các máy tính trao đổi thông tin.', illustration: '/images/core/computing.png'},
-    { q: 'Scratch là gì?', a: 'Ngôn ngữ lập trình dạng khối cho trẻ em', opts: ['Ngôn ngữ lập trình dạng khối cho trẻ em', 'Một trò chơi điện tử', 'Một mạng xã hội', 'Một loại virus'], e: 'Scratch (MIT) dùng các khối ghép nối để lập trình, phù hợp cho trẻ em từ 8 tuổi.', illustration: '/images/core/computing.png'},
+    { q: 'Internet là gì?', a: 'Mạng lưới kết nối hàng tỷ máy tính trên thế giới', opts: ['Mạng lưới kết nối hàng tỷ máy tính trên thế giới', 'Một phần mềm', 'Một chiếc máy tính lớn', 'Một loại cáp'], e: 'Internet là hệ thống mạng toàn cầu giúp các máy tính trao đổi thông tin.', illustration: '/images/core/computing.svg'},
+    { q: 'Scratch là gì?', a: 'Ngôn ngữ lập trình dạng khối cho trẻ em', opts: ['Ngôn ngữ lập trình dạng khối cho trẻ em', 'Một trò chơi điện tử', 'Một mạng xã hội', 'Một loại virus'], e: 'Scratch (MIT) dùng các khối ghép nối để lập trình, phù hợp cho trẻ em từ 8 tuổi.', illustration: '/images/core/computing.svg'},
 ];
 
 export function genLogic(): ComputingProblem {
@@ -105,7 +102,7 @@ export function genLogic(): ComputingProblem {
         type: 'logic', topic: 'Tư duy máy tính', topicKey: 'comp_logic',
         question: item.q, correctAnswer: item.a, options: item.opts,
         explanation: item.e, hints: ['Hãy tưởng tượng bạn đang đưa ra chỉ dẫn', `Đáp án: ${item.a}`],
-        illustration: '/images/core/computing.png',
+        illustration: '/images/core/computing.svg',
     };
 }
 

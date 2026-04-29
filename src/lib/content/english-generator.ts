@@ -16,7 +16,19 @@ export interface EnglishProblem {
     topic: string;
     topicKey: string;
     passage?: string;
-    illustration?: any;
+    illustration?: string;
+}
+
+interface VocabPair {
+    en: string;
+    vi: string;
+    img?: string;
+}
+
+interface VocabBank {
+    theme: string;
+    img?: string;
+    pairs: VocabPair[];
 }
 
 const rand = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
@@ -29,7 +41,7 @@ const shuffle = <T>(arr: T[]): T[] => {
 // GRADE 3: Basic Vocabulary (Family, School, Colors, Numbers, Animals)
 // ══════════════════════════════════════════════
 
-const VOCAB_BANKS = [
+const VOCAB_BANKS: VocabBank[] = [
     {
         theme: 'Family', img: '/images/english/Huskiesatrest.jpg', pairs: [
             { en: 'mother', vi: 'mẹ' }, { en: 'father', vi: 'bố' }, { en: 'brother', vi: 'anh/em trai' },
@@ -68,7 +80,7 @@ const VOCAB_BANKS = [
         theme: 'Food & Drink', pairs: [
             { en: 'rice', vi: 'cơm/gạo', img: '/images/english/20201102.Hengnan.Hybrid_rice_Sanyou-1.6.jpg' },
             { en: 'milk', vi: 'sữa' },
-            { en: 'bread', vi: 'bánh mì', img: '/images/english/Korb_mit_Br_tchen.JPG' },
+            { en: 'bread', vi: 'bánh mì', img: '/images/english/Korb_mit_Br_C3_B6tchen.JPG' },
             { en: 'water', vi: 'nước' }, { en: 'apple', vi: 'táo', img: '/images/english/Pink_lady_and_cross_section.jpg' },
             { en: 'chicken', vi: 'gà' },
             { en: 'egg', vi: 'trứng' }, { en: 'juice', vi: 'nước ép' }, { en: 'noodle', vi: 'mì/phở' },
@@ -113,7 +125,7 @@ export function genVocabEn(): EnglishProblem {
         options: opts,
         explanation: `${pair.en} = ${pair.vi} (Theme: ${bank.theme}).`,
         hints: [`Topic: ${bank.theme}`, `Answer: ${direction ? pair.vi : pair.en}`],
-        illustration: (pair as any).img || (bank as any).img,
+        illustration: pair.img ?? bank.img,
     };
 }
 

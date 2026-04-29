@@ -1,25 +1,18 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useAppStore } from '@/stores/app-store';
 import { useTranslation } from '@/lib/i18n';
 import { LangToggle } from '@/components/LangToggle';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { BookOpen, Brain, Clock, AlertTriangle, Bookmark, RotateCcw, Home, Sparkles, Search, Type } from 'lucide-react';
+import { ENRICHMENT_STATS } from '@/data/curriculum-enrichment';
 
 export default function ChildDashboard() {
     const router = useRouter();
     const { childProfile, lessons, masteryStates, mistakes, reviewSchedules } = useAppStore();
     const { t } = useTranslation();
-
-    useEffect(() => {
-        if (!childProfile) router.push('/parent/onboarding');
-    }, [childProfile, router]);
-
-    if (!childProfile) {
-        return null;
-    }
+    const activeChild = childProfile ?? { nameOrNickname: 'Henry' };
 
     const unresolvedMistakes = mistakes.filter((m) => !m.resolvedAt).length;
     const dueReviews = reviewSchedules.filter((r) => new Date(r.scheduledAt) <= new Date()).length;
@@ -37,7 +30,7 @@ export default function ChildDashboard() {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                         <div>
                             <div style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)' }}>{t('greeting')}</div>
-                            <h1 style={{ fontSize: '1.75rem', fontWeight: 800 }}>{childProfile.nameOrNickname} 👋</h1>
+                            <h1 style={{ fontSize: '1.75rem', fontWeight: 800 }}>{activeChild.nameOrNickname} 👋</h1>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                             <LangToggle />
@@ -71,6 +64,29 @@ export default function ChildDashboard() {
                             <div style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)' }}>{t('mastered')}</div>
                         </div>
                     </Link>
+                </div>
+
+                {/* Learning quality layer */}
+                <div className="card animate-fade-in" style={{
+                    marginBottom: '2rem',
+                    background: 'linear-gradient(135deg, rgba(59,130,246,0.10), rgba(16,185,129,0.10))',
+                    border: '1px solid rgba(59,130,246,0.22)',
+                }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flexWrap: 'wrap' }}>
+                        <div style={{
+                            width: '44px', height: '44px', borderRadius: 'var(--radius-md)',
+                            background: '#2563eb',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        }}>
+                            <Sparkles size={22} color="white" />
+                        </div>
+                        <div style={{ flex: 1, minWidth: 220 }}>
+                            <div style={{ fontWeight: 800, fontSize: '1rem' }}>Học sâu, có nguồn và có hỗ trợ</div>
+                            <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.82rem', lineHeight: 1.45 }}>
+                                {ENRICHMENT_STATS.sourceCount} nguồn chuẩn/benchmark • gợi ý L0-L5 • ảnh minh họa nội bộ • nhiệm vụ ba mẹ 10 phút
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Elite Capability Entry */}
@@ -137,7 +153,7 @@ export default function ChildDashboard() {
                     <Link href="/child/vocab" style={{ textDecoration: 'none' }}>
                         <div className="card card-interactive" style={{
                             textAlign: 'center', padding: '1.25rem',
-                            background: 'linear-gradient(135deg, #f59e0b22, #f97316​22)',
+                            background: 'linear-gradient(135deg, #f59e0b22, #f9731622)',
                             border: '2px solid #f59e0b44',
                         }}>
                             <Type size={28} color="#f59e0b" />

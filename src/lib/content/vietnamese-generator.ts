@@ -65,7 +65,7 @@ export function genAlphabet(): VietnameseProblem {
         type: 'alphabet', topic: 'Bảng chữ cái', topicKey: 'alphabet',
         question: t.q, correctAnswer: t.a,
         options: t.q.includes('Sắp xếp') ? shuffle([t.a, t.a.split(', ').reverse().join(', '), t.a.replace(/a, ă/, 'ă, a')]) : shuffle([t.a, ALPHABET[rand(0, 10)], ALPHABET[rand(11, 20)], ALPHABET[rand(21, 28)]]).slice(0, 4),
-        illustration: '/images/core/letters_vn.png',
+        illustration: '/images/core/letters_vn.svg',
         explanation: t.e, hints: ['Nhớ thứ tự: a, ă, â, b, c, d, đ, e, ê...', `Đáp số: ${t.a}`],
     };
 }
@@ -82,7 +82,7 @@ export function genTones(): VietnameseProblem {
         type: 'tone', topic: 'Dấu thanh', topicKey: 'tones',
         question: t.q, correctAnswer: t.a,
         options: TONES.map(t => t.mark),
-        illustration: '/images/core/musical_notes.png',
+        illustration: '/images/core/musical_notes.svg',
         explanation: t.e, hints: ['6 thanh: ngang, sắc, huyền, hỏi, ngã, nặng', `Đáp số: ${t.a}`],
     };
 }
@@ -149,7 +149,7 @@ export function genVocabulary(): VietnameseProblem {
         type: 'vocabulary', topic: `Từ vựng: ${theme.theme}`, topicKey: 'vocabulary',
         question: t.q, correctAnswer: t.a,
         options: t.opts,
-        illustration: '/images/core/open_book.png',
+        illustration: '/images/core/open_book.svg',
         explanation: `"${w.word}" = ${w.def}. Chủ đề: ${theme.theme}.`,
         hints: [`Chủ đề: ${theme.theme}`, `Đáp số: ${t.a}`],
     };
@@ -225,7 +225,7 @@ export function genReadingComprehension(): VietnameseProblem {
         passage: `📖 ${p.title}\n\n${p.text}`,
         question: qItem.q, correctAnswer: qItem.a,
         options: qItem.opts,
-        illustration: '/images/core/books_hd.jpg',
+        illustration: '/images/core/books_hd.svg',
         explanation: `Đáp án: "${qItem.a}" — dựa trên nội dung đoạn văn "${p.title}".`,
         hints: ['Đọc lại đoạn văn thật kỹ', `Đáp số: ${qItem.a}`],
     };
@@ -298,7 +298,7 @@ export function genGrammar(): VietnameseProblem {
         type: 'grammar', topic: 'Ngữ pháp', topicKey: 'grammar',
         question: t.q, correctAnswer: t.a,
         options: t.opts,
-        illustration: '/images/core/pencil_icon.png',
+        illustration: '/images/core/pencil_icon.svg',
         explanation: t.e, hints: ['Nhớ quy tắc từ loại và dấu câu', `Đáp số: ${t.a}`],
     };
 }

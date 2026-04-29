@@ -15,28 +15,25 @@ export interface ScienceProblem {
     gradeLevel: number;
     topic: string;
     topicKey: string;
-    illustration?: any;
+    illustration?: string;
 }
 
 const rand = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
 const genId = () => `sci-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-const shuffle = <T>(arr: T[]): T[] => {
-    const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = rand(0, i);[a[i], a[j]] = [a[j], a[i]]; } return a;
-};
 
 // ══════════════════════════════════════════════
 // Grade 1-2: Body, Hygiene, Safety
 // ══════════════════════════════════════════════
 
 const BODY_HEALTH_QS = [
-    { q: 'Con người có bao nhiêu giác quan?', a: '5', opts: ['5', '3', '4', '6'], e: '5 giác quan: thị giác (mắt), thính giác (tai), khứu giác (mũi), vị giác (lưỡi), xúc giác (da).', grade: 1, illustration: '/images/core/science.jpg'},
-    { q: 'Để bảo vệ mắt, chúng ta nên làm gì?', a: 'Không nhìn trực tiếp vào mặt trời', opts: ['Không nhìn trực tiếp vào mặt trời', 'Nhìn màn hình cả ngày', 'Dụi mắt thường xuyên', 'Đọc sách trong bóng tối'], e: 'Ánh sáng mặt trời rất mạnh, nhìn trực tiếp gây hại cho mắt.', grade: 1, illustration: '/images/core/science.jpg'},
-    { q: 'Khi nào cần rửa tay?', a: 'Trước khi ăn và sau khi đi vệ sinh', opts: ['Trước khi ăn và sau khi đi vệ sinh', 'Chỉ khi tay bẩn', 'Chỉ buổi sáng', 'Không cần rửa'], e: 'Rửa tay đúng cách giúp ngăn ngừa vi khuẩn gây bệnh.', grade: 1, illustration: '/images/core/science.jpg'},
-    { q: 'Cơ quan nào giúp chúng ta thở?', a: 'Phổi', opts: ['Phổi', 'Tim', 'Dạ dày', 'Não'], e: 'Phổi hít không khí vào, lấy oxy và thải CO2.', grade: 2, illustration: '/images/core/science.jpg'},
-    { q: 'Xương có vai trò gì?', a: 'Nâng đỡ và bảo vệ cơ thể', opts: ['Nâng đỡ và bảo vệ cơ thể', 'Tiêu hóa thức ăn', 'Tạo máu', 'Điều khiển suy nghĩ'], e: 'Bộ xương nâng đỡ cơ thể và bảo vệ các cơ quan bên trong.', grade: 2, illustration: '/images/core/science.jpg'},
-    { q: 'Đánh răng ít nhất bao nhiêu lần mỗi ngày?', a: '2 lần', opts: ['2 lần', '1 lần', '3 lần', 'Không cần'], e: 'Đánh răng sáng và tối, mỗi lần ít nhất 2 phút.', grade: 1, illustration: '/images/core/science.jpg'},
-    { q: 'Thức ăn được tiêu hóa ở đâu?', a: 'Dạ dày', opts: ['Dạ dày', 'Phổi', 'Tim', 'Não'], e: 'Dạ dày chứa acid và enzym để phân hủy thức ăn.', grade: 2, illustration: '/images/core/science.jpg'},
-    { q: 'Khi bị thương chảy máu nhẹ, bước đầu tiên là gì?', a: 'Rửa sạch vết thương bằng nước sạch', opts: ['Rửa sạch vết thương bằng nước sạch', 'Đắp đất lên', 'Không làm gì', 'Tự liếm vết thương'], e: 'Rửa sạch vết thương ngăn vi khuẩn, sau đó dán băng cá nhân.', grade: 2, illustration: '/images/core/science.jpg'},
+    { q: 'Con người có bao nhiêu giác quan?', a: '5', opts: ['5', '3', '4', '6'], e: '5 giác quan: thị giác (mắt), thính giác (tai), khứu giác (mũi), vị giác (lưỡi), xúc giác (da).', grade: 1, illustration: '/images/core/science.svg'},
+    { q: 'Để bảo vệ mắt, chúng ta nên làm gì?', a: 'Không nhìn trực tiếp vào mặt trời', opts: ['Không nhìn trực tiếp vào mặt trời', 'Nhìn màn hình cả ngày', 'Dụi mắt thường xuyên', 'Đọc sách trong bóng tối'], e: 'Ánh sáng mặt trời rất mạnh, nhìn trực tiếp gây hại cho mắt.', grade: 1, illustration: '/images/core/science.svg'},
+    { q: 'Khi nào cần rửa tay?', a: 'Trước khi ăn và sau khi đi vệ sinh', opts: ['Trước khi ăn và sau khi đi vệ sinh', 'Chỉ khi tay bẩn', 'Chỉ buổi sáng', 'Không cần rửa'], e: 'Rửa tay đúng cách giúp ngăn ngừa vi khuẩn gây bệnh.', grade: 1, illustration: '/images/core/science.svg'},
+    { q: 'Cơ quan nào giúp chúng ta thở?', a: 'Phổi', opts: ['Phổi', 'Tim', 'Dạ dày', 'Não'], e: 'Phổi hít không khí vào, lấy oxy và thải CO2.', grade: 2, illustration: '/images/core/science.svg'},
+    { q: 'Xương có vai trò gì?', a: 'Nâng đỡ và bảo vệ cơ thể', opts: ['Nâng đỡ và bảo vệ cơ thể', 'Tiêu hóa thức ăn', 'Tạo máu', 'Điều khiển suy nghĩ'], e: 'Bộ xương nâng đỡ cơ thể và bảo vệ các cơ quan bên trong.', grade: 2, illustration: '/images/core/science.svg'},
+    { q: 'Đánh răng ít nhất bao nhiêu lần mỗi ngày?', a: '2 lần', opts: ['2 lần', '1 lần', '3 lần', 'Không cần'], e: 'Đánh răng sáng và tối, mỗi lần ít nhất 2 phút.', grade: 1, illustration: '/images/core/science.svg'},
+    { q: 'Thức ăn được tiêu hóa ở đâu?', a: 'Dạ dày', opts: ['Dạ dày', 'Phổi', 'Tim', 'Não'], e: 'Dạ dày chứa acid và enzym để phân hủy thức ăn.', grade: 2, illustration: '/images/core/science.svg'},
+    { q: 'Khi bị thương chảy máu nhẹ, bước đầu tiên là gì?', a: 'Rửa sạch vết thương bằng nước sạch', opts: ['Rửa sạch vết thương bằng nước sạch', 'Đắp đất lên', 'Không làm gì', 'Tự liếm vết thương'], e: 'Rửa sạch vết thương ngăn vi khuẩn, sau đó dán băng cá nhân.', grade: 2, illustration: '/images/core/science.svg'},
 ];
 
 export function genBodyHealth(): ScienceProblem {
@@ -46,7 +43,7 @@ export function genBodyHealth(): ScienceProblem {
         type: 'body', topic: 'Cơ thể & Sức khỏe', topicKey: 'body_health',
         question: item.q, correctAnswer: item.a, options: item.opts,
         explanation: item.e, hints: ['Nghĩ về chức năng các bộ phận cơ thể', `Đáp án: ${item.a}`],
-        illustration: '/images/core/science.jpg',
+        illustration: '/images/core/science.svg',
     };
 }
 
@@ -55,14 +52,14 @@ export function genBodyHealth(): ScienceProblem {
 // ══════════════════════════════════════════════
 
 const NATURE_QS = [
-    { q: 'Cây xanh cần gì để sống?', a: 'Nước, ánh sáng, không khí', opts: ['Nước, ánh sáng, không khí', 'Chỉ nước', 'Chỉ đất', 'Chỉ ánh sáng'], e: 'Cây cần nước, ánh sáng mặt trời, không khí (CO2) và chất khoáng.', grade: 2, type: 'plants' as const, illustration: '/images/core/science.jpg'},
-    { q: 'Phần nào của cây hấp thụ nước?', a: 'Rễ', opts: ['Rễ', 'Lá', 'Hoa', 'Thân'], e: 'Rễ cây hấp thụ nước và chất khoáng từ đất.', grade: 2, type: 'plants' as const, illustration: '/images/core/science.jpg'},
-    { q: 'Quá trình cây tạo thức ăn từ ánh sáng gọi là gì?', a: 'Quang hợp', opts: ['Quang hợp', 'Hô hấp', 'Tiêu hóa', 'Trao đổi chất'], e: 'Quang hợp: cây dùng ánh sáng + CO2 + nước → tạo đường + O2.', grade: 3, type: 'plants' as const, illustration: '/images/core/science.jpg'},
-    { q: 'Động vật nào là động vật có vú?', a: 'Cá heo', opts: ['Cá heo', 'Cá mập', 'Rắn', 'Ếch'], e: 'Cá heo là động vật có vú: đẻ con, nuôi con bằng sữa, thở bằng phổi.', grade: 3, type: 'animals' as const, illustration: '/images/core/science.jpg'},
-    { q: 'Côn trùng có bao nhiêu chân?', a: '6 chân', opts: ['6 chân', '4 chân', '8 chân', '2 chân'], e: 'Côn trùng luôn có 6 chân. Nhện có 8 chân (không phải côn trùng).', grade: 2, type: 'animals' as const, illustration: '/images/core/science.jpg'},
-    { q: 'Vòng đời của bướm gồm mấy giai đoạn?', a: '4 giai đoạn', opts: ['4 giai đoạn', '2 giai đoạn', '3 giai đoạn', '5 giai đoạn'], e: 'Trứng → Sâu → Nhộng → Bướm trưởng thành (biến thái hoàn toàn).', grade: 3, type: 'animals' as const, illustration: '/images/core/science.jpg'},
-    { q: 'Ếch thuộc nhóm động vật nào?', a: 'Lưỡng cư', opts: ['Lưỡng cư', 'Bò sát', 'Cá', 'Có vú'], e: 'Lưỡng cư: sống được cả trên cạn và dưới nước (ếch, cóc, kỳ giông).', grade: 3, type: 'animals' as const, illustration: '/images/core/science.jpg'},
-    { q: 'Hạt giống nảy mầm cần điều kiện gì?', a: 'Nước, nhiệt độ thích hợp, không khí', opts: ['Nước, nhiệt độ thích hợp, không khí', 'Chỉ nước', 'Chỉ ánh sáng', 'Chỉ đất'], e: 'Hạt giống cần nước (ngâm mềm vỏ), nhiệt độ ấm, không khí. Ánh sáng chưa cần ở giai đoạn nảy mầm.', grade: 2, type: 'plants' as const, illustration: '/images/core/science.jpg'},
+    { q: 'Cây xanh cần gì để sống?', a: 'Nước, ánh sáng, không khí', opts: ['Nước, ánh sáng, không khí', 'Chỉ nước', 'Chỉ đất', 'Chỉ ánh sáng'], e: 'Cây cần nước, ánh sáng mặt trời, không khí (CO2) và chất khoáng.', grade: 2, type: 'plants' as const, illustration: '/images/core/science.svg'},
+    { q: 'Phần nào của cây hấp thụ nước?', a: 'Rễ', opts: ['Rễ', 'Lá', 'Hoa', 'Thân'], e: 'Rễ cây hấp thụ nước và chất khoáng từ đất.', grade: 2, type: 'plants' as const, illustration: '/images/core/science.svg'},
+    { q: 'Quá trình cây tạo thức ăn từ ánh sáng gọi là gì?', a: 'Quang hợp', opts: ['Quang hợp', 'Hô hấp', 'Tiêu hóa', 'Trao đổi chất'], e: 'Quang hợp: cây dùng ánh sáng + CO2 + nước → tạo đường + O2.', grade: 3, type: 'plants' as const, illustration: '/images/core/science.svg'},
+    { q: 'Động vật nào là động vật có vú?', a: 'Cá heo', opts: ['Cá heo', 'Cá mập', 'Rắn', 'Ếch'], e: 'Cá heo là động vật có vú: đẻ con, nuôi con bằng sữa, thở bằng phổi.', grade: 3, type: 'animals' as const, illustration: '/images/core/science.svg'},
+    { q: 'Côn trùng có bao nhiêu chân?', a: '6 chân', opts: ['6 chân', '4 chân', '8 chân', '2 chân'], e: 'Côn trùng luôn có 6 chân. Nhện có 8 chân (không phải côn trùng).', grade: 2, type: 'animals' as const, illustration: '/images/core/science.svg'},
+    { q: 'Vòng đời của bướm gồm mấy giai đoạn?', a: '4 giai đoạn', opts: ['4 giai đoạn', '2 giai đoạn', '3 giai đoạn', '5 giai đoạn'], e: 'Trứng → Sâu → Nhộng → Bướm trưởng thành (biến thái hoàn toàn).', grade: 3, type: 'animals' as const, illustration: '/images/core/science.svg'},
+    { q: 'Ếch thuộc nhóm động vật nào?', a: 'Lưỡng cư', opts: ['Lưỡng cư', 'Bò sát', 'Cá', 'Có vú'], e: 'Lưỡng cư: sống được cả trên cạn và dưới nước (ếch, cóc, kỳ giông).', grade: 3, type: 'animals' as const, illustration: '/images/core/science.svg'},
+    { q: 'Hạt giống nảy mầm cần điều kiện gì?', a: 'Nước, nhiệt độ thích hợp, không khí', opts: ['Nước, nhiệt độ thích hợp, không khí', 'Chỉ nước', 'Chỉ ánh sáng', 'Chỉ đất'], e: 'Hạt giống cần nước (ngâm mềm vỏ), nhiệt độ ấm, không khí. Ánh sáng chưa cần ở giai đoạn nảy mầm.', grade: 2, type: 'plants' as const, illustration: '/images/core/science.svg'},
 ];
 
 export function genNature(): ScienceProblem {
@@ -72,7 +69,7 @@ export function genNature(): ScienceProblem {
         type: item.type, topic: item.type === 'plants' ? 'Thực vật' : 'Động vật', topicKey: 'nature',
         question: item.q, correctAnswer: item.a, options: item.opts,
         explanation: item.e, hints: ['Nghĩ về đặc điểm phân loại', `Đáp án: ${item.a}`],
-        illustration: '/images/core/science.jpg',
+        illustration: '/images/core/science.svg',
     };
 }
 
@@ -81,14 +78,14 @@ export function genNature(): ScienceProblem {
 // ══════════════════════════════════════════════
 
 const WEATHER_EARTH_QS = [
-    { q: 'Nước tồn tại ở mấy thể?', a: '3 thể', opts: ['3 thể', '2 thể', '4 thể', '1 thể'], e: '3 thể: rắn (đá), lỏng (nước), khí (hơi nước).', illustration: '/images/core/science.jpg'},
-    { q: 'Khi đun nước sôi, nước chuyển từ thể nào sang thể nào?', a: 'Lỏng sang khí', opts: ['Lỏng sang khí', 'Rắn sang lỏng', 'Khí sang lỏng', 'Lỏng sang rắn'], e: 'Nước sôi → bốc hơi: lỏng → khí (bay hơi).', grade: 3, illustration: '/images/core/science.jpg'},
-    { q: 'Mưa hình thành như thế nào?', a: 'Hơi nước ngưng tụ thành mây, rơi xuống', opts: ['Hơi nước ngưng tụ thành mây, rơi xuống', 'Nước từ mặt đất bay lên', 'Sông chảy lên trời', 'Người tạo ra'], e: 'Vòng tuần hoàn nước: bay hơi → ngưng tụ → mưa → chảy về sông/biển.', grade: 3, illustration: '/images/core/science.jpg'},
-    { q: 'Trái Đất quay quanh gì?', a: 'Mặt Trời', opts: ['Mặt Trời', 'Mặt Trăng', 'Sao Hỏa', 'Chính nó'], e: 'Trái Đất quay quanh Mặt Trời, mất khoảng 365 ngày (1 năm).', grade: 4, illustration: '/images/core/science.jpg'},
-    { q: 'Ngày và đêm xảy ra do đâu?', a: 'Trái Đất tự quay quanh trục', opts: ['Trái Đất tự quay quanh trục', 'Mặt Trời quay quanh Trái Đất', 'Mặt Trăng che', 'Mây che'], e: 'Trái Đất tự quay 1 vòng/24h: nửa hướng Mặt Trời = ngày, nửa kia = đêm.', grade: 4, illustration: '/images/core/science.jpg'},
-    { q: 'Nhiệt kế dùng đo gì?', a: 'Nhiệt độ', opts: ['Nhiệt độ', 'Trọng lượng', 'Chiều dài', 'Thời gian'], e: 'Nhiệt kế đo nhiệt độ, đơn vị °C (Celsius) hoặc °F (Fahrenheit).', grade: 3, illustration: '/images/core/science.jpg'},
-    { q: 'Vì sao có 4 mùa?', a: 'Trục Trái Đất nghiêng khi quay quanh Mặt Trời', opts: ['Trục Trái Đất nghiêng khi quay quanh Mặt Trời', 'Mặt Trời thay đổi nhiệt', 'Mặt Trăng ảnh hưởng', 'Gió thay đổi'], e: 'Trục Trái Đất nghiêng 23.5° → các bán cầu nhận lượng ánh sáng khác nhau.', grade: 4, illustration: '/images/core/science.jpg'},
-    { q: 'Âm thanh truyền qua môi trường nào?', a: 'Rắn, lỏng, và khí', opts: ['Rắn, lỏng, và khí', 'Chỉ không khí', 'Chỉ nước', 'Chân không'], e: 'Âm thanh cần môi trường vật chất: truyền nhanh nhất qua rắn, chậm nhất qua khí. Không truyền trong chân không.', grade: 4, illustration: '/images/core/science.jpg'},
+    { q: 'Nước tồn tại ở mấy thể?', a: '3 thể', opts: ['3 thể', '2 thể', '4 thể', '1 thể'], e: '3 thể: rắn (đá), lỏng (nước), khí (hơi nước).', illustration: '/images/core/science.svg'},
+    { q: 'Khi đun nước sôi, nước chuyển từ thể nào sang thể nào?', a: 'Lỏng sang khí', opts: ['Lỏng sang khí', 'Rắn sang lỏng', 'Khí sang lỏng', 'Lỏng sang rắn'], e: 'Nước sôi → bốc hơi: lỏng → khí (bay hơi).', grade: 3, illustration: '/images/core/science.svg'},
+    { q: 'Mưa hình thành như thế nào?', a: 'Hơi nước ngưng tụ thành mây, rơi xuống', opts: ['Hơi nước ngưng tụ thành mây, rơi xuống', 'Nước từ mặt đất bay lên', 'Sông chảy lên trời', 'Người tạo ra'], e: 'Vòng tuần hoàn nước: bay hơi → ngưng tụ → mưa → chảy về sông/biển.', grade: 3, illustration: '/images/core/science.svg'},
+    { q: 'Trái Đất quay quanh gì?', a: 'Mặt Trời', opts: ['Mặt Trời', 'Mặt Trăng', 'Sao Hỏa', 'Chính nó'], e: 'Trái Đất quay quanh Mặt Trời, mất khoảng 365 ngày (1 năm).', grade: 4, illustration: '/images/core/science.svg'},
+    { q: 'Ngày và đêm xảy ra do đâu?', a: 'Trái Đất tự quay quanh trục', opts: ['Trái Đất tự quay quanh trục', 'Mặt Trời quay quanh Trái Đất', 'Mặt Trăng che', 'Mây che'], e: 'Trái Đất tự quay 1 vòng/24h: nửa hướng Mặt Trời = ngày, nửa kia = đêm.', grade: 4, illustration: '/images/core/science.svg'},
+    { q: 'Nhiệt kế dùng đo gì?', a: 'Nhiệt độ', opts: ['Nhiệt độ', 'Trọng lượng', 'Chiều dài', 'Thời gian'], e: 'Nhiệt kế đo nhiệt độ, đơn vị °C (Celsius) hoặc °F (Fahrenheit).', grade: 3, illustration: '/images/core/science.svg'},
+    { q: 'Vì sao có 4 mùa?', a: 'Trục Trái Đất nghiêng khi quay quanh Mặt Trời', opts: ['Trục Trái Đất nghiêng khi quay quanh Mặt Trời', 'Mặt Trời thay đổi nhiệt', 'Mặt Trăng ảnh hưởng', 'Gió thay đổi'], e: 'Trục Trái Đất nghiêng 23.5° → các bán cầu nhận lượng ánh sáng khác nhau.', grade: 4, illustration: '/images/core/science.svg'},
+    { q: 'Âm thanh truyền qua môi trường nào?', a: 'Rắn, lỏng, và khí', opts: ['Rắn, lỏng, và khí', 'Chỉ không khí', 'Chỉ nước', 'Chân không'], e: 'Âm thanh cần môi trường vật chất: truyền nhanh nhất qua rắn, chậm nhất qua khí. Không truyền trong chân không.', grade: 4, illustration: '/images/core/science.svg'},
 ];
 
 export function genWeatherEarth(): ScienceProblem {
@@ -98,7 +95,7 @@ export function genWeatherEarth(): ScienceProblem {
         type: 'weather', topic: 'Thời tiết & Trái Đất', topicKey: 'weather_earth',
         question: item.q, correctAnswer: item.a, options: item.opts,
         explanation: item.e, hints: ['Quan sát tự nhiên xung quanh', `Đáp án: ${item.a}`],
-        illustration: '/images/core/science.jpg',
+        illustration: '/images/core/science.svg',
     };
 }
 
@@ -107,12 +104,12 @@ export function genWeatherEarth(): ScienceProblem {
 // ══════════════════════════════════════════════
 
 const MATTER_ENERGY_QS = [
-    { q: 'Ánh sáng truyền theo đường nào?', a: 'Đường thẳng', opts: ['Đường thẳng', 'Đường cong', 'Đường zigzag', 'Đường tròn'], e: 'Ánh sáng truyền theo đường thẳng. Vì vậy ta thấy bóng khi vật cản ánh sáng.', grade: 4, illustration: '/images/core/science.jpg'},
-    { q: 'Vật nào dẫn điện?', a: 'Kim loại (đồng, sắt)', opts: ['Kim loại (đồng, sắt)', 'Gỗ', 'Nhựa', 'Cao su'], e: 'Kim loại dẫn điện tốt. Gỗ, nhựa, cao su là chất cách điện.', grade: 4, illustration: '/images/core/science.jpg'},
-    { q: 'Năng lượng mặt trời có thể dùng để làm gì?', a: 'Phát điện, sưởi ấm, trồng cây', opts: ['Phát điện, sưởi ấm, trồng cây', 'Chỉ chiếu sáng', 'Chỉ sưởi ấm', 'Không dùng được'], e: 'Năng lượng mặt trời: pin năng lượng → điện, nhà kính → ấm, quang hợp → cây.', grade: 5, illustration: '/images/core/science.jpg'},
-    { q: 'Vật nào là chất cách nhiệt?', a: 'Len, bông', opts: ['Len, bông', 'Kim loại', 'Nước', 'Đá'], e: 'Len, bông giữ không khí bên trong → cách nhiệt tốt. Kim loại dẫn nhiệt nhanh.', grade: 4, illustration: '/images/core/science.jpg'},
-    { q: 'Khi hòa đường vào nước nóng, đường sẽ?', a: 'Tan nhanh hơn trong nước lạnh', opts: ['Tan nhanh hơn trong nước lạnh', 'Không tan', 'Tan chậm hơn', 'Biến mất'], e: 'Nhiệt độ cao → phân tử chuyển động nhanh → hòa tan nhanh hơn.', grade: 4, illustration: '/images/core/science.jpg'},
-    { q: 'Nam châm hút vật liệu nào?', a: 'Sắt, thép', opts: ['Sắt, thép', 'Gỗ', 'Nhựa', 'Giấy'], e: 'Nam châm chỉ hút kim loại chứa sắt (sắt, thép, niken, coban).', grade: 4, illustration: '/images/core/science.jpg'},
+    { q: 'Ánh sáng truyền theo đường nào?', a: 'Đường thẳng', opts: ['Đường thẳng', 'Đường cong', 'Đường zigzag', 'Đường tròn'], e: 'Ánh sáng truyền theo đường thẳng. Vì vậy ta thấy bóng khi vật cản ánh sáng.', grade: 4, illustration: '/images/core/science.svg'},
+    { q: 'Vật nào dẫn điện?', a: 'Kim loại (đồng, sắt)', opts: ['Kim loại (đồng, sắt)', 'Gỗ', 'Nhựa', 'Cao su'], e: 'Kim loại dẫn điện tốt. Gỗ, nhựa, cao su là chất cách điện.', grade: 4, illustration: '/images/core/science.svg'},
+    { q: 'Năng lượng mặt trời có thể dùng để làm gì?', a: 'Phát điện, sưởi ấm, trồng cây', opts: ['Phát điện, sưởi ấm, trồng cây', 'Chỉ chiếu sáng', 'Chỉ sưởi ấm', 'Không dùng được'], e: 'Năng lượng mặt trời: pin năng lượng → điện, nhà kính → ấm, quang hợp → cây.', grade: 5, illustration: '/images/core/science.svg'},
+    { q: 'Vật nào là chất cách nhiệt?', a: 'Len, bông', opts: ['Len, bông', 'Kim loại', 'Nước', 'Đá'], e: 'Len, bông giữ không khí bên trong → cách nhiệt tốt. Kim loại dẫn nhiệt nhanh.', grade: 4, illustration: '/images/core/science.svg'},
+    { q: 'Khi hòa đường vào nước nóng, đường sẽ?', a: 'Tan nhanh hơn trong nước lạnh', opts: ['Tan nhanh hơn trong nước lạnh', 'Không tan', 'Tan chậm hơn', 'Biến mất'], e: 'Nhiệt độ cao → phân tử chuyển động nhanh → hòa tan nhanh hơn.', grade: 4, illustration: '/images/core/science.svg'},
+    { q: 'Nam châm hút vật liệu nào?', a: 'Sắt, thép', opts: ['Sắt, thép', 'Gỗ', 'Nhựa', 'Giấy'], e: 'Nam châm chỉ hút kim loại chứa sắt (sắt, thép, niken, coban).', grade: 4, illustration: '/images/core/science.svg'},
 ];
 
 export function genMatterEnergy(): ScienceProblem {
@@ -122,7 +119,7 @@ export function genMatterEnergy(): ScienceProblem {
         type: 'matter', topic: 'Vật chất & Năng lượng', topicKey: 'matter_energy',
         question: item.q, correctAnswer: item.a, options: item.opts,
         explanation: item.e, hints: ['Nghĩ về tính chất vật liệu', `Đáp án: ${item.a}`],
-        illustration: '/images/core/science.jpg',
+        illustration: '/images/core/science.svg',
     };
 }
 
@@ -131,12 +128,12 @@ export function genMatterEnergy(): ScienceProblem {
 // ══════════════════════════════════════════════
 
 const ECO_QS = [
-    { q: 'Chuỗi thức ăn bắt đầu từ đâu?', a: 'Thực vật (sinh vật sản xuất)', opts: ['Thực vật (sinh vật sản xuất)', 'Động vật ăn thịt', 'Vi khuẩn', 'Con người'], e: 'Thực vật quang hợp tạo năng lượng → cơ sở chuỗi thức ăn.', illustration: '/images/core/science.jpg'},
-    { q: 'Ô nhiễm không khí chủ yếu do đâu?', a: 'Khí thải xe cộ và nhà máy', opts: ['Khí thải xe cộ và nhà máy', 'Cây cối', 'Nước biển', 'Gió'], e: 'Đốt nhiên liệu hóa thạch → CO2, SO2, bụi mịn → ô nhiễm.', illustration: '/images/core/science.jpg'},
-    { q: '3R là viết tắt của gì?', a: 'Reduce - Reuse - Recycle', opts: ['Reduce - Reuse - Recycle', 'Run - Read - Rest', 'Red - Round - Right', 'Rain - River - Rock'], e: 'Giảm thiểu - Tái sử dụng - Tái chế: 3 nguyên tắc bảo vệ môi trường.', illustration: '/images/core/science.jpg'},
-    { q: 'Rừng cung cấp gì cho con người và động vật?', a: 'Oxy, thức ăn, nơi ở, gỗ', opts: ['Oxy, thức ăn, nơi ở, gỗ', 'Chỉ gỗ', 'Chỉ oxy', 'Không cung cấp gì'], e: 'Rừng là "lá phổi xanh": tạo O2, giữ nước, chống xói mòn, là nơi ở của động vật.', illustration: '/images/core/science.jpg'},
-    { q: 'Nước sạch dùng cho sinh hoạt chiếm bao nhiêu % nước trên Trái Đất?', a: 'Khoảng 1%', opts: ['Khoảng 1%', 'Khoảng 50%', 'Khoảng 30%', 'Khoảng 10%'], e: '97% nước biển mặn, 2% đóng băng ở cực, chỉ ~1% nước ngọt dùng được.', illustration: '/images/core/science.jpg'},
-    { q: 'Tuyệt chủng nghĩa là gì?', a: 'Loài đó hoàn toàn biến mất', opts: ['Loài đó hoàn toàn biến mất', 'Di cư sang nơi khác', 'Ngủ đông', 'Thay đổi hình dạng'], e: 'Tuyệt chủng = không còn cá thể nào sống sót. VD: khủng long.', illustration: '/images/core/science.jpg'},
+    { q: 'Chuỗi thức ăn bắt đầu từ đâu?', a: 'Thực vật (sinh vật sản xuất)', opts: ['Thực vật (sinh vật sản xuất)', 'Động vật ăn thịt', 'Vi khuẩn', 'Con người'], e: 'Thực vật quang hợp tạo năng lượng → cơ sở chuỗi thức ăn.', illustration: '/images/core/science.svg'},
+    { q: 'Ô nhiễm không khí chủ yếu do đâu?', a: 'Khí thải xe cộ và nhà máy', opts: ['Khí thải xe cộ và nhà máy', 'Cây cối', 'Nước biển', 'Gió'], e: 'Đốt nhiên liệu hóa thạch → CO2, SO2, bụi mịn → ô nhiễm.', illustration: '/images/core/science.svg'},
+    { q: '3R là viết tắt của gì?', a: 'Reduce - Reuse - Recycle', opts: ['Reduce - Reuse - Recycle', 'Run - Read - Rest', 'Red - Round - Right', 'Rain - River - Rock'], e: 'Giảm thiểu - Tái sử dụng - Tái chế: 3 nguyên tắc bảo vệ môi trường.', illustration: '/images/core/science.svg'},
+    { q: 'Rừng cung cấp gì cho con người và động vật?', a: 'Oxy, thức ăn, nơi ở, gỗ', opts: ['Oxy, thức ăn, nơi ở, gỗ', 'Chỉ gỗ', 'Chỉ oxy', 'Không cung cấp gì'], e: 'Rừng là "lá phổi xanh": tạo O2, giữ nước, chống xói mòn, là nơi ở của động vật.', illustration: '/images/core/science.svg'},
+    { q: 'Nước sạch dùng cho sinh hoạt chiếm bao nhiêu % nước trên Trái Đất?', a: 'Khoảng 1%', opts: ['Khoảng 1%', 'Khoảng 50%', 'Khoảng 30%', 'Khoảng 10%'], e: '97% nước biển mặn, 2% đóng băng ở cực, chỉ ~1% nước ngọt dùng được.', illustration: '/images/core/science.svg'},
+    { q: 'Tuyệt chủng nghĩa là gì?', a: 'Loài đó hoàn toàn biến mất', opts: ['Loài đó hoàn toàn biến mất', 'Di cư sang nơi khác', 'Ngủ đông', 'Thay đổi hình dạng'], e: 'Tuyệt chủng = không còn cá thể nào sống sót. VD: khủng long.', illustration: '/images/core/science.svg'},
 ];
 
 export function genEcosystem(): ScienceProblem {
@@ -146,7 +143,7 @@ export function genEcosystem(): ScienceProblem {
         type: 'ecosystem', topic: 'Hệ sinh thái & Môi trường', topicKey: 'ecosystem',
         question: item.q, correctAnswer: item.a, options: item.opts,
         explanation: item.e, hints: ['Nghĩ về mối quan hệ trong tự nhiên', `Đáp án: ${item.a}`],
-        illustration: '/images/core/science.jpg',
+        illustration: '/images/core/science.svg',
     };
 }
 
