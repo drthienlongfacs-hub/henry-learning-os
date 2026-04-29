@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Shield, ShieldAlert, Crosshair, Star, Radar } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -21,24 +21,12 @@ export function BaseDefenseCard({
     showResult,
     children,
 }: BaseDefenseCardProps) {
-    const [shake, setShake] = useState(false);
-    const [fire, setFire] = useState(false);
-
-    useEffect(() => {
-        if (showResult !== undefined && showResult) {
-            if (isCorrect) {
-                setFire(true);
-                setTimeout(() => setFire(false), 800);
-            } else {
-                setShake(true);
-                setTimeout(() => setShake(false), 500);
-            }
-        }
-    }, [showResult, isCorrect]);
+    const shouldShake = !!showResult && !isCorrect;
+    const shouldFire = !!showResult && !!isCorrect;
 
     return (
         <motion.div
-            animate={shake ? { x: [-10, 10, -10, 10, 0] } : {}}
+            animate={shouldShake ? { x: [-10, 10, -10, 10, 0] } : {}}
             transition={{ duration: 0.4 }}
             className="relative overflow-hidden rounded-2xl border border-cyan-500/50 bg-[#0B1120] text-cyan-50 shadow-[0_0_20px_rgba(6,182,212,0.15)] font-mono"
         >
@@ -107,7 +95,7 @@ export function BaseDefenseCard({
                     <Radar className="text-cyan-400 w-16 h-16 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]" />
 
                     <AnimatePresence>
-                        {fire && (
+                        {shouldFire && (
                             <motion.div
                                 initial={{ opacity: 0, y: 20, scale: 0.5 }}
                                 animate={{ opacity: 1, y: -40, scale: 1.5 }}

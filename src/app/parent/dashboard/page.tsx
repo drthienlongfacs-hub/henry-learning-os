@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useAppStore } from '@/stores/app-store';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Settings, Calendar, Shield, TrendingUp, AlertTriangle, Target, Heart, BookOpen, Star } from 'lucide-react';
+import { Settings, Calendar, Shield, TrendingUp, AlertTriangle, Target, Heart, Star } from 'lucide-react';
 
 export default function ParentDashboard() {
     const router = useRouter();
@@ -42,8 +42,10 @@ export default function ParentDashboard() {
     const booksRead = readingEntries.length;
     const pendingMissions = parentMissions.filter((m) => !m.completedAt);
     const avgHintLevel = recentAttempts.length > 0
-        ? (recentAttempts.reduce((sum, a) => sum + a.hintLevelUsed, 0) / recentAttempts.length).toFixed(1)
-        : '0';
+        ? recentAttempts.reduce((sum, a) => sum + a.hintLevelUsed, 0) / recentAttempts.length
+        : 0;
+    const dueReviews = reviewSchedules.filter((r) => new Date(r.scheduledAt) <= new Date()).length;
+    const aiLogCount = aiInteractionLogs.length;
 
     // Top mistake type
     const errorCounts: Record<string, number> = {};
@@ -56,7 +58,7 @@ export default function ParentDashboard() {
     const highlight = accuracyPct >= 80
         ? `${childProfile.nameOrNickname} đạt ${accuracyPct}% chính xác trong 10 bài gần nhất!`
         : totalSessions > 0
-            ? `${childProfile.nameOrNickname} đã hoàn thành ${totalSessions} bày học.`
+            ? `${childProfile.nameOrNickname} đã hoàn thành ${totalSessions} bài học.`
             : `${childProfile.nameOrNickname} sẵn sàng bắt đầu hành trình học tập!`;
 
     const concern = topErrorType
@@ -67,7 +69,7 @@ export default function ParentDashboard() {
 
     const action = unresolvedMistakes.length > 3
         ? 'Cùng con xem lại sổ lỗi sai và sửa 2-3 lỗi trước khi học bài mới.'
-        : avgHintLevel > '2'
+        : avgHintLevel > 2
             ? 'Con đang cần nhiều gợi ý. Thử học cùng con 15 phút tuần này.'
             : 'Hỏi con: "Hôm nay con học được điều gì hay nhất?"';
 
@@ -117,11 +119,14 @@ export default function ParentDashboard() {
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.75rem', marginBottom: '2rem' }}>
                     {[
                         { label: 'Độ chính xác', value: `${accuracyPct}%`, color: accuracyPct >= 80 ? 'var(--color-success)' : 'var(--color-warning)' },
+                        { label: 'Tiến độ tổng', value: `${progressPct}%`, color: 'var(--color-primary)' },
                         { label: 'Bài học', value: totalSessions, color: 'var(--color-primary)' },
                         { label: 'Đã thành thạo', value: `${masteredCount}/${totalCompetencies}`, color: 'var(--color-success)' },
                         { label: 'Sách đã đọc', value: booksRead, color: 'var(--color-info)' },
                         { label: 'Lỗi chưa sửa', value: unresolvedMistakes.length, color: unresolvedMistakes.length > 3 ? 'var(--color-danger)' : 'var(--color-text-secondary)' },
-                        { label: 'Mức gợi ý TB', value: `L${avgHintLevel}`, color: 'var(--color-accent)' },
+                        { label: 'Ôn đến hạn', value: dueReviews, color: dueReviews > 0 ? 'var(--color-warning)' : 'var(--color-text-secondary)' },
+                        { label: 'Mức gợi ý TB', value: `L${avgHintLevel.toFixed(1)}`, color: 'var(--color-accent)' },
+                        { label: 'Log AI', value: aiLogCount, color: 'var(--color-text-secondary)' },
                     ].map((stat, idx) => (
                         <div key={idx} className="card" style={{ textAlign: 'center', padding: '1rem' }}>
                             <div style={{ fontSize: '1.5rem', fontWeight: 800, color: stat.color }}>{stat.value}</div>
@@ -144,7 +149,7 @@ export default function ParentDashboard() {
                                 </div>
                                 <div style={{ width: '100%', height: '8px', background: 'var(--color-bg-session)', borderRadius: '4px', overflow: 'hidden' }}>
                                     <div style={{
-                                        width: `\${score}%`,
+                                        width: `${score}%`,
                                         height: '100%',
                                         background: score > 70 ? 'var(--color-success)' : score > 40 ? 'var(--color-primary)' : 'var(--color-warning)',
                                         transition: 'width 1s ease-in-out'
@@ -185,6 +190,12 @@ export default function ParentDashboard() {
                         <div className="card card-interactive" style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem' }}>
                             <Calendar size={20} color="var(--color-primary)" />
                             <span style={{ fontWeight: 600 }}>Đánh giá tuần</span>
+                        </div>
+                    </Link>
+                    <Link href="/parent/adaptive" style={{ textDecoration: 'none' }}>
+                        <div className="card card-interactive" style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem' }}>
+                            <TrendingUp size={20} color="var(--color-success)" />
+                            <span style={{ fontWeight: 600 }}>Phân tích học thật và tăng tốc</span>
                         </div>
                     </Link>
                     <Link href="/parent/settings" style={{ textDecoration: 'none' }}>

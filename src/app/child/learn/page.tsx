@@ -35,6 +35,8 @@ import {
     type LearningPathStatus,
 } from '@/lib/learning-path-advisor';
 import { createReviewItem } from '@/lib/spaced-repetition';
+import { buildTopicEvidenceProfile } from '@/lib/evidence/learning-evidence';
+import { buildQuestionPresentationPlan } from '@/lib/pedagogy/question-presentation';
 
 // ── Types ──
 type Subject = 'math' | 'vietnamese' | 'english' | 'science' | 'hisgeo' | 'computing' | 'elite';
@@ -97,10 +99,11 @@ export default function LearnPage() {
     const [selected, setSelected] = useState<string | null>(null);
     const [score, setScore] = useState(0);
     const [showHint, setShowHint] = useState(false);
+    const [hintLevelUsed, setHintLevelUsed] = useState(0);
     const [lessonDepth, setLessonDepth] = useState<LessonDepth>('deep');
     const startTime = useRef(0);
 
-    const { addAttempt, addMistake, addReviewSchedule, childProfile, attempts, reviewSchedules } = useAppStore();
+    const { addAttempt, addMistake, addReviewSchedule, childProfile, attempts, mistakes, reviewSchedules } = useAppStore();
     const activeMode = getLessonModeConfig(lessonDepth);
     const modeOptions = Object.values(LESSON_MODE_CONFIG);
 
@@ -114,7 +117,7 @@ export default function LearnPage() {
         else if (subj === 'hisgeo') p = generateHisGeoSet(g, topicKey, count);
         else if (subj === 'computing') p = generateComputingSet(g, topicKey, count);
         setProblems(p);
-        setIndex(0); setSelected(null); setScore(0); setShowHint(false);
+        setIndex(0); setSelected(null); setScore(0); setShowHint(false); setHintLevelUsed(0);
         startTime.current = Date.now();
     }, [lessonDepth]);
 
@@ -133,7 +136,7 @@ export default function LearnPage() {
                 id: attemptId, childId: childProfile.id, lessonId: p.id,
                 competencyId: p.topicKey, exerciseId: p.id, answer,
                 isCorrect, errorType: isCorrect ? null : 'concept',
-                hintLevelUsed: 0, timeSpentSeconds: timeSpent,
+                hintLevelUsed, timeSpentSeconds: timeSpent,
                 confidenceSelfRating: 3, aiRoleUsed: 'tutor', createdAt: new Date().toISOString(),
             });
             const hasPendingCompetencyReview = reviewSchedules.some((review) =>
@@ -157,10 +160,10 @@ export default function LearnPage() {
                 addReviewSchedule(createReviewItem(childProfile.id, 'mistake', mistakeId));
             }
         }
-    }, [selected, problems, index, childProfile, reviewSchedules, addAttempt, addMistake, addReviewSchedule]);
+    }, [selected, problems, index, childProfile, reviewSchedules, hintLevelUsed, addAttempt, addMistake, addReviewSchedule]);
 
     const nextProblem = () => {
-        setSelected(null); setShowHint(false);
+        setSelected(null); setShowHint(false); setHintLevelUsed(0);
         setIndex(i => i + 1);
         startTime.current = Date.now();
     };
@@ -177,6 +180,22 @@ export default function LearnPage() {
     const activeBenchmarks = subject ? getSubjectBenchmarkPatterns(SUBJECT_ENRICHMENT_KEY[subject]) : [];
     const currentBlueprint = currentProblem?.topicKey
         ? getTopicLearningBlueprint(currentProblem.topicKey, subject ? SUBJECT_ENRICHMENT_KEY[subject] : undefined)
+        : null;
+    const currentEvidenceProfile = currentProblem?.topicKey && subject
+        ? buildTopicEvidenceProfile({
+            topicKey: currentProblem.topicKey,
+            subject: SUBJECT_ENRICHMENT_KEY[subject],
+            attempts,
+            mistakes,
+            reviewSchedules,
+        })
+        : null;
+    const currentQuestionPlan = currentProblem && subject
+        ? buildQuestionPresentationPlan({
+            subject: SUBJECT_ENRICHMENT_KEY[subject],
+            problem: currentProblem,
+            evidenceProfile: currentEvidenceProfile ?? undefined,
+        })
         : null;
     const currentPhase = problems.length > 0
         ? activeMode.phases[Math.min(activeMode.phases.length - 1, Math.floor(index / Math.max(1, Math.ceil(problems.length / activeMode.phases.length))))]
@@ -385,6 +404,13 @@ export default function LearnPage() {
                                     const enrich = getTopicEnrichment(t.key, SUBJECT_ENRICHMENT_KEY[subject]);
                                     const blueprint = getTopicLearningBlueprint(t.key, SUBJECT_ENRICHMENT_KEY[subject]);
                                     const plan = getTopicLearningPlan(t.key, SUBJECT_ENRICHMENT_KEY[subject], attempts);
+                                    const evidence = buildTopicEvidenceProfile({
+                                        topicKey: t.key,
+                                        subject: SUBJECT_ENRICHMENT_KEY[subject],
+                                        attempts,
+                                        mistakes,
+                                        reviewSchedules,
+                                    });
                                     const statusColor = planColor[plan.status];
                                     return (
                                         <div key={t.key} style={{ ...glass.card, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, cursor: 'pointer', transition: 'transform .2s' }}
@@ -417,6 +443,9 @@ export default function LearnPage() {
                                                     </div>
                                                     <div style={{ fontSize: 11, color: '#64748b', marginTop: 7, lineHeight: 1.35 }}>
                                                         Gợi ý tiếp: {plan.nextAction}
+                                                    </div>
+                                                    <div style={{ fontSize: 11, color: '#0f766e', marginTop: 6, lineHeight: 1.35 }}>
+                                                        Dữ liệu thật: {evidence.challengeFitLabel} · {evidence.evidenceSummary}
                                                     </div>
                                                 </div>
                                             </div>
@@ -460,6 +489,36 @@ export default function LearnPage() {
                                 {activeMode.sessionPromise}
                             </div>
                         </div>
+
+                        {currentQuestionPlan && (
+                            <div style={{ background: '#ffffffcc', border: '1px solid #dbeafe', borderRadius: 16, padding: 14, marginBottom: 18 }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', marginBottom: 10 }}>
+                                    <div>
+                                        <div style={{ fontSize: 12, fontWeight: 900, color: '#1d4ed8', textTransform: 'uppercase' }}>Cách trình bày câu hỏi</div>
+                                        <div style={{ fontSize: 15, fontWeight: 900, color: '#1e293b', marginTop: 3 }}>{currentQuestionPlan.focus}</div>
+                                    </div>
+                                    <div style={{ fontSize: 11, color: '#475569', lineHeight: 1.35, maxWidth: 260 }}>
+                                        {currentQuestionPlan.supportRule}
+                                    </div>
+                                </div>
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 8 }}>
+                                    {currentQuestionPlan.beforeAnswer.map((step) => (
+                                        <div key={step.label} style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 12, padding: 10 }}>
+                                            <div style={{ fontSize: 11, fontWeight: 900, color: '#1d4ed8' }}>{step.label}</div>
+                                            <div style={{ fontSize: 12, color: '#334155', lineHeight: 1.35, marginTop: 4 }}>{step.prompt}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 8, marginTop: 10 }}>
+                                    <div style={{ fontSize: 12, color: '#475569', lineHeight: 1.4, background: '#f8fafc', borderRadius: 12, padding: 10 }}>
+                                        Dữ liệu: {currentQuestionPlan.dataSignal}
+                                    </div>
+                                    <div style={{ fontSize: 12, color: '#475569', lineHeight: 1.4, background: '#f0fdf4', borderRadius: 12, padding: 10 }}>
+                                        Benchmark: {currentQuestionPlan.benchmarkSignal}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
 
                         {/* Passage (for reading) */}
                         {'passage' in currentProblem && (currentProblem as VietnameseProblem).passage && (
@@ -569,7 +628,10 @@ export default function LearnPage() {
                         {/* Hint */}
                         {!selected && (
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 24, gap: 12 }}>
-                                <button onClick={() => setShowHint(!showHint)}
+                                <button onClick={() => {
+                                    if (!showHint) setHintLevelUsed((level) => Math.max(level, 1));
+                                    setShowHint(!showHint);
+                                }}
                                     style={{ padding: '10px 20px', borderRadius: 20, border: '1px solid rgba(245,158,11,0.4)', background: 'rgba(245,158,11,0.1)', color: '#b45309', fontSize: 16, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, transition: 'all .2s' }}>
                                     <Lightbulb size={18} /> Mở gợi ý từng tầng
                                 </button>
@@ -607,6 +669,21 @@ export default function LearnPage() {
                                         <div style={{ fontSize: 13, color: '#475569', lineHeight: 1.5 }}>{currentBlueprint.stretchTask}</div>
                                         <div style={{ fontSize: 12, color: '#64748b', marginTop: 8 }}>
                                             Bằng chứng thành thạo: {currentBlueprint.evidenceOfMastery.slice(0, 3).join(' · ')}
+                                        </div>
+                                    </div>
+                                )}
+                                {currentQuestionPlan && (
+                                    <div style={{ textAlign: 'left', background: '#fff', borderRadius: 14, padding: 14, border: '1px solid #dbeafe', marginBottom: 16 }}>
+                                        <div style={{ fontSize: 13, fontWeight: 900, color: '#1d4ed8', marginBottom: 8 }}>Tự kiểm trước khi đi tiếp</div>
+                                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 8 }}>
+                                            {currentQuestionPlan.selfCheck.slice(0, 3).map((item) => (
+                                                <div key={item} style={{ fontSize: 12, color: '#334155', lineHeight: 1.35, background: '#eff6ff', borderRadius: 10, padding: 9 }}>
+                                                    {item}
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <div style={{ fontSize: 12, color: '#b91c1c', lineHeight: 1.4, marginTop: 10 }}>
+                                            Sai dễ gặp: {currentQuestionPlan.misconceptionCheck.join(' · ')}
                                         </div>
                                     </div>
                                 )}

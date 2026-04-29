@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useAppStore } from '@/stores/app-store';
 import { generateId } from '@/lib/utils';
 import { useTranslation, useLangStore } from '@/lib/i18n';
@@ -86,6 +86,50 @@ const LIKELIHOOD_EN: Record<LikelihoodLevel, string> = {
     impossible: 'Impossible', unlikely: 'Unlikely', equal: 'Equal', likely: 'Likely', certain: 'Certain',
 };
 
+function FeedbackCard({ correct, explanation, onNext }: { correct: boolean; explanation: string; onNext: () => void }) {
+    return (
+        <div style={{
+            marginTop: '16px', padding: '16px', borderRadius: '12px',
+            background: correct ? '#F0FFF4' : '#FFF5F5',
+            border: `1px solid ${correct ? '#C6F6D5' : '#FED7D7'}`,
+        }}>
+            <p style={{ fontWeight: 700, fontSize: '0.9rem', color: correct ? '#22543D' : '#9B2C2C', marginBottom: '6px', fontFamily: ios.font }}>
+                {correct ? '✓ Chính xác!' : '✗ Chưa đúng rồi'}
+            </p>
+            <p style={{ fontSize: '0.9rem', color: ios.secondary, lineHeight: 1.5, fontFamily: ios.font }}>{explanation}</p>
+            <button style={{ ...btnPrimary(correct ? ios.green : ios.blue), marginTop: '12px', padding: '10px 20px', fontSize: '0.9rem' }} onClick={onNext}>
+                Câu tiếp theo <ChevronRight size={16} />
+            </button>
+        </div>
+    );
+}
+
+function CompletionCard({ emoji, title, score, total, onReplay }: { emoji: string; title: string; score: number; total: number; onReplay: () => void }) {
+    return (
+        <div style={{ ...cardStyle, textAlign: 'center', padding: '32px 20px' }}>
+            <div style={{ fontSize: '3.5rem', marginBottom: '12px' }}>{emoji}</div>
+            <h2 style={{ fontWeight: 700, fontSize: '1.25rem', color: ios.text, fontFamily: ios.font, marginBottom: '4px' }}>{title}</h2>
+            <p style={{ fontSize: '2rem', fontWeight: 800, color: ios.blue, fontFamily: ios.font, marginBottom: '16px' }}>
+                {score} / {total}
+            </p>
+            <button style={btnPrimary(ios.blue)} onClick={onReplay}>Chơi lại</button>
+        </div>
+    );
+}
+
+function ProgressPill({ current, total, score, color }: { current: number; total: number; score?: number; color: string }) {
+    return (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+            <div style={{ flex: 1, height: '4px', background: ios.borderSolid, borderRadius: '2px', overflow: 'hidden' }}>
+                <div style={{ width: `${(current / total) * 100}%`, height: '100%', background: color, borderRadius: '2px', transition: 'width 0.3s ease' }} />
+            </div>
+            <span style={{ fontSize: '0.8rem', fontWeight: 600, color: ios.secondary, fontFamily: ios.font, whiteSpace: 'nowrap' }}>
+                {current}/{total} {score !== undefined && `· ${score} đ`}
+            </span>
+        </div>
+    );
+}
+
 export default function EliteDashboardPage() {
     const childProfile = useAppStore((s) => s.childProfile);
     const addAttempt = useAppStore((s) => s.addAttempt);
@@ -93,7 +137,7 @@ export default function EliteDashboardPage() {
     const [activeTab, setActiveTab] = useState<EliteTab>('overview');
 
     // Timer for tracking time spent per question
-    const questionStartTime = useRef<number>(Date.now());
+    const questionStartTime = useRef<number>(0);
     useEffect(() => { questionStartTime.current = Date.now(); }, [activeTab]);
 
     // Analytics helper: record every answer to Zustand store
@@ -167,18 +211,19 @@ export default function EliteDashboardPage() {
     const [currentCoc, setCurrentCoc] = useState(() => pickRandom(CIRCLE_OF_CONTROL.filter(i => i.ageTarget === ageFilter), SESSION_SIZE));
     const [currentNeg, setCurrentNeg] = useState(() => pickRandom(NEGOTIATION_CHALLENGES.filter(i => i.ageTarget === ageFilter), SESSION_SIZE));
 
-    useEffect(() => {
-        setProbScenarios(generateProbabilityScenarios(ageFilter, SESSION_SIZE));
-        setCurrentWvn(pickRandom(WANTS_VS_NEEDS.filter(i => i.ageTarget === ageFilter), SESSION_SIZE));
-        setCurrentPol(pickRandom(POLICY_SCENARIOS.filter(i => i.ageTarget === ageFilter), SESSION_SIZE));
-        setCurrentCoc(pickRandom(CIRCLE_OF_CONTROL.filter(i => i.ageTarget === ageFilter), SESSION_SIZE));
-        setCurrentNeg(pickRandom(NEGOTIATION_CHALLENGES.filter(i => i.ageTarget === ageFilter), SESSION_SIZE));
+    const resetSessionsForAge = useCallback((nextAge: AgeGroup) => {
+        setAgeFilter(nextAge);
+        setProbScenarios(generateProbabilityScenarios(nextAge, SESSION_SIZE));
+        setCurrentWvn(pickRandom(WANTS_VS_NEEDS.filter(i => i.ageTarget === nextAge), SESSION_SIZE));
+        setCurrentPol(pickRandom(POLICY_SCENARIOS.filter(i => i.ageTarget === nextAge), SESSION_SIZE));
+        setCurrentCoc(pickRandom(CIRCLE_OF_CONTROL.filter(i => i.ageTarget === nextAge), SESSION_SIZE));
+        setCurrentNeg(pickRandom(NEGOTIATION_CHALLENGES.filter(i => i.ageTarget === nextAge), SESSION_SIZE));
         setProbIndex(0); setProbAnswer(null); setProbScore(0);
         setWvnIndex(0); setWvnAnswer(null); setWvnScore(0);
         setPolicyIndex(0); setPolicyChoice(null);
         setCocIndex(0); setCocAnswer(null); setCocScore(0);
         setNegIndex(0); setNegAnswer(null); setNegScore(0);
-    }, [ageFilter]);
+    }, []);
 
     const metrics = childProfile?.eliteMetrics ?? {
         bilingual_agility: 0, stochastic_intuition: 0, systemic_reasoning: 0,
@@ -202,47 +247,6 @@ export default function EliteDashboardPage() {
         { key: 'negotiation', label: t('tab_negotiation'), icon: <Handshake size={16} />, color: ios.red },
         { key: 'ethics', label: t('tab_ethics'), icon: <Shield size={16} />, color: ios.indigo },
     ];
-
-    /* ─── Feedback card after answering ─── */
-    const FeedbackCard = ({ correct, explanation, onNext }: { correct: boolean; explanation: string; onNext: () => void }) => (
-        <div style={{
-            marginTop: '16px', padding: '16px', borderRadius: '12px',
-            background: correct ? '#F0FFF4' : '#FFF5F5',
-            border: `1px solid ${correct ? '#C6F6D5' : '#FED7D7'}`,
-        }}>
-            <p style={{ fontWeight: 700, fontSize: '0.9rem', color: correct ? '#22543D' : '#9B2C2C', marginBottom: '6px', fontFamily: ios.font }}>
-                {correct ? '✓ Chính xác!' : '✗ Chưa đúng rồi'}
-            </p>
-            <p style={{ fontSize: '0.9rem', color: ios.secondary, lineHeight: 1.5, fontFamily: ios.font }}>{explanation}</p>
-            <button style={{ ...btnPrimary(correct ? ios.green : ios.blue), marginTop: '12px', padding: '10px 20px', fontSize: '0.9rem' }} onClick={onNext}>
-                Câu tiếp theo <ChevronRight size={16} />
-            </button>
-        </div>
-    );
-
-    /* ─── Completion card ─── */
-    const CompletionCard = ({ emoji, title, score, total, onReplay }: { emoji: string; title: string; score: number; total: number; onReplay: () => void }) => (
-        <div style={{ ...cardStyle, textAlign: 'center', padding: '32px 20px' }}>
-            <div style={{ fontSize: '3.5rem', marginBottom: '12px' }}>{emoji}</div>
-            <h2 style={{ fontWeight: 700, fontSize: '1.25rem', color: ios.text, fontFamily: ios.font, marginBottom: '4px' }}>{title}</h2>
-            <p style={{ fontSize: '2rem', fontWeight: 800, color: ios.blue, fontFamily: ios.font, marginBottom: '16px' }}>
-                {score} / {total}
-            </p>
-            <button style={btnPrimary(ios.blue)} onClick={onReplay}>Chơi lại</button>
-        </div>
-    );
-
-    /* ─── Progress pill ─── */
-    const ProgressPill = ({ current, total, score, color }: { current: number; total: number; score?: number; color: string }) => (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-            <div style={{ flex: 1, height: '4px', background: ios.borderSolid, borderRadius: '2px', overflow: 'hidden' }}>
-                <div style={{ width: `${(current / total) * 100}%`, height: '100%', background: color, borderRadius: '2px', transition: 'width 0.3s ease' }} />
-            </div>
-            <span style={{ fontSize: '0.8rem', fontWeight: 600, color: ios.secondary, fontFamily: ios.font, whiteSpace: 'nowrap' }}>
-                {current}/{total} {score !== undefined && `· ${score} đ`}
-            </span>
-        </div>
-    );
 
     return (
         <div style={{ minHeight: '100vh', background: ios.surface, fontFamily: ios.font }}>
@@ -274,7 +278,7 @@ export default function EliteDashboardPage() {
                                 overflow: 'hidden',
                             }}>
                                 {(['6-10', '11+'] as AgeGroup[]).map(age => (
-                                    <button key={age} onClick={() => setAgeFilter(age)} style={{
+                                    <button key={age} onClick={() => resetSessionsForAge(age)} style={{
                                         border: 'none', padding: '5px 12px', fontSize: '0.8rem', fontWeight: 600,
                                         fontFamily: ios.font, cursor: 'pointer',
                                         background: ageFilter === age ? ios.blue : 'transparent',
