@@ -4,7 +4,7 @@ import { useAppStore } from '@/stores/app-store';
 import { useTranslation } from '@/lib/i18n';
 import { LangToggle } from '@/components/LangToggle';
 import Link from 'next/link';
-import { BookOpen, Brain, GraduationCap, Heart, Shield, Star } from 'lucide-react';
+import { BarChart3, BookOpen, Brain, GraduationCap, Heart, Shield, Star } from 'lucide-react';
 
 export default function Home() {
   const { isOnboarded } = useAppStore();
@@ -45,6 +45,18 @@ export default function Home() {
               <div>
                 <div style={{ fontWeight: 700, fontSize: '1.1rem', color: 'var(--color-text-primary)' }}>{t('parent')}</div>
                 <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>{t('parent_desc')}</div>
+              </div>
+            </div>
+          </Link>
+
+          <Link href="/parent/benchmark" style={{ textDecoration: 'none' }}>
+            <div className="card card-interactive animate-fade-in" style={{ display: 'flex', alignItems: 'center', gap: '1rem', animationDelay: '0.2s' }}>
+              <div style={{ width: '56px', height: '56px', borderRadius: 'var(--radius-lg)', background: 'linear-gradient(135deg, #2563eb, #0f766e)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <BarChart3 size={28} color="white" />
+              </div>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: '1.1rem', color: 'var(--color-text-primary)' }}>Benchmark full-stack</div>
+                <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>So sánh UI, AI, adaptive và evidence</div>
               </div>
             </div>
           </Link>
@@ -89,6 +101,12 @@ export default function Home() {
             {t('landing_cta')}
           </button>
         </Link>
+
+        <div style={{ marginTop: '1rem' }}>
+          <Link href="/parent/benchmark" style={{ color: '#2563eb', fontWeight: 800, fontSize: '0.92rem', textDecoration: 'none' }}>
+            Xem benchmark full-stack và evidence gate
+          </Link>
+        </div>
 
         <p style={{ marginTop: '1.5rem', fontSize: '0.8rem', color: '#94a3b8', maxWidth: '400px', marginLeft: 'auto', marginRight: 'auto' }}>
           {t('landing_privacy')}

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useAppStore } from '@/stores/app-store';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Settings, Calendar, Shield, TrendingUp, AlertTriangle, Target, Heart, Star } from 'lucide-react';
+import { Settings, Calendar, Shield, TrendingUp, AlertTriangle, Target, Heart, Star, BarChart3 } from 'lucide-react';
 
 export default function ParentDashboard() {
     const router = useRouter();
@@ -196,6 +196,12 @@ export default function ParentDashboard() {
                         <div className="card card-interactive" style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem' }}>
                             <TrendingUp size={20} color="var(--color-success)" />
                             <span style={{ fontWeight: 600 }}>Phân tích học thật và tăng tốc</span>
+                        </div>
+                    </Link>
+                    <Link href="/parent/benchmark" style={{ textDecoration: 'none' }}>
+                        <div className="card card-interactive" style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem' }}>
+                            <BarChart3 size={20} color="var(--color-info)" />
+                            <span style={{ fontWeight: 600 }}>Benchmark full-stack và evidence gate</span>
                         </div>
                     </Link>
                     <Link href="/parent/settings" style={{ textDecoration: 'none' }}>
