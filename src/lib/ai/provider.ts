@@ -1,9 +1,11 @@
 // ========================================
-// AI Provider — Mock implementation
+// AI Provider — Evidence-grounded local tutor
 // Safety middleware + Role router
 // ========================================
 
 import type { AIRole, SupportLevel, SafetyLevel } from '@/types';
+import { generateTutorTurn, type TutorProblem } from '@/lib/ai/tutor-engine';
+import type { LearningSubjectKey } from '@/data/curriculum-enrichment';
 
 export interface AIRequest {
     childId: string;
@@ -15,6 +17,14 @@ export interface AIRequest {
     question: string;
     context?: string;
     hintLevel?: number;
+    correctAnswer?: string;
+    childAnswer?: string;
+    topic?: string;
+    topicKey?: string;
+    problemType?: string;
+    options?: string[];
+    explanation?: string;
+    revealAnswerAllowed?: boolean;
 }
 
 export interface AIResponse {
@@ -44,7 +54,7 @@ function checkSafety(request: AIRequest): { allowed: boolean; reason?: string } 
     return { allowed: true };
 }
 
-// Socratic tutor responses (mock)
+// Fallback Socratic tutor responses when no exercise payload is available.
 const tutorResponses: Record<string, string[]> = {
     'Toán': [
         'Con đã thử tự giải chưa? Bước đầu tiên con sẽ làm gì?',
@@ -77,18 +87,6 @@ const coachResponses = [
     'Nhìn lại tuần này, con tiến bộ nhiều ở phần Toán. Tuần tới mình sẽ tập trung thêm vào đọc hiểu nhé!',
 ];
 
-function getHintResponse(hintLevel: number, subject: string): string {
-    const hints: Record<number, string> = {
-        0: 'Con tự thử trước nhé! Cô/thầy AI tin con làm được.',
-        1: 'Gợi ý nhỏ thôi: con thử đọc lại câu hỏi thật kỹ...',
-        2: 'Gợi ý vừa: con hãy nghĩ về bước đầu tiên cần làm...',
-        3: `Giải thích: Trong ${subject}, con cần nhớ rằng...`,
-        4: 'Đây là ví dụ tương tự đã được giải, con tham khảo rồi thử lại nhé.',
-        5: 'Đây là lời giải chi tiết. Con đọc hiểu rồi thử tự giải bài tương tự nhé!',
-    };
-    return hints[hintLevel] || hints[0];
-}
-
 export function generateAIResponse(request: AIRequest): AIResponse {
     // Safety check first
     const safetyCheck = checkSafety(request);
@@ -119,13 +117,30 @@ export function generateAIResponse(request: AIRequest): AIResponse {
 
     switch (request.role) {
         case 'tutor': {
-            if (request.hintLevel && request.hintLevel > 0) {
-                responseText = getHintResponse(request.hintLevel, request.subject);
-                supportLevel = (['none', 'hint_light', 'hint_medium', 'explanation', 'worked_example', 'feedback'] as SupportLevel[])[request.hintLevel] || 'feedback';
+            if (request.correctAnswer) {
+                const problem: TutorProblem = {
+                    question: request.question,
+                    correctAnswer: request.correctAnswer,
+                    explanation: request.explanation ?? request.context ?? '',
+                    topic: request.topic ?? request.subject,
+                    topicKey: request.topicKey ?? request.topic ?? request.subject,
+                    type: request.problemType ?? 'unknown',
+                    options: request.options,
+                };
+                const turn = generateTutorTurn({
+                    subject: request.subject as LearningSubjectKey,
+                    problem,
+                    hintLevel: request.hintLevel,
+                    childAnswer: request.childAnswer,
+                    revealAnswerAllowed: request.revealAnswerAllowed,
+                });
+                responseText = turn.text;
+                supportLevel = turn.supportLevel;
             } else {
                 const responses = tutorResponses[request.subject] || tutorResponses['Toán'];
-                responseText = responses[Math.floor(Math.random() * responses.length)];
-                supportLevel = 'none';
+                const hintIndex = Math.max(0, Math.min(responses.length - 1, request.hintLevel ?? 0));
+                responseText = responses[hintIndex];
+                supportLevel = request.hintLevel && request.hintLevel > 0 ? 'hint_light' : 'none';
             }
             break;
         }
@@ -167,7 +182,6 @@ export function classifyError(
 ): { errorType: string; explanation: string; correctionPlan: string } {
     // Simple heuristic error classification
     const answerLower = answer.toLowerCase().trim();
-    const correctLower = correctAnswer.toLowerCase().trim();
 
     if (answerLower === '') {
         return {

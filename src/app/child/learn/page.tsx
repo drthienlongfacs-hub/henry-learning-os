@@ -37,6 +37,7 @@ import {
 import { createReviewItem } from '@/lib/spaced-repetition';
 import { buildTopicEvidenceProfile } from '@/lib/evidence/learning-evidence';
 import { buildQuestionPresentationPlan } from '@/lib/pedagogy/question-presentation';
+import { generateTutorTurn, type TutorTurn } from '@/lib/ai/tutor-engine';
 
 // ── Types ──
 type Subject = 'math' | 'vietnamese' | 'english' | 'science' | 'hisgeo' | 'computing' | 'elite';
@@ -103,7 +104,7 @@ export default function LearnPage() {
     const [lessonDepth, setLessonDepth] = useState<LessonDepth>('deep');
     const startTime = useRef(0);
 
-    const { addAttempt, addMistake, addReviewSchedule, childProfile, attempts, mistakes, reviewSchedules } = useAppStore();
+    const { addAttempt, addMistake, addReviewSchedule, addAIInteractionLog, childProfile, attempts, mistakes, reviewSchedules } = useAppStore();
     const activeMode = getLessonModeConfig(lessonDepth);
     const modeOptions = Object.values(LESSON_MODE_CONFIG);
 
@@ -139,6 +140,18 @@ export default function LearnPage() {
                 hintLevelUsed, timeSpentSeconds: timeSpent,
                 confidenceSelfRating: 3, aiRoleUsed: 'tutor', createdAt: new Date().toISOString(),
             });
+            addAIInteractionLog({
+                id: `ai-${Date.now()}`,
+                childId: childProfile.id,
+                sessionId: `learn-${p.topicKey}`,
+                role: 'tutor',
+                subject: subject ? SUBJECT_ENRICHMENT_KEY[subject] : 'learning',
+                ageBand: `grade-${grade}`,
+                supportLevel: 'feedback',
+                safetyFlags: [],
+                responseQualityScore: 0.82,
+                createdAt: new Date().toISOString(),
+            });
             const hasPendingCompetencyReview = reviewSchedules.some((review) =>
                 review.childId === childProfile.id &&
                 review.itemType === 'competency' &&
@@ -160,7 +173,7 @@ export default function LearnPage() {
                 addReviewSchedule(createReviewItem(childProfile.id, 'mistake', mistakeId));
             }
         }
-    }, [selected, problems, index, childProfile, reviewSchedules, hintLevelUsed, addAttempt, addMistake, addReviewSchedule]);
+    }, [selected, problems, index, childProfile, reviewSchedules, hintLevelUsed, addAttempt, addAIInteractionLog, addMistake, addReviewSchedule, subject, grade]);
 
     const nextProblem = () => {
         setSelected(null); setShowHint(false); setHintLevelUsed(0);
@@ -197,6 +210,61 @@ export default function LearnPage() {
             evidenceProfile: currentEvidenceProfile ?? undefined,
         })
         : null;
+    const currentTutorProblem = currentProblem
+        ? {
+            question: currentProblem.question,
+            correctAnswer: currentProblem.correctAnswer,
+            explanation: currentProblem.explanation,
+            topic: currentProblem.topic,
+            topicKey: currentProblem.topicKey,
+            type: currentProblem.type,
+            options: currentProblem.options,
+            hints: currentProblem.hints,
+        }
+        : null;
+    const currentTutorHintTurn: TutorTurn | null = currentTutorProblem && subject && currentQuestionPlan
+        ? generateTutorTurn({
+            subject: SUBJECT_ENRICHMENT_KEY[subject],
+            problem: currentTutorProblem,
+            hintLevel: hintLevelUsed,
+            evidenceProfile: currentEvidenceProfile ?? undefined,
+            presentationPlan: currentQuestionPlan,
+            revealAnswerAllowed: false,
+        })
+        : null;
+    const currentTutorFeedbackTurn: TutorTurn | null = currentTutorProblem && subject && currentQuestionPlan && selected
+        ? generateTutorTurn({
+            subject: SUBJECT_ENRICHMENT_KEY[subject],
+            problem: currentTutorProblem,
+            hintLevel: hintLevelUsed,
+            childAnswer: selected,
+            evidenceProfile: currentEvidenceProfile ?? undefined,
+            presentationPlan: currentQuestionPlan,
+            revealAnswerAllowed: false,
+        })
+        : null;
+    const requestTutorHint = () => {
+        if (!currentProblem || !subject || !childProfile) {
+            setHintLevelUsed((level) => Math.max(1, Math.min(5, level + 1)));
+            setShowHint(true);
+            return;
+        }
+        const nextLevel = showHint ? Math.min(5, hintLevelUsed + 1) : Math.max(1, hintLevelUsed);
+        setHintLevelUsed(nextLevel);
+        setShowHint(true);
+        addAIInteractionLog({
+            id: `ai-${Date.now()}`,
+            childId: childProfile.id,
+            sessionId: `learn-${currentProblem.topicKey}`,
+            role: 'tutor',
+            subject: SUBJECT_ENRICHMENT_KEY[subject],
+            ageBand: `grade-${grade}`,
+            supportLevel: nextLevel <= 1 ? 'hint_light' : nextLevel === 2 ? 'hint_medium' : nextLevel === 3 ? 'explanation' : nextLevel === 4 ? 'worked_example' : 'feedback',
+            safetyFlags: [],
+            responseQualityScore: currentEvidenceProfile?.reliability === 'strong' ? 0.9 : 0.82,
+            createdAt: new Date().toISOString(),
+        });
+    };
     const currentPhase = problems.length > 0
         ? activeMode.phases[Math.min(activeMode.phases.length - 1, Math.floor(index / Math.max(1, Math.ceil(problems.length / activeMode.phases.length))))]
         : activeMode.phases[0];
@@ -628,17 +696,17 @@ export default function LearnPage() {
                         {/* Hint */}
                         {!selected && (
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 24, gap: 12 }}>
-                                <button onClick={() => {
-                                    if (!showHint) setHintLevelUsed((level) => Math.max(level, 1));
-                                    setShowHint(!showHint);
-                                }}
+                                <button onClick={requestTutorHint}
                                     style={{ padding: '10px 20px', borderRadius: 20, border: '1px solid rgba(245,158,11,0.4)', background: 'rgba(245,158,11,0.1)', color: '#b45309', fontSize: 16, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, transition: 'all .2s' }}>
-                                    <Lightbulb size={18} /> Mở gợi ý từng tầng
+                                    <Lightbulb size={18} /> {showHint ? `Gợi ý tiếp L${Math.min(5, hintLevelUsed + 1)}` : 'Mở AI gia sư L1'}
                                 </button>
-                                {showHint && (
+                                {showHint && currentTutorHintTurn && (
                                     <div style={{ padding: '16px 20px', borderRadius: 16, background: '#fffbeb', border: '2px solid #fde68a', color: '#92400e', fontSize: 15, fontWeight: 650, maxWidth: '92%', textAlign: 'left', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' }}>
-                                        <div style={{ fontSize: 17, fontWeight: 850, marginBottom: 8 }}>Gợi ý từng tầng</div>
-                                        <div style={{ marginBottom: 10 }}>{currentProblem.hints[0]}</div>
+                                        <div style={{ fontSize: 17, fontWeight: 850, marginBottom: 8 }}>AI gia sư L{hintLevelUsed}: {currentTutorHintTurn.move}</div>
+                                        <div style={{ marginBottom: 10, lineHeight: 1.5 }}>{currentTutorHintTurn.text}</div>
+                                        <div style={{ marginBottom: 10, fontSize: 13, color: '#78350f', lineHeight: 1.45 }}>
+                                            Bước con làm tiếp: {currentTutorHintTurn.nextPrompt}
+                                        </div>
                                         {currentEnrichment?.supportLadder.slice(0, 3).map(step => (
                                             <div key={step.level} style={{ padding: '8px 0', borderTop: '1px solid #fde68a' }}>
                                                 <strong>{step.level} - {step.title}:</strong> {step.action}
@@ -656,6 +724,15 @@ export default function LearnPage() {
                                     {selected === currentProblem.correctAnswer ? 'Chính xác. Bây giờ kiểm tra cách nghĩ.' : 'Chưa đúng. Phân tích lại chiến lược.'}
                                 </div>
                                 <div style={{ fontSize: 16, color: '#475569', lineHeight: 1.6, textAlign: 'center', background: 'rgba(255,255,255,0.6)', padding: 12, borderRadius: 12, marginBottom: 16 }}>{currentProblem.explanation}</div>
+                                {currentTutorFeedbackTurn && (
+                                    <div style={{ textAlign: 'left', background: '#eef2ff', borderRadius: 14, padding: 14, border: '1px solid #c7d2fe', marginBottom: 16 }}>
+                                        <div style={{ fontSize: 13, fontWeight: 900, color: '#3730a3', marginBottom: 6 }}>AI gia sư phân tích câu trả lời</div>
+                                        <div style={{ fontSize: 13, color: '#312e81', lineHeight: 1.5 }}>{currentTutorFeedbackTurn.text}</div>
+                                        <div style={{ fontSize: 12, color: '#4338ca', lineHeight: 1.4, marginTop: 8 }}>
+                                            Bước tiếp theo: {currentTutorFeedbackTurn.nextPrompt}
+                                        </div>
+                                    </div>
+                                )}
                                 {currentEnrichment && (
                                     <div style={{ textAlign: 'left', background: 'rgba(255,255,255,0.68)', borderRadius: 14, padding: 14, border: '1px solid rgba(148,163,184,0.28)', marginBottom: 16 }}>
                                         <div style={{ fontSize: 13, fontWeight: 850, color: '#334155', marginBottom: 6 }}>Bước tiếp theo</div>
