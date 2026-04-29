@@ -1,3 +1,5 @@
+import { PRIMARY_CURRICULUM_MAP_STATS } from './primary-curriculum-map';
+
 export type BenchmarkDimensionKey =
     | 'aiTutorScaffolding'
     | 'adaptiveMasteryDiagnostics'
@@ -262,15 +264,16 @@ export const FULLSTACK_BENCHMARK_DIMENSIONS: FullstackBenchmarkDimension[] = [
         key: 'curriculumDepth',
         label: 'Độ sâu chương trình và nhiệm vụ chuyển giao',
         weightPct: 11,
-        henryScore10: 6.3,
+        henryScore10: 6.8,
         topBenchmarks: ['Bộ GDĐT CTGDPT 2018/2025', 'Beast Academy', 'Khan Academy'],
         currentHenryEvidence: [
             'Có topic blueprint theo môn, practice design, parent coaching và stretch task.',
             'Có nhiều generator nội dung cho Toán, Tiếng Việt, Tiếng Anh, Khoa học, Lịch sử - Địa lý, Tin học.',
             'Đã bổ sung benchmark nguồn chính thức cho Chương trình GDPT Việt Nam năm học 2026-2027.',
+            `Đã map ${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount}/${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount} topic generator lớp 1-5 tới mạch nội dung, yêu cầu cần đạt, ví dụ nhiệm vụ và minh chứng cần lưu.`,
         ],
-        gap: 'Benchmark nguồn đã đủ, nhưng nhiều nội dung vẫn là generated seed, chưa có item-level map tới từng yêu cầu cần đạt và chưa có item calibration.',
-        nextUpgrade: 'Ưu tiên curriculum map lớp 1-5: từng item phải có môn, lớp, mạch nội dung, yêu cầu cần đạt, source version và người duyệt.',
+        gap: 'Đã có topic-level curriculum map lớp 1-5, nhưng từng item cụ thể vẫn chưa có curriculumMapId, người duyệt và item calibration.',
+        nextUpgrade: 'Gắn curriculumMapId vào từng generated item, lưu source version trong attempt log và thêm review queue cho người duyệt.',
         evidenceNeededBeforeEfficacyClaim: 'Cần item bank đã duyệt, độ khó thực nghiệm, tỉ lệ phân biệt và lỗi thường gặp theo tuổi.',
         sourceIds: ['moet-ctgdpt-2018', 'moet-tt17-2025', 'moet-sgk-2026-2027', 'beast-academy', 'khanmigo'],
     },

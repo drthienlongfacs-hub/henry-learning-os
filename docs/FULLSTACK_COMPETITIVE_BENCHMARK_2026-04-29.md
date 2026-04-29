@@ -4,11 +4,13 @@ Ngày cập nhật: 2026-04-29
 
 ## Kết luận ngắn
 
-Henry Learning OS đã vượt mức "display demo" ở các phần: AI gia sư, mastery/adaptive, dashboard bằng chứng, safety settings, static build và GitHub Pages. Điểm cạnh tranh nội bộ hiện là **56/100** theo scorecard có trọng số.
+Henry Learning OS đã vượt mức "display demo" ở các phần: AI gia sư, mastery/adaptive, dashboard bằng chứng, safety settings, static build và GitHub Pages. Điểm cạnh tranh nội bộ hiện là **57/100** theo scorecard có trọng số.
 
 Benchmark Chương trình giáo dục phổ thông Việt Nam cho năm học **2026-2027** hiện đạt **100/100 ở lớp coverage nguồn, phiên bản và gate kiểm chứng**. Con số này không đồng nghĩa item bank đã phủ 100% mọi yêu cầu cần đạt; muốn claim phủ chuẩn nội dung phải có item-level map và người duyệt.
 
 Riêng bậc tiểu học được kiểm soát kỹ hơn: benchmark đã đưa đủ **13 nhóm chính thức** gồm **11 môn học/hoạt động giáo dục bắt buộc** và **2 môn tự chọn** vào scope theo nguồn Bộ GDĐT. Những nhóm chưa có module trong app vẫn được giữ trong danh mục để không bị bỏ sót khi nâng cấp.
+
+Nâng cấp tiếp theo đã hoàn tất ở mức topic-to-generator: **47/47 topic lớp 1-5** trong app đã có curriculum map gồm môn, lớp, mạch nội dung, yêu cầu cần đạt, ví dụ nhiệm vụ, lỗi thường gặp và minh chứng cần lưu. Chưa được claim item bank phủ chuẩn cho đến khi từng item cụ thể có `curriculumMapId`, source version và người duyệt.
 
 Không được claim hiệu quả học tập, tăng điểm, hoặc vượt phần mềm khác cho đến khi có dữ liệu người học thật: pre-test, post-test, retention sau 7 ngày, time-on-task, lỗi tái phát và phân tích cohort.
 
@@ -55,6 +57,16 @@ Không được claim hiệu quả học tập, tăng điểm, hoặc vượt ph
 | 5 | Toán | Con cần giải nhiều bước và kiểm tra kết quả | Tóm tắt bài toán mua đồ, viết cách làm, nêu vì sao chọn phép tính | Tóm tắt, bước giải, lỗi tính, cách kiểm tra |
 | 5 | Hoạt động trải nghiệm | Con cần làm việc thật và tự nhìn lại | Dọn góc học tập 15 phút, chụp minh chứng, viết 3 câu tự nhận xét | Mục tiêu, minh chứng, phản tư, xác nhận phụ huynh |
 
+## Curriculum map lớp 1-5 trong app
+
+| Khối | Số topic đã map | Ví dụ mạch nội dung | Gate còn thiếu |
+|---:|---:|---|---|
+| 1 | 11 | Tiếng Việt âm/chữ/dấu; Toán số đến 20, hình phẳng, khối 3D; Tự nhiên và Xã hội cơ thể - sức khỏe | Gắn `curriculumMapId` vào từng item sinh ra |
+| 2 | 11 | Toán hàng chục-đơn vị, cộng trừ có nhớ, đo độ dài; Tiếng Việt từ vựng/đọc hiểu; Tự nhiên và Xã hội thực vật - động vật | Lưu source version và lỗi thường gặp trong attempt log |
+| 3 | 8 | Toán nhân/chia, chu vi, quy luật; Tiếng Việt ngữ pháp; Ngoại ngữ 1 từ vựng; Tin học phần cứng | Thêm review queue cho người duyệt item |
+| 4 | 9 | Toán phân số/diện tích/số lớn; Ngoại ngữ 1 đọc-ngữ pháp; Khoa học vật chất - năng lượng; Lịch sử dân tộc | Re-audit địa danh/bản đồ theo Thông tư 17/2025 |
+| 5 | 8 | Toán thập phân/phần trăm/tỉ số/biểu đồ; Khoa học hệ sinh thái; Địa lý Việt Nam; Tin học thuật toán | Item calibration bằng dữ liệu làm bài thật |
+
 ### Môn đang có mapping nguồn
 
 | Môn trong app | Phạm vi | Gate tiếp theo |
@@ -83,7 +95,7 @@ Không được claim hiệu quả học tập, tăng điểm, hoặc vượt ph
 | AI gia sư và sửa lỗi tư duy | 15% | 6.4/10 | Chưa có rubric hội thoại | 50 kịch bản tutor regression |
 | Chẩn đoán và thích ứng học thật | 14% | 6.1/10 | Chưa có diagnostic đầu vào | Diagnostic 12-15 phút theo môn |
 | UI/UX học ngắn và bền | 10% | 6.2/10 | Chưa có Playwright/Lighthouse mobile | Smoke test visual mobile |
-| Độ sâu chương trình | 11% | 6.3/10 | Benchmark nguồn Việt Nam đã đủ, nhưng item bank chưa có item-level map và calibration | Curriculum map lớp 1-5 theo môn/lớp/mạch/yêu cầu cần đạt |
+| Độ sâu chương trình | 11% | 6.8/10 | Đã có topic-level curriculum map 47/47 topic, nhưng item bank chưa có `curriculumMapId`, người duyệt và calibration | Gắn map vào từng item và attempt log |
 | Dashboard phụ huynh | 11% | 5.7/10 | Chưa có mục tiêu tuần và export | Weekly outcome loop |
 | Hiệu quả học tập có bằng chứng | 14% | 3.2/10 | Chưa có cohort/pre-post/retention | Pilot 4 tuần |
 | Safety/privacy | 10% | 6.0/10 | Chưa có privacy status panel | Consent và data-retention checklist |

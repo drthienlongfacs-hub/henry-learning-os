@@ -23,6 +23,12 @@ import {
     VIETNAM_CURRICULUM_SUBJECT_COVERAGE,
     sourceLookup,
 } from '@/data/fullstack-competitive-benchmark';
+import {
+    PRIMARY_CURRICULUM_MAP_STATS,
+    PRIMARY_CURRICULUM_TOPIC_MAP,
+    computePrimaryCurriculumTopicMapCoverage,
+    getPrimaryCurriculumTopicMapsByGrade,
+} from '@/data/primary-curriculum-map';
 
 function scoreColor(score: number) {
     if (score >= 7) return '#059669';
@@ -49,6 +55,8 @@ function primaryScopeStatusColor(status: string) {
     if (status === 'benchmark_scope_only') return '#2563eb';
     return '#64748b';
 }
+
+const PRIMARY_GRADES = [1, 2, 3, 4, 5] as const;
 
 export default function ParentBenchmarkPage() {
     return (
@@ -261,6 +269,62 @@ export default function ParentBenchmarkPage() {
                                 <p style={{ color: '#065f46', fontSize: '0.78rem', lineHeight: 1.45 }}>
                                     Minh chứng cần lưu: {example.evidenceToStore}
                                 </p>
+                            </article>
+                        ))}
+                    </div>
+                </section>
+
+                <section style={{ marginBottom: '1.5rem' }}>
+                    <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.1rem', fontWeight: 900, marginBottom: '0.75rem' }}>
+                        <Target size={18} color="#7c3aed" /> Curriculum map lớp 1-5
+                    </h2>
+                    <div className="card" style={{ borderRadius: '12px', padding: '1rem', border: '1px solid #ddd6fe', marginBottom: '0.85rem' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: '0.75rem', marginBottom: '0.9rem' }}>
+                            {[
+                                { label: 'Topic generator đã map', value: `${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount}/${PRIMARY_CURRICULUM_TOPIC_MAP.length}` },
+                                { label: 'Độ phủ mapping', value: `${computePrimaryCurriculumTopicMapCoverage()}%` },
+                                { label: 'Khối lớp', value: PRIMARY_CURRICULUM_MAP_STATS.gradeCoverage.join(', ') },
+                                { label: 'Nhóm môn trong app', value: `${PRIMARY_CURRICULUM_MAP_STATS.subjectCoverage.length}` },
+                            ].map((item) => (
+                                <div key={item.label} style={{ border: '1px solid #e2e8f0', borderRadius: '10px', padding: '0.75rem' }}>
+                                    <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.76rem', fontWeight: 700 }}>{item.label}</div>
+                                    <div style={{ fontWeight: 900, color: item.value.includes('%') ? '#059669' : '#0f172a' }}>{item.value}</div>
+                                </div>
+                            ))}
+                        </div>
+                        <p style={{ color: '#5b21b6', fontSize: '0.84rem', lineHeight: 1.55, marginBottom: '0.45rem' }}>
+                            {PRIMARY_CURRICULUM_MAP_STATS.sourceVersion}. Mỗi topic đã có mạch nội dung, yêu cầu cần đạt, ví dụ nhiệm vụ, lỗi thường gặp và minh chứng cần lưu.
+                        </p>
+                        <p style={{ color: '#7c2d12', fontSize: '0.82rem', lineHeight: 1.5 }}>
+                            {PRIMARY_CURRICULUM_MAP_STATS.noOverclaim}
+                        </p>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: '0.85rem' }}>
+                        {PRIMARY_GRADES.map((grade) => (
+                            <article key={grade} className="card" style={{ borderRadius: '12px', padding: '1rem' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', gap: '0.75rem', alignItems: 'center', marginBottom: '0.75rem' }}>
+                                    <h3 style={{ fontWeight: 900, color: '#0f172a' }}>Lớp {grade}</h3>
+                                    <span className="badge" style={{ color: '#7c3aed', background: '#ede9fe' }}>
+                                        {getPrimaryCurriculumTopicMapsByGrade(grade).length} topic
+                                    </span>
+                                </div>
+                                <div style={{ display: 'grid', gap: '0.6rem' }}>
+                                    {getPrimaryCurriculumTopicMapsByGrade(grade).map((item) => (
+                                        <div key={`${item.subject}-${item.topicKey}`} style={{ border: '1px solid #e2e8f0', borderRadius: '10px', padding: '0.75rem' }}>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', gap: '0.5rem', marginBottom: '0.35rem' }}>
+                                                <div style={{ fontWeight: 900, color: '#0f172a' }}>{item.topicName}</div>
+                                                <div style={{ color: '#64748b', fontSize: '0.74rem', fontWeight: 800 }}>{item.subjectLabel}</div>
+                                            </div>
+                                            <div style={{ color: '#5b21b6', fontSize: '0.78rem', lineHeight: 1.45, marginBottom: '0.3rem' }}>
+                                                {item.officialStrand}: {item.expectedOutcome}
+                                            </div>
+                                            <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.76rem', lineHeight: 1.45 }}>
+                                                Ví dụ: {item.exampleTask}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             </article>
                         ))}
                     </div>
