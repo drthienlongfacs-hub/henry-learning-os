@@ -1,9 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import {
+    BENCHMARK_PAGE_NAV,
     FULLSTACK_BENCHMARK_DIMENSIONS,
     FULLSTACK_BENCHMARK_ROADMAP,
     FULLSTACK_BENCHMARK_SOURCES,
     HENRY_FULLSTACK_BENCHMARK,
+    LIVE_UPGRADE_SIGNALS,
     PRIMARY_CURRICULUM_EXPLANATION_EXAMPLES,
     PRIMARY_SCHOOL_CURRICULUM_SCOPE,
     VIETNAM_CURRICULUM_BENCHMARK,
@@ -53,6 +55,22 @@ describe('full-stack competitive benchmark', () => {
         expect(FULLSTACK_BENCHMARK_SOURCES.every((source) => source.url.startsWith('https://'))).toBe(true);
         expect(FULLSTACK_BENCHMARK_ROADMAP[0].title).toContain('Pilot evidence');
         expect(FULLSTACK_BENCHMARK_ROADMAP.every((item) => item.measurableGate.length > 30)).toBe(true);
+    });
+
+    it('surfaces the latest live upgrade above the fold', () => {
+        expect(LIVE_UPGRADE_SIGNALS).toHaveLength(4);
+        expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('57/100');
+        expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('47/47 topic');
+        expect(LIVE_UPGRADE_SIGNALS.some((signal) => signal.detail.includes('chưa nâng điểm hiệu quả học tập'))).toBe(true);
+
+        expect(BENCHMARK_PAGE_NAV.map((item) => item.href)).toEqual([
+            '#live-upgrade',
+            '#vietnam-curriculum',
+            '#primary-scope',
+            '#topic-map',
+            '#scorecard',
+            '#sources',
+        ]);
     });
 
     it('benchmarks Vietnam curriculum 2026-2027 at 100 percent source coverage without overclaiming product coverage', () => {

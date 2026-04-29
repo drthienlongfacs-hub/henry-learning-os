@@ -48,6 +48,13 @@ export interface BenchmarkRoadmapItem {
     measurableGate: string;
 }
 
+export interface LiveUpgradeSignal {
+    label: string;
+    value: string;
+    detail: string;
+    tone: 'good' | 'info' | 'warn' | 'risk';
+}
+
 export interface VietnamCurriculumBenchmarkCheck {
     key: string;
     label: string;
@@ -93,6 +100,42 @@ export interface PrimaryCurriculumExplanationExample {
 }
 
 export const FULLSTACK_BENCHMARK_AS_OF = '2026-04-29';
+
+export const LIVE_UPGRADE_SIGNALS: LiveUpgradeSignal[] = [
+    {
+        label: 'Bản live mới',
+        value: '57/100',
+        detail: 'Điểm cạnh tranh tăng sau khi có curriculum map lớp 1-5; chưa nâng điểm hiệu quả học tập.',
+        tone: 'info',
+    },
+    {
+        label: 'Curriculum map',
+        value: '47/47 topic',
+        detail: 'Toàn bộ topic generator đang có trong app đã được map tới môn, lớp, mạch nội dung và minh chứng cần lưu.',
+        tone: 'good',
+    },
+    {
+        label: 'Scope tiểu học',
+        value: '13 nhóm',
+        detail: 'Bao gồm 11 môn học/hoạt động giáo dục bắt buộc và 2 nhóm tự chọn theo phạm vi chính thức.',
+        tone: 'good',
+    },
+    {
+        label: 'Gate còn thiếu',
+        value: 'Item audit',
+        detail: 'Bước tiếp theo là gắn curriculumMapId vào từng item, source version, người duyệt và calibration.',
+        tone: 'warn',
+    },
+];
+
+export const BENCHMARK_PAGE_NAV = [
+    { href: '#live-upgrade', label: 'Live mới' },
+    { href: '#vietnam-curriculum', label: 'CT Việt Nam' },
+    { href: '#primary-scope', label: 'Tiểu học' },
+    { href: '#topic-map', label: '47 topic' },
+    { href: '#scorecard', label: 'Scorecard' },
+    { href: '#sources', label: 'Nguồn' },
+];
 
 export const FULLSTACK_BENCHMARK_SOURCES: BenchmarkSource[] = [
     {

@@ -12,6 +12,8 @@ Riêng bậc tiểu học được kiểm soát kỹ hơn: benchmark đã đưa 
 
 Nâng cấp tiếp theo đã hoàn tất ở mức topic-to-generator: **47/47 topic lớp 1-5** trong app đã có curriculum map gồm môn, lớp, mạch nội dung, yêu cầu cần đạt, ví dụ nhiệm vụ, lỗi thường gặp và minh chứng cần lưu. Chưa được claim item bank phủ chuẩn cho đến khi từng item cụ thể có `curriculumMapId`, source version và người duyệt.
 
+UI/UX live đã được chỉnh để khác biệt thấy ngay ở màn hình đầu: có panel "Bản live đã cập nhật", 4 tín hiệu chính, điểm 57/100, cảnh báo chưa claim hiệu quả học tập và mục lục nhanh tới các phần CT Việt Nam, Tiểu học, 47 topic, Scorecard và Nguồn.
+
 Không được claim hiệu quả học tập, tăng điểm, hoặc vượt phần mềm khác cho đến khi có dữ liệu người học thật: pre-test, post-test, retention sau 7 ngày, time-on-task, lỗi tái phát và phân tích cohort.
 
 ## Benchmark chương trình Việt Nam 2026-2027

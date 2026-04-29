@@ -11,11 +11,13 @@ import {
     TrendingUp,
 } from 'lucide-react';
 import {
+    BENCHMARK_PAGE_NAV,
     COMPETITIVE_PROFILES,
     FULLSTACK_BENCHMARK_DIMENSIONS,
     FULLSTACK_BENCHMARK_ROADMAP,
     FULLSTACK_BENCHMARK_SOURCES,
     HENRY_FULLSTACK_BENCHMARK,
+    LIVE_UPGRADE_SIGNALS,
     PRIMARY_CURRICULUM_EXPLANATION_EXAMPLES,
     PRIMARY_SCHOOL_CURRICULUM_SCOPE,
     VIETNAM_CURRICULUM_BENCHMARK,
@@ -56,6 +58,13 @@ function primaryScopeStatusColor(status: string) {
     return '#64748b';
 }
 
+function signalToneColor(tone: string) {
+    if (tone === 'good') return '#059669';
+    if (tone === 'warn') return '#d97706';
+    if (tone === 'risk') return '#dc2626';
+    return '#2563eb';
+}
+
 const PRIMARY_GRADES = [1, 2, 3, 4, 5] as const;
 
 export default function ParentBenchmarkPage() {
@@ -77,6 +86,71 @@ export default function ParentBenchmarkPage() {
                         </h1>
                     </div>
                 </div>
+
+                <section id="live-upgrade" style={{ marginBottom: '1rem' }}>
+                    <div
+                        style={{
+                            background: '#ffffff',
+                            border: '1px solid #c7d2fe',
+                            borderRadius: '12px',
+                            padding: '1rem',
+                            boxShadow: '0 12px 30px rgba(15, 23, 42, 0.06)',
+                        }}
+                    >
+                        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem', alignItems: 'flex-start', flexWrap: 'wrap', marginBottom: '0.9rem' }}>
+                            <div style={{ maxWidth: '620px' }}>
+                                <div style={{ color: '#4f46e5', fontWeight: 900, fontSize: '0.82rem', marginBottom: '0.35rem' }}>
+                                    Bản live đã cập nhật sau nâng cấp full-stack
+                                </div>
+                                <h2 style={{ fontSize: '1.35rem', lineHeight: 1.2, fontWeight: 900, color: '#0f172a', marginBottom: '0.45rem' }}>
+                                    Nhìn nhanh: đã có benchmark nguồn, scope tiểu học, map 47 topic lớp 1-5 và guardrail chống claim quá mức
+                                </h2>
+                                <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', lineHeight: 1.55 }}>
+                                    Điểm khác biệt chính nằm ở phần curriculum: trang này không chỉ so sánh với sản phẩm quốc tế, mà đã có lớp kiểm chứng chương trình Việt Nam 2026-2027 và map nội dung tiểu học đang chạy trong app.
+                                </p>
+                            </div>
+                            <div style={{ minWidth: '170px', textAlign: 'right' }}>
+                                <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.76rem', fontWeight: 800 }}>Điểm hiện tại</div>
+                                <div style={{ color: '#2563eb', fontSize: '2.6rem', lineHeight: 1, fontWeight: 900 }}>{HENRY_FULLSTACK_BENCHMARK.overallScore100}/100</div>
+                                <div style={{ color: '#7c2d12', fontSize: '0.76rem', fontWeight: 800, marginTop: '0.35rem' }}>Chưa claim hiệu quả học tập</div>
+                            </div>
+                        </div>
+
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: '0.75rem', marginBottom: '0.9rem' }}>
+                            {LIVE_UPGRADE_SIGNALS.map((signal) => (
+                                <article key={signal.label} style={{ border: '1px solid #e2e8f0', borderRadius: '10px', padding: '0.85rem', background: '#f8fafc' }}>
+                                    <div style={{ color: signalToneColor(signal.tone), fontWeight: 900, fontSize: '0.76rem', marginBottom: '0.25rem' }}>{signal.label}</div>
+                                    <div style={{ color: '#0f172a', fontWeight: 900, fontSize: '1.15rem', marginBottom: '0.25rem' }}>{signal.value}</div>
+                                    <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.78rem', lineHeight: 1.45 }}>{signal.detail}</div>
+                                </article>
+                            ))}
+                        </div>
+
+                        <nav aria-label="Đi nhanh trong trang benchmark" style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                            {BENCHMARK_PAGE_NAV.map((item) => (
+                                <a
+                                    key={item.href}
+                                    href={item.href}
+                                    style={{
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        minHeight: '34px',
+                                        padding: '0.4rem 0.65rem',
+                                        borderRadius: '999px',
+                                        border: '1px solid #dbeafe',
+                                        color: '#1d4ed8',
+                                        background: '#eff6ff',
+                                        fontSize: '0.78rem',
+                                        fontWeight: 900,
+                                        textDecoration: 'none',
+                                    }}
+                                >
+                                    {item.label}
+                                </a>
+                            ))}
+                        </nav>
+                    </div>
+                </section>
 
                 <section
                     style={{
@@ -133,7 +207,7 @@ export default function ParentBenchmarkPage() {
                     </div>
                 </section>
 
-                <section style={{ marginBottom: '1.5rem' }}>
+                <section id="vietnam-curriculum" style={{ marginBottom: '1.5rem', scrollMarginTop: '1rem' }}>
                     <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.1rem', fontWeight: 900, marginBottom: '0.75rem' }}>
                         <BookOpen size={18} color="#059669" /> Benchmark chương trình Việt Nam 2026-2027
                     </h2>
@@ -196,7 +270,7 @@ export default function ParentBenchmarkPage() {
                     </div>
                 </section>
 
-                <section style={{ marginBottom: '1.5rem' }}>
+                <section id="primary-scope" style={{ marginBottom: '1.5rem', scrollMarginTop: '1rem' }}>
                     <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.1rem', fontWeight: 900, marginBottom: '0.75rem' }}>
                         <BookOpen size={18} color="#2563eb" /> Bậc tiểu học: kiểm soát kỹ lưỡng 100%
                     </h2>
@@ -274,7 +348,7 @@ export default function ParentBenchmarkPage() {
                     </div>
                 </section>
 
-                <section style={{ marginBottom: '1.5rem' }}>
+                <section id="topic-map" style={{ marginBottom: '1.5rem', scrollMarginTop: '1rem' }}>
                     <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.1rem', fontWeight: 900, marginBottom: '0.75rem' }}>
                         <Target size={18} color="#7c3aed" /> Curriculum map lớp 1-5
                     </h2>
@@ -330,7 +404,7 @@ export default function ParentBenchmarkPage() {
                     </div>
                 </section>
 
-                <section style={{ marginBottom: '1.5rem' }}>
+                <section id="scorecard" style={{ marginBottom: '1.5rem', scrollMarginTop: '1rem' }}>
                     <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.1rem', fontWeight: 900, marginBottom: '0.75rem' }}>
                         <BarChart3 size={18} color="#2563eb" /> Scorecard có trọng số
                     </h2>
@@ -416,7 +490,7 @@ export default function ParentBenchmarkPage() {
                     </div>
                 </section>
 
-                <section style={{ marginBottom: '1rem' }}>
+                <section id="sources" style={{ marginBottom: '1rem', scrollMarginTop: '1rem' }}>
                     <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.1rem', fontWeight: 900, marginBottom: '0.75rem' }}>
                         <ExternalLink size={18} color="#64748b" /> Nguồn benchmark
                     </h2>
