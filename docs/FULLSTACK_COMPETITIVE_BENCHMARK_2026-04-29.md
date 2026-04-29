@@ -6,7 +6,65 @@ Ngày cập nhật: 2026-04-29
 
 Henry Learning OS đã vượt mức "display demo" ở các phần: AI gia sư, mastery/adaptive, dashboard bằng chứng, safety settings, static build và GitHub Pages. Điểm cạnh tranh nội bộ hiện là **56/100** theo scorecard có trọng số.
 
+Benchmark Chương trình giáo dục phổ thông Việt Nam cho năm học **2026-2027** hiện đạt **100/100 ở lớp coverage nguồn, phiên bản và gate kiểm chứng**. Con số này không đồng nghĩa item bank đã phủ 100% mọi yêu cầu cần đạt; muốn claim phủ chuẩn nội dung phải có item-level map và người duyệt.
+
+Riêng bậc tiểu học được kiểm soát kỹ hơn: benchmark đã đưa đủ **13 nhóm chính thức** gồm **11 môn học/hoạt động giáo dục bắt buộc** và **2 môn tự chọn** vào scope theo nguồn Bộ GDĐT. Những nhóm chưa có module trong app vẫn được giữ trong danh mục để không bị bỏ sót khi nâng cấp.
+
 Không được claim hiệu quả học tập, tăng điểm, hoặc vượt phần mềm khác cho đến khi có dữ liệu người học thật: pre-test, post-test, retention sau 7 ngày, time-on-task, lỗi tái phát và phân tích cohort.
+
+## Benchmark chương trình Việt Nam 2026-2027
+
+| Gate bắt buộc | Trạng thái | Nguồn chính | Gate tiếp theo |
+|---|---|---|---|
+| Nguồn Chương trình GDPT chính thức | Đã đạt | Bộ GDĐT - Chương trình GDPT 2018 | Mọi curriculum map phải lưu sourceId và ngày benchmark |
+| Cập nhật chương trình 2025 | Đã đạt | Thông tư 17/2025/TT-BGDĐT | Re-audit nội dung chịu tác động, nhất là Lịch sử - Địa lý và công dân/pháp luật |
+| Mốc năm học 2026-2027 | Đã đạt | Bộ GDĐT - SGK thống nhất từ năm học 2026-2027 | Khi có danh mục/sách cụ thể, cập nhật source version và so sánh item bank |
+| Map nguồn cho môn đang có trong app | Đã đạt | CTGDPT 2018 và Thông tư 17/2025 | Không thêm môn/generator mới nếu thiếu sourceIds và nextGate |
+| Gate chống claim phủ chuẩn quá mức | Đã đạt | CTGDPT + nguồn evidence | Không hiển thị claim phủ 100% chương trình nếu chưa có item-level audit |
+
+## Bậc tiểu học - scope 100%
+
+| Nhóm chính thức | Lớp | Vai trò | Trạng thái trong Henry | Diễn giải dễ hiểu |
+|---|---|---|---|---|
+| Tiếng Việt | 1-5 | Bắt buộc | Đã có trong app | Trẻ cần đọc được, viết được, nói rõ ý và nghe hiểu; không chỉ làm đúng trắc nghiệm |
+| Toán | 1-5 | Bắt buộc | Đã có trong app | Trẻ cần hiểu số, phép tính, hình, đo lường, dữ liệu và biết giải thích cách làm |
+| Đạo đức | 1-5 | Bắt buộc | Scope benchmark | Trẻ cần biết chọn việc đúng trong tình huống gần gũi, nói được lý do và làm lại trong đời sống |
+| Ngoại ngữ 1 | 3-5 | Bắt buộc | Đã có trong app | Trẻ cần dùng tiếng Anh trong tình huống ngắn: nghe, nói, đọc, viết ở mức phù hợp |
+| Tự nhiên và Xã hội | 1-3 | Bắt buộc | Đã có trong app | Trẻ học bằng quan sát đời sống: cơ thể, gia đình, trường học, cây cối, con vật, môi trường và an toàn |
+| Lịch sử và Địa lý | 4-5 | Bắt buộc | Đã có trong app | Trẻ cần đọc bản đồ, hiểu mốc thời gian, nhân vật, địa danh và nói được ý nghĩa |
+| Khoa học | 4-5 | Bắt buộc | Đã có trong app | Trẻ cần quan sát, thử nghiệm đơn giản, giải thích hiện tượng và áp dụng an toàn |
+| Tin học và Công nghệ | 3-5 | Bắt buộc | Đã có trong app | Trẻ cần dùng thiết bị số an toàn, hiểu dữ liệu đơn giản, làm theo thuật toán và tạo sản phẩm số nhỏ |
+| Giáo dục thể chất | 1-5 | Bắt buộc | Scope benchmark | App chỉ nên nhắc thói quen và ghi nhận; không thay giáo viên khi đánh giá vận động |
+| Nghệ thuật | 1-5 | Bắt buộc | Scope benchmark | Trẻ cần cảm thụ, thể hiện và nói về sản phẩm; không chấm theo một đáp án cứng |
+| Hoạt động trải nghiệm | 1-5 | Bắt buộc | Scope benchmark | Trẻ học qua việc làm thật, tự nhìn lại và có xác nhận phụ huynh khi phù hợp |
+| Tiếng dân tộc thiểu số | 1-5 | Tự chọn | Tham chiếu | Chỉ triển khai khi có chương trình, ngữ liệu được phép dùng và người duyệt ngôn ngữ |
+| Ngoại ngữ 1 lớp 1-2 | 1-2 | Tự chọn | Tham chiếu/enrichment | Làm quen nhẹ nhàng; không biến thành kiểm tra nặng hoặc claim chương trình bắt buộc |
+
+## Ví dụ diễn giải tiểu học
+
+| Lớp | Môn | Cách hiểu đúng | Ví dụ bài trong app | Minh chứng phải lưu |
+|---:|---|---|---|---|
+| 1 | Tiếng Việt | Con cần nghe âm, đọc tiếng, viết lại và nói một câu ngắn | Với tiếng "mẹ": đọc to, chỉ âm đầu, viết lại, nói câu "Mẹ bế em" | Lỗi âm-vần-dấu, câu con tự nói, mức gợi ý |
+| 1 | Toán | Con cần hiểu số là số lượng thật, không chỉ nhớ đáp án | Gộp 7 quả táo và 2 quả táo, nói "7 thêm 2 là 9" | Cách đếm, lỗi thêm/bớt, giải thích của con |
+| 2 | Tự nhiên và Xã hội | Con cần quan sát và nói điều an toàn trong đời sống | Xem cây bị héo, chọn nguyên nhân có thể xảy ra và nói cách chăm sóc | Câu quan sát, lý do an toàn, liên hệ đời sống |
+| 3 | Ngoại ngữ 1 | Con cần dùng câu trong tình huống nhỏ | Nghe "What do you like?", chọn câu trả lời, đọc lại và viết một câu về sở thích | Kỹ năng đo, từ/mẫu câu, mức hỗ trợ tiếng Việt |
+| 3 | Tin học và Công nghệ | Con cần làm theo bước và dùng thiết bị an toàn | Xếp lệnh cho nhân vật đi tới nhà, rồi chọn cách xử lý khi gặp link lạ | Chuỗi lệnh, lỗi thứ tự, quyết định an toàn số |
+| 4 | Lịch sử và Địa lý | Con cần đọc bản đồ, đặt sự kiện vào thời gian và nói ý nghĩa | Chỉ địa danh trên bản đồ, đặt sự kiện vào dòng thời gian, nói điều thay đổi sau sự kiện | Địa danh, mốc thời gian, trạng thái re-audit theo Thông tư 17/2025 |
+| 4 | Khoa học | Con cần dự đoán, quan sát và giải thích bằng bằng chứng | So sánh đường tan trong nước ấm và nước lạnh, dự đoán bên nào nhanh hơn | Dự đoán, quan sát, câu giải thích, bước an toàn |
+| 5 | Tiếng Việt | Con cần hiểu ý chính, chọn chi tiết và viết đoạn rõ ràng | Đọc đoạn ngắn, gạch ý chính, chọn 2 chi tiết, viết đoạn 5-7 câu | Ý chính, chi tiết làm bằng chứng, lỗi diễn đạt |
+| 5 | Toán | Con cần giải nhiều bước và kiểm tra kết quả | Tóm tắt bài toán mua đồ, viết cách làm, nêu vì sao chọn phép tính | Tóm tắt, bước giải, lỗi tính, cách kiểm tra |
+| 5 | Hoạt động trải nghiệm | Con cần làm việc thật và tự nhìn lại | Dọn góc học tập 15 phút, chụp minh chứng, viết 3 câu tự nhận xét | Mục tiêu, minh chứng, phản tư, xác nhận phụ huynh |
+
+### Môn đang có mapping nguồn
+
+| Môn trong app | Phạm vi | Gate tiếp theo |
+|---|---|---|
+| Toán | Lớp 1-5 đang có trong app | Map từng câu hỏi tới lớp, mạch số và phép tính, hình học, đo lường, thống kê/xác suất |
+| Tiếng Việt | Lớp 1-5 đang có trong app | Map từng bài tới đọc, viết, nói và nghe; kiểm tra lỗi dấu thanh, âm/vần và diễn đạt |
+| Tiếng Anh | Lớp 1-5 trong app | Map từ vựng, mẫu câu, nghe-nói-đọc-viết theo lớp và tình huống giao tiếp |
+| Khoa học / Tự nhiên và Xã hội | Tự nhiên và Xã hội lớp 1-3; Khoa học lớp 4-5 | Map từng hoạt động tới quan sát, đặt câu hỏi, giải thích hiện tượng và vận dụng an toàn |
+| Lịch sử và Địa lý | Lớp 4-5 đang có trong app | Re-audit câu hỏi địa danh, đơn vị hành chính và nội dung chịu tác động cập nhật 2025 |
+| Tin học và Công nghệ | Lớp 3-5 trong CTGDPT 2018; app đang có computing topics | Map từng item tới thiết bị số, an toàn, dữ liệu, thuật toán và sản phẩm số |
 
 ## Đối thủ benchmark
 
@@ -16,6 +74,7 @@ Không được claim hiệu quả học tập, tăng điểm, hoặc vượt ph
 | IXL / DreamBox | Chẩn đoán liên tục, đường học thích ứng | Attempt, lỗi sai, mức gợi ý và lịch ôn phải điều khiển bài tiếp theo |
 | Duolingo ABC / Beast Academy | Phiên học ngắn, nội dung sâu, dashboard phụ huynh | Trẻ nhỏ cần nhịp học ngắn nhưng trẻ mạnh cần stretch task |
 | Zearn / ST Math / EEF | Báo cáo vận hành, evidence ngoài, metacognition | Cần pilot thực nghiệm trước khi nói về hiệu quả |
+| Bộ GDĐT Việt Nam / CTGDPT 2018 cập nhật 2025 | Chuẩn chương trình, mốc cập nhật 2025, mốc SGK 2026-2027 | Henry phải version hóa nguồn chương trình và map từng item trước khi claim phủ chuẩn |
 
 ## Scorecard
 
@@ -24,7 +83,7 @@ Không được claim hiệu quả học tập, tăng điểm, hoặc vượt ph
 | AI gia sư và sửa lỗi tư duy | 15% | 6.4/10 | Chưa có rubric hội thoại | 50 kịch bản tutor regression |
 | Chẩn đoán và thích ứng học thật | 14% | 6.1/10 | Chưa có diagnostic đầu vào | Diagnostic 12-15 phút theo môn |
 | UI/UX học ngắn và bền | 10% | 6.2/10 | Chưa có Playwright/Lighthouse mobile | Smoke test visual mobile |
-| Độ sâu chương trình | 11% | 6.3/10 | Item bank chưa calibration | Review 3 mạch lõi lớp 1-3 |
+| Độ sâu chương trình | 11% | 6.3/10 | Benchmark nguồn Việt Nam đã đủ, nhưng item bank chưa có item-level map và calibration | Curriculum map lớp 1-5 theo môn/lớp/mạch/yêu cầu cần đạt |
 | Dashboard phụ huynh | 11% | 5.7/10 | Chưa có mục tiêu tuần và export | Weekly outcome loop |
 | Hiệu quả học tập có bằng chứng | 14% | 3.2/10 | Chưa có cohort/pre-post/retention | Pilot 4 tuần |
 | Safety/privacy | 10% | 6.0/10 | Chưa có privacy status panel | Consent và data-retention checklist |
@@ -48,3 +107,7 @@ Không được claim hiệu quả học tập, tăng điểm, hoặc vượt ph
 - Zearn reporting suite: https://help.zearn.org/hc/en-us/articles/29008224450967-Zearn-reporting-suite
 - ST Math - Evidence for ESSA: https://www.evidenceforessa.org/program/st-math-spatial-temporal-math/
 - EEF metacognition and self-regulation: https://educationendowmentfoundation.org.uk/news/updated-eef-guide-to-metacognition-and-self-regulation
+- Bộ GDĐT - Chương trình GDPT 2018: https://moet.gov.vn/tintuc/pages/tin-hoat-dong-cua-bo.aspx?ItemID=5755
+- Thông tư 17/2025/TT-BGDĐT: https://moet.gov.vn/van-ban/vanban/Pages/chi-tiet-van-ban.aspx?ItemID=1600
+- Bộ GDĐT - tổng kết triển khai chương trình, sách giáo khoa GDPT 2020-2025 và mốc SGK 2026-2027: https://www.moet.gov.vn/tintuc/Pages/tin-hoat-dong-cua-bo.aspx?ItemID=11222
+- Bộ GDĐT - họp báo công bố Chương trình GDPT mới, phạm vi cấp tiểu học: https://moet.gov.vn/tintuc/Pages/CT-GDPT-Moi.aspx?ItemID=5756

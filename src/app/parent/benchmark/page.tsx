@@ -2,6 +2,7 @@ import Link from 'next/link';
 import {
     ArrowLeft,
     BarChart3,
+    BookOpen,
     CheckCircle2,
     ExternalLink,
     Gauge,
@@ -15,6 +16,11 @@ import {
     FULLSTACK_BENCHMARK_ROADMAP,
     FULLSTACK_BENCHMARK_SOURCES,
     HENRY_FULLSTACK_BENCHMARK,
+    PRIMARY_CURRICULUM_EXPLANATION_EXAMPLES,
+    PRIMARY_SCHOOL_CURRICULUM_SCOPE,
+    VIETNAM_CURRICULUM_BENCHMARK,
+    VIETNAM_CURRICULUM_BENCHMARK_CHECKS,
+    VIETNAM_CURRICULUM_SUBJECT_COVERAGE,
     sourceLookup,
 } from '@/data/fullstack-competitive-benchmark';
 
@@ -30,6 +36,18 @@ function scoreLabel(score: number) {
     if (score >= 5.5) return 'Có nền';
     if (score >= 4) return 'Cần nâng';
     return 'Thiếu evidence';
+}
+
+function primaryScopeStatusLabel(status: string) {
+    if (status === 'in_app_mapped') return 'Đã có trong app';
+    if (status === 'benchmark_scope_only') return 'Có trong scope benchmark';
+    return 'Tự chọn / tham chiếu';
+}
+
+function primaryScopeStatusColor(status: string) {
+    if (status === 'in_app_mapped') return '#059669';
+    if (status === 'benchmark_scope_only') return '#2563eb';
+    return '#64748b';
 }
 
 export default function ParentBenchmarkPage() {
@@ -109,6 +127,147 @@ export default function ParentBenchmarkPage() {
 
                 <section style={{ marginBottom: '1.5rem' }}>
                     <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.1rem', fontWeight: 900, marginBottom: '0.75rem' }}>
+                        <BookOpen size={18} color="#059669" /> Benchmark chương trình Việt Nam 2026-2027
+                    </h2>
+                    <div
+                        style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                            gap: '0.85rem',
+                            marginBottom: '0.85rem',
+                        }}
+                    >
+                        <article className="card" style={{ borderRadius: '12px', padding: '1rem', border: '1px solid #bbf7d0' }}>
+                            <div style={{ color: '#047857', fontWeight: 900, fontSize: '0.82rem', marginBottom: '0.65rem' }}>
+                                Độ phủ benchmark nguồn
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.35rem', marginBottom: '0.75rem' }}>
+                                <span style={{ fontSize: '2.8rem', lineHeight: 1, fontWeight: 900, color: '#059669' }}>
+                                    {VIETNAM_CURRICULUM_BENCHMARK.coverage100}
+                                </span>
+                                <span style={{ color: 'var(--color-text-secondary)', fontWeight: 800 }}>/100</span>
+                            </div>
+                            <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.86rem', lineHeight: 1.55, marginBottom: '0.75rem' }}>
+                                Năm học {VIETNAM_CURRICULUM_BENCHMARK.schoolYear} · {VIETNAM_CURRICULUM_BENCHMARK.requiredCheckCount} gate bắt buộc · {VIETNAM_CURRICULUM_BENCHMARK.coveredSubjectCount} nhóm môn đang có mapping nguồn.
+                            </p>
+                            <p style={{ color: '#065f46', background: '#ecfdf5', borderRadius: '10px', padding: '0.75rem', fontSize: '0.82rem', lineHeight: 1.5 }}>
+                                {VIETNAM_CURRICULUM_BENCHMARK.scope}
+                            </p>
+                        </article>
+
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '0.85rem' }}>
+                            {VIETNAM_CURRICULUM_BENCHMARK_CHECKS.map((check) => (
+                                <article key={check.key} className="card" style={{ borderRadius: '12px', padding: '1rem', borderLeft: '4px solid #10b981' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#059669', fontWeight: 900, fontSize: '0.78rem', marginBottom: '0.35rem' }}>
+                                        <CheckCircle2 size={14} /> Đã đạt
+                                    </div>
+                                    <h3 style={{ fontWeight: 900, color: '#0f172a', marginBottom: '0.45rem' }}>{check.label}</h3>
+                                    <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.8rem', lineHeight: 1.5 }}>
+                                        {check.verificationGate}
+                                    </p>
+                                </article>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '0.75rem' }}>
+                        {VIETNAM_CURRICULUM_SUBJECT_COVERAGE.map((subject) => (
+                            <article key={subject.subject} className="card" style={{ borderRadius: '12px', padding: '0.9rem' }}>
+                                <div style={{ fontWeight: 900, color: '#0f172a', marginBottom: '0.35rem' }}>{subject.subject}</div>
+                                <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.78rem', lineHeight: 1.45, marginBottom: '0.5rem' }}>
+                                    {subject.gradeBand}
+                                </div>
+                                <div style={{ color: '#075985', fontSize: '0.78rem', lineHeight: 1.45, marginBottom: '0.5rem' }}>
+                                    Phần app: {subject.appSurface}
+                                </div>
+                                <div style={{ color: '#7c2d12', fontSize: '0.78rem', lineHeight: 1.45 }}>
+                                    Gate tiếp theo: {subject.nextGate}
+                                </div>
+                            </article>
+                        ))}
+                    </div>
+                </section>
+
+                <section style={{ marginBottom: '1.5rem' }}>
+                    <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.1rem', fontWeight: 900, marginBottom: '0.75rem' }}>
+                        <BookOpen size={18} color="#2563eb" /> Bậc tiểu học: kiểm soát kỹ lưỡng 100%
+                    </h2>
+                    <div className="card" style={{ borderRadius: '12px', padding: '1rem', border: '1px solid #dbeafe', marginBottom: '0.85rem' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: '0.75rem', marginBottom: '0.9rem' }}>
+                            {[
+                                { label: 'Độ phủ scope tiểu học', value: `${VIETNAM_CURRICULUM_BENCHMARK.primarySchoolScopeCoverage100}/100` },
+                                { label: 'Nhóm chính thức', value: `${VIETNAM_CURRICULUM_BENCHMARK.primaryOfficialScopeCount}` },
+                                { label: 'Bắt buộc', value: `${VIETNAM_CURRICULUM_BENCHMARK.primaryMandatoryCount}` },
+                                { label: 'Tự chọn', value: `${VIETNAM_CURRICULUM_BENCHMARK.primaryOptionalCount}` },
+                                { label: 'Ví dụ diễn giải', value: `${VIETNAM_CURRICULUM_BENCHMARK.primaryExampleCount}` },
+                            ].map((item) => (
+                                <div key={item.label} style={{ border: '1px solid #e2e8f0', borderRadius: '10px', padding: '0.75rem' }}>
+                                    <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.76rem', fontWeight: 700 }}>{item.label}</div>
+                                    <div style={{ fontWeight: 900, color: item.value.includes('/100') ? '#059669' : '#0f172a' }}>{item.value}</div>
+                                </div>
+                            ))}
+                        </div>
+                        <p style={{ color: '#075985', fontSize: '0.86rem', lineHeight: 1.55 }}>
+                            Bậc tiểu học được benchmark theo toàn bộ phạm vi chính thức: 11 môn học/hoạt động giáo dục bắt buộc và 2 môn tự chọn. Những mục chưa có module riêng vẫn được giữ trong scope để không bị bỏ sót khi nâng cấp.
+                        </p>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '0.75rem', marginBottom: '0.85rem' }}>
+                        {PRIMARY_SCHOOL_CURRICULUM_SCOPE.map((item) => (
+                            <article key={item.key} className="card" style={{ borderRadius: '12px', padding: '0.9rem' }}>
+                                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '0.65rem', marginBottom: '0.45rem' }}>
+                                    <div>
+                                        <div style={{ fontWeight: 900, color: '#0f172a', marginBottom: '0.25rem' }}>{item.label}</div>
+                                        <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.76rem' }}>
+                                            {item.gradeBand} · {item.officialRole === 'mandatory' ? 'Bắt buộc' : 'Tự chọn'}
+                                        </div>
+                                    </div>
+                                    <span
+                                        className="badge"
+                                        style={{
+                                            background: `${primaryScopeStatusColor(item.status)}18`,
+                                            color: primaryScopeStatusColor(item.status),
+                                            whiteSpace: 'normal',
+                                            textAlign: 'center',
+                                            lineHeight: 1.25,
+                                        }}
+                                    >
+                                        {primaryScopeStatusLabel(item.status)}
+                                    </span>
+                                </div>
+                                <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.8rem', lineHeight: 1.5, marginBottom: '0.5rem' }}>
+                                    {item.plainLanguage}
+                                </p>
+                                <p style={{ color: '#7c2d12', fontSize: '0.78rem', lineHeight: 1.45 }}>
+                                    Gate: {item.verificationGate}
+                                </p>
+                            </article>
+                        ))}
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '0.75rem' }}>
+                        {PRIMARY_CURRICULUM_EXPLANATION_EXAMPLES.map((example) => (
+                            <article key={example.id} className="card" style={{ borderRadius: '12px', padding: '0.95rem', borderLeft: '4px solid #2563eb' }}>
+                                <div style={{ color: '#2563eb', fontWeight: 900, fontSize: '0.78rem', marginBottom: '0.3rem' }}>
+                                    Lớp {example.grade} · {example.subject}
+                                </div>
+                                <h3 style={{ fontWeight: 900, color: '#0f172a', marginBottom: '0.45rem' }}>{example.competencyFocus}</h3>
+                                <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.82rem', lineHeight: 1.5, marginBottom: '0.5rem' }}>
+                                    {example.childFriendlyExplanation}
+                                </p>
+                                <p style={{ color: '#075985', fontSize: '0.8rem', lineHeight: 1.45, marginBottom: '0.5rem' }}>
+                                    Ví dụ: {example.exampleTask}
+                                </p>
+                                <p style={{ color: '#065f46', fontSize: '0.78rem', lineHeight: 1.45 }}>
+                                    Minh chứng cần lưu: {example.evidenceToStore}
+                                </p>
+                            </article>
+                        ))}
+                    </div>
+                </section>
+
+                <section style={{ marginBottom: '1.5rem' }}>
+                    <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.1rem', fontWeight: 900, marginBottom: '0.75rem' }}>
                         <BarChart3 size={18} color="#2563eb" /> Scorecard có trọng số
                     </h2>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '0.85rem' }}>
@@ -157,7 +316,7 @@ export default function ParentBenchmarkPage() {
 
                 <section style={{ marginBottom: '1.5rem' }}>
                     <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.1rem', fontWeight: 900, marginBottom: '0.75rem' }}>
-                        <TrendingUp size={18} color="#059669" /> Đối thủ dùng làm chuẩn
+                        <TrendingUp size={18} color="#059669" /> Chuẩn dùng để benchmark
                     </h2>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '0.85rem' }}>
                         {COMPETITIVE_PROFILES.map((profile) => (

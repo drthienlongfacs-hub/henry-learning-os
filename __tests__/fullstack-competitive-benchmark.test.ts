@@ -4,6 +4,13 @@ import {
     FULLSTACK_BENCHMARK_ROADMAP,
     FULLSTACK_BENCHMARK_SOURCES,
     HENRY_FULLSTACK_BENCHMARK,
+    PRIMARY_CURRICULUM_EXPLANATION_EXAMPLES,
+    PRIMARY_SCHOOL_CURRICULUM_SCOPE,
+    VIETNAM_CURRICULUM_BENCHMARK,
+    VIETNAM_CURRICULUM_BENCHMARK_CHECKS,
+    VIETNAM_CURRICULUM_SUBJECT_COVERAGE,
+    computePrimarySchoolScopeCoverage,
+    computeVietnamCurriculumBenchmarkCoverage,
     computeWeightedBenchmarkScore,
 } from '@/data/fullstack-competitive-benchmark';
 
@@ -46,5 +53,95 @@ describe('full-stack competitive benchmark', () => {
         expect(FULLSTACK_BENCHMARK_SOURCES.every((source) => source.url.startsWith('https://'))).toBe(true);
         expect(FULLSTACK_BENCHMARK_ROADMAP[0].title).toContain('Pilot evidence');
         expect(FULLSTACK_BENCHMARK_ROADMAP.every((item) => item.measurableGate.length > 30)).toBe(true);
+    });
+
+    it('benchmarks Vietnam curriculum 2026-2027 at 100 percent source coverage without overclaiming product coverage', () => {
+        expect(computeVietnamCurriculumBenchmarkCoverage()).toBe(100);
+        expect(VIETNAM_CURRICULUM_BENCHMARK.coverage100).toBe(100);
+        expect(computePrimarySchoolScopeCoverage()).toBe(100);
+        expect(VIETNAM_CURRICULUM_BENCHMARK.primarySchoolScopeCoverage100).toBe(100);
+        expect(HENRY_FULLSTACK_BENCHMARK.vietnamCurriculumBenchmarkCoverage100).toBe(100);
+        expect(HENRY_FULLSTACK_BENCHMARK.primarySchoolScopeCoverage100).toBe(100);
+        expect(VIETNAM_CURRICULUM_BENCHMARK.schoolYear).toBe('2026-2027');
+        expect(VIETNAM_CURRICULUM_BENCHMARK.scope).toContain('không đồng nghĩa item bank đã phủ 100%');
+        expect(VIETNAM_CURRICULUM_BENCHMARK.noOverclaimGuardrail).toContain('từng item');
+    });
+
+    it('anchors the Vietnam curriculum benchmark to official Ministry sources and every active subject', () => {
+        const sourcesById = new Map(FULLSTACK_BENCHMARK_SOURCES.map((source) => [source.id, source]));
+        const officialCurriculumSourceIds = [
+            'moet-ctgdpt-2018',
+            'moet-tt17-2025',
+            'moet-sgk-2026-2027',
+            'moet-primary-scope-2018',
+        ];
+
+        officialCurriculumSourceIds.forEach((sourceId) => {
+            expect(sourcesById.get(sourceId)?.kind).toBe('official_curriculum');
+            expect(sourcesById.get(sourceId)?.url).toMatch(/^https:\/\/(www\.)?moet\.gov\.vn\//);
+        });
+
+        VIETNAM_CURRICULUM_BENCHMARK_CHECKS.forEach((check) => {
+            expect(check.status).toBe('covered');
+            expect(check.evidence.length).toBeGreaterThanOrEqual(2);
+            expect(check.verificationGate.length).toBeGreaterThan(40);
+            check.sourceIds.forEach((sourceId) => expect(sourcesById.has(sourceId)).toBe(true));
+        });
+
+        expect(VIETNAM_CURRICULUM_SUBJECT_COVERAGE.map((subject) => subject.subject)).toEqual([
+            'Toán',
+            'Tiếng Việt',
+            'Tiếng Anh',
+            'Khoa học / Tự nhiên và Xã hội',
+            'Lịch sử và Địa lý',
+            'Tin học và Công nghệ',
+        ]);
+        VIETNAM_CURRICULUM_SUBJECT_COVERAGE.forEach((subject) => {
+            expect(subject.status).toBe('source_mapped');
+            expect(subject.nextGate).toMatch(/Map|audit/);
+            subject.sourceIds.forEach((sourceId) => expect(sourcesById.get(sourceId)?.kind).toBe('official_curriculum'));
+        });
+    });
+
+    it('keeps primary school benchmark scope complete and explicit for every official subject group', () => {
+        const labels = PRIMARY_SCHOOL_CURRICULUM_SCOPE.map((item) => item.label);
+
+        expect(VIETNAM_CURRICULUM_BENCHMARK.primaryOfficialScopeCount).toBe(13);
+        expect(VIETNAM_CURRICULUM_BENCHMARK.primaryMandatoryCount).toBe(11);
+        expect(VIETNAM_CURRICULUM_BENCHMARK.primaryOptionalCount).toBe(2);
+        expect(labels).toEqual([
+            'Tiếng Việt',
+            'Toán',
+            'Đạo đức',
+            'Ngoại ngữ 1',
+            'Tự nhiên và Xã hội',
+            'Lịch sử và Địa lý',
+            'Khoa học',
+            'Tin học và Công nghệ',
+            'Giáo dục thể chất',
+            'Nghệ thuật',
+            'Hoạt động trải nghiệm',
+            'Tiếng dân tộc thiểu số',
+            'Ngoại ngữ 1 lớp 1-2',
+        ]);
+
+        PRIMARY_SCHOOL_CURRICULUM_SCOPE.forEach((item) => {
+            expect(item.sourceIds.length).toBeGreaterThan(0);
+            expect(item.plainLanguage.length).toBeGreaterThan(50);
+            expect(item.verificationGate.length).toBeGreaterThan(60);
+        });
+    });
+
+    it('adds parent-friendly primary school examples across grades 1 to 5', () => {
+        const grades = new Set(PRIMARY_CURRICULUM_EXPLANATION_EXAMPLES.map((example) => example.grade));
+
+        expect([...grades].sort()).toEqual([1, 2, 3, 4, 5]);
+        expect(PRIMARY_CURRICULUM_EXPLANATION_EXAMPLES.length).toBeGreaterThanOrEqual(10);
+        PRIMARY_CURRICULUM_EXPLANATION_EXAMPLES.forEach((example) => {
+            expect(example.childFriendlyExplanation.length).toBeGreaterThan(70);
+            expect(example.exampleTask.length).toBeGreaterThan(70);
+            expect(example.evidenceToStore.length).toBeGreaterThan(40);
+            expect(example.sourceIds.length).toBeGreaterThan(0);
+        });
     });
 });
