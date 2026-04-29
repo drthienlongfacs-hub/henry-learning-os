@@ -1,5 +1,3 @@
-import type { LearningEvent } from '@/types/resource-types';
-
 export interface SpacedMemoryItem {
     exerciseId: string;
     childId: string;
@@ -13,7 +11,7 @@ export interface SpacedMemoryItem {
 const memoryStore = new Map<string, SpacedMemoryItem>();
 
 function getMemoryKey(childId: string, exerciseId: string) {
-    return `\${childId}::\${exerciseId}`;
+    return `${childId}::${exerciseId}`;
 }
 
 /**

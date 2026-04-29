@@ -6,6 +6,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { generateId } from '@/lib/utils';
+import { calculateNextReview } from '@/lib/spaced-repetition';
 import { competencies, lessons, parentMissions } from '@/data/seed';
 import type {
     ChildProfile,
@@ -216,7 +217,7 @@ export const useAppStore = create<AppState>()(
             updateReviewResult: (reviewId, result) =>
                 set((s) => ({
                     reviewSchedules: s.reviewSchedules.map((r) =>
-                        r.id === reviewId ? { ...r, lastResult: result } : r
+                        r.id === reviewId ? calculateNextReview(r, result) : r
                     ),
                 })),
         }),

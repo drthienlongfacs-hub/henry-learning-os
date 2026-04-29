@@ -7,10 +7,12 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { BookOpen, Brain, Clock, AlertTriangle, Bookmark, RotateCcw, Home, Sparkles, Search, Type } from 'lucide-react';
 import { ENRICHMENT_STATS } from '@/data/curriculum-enrichment';
+import { LEARNING_SCIENCE_STATS, getLearningSciencePrinciples } from '@/data/learning-science-system';
+import { buildWholeChildLearningPlan, summarizePrinciplesForCard } from '@/lib/whole-child-learning-plan';
 
 export default function ChildDashboard() {
     const router = useRouter();
-    const { childProfile, lessons, masteryStates, mistakes, reviewSchedules } = useAppStore();
+    const { childProfile, lessons, masteryStates, mistakes, reviewSchedules, attempts } = useAppStore();
     const { t } = useTranslation();
     const activeChild = childProfile ?? { nameOrNickname: 'Henry' };
 
@@ -21,6 +23,14 @@ export default function ChildDashboard() {
     const progressPct = totalCount > 0 ? Math.round((masteredCount / totalCount) * 100) : 0;
 
     const todaysLessons = lessons.slice(0, 3);
+    const systemPlan = buildWholeChildLearningPlan({ attempts, mistakes, reviewSchedules });
+    const sciencePrinciples = getLearningSciencePrinciples(['retrieval', 'spacing', 'adaptive_challenge', 'motivation']);
+    const toneColor = {
+        repair: '#ef4444',
+        review: '#3b82f6',
+        learn: '#10b981',
+        stretch: '#8b5cf6',
+    } as const;
 
     return (
         <div style={{ paddingBottom: '5rem', background: 'var(--color-bg-child)', minHeight: '100dvh' }}>
@@ -83,9 +93,58 @@ export default function ChildDashboard() {
                         <div style={{ flex: 1, minWidth: 220 }}>
                             <div style={{ fontWeight: 800, fontSize: '1rem' }}>Học sâu, có nguồn và có hỗ trợ</div>
                             <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.82rem', lineHeight: 1.45 }}>
-                                {ENRICHMENT_STATS.sourceCount} nguồn chuẩn/benchmark • gợi ý L0-L5 • ảnh minh họa nội bộ • nhiệm vụ ba mẹ 10 phút
+                                {ENRICHMENT_STATS.sourceCount} nguồn chuẩn/benchmark • {LEARNING_SCIENCE_STATS.principleCount} nguyên lý học tập • gợi ý L0-L5 • nhiệm vụ ba mẹ 10 phút
                             </div>
                         </div>
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(118px, 1fr))', gap: '0.6rem', marginTop: '1rem' }}>
+                        {sciencePrinciples.map((principle) => (
+                            <div key={principle.id} style={{
+                                background: 'rgba(255,255,255,0.72)',
+                                border: '1px solid rgba(59,130,246,0.16)',
+                                borderRadius: 'var(--radius-md)',
+                                padding: '0.65rem',
+                            }}>
+                                <div style={{ fontWeight: 800, fontSize: '0.78rem' }}>{principle.label}</div>
+                                <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.7rem', lineHeight: 1.35, marginTop: '0.25rem' }}>
+                                    {principle.benchmarkPattern}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Whole-child learning system */}
+                <div className="animate-fade-in" style={{ marginBottom: '2rem' }}>
+                    <h2 style={{ fontWeight: 700, fontSize: '1.2rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <Brain size={20} color="var(--color-primary)" /> Hệ điều hành học tập
+                    </h2>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '0.75rem' }}>
+                        {systemPlan.map((card) => (
+                            <Link key={card.id} href={card.href} style={{ textDecoration: 'none' }}>
+                                <div className="card card-interactive" style={{
+                                    border: `2px solid ${toneColor[card.tone]}30`,
+                                    background: `linear-gradient(135deg, ${toneColor[card.tone]}14, rgba(255,255,255,0.78))`,
+                                    minHeight: 164,
+                                }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.75rem' }}>
+                                        <div>
+                                            <div style={{ fontWeight: 850, fontSize: '1rem', color: 'var(--color-text-primary)' }}>{card.title}</div>
+                                            <div style={{ fontWeight: 900, fontSize: '1.35rem', color: toneColor[card.tone], marginTop: '0.2rem' }}>{card.metric}</div>
+                                        </div>
+                                        <span style={{ padding: '0.28rem 0.5rem', borderRadius: 999, background: `${toneColor[card.tone]}18`, color: toneColor[card.tone], fontSize: '0.68rem', fontWeight: 850 }}>
+                                            {card.benchmark}
+                                        </span>
+                                    </div>
+                                    <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.78rem', lineHeight: 1.45, marginTop: '0.65rem' }}>
+                                        {card.nextAction}
+                                    </div>
+                                    <div style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem', lineHeight: 1.35, marginTop: '0.65rem' }}>
+                                        {summarizePrinciplesForCard(card)}
+                                    </div>
+                                </div>
+                            </Link>
+                        ))}
                     </div>
                 </div>
 

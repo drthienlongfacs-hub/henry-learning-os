@@ -34,7 +34,16 @@ export type SourceId =
     | 'khan-academy-mastery'
     | 'ixl-diagnostic'
     | 'beast-academy'
-    | 'duolingo-abc';
+    | 'duolingo-abc'
+    | 'ies-study-learning'
+    | 'dunlosky-learning-techniques'
+    | 'cast-udl'
+    | 'harvard-executive-function'
+    | 'self-determination-theory'
+    | 'oecd-learning-compass'
+    | 'zearn-math'
+    | 'st-math'
+    | 'dreambox-learning';
 
 export interface LearningSource {
     id: SourceId;
@@ -318,6 +327,87 @@ export const LEARNING_SOURCES: Record<SourceId, LearningSource> = {
         useInApp: 'Benchmark cho micro-lesson đọc tiếng Anh: ngắn, lặp có chủ đích, chữ-âm-từ-câu.',
         retrievedAt: RETRIEVED_AT,
     },
+    'ies-study-learning': {
+        id: 'ies-study-learning',
+        title: 'Organizing Instruction and Study to Improve Student Learning',
+        provider: 'Institute of Education Sciences / What Works Clearinghouse',
+        kind: 'research',
+        sourceUrl: 'https://ies.ed.gov/ncee/wwc/PracticeGuide.aspx?sid=1',
+        useInApp: 'Căn cứ cho spacing, worked examples, dual coding, concrete-abstract connection, retrieval quiz.',
+        retrievedAt: RETRIEVED_AT,
+    },
+    'dunlosky-learning-techniques': {
+        id: 'dunlosky-learning-techniques',
+        title: 'Improving Students’ Learning With Effective Learning Techniques',
+        provider: 'Psychological Science in the Public Interest / PubMed',
+        kind: 'research',
+        sourceUrl: 'https://pubmed.ncbi.nlm.nih.gov/26173288/',
+        useInApp: 'Ưu tiên practice testing và distributed practice; cẩn trọng với kỹ thuật kém bền như đọc lại thụ động.',
+        retrievedAt: RETRIEVED_AT,
+    },
+    'cast-udl': {
+        id: 'cast-udl',
+        title: 'Universal Design for Learning',
+        provider: 'CAST',
+        kind: 'research',
+        sourceUrl: 'https://www.cast.org/what-we-do/universal-design-for-learning/',
+        useInApp: 'Thiết kế nhiều cách tham gia, biểu diễn kiến thức và thể hiện câu trả lời.',
+        retrievedAt: RETRIEVED_AT,
+    },
+    'harvard-executive-function': {
+        id: 'harvard-executive-function',
+        title: 'Executive Function & Self-Regulation',
+        provider: 'Center on the Developing Child at Harvard University',
+        kind: 'research',
+        sourceUrl: 'https://developingchild.harvard.edu/key_concepts/executive_function/',
+        useInApp: 'Luyện trí nhớ làm việc, kiểm soát chú ý, linh hoạt nhận thức qua kế hoạch học ngắn.',
+        retrievedAt: RETRIEVED_AT,
+    },
+    'self-determination-theory': {
+        id: 'self-determination-theory',
+        title: 'Self-Determination Theory in Education',
+        provider: 'Self-Determination Theory organization',
+        kind: 'research',
+        sourceUrl: 'https://selfdeterminationtheory.org/topics/application-education/',
+        useInApp: 'Giữ động lực bằng tự chủ, cảm giác tiến bộ và kết nối với người lớn.',
+        retrievedAt: RETRIEVED_AT,
+    },
+    'oecd-learning-compass': {
+        id: 'oecd-learning-compass',
+        title: 'OECD Learning Compass 2030',
+        provider: 'OECD',
+        kind: 'official',
+        sourceUrl: 'https://www.oecd.org/en/data/tools/oecd-learning-compass-2030.html',
+        useInApp: 'Định hướng student agency, well-being và năng lực tương lai.',
+        retrievedAt: RETRIEVED_AT,
+    },
+    'zearn-math': {
+        id: 'zearn-math',
+        title: 'Zearn Math Digital Lessons',
+        provider: 'Zearn',
+        kind: 'benchmark',
+        sourceUrl: 'https://about.zearn.org/how-zearn-math-works',
+        useInApp: 'Benchmark nhịp bài: fluency, concept development, independent practice.',
+        retrievedAt: RETRIEVED_AT,
+    },
+    'st-math': {
+        id: 'st-math',
+        title: 'ST Math Visual Instructional Program',
+        provider: 'MIND Education',
+        kind: 'benchmark',
+        sourceUrl: 'https://www.mindeducation.org/programs/st-math/',
+        useInApp: 'Benchmark học Toán bằng visual problem solving và spatial-temporal reasoning.',
+        retrievedAt: RETRIEVED_AT,
+    },
+    'dreambox-learning': {
+        id: 'dreambox-learning',
+        title: 'DreamBox Adaptive Math & Reading',
+        provider: 'Discovery Education',
+        kind: 'benchmark',
+        sourceUrl: 'https://www.discoveryeducation.com/solutions/dreambox-learning',
+        useInApp: 'Benchmark adaptive instruction: cá nhân hóa đường học mà không làm phụ huynh quá tải.',
+        retrievedAt: RETRIEVED_AT,
+    },
 };
 
 export const SUBJECT_ENRICHMENT: Record<LearningSubjectKey, SubjectEnrichment> = {
@@ -327,8 +417,8 @@ export const SUBJECT_ENRICHMENT: Record<LearningSubjectKey, SubjectEnrichment> =
         headline: 'Từ đồ vật -> hình ảnh -> phép tính -> lời giải thích.',
         coverage: 'Lớp 1-5: số học, cơ số 10, đo lường, hình học, phân số, dữ liệu, tỉ số.',
         defaultVisual: '/images/math/number_bonds.svg',
-        sourceIds: ['moet-ctgdpt-2018', 'common-core-math', 'cambridge-primary-math', 'khan-academy-mastery', 'ixl-diagnostic', 'beast-academy', 'aero-spacing-retrieval', 'eef-feedback'],
-        benchmarkPattern: ['Khan Academy mastery', 'IXL diagnostic path', 'Beast Academy depth', 'Cambridge reasoning'],
+        sourceIds: ['moet-ctgdpt-2018', 'common-core-math', 'cambridge-primary-math', 'khan-academy-mastery', 'ixl-diagnostic', 'beast-academy', 'zearn-math', 'st-math', 'dreambox-learning', 'ies-study-learning', 'aero-spacing-retrieval', 'eef-feedback'],
+        benchmarkPattern: ['Khan Academy mastery', 'IXL diagnostic path', 'Beast Academy depth', 'Zearn lesson rhythm', 'ST Math visual reasoning'],
         sessionRhythm: ['Nhớ lại 1 câu cũ', 'Làm với hình hoặc đồ vật', 'Giải thích bằng lời', 'Đổi sang tình huống đời sống'],
     },
     vietnamese: {
@@ -337,7 +427,7 @@ export const SUBJECT_ENRICHMENT: Record<LearningSubjectKey, SubjectEnrichment> =
         headline: 'Đọc đúng, hiểu ý, dùng từ, kể lại bằng lời của con.',
         coverage: 'Âm chữ, dấu thanh, từ vựng, đọc hiểu, ngữ pháp, viết câu.',
         defaultVisual: '/images/core/books_hd.svg',
-        sourceIds: ['moet-ctgdpt-2018', 'national-reading-panel', 'ies-foundational-reading', 'open-library', 'aero-spacing-retrieval', 'eef-metacognition'],
+        sourceIds: ['moet-ctgdpt-2018', 'national-reading-panel', 'ies-foundational-reading', 'ies-study-learning', 'open-library', 'aero-spacing-retrieval', 'eef-metacognition', 'cast-udl'],
         benchmarkPattern: ['Science of reading', 'Evidence-based comprehension', 'Vocabulary depth'],
         sessionRhythm: ['Đọc ngắn', 'Tìm chi tiết trong câu', 'Nói nghĩa bằng lời con', 'Viết hoặc kể lại 1 câu'],
     },
@@ -347,7 +437,7 @@ export const SUBJECT_ENRICHMENT: Record<LearningSubjectKey, SubjectEnrichment> =
         headline: 'Nghe - nhìn - nói - dùng trong câu, không học từ rời rạc.',
         coverage: 'Từ vựng chủ đề, ngữ pháp, đọc hiểu, câu giao tiếp, chuyển dịch Việt - Anh.',
         defaultVisual: '/images/english/Pink_lady_and_cross_section.jpg',
-        sourceIds: ['moet-ctgdpt-2018', 'national-reading-panel', 'ies-foundational-reading', 'duolingo-abc', 'gutendex', 'open-library', 'eef-feedback'],
+        sourceIds: ['moet-ctgdpt-2018', 'national-reading-panel', 'ies-foundational-reading', 'duolingo-abc', 'gutendex', 'open-library', 'ies-study-learning', 'eef-feedback', 'cast-udl'],
         benchmarkPattern: ['CEFR-like can-do', 'Duolingo ABC micro-lesson', 'Roleplay'],
         sessionRhythm: ['Nhìn ảnh', 'Nói từ', 'Đặt câu', 'Dùng vào tình huống gia đình'],
     },
@@ -357,7 +447,7 @@ export const SUBJECT_ENRICHMENT: Record<LearningSubjectKey, SubjectEnrichment> =
         headline: 'Quan sát, dự đoán, kiểm tra, giải thích bằng bằng chứng.',
         coverage: 'Cơ thể, sức khỏe, thực vật, động vật, thời tiết, Trái Đất, vật chất, môi trường.',
         defaultVisual: '/images/science/USGS_WaterCycle_English_ONLINE_20221013.png',
-        sourceIds: ['moet-ctgdpt-2018', 'ngss-three-dimensional', 'wikimedia-commons', 'openverse', 'eef-metacognition'],
+        sourceIds: ['moet-ctgdpt-2018', 'ngss-three-dimensional', 'wikimedia-commons', 'openverse', 'ies-study-learning', 'eef-metacognition', 'harvard-executive-function'],
         benchmarkPattern: ['NGSS 3D learning', 'Claim-Evidence-Reasoning', 'Hands-on science'],
         sessionRhythm: ['Quan sát ảnh', 'Dự đoán', 'Chọn bằng chứng', 'Nói điều sẽ thử ở nhà'],
     },
@@ -367,7 +457,7 @@ export const SUBJECT_ENRICHMENT: Record<LearningSubjectKey, SubjectEnrichment> =
         headline: 'Nhìn bản đồ, mốc thời gian, nhân vật và hệ quả.',
         coverage: 'Địa lý Việt Nam, mốc lịch sử, nơi chốn, biểu tượng, nguyên nhân - hệ quả.',
         defaultVisual: '/images/history-geo/Ha_Long_Bay_in_2019.jpg',
-        sourceIds: ['moet-ctgdpt-2018', 'wikimedia-commons', 'openverse', 'eef-metacognition', 'casel-framework'],
+        sourceIds: ['moet-ctgdpt-2018', 'wikimedia-commons', 'openverse', 'eef-metacognition', 'casel-framework', 'oecd-learning-compass'],
         benchmarkPattern: ['C3 inquiry arc adapted for Vietnam', 'Map literacy', 'Timeline reasoning'],
         sessionRhythm: ['Xem ảnh/bản đồ', 'Xác định nơi hoặc thời gian', 'Nói vì sao quan trọng', 'Liên hệ đời sống'],
     },
@@ -377,7 +467,7 @@ export const SUBJECT_ENRICHMENT: Record<LearningSubjectKey, SubjectEnrichment> =
         headline: 'Tạo, thử, sai, sửa, kể lại thuật toán.',
         coverage: 'Phần cứng, thao tác cơ bản, an toàn mạng, tư duy thuật toán, dữ liệu và AI literacy.',
         defaultVisual: '/images/computing/Scratch_editor_screenshot.png',
-        sourceIds: ['moet-ctgdpt-2018', 'csta-k12-standards', 'scratch', 'code-org', 'code-org-ai', 'unicef-ai-children', 'aap-family-media'],
+        sourceIds: ['moet-ctgdpt-2018', 'csta-k12-standards', 'scratch', 'code-org', 'code-org-ai', 'unicef-ai-children', 'aap-family-media', 'harvard-executive-function', 'cast-udl'],
         benchmarkPattern: ['CSTA standards', 'Scratch create-first', 'Code.org CS pathway', 'Child-safe AI literacy'],
         sessionRhythm: ['Nêu mục tiêu', 'Kéo/thử bằng mô phỏng', 'Debug', 'Nói quy tắc an toàn'],
     },
@@ -387,7 +477,7 @@ export const SUBJECT_ENRICHMENT: Record<LearningSubjectKey, SubjectEnrichment> =
         headline: 'Ra quyết định, thương lượng, tự chủ và hiểu hệ thống.',
         coverage: 'Xác suất, tài chính, công dân, thương lượng, đạo đức, phục hồi cảm xúc.',
         defaultVisual: '/images/core/bar_chart.svg',
-        sourceIds: ['eef-metacognition', 'casel-framework', 'unicef-ai-children', 'aap-family-media'],
+        sourceIds: ['eef-metacognition', 'casel-framework', 'unicef-ai-children', 'aap-family-media', 'self-determination-theory', 'oecd-learning-compass', 'harvard-executive-function'],
         benchmarkPattern: ['CASEL reflection', 'Civics roleplay', 'Decision quality'],
         sessionRhythm: ['Chọn phương án', 'Giải thích góc nhìn', 'Tìm hệ quả', 'Nói cách sửa lần sau'],
     },

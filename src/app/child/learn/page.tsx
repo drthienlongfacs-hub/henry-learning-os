@@ -34,6 +34,7 @@ import {
     summarizeSubjectPlan,
     type LearningPathStatus,
 } from '@/lib/learning-path-advisor';
+import { createReviewItem } from '@/lib/spaced-repetition';
 
 // ── Types ──
 type Subject = 'math' | 'vietnamese' | 'english' | 'science' | 'hisgeo' | 'computing' | 'elite';
@@ -99,7 +100,7 @@ export default function LearnPage() {
     const [lessonDepth, setLessonDepth] = useState<LessonDepth>('deep');
     const startTime = useRef(0);
 
-    const { addAttempt, addMistake, childProfile, attempts } = useAppStore();
+    const { addAttempt, addMistake, addReviewSchedule, childProfile, attempts, reviewSchedules } = useAppStore();
     const activeMode = getLessonModeConfig(lessonDepth);
     const modeOptions = Object.values(LESSON_MODE_CONFIG);
 
@@ -127,24 +128,36 @@ export default function LearnPage() {
 
         const timeSpent = Math.round((Date.now() - (startTime.current || Date.now())) / 1000);
         if (childProfile) {
+            const attemptId = `att-${Date.now()}`;
             addAttempt({
-                id: `att-${Date.now()}`, childId: childProfile.id, lessonId: p.id,
+                id: attemptId, childId: childProfile.id, lessonId: p.id,
                 competencyId: p.topicKey, exerciseId: p.id, answer,
                 isCorrect, errorType: isCorrect ? null : 'concept',
                 hintLevelUsed: 0, timeSpentSeconds: timeSpent,
                 confidenceSelfRating: 3, aiRoleUsed: 'tutor', createdAt: new Date().toISOString(),
             });
+            const hasPendingCompetencyReview = reviewSchedules.some((review) =>
+                review.childId === childProfile.id &&
+                review.itemType === 'competency' &&
+                review.itemId === p.topicKey &&
+                (review.lastResult === null || new Date(review.scheduledAt) > new Date())
+            );
+            if (!hasPendingCompetencyReview) {
+                addReviewSchedule(createReviewItem(childProfile.id, 'competency', p.topicKey));
+            }
             if (!isCorrect) {
+                const mistakeId = `mis-${Date.now()}`;
                 addMistake({
-                    id: `mis-${Date.now()}`, childId: childProfile.id,
-                    competencyId: p.topicKey, attemptId: `att-${Date.now()}`,
+                    id: mistakeId, childId: childProfile.id,
+                    competencyId: p.topicKey, attemptId,
                     errorType: 'concept', explanation: p.explanation,
                     correctionPlan: `Ôn lại chủ đề: ${p.topic}`,
                     reviewSchedule: [], resolvedAt: null,
                 });
+                addReviewSchedule(createReviewItem(childProfile.id, 'mistake', mistakeId));
             }
         }
-    }, [selected, problems, index, childProfile, addAttempt, addMistake]);
+    }, [selected, problems, index, childProfile, reviewSchedules, addAttempt, addMistake, addReviewSchedule]);
 
     const nextProblem = () => {
         setSelected(null); setShowHint(false);

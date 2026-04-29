@@ -4,6 +4,8 @@ import { useAppStore } from '@/stores/app-store';
 import { useTranslation } from '@/lib/i18n';
 import { LangToggle } from '@/components/LangToggle';
 import { getDueReviews } from '@/lib/spaced-repetition';
+import { getTopicLearningBlueprint } from '@/data/learning-benchmark-system';
+import type { LearningSubjectKey } from '@/data/curriculum-enrichment';
 import Link from 'next/link';
 import { ArrowLeft, Check, X, HelpCircle, RotateCcw, Home, Brain, BookOpen, Sparkles } from 'lucide-react';
 import { useState } from 'react';
@@ -38,6 +40,21 @@ export default function ReviewPage() {
                 question: mistake?.explanation || t('review_default_q'),
                 answer: mistake?.correctionPlan || '',
                 subject: comp?.subject || '',
+            };
+        }
+        if (review.itemType === 'competency') {
+            const comp = competencies.find((c) => c.id === review.itemId);
+            const subject = (comp?.subject === 'Tiếng Việt' ? 'vietnamese'
+                : comp?.subject === 'Tiếng Anh' ? 'english'
+                    : comp?.subject === 'Khoa học' ? 'science'
+                        : comp?.subject === 'Lịch sử & Địa lý' ? 'hisgeo'
+                            : comp?.subject === 'Tin học' ? 'computing'
+                                : 'math') as LearningSubjectKey;
+            const blueprint = getTopicLearningBlueprint(review.itemId, subject);
+            return {
+                question: `Nhớ lại chủ động: ${blueprint.bigIdea} Con hãy giải thích bằng một ví dụ.`,
+                answer: `Bằng chứng thành thạo: ${blueprint.evidenceOfMastery.join(' · ')}. Bước nâng cao: ${blueprint.stretchTask}`,
+                subject: blueprint.subject,
             };
         }
         return { question: t('review_default_fc'), answer: t('review_default_a'), subject: '' };
