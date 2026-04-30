@@ -1,4 +1,5 @@
 import { UI_SMOKE_GATE } from './ui-smoke-gate';
+import { PRIMARY_CURRICULUM_MAP_STATS } from './primary-curriculum-map';
 
 export type FoundationSourceKind =
     | 'local_blueprint'
@@ -200,7 +201,7 @@ export const PRODUCT_FOUNDATION_SOURCE_REGISTRY: FoundationSource[] = [
         kind: 'repo_handoff',
         locatorKind: 'repo_file',
         locator: 'src/data/primary-curriculum-map.ts',
-        foundationUse: '47 topic lớp 1-5 có môn, lớp, mạch nội dung, ví dụ bài, misconception và evidence fields.',
+        foundationUse: `${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount} topic lớp 1-5 có môn, lớp, mạch nội dung, ví dụ bài, misconception và evidence fields.`,
     },
     {
         id: 'moet-ctgdpt-2018',
@@ -342,7 +343,7 @@ export const PRODUCT_FOUNDATION_LAYERS: FoundationLayer[] = [
             'Không claim phủ chuẩn nếu thiếu người duyệt và calibration.',
             'Nội dung Lịch sử - Địa lý phải re-audit khi nguồn hành chính thay đổi.',
         ],
-        currentAssets: ['47 topic lớp 1-5 đã map', 'Scope tiểu học 13 nhóm', 'Generated item có curriculumMapId và review/calibration status', 'Human review queue có RCA/PDCA và release gate'],
+        currentAssets: [`${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount} topic lớp 1-5 đã map`, 'Scope tiểu học 13 nhóm', 'Generated item có curriculumMapId và review/calibration status', 'Human review queue có RCA/PDCA và release gate'],
         missingGates: ['Reviewer thật cho từng item', 'Approved item bank', 'Difficulty calibration bằng attempt thật'],
         sourceIds: ['moet-ctgdpt-2018', 'moet-tt17-2025', 'moet-primary-scope-2018', 'repo-curriculum-map'],
     },
@@ -446,8 +447,8 @@ export const PRODUCT_FOUNDATION_REQUIREMENTS: FoundationRequirement[] = [
         title: 'Traceability chương trình lớp 1-5',
         requirement: 'Mỗi topic/item đang có trong app phải truy vết được về môn, lớp, mạch nội dung, source version và evidence fields.',
         rationale: 'Bậc tiểu học phải kỹ lưỡng 100%; không được nói phủ chương trình nếu không truy vết được từng item.',
-        acceptanceCriteria: ['47/47 topic có map', 'Generated item có curriculumMapId', 'Attempt có trường evidence', 'Có no-overclaim về human review/calibration'],
-        currentEvidence: ['src/data/primary-curriculum-map.ts', 'src/lib/curriculum/item-audit.ts', 'benchmark page đang hiện 47/47 topic và item traceability'],
+        acceptanceCriteria: [`${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount}/${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount} topic có map`, 'Generated item có curriculumMapId', 'Attempt có trường evidence', 'Có no-overclaim về human review/calibration'],
+        currentEvidence: ['src/data/primary-curriculum-map.ts', 'src/lib/curriculum/item-audit.ts', `benchmark page đang hiện ${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount}/${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount} topic và item traceability`],
         nextGate: 'Ghi reviewerId/approvedAt/blockReason thật cho từng item và khóa item mới nếu thiếu curriculumMapId hoặc source version.',
         sourceIds: ['repo-curriculum-map', 'moet-ctgdpt-2018', 'moet-tt17-2025', 'moet-primary-scope-2018'],
     },
@@ -784,7 +785,7 @@ export const PRODUCT_FOUNDATION_CLAIM_GATES: FoundationClaimGate[] = [
         status: 'passed',
         allowedClaim: 'Topic/item đang có đã có đường truy vết chương trình lớp 1-5.',
         blockedClaim: 'Không nói item bank đã được giáo viên duyệt hoặc calibration xong.',
-        requiredEvidence: '47/47 topic map, item audit, reviewStatus và calibrationStatus.',
+        requiredEvidence: `${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount}/${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount} topic map, item audit, reviewStatus và calibrationStatus.`,
         sourceIds: ['repo-curriculum-map', 'moet-ctgdpt-2018', 'moet-primary-scope-2018'],
     },
     {
@@ -1025,7 +1026,7 @@ export const PRODUCT_FOUNDATION_SOT_UPGRADE_DECISIONS: FoundationUpgradeDecision
         ],
         evidenceGate: 'Đã có workflow duyệt nội dung, RCA/PDCA và release gate nội bộ; chưa claim item bank đã phủ chuẩn nếu chưa có reviewer thật và calibration.',
         deployGate: 'TypeScript, curriculum review tests, full Vitest, ESLint, build, Pages success và live benchmark/foundation check.',
-        antiOverclaim: 'Không đổi 47/47 traceability thành “approved 47/47”.',
+        antiOverclaim: `Không đổi ${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount}/${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount} traceability thành “approved ${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount}/${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount}”.`,
         blockedUntil: 'Đã triển khai ở src/lib/curriculum/review-queue.ts, /parent/review-queue và __tests__/curriculum-review-queue.test.ts; gate tiếp theo là reviewer thật và calibration bằng attempt thật.',
         ownerSurface: 'src/lib/curriculum, src/data/primary-curriculum-map.ts, parent review UI, tests.',
         sourceIds: ['repo-curriculum-map', 'moet-ctgdpt-2018', 'moet-tt17-2025', 'moet-primary-scope-2018', 'repo-current-benchmark'],

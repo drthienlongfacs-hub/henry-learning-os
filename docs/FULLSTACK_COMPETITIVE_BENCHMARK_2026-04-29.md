@@ -10,7 +10,7 @@ Benchmark Chương trình giáo dục phổ thông Việt Nam cho năm học **2
 
 Riêng bậc tiểu học được kiểm soát kỹ hơn: benchmark đã đưa đủ **13 nhóm chính thức** gồm **11 môn học/hoạt động giáo dục bắt buộc** và **2 môn tự chọn** vào scope theo nguồn Bộ GDĐT. Những nhóm chưa có module trong app vẫn được giữ trong danh mục để không bị bỏ sót khi nâng cấp.
 
-Nâng cấp mới đã hoàn tất ở mức item review workflow và baseline ban đầu: **47/47 topic lớp 1-5** trong app đã có curriculum map, generated item có `curriculumMapId`, toàn bộ được đưa vào human review queue với RCA/PDCA, reviewer metadata schema và release gate; đồng thời có diagnostic warm-start lớp 1 gồm **12 item Toán/Tiếng Việt** để tạo baseline, confidence, domain RCA và kế hoạch 7 ngày. Chưa được claim item bank phủ chuẩn cho đến khi có người duyệt thật và calibration bằng dữ liệu làm bài thật.
+Nâng cấp mới đã hoàn tất ở mức item review workflow và baseline ban đầu: **59/59 topic lớp 1-5** trong app đã có curriculum map, generated item có `curriculumMapId`, toàn bộ được đưa vào human review queue với RCA/PDCA, reviewer metadata schema và release gate; đồng thời có diagnostic warm-start lớp 1 gồm **12 item Toán/Tiếng Việt** để tạo baseline, confidence, domain RCA và kế hoạch 7 ngày. Chưa được claim item bank phủ chuẩn cho đến khi có người duyệt thật và calibration bằng dữ liệu làm bài thật.
 
 UI/UX live đã được chỉnh để khác biệt thấy ngay: benchmark hiện điểm 67/100, trang `/parent/sot` hiển thị SOT Control Center, `/parent/review-queue` hiển thị hàng đợi duyệt item lớp 1-5, `/parent/diagnostic` hiển thị diagnostic warm-start lớp 1, dashboard phụ huynh có RCA/PDCA tuần, settings có privacy evidence panel, và GitHub Pages workflow chạy Playwright smoke 8 route x 2 viewport trước khi upload site. Vẫn cảnh báo chưa claim hiệu quả học tập.
 
@@ -31,7 +31,7 @@ Không được claim hiệu quả học tập, tăng điểm, hoặc vượt ph
 | Gate | Trạng thái | Hiện có | Cần để lên 100 |
 |---|---|---|---|
 | Nguồn CTGDPT Việt Nam | Đã qua | Nguồn Bộ GDĐT, cập nhật 2025, mốc 2026-2027, scope tiểu học | Duy trì version nguồn khi có thay đổi mới |
-| Traceability từng item | Đã qua | 47/47 topic generator có `curriculumMapId`, source version và evidence fields | Không cho generator mới chạy nếu thiếu source version |
+| Traceability từng item | Đã qua | 59/59 topic generator có `curriculumMapId`, source version và evidence fields | Không cho generator mới chạy nếu thiếu source version |
 | Người duyệt nội dung | Đang làm | Đã có review queue, RCA/PDCA và release gate khóa item chưa approved | `reviewerId`, `approvedAt`, lý do block thật cho từng item |
 | Calibration độ khó | Đang làm | Item đã có `calibrationStatus` | Dữ liệu attempt thật đủ mẫu để hiệu chỉnh độ khó |
 | Pilot hiệu quả học tập | Chưa đủ dữ liệu | Chưa có cohort/pre-post/retention | Pilot 4 tuần có consent, pre-test, post-test, retention 7 ngày |
@@ -84,12 +84,12 @@ Không được claim hiệu quả học tập, tăng điểm, hoặc vượt ph
 
 | Thành phần | Trạng thái |
 |---|---|
-| Traceable topic generator | 47/47 |
+| Traceable topic generator | 59/59 |
 | Item traceability coverage | 100/100 |
 | Trường lưu trong attempt/event | `curriculumMapId`, `topicKey`, `gradeLevel`, `attempt result`, `support level`, `child explanation`, `source version`, `review status` |
 | Review status hiện tại | `needs_human_review` |
 | Calibration status hiện tại | `needs_real_attempts` |
-| Human review queue | Đã có `/parent/review-queue` cho 47 item/topic, có RCA/PDCA và release gate |
+| Human review queue | Đã có `/parent/review-queue` cho 59 item/topic, có RCA/PDCA và release gate |
 
 Generated item trong luồng học lớp 1-5 hiện đã có đủ metadata để truy vết về CTGDPT. Đây là nâng cấp dữ liệu và UI thật, nhưng chưa phải bằng chứng hiệu quả học tập.
 

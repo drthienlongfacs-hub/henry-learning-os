@@ -122,7 +122,7 @@ export const LIVE_UPGRADE_SIGNALS: LiveUpgradeSignal[] = [
     {
         label: 'Curriculum map',
         value: `${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount}/${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount} topic`,
-        detail: 'Toàn bộ topic generator đang có trong app đã được map tới môn, lớp, mạch nội dung và minh chứng cần lưu.',
+        detail: 'Toàn bộ topic generator đang có trong app đã được map tới môn, lớp, mạch nội dung và minh chứng cần lưu, bao gồm Đạo đức, Nghệ thuật và Tiếng Việt viết lớp 4-5.',
         tone: 'good',
     },
     {

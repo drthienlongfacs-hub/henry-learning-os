@@ -127,7 +127,7 @@ export default function ParentBenchmarkPage() {
                                     Bản live đã cập nhật sau nâng cấp full-stack
                                 </div>
                                 <h2 style={{ fontSize: '1.35rem', lineHeight: 1.2, fontWeight: 900, color: '#0f172a', marginBottom: '0.45rem' }}>
-                                    Nhìn nhanh: đã có benchmark nguồn, scope tiểu học, map 47 topic lớp 1-5 và guardrail chống claim quá mức
+                                    Nhìn nhanh: đã có benchmark nguồn, scope tiểu học, map {PRIMARY_CURRICULUM_MAP_STATS.topicMapCount} topic lớp 1-5 và guardrail chống claim quá mức
                                 </h2>
                                 <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', lineHeight: 1.55 }}>
                                     Điểm khác biệt chính nằm ở phần curriculum: trang này không chỉ so sánh với sản phẩm quốc tế, mà đã có lớp kiểm chứng chương trình Việt Nam 2026-2027 và map nội dung tiểu học đang chạy trong app.

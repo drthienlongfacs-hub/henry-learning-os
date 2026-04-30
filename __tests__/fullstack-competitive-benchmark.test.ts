@@ -16,6 +16,7 @@ import {
     computeVietnamCurriculumBenchmarkCoverage,
     computeWeightedBenchmarkScore,
 } from '@/data/fullstack-competitive-benchmark';
+import { PRIMARY_CURRICULUM_MAP_STATS } from '@/data/primary-curriculum-map';
 import { PRIMARY_ITEM_AUDIT_GATE } from '@/lib/curriculum/item-audit';
 
 describe('full-stack competitive benchmark', () => {
@@ -63,8 +64,8 @@ describe('full-stack competitive benchmark', () => {
         expect(LIVE_UPGRADE_SIGNALS).toHaveLength(8);
         expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('67/100');
         expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('94/100 P0');
-        expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('47/47 topic');
-        expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('47 item');
+        expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain(`${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount}/${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount} topic`);
+        expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain(`${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount} item`);
         expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('12 item');
         expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('8x2');
         expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('100% traceable');
@@ -133,6 +134,8 @@ describe('full-stack competitive benchmark', () => {
             'Khoa học / Tự nhiên và Xã hội',
             'Lịch sử và Địa lý',
             'Tin học và Công nghệ',
+            'Đạo đức',
+            'Nghệ thuật',
         ]);
         VIETNAM_CURRICULUM_SUBJECT_COVERAGE.forEach((subject) => {
             expect(subject.status).toBe('source_mapped');

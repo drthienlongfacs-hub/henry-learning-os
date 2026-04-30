@@ -84,7 +84,7 @@ Ví dụ trích đoạn gốc được dùng:
 | S05 | `docs/dev-handoff/architecture/ARCHITECTURE.md` | A2 | Boundary kỹ thuật: child app, parent app, AI orchestration, learning engine |
 | S06 | `docs/FULLSTACK_COMPETITIVE_BENCHMARK_2026-04-29.md` | A2 | Scorecard, đường lên 100, no-overclaim, scope tiểu học |
 | S07 | `docs/PRODUCT_FOUNDATION_SPEC_2026-04-30.md` | A2 | Định vị Product Foundation và SOT control plane |
-| S08 | `src/data/primary-curriculum-map.ts` | C | 47 topic lớp 1-5 đã map trong app |
+| S08 | `src/data/primary-curriculum-map.ts` | C | 59 topic lớp 1-5 đã map trong app |
 | S09 | Bộ GDĐT - Chương trình GDPT 2018: https://moet.gov.vn/tintuc/Pages/chi-tiet.aspx?ItemID=8421 | A0 | Chuẩn chương trình gốc |
 | S10 | Bộ GDĐT - phạm vi tiểu học: https://moet.gov.vn/tintuc/Pages/CT-GDPT-Tong-The.aspx?ItemID=5756 | A0 | 11 môn/hoạt động bắt buộc và 2 môn tự chọn cấp tiểu học |
 | S11 | Bộ GDĐT - cập nhật/chỉ đạo 2026-2027: https://www.moet.gov.vn/tintuc/Pages/tin-hoat-dong-cua-bo.aspx?ItemID=11222 | A0 | Mốc sách giáo khoa và version nguồn cần theo dõi |
@@ -107,13 +107,13 @@ Ví dụ trích đoạn gốc được dùng:
 | Tầng | Có thể đạt 100% khi nào | Trạng thái hiện tại |
 |---|---|---|
 | Source coverage | Đủ nguồn chính thức, version, phạm vi môn học, mốc cập nhật | Đã có trong benchmark/foundation |
-| Traceability coverage | Mỗi topic/item trong app có môn, lớp, mạch nội dung, source version, review status | 47/47 topic đã map; item generator đã có metadata |
+| Traceability coverage | Mỗi topic/item trong app có môn, lớp, mạch nội dung, source version, review status | 59/59 topic đã map; item generator đã có metadata |
 | Efficacy coverage | Có dữ liệu người học thật, pre/post, retention, transfer, cohort đủ mẫu | Chưa đủ, không được claim |
 
 Không được viết "Henry đáp ứng 100% chương trình" nếu chỉ có source coverage. Cách viết đúng là:
 
 - "Đã có 100% source coverage cho phạm vi chính thức lớp 1-5 đang benchmark."
-- "Đã có 47/47 topic trong app được traceability."
+- "Đã có 59/59 topic trong app được traceability."
 - "Chưa có bằng chứng hiệu quả học tập 100%; cần pilot thật."
 
 ## 8. Ma trận tính năng
@@ -470,7 +470,7 @@ Không được gọi là "tự tiến hóa" nếu hệ thống tự sửa polic
 | Chủ đề | Được nói | Bị chặn |
 |---|---|---|
 | Nguồn chương trình | Đã có nguồn chính thức và version để benchmark lớp 1-5 | Đã đảm bảo mọi bài học trong app phủ 100% chuẩn nếu chưa duyệt item |
-| Curriculum map | 47/47 topic hiện có đã traceability | Mọi yêu cầu cần đạt của Bộ GDĐT đã có item đủ chất lượng |
+| Curriculum map | 59/59 topic hiện có đã traceability | Mọi yêu cầu cần đạt của Bộ GDĐT đã có item đủ chất lượng |
 | AI tutor | Đã có thiết kế Socratic/hint ladder và cần regression | AI tốt hơn gia sư/giáo viên |
 | Adaptive learning | Có engine và dữ liệu nội bộ bước đầu | Adaptive đã tối ưu bằng cohort thật |
 | Parent dashboard | Có dashboard và mission | Phụ huynh chỉ nhìn dashboard là cải thiện chắc chắn |

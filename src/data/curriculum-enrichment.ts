@@ -915,24 +915,24 @@ const TOPIC_OVERRIDES: Record<string, Partial<TopicEnrichment>> = {
     // ── Đạo đức ──
     polite_greet: {
         visual: { src: '/images/core/books_hd.svg', alt: 'Hình ảnh trẻ em chào hỏi lễ phép' },
-        masteryTargets: ['Biết chào hỏi phù hợp với người lớn và bạn bè', 'Hiểu lý do vì sao cần chào hỏi lễ phép'],
+        masteryTargets: ['Biết chào hỏi phù hợp với người lớn và bạn bè', 'Hiểu lý do vì sao cần chào hỏi lễ phép', 'Thực hành lời chào trong tình huống thật'],
         commonPitfalls: ['Chào trống không', 'Ngại ngùng không dám chào'],
     },
     express_emotion: {
         visual: { src: '/images/core/books_hd.svg', alt: 'Hình ảnh biểu cảm khuôn mặt' },
-        masteryTargets: ['Nhận biết được cảm xúc của bản thân (vui, buồn, tức giận)', 'Biết cách thể hiện cảm xúc mà không làm tổn thương người khác'],
+        masteryTargets: ['Nhận biết được cảm xúc của bản thân (vui, buồn, tức giận)', 'Biết cách thể hiện cảm xúc mà không làm tổn thương người khác', 'Chọn được cách tự điều chỉnh trước khi phản ứng'],
         commonPitfalls: ['Ném đồ đạc khi tức giận', 'Giấu nhẹm cảm xúc buồn bã'],
     },
 
     // ── Nghệ thuật ──
     basic_colors: {
         visual: { src: '/images/core/books_hd.svg', alt: 'Bảng pha màu cơ bản' },
-        masteryTargets: ['Nhận biết 3 màu cơ bản (đỏ, vàng, xanh lam)', 'Biết sự pha trộn tạo ra màu mới (đỏ + vàng = cam)'],
+        masteryTargets: ['Nhận biết 3 màu cơ bản (đỏ, vàng, xanh lam)', 'Biết sự pha trộn tạo ra màu mới (đỏ + vàng = cam)', 'Nói được màu tạo cảm giác gì trong tranh'],
         commonPitfalls: ['Gọi nhầm tên màu', 'Tô màu tràn viền không kiểm soát'],
     },
     music_rhythm: {
         visual: { src: '/images/core/books_hd.svg', alt: 'Nốt nhạc và nhịp điệu' },
-        masteryTargets: ['Nhận biết nhịp điệu bài hát (nhanh, chậm)', 'Vỗ tay đúng nhịp 2/4'],
+        masteryTargets: ['Nhận biết nhịp điệu bài hát (nhanh, chậm)', 'Vỗ tay đúng nhịp 2/4', 'Phân biệt phách mạnh và phách nhẹ qua vận động'],
         commonPitfalls: ['Vỗ tay không đều', 'Vỗ tay theo lời ca thay vì nhịp/phách'],
     },
 

@@ -12,6 +12,8 @@ import { ENGLISH_TOPICS } from '@/lib/content/english-generator';
 import { SCIENCE_TOPICS } from '@/lib/content/science-generator';
 import { HISGEO_TOPICS } from '@/lib/content/history-geo-generator';
 import { COMPUTING_TOPICS } from '@/lib/content/computing-generator';
+import { ETHICS_TOPICS } from '@/lib/content/ethics-generator';
+import { ART_TOPICS } from '@/lib/content/art-generator';
 import {
     attachCurriculumAudit,
     buildAttemptCurriculumEvidence,
@@ -25,6 +27,8 @@ const topicSets: { subject: PrimaryCurriculumSubjectKey; topics: { key: string; 
     { subject: 'science', topics: SCIENCE_TOPICS },
     { subject: 'hisgeo', topics: HISGEO_TOPICS },
     { subject: 'computing', topics: COMPUTING_TOPICS },
+    { subject: 'ethics', topics: ETHICS_TOPICS },
+    { subject: 'art', topics: ART_TOPICS },
 ];
 
 describe('primary curriculum topic map', () => {

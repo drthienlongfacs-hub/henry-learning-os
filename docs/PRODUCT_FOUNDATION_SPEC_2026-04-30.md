@@ -19,7 +19,7 @@ Không được nâng điểm benchmark lên 100/100 chỉ vì đã có trang UI
 | `docs/dev-handoff/docs/PRD.md` | Family-first vision, non-goals, product pillars, MVP scope, acceptance criteria |
 | `docs/dev-handoff/architecture/ARCHITECTURE.md` | Child app, parent app, AI orchestration, learning engine, content engine, data layer |
 | `docs/FULLSTACK_COMPETITIVE_BENCHMARK_2026-04-29.md` | Scorecard 60/100, đường lên 100, scope tiểu học, item traceability và no-overclaim |
-| `src/data/primary-curriculum-map.ts` | 47 topic lớp 1-5 đã map tới môn, lớp, mạch nội dung, ví dụ nhiệm vụ và evidence fields |
+| `src/data/primary-curriculum-map.ts` | 59 topic lớp 1-5 đã map tới môn, lớp, mạch nội dung, ví dụ nhiệm vụ và evidence fields |
 
 Nguồn chuẩn dùng để benchmark foundation:
 
