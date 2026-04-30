@@ -1,5 +1,6 @@
 import { PRIMARY_CURRICULUM_MAP_STATS } from './primary-curriculum-map';
 import { PRIMARY_ITEM_AUDIT_GATE } from '@/lib/curriculum/item-audit';
+import { GRADE1_DIAGNOSTIC_ITEMS } from '@/lib/diagnostic/grade1-warm-start';
 
 export type BenchmarkDimensionKey =
     | 'aiTutorScaffolding'
@@ -113,8 +114,8 @@ export const FULLSTACK_BENCHMARK_AS_OF = '2026-04-30';
 export const LIVE_UPGRADE_SIGNALS: LiveUpgradeSignal[] = [
     {
         label: 'Bản live mới',
-        value: '65/100',
-        detail: 'Điểm cạnh tranh tăng sau khi có SOT Control Center, AI rubric 50 scenario, RCA/PDCA, privacy evidence panel và human review queue.',
+        value: '66/100',
+        detail: 'Điểm cạnh tranh tăng sau khi có SOT Control Center, AI rubric 50 scenario, RCA/PDCA, privacy evidence panel, human review queue và diagnostic warm-start.',
         tone: 'info',
     },
     {
@@ -140,6 +141,12 @@ export const LIVE_UPGRADE_SIGNALS: LiveUpgradeSignal[] = [
         value: '47 item',
         detail: 'Toàn bộ topic/item lớp 1-5 được đưa vào hàng đợi duyệt với RCA/PDCA, reviewer metadata và release gate.',
         tone: 'warn',
+    },
+    {
+        label: 'Diagnostic',
+        value: `${GRADE1_DIAGNOSTIC_ITEMS.length} item`,
+        detail: 'Warm-start lớp 1 cho Toán và Tiếng Việt tạo baseline, confidence, domain RCA và kế hoạch 7 ngày.',
+        tone: 'info',
     },
     {
         label: 'SOT live',
@@ -346,15 +353,16 @@ export const FULLSTACK_BENCHMARK_DIMENSIONS: FullstackBenchmarkDimension[] = [
         key: 'adaptiveMasteryDiagnostics',
         label: 'Chẩn đoán và thích ứng học thật',
         weightPct: 14,
-        henryScore10: 6.1,
+        henryScore10: 6.8,
         topBenchmarks: ['IXL', 'DreamBox'],
         currentHenryEvidence: [
             'Có mastery state, attempt, lỗi sai, spaced review và adaptive acceleration.',
             'Dashboard phụ huynh đã phân biệt thiếu mẫu với sẵn sàng tăng tốc.',
+            `Có diagnostic warm-start lớp 1 với ${GRADE1_DIAGNOSTIC_ITEMS.length} item Toán/Tiếng Việt, confidence, domain RCA và kế hoạch 7 ngày.`,
         ],
-        gap: 'Chưa có bài chẩn đoán đầu vào chuẩn hóa và chưa hiệu chỉnh độ khó bằng dữ liệu cohort thật.',
-        nextUpgrade: 'Tạo diagnostic warm-start 15 phút theo môn, dùng kết quả để đặt level ban đầu và kế hoạch 7 ngày.',
-        evidenceNeededBeforeEfficacyClaim: 'Cần theo dõi độ chính xác dự báo level, thời gian học, độ bền sau 7 ngày và lỗi tái phát.',
+        gap: 'Đã có diagnostic nội bộ lớp 1, nhưng chưa lưu session dài hạn và chưa validation bằng cohort thật.',
+        nextUpgrade: 'Lưu diagnostic session, mở rộng Tiếng Anh và so sánh dự báo level với recheck sau 7 ngày.',
+        evidenceNeededBeforeEfficacyClaim: 'Cần theo dõi độ chính xác dự báo level, thời gian học, độ bền sau 7 ngày, lỗi tái phát và mất mẫu.',
         sourceIds: ['ixl-diagnostic', 'dreambox-adaptivity'],
     },
     {
@@ -444,7 +452,7 @@ export const FULLSTACK_BENCHMARK_DIMENSIONS: FullstackBenchmarkDimension[] = [
         key: 'dataInfrastructure',
         label: 'Hạ tầng dữ liệu và vận hành',
         weightPct: 9,
-        henryScore10: 6.4,
+        henryScore10: 6.6,
         topBenchmarks: ['Zearn', 'IXL'],
         currentHenryEvidence: [
             'Có event model, local store và nhiều dashboard đọc dữ liệu thật trong app.',
@@ -452,9 +460,10 @@ export const FULLSTACK_BENCHMARK_DIMENSIONS: FullstackBenchmarkDimension[] = [
             'Attempt và xAPI-like event đã có trường curriculumMapId, source version, official strand, review status.',
             'Có SOT Control Center đọc các engine nội bộ và hiển thị gate đang chặn.',
             'Có human review queue typed để tổng hợp item cần duyệt, RCA block reason và PDCA phiên duyệt.',
+            'Có diagnostic engine typed để biến câu trả lời baseline thành confidence và kế hoạch 7 ngày.',
         ],
-        gap: 'Chưa có backend/persistence đồng bộ, export chuẩn, reviewer decisions thật và cohort analytics.',
-        nextUpgrade: 'Định nghĩa analytics export schema, snapshot weekly, reviewer decision persistence và adapter backend khi rời local-only.',
+        gap: 'Chưa có backend/persistence đồng bộ, export chuẩn, diagnostic session persistence, reviewer decisions thật và cohort analytics.',
+        nextUpgrade: 'Định nghĩa analytics export schema, snapshot weekly, diagnostic session persistence, reviewer decision persistence và adapter backend khi rời local-only.',
         evidenceNeededBeforeEfficacyClaim: 'Cần dữ liệu phiên học có timestamp, user cohort, version content và tracking mất mẫu.',
         sourceIds: ['zearn-reports', 'ixl-diagnostic'],
     },
@@ -841,21 +850,21 @@ export const PRIMARY_CURRICULUM_EXPLANATION_EXAMPLES: PrimaryCurriculumExplanati
 export const FULLSTACK_BENCHMARK_ROADMAP: BenchmarkRoadmapItem[] = [
     {
         priority: 1,
-        title: 'Diagnostic warm-start lớp 1',
-        whyNow: 'Sau review queue, hệ thống cần baseline đầu vào để adaptive không đoán level bằng tuổi/lớp.',
-        measurableGate: 'Có diagnostic Toán/Tiếng Việt 12-15 phút, confidence score, kế hoạch 7 ngày và missing-data guard.',
+        title: 'Playwright/WCAG smoke gate',
+        whyNow: 'UI live đã tăng nhiều surface; cần gate desktop/mobile trước khi thêm workflow phức tạp.',
+        measurableGate: 'Có smoke local/CI-ready cho home, child learn, parent dashboard, benchmark, SOT, review queue và diagnostic.',
     },
     {
         priority: 2,
-        title: 'Playwright/WCAG smoke gate',
-        whyNow: 'UI live đã tăng nhiều surface; cần gate desktop/mobile trước khi thêm workflow phức tạp.',
-        measurableGate: 'Có smoke local/CI-ready cho home, child learn, parent dashboard, benchmark, SOT và review queue.',
-    },
-    {
-        priority: 3,
         title: 'Pilot evidence pack 4 tuần',
         whyNow: 'Đây là lỗ hổng hiệu quả lớn nhất: sản phẩm có nhiều cơ chế học nhưng chưa có dữ liệu người học thật.',
         measurableGate: 'Có pre/post, retention sau 7 ngày, time-on-task, lỗi tái phát và dashboard phân tích theo cohort.',
+    },
+    {
+        priority: 3,
+        title: 'Diagnostic persistence và validation',
+        whyNow: 'Diagnostic đã có engine/UI nội bộ; cần lưu session và kiểm độ chính xác dự báo bằng recheck thật.',
+        measurableGate: 'Có diagnostic session history, recheck 7 ngày và dashboard so baseline với outcome.',
     },
     {
         priority: 4,

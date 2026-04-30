@@ -107,7 +107,7 @@ describe('product foundation', () => {
         expect(PRODUCT_FOUNDATION_REQUIREMENTS.filter((requirement) => requirement.priority === 'P0')).toHaveLength(8);
         expect(computeFoundationP0Readiness100()).toBe(94);
         expect(PRODUCT_FOUNDATION_FEATURE_COVERAGE).toHaveLength(20);
-        expect(computeFoundationMustHaveCoverage100()).toBe(75);
+        expect(computeFoundationMustHaveCoverage100()).toBe(80);
         expect(computeFoundationRequirementCoverage('implemented')).toBeGreaterThan(20);
         expect(computeFoundationRequirementCoverage('blocked')).toBe(0);
     });
@@ -190,9 +190,9 @@ describe('product foundation', () => {
     it('selects the next foundation upgrade from SOT instead of intuition', () => {
         const nextDecision = getNextFoundationUpgradeDecision();
 
-        expect(nextDecision?.id).toBe('diagnostic-warm-start-grade1');
-        expect(nextDecision?.targetRequirementIds).toContain('P1-diagnostic-warm-start');
-        expect(nextDecision?.sourceIds).toEqual(expect.arrayContaining(['repo-curriculum-map', 'ixl-diagnostic']));
+        expect(nextDecision?.id).toBe('playwright-wcag-smoke');
+        expect(nextDecision?.targetRequirementIds).toContain('P1-accessibility-quality');
+        expect(nextDecision?.sourceIds).toEqual(expect.arrayContaining(['iso-25010', 'wcag-22']));
         expect(nextDecision?.antiOverclaim).toContain('Không');
     });
 });

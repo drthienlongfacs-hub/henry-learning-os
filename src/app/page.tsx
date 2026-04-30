@@ -4,7 +4,7 @@ import { useAppStore } from '@/stores/app-store';
 import { useTranslation } from '@/lib/i18n';
 import { LangToggle } from '@/components/LangToggle';
 import Link from 'next/link';
-import { BarChart3, BookOpen, Brain, ClipboardCheck, GitBranch, GraduationCap, Heart, Shield, Star } from 'lucide-react';
+import { BarChart3, BookOpen, Brain, ClipboardCheck, GitBranch, GraduationCap, Heart, Shield, Star, Target } from 'lucide-react';
 
 export default function Home() {
   const { isOnboarded } = useAppStore();
@@ -81,6 +81,18 @@ export default function Home() {
               <div>
                 <div style={{ fontWeight: 700, fontSize: '1.1rem', color: 'var(--color-text-primary)' }}>SOT Control Center</div>
                 <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>AI rubric, RCA/PDCA và privacy evidence</div>
+              </div>
+            </div>
+          </Link>
+
+          <Link href="/parent/diagnostic" style={{ textDecoration: 'none' }}>
+            <div className="card card-interactive animate-fade-in" style={{ display: 'flex', alignItems: 'center', gap: '1rem', animationDelay: '0.5s' }}>
+              <div style={{ width: '56px', height: '56px', borderRadius: 'var(--radius-lg)', background: 'linear-gradient(135deg, #2563eb, #0f766e)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Target size={28} color="white" />
+              </div>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: '1.1rem', color: 'var(--color-text-primary)' }}>Diagnostic warm-start</div>
+                <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>Baseline lớp 1 và kế hoạch 7 ngày</div>
               </div>
             </div>
           </Link>

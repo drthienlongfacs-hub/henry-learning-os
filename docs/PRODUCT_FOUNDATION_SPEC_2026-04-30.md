@@ -6,7 +6,7 @@ Ngày cập nhật: 2026-04-30
 
 Henry Learning OS được định vị là **Family-first Learning Evidence OS**: một hệ điều hành học tập cá nhân cho Henry từ lớp 1 đến 18 tuổi, trong đó AI giúp con suy nghĩ sâu hơn, ba mẹ đồng hành bằng nhiệm vụ ngắn và mọi claim mạnh đều đi qua evidence gate.
 
-Nền móng hiện đạt **94/100 P0 readiness**: đã chốt định vị, curriculum traceability lớp 1-5, no-overclaim gate, quy trình deploy live, AI tutor regression 50 scenario, privacy evidence panel, RCA/PDCA tuần theo số liệu local và human review queue cho item lớp 1-5. Còn thiếu gate trưởng thành về reviewer decisions thật, calibration, cohort/pilot thật, diagnostic warm-start và UI smoke/accessibility.
+Nền móng hiện đạt **94/100 P0 readiness**: đã chốt định vị, curriculum traceability lớp 1-5, no-overclaim gate, quy trình deploy live, AI tutor regression 50 scenario, privacy evidence panel, RCA/PDCA tuần theo số liệu local, human review queue cho item lớp 1-5 và diagnostic warm-start lớp 1. Còn thiếu gate trưởng thành về reviewer decisions thật, calibration, diagnostic validation cohort, cohort/pilot thật và UI smoke/accessibility.
 
 Không được nâng điểm benchmark lên 100/100 chỉ vì đã có trang UI hoặc nguồn tham khảo. 100/100 chỉ mở khi có review người thật, calibration độ khó, pilot outcome, production monitoring và accessibility smoke.
 
@@ -77,7 +77,7 @@ Nguồn chuẩn dùng để benchmark foundation:
 | P0-real-evidence-engine | P0 | Partial | Quyết định dựa trên attempt/lỗi/hint/retention/transfer thật | Pilot evidence pack 4 tuần |
 | P0-child-privacy | P0 | Implemented | Data tối thiểu, parent control, export/delete local, không ads/tracking | Legal/backend review trước claim tuân thủ |
 | P0-data-driven-pdca | P0 | Implemented | Observe-score-recommend-validate, không self-modification mơ hồ | Lưu plan/follow-up qua nhiều tuần |
-| P1-diagnostic-warm-start | P1 | Spec ready | Chẩn đoán 12-15 phút theo môn để đặt level ban đầu | Build diagnostic Toán/Tiếng Việt lớp 1 |
+| P1-diagnostic-warm-start | P1 | Implemented | Chẩn đoán 12-15 phút theo môn để đặt level ban đầu | Lưu diagnostic session và validation cohort |
 | P1-review-queue | P1 | Implemented | Hàng đợi duyệt item với reviewer metadata | ReviewerId/approvedAt/blockReason thật và calibration |
 | P1-weekly-outcome-loop | P1 | Implemented | Mục tiêu tuần, hành động phụ huynh, đo lại sau 7 ngày | Cohort/export cho pilot |
 | P1-accessibility-quality | P1 | Spec ready | Smoke visual mobile, keyboard/focus, target size theo WCAG 2.2 | Playwright smoke cho các trang chính |
@@ -113,20 +113,20 @@ Protocol bắt buộc:
 | 2 | Weekly RCA/PDCA outcome loop | Đã triển khai live | Benchmark, EEF, WWC, Zearn, DOCX | Weekly issue, parent action, recheck 7 ngày, no fake delta |
 | 3 | Privacy evidence panel | Đã triển khai live | UNICEF, COPPA, FERPA, NIST AI RMF | Data inventory, purpose, retention, export/delete status |
 | 4 | Human review queue | Đã triển khai live | Bộ GDĐT, curriculum map, benchmark | reviewer metadata, block reason, release gate |
-| 5 | Diagnostic warm-start lớp 1 | Sẵn sàng triển khai | IXL, DreamBox, CTGDPT, curriculum map | diagnostic Toán/Tiếng Việt, confidence, 7-day plan |
+| 5 | Diagnostic warm-start lớp 1 | Đã triển khai live | IXL, DreamBox, CTGDPT, curriculum map | diagnostic Toán/Tiếng Việt, confidence, 7-day plan |
 | 6 | Playwright/WCAG smoke gate | Sẵn sàng triển khai | ISO 25010, WCAG 2.2, architecture | desktop/mobile smoke, route text, no blank page |
 
-Bốn lane đầu theo SOT đã được triển khai nội bộ: **AI tutor rubric và 50 scenario regression**, **Weekly RCA/PDCA outcome loop**, **Privacy evidence panel**, **Human review queue cho item lớp 1-5**. Lane tiếp theo theo SOT là **Diagnostic warm-start lớp 1**. Không được nhảy sang tính năng hấp dẫn hơn nếu chưa ghi rõ vì sao bỏ qua rank 5.
+Năm lane đầu theo SOT đã được triển khai nội bộ: **AI tutor rubric và 50 scenario regression**, **Weekly RCA/PDCA outcome loop**, **Privacy evidence panel**, **Human review queue cho item lớp 1-5**, **Diagnostic warm-start lớp 1**. Lane tiếp theo theo SOT là **Playwright/WCAG smoke gate**. Không được nhảy sang tính năng hấp dẫn hơn nếu chưa ghi rõ vì sao bỏ qua rank 6.
 
 ## Hai mươi must-have feature
 
-Hiện trạng coverage thực thi/partial là **15/20 = 75/100**.
+Hiện trạng coverage thực thi/partial là **16/20 = 80/100**.
 
 | Feature | Trạng thái | Bề mặt hiện có |
 |---|---|---|
 | Child profile | Implemented | Onboarding và store |
 | Competency map 6-18 | Partial | Mastery states và map lớp 1-5 |
-| Diagnostic baseline | Spec ready | Adaptive engine sẵn, chưa có diagnostic UI |
+| Diagnostic baseline | Implemented | Diagnostic warm-start Toán/Tiếng Việt lớp 1, confidence và kế hoạch 7 ngày |
 | AI Socratic tutor | Implemented | Tutor engine, role policy, hint ladder |
 | Hint ladder | Implemented | Session practice và `hintLevelUsed` |
 | Mistake notebook | Implemented | Mistake store/UI |
@@ -172,8 +172,8 @@ Không được gọi là tự tiến hóa nếu hệ thống tự sửa nội d
 
 ## Roadmap đúng thứ tự
 
-1. **Diagnostic warm-start lớp 1** cho Toán và Tiếng Việt.
-2. **Playwright/WCAG smoke CI** trước khi gọi UI là production-grade.
-3. **Pilot evidence pack 4 tuần** trước mọi claim hiệu quả học tập.
+1. **Playwright/WCAG smoke CI** trước khi gọi UI là production-grade.
+2. **Pilot evidence pack 4 tuần** trước mọi claim hiệu quả học tập.
+3. **Diagnostic persistence và validation** để so baseline với recheck thật.
 4. **Reviewer decision persistence và calibration** cho item đã duyệt.
 5. **Lưu PDCA plan/follow-up qua nhiều tuần** để chuẩn bị cohort export.

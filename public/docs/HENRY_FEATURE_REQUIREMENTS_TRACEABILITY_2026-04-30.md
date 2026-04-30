@@ -246,7 +246,7 @@ Không được viết "Henry đáp ứng 100% chương trình" nếu chỉ có 
 | Diễn giải | Không nên mặc định trẻ lớp 1 thì mọi kỹ năng đều ở mức lớp 1; cần đo theo domain |
 | Áp dụng vào Henry | Diagnostic Toán/Tiếng Việt lớp 1, confidence score, kế hoạch 7 ngày, flag thiếu dữ liệu |
 | Tương ứng Việt Nam/BVBD | Tương tự baseline trước cải tiến: chưa có baseline thì không biết can thiệp có hiệu quả không |
-| Gate đạt | Mỗi diagnostic có rubric, item source, độ tin cậy và parent-visible summary |
+| Gate đạt | Đã có diagnostic warm-start lớp 1 với 12 item Toán/Tiếng Việt, rubric, confidence, domain RCA, kế hoạch 7 ngày và parent-visible summary; gate tiếp theo là lưu session và validation bằng cohort thật |
 
 ### F11. Weekly RCA/PDCA outcome loop
 
@@ -504,7 +504,7 @@ Nếu Henry được vận hành trong hệ sinh thái cá nhân của BS. Long/
 | 2 | Weekly RCA/PDCA outcome loop | Biến dữ liệu thành cải tiến thật | Top mistake -> parent mission -> recheck 7 ngày |
 | 3 | Privacy evidence panel | Sản phẩm cho trẻ cần minh bạch dữ liệu | Data inventory, purpose, retention, export/delete |
 | 4 | Human review queue | Muốn claim phủ chuẩn phải có người duyệt | Đã có queue/RCA/PDCA; cần reviewerId, approvedAt, block reason thật |
-| 5 | Diagnostic warm-start lớp 1 | Cá nhân hóa cần baseline | Diagnostic Toán/Tiếng Việt, confidence, plan 7 ngày |
+| 5 | Diagnostic warm-start lớp 1 | Cá nhân hóa cần baseline | Đã có diagnostic Toán/Tiếng Việt, confidence, plan 7 ngày; cần lưu session và validation |
 | 6 | Playwright/WCAG smoke CI | UI live phải kiểm được thật | Desktop/mobile smoke, focus, no blank page |
 | 7 | Pilot evidence pack 4 tuần | Muốn claim hiệu quả phải có dữ liệu thật | consent, pre/post, retention, cohort report |
 
@@ -529,8 +529,8 @@ Cập nhật sau đợt nâng cấp full-stack ngày 2026-04-30:
 | 2 | Weekly RCA/PDCA outcome loop | Đã triển khai engine và dashboard phụ huynh | `src/lib/evidence/weekly-pdca.ts`, `__tests__/weekly-pdca.test.ts`, `/parent/dashboard` | Có vòng observe/RCA/plan/recheck không bịa delta |
 | 3 | Privacy evidence panel | Đã triển khai inventory và UI phụ huynh | `src/lib/privacy/privacy-evidence.ts`, `__tests__/privacy-evidence.test.ts`, `/parent/settings` | Có privacy evidence inventory local-first |
 | 4 | Human review queue | Đã triển khai control plane và live UI | `src/lib/curriculum/review-queue.ts`, `__tests__/curriculum-review-queue.test.ts`, `/parent/review-queue` | Có workflow duyệt nội dung, RCA/PDCA và release gate nội bộ |
-| 5 | Diagnostic warm-start lớp 1 | Lane tiếp theo | Còn trong roadmap theo SOT | Chỉ được nói đã đặc tả |
+| 5 | Diagnostic warm-start lớp 1 | Đã triển khai engine/test/UI | `src/lib/diagnostic/grade1-warm-start.ts`, `__tests__/diagnostic-warm-start.test.ts`, `/parent/diagnostic` | Có baseline nội bộ lớp 1, confidence, domain RCA và plan 7 ngày; chưa claim level chính xác |
 | 6 | Playwright/WCAG smoke gate | Chưa triển khai | Còn trong roadmap | Chưa claim production-grade/WCAG conformant |
 | 7 | Pilot evidence pack 4 tuần | Chưa có dữ liệu thật | Bị chặn bởi evidence | Không claim hiệu quả học tập |
 
-Điểm P0 readiness có thể tăng vì bốn lane kỹ thuật đã có code/test/UI. Điểm hiệu quả học tập không được nâng nếu chưa có pilot có consent, pre-test, post-test, retention, attrition và phân tích cohort.
+Điểm P0 readiness giữ ở mức đã kiểm soát vì các lane P0 đã có code/test/UI; must-have coverage tăng thêm nhờ diagnostic P1 đã có engine/test/UI. Điểm hiệu quả học tập không được nâng nếu chưa có pilot có consent, pre-test, post-test, retention, attrition và phân tích cohort.

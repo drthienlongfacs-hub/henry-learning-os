@@ -244,6 +244,12 @@ export default function ParentDashboard() {
                             <span style={{ fontWeight: 600 }}>Phân tích học thật và tăng tốc</span>
                         </div>
                     </Link>
+                    <Link href="/parent/diagnostic" style={{ textDecoration: 'none' }}>
+                        <div className="card card-interactive" style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem' }}>
+                            <Target size={20} color="#2563eb" />
+                            <span style={{ fontWeight: 600 }}>Diagnostic warm-start lớp 1</span>
+                        </div>
+                    </Link>
                     <Link href="/parent/benchmark" style={{ textDecoration: 'none' }}>
                         <div className="card card-interactive" style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem' }}>
                             <BarChart3 size={20} color="var(--color-info)" />

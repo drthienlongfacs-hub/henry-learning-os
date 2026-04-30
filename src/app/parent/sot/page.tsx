@@ -25,11 +25,13 @@ import { runTutorRegressionAudit } from '@/lib/ai/tutor-rubric';
 import { buildWeeklyPdcaPlan } from '@/lib/evidence/weekly-pdca';
 import { buildPrivacyEvidencePanel } from '@/lib/privacy/privacy-evidence';
 import { buildCurriculumReviewQueue, summarizeCurriculumReviewQueue } from '@/lib/curriculum/review-queue';
+import { GRADE1_DIAGNOSTIC_ITEMS, scoreGrade1DiagnosticWarmStart } from '@/lib/diagnostic/grade1-warm-start';
 
 const tutorAudit = runTutorRegressionAudit();
 const privacyPanel = buildPrivacyEvidencePanel();
 const pdcaDryRun = buildWeeklyPdcaPlan({ now: new Date('2026-04-30T00:00:00.000Z') });
 const reviewQueueSummary = summarizeCurriculumReviewQueue(buildCurriculumReviewQueue());
+const diagnosticDryRun = scoreGrade1DiagnosticWarmStart({ now: new Date('2026-04-30T00:00:00.000Z') });
 const p0Readiness = computeFoundationP0Readiness100();
 const nextLane = getNextFoundationUpgradeDecision();
 const implementedLanes = PRODUCT_FOUNDATION_SOT_UPGRADE_DECISIONS.filter((lane) => lane.status === 'implemented');
@@ -86,6 +88,11 @@ export default function ParentSotPage() {
                                 <ClipboardList size={16} /> Review queue
                             </button>
                         </Link>
+                        <Link href="/parent/diagnostic" style={{ textDecoration: 'none' }}>
+                            <button className="btn btn-secondary btn-sm">
+                                <Target size={16} /> Diagnostic
+                            </button>
+                        </Link>
                     </div>
                 </div>
 
@@ -98,7 +105,7 @@ export default function ParentSotPage() {
                             Mỗi feature phải có yêu cầu, căn cứ, mức tin cậy, diễn giải, workflow, dữ liệu, gate và no-overclaim.
                         </h2>
                         <p style={{ color: '#475569', lineHeight: 1.55, fontSize: '0.9rem', marginBottom: '0.9rem' }}>
-                            Trang này biến file traceability thành control plane live: AI tutor có regression 50 scenario, dashboard phụ huynh có RCA/PDCA, settings có privacy evidence panel và review queue cho item lớp 1-5. Các lane chưa đủ evidence vẫn giữ trạng thái cần làm, không bị nâng claim bằng câu chữ.
+                            Trang này biến file traceability thành control plane live: AI tutor có regression 50 scenario, dashboard phụ huynh có RCA/PDCA, settings có privacy evidence panel, review queue cho item lớp 1-5 và diagnostic warm-start lớp 1. Các lane chưa đủ evidence vẫn giữ trạng thái cần làm, không bị nâng claim bằng câu chữ.
                         </p>
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '0.7rem' }}>
                             {[
@@ -106,6 +113,7 @@ export default function ParentSotPage() {
                                 { label: 'AI regression', value: `${tutorAudit.passedCount}/${tutorAudit.scenarioCount}`, detail: 'Scenario lớp 1-5', icon: <Brain size={18} />, color: '#7c3aed' },
                                 { label: 'Privacy inventory', value: `${privacyPanel.items.length}`, detail: `${privacyPanel.readiness100}/100 local`, icon: <ShieldCheck size={18} />, color: '#059669' },
                                 { label: 'Review queue', value: `${reviewQueueSummary.totalItems}`, detail: `${reviewQueueSummary.needsHumanReview} cần duyệt`, icon: <ClipboardList size={18} />, color: '#d97706' },
+                                { label: 'Diagnostic', value: `${GRADE1_DIAGNOSTIC_ITEMS.length}`, detail: diagnosticDryRun.status === 'missing_data' ? 'Đợi baseline thật' : 'Có plan', icon: <Target size={18} />, color: '#2563eb' },
                                 { label: 'PDCA guard', value: pdcaDryRun.status === 'missing_data' ? 'safe' : 'ready', detail: 'Không bịa delta', icon: <ListChecks size={18} />, color: '#d97706' },
                             ].map((metric) => (
                                 <article key={metric.label} style={{ border: '1px solid #e2e8f0', borderRadius: '10px', padding: '0.85rem', background: '#f8fafc' }}>
@@ -127,7 +135,7 @@ export default function ParentSotPage() {
                             {efficacyGate?.allowedClaim}
                         </p>
                         <p style={{ color: '#7c2d12', lineHeight: 1.52, fontSize: '0.84rem' }}>
-                            Gate còn thiếu: reviewer thật/approvedAt cho từng item, calibration bằng attempt thật, diagnostic warm-start, Playwright/WCAG smoke và pilot 4 tuần có pre/post/retention.
+                            Gate còn thiếu: reviewer thật/approvedAt cho từng item, calibration bằng attempt thật, validation cohort cho diagnostic, Playwright/WCAG smoke và pilot 4 tuần có pre/post/retention.
                         </p>
                     </aside>
                 </section>
@@ -167,6 +175,15 @@ export default function ParentSotPage() {
                         <div style={{ fontSize: '1.8rem', fontWeight: 900, color: '#0f172a', lineHeight: 1 }}>{reviewQueueSummary.totalItems} item</div>
                         <p style={{ color: '#475569', fontSize: '0.84rem', lineHeight: 1.5, marginTop: '0.5rem' }}>
                             Queue đã gom toàn bộ topic/item lớp 1-5, nêu RCA vì sao bị khóa và PDCA cho phiên duyệt. Chưa tự động approved nếu thiếu reviewer metadata.
+                        </p>
+                    </div>
+                    <div className="card" style={{ borderRadius: '12px', border: '1px solid #bfdbfe' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#2563eb', fontWeight: 900, marginBottom: '0.65rem' }}>
+                            <Target size={18} /> Diagnostic warm-start
+                        </div>
+                        <div style={{ fontSize: '1.8rem', fontWeight: 900, color: '#0f172a', lineHeight: 1 }}>{GRADE1_DIAGNOSTIC_ITEMS.length} item</div>
+                        <p style={{ color: '#475569', fontSize: '0.84rem', lineHeight: 1.5, marginTop: '0.5rem' }}>
+                            Baseline Toán/Tiếng Việt lớp 1 sinh confidence và kế hoạch 7 ngày từ câu trả lời thật. Khi thiếu dữ liệu, hệ thống giữ missing-data state.
                         </p>
                     </div>
                 </section>
