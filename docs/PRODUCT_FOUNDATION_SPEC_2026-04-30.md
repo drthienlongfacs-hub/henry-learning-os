@@ -6,9 +6,9 @@ Ngày cập nhật: 2026-04-30
 
 Henry Learning OS được định vị là **Family-first Learning Evidence OS**: một hệ điều hành học tập cá nhân cho Henry từ lớp 1 đến 18 tuổi, trong đó AI giúp con suy nghĩ sâu hơn, ba mẹ đồng hành bằng nhiệm vụ ngắn và mọi claim mạnh đều đi qua evidence gate.
 
-Nền móng hiện đạt **94/100 P0 readiness**: đã chốt định vị, curriculum traceability lớp 1-5, no-overclaim gate, quy trình deploy live, AI tutor regression 50 scenario, privacy evidence panel, RCA/PDCA tuần theo số liệu local, human review queue cho item lớp 1-5 và diagnostic warm-start lớp 1. Còn thiếu gate trưởng thành về reviewer decisions thật, calibration, diagnostic validation cohort, cohort/pilot thật và UI smoke/accessibility.
+Nền móng hiện đạt **94/100 P0 readiness**: đã chốt định vị, curriculum traceability lớp 1-5, no-overclaim gate, quy trình deploy live, AI tutor regression 50 scenario, privacy evidence panel, RCA/PDCA tuần theo số liệu local, human review queue cho item lớp 1-5, diagnostic warm-start lớp 1 và Playwright/WCAG smoke gate cho route live. Còn thiếu gate trưởng thành về reviewer decisions thật, calibration, diagnostic validation cohort, cohort/pilot thật, monitoring live và accessibility audit sâu.
 
-Không được nâng điểm benchmark lên 100/100 chỉ vì đã có trang UI hoặc nguồn tham khảo. 100/100 chỉ mở khi có review người thật, calibration độ khó, pilot outcome, production monitoring và accessibility smoke.
+Không được nâng điểm benchmark lên 100/100 chỉ vì đã có trang UI hoặc nguồn tham khảo. 100/100 chỉ mở khi có review người thật, calibration độ khó, pilot outcome, production monitoring, rollback drill và accessibility audit sâu.
 
 ## Căn cứ đã kiểm tra
 
@@ -63,7 +63,7 @@ Nguồn chuẩn dùng để benchmark foundation:
 | Evidence data kernel | Thu dữ liệu vừa đủ để chạy RCA/PDCA: attempt, lỗi, hint, retention, transfer, parent observation | Cohort export, pre/post/retention protocol, weekly PDCA loop |
 | Parent co-learning kernel | Biến phụ huynh thành mentor bằng hành động ngắn, đo lại được | Weekly outcome delta, parent observation rubric, export report |
 | Child safety/privacy kernel | Data minimization, parent-visible audit, không dark pattern, không emotional dependency | Consent checklist, retention/delete UI, privacy event audit panel |
-| Software quality kernel | Typed data, tests, build/deploy gate, accessibility, maintainability | Playwright smoke CI, WCAG audit, production monitoring |
+| Software quality kernel | Typed data, tests, build/deploy gate, accessibility, maintainability | WCAG audit sâu, production monitoring, rollback drill |
 
 ## Requirements P0/P1/P2
 
@@ -72,7 +72,7 @@ Nguồn chuẩn dùng để benchmark foundation:
 | P0-positioning | P0 | Implemented | Chốt Henry Learning OS là Family-first Learning Evidence OS | Mọi trang chính link về foundation |
 | P0-curriculum-traceability | P0 | Implemented | Mỗi topic/item truy vết được chương trình, source version, evidence | Review queue và khóa item thiếu metadata |
 | P0-no-overclaim | P0 | Implemented | Claim mạnh phải qua evidence gate | Mở rộng test no-overclaim sang foundation UI |
-| P0-release-gate | P0 | Implemented | TypeScript, test, lint, build, commit, push, Actions success, live verification | Thêm Playwright smoke CI |
+| P0-release-gate | P0 | Implemented | TypeScript, test, lint, build, Playwright smoke, commit, push, Actions success, live verification | Live monitoring và rollback drill |
 | P0-ai-socratic-safety | P0 | Implemented | AI hỏi gợi mở, không làm hộ, có audit | Pilot hội thoại thật với trẻ/phụ huynh |
 | P0-real-evidence-engine | P0 | Partial | Quyết định dựa trên attempt/lỗi/hint/retention/transfer thật | Pilot evidence pack 4 tuần |
 | P0-child-privacy | P0 | Implemented | Data tối thiểu, parent control, export/delete local, không ads/tracking | Legal/backend review trước claim tuân thủ |
@@ -80,7 +80,7 @@ Nguồn chuẩn dùng để benchmark foundation:
 | P1-diagnostic-warm-start | P1 | Implemented | Chẩn đoán 12-15 phút theo môn để đặt level ban đầu | Lưu diagnostic session và validation cohort |
 | P1-review-queue | P1 | Implemented | Hàng đợi duyệt item với reviewer metadata | ReviewerId/approvedAt/blockReason thật và calibration |
 | P1-weekly-outcome-loop | P1 | Implemented | Mục tiêu tuần, hành động phụ huynh, đo lại sau 7 ngày | Cohort/export cho pilot |
-| P1-accessibility-quality | P1 | Spec ready | Smoke visual mobile, keyboard/focus, target size theo WCAG 2.2 | Playwright smoke cho các trang chính |
+| P1-accessibility-quality | P1 | Implemented | Smoke visual mobile, keyboard/focus, target size theo WCAG 2.2 | Visual diff, axe/WCAG audit sâu và monitoring live |
 | P2-whole-child-portfolio | P2 | Spec ready | Portfolio 12 năm gồm đọc, viết, dự án, coding, reflection | Portfolio schema và page đầu tiên |
 
 ## SOT control plane
@@ -114,9 +114,10 @@ Protocol bắt buộc:
 | 3 | Privacy evidence panel | Đã triển khai live | UNICEF, COPPA, FERPA, NIST AI RMF | Data inventory, purpose, retention, export/delete status |
 | 4 | Human review queue | Đã triển khai live | Bộ GDĐT, curriculum map, benchmark | reviewer metadata, block reason, release gate |
 | 5 | Diagnostic warm-start lớp 1 | Đã triển khai live | IXL, DreamBox, CTGDPT, curriculum map | diagnostic Toán/Tiếng Việt, confidence, 7-day plan |
-| 6 | Playwright/WCAG smoke gate | Sẵn sàng triển khai | ISO 25010, WCAG 2.2, architecture | desktop/mobile smoke, route text, no blank page |
+| 6 | Playwright/WCAG smoke gate | Đã triển khai live | ISO 25010, WCAG 2.2, architecture | 8 route x 2 viewport, route text, focus, target-size, no blank page |
+| 7 | Pilot evidence pack 4 tuần | Sẵn sàng triển khai | WWC, EEF, Zearn, benchmark | consent, pre/post, retention, cohort dashboard |
 
-Năm lane đầu theo SOT đã được triển khai nội bộ: **AI tutor rubric và 50 scenario regression**, **Weekly RCA/PDCA outcome loop**, **Privacy evidence panel**, **Human review queue cho item lớp 1-5**, **Diagnostic warm-start lớp 1**. Lane tiếp theo theo SOT là **Playwright/WCAG smoke gate**. Không được nhảy sang tính năng hấp dẫn hơn nếu chưa ghi rõ vì sao bỏ qua rank 6.
+Sáu lane đầu theo SOT đã được triển khai nội bộ: **AI tutor rubric và 50 scenario regression**, **Weekly RCA/PDCA outcome loop**, **Privacy evidence panel**, **Human review queue cho item lớp 1-5**, **Diagnostic warm-start lớp 1**, **Playwright/WCAG smoke gate**. Lane tiếp theo theo SOT là **Pilot evidence pack 4 tuần**. Không được nhảy sang tính năng hấp dẫn hơn nếu chưa ghi rõ vì sao bỏ qua rank 7.
 
 ## Hai mươi must-have feature
 
@@ -155,7 +156,7 @@ Hiện trạng coverage thực thi/partial là **16/20 = 80/100**.
 | AI tutor quality | Passed | Có AI tutor/hint ladder và regression guardrail 50 scenario | Không nói đã benchmark chất lượng với trẻ thật |
 | Adaptive evidence | Partial | Có local data và adaptive engine | Không nói adaptive đã tối ưu bằng cohort |
 | Learning efficacy | Blocked | Chỉ nói sẵn sàng thiết kế pilot | Cấm claim tăng điểm, effect size, vượt ST Math/IXL/Khanmigo |
-| Production quality | Partial | Có TypeScript/test/lint/build/deploy gate | Không nói production-grade khi thiếu E2E/monitoring/accessibility audit |
+| Production quality | Partial | Có TypeScript/test/lint/build/deploy gate và Playwright smoke 8 route x 2 viewport | Không nói production-grade khi thiếu monitoring, rollback drill và accessibility audit sâu |
 
 ## RCA/PDCA thật cần xây tiếp
 
@@ -172,8 +173,8 @@ Không được gọi là tự tiến hóa nếu hệ thống tự sửa nội d
 
 ## Roadmap đúng thứ tự
 
-1. **Playwright/WCAG smoke CI** trước khi gọi UI là production-grade.
-2. **Pilot evidence pack 4 tuần** trước mọi claim hiệu quả học tập.
-3. **Diagnostic persistence và validation** để so baseline với recheck thật.
-4. **Reviewer decision persistence và calibration** cho item đã duyệt.
+1. **Pilot evidence pack 4 tuần** trước mọi claim hiệu quả học tập.
+2. **Diagnostic persistence và validation** để so baseline với recheck thật.
+3. **Reviewer decision persistence và calibration** cho item đã duyệt.
+4. **Live monitoring và accessibility audit sâu** trước khi gọi production-grade đầy đủ.
 5. **Lưu PDCA plan/follow-up qua nhiều tuần** để chuẩn bị cohort export.

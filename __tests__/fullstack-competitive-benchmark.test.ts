@@ -55,17 +55,18 @@ describe('full-stack competitive benchmark', () => {
     it('uses real source URLs and a measurable roadmap', () => {
         expect(FULLSTACK_BENCHMARK_SOURCES.length).toBeGreaterThanOrEqual(8);
         expect(FULLSTACK_BENCHMARK_SOURCES.every((source) => source.url.startsWith('https://'))).toBe(true);
-        expect(FULLSTACK_BENCHMARK_ROADMAP[0].title).toContain('Playwright');
+        expect(FULLSTACK_BENCHMARK_ROADMAP[0].title).toContain('Pilot evidence');
         expect(FULLSTACK_BENCHMARK_ROADMAP.every((item) => item.measurableGate.length > 30)).toBe(true);
     });
 
     it('surfaces the latest live upgrade above the fold', () => {
-        expect(LIVE_UPGRADE_SIGNALS).toHaveLength(7);
-        expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('66/100');
+        expect(LIVE_UPGRADE_SIGNALS).toHaveLength(8);
+        expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('67/100');
         expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('94/100 P0');
         expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('47/47 topic');
         expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('47 item');
         expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('12 item');
+        expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('8x2');
         expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('100% traceable');
         expect(LIVE_UPGRADE_SIGNALS.some((signal) => signal.detail.includes('review queue'))).toBe(true);
 
@@ -84,7 +85,7 @@ describe('full-stack competitive benchmark', () => {
     it('explains why full-stack score cannot honestly jump to 100 yet', () => {
         const statuses = new Set(FULLSTACK_100_GATES.map((gate) => gate.status));
 
-        expect(HENRY_FULLSTACK_BENCHMARK.overallScore100).toBe(66);
+        expect(HENRY_FULLSTACK_BENCHMARK.overallScore100).toBe(67);
         expect(PRIMARY_ITEM_AUDIT_GATE.generatedItemTraceabilityCoverage100).toBe(100);
         expect(statuses.has('passed')).toBe(true);
         expect(statuses.has('partial')).toBe(true);

@@ -1,6 +1,7 @@
 import { PRIMARY_CURRICULUM_MAP_STATS } from './primary-curriculum-map';
 import { PRIMARY_ITEM_AUDIT_GATE } from '@/lib/curriculum/item-audit';
 import { GRADE1_DIAGNOSTIC_ITEMS } from '@/lib/diagnostic/grade1-warm-start';
+import { UI_SMOKE_GATE } from './ui-smoke-gate';
 
 export type BenchmarkDimensionKey =
     | 'aiTutorScaffolding'
@@ -114,8 +115,8 @@ export const FULLSTACK_BENCHMARK_AS_OF = '2026-04-30';
 export const LIVE_UPGRADE_SIGNALS: LiveUpgradeSignal[] = [
     {
         label: 'Bản live mới',
-        value: '66/100',
-        detail: 'Điểm cạnh tranh tăng sau khi có SOT Control Center, AI rubric 50 scenario, RCA/PDCA, privacy evidence panel, human review queue và diagnostic warm-start.',
+        value: '67/100',
+        detail: 'Điểm cạnh tranh tăng sau khi có SOT Control Center, AI rubric 50 scenario, RCA/PDCA, privacy evidence panel, review queue, diagnostic warm-start và Playwright/WCAG smoke gate.',
         tone: 'info',
     },
     {
@@ -147,6 +148,12 @@ export const LIVE_UPGRADE_SIGNALS: LiveUpgradeSignal[] = [
         value: `${GRADE1_DIAGNOSTIC_ITEMS.length} item`,
         detail: 'Warm-start lớp 1 cho Toán và Tiếng Việt tạo baseline, confidence, domain RCA và kế hoạch 7 ngày.',
         tone: 'info',
+    },
+    {
+        label: 'Smoke gate',
+        value: `${UI_SMOKE_GATE.routeCount}x${UI_SMOKE_GATE.viewportCount}`,
+        detail: 'Playwright kiểm route chính trên desktop/mobile, required text, focus, target-size và no-overflow trước deploy Pages.',
+        tone: 'good',
     },
     {
         label: 'SOT live',
@@ -207,8 +214,8 @@ export const FULLSTACK_100_GATES: Benchmark100Gate[] = [
         key: 'production-monitoring',
         label: 'Vận hành production',
         status: 'partial',
-        currentEvidence: 'Có Pages deploy và unit/build gate; chưa có E2E bắt buộc, live monitoring và export cohort.',
-        requiredFor100: 'Có Playwright smoke trong CI, monitoring live, export schema và dashboard cohort.',
+        currentEvidence: `Có Pages deploy, unit/build gate và Playwright smoke ${UI_SMOKE_GATE.routeCount} route x ${UI_SMOKE_GATE.viewportCount} viewport trước upload Pages; chưa có monitoring live và export cohort.`,
+        requiredFor100: 'Có live monitoring, rollback drill, export schema, dashboard cohort và accessibility audit sâu.',
     },
 ];
 
@@ -369,14 +376,15 @@ export const FULLSTACK_BENCHMARK_DIMENSIONS: FullstackBenchmarkDimension[] = [
         key: 'uiUxEngagement',
         label: 'UI/UX học ngắn và bền',
         weightPct: 10,
-        henryScore10: 6.2,
+        henryScore10: 6.7,
         topBenchmarks: ['Duolingo ABC', 'Beast Academy'],
         currentHenryEvidence: [
             'Có phân vai trẻ/phụ huynh, session học, Elite track, đọc sách và dashboard.',
             'Build static export chạy được trên GitHub Pages.',
+            `Có Playwright smoke ${UI_SMOKE_GATE.routeCount} route x ${UI_SMOKE_GATE.viewportCount} viewport kiểm text, focus, target-size và no-overflow.`,
         ],
-        gap: 'Chưa có Playwright/Lighthouse trên mobile và chưa đo drop-off từng màn hình.',
-        nextUpgrade: 'Thêm smoke test visual mobile cho luồng vào học, làm bài, xem gợi ý, xem dashboard.',
+        gap: 'Đã có smoke gate cơ bản, nhưng chưa có Lighthouse/axe audit sâu, visual diff và đo drop-off từng màn hình.',
+        nextUpgrade: 'Thêm visual regression/axe audit, completion funnel và đo drop-off từng màn hình học.',
         evidenceNeededBeforeEfficacyClaim: 'Cần completion rate, time-on-task, số lần bỏ phiên và phản hồi phụ huynh.',
         sourceIds: ['duolingo-abc', 'beast-academy'],
     },
@@ -471,14 +479,15 @@ export const FULLSTACK_BENCHMARK_DIMENSIONS: FullstackBenchmarkDimension[] = [
         key: 'deploymentAndQualityGates',
         label: 'Build, test và deploy live',
         weightPct: 6,
-        henryScore10: 7,
+        henryScore10: 7.6,
         topBenchmarks: ['Production learning apps'],
         currentHenryEvidence: [
             'Có GitHub Pages workflow, static export và test suite Vitest.',
             'Repo có audit docs và handoff docs cho nâng cấp tiếp theo.',
+            `Có Playwright smoke gate chạy ${UI_SMOKE_GATE.routeCount} route chính trên desktop/mobile trước upload Pages.`,
         ],
-        gap: 'Chưa có end-to-end test bắt buộc trong CI và chưa có monitoring live.',
-        nextUpgrade: 'Đưa Playwright smoke vào CI cho trang chính, child session, parent dashboard và benchmark.',
+        gap: 'Đã có E2E smoke bắt buộc trong Pages workflow, nhưng chưa có monitoring live, rollback drill và accessibility audit sâu.',
+        nextUpgrade: 'Bổ sung live monitoring, rollback drill, axe/WCAG audit sâu và export cohort.',
         evidenceNeededBeforeEfficacyClaim: 'Cần release gate có build, unit, visual smoke và dữ liệu phiên bản nội dung.',
         sourceIds: ['zearn-reports'],
     },
@@ -850,27 +859,27 @@ export const PRIMARY_CURRICULUM_EXPLANATION_EXAMPLES: PrimaryCurriculumExplanati
 export const FULLSTACK_BENCHMARK_ROADMAP: BenchmarkRoadmapItem[] = [
     {
         priority: 1,
-        title: 'Playwright/WCAG smoke gate',
-        whyNow: 'UI live đã tăng nhiều surface; cần gate desktop/mobile trước khi thêm workflow phức tạp.',
-        measurableGate: 'Có smoke local/CI-ready cho home, child learn, parent dashboard, benchmark, SOT, review queue và diagnostic.',
+        title: 'Pilot evidence pack 4 tuần',
+        whyNow: 'Sau Playwright/WCAG smoke gate, lỗ hổng hiệu quả lớn nhất vẫn là chưa có dữ liệu người học thật.',
+        measurableGate: 'Có pre/post, retention sau 7 ngày, time-on-task, lỗi tái phát, consent và dashboard phân tích theo cohort.',
     },
     {
         priority: 2,
-        title: 'Pilot evidence pack 4 tuần',
-        whyNow: 'Đây là lỗ hổng hiệu quả lớn nhất: sản phẩm có nhiều cơ chế học nhưng chưa có dữ liệu người học thật.',
-        measurableGate: 'Có pre/post, retention sau 7 ngày, time-on-task, lỗi tái phát và dashboard phân tích theo cohort.',
-    },
-    {
-        priority: 3,
         title: 'Diagnostic persistence và validation',
         whyNow: 'Diagnostic đã có engine/UI nội bộ; cần lưu session và kiểm độ chính xác dự báo bằng recheck thật.',
         measurableGate: 'Có diagnostic session history, recheck 7 ngày và dashboard so baseline với outcome.',
     },
     {
-        priority: 4,
+        priority: 3,
         title: 'Reviewer decision persistence và calibration',
         whyNow: 'Review queue đã có ở dạng control plane; cần dữ liệu reviewer thật và attempt thật để trưởng thành.',
         measurableGate: 'Có reviewerId/approvedAt/blockReason được lưu, item approved vào calibration và report theo topic/cohort.',
+    },
+    {
+        priority: 4,
+        title: 'Live monitoring và accessibility audit sâu',
+        whyNow: 'Smoke gate chỉ kiểm lỗi lớn; cần monitoring/audit sâu trước khi gọi production-grade.',
+        measurableGate: 'Có uptime route check, rollback drill, axe/WCAG report và visual diff cho route chính.',
     },
 ];
 

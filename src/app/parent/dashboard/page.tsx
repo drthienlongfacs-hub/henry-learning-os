@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppStore } from '@/stores/app-store';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -9,6 +9,7 @@ import { buildWeeklyPdcaPlan } from '@/lib/evidence/weekly-pdca';
 
 export default function ParentDashboard() {
     const router = useRouter();
+    const [hasHydrated, setHasHydrated] = useState(false);
     const {
         childProfile, parentProfile, masteryStates, mistakes, attempts,
         reviewSchedules, reflections, readingEntries, parentMissions,
@@ -24,10 +25,22 @@ export default function ParentDashboard() {
     };
 
     useEffect(() => {
-        if (!childProfile || !parentProfile) router.push('/parent/onboarding');
-    }, [childProfile, parentProfile, router]);
+        const unsubscribe = useAppStore.persist.onFinishHydration(() => setHasHydrated(true));
+        const hydrationCheck = window.setTimeout(() => {
+            setHasHydrated(useAppStore.persist.hasHydrated());
+        }, 50);
 
-    if (!childProfile || !parentProfile) {
+        return () => {
+            window.clearTimeout(hydrationCheck);
+            unsubscribe();
+        };
+    }, []);
+
+    useEffect(() => {
+        if (hasHydrated && (!childProfile || !parentProfile)) router.push('/parent/onboarding');
+    }, [childProfile, hasHydrated, parentProfile, router]);
+
+    if (!hasHydrated || !childProfile || !parentProfile) {
         return null;
     }
 

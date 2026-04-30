@@ -61,7 +61,7 @@ export default function ParentReviewQueuePage() {
                                 <Database size={16} /> Benchmark
                             </button>
                         </Link>
-                        <Link href="/docs/HENRY_FEATURE_REQUIREMENTS_TRACEABILITY_2026-04-30.md" style={{ textDecoration: 'none' }}>
+                        <Link href="/docs/HENRY_FEATURE_REQUIREMENTS_TRACEABILITY_2026-04-30.md" prefetch={false} style={{ textDecoration: 'none' }}>
                             <button className="btn btn-secondary btn-sm">
                                 <GitBranch size={16} /> SOT doc
                             </button>

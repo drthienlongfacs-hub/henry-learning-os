@@ -170,7 +170,7 @@ describe('product foundation', () => {
     });
 
     it('keeps every SOT upgrade decision traceable, ranked, and guarded', () => {
-        expect(PRODUCT_FOUNDATION_SOT_UPGRADE_DECISIONS.map((decision) => decision.rank)).toEqual([1, 2, 3, 4, 5, 6]);
+        expect(PRODUCT_FOUNDATION_SOT_UPGRADE_DECISIONS.map((decision) => decision.rank)).toEqual([1, 2, 3, 4, 5, 6, 7]);
         expect(computeFoundationSotIntegrity100()).toBe(100);
 
         PRODUCT_FOUNDATION_SOT_UPGRADE_DECISIONS.forEach((decision) => {
@@ -190,9 +190,9 @@ describe('product foundation', () => {
     it('selects the next foundation upgrade from SOT instead of intuition', () => {
         const nextDecision = getNextFoundationUpgradeDecision();
 
-        expect(nextDecision?.id).toBe('playwright-wcag-smoke');
-        expect(nextDecision?.targetRequirementIds).toContain('P1-accessibility-quality');
-        expect(nextDecision?.sourceIds).toEqual(expect.arrayContaining(['iso-25010', 'wcag-22']));
+        expect(nextDecision?.id).toBe('pilot-evidence-pack-4-week');
+        expect(nextDecision?.targetRequirementIds).toContain('P0-real-evidence-engine');
+        expect(nextDecision?.sourceIds).toEqual(expect.arrayContaining(['wwc-standards', 'eef-metacognition']));
         expect(nextDecision?.antiOverclaim).toContain('Không');
     });
 });

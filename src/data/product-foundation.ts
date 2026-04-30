@@ -1,3 +1,5 @@
+import { UI_SMOKE_GATE } from './ui-smoke-gate';
+
 export type FoundationSourceKind =
     | 'local_blueprint'
     | 'repo_handoff'
@@ -469,8 +471,8 @@ export const PRODUCT_FOUNDATION_REQUIREMENTS: FoundationRequirement[] = [
         requirement: 'Mỗi nâng cấp UI/data cần qua gate TypeScript, test, lint, build, commit, push, Actions success và live verification.',
         rationale: 'Người dùng yêu cầu trang live cập nhật sau mỗi đợt nâng cấp; quy trình phải thành operator habit.',
         acceptanceCriteria: ['AGENTS.md có quy trình', 'Build static export thành công', 'GitHub Pages deploy được theo main', 'Báo cáo run id và live URL sau push'],
-        currentEvidence: ['AGENTS.md', 'next.config.ts', 'GitHub Pages workflow trong cac lan deploy truoc'],
-        nextGate: 'Thêm Playwright smoke vào CI để gate UI thật trên mobile/desktop.',
+        currentEvidence: ['AGENTS.md', 'next.config.ts', 'GitHub Pages workflow trong cac lan deploy truoc', 'Playwright smoke gate chạy desktop/mobile route chính trước upload Pages'],
+        nextGate: 'Bổ sung live monitoring và rollback drill khi rời static-only.',
         sourceIds: ['repo-architecture', 'iso-25010', 'wcag-22'],
     },
     {
@@ -560,13 +562,13 @@ export const PRODUCT_FOUNDATION_REQUIREMENTS: FoundationRequirement[] = [
     {
         id: 'P1-accessibility-quality',
         priority: 'P1',
-        status: 'spec_ready',
+        status: 'implemented',
         title: 'Accessibility và mobile quality',
         requirement: 'Child/parent UI phải có smoke visual mobile, keyboard/focus và target size theo WCAG 2.2.',
         rationale: 'Trẻ lớp 1-5 và phụ huynh cần UI dễ đọc, dễ chạm, không bị vỡ layout trên mobile.',
         acceptanceCriteria: ['Playwright mobile screenshot', 'Focus visible', 'Target size audit', 'No text overlap'],
-        currentEvidence: ['Build static thành công, chưa có Playwright/WCAG gate'],
-        nextGate: 'Thêm Playwright smoke cho home, session, dashboard, benchmark và foundation.',
+        currentEvidence: [`${UI_SMOKE_GATE.routeCount} route chính x ${UI_SMOKE_GATE.viewportCount} viewport được kiểm bằng Playwright`, 'tests/smoke/ui-smoke.spec.ts kiểm route text, focus, target-size và overflow', '.github/workflows/deploy.yml chạy smoke trước upload Pages'],
+        nextGate: 'Thêm visual diff, axe/WCAG audit sâu và monitoring live trước khi claim WCAG conformant.',
         sourceIds: ['wcag-22', 'iso-25010'],
     },
     {
@@ -825,9 +827,9 @@ export const PRODUCT_FOUNDATION_CLAIM_GATES: FoundationClaimGate[] = [
         id: 'production-quality',
         label: 'Production quality',
         status: 'partial',
-        allowedClaim: 'Đã có TypeScript/test/lint/build/deploy gate cho static site.',
-        blockedClaim: 'Không nói production-grade nếu chưa có E2E, monitoring, accessibility audit.',
-        requiredEvidence: 'Cần Playwright smoke CI, WCAG check, live monitoring và rollback drill.',
+        allowedClaim: 'Đã có TypeScript/test/lint/build/deploy gate và Playwright smoke gate desktop/mobile cho static site.',
+        blockedClaim: 'Không nói production-grade đầy đủ nếu chưa có monitoring, rollback drill và accessibility audit sâu.',
+        requiredEvidence: 'Cần Playwright smoke CI đã chạy, sau đó bổ sung WCAG audit sâu, live monitoring và rollback drill.',
         sourceIds: ['iso-25010', 'wcag-22'],
     },
 ];
@@ -854,7 +856,7 @@ export const PRODUCT_FOUNDATION_QUALITY_AXES: FoundationQualityAxis[] = [
         label: 'Usability and accessibility',
         benchmarkFrame: 'WCAG 2.2 + UDL',
         productRequirement: 'Trẻ nhỏ đọc được, chạm được, không quá tải; phụ huynh scan nhanh và biết việc phải làm.',
-        measurableGate: 'Playwright mobile screenshots, focus/target-size check va no-overlap visual smoke.',
+        measurableGate: `${UI_SMOKE_GATE.routeCount} route x ${UI_SMOKE_GATE.viewportCount} viewport, focus/target-size check và no-overflow visual smoke.`,
         sourceIds: ['wcag-22', 'cast-udl'],
     },
     {
@@ -1058,7 +1060,7 @@ export const PRODUCT_FOUNDATION_SOT_UPGRADE_DECISIONS: FoundationUpgradeDecision
     {
         id: 'playwright-wcag-smoke',
         rank: 6,
-        status: 'ready_for_implementation',
+        status: 'implemented',
         riskLevel: 'low',
         label: 'Playwright/WCAG smoke gate',
         whyNow: 'Build đã qua nhưng UI chưa có smoke visual mobile/desktop; foundation không được gọi production-grade nếu thiếu E2E/accessibility gate.',
@@ -1066,21 +1068,48 @@ export const PRODUCT_FOUNDATION_SOT_UPGRADE_DECISIONS: FoundationUpgradeDecision
         targetFeatureIds: ['parent-dashboard', 'safety-audit-parent-control'],
         sourceOfTruth: 'ISO 25010 đặt quality gate; WCAG 2.2 đặt accessibility gate; AGENTS.md yêu cầu deploy/live verification sau nâng cấp.',
         implementationScope: [
-            'Thêm Playwright smoke cho home, parent dashboard, benchmark và foundation.',
+            'Thêm Playwright smoke cho home, child learn, parent dashboard, benchmark, foundation, SOT, review queue và diagnostic.',
             'Kiểm tra text chính, route status, mobile viewport và không blank page.',
             'Gắn script để chạy trước deploy khi có thay đổi UI lớn.',
         ],
         doneDefinition: [
             'Smoke chạy được local và có CI-ready command.',
-            'Kiểm tra desktop/mobile cho route foundation và benchmark.',
+            'Kiểm tra desktop/mobile cho route foundation, benchmark, SOT, review queue và diagnostic.',
             'Không thay thế audit WCAG đầy đủ, chỉ là smoke gate ban đầu.',
         ],
-        evidenceGate: 'Có thể claim có UI smoke gate; chưa claim WCAG conformant nếu chưa audit đầy đủ.',
+        evidenceGate: UI_SMOKE_GATE.allowedClaim,
         deployGate: 'TypeScript, Playwright smoke, full Vitest, ESLint, build, Pages success và live route check.',
-        antiOverclaim: 'Không nói đạt WCAG 2.2 đầy đủ nếu mới có smoke.',
-        blockedUntil: 'Không bị chặn; nên làm trước các UI phức tạp tiếp theo.',
-        ownerSurface: 'tests/e2e hoặc __tests__/smoke, package scripts, GitHub workflow nếu mở rộng CI.',
+        antiOverclaim: UI_SMOKE_GATE.blockedClaim,
+        blockedUntil: 'Đã triển khai ở src/data/ui-smoke-gate.ts, tests/smoke/ui-smoke.spec.ts, package scripts và GitHub Pages workflow; gate tiếp theo là monitoring/live audit sâu.',
+        ownerSurface: 'tests/smoke, package scripts, GitHub workflow, benchmark/foundation docs.',
         sourceIds: ['iso-25010', 'wcag-22', 'repo-architecture'],
+    },
+    {
+        id: 'pilot-evidence-pack-4-week',
+        rank: 7,
+        status: 'ready_for_implementation',
+        riskLevel: 'high',
+        label: 'Pilot evidence pack 4 tuần',
+        whyNow: 'Sau khi UI smoke gate đã có, lỗ hổng lớn nhất còn lại là chưa có dữ liệu người học thật để chứng minh hiệu quả học tập, retention và lỗi tái phát.',
+        targetRequirementIds: ['P0-real-evidence-engine', 'P1-weekly-outcome-loop'],
+        targetFeatureIds: ['parent-dashboard', 'mastery-checkpoint', 'spaced-repetition', 'retrieval-practice'],
+        sourceOfTruth: 'WWC và EEF yêu cầu pre/post, retention, mẫu số rõ, attrition và phân tích cohort trước mọi claim hiệu quả học tập.',
+        implementationScope: [
+            'Thiết kế pilot protocol 4 tuần với consent phụ huynh, pre-test, post-test và retention 7 ngày.',
+            'Định nghĩa cohort export schema cho attempt, hint, time-on-task, lỗi tái phát và parent action.',
+            'Tạo dashboard evidence pack ở chế độ missing-data cho đến khi có dữ liệu thật.',
+        ],
+        doneDefinition: [
+            'Có protocol và schema đủ để thu pilot mà không claim trước.',
+            'Có UI phụ huynh/operator thấy missing-data, mẫu số, retention và attrition.',
+            'Có test chặn claim hiệu quả nếu pilot chưa đủ dữ liệu.',
+        ],
+        evidenceGate: 'Chỉ được claim đã sẵn sàng pilot; chưa claim tăng điểm, effect size hoặc hiệu quả học tập.',
+        deployGate: 'TypeScript, pilot evidence tests, Playwright smoke, full Vitest, ESLint, build, Pages success và live route check.',
+        antiOverclaim: 'Không gọi bất kỳ cải thiện nào là hiệu quả nếu chưa có pre/post/retention đủ mẫu và phân tích mất mẫu.',
+        blockedUntil: 'Không bị chặn về kỹ thuật; bị chặn claim cho đến khi có cohort thật và consent phụ huynh.',
+        ownerSurface: 'src/lib/evidence, parent analytics/dashboard, docs, tests.',
+        sourceIds: ['wwc-standards', 'eef-metacognition', 'zearn-reporting', 'repo-current-benchmark'],
     },
 ];
 

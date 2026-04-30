@@ -400,9 +400,9 @@ Không được viết "Henry đáp ứng 100% chương trình" nếu chỉ có 
 | Mức tin cậy | A1 + A2 + C |
 | Nguyên văn ngắn | Product Foundation: "TypeScript, test, lint, build, deploy gate" |
 | Diễn giải | Một tính năng chưa đạt nếu chỉ nằm trong code nhưng không qua build, test và kiểm tra UI |
-| Áp dụng vào Henry | Gate: `tsc`, Vitest, lint, `npm run build`, Pages Actions success, live verification |
+| Áp dụng vào Henry | Gate: `tsc`, Vitest, lint, `npm run build`, Playwright smoke, Pages Actions success, live verification |
 | Tương ứng Việt Nam/BVBD | Tương tự nghiệm thu nội bộ: có bằng chứng chạy được và người dùng nhìn thấy được |
-| Gate đạt | Thêm Playwright/WCAG smoke CI trước khi gọi UI là production-grade |
+| Gate đạt | Đã có Playwright/WCAG smoke gate 8 route x 2 viewport; gate tiếp theo là visual diff, axe/WCAG audit sâu, monitoring live và rollback drill |
 
 ### F23. Pilot evidence pack
 
@@ -475,7 +475,7 @@ Không được gọi là "tự tiến hóa" nếu hệ thống tự sửa polic
 | Adaptive learning | Có engine và dữ liệu nội bộ bước đầu | Adaptive đã tối ưu bằng cohort thật |
 | Parent dashboard | Có dashboard và mission | Phụ huynh chỉ nhìn dashboard là cải thiện chắc chắn |
 | Hiệu quả học tập | Sẵn sàng thiết kế pilot | Tăng điểm, tăng năng lực, vượt đối thủ khi chưa có pre/post/retention |
-| Software deploy | Build/test/deploy live thành công | Production-grade nếu chưa có E2E, accessibility và monitoring |
+| Software deploy | Build/test/deploy live và Playwright smoke thành công | Production-grade đầy đủ nếu chưa có monitoring, rollback drill và accessibility audit sâu |
 
 ## 13. Áp dụng vào bối cảnh Việt Nam và BVBD
 
@@ -505,7 +505,7 @@ Nếu Henry được vận hành trong hệ sinh thái cá nhân của BS. Long/
 | 3 | Privacy evidence panel | Sản phẩm cho trẻ cần minh bạch dữ liệu | Data inventory, purpose, retention, export/delete |
 | 4 | Human review queue | Muốn claim phủ chuẩn phải có người duyệt | Đã có queue/RCA/PDCA; cần reviewerId, approvedAt, block reason thật |
 | 5 | Diagnostic warm-start lớp 1 | Cá nhân hóa cần baseline | Đã có diagnostic Toán/Tiếng Việt, confidence, plan 7 ngày; cần lưu session và validation |
-| 6 | Playwright/WCAG smoke CI | UI live phải kiểm được thật | Desktop/mobile smoke, focus, no blank page |
+| 6 | Playwright/WCAG smoke CI | UI live phải kiểm được thật | Đã có 8 route x 2 viewport, focus, target-size, no blank page |
 | 7 | Pilot evidence pack 4 tuần | Muốn claim hiệu quả phải có dữ liệu thật | consent, pre/post, retention, cohort report |
 
 ## 15. Kết luận vận hành
@@ -530,7 +530,7 @@ Cập nhật sau đợt nâng cấp full-stack ngày 2026-04-30:
 | 3 | Privacy evidence panel | Đã triển khai inventory và UI phụ huynh | `src/lib/privacy/privacy-evidence.ts`, `__tests__/privacy-evidence.test.ts`, `/parent/settings` | Có privacy evidence inventory local-first |
 | 4 | Human review queue | Đã triển khai control plane và live UI | `src/lib/curriculum/review-queue.ts`, `__tests__/curriculum-review-queue.test.ts`, `/parent/review-queue` | Có workflow duyệt nội dung, RCA/PDCA và release gate nội bộ |
 | 5 | Diagnostic warm-start lớp 1 | Đã triển khai engine/test/UI | `src/lib/diagnostic/grade1-warm-start.ts`, `__tests__/diagnostic-warm-start.test.ts`, `/parent/diagnostic` | Có baseline nội bộ lớp 1, confidence, domain RCA và plan 7 ngày; chưa claim level chính xác |
-| 6 | Playwright/WCAG smoke gate | Chưa triển khai | Còn trong roadmap | Chưa claim production-grade/WCAG conformant |
-| 7 | Pilot evidence pack 4 tuần | Chưa có dữ liệu thật | Bị chặn bởi evidence | Không claim hiệu quả học tập |
+| 6 | Playwright/WCAG smoke gate | Đã triển khai script/workflow/UI guard | `src/data/ui-smoke-gate.ts`, `tests/smoke/ui-smoke.spec.ts`, `.github/workflows/deploy.yml`, `/parent/sot` | Có smoke gate nội bộ; chưa claim WCAG 2.2 đầy đủ |
+| 7 | Pilot evidence pack 4 tuần | Lane tiếp theo | Còn trong SOT roadmap | Chỉ claim sẵn sàng thiết kế pilot; không claim hiệu quả học tập |
 
-Điểm P0 readiness giữ ở mức đã kiểm soát vì các lane P0 đã có code/test/UI; must-have coverage tăng thêm nhờ diagnostic P1 đã có engine/test/UI. Điểm hiệu quả học tập không được nâng nếu chưa có pilot có consent, pre-test, post-test, retention, attrition và phân tích cohort.
+Điểm P0 readiness giữ ở mức đã kiểm soát vì các lane P0 đã có code/test/UI và smoke gate; must-have coverage giữ nguyên vì đây là quality gate, không phải module học mới. Điểm hiệu quả học tập không được nâng nếu chưa có pilot có consent, pre-test, post-test, retention, attrition và phân tích cohort.
