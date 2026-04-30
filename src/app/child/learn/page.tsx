@@ -542,25 +542,28 @@ export default function LearnPage() {
                                                     <div style={{ fontSize: 12, color: '#475569', marginTop: 4, lineHeight: 1.4 }}>
                                                         {enrich.masteryTargets[0]}
                                                     </div>
+                                                    {/* Sample question preview */}
+                                                    {evidence.sampleSize === 0 && (
+                                                        <div style={{ fontSize: 12, color: '#1d4ed8', marginTop: 8, lineHeight: 1.5, background: '#eff6ff', borderRadius: 10, padding: '8px 12px', border: '1px solid #bfdbfe' }}>
+                                                            💡 Ví dụ: <em>{t.generator().question}</em>
+                                                        </div>
+                                                    )}
                                                     <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', marginTop: 8 }}>
                                                         {blueprint.benchmarkPatterns.slice(0, 2).map(item => (
                                                             <span key={item.product} style={{ padding: '4px 7px', borderRadius: 999, background: '#f8fafc', border: '1px solid #e2e8f0', color: '#334155', fontSize: 10, fontWeight: 850 }}>
                                                                 {item.product}
                                                             </span>
                                                         ))}
-                                                        <span style={{ padding: '4px 7px', borderRadius: 999, background: statusColor.bg, border: `1px solid ${statusColor.border}`, color: statusColor.fg, fontSize: 10, fontWeight: 850 }}>
-                                                            {plan.label}{plan.accuracy !== null ? ` · ${plan.accuracy}%` : ''}
+                                                        <span style={{ padding: '4px 7px', borderRadius: 999, background: evidence.sampleSize === 0 ? '#ecfdf5' : statusColor.bg, border: `1px solid ${evidence.sampleSize === 0 ? '#a7f3d0' : statusColor.border}`, color: evidence.sampleSize === 0 ? '#047857' : statusColor.fg, fontSize: 10, fontWeight: 850 }}>
+                                                            {evidence.challengeFitLabel}{evidence.accuracyPct !== null ? ` · ${evidence.accuracyPct}%` : ''}
                                                         </span>
                                                     </div>
-                                                    <div style={{ fontSize: 11, color: '#64748b', marginTop: 7, lineHeight: 1.35 }}>
-                                                        Gợi ý tiếp: {plan.nextAction}
-                                                    </div>
-                                                    <div style={{ fontSize: 11, color: '#0f766e', marginTop: 6, lineHeight: 1.35 }}>
-                                                        Dữ liệu thật: {evidence.challengeFitLabel} · {evidence.evidenceSummary}
+                                                    <div style={{ fontSize: 11, color: evidence.sampleSize === 0 ? '#047857' : '#64748b', marginTop: 7, lineHeight: 1.35, fontWeight: evidence.sampleSize === 0 ? 700 : 400 }}>
+                                                        {evidence.sampleSize === 0 ? '▶ Bấm để bắt đầu học ngay' : evidence.evidenceSummary}
                                                     </div>
                                                 </div>
                                             </div>
-                                            <ChevronRight size={20} color="#999" style={{ flex: '0 0 auto' }} />
+                                            <ChevronRight size={20} color={evidence.sampleSize === 0 ? '#047857' : '#999'} style={{ flex: '0 0 auto' }} />
                                         </div>
                                     );
                                 })}

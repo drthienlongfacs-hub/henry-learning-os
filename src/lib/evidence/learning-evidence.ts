@@ -83,15 +83,15 @@ function getReliability(sampleSize: number, independentSampleSize: number): Evid
 
 function getDataQualityNote(reliability: EvidenceReliability, sampleSize: number, independentSampleSize: number) {
     if (reliability === 'insufficient') {
-        return 'Chưa có bài làm thật cho chủ đề này; hệ thống chỉ được phép đề xuất bài chẩn đoán, không kết luận năng lực.';
+        return 'Bấm vào để bắt đầu! Sau vài bài đầu, hệ thống sẽ tự điều chỉnh độ khó phù hợp.';
     }
     if (reliability === 'emerging') {
-        return `Mới có ${sampleSize} bài làm; dùng để quan sát xu hướng, chưa dùng để tăng tốc mạnh.`;
+        return `Đã làm ${sampleSize} bài — thêm vài bài nữa để hệ thống hiểu rõ năng lực.`;
     }
     if (reliability === 'usable') {
-        return `Có ${sampleSize} bài làm, trong đó ${independentSampleSize} bài không dùng gợi ý; đủ để chọn nhịp học gần nhất.`;
+        return `Đã làm ${sampleSize} bài (${independentSampleSize} tự lực) — đủ dữ liệu gợi ý nhịp học phù hợp.`;
     }
-    return `Có ${sampleSize} bài làm, trong đó ${independentSampleSize} bài không dùng gợi ý; đủ mạnh để cân nhắc mở rộng có kiểm soát.`;
+    return `Đã làm ${sampleSize} bài (${independentSampleSize} tự lực) — dữ liệu vững, sẵn sàng thử thách nâng cao.`;
 }
 
 function getDecision(args: {
@@ -118,15 +118,15 @@ function getDecision(args: {
 function getChallengeFitLabel(decision: EvidenceDecision) {
     switch (decision) {
         case 'observe':
-            return 'Cần bài chẩn đoán';
+            return 'Sẵn sàng học!';
         case 'repair':
-            return 'Cần sửa hiểu nhầm trước';
+            return 'Cần ôn lại';
         case 'practice':
-            return 'Vùng luyện tập vừa tầm';
+            return 'Đang luyện tập';
         case 'stretch':
-            return 'Sẵn sàng học sâu hơn';
+            return 'Sẵn sàng nâng cao';
         case 'accelerate_guarded':
-            return 'Có thể tăng tốc có kiểm soát';
+            return 'Xuất sắc — có thể tăng tốc';
     }
 }
 
@@ -242,8 +242,8 @@ export function buildTopicEvidenceProfile(args: {
         challengeFitLabel: getChallengeFitLabel(decision),
         dataQualityNote: getDataQualityNote(reliability, topicAttempts.length, independentAttempts.length),
         evidenceSummary: accuracyPct === null
-            ? 'Chưa có accuracy vì chưa có bài làm thật.'
-            : `${topicAttempts.length} bài làm, đúng ${accuracyPct}%, gợi ý ${hintDependencyPct ?? 0}%, lỗi mở ${unresolvedMistakes.length}, ôn đến hạn ${dueReviewCount}.`,
+            ? 'Bấm để bắt đầu bài đầu tiên'
+            : `${topicAttempts.length} bài, đúng ${accuracyPct}%${hintDependencyPct ? `, gợi ý ${hintDependencyPct}%` : ''}${unresolvedMistakes.length > 0 ? `, ${unresolvedMistakes.length} lỗi cần sửa` : ''}`,
         ...move,
         benchmark,
         sourceIds: Array.from(new Set([...blueprint.goldStandards.map((item) => item.sourceId), benchmark.sourceId])),
