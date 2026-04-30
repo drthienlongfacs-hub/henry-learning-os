@@ -8,7 +8,9 @@ import {
     ClipboardCheck,
     Database,
     ExternalLink,
+    GitBranch,
     Layers3,
+    ListChecks,
     ShieldCheck,
     Target,
     TriangleAlert,
@@ -21,12 +23,17 @@ import {
     PRODUCT_FOUNDATION_POSITIONING,
     PRODUCT_FOUNDATION_QUALITY_AXES,
     PRODUCT_FOUNDATION_REQUIREMENTS,
+    PRODUCT_FOUNDATION_SOT_PROTOCOL,
+    PRODUCT_FOUNDATION_SOT_UPGRADE_DECISIONS,
     PRODUCT_FOUNDATION_SOURCE_REGISTRY,
     computeFoundationMustHaveCoverage100,
     computeFoundationP0Readiness100,
+    computeFoundationSotIntegrity100,
+    getNextFoundationUpgradeDecision,
     getFoundationSourcesByIds,
     type FoundationGateStatus,
     type FoundationRequirementStatus,
+    type FoundationSotDecisionStatus,
 } from '@/data/product-foundation';
 
 function statusColor(status: FoundationRequirementStatus | FoundationGateStatus) {
@@ -42,6 +49,18 @@ function statusLabel(status: FoundationRequirementStatus | FoundationGateStatus)
     if (status === 'partial') return 'Đang thiếu gate';
     if (status === 'spec_ready') return 'Đã đặc tả';
     return 'Bị chặn';
+}
+
+function decisionStatusColor(status: FoundationSotDecisionStatus) {
+    if (status === 'ready_for_implementation') return '#2563eb';
+    if (status === 'monitor_only') return '#64748b';
+    return '#dc2626';
+}
+
+function decisionStatusLabel(status: FoundationSotDecisionStatus) {
+    if (status === 'ready_for_implementation') return 'Sẵn sàng triển khai';
+    if (status === 'monitor_only') return 'Theo dõi';
+    return 'Bị chặn bởi evidence';
 }
 
 function sourceKindLabel(kind: string) {
@@ -70,6 +89,8 @@ function isUrl(locator: string) {
 
 const p0Readiness = computeFoundationP0Readiness100();
 const featureCoverage = computeFoundationMustHaveCoverage100();
+const sotIntegrity = computeFoundationSotIntegrity100();
+const nextUpgradeDecision = getNextFoundationUpgradeDecision();
 const p0Requirements = PRODUCT_FOUNDATION_REQUIREMENTS.filter((requirement) => requirement.priority === 'P0');
 const p1p2Requirements = PRODUCT_FOUNDATION_REQUIREMENTS.filter((requirement) => requirement.priority !== 'P0');
 
@@ -129,8 +150,8 @@ export default function ParentFoundationPage() {
                                 {[
                                     { label: 'P0 readiness', value: `${p0Readiness}/100`, detail: 'Foundation gate cốt lõi', color: '#2563eb', icon: <Target size={18} /> },
                                     { label: 'Must-have', value: `${featureCoverage}/100`, detail: '15/20 có surface', color: '#059669', icon: <CheckCircle2 size={18} /> },
-                                    { label: 'Kernel', value: `${PRODUCT_FOUNDATION_LAYERS.length}`, detail: 'Lớp nền bắt buộc', color: '#7c3aed', icon: <Layers3 size={18} /> },
-                                    { label: 'Nguồn', value: `${PRODUCT_FOUNDATION_SOURCE_REGISTRY.length}`, detail: 'Local, repo, chuẩn', color: '#475569', icon: <Database size={18} /> },
+                                    { label: 'SOT integrity', value: `${sotIntegrity}/100`, detail: 'Traceable decision queue', color: '#7c3aed', icon: <GitBranch size={18} /> },
+                                    { label: 'Nguồn', value: `${PRODUCT_FOUNDATION_SOURCE_REGISTRY.length}`, detail: `${PRODUCT_FOUNDATION_LAYERS.length} kernel, ${PRODUCT_FOUNDATION_SOT_UPGRADE_DECISIONS.length} lane`, color: '#475569', icon: <Database size={18} /> },
                                 ].map((metric) => (
                                     <article key={metric.label} style={{ border: '1px solid #e2e8f0', borderRadius: '10px', padding: '0.85rem', background: '#f8fafc' }}>
                                         <div style={{ color: metric.color, display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 900, fontSize: '0.76rem', marginBottom: '0.35rem' }}>
@@ -142,6 +163,91 @@ export default function ParentFoundationPage() {
                                 ))}
                             </div>
                         </div>
+                    </div>
+                </section>
+
+                <section style={{ marginBottom: '1rem' }}>
+                    <div className="card" style={{ borderRadius: '12px', border: '1px solid #ddd6fe', background: '#faf5ff' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem', alignItems: 'flex-start', flexWrap: 'wrap', marginBottom: '0.9rem' }}>
+                            <div style={{ maxWidth: '680px' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', color: '#7c3aed', fontWeight: 900, fontSize: '0.82rem', marginBottom: '0.35rem' }}>
+                                    <GitBranch size={17} /> Source of Truth control plane
+                                </div>
+                                <h2 style={{ color: '#0f172a', fontSize: '1.15rem', lineHeight: 1.28, fontWeight: 900, marginBottom: '0.45rem' }}>
+                                    Mọi nâng cấp tiếp theo phải đi qua thứ tự nguồn, protocol, done definition và anti-overclaim.
+                                </h2>
+                                <p style={{ color: '#475569', fontSize: '0.84rem', lineHeight: 1.5 }}>
+                                    SOT integrity {sotIntegrity}/100 chỉ nói rằng hàng đợi quyết định đã có nguồn, requirement, feature, evidence gate và deploy gate. Con số này không phải điểm hiệu quả học tập.
+                                </p>
+                            </div>
+                            <div style={{ minWidth: '180px', border: '1px solid #c4b5fd', borderRadius: '10px', padding: '0.85rem', background: '#ffffff' }}>
+                                <div style={{ color: '#6d28d9', fontWeight: 900, fontSize: '0.75rem', marginBottom: '0.25rem' }}>Lane tiếp theo</div>
+                                <div style={{ color: '#0f172a', fontWeight: 900, fontSize: '0.96rem', lineHeight: 1.25 }}>{nextUpgradeDecision?.label}</div>
+                                <div style={{ color: '#64748b', fontSize: '0.74rem', marginTop: '0.35rem' }}>Rank #{nextUpgradeDecision?.rank} · {nextUpgradeDecision ? decisionStatusLabel(nextUpgradeDecision.status) : 'Chưa có'}</div>
+                            </div>
+                        </div>
+
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '0.85rem', marginBottom: '0.85rem' }}>
+                            <article style={{ border: '1px solid #e9d5ff', borderRadius: '10px', padding: '0.85rem', background: '#ffffff' }}>
+                                <div style={{ color: '#6d28d9', fontWeight: 900, fontSize: '0.78rem', marginBottom: '0.45rem' }}>Thứ tự nguồn</div>
+                                <ol style={{ margin: 0, paddingLeft: '1rem', color: '#475569', fontSize: '0.76rem', lineHeight: 1.45 }}>
+                                    {PRODUCT_FOUNDATION_SOT_PROTOCOL.sourcePrecedence.map((item) => (
+                                        <li key={item}>{item.replace(/^\d+\.\s*/, '')}</li>
+                                    ))}
+                                </ol>
+                            </article>
+                            <article style={{ border: '1px solid #e9d5ff', borderRadius: '10px', padding: '0.85rem', background: '#ffffff' }}>
+                                <div style={{ color: '#6d28d9', fontWeight: 900, fontSize: '0.78rem', marginBottom: '0.45rem' }}>Protocol bắt buộc</div>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
+                                    {PRODUCT_FOUNDATION_SOT_PROTOCOL.requiredProtocolSteps.map((step) => (
+                                        <span key={step} className="badge" style={{ color: '#6d28d9', background: '#f5f3ff', border: '1px solid #ddd6fe' }}>
+                                            {step.split(':')[0]}
+                                        </span>
+                                    ))}
+                                </div>
+                                <p style={{ color: '#64748b', fontSize: '0.74rem', lineHeight: 1.4, marginTop: '0.55rem' }}>
+                                    Không có sourceIds hợp lệ, done definition và deploy gate thì không đưa lane vào implementation queue.
+                                </p>
+                            </article>
+                        </div>
+
+                        {nextUpgradeDecision ? (
+                            <article style={{ border: '1px solid #c4b5fd', borderRadius: '10px', padding: '0.9rem', background: '#ffffff' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', gap: '0.5rem', alignItems: 'flex-start', flexWrap: 'wrap', marginBottom: '0.5rem' }}>
+                                    <div>
+                                        <div style={{ color: '#6d28d9', fontWeight: 900, fontSize: '0.78rem', marginBottom: '0.25rem' }}>Implementation-ready SOT lane</div>
+                                        <h3 style={{ color: '#0f172a', fontWeight: 900, fontSize: '1rem' }}>{nextUpgradeDecision.label}</h3>
+                                    </div>
+                                    <span className="badge" style={{ color: decisionStatusColor(nextUpgradeDecision.status), background: `${decisionStatusColor(nextUpgradeDecision.status)}18`, whiteSpace: 'nowrap' }}>
+                                        {decisionStatusLabel(nextUpgradeDecision.status)}
+                                    </span>
+                                </div>
+                                <p style={{ color: '#475569', fontSize: '0.8rem', lineHeight: 1.5, marginBottom: '0.55rem' }}>
+                                    {nextUpgradeDecision.whyNow}
+                                </p>
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '0.75rem' }}>
+                                    <div>
+                                        <div style={{ color: '#0f766e', fontWeight: 900, fontSize: '0.74rem', marginBottom: '0.3rem' }}>Scope</div>
+                                        <ul style={{ margin: 0, paddingLeft: '1rem', color: '#334155', fontSize: '0.75rem', lineHeight: 1.42 }}>
+                                            {nextUpgradeDecision.implementationScope.map((item) => (
+                                                <li key={item}>{item}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <div style={{ color: '#0f766e', fontWeight: 900, fontSize: '0.74rem', marginBottom: '0.3rem' }}>Done definition</div>
+                                        <ul style={{ margin: 0, paddingLeft: '1rem', color: '#334155', fontSize: '0.75rem', lineHeight: 1.42 }}>
+                                            {nextUpgradeDecision.doneDefinition.map((item) => (
+                                                <li key={item}>{item}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div style={{ borderTop: '1px solid #e9d5ff', marginTop: '0.75rem', paddingTop: '0.65rem', color: '#7c2d12', fontSize: '0.76rem', lineHeight: 1.45 }}>
+                                    Anti-overclaim: {nextUpgradeDecision.antiOverclaim}
+                                </div>
+                            </article>
+                        ) : null}
                     </div>
                 </section>
 
@@ -235,6 +341,37 @@ export default function ParentFoundationPage() {
                                 </div>
                                 <p style={{ color: '#475569', fontSize: '0.78rem', lineHeight: 1.45, marginBottom: '0.45rem' }}>{requirement.requirement}</p>
                                 <div style={{ color: '#7c2d12', fontSize: '0.75rem', lineHeight: 1.4 }}>{requirement.nextGate}</div>
+                            </article>
+                        ))}
+                    </div>
+                </section>
+
+                <section style={{ marginBottom: '1rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#0f172a', fontWeight: 900, marginBottom: '0.75rem' }}>
+                        <ListChecks size={18} color="#7c3aed" /> SOT upgrade queue
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '0.85rem' }}>
+                        {PRODUCT_FOUNDATION_SOT_UPGRADE_DECISIONS.map((decision) => (
+                            <article key={decision.id} className="card" style={{ borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1rem' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', gap: '0.5rem', alignItems: 'flex-start', marginBottom: '0.45rem' }}>
+                                    <div>
+                                        <div style={{ color: '#7c3aed', fontWeight: 900, fontSize: '0.72rem', marginBottom: '0.2rem' }}>Rank #{decision.rank} · Risk {decision.riskLevel}</div>
+                                        <h3 style={{ color: '#0f172a', fontSize: '0.92rem', fontWeight: 900 }}>{decision.label}</h3>
+                                    </div>
+                                    <span className="badge" style={{ color: decisionStatusColor(decision.status), background: `${decisionStatusColor(decision.status)}18`, whiteSpace: 'nowrap' }}>
+                                        {decisionStatusLabel(decision.status)}
+                                    </span>
+                                </div>
+                                <p style={{ color: '#475569', fontSize: '0.77rem', lineHeight: 1.45, marginBottom: '0.45rem' }}>{decision.whyNow}</p>
+                                <div style={{ color: '#0f766e', fontWeight: 900, fontSize: '0.72rem', marginBottom: '0.25rem' }}>Target requirement</div>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem', marginBottom: '0.5rem' }}>
+                                    {decision.targetRequirementIds.map((requirementId) => (
+                                        <span key={requirementId} className="badge" style={{ color: '#0f766e', background: '#ecfdf5' }}>{requirementId}</span>
+                                    ))}
+                                </div>
+                                <div style={{ color: '#7c2d12', fontSize: '0.74rem', lineHeight: 1.4 }}>
+                                    Evidence gate: {decision.evidenceGate}
+                                </div>
                             </article>
                         ))}
                     </div>

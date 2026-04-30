@@ -85,6 +85,38 @@ export interface FoundationQualityAxis {
     sourceIds: string[];
 }
 
+export type FoundationSotDecisionStatus = 'ready_for_implementation' | 'blocked_by_evidence' | 'monitor_only';
+export type FoundationSotRiskLevel = 'low' | 'medium' | 'high';
+
+export interface FoundationSotProtocol {
+    id: string;
+    label: string;
+    sourcePrecedence: string[];
+    requiredProtocolSteps: string[];
+    nonNegotiableOutputs: string[];
+    sourceIds: string[];
+}
+
+export interface FoundationUpgradeDecision {
+    id: string;
+    rank: number;
+    status: FoundationSotDecisionStatus;
+    riskLevel: FoundationSotRiskLevel;
+    label: string;
+    whyNow: string;
+    targetRequirementIds: string[];
+    targetFeatureIds: string[];
+    sourceOfTruth: string;
+    implementationScope: string[];
+    doneDefinition: string[];
+    evidenceGate: string;
+    deployGate: string;
+    antiOverclaim: string;
+    blockedUntil: string;
+    ownerSurface: string;
+    sourceIds: string[];
+}
+
 export const PRODUCT_FOUNDATION_AS_OF = '2026-04-30';
 
 export const PRODUCT_FOUNDATION_POSITIONING: ProductFoundationPositioning = {
@@ -851,15 +883,232 @@ export const PRODUCT_FOUNDATION_QUALITY_AXES: FoundationQualityAxis[] = [
     },
 ];
 
+export const PRODUCT_FOUNDATION_SOT_PROTOCOL: FoundationSotProtocol = {
+    id: 'foundation-sot-v1',
+    label: 'Source of Truth control plane',
+    sourcePrecedence: [
+        '1. Người dùng và local blueprint: mục đích, ràng buộc gia đình, DOCX và ZIP handoff.',
+        '2. Repo SOT: PRD, architecture, benchmark, curriculum map, product foundation data.',
+        '3. Nguồn chính thức: Bộ GDĐT, chuẩn phần mềm, chuẩn accessibility, chuẩn AI/privacy.',
+        '4. Learning science và evidence standard: EEF, WWC, pilot/cohort/pre-post/retention.',
+        '5. Code reality: TypeScript types, tests, build output, GitHub Actions, live URL.',
+    ],
+    requiredProtocolSteps: [
+        'Observe: đọc dữ liệu/source hiện có, không suy luận từ tên file.',
+        'Cite: mỗi quyết định phải có sourceIds và file/source locator rõ.',
+        'Decide: chọn lane có rank cao nhất nhưng chưa bị chặn bởi evidence.',
+        'Implement: sửa phạm vi nhỏ, additive, không phá hành vi đang live.',
+        'Verify: chạy TypeScript, test liên quan, lint, full Vitest và build khi thay UI/data.',
+        'Deploy: commit, push main, theo dõi Pages success, kiểm tra URL live.',
+        'Recheck: không nâng claim nếu gate evidence chưa đủ.',
+    ],
+    nonNegotiableOutputs: [
+        'Mỗi nâng cấp phải có targetRequirementIds và targetFeatureIds.',
+        'Mỗi lane phải nêu doneDefinition, evidenceGate, deployGate và antiOverclaim.',
+        'Không có sourceIds hợp lệ thì không được đưa vào implementation queue.',
+        'Không claim hiệu quả học tập nếu chưa có pilot người học thật.',
+    ],
+    sourceIds: ['docx-master-blueprint', 'zip-dev-handoff', 'repo-prd', 'repo-architecture', 'repo-current-benchmark', 'iso-25010', 'wwc-standards'],
+};
+
+export const PRODUCT_FOUNDATION_SOT_UPGRADE_DECISIONS: FoundationUpgradeDecision[] = [
+    {
+        id: 'ai-tutor-rubric-regression',
+        rank: 1,
+        status: 'ready_for_implementation',
+        riskLevel: 'medium',
+        label: 'AI tutor rubric và 50 scenario regression',
+        whyNow: 'Đây là P0 còn thiếu lớn nhất: AI đã có tutor/hint ladder nhưng chưa có rubric đủ mạnh để chứng minh không làm hộ, không đưa đáp án ngay và phát hiện lỗi tư duy.',
+        targetRequirementIds: ['P0-ai-socratic-safety'],
+        targetFeatureIds: ['ai-socratic-tutor', 'hint-ladder', 'math-reasoning', 'writing-coach', 'english-roleplay'],
+        sourceOfTruth: 'DOCX yêu cầu AI không làm hộ; PRD yêu cầu Socratic tutor; Khanmigo là benchmark gợi mở; NIST/UNICEF là guardrail AI cho trẻ.',
+        implementationScope: [
+            'Tạo rubric typed cho AI tutor: gợi mở, phát hiện misconception, mức hỗ trợ, không làm hộ, phản tư.',
+            'Tạo scenario fixtures cho Toán, Tiếng Việt, Tiếng Anh lớp 1-5.',
+            'Thêm evaluator/test chặn direct-answer, viết hộ văn và free chat dưới 13 tuổi.',
+        ],
+        doneDefinition: [
+            'Ít nhất 50 scenario regression chạy trong Vitest.',
+            'Mỗi scenario có grade, subject, target skill, forbidden behavior và expected tutor behavior.',
+            'Test chứng minh không có claim chất lượng với trẻ thật khi chưa có log/pilot.',
+        ],
+        evidenceGate: 'Có thể nói AI tutor có regression guardrail nội bộ; chưa được nói đã chứng minh hiệu quả học tập hoặc chất lượng với cohort trẻ thật.',
+        deployGate: 'TypeScript, targeted AI tutor tests, full Vitest, ESLint, build, Pages success và live foundation/benchmark vẫn render.',
+        antiOverclaim: 'Không claim “AI dạy tốt hơn gia sư” hoặc “tăng điểm” nếu chỉ có rubric/test nội bộ.',
+        blockedUntil: 'Không bị chặn; đây là lane tiếp theo nên làm trước khi mở rộng AI roleplay/writing coach.',
+        ownerSurface: 'src/lib/ai, __tests__, src/data/product-foundation.ts, trang foundation.',
+        sourceIds: ['docx-master-blueprint', 'repo-prd', 'repo-architecture', 'khanmigo', 'nist-ai-rmf', 'unicef-ai-children'],
+    },
+    {
+        id: 'weekly-rca-pdca-loop',
+        rank: 2,
+        status: 'ready_for_implementation',
+        riskLevel: 'medium',
+        label: 'Weekly RCA/PDCA outcome loop',
+        whyNow: 'Người dùng yêu cầu real evidence base, real data driven, RCA, PDCA và tiến hóa tự động dựa vào số liệu; hiện dashboard có mission nhưng chưa đo before/after.',
+        targetRequirementIds: ['P0-real-evidence-engine', 'P0-data-driven-pdca', 'P1-weekly-outcome-loop'],
+        targetFeatureIds: ['mistake-notebook', 'parent-dashboard', 'daily-parent-mission', 'reflection-journal'],
+        sourceOfTruth: 'Foundation yêu cầu observe-score-recommend-validate; EEF yêu cầu metacognition/self-regulation; benchmark chặn claim khi thiếu dữ liệu thật.',
+        implementationScope: [
+            'Tạo weekly outcome model: observation, root cause, action, recheck date, outcome delta.',
+            'Gắn top recurring mistake với parent mission và review schedule.',
+            'Hiển thị missing-data state nếu chưa đủ attempt hoặc chưa đến ngày recheck.',
+        ],
+        doneDefinition: [
+            'Có pure functions chọn top RCA issue từ attempts/mistakes/reviews.',
+            'Có UI phụ huynh thấy mục tiêu tuần, hành động và điều kiện đo lại.',
+            'Có test cho thiếu dữ liệu, lỗi tái phát và không bịa outcome delta.',
+        ],
+        evidenceGate: 'Chỉ được claim có vòng PDCA nội bộ; chưa claim can thiệp phụ huynh cải thiện kết quả nếu chưa có follow-up thật.',
+        deployGate: 'TypeScript, weekly outcome tests, full Vitest, ESLint, build, Pages success và live dashboard/foundation check.',
+        antiOverclaim: 'Không nói mission làm tăng accuracy nếu chưa có before/after đủ mẫu.',
+        blockedUntil: 'Không bị chặn; nên làm sau AI rubric hoặc song song nếu tách file rõ.',
+        ownerSurface: 'src/lib/evidence, stores/app-store.ts, parent dashboard/weekly review, tests.',
+        sourceIds: ['repo-current-benchmark', 'eef-metacognition', 'wwc-standards', 'zearn-reporting', 'docx-master-blueprint'],
+    },
+    {
+        id: 'privacy-evidence-panel',
+        rank: 3,
+        status: 'ready_for_implementation',
+        riskLevel: 'high',
+        label: 'Privacy evidence panel cho trẻ dưới 13 tuổi',
+        whyNow: 'Child privacy vẫn là P0 partial. Sản phẩm lưu dữ liệu học tập local nhưng phụ huynh chưa thấy data inventory, mục đích lưu, export/delete và retention policy.',
+        targetRequirementIds: ['P0-child-privacy'],
+        targetFeatureIds: ['safety-audit-parent-control', 'child-profile'],
+        sourceOfTruth: 'UNICEF, COPPA, FERPA và NIST AI RMF yêu cầu data minimization, parent control, transparency và audit.',
+        implementationScope: [
+            'Thêm privacy inventory typed: dữ liệu nào lưu, mục đích, nơi lưu, retention, export/delete.',
+            'Hiển thị trong parent settings/foundation với trạng thái local-only hiện tại.',
+            'Thêm test đảm bảo không có ads/tracking/public leaderboard trong SOT.',
+        ],
+        doneDefinition: [
+            'Phụ huynh thấy danh mục dữ liệu đang lưu và mục đích từng nhóm.',
+            'Có trạng thái export/delete ở mức local app hiện tại.',
+            'Có test source-traceability tới UNICEF/COPPA/FERPA/NIST.',
+        ],
+        evidenceGate: 'Có thể claim transparency/privacy inventory; chưa claim compliance pháp lý đầy đủ nếu chưa có counsel review và backend policy.',
+        deployGate: 'TypeScript, privacy tests, full Vitest, ESLint, build, Pages success và live settings/foundation check.',
+        antiOverclaim: 'Không nói “COPPA/FERPA compliant” chỉ vì có panel nội bộ.',
+        blockedUntil: 'Không bị chặn, nhưng cần giữ wording là baseline/guardrail, không phải legal certification.',
+        ownerSurface: 'src/data/privacy, parent settings, foundation page, tests.',
+        sourceIds: ['unicef-ai-children', 'coppa', 'ferpa', 'nist-ai-rmf', 'repo-prd'],
+    },
+    {
+        id: 'human-review-queue',
+        rank: 4,
+        status: 'ready_for_implementation',
+        riskLevel: 'medium',
+        label: 'Human review queue cho item lớp 1-5',
+        whyNow: 'Curriculum source và item traceability đã qua, nhưng đường lên 100/100 bị chặn ở người duyệt và calibration.',
+        targetRequirementIds: ['P0-curriculum-traceability', 'P1-review-queue'],
+        targetFeatureIds: ['competency-map', 'mastery-checkpoint', 'math-reasoning'],
+        sourceOfTruth: 'Bộ GDĐT là nguồn chương trình; repo curriculum map là SOT topic; benchmark yêu cầu không release item chưa duyệt.',
+        implementationScope: [
+            'Tạo item review model: reviewerId, status, approvedAt, blockReason, calibrationStatus.',
+            'Tạo review queue UI ở parent/admin mode cho generated items.',
+            'Thêm release gate test: item thiếu source/review không được claim approved.',
+        ],
+        doneDefinition: [
+            'Queue liệt kê item needs_human_review theo môn/lớp/topic.',
+            'Có filter blocked/approved/needs calibration.',
+            'Test bảo vệ no-overclaim item bank.',
+        ],
+        evidenceGate: 'Có thể claim có workflow duyệt nội dung; chưa claim item bank đã phủ chuẩn nếu chưa có người duyệt thật và calibration.',
+        deployGate: 'TypeScript, curriculum review tests, full Vitest, ESLint, build, Pages success và live benchmark/foundation check.',
+        antiOverclaim: 'Không đổi 47/47 traceability thành “approved 47/47”.',
+        blockedUntil: 'Không bị chặn về kỹ thuật; calibration vẫn bị chặn bởi dữ liệu attempt thật.',
+        ownerSurface: 'src/lib/curriculum, src/data/primary-curriculum-map.ts, parent review UI, tests.',
+        sourceIds: ['repo-curriculum-map', 'moet-ctgdpt-2018', 'moet-tt17-2025', 'moet-primary-scope-2018', 'repo-current-benchmark'],
+    },
+    {
+        id: 'diagnostic-warm-start-grade1',
+        rank: 5,
+        status: 'ready_for_implementation',
+        riskLevel: 'medium',
+        label: 'Diagnostic warm-start lớp 1',
+        whyNow: 'Adaptive hiện có engine nhưng chưa có diagnostic đầu vào để đặt level ban đầu bằng dữ liệu thật.',
+        targetRequirementIds: ['P1-diagnostic-warm-start', 'P0-real-evidence-engine'],
+        targetFeatureIds: ['diagnostic-test', 'competency-map', 'mastery-checkpoint'],
+        sourceOfTruth: 'IXL/DreamBox benchmark diagnostic/adaptivity; curriculum map lớp 1 là SOT nội dung; foundation yêu cầu missing-data state.',
+        implementationScope: [
+            'Tạo diagnostic blueprint 12-15 phút cho Toán và Tiếng Việt lớp 1.',
+            'Tính level confidence và kế hoạch 7 ngày không overclaim.',
+            'Lưu diagnostic attempt metadata để dùng cho adaptive engine.',
+        ],
+        doneDefinition: [
+            'Diagnostic có source map, item intent, evidence fields và scoring confidence.',
+            'Có test phân biệt insufficient evidence với ready plan.',
+            'UI phụ huynh thấy level là giả thuyết ban đầu, không phải nhãn cố định.',
+        ],
+        evidenceGate: 'Có thể claim có diagnostic warm-start nội bộ; chưa claim level chính xác nếu chưa validation cohort.',
+        deployGate: 'TypeScript, diagnostic tests, full Vitest, ESLint, build, Pages success và live route check.',
+        antiOverclaim: 'Không gọi trẻ là giỏi/yếu; chỉ báo domain readiness có độ tin cậy.',
+        blockedUntil: 'Không bị chặn, nhưng chỉ nên làm sau AI rubric hoặc review queue nếu muốn giảm rủi ro nội dung.',
+        ownerSurface: 'src/data/diagnostic, src/lib/adaptive, child/parent UI, tests.',
+        sourceIds: ['ixl-diagnostic', 'dreambox-adaptivity', 'repo-curriculum-map', 'moet-ctgdpt-2018'],
+    },
+    {
+        id: 'playwright-wcag-smoke',
+        rank: 6,
+        status: 'ready_for_implementation',
+        riskLevel: 'low',
+        label: 'Playwright/WCAG smoke gate',
+        whyNow: 'Build đã qua nhưng UI chưa có smoke visual mobile/desktop; foundation không được gọi production-grade nếu thiếu E2E/accessibility gate.',
+        targetRequirementIds: ['P0-release-gate', 'P1-accessibility-quality'],
+        targetFeatureIds: ['parent-dashboard', 'safety-audit-parent-control'],
+        sourceOfTruth: 'ISO 25010 đặt quality gate; WCAG 2.2 đặt accessibility gate; AGENTS.md yêu cầu deploy/live verification sau nâng cấp.',
+        implementationScope: [
+            'Thêm Playwright smoke cho home, parent dashboard, benchmark và foundation.',
+            'Kiểm tra text chính, route status, mobile viewport và không blank page.',
+            'Gắn script để chạy trước deploy khi có thay đổi UI lớn.',
+        ],
+        doneDefinition: [
+            'Smoke chạy được local và có CI-ready command.',
+            'Kiểm tra desktop/mobile cho route foundation và benchmark.',
+            'Không thay thế audit WCAG đầy đủ, chỉ là smoke gate ban đầu.',
+        ],
+        evidenceGate: 'Có thể claim có UI smoke gate; chưa claim WCAG conformant nếu chưa audit đầy đủ.',
+        deployGate: 'TypeScript, Playwright smoke, full Vitest, ESLint, build, Pages success và live route check.',
+        antiOverclaim: 'Không nói đạt WCAG 2.2 đầy đủ nếu mới có smoke.',
+        blockedUntil: 'Không bị chặn; nên làm trước các UI phức tạp tiếp theo.',
+        ownerSurface: 'tests/e2e hoặc __tests__/smoke, package scripts, GitHub workflow nếu mở rộng CI.',
+        sourceIds: ['iso-25010', 'wcag-22', 'repo-architecture'],
+    },
+];
+
 export const foundationSourceLookup = Object.fromEntries(
     PRODUCT_FOUNDATION_SOURCE_REGISTRY.map((source) => [source.id, source]),
 ) as Record<string, FoundationSource>;
+
+export const foundationRequirementLookup = Object.fromEntries(
+    PRODUCT_FOUNDATION_REQUIREMENTS.map((requirement) => [requirement.id, requirement]),
+) as Record<string, FoundationRequirement>;
+
+export const foundationFeatureLookup = Object.fromEntries(
+    PRODUCT_FOUNDATION_FEATURE_COVERAGE.map((feature) => [feature.id, feature]),
+) as Record<string, FoundationFeatureCoverage>;
 
 export function getFoundationSourcesByIds(sourceIds: string[]) {
     return sourceIds.flatMap((sourceId) => {
         const source = foundationSourceLookup[sourceId];
 
         return source ? [source] : [];
+    });
+}
+
+export function getFoundationRequirementsByIds(requirementIds: string[]) {
+    return requirementIds.flatMap((requirementId) => {
+        const requirement = foundationRequirementLookup[requirementId];
+
+        return requirement ? [requirement] : [];
+    });
+}
+
+export function getFoundationFeaturesByIds(featureIds: string[]) {
+    return featureIds.flatMap((featureId) => {
+        const feature = foundationFeatureLookup[featureId];
+
+        return feature ? [feature] : [];
     });
 }
 
@@ -884,4 +1133,35 @@ export function computeFoundationMustHaveCoverage100() {
     const covered = PRODUCT_FOUNDATION_FEATURE_COVERAGE.filter((feature) => feature.status === 'implemented' || feature.status === 'partial').length;
 
     return Math.round((covered / PRODUCT_FOUNDATION_FEATURE_COVERAGE.length) * 100);
+}
+
+export function getNextFoundationUpgradeDecision() {
+    return [...PRODUCT_FOUNDATION_SOT_UPGRADE_DECISIONS]
+        .sort((a, b) => a.rank - b.rank)
+        .find((decision) => decision.status === 'ready_for_implementation');
+}
+
+export function computeFoundationSotIntegrity100() {
+    const protocolChecks = [
+        PRODUCT_FOUNDATION_SOT_PROTOCOL.sourcePrecedence.length >= 5,
+        PRODUCT_FOUNDATION_SOT_PROTOCOL.requiredProtocolSteps.length >= 7,
+        PRODUCT_FOUNDATION_SOT_PROTOCOL.nonNegotiableOutputs.length >= 4,
+        PRODUCT_FOUNDATION_SOT_PROTOCOL.sourceIds.every((sourceId) => Boolean(foundationSourceLookup[sourceId])),
+    ];
+
+    const decisionChecks = PRODUCT_FOUNDATION_SOT_UPGRADE_DECISIONS.flatMap((decision) => [
+        decision.sourceIds.length > 0 && decision.sourceIds.every((sourceId) => Boolean(foundationSourceLookup[sourceId])),
+        decision.targetRequirementIds.length > 0 && decision.targetRequirementIds.every((requirementId) => Boolean(foundationRequirementLookup[requirementId])),
+        decision.targetFeatureIds.length > 0 && decision.targetFeatureIds.every((featureId) => Boolean(foundationFeatureLookup[featureId])),
+        decision.doneDefinition.length >= 3,
+        decision.implementationScope.length >= 3,
+        decision.evidenceGate.length > 40,
+        decision.deployGate.includes('TypeScript') && decision.deployGate.includes('Pages success'),
+        decision.antiOverclaim.length > 40,
+    ]);
+
+    const checks = [...protocolChecks, ...decisionChecks];
+    const passed = checks.filter(Boolean).length;
+
+    return Math.round((passed / checks.length) * 100);
 }

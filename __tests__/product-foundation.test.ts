@@ -6,11 +6,17 @@ import {
     PRODUCT_FOUNDATION_POSITIONING,
     PRODUCT_FOUNDATION_QUALITY_AXES,
     PRODUCT_FOUNDATION_REQUIREMENTS,
+    PRODUCT_FOUNDATION_SOT_PROTOCOL,
+    PRODUCT_FOUNDATION_SOT_UPGRADE_DECISIONS,
     PRODUCT_FOUNDATION_SOURCE_REGISTRY,
     computeFoundationMustHaveCoverage100,
     computeFoundationP0Readiness100,
     computeFoundationRequirementCoverage,
+    computeFoundationSotIntegrity100,
+    foundationFeatureLookup,
+    foundationRequirementLookup,
     foundationSourceLookup,
+    getNextFoundationUpgradeDecision,
     getFoundationSourcesByIds,
 } from '@/data/product-foundation';
 
@@ -144,5 +150,48 @@ describe('product foundation', () => {
         const sources = getFoundationSourcesByIds(['iso-25010', 'wcag-22', 'missing-source']);
 
         expect(sources.map((source) => source.id)).toEqual(['iso-25010', 'wcag-22']);
+    });
+
+    it('adds a SOT protocol that turns sources into implementation decisions', () => {
+        expect(PRODUCT_FOUNDATION_SOT_PROTOCOL.id).toBe('foundation-sot-v1');
+        expect(PRODUCT_FOUNDATION_SOT_PROTOCOL.sourcePrecedence).toHaveLength(5);
+        expect(PRODUCT_FOUNDATION_SOT_PROTOCOL.requiredProtocolSteps).toEqual([
+            'Observe: đọc dữ liệu/source hiện có, không suy luận từ tên file.',
+            'Cite: mỗi quyết định phải có sourceIds và file/source locator rõ.',
+            'Decide: chọn lane có rank cao nhất nhưng chưa bị chặn bởi evidence.',
+            'Implement: sửa phạm vi nhỏ, additive, không phá hành vi đang live.',
+            'Verify: chạy TypeScript, test liên quan, lint, full Vitest và build khi thay UI/data.',
+            'Deploy: commit, push main, theo dõi Pages success, kiểm tra URL live.',
+            'Recheck: không nâng claim nếu gate evidence chưa đủ.',
+        ]);
+        expect(PRODUCT_FOUNDATION_SOT_PROTOCOL.nonNegotiableOutputs.join(' ')).toContain('antiOverclaim');
+        expectResolvableSourceIds(PRODUCT_FOUNDATION_SOT_PROTOCOL.sourceIds);
+    });
+
+    it('keeps every SOT upgrade decision traceable, ranked, and guarded', () => {
+        expect(PRODUCT_FOUNDATION_SOT_UPGRADE_DECISIONS.map((decision) => decision.rank)).toEqual([1, 2, 3, 4, 5, 6]);
+        expect(computeFoundationSotIntegrity100()).toBe(100);
+
+        PRODUCT_FOUNDATION_SOT_UPGRADE_DECISIONS.forEach((decision) => {
+            expect(decision.whyNow.length).toBeGreaterThan(60);
+            expect(decision.sourceOfTruth.length).toBeGreaterThan(60);
+            expect(decision.implementationScope.length).toBeGreaterThanOrEqual(3);
+            expect(decision.doneDefinition.length).toBeGreaterThanOrEqual(3);
+            expect(decision.deployGate).toContain('TypeScript');
+            expect(decision.deployGate).toContain('Pages success');
+            expect(decision.antiOverclaim.length).toBeGreaterThan(40);
+            expectResolvableSourceIds(decision.sourceIds);
+            decision.targetRequirementIds.forEach((requirementId) => expect(foundationRequirementLookup[requirementId], requirementId).toBeDefined());
+            decision.targetFeatureIds.forEach((featureId) => expect(foundationFeatureLookup[featureId], featureId).toBeDefined());
+        });
+    });
+
+    it('selects the next foundation upgrade from SOT instead of intuition', () => {
+        const nextDecision = getNextFoundationUpgradeDecision();
+
+        expect(nextDecision?.id).toBe('ai-tutor-rubric-regression');
+        expect(nextDecision?.targetRequirementIds).toContain('P0-ai-socratic-safety');
+        expect(nextDecision?.sourceIds).toEqual(expect.arrayContaining(['khanmigo', 'nist-ai-rmf', 'unicef-ai-children']));
+        expect(nextDecision?.antiOverclaim).toContain('Không claim');
     });
 });

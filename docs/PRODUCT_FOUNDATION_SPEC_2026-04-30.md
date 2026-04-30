@@ -83,6 +83,41 @@ Nguồn chuẩn dùng để benchmark foundation:
 | P1-accessibility-quality | P1 | Spec ready | Smoke visual mobile, keyboard/focus, target size theo WCAG 2.2 | Playwright smoke cho các trang chính |
 | P2-whole-child-portfolio | P2 | Spec ready | Portfolio 12 năm gồm đọc, viết, dự án, coding, reflection | Portfolio schema và page đầu tiên |
 
+## SOT control plane
+
+SOT integrity hiện là **100/100** ở nghĩa hẹp: mọi lane nâng cấp trong queue đều có sourceIds, target requirement, target feature, implementation scope, done definition, evidence gate, deploy gate và anti-overclaim. Đây không phải điểm hiệu quả học tập.
+
+Thứ tự nguồn bắt buộc:
+
+1. Người dùng và local blueprint: mục đích, ràng buộc gia đình, DOCX và ZIP handoff.
+2. Repo SOT: PRD, architecture, benchmark, curriculum map, product foundation data.
+3. Nguồn chính thức: Bộ GDĐT, chuẩn phần mềm, chuẩn accessibility, chuẩn AI/privacy.
+4. Learning science và evidence standard: EEF, WWC, pilot/cohort/pre-post/retention.
+5. Code reality: TypeScript types, tests, build output, GitHub Actions, live URL.
+
+Protocol bắt buộc:
+
+1. Observe: đọc dữ liệu/source hiện có, không suy luận từ tên file.
+2. Cite: mỗi quyết định phải có sourceIds và file/source locator rõ.
+3. Decide: chọn lane có rank cao nhất nhưng chưa bị chặn bởi evidence.
+4. Implement: sửa phạm vi nhỏ, additive, không phá hành vi đang live.
+5. Verify: chạy TypeScript, test liên quan, lint, full Vitest và build khi thay UI/data.
+6. Deploy: commit, push main, theo dõi Pages success, kiểm tra URL live.
+7. Recheck: không nâng claim nếu gate evidence chưa đủ.
+
+### Implementation queue từ SOT
+
+| Rank | Lane | Trạng thái | Căn cứ chính | Done definition tóm tắt |
+|---:|---|---|---|---|
+| 1 | AI tutor rubric và 50 scenario regression | Sẵn sàng triển khai | DOCX, PRD, Khanmigo, NIST AI RMF, UNICEF | 50 scenario, rubric Socratic, test không làm hộ |
+| 2 | Weekly RCA/PDCA outcome loop | Sẵn sàng triển khai | Benchmark, EEF, WWC, Zearn, DOCX | Weekly issue, parent action, recheck 7 ngày, no fake delta |
+| 3 | Privacy evidence panel | Sẵn sàng triển khai | UNICEF, COPPA, FERPA, NIST AI RMF | Data inventory, purpose, retention, export/delete status |
+| 4 | Human review queue | Sẵn sàng triển khai | Bộ GDĐT, curriculum map, benchmark | reviewer metadata, block reason, release gate |
+| 5 | Diagnostic warm-start lớp 1 | Sẵn sàng triển khai | IXL, DreamBox, CTGDPT, curriculum map | diagnostic Toán/Tiếng Việt, confidence, 7-day plan |
+| 6 | Playwright/WCAG smoke gate | Sẵn sàng triển khai | ISO 25010, WCAG 2.2, architecture | desktop/mobile smoke, route text, no blank page |
+
+Lane tiếp theo theo SOT là **AI tutor rubric và 50 scenario regression**. Không được nhảy sang tính năng hấp dẫn hơn nếu chưa ghi rõ vì sao bỏ qua rank 1.
+
 ## Hai mươi must-have feature
 
 Hiện trạng coverage thực thi/partial là **15/20 = 75/100**.
@@ -138,9 +173,9 @@ Không được gọi là tự tiến hóa nếu hệ thống tự sửa nội d
 ## Roadmap đúng thứ tự
 
 1. **AI tutor rubric + 50 scenario regression** cho Toán, Tiếng Việt, Tiếng Anh lớp 1-5.
-2. **Human review queue** để duyệt item theo curriculum map.
-3. **Diagnostic warm-start lớp 1** cho Toán và Tiếng Việt.
-4. **Weekly outcome loop** gắn parent mission với top recurring mistake và đo lại sau 7 ngày.
-5. **Privacy evidence panel**: data đang lưu, mục đích, nơi lưu, export/delete.
+2. **Weekly outcome loop** gắn parent mission với top recurring mistake và đo lại sau 7 ngày.
+3. **Privacy evidence panel**: data đang lưu, mục đích, nơi lưu, export/delete.
+4. **Human review queue** để duyệt item theo curriculum map.
+5. **Diagnostic warm-start lớp 1** cho Toán và Tiếng Việt.
 6. **Playwright/WCAG smoke CI** trước khi gọi UI là production-grade.
 7. **Pilot evidence pack 4 tuần** trước mọi claim hiệu quả học tập.
