@@ -7,6 +7,7 @@ import {
     UI_SMOKE_GATE,
     UI_SMOKE_ROUTES,
 } from '../../src/data/ui-smoke-gate';
+import { LEARNING_I18N_REQUIRED_EN_STRINGS } from '../../src/lib/i18n-learning';
 
 const outDir = path.resolve(process.cwd(), 'out');
 const mimeByExtension: Record<string, string> = {
@@ -232,3 +233,42 @@ for (const route of UI_SMOKE_ROUTES) {
         expect(badLocalResponses).toEqual([]);
     });
 }
+
+test('Child learning engine switches core surface and topic cards to English', async ({ page }) => {
+    await page.addInitScript(() => {
+        localStorage.setItem('henry-lang', JSON.stringify({
+            state: { lang: 'en' },
+            version: 0,
+        }));
+    });
+
+    const badLocalResponses: string[] = [];
+    page.on('response', (response) => {
+        if (response.url().startsWith(baseUrl) && response.status() >= 400) {
+            badLocalResponses.push(`${response.status()} ${response.url()}`);
+        }
+    });
+
+    await page.goto(`${baseUrl}${UI_SMOKE_BASE_PATH}/child/learn/`, { waitUntil: 'domcontentloaded' });
+    await page.waitForLoadState('networkidle', { timeout: 5_000 }).catch(() => undefined);
+
+    await expect(page.locator('body')).toContainText('Choose learning rhythm');
+    await page.getByText('Science', { exact: true }).first().click();
+
+    for (const requiredText of LEARNING_I18N_REQUIRED_EN_STRINGS) {
+        await expect(page.locator('body'), `English learning surface contains ${requiredText}`).toContainText(requiredText);
+    }
+
+    await expect(page.locator('body')).not.toContainText('Cơ thể & Sức khỏe');
+    await expect(page.locator('body')).not.toContainText('Chọn nhịp học');
+
+    const brokenImages = await page.locator('img').evaluateAll((images) =>
+        images
+            .map((image) => image as HTMLImageElement)
+            .filter((image) => image.complete && image.naturalWidth === 0)
+            .map((image) => image.getAttribute('src') ?? image.getAttribute('alt') ?? 'unknown image')
+    );
+
+    expect(brokenImages).toEqual([]);
+    expect(badLocalResponses).toEqual([]);
+});

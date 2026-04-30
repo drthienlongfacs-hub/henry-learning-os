@@ -15,6 +15,14 @@ import { ETHICS_TOPICS, generateEthicsSet, type EthicsProblem } from '@/lib/cont
 import { ART_TOPICS, generateArtSet, type ArtProblem } from '@/lib/content/art-generator';
 import { useAppStore } from '@/stores/app-store';
 import { ResourceAttribution } from '@/components/ResourceAttribution';
+import { LangToggle } from '@/components/LangToggle';
+import { useTranslation } from '@/lib/i18n';
+import {
+    formatLearningCount,
+    formatLearningGrade,
+    formatLearningGradeList,
+    translateLearningText,
+} from '@/lib/i18n-learning';
 import {
     ENRICHMENT_STATS,
     getAttributionForSource,
@@ -88,6 +96,60 @@ function isPrimaryCurriculumSubject(subj: Subject): subj is PrimaryCurriculumSub
 const withBasePath = (src: string) =>
     src.startsWith('/') ? `${process.env.NODE_ENV === 'production' ? '/henry-learning-os' : ''}${src}` : src;
 
+function SafeLearningImage({
+    src,
+    alt,
+    width,
+    height,
+    style,
+    fallback,
+}: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+    style?: React.CSSProperties;
+    fallback: React.ReactNode;
+}) {
+    const [failed, setFailed] = useState(false);
+
+    if (failed) {
+        return (
+            <div
+                role="img"
+                aria-label={alt}
+                style={{
+                    width,
+                    height,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: 14,
+                    border: '1px solid rgba(15,23,42,0.08)',
+                    background: 'linear-gradient(135deg, #e0e7ff, #fce7f3)',
+                    fontSize: Math.min(width, height) * 0.45,
+                    flex: '0 0 auto',
+                    ...style,
+                }}
+            >
+                {fallback}
+            </div>
+        );
+    }
+
+    return (
+        <Image
+            src={withBasePath(src)}
+            alt={alt}
+            width={width}
+            height={height}
+            unoptimized
+            onError={() => setFailed(true)}
+            style={style}
+        />
+    );
+}
+
 const planColor: Record<LearningPathStatus, { bg: string; fg: string; border: string }> = {
     new: { bg: '#f8fafc', fg: '#475569', border: '#e2e8f0' },
     repair: { bg: '#fef2f2', fg: '#b91c1c', border: '#fecaca' },
@@ -112,6 +174,7 @@ const glass = {
 
 export default function LearnPage() {
     const router = useRouter();
+    const { lang } = useTranslation();
     const [subject, setSubject] = useState<Subject | null>(null);
     const [grade, setGrade] = useState(1);
     const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
@@ -125,6 +188,7 @@ export default function LearnPage() {
     const startTime = useRef(0);
 
     const { addAttempt, addMistake, addReviewSchedule, addAIInteractionLog, childProfile, attempts, mistakes, reviewSchedules } = useAppStore();
+    const tx = useCallback((value: string | null | undefined) => translateLearningText(value, lang), [lang]);
     const activeMode = getLessonModeConfig(lessonDepth);
     const modeOptions = Object.values(LESSON_MODE_CONFIG);
 
@@ -339,12 +403,13 @@ export default function LearnPage() {
                         }
                     }}>
                         <div style={{ ...glass.card, padding: '8px 16px', display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer', color: '#3b82f6' }}>
-                            <ArrowLeft size={18} /> Quay lại
+                            <ArrowLeft size={18} /> {tx('Quay lại')}
                         </div>
                     </Link>
-                    <h1 style={{ fontSize: 22, fontWeight: 800, color: '#1e1b4b' }}>
-                        {problems.length > 0 ? currentProblem?.topic || 'Bài tập' : subject ? SUBJECTS.find(s => s.key === subject)?.name : 'Chương trình học'}
+                    <h1 style={{ fontSize: 22, fontWeight: 800, color: '#1e1b4b', flex: 1, minWidth: 0 }}>
+                        {problems.length > 0 ? tx(currentProblem?.topic || 'Bài tập') : subject ? tx(SUBJECTS.find(s => s.key === subject)?.name) : tx('Chương trình học')}
                     </h1>
+                    <LangToggle />
                 </div>
 
                 {/* ════ SUBJECT SELECTION ════ */}
@@ -357,13 +422,13 @@ export default function LearnPage() {
                                         Learning engine
                                     </div>
                                     <div style={{ fontSize: 17, fontWeight: 900, color: '#1e1b4b', marginTop: 4 }}>
-                                        {ENRICHMENT_STATS.sourceCount} nguồn, {LEARNING_SYSTEM_STATS.goldStandardLinks} chuẩn đối chiếu, {LEARNING_SYSTEM_STATS.benchmarkLinks} benchmark thực tế, {LEARNING_SYSTEM_STATS.explicitTopicBlueprints} chủ đề có blueprint
+                                        {ENRICHMENT_STATS.sourceCount} {tx('nguồn')}, {LEARNING_SYSTEM_STATS.goldStandardLinks} {tx('chuẩn đối chiếu')}, {LEARNING_SYSTEM_STATS.benchmarkLinks} {tx('benchmark thực tế')}, {LEARNING_SYSTEM_STATS.explicitTopicBlueprints} {tx('chủ đề có blueprint')}
                                     </div>
                                 </div>
                                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                                     {['Chuẩn vàng', 'Mastery', 'Diagnostic', 'Tư duy nâng cao'].map((label) => (
                                         <span key={label} style={{ padding: '7px 10px', borderRadius: 999, background: '#eef2ff', color: '#3730a3', fontSize: 12, fontWeight: 800 }}>
-                                            {label}
+                                            {tx(label)}
                                         </span>
                                     ))}
                                 </div>
@@ -371,7 +436,7 @@ export default function LearnPage() {
                         </div>
 
                         <div style={{ ...glass.card, marginBottom: 16, background: 'rgba(255,255,255,0.58)' }}>
-                            <div style={{ fontSize: 13, fontWeight: 850, color: '#334155', marginBottom: 10 }}>Chọn nhịp học</div>
+                            <div style={{ fontSize: 13, fontWeight: 850, color: '#334155', marginBottom: 10 }}>{tx('Chọn nhịp học')}</div>
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 10 }}>
                                 {modeOptions.map(mode => {
                                     const active = lessonDepth === mode.key;
@@ -385,8 +450,8 @@ export default function LearnPage() {
                                             textAlign: 'left',
                                             cursor: 'pointer',
                                         }}>
-                                            <div style={{ fontWeight: 900, fontSize: 14 }}>{mode.label} · {mode.count} câu</div>
-                                            <div style={{ fontSize: 12, lineHeight: 1.4, color: '#475569', marginTop: 4 }}>{mode.description}</div>
+                                            <div style={{ fontWeight: 900, fontSize: 14 }}>{tx(mode.label)} · {formatLearningCount(mode.count, lang)}</div>
+                                            <div style={{ fontSize: 12, lineHeight: 1.4, color: '#475569', marginTop: 4 }}>{tx(mode.description)}</div>
                                         </button>
                                     );
                                 })}
@@ -406,12 +471,12 @@ export default function LearnPage() {
                                                 {s.icon}
                                             </div>
                                             <div>
-                                                <div style={{ fontWeight: 800, fontSize: 16 }}>{s.name}</div>
-                                                <div style={{ fontSize: 12, color: '#666', marginTop: 3 }}>Lớp {s.grades.join(', ')}</div>
+                                                <div style={{ fontWeight: 800, fontSize: 16 }}>{tx(s.name)}</div>
+                                                <div style={{ fontSize: 12, color: '#666', marginTop: 3 }}>{formatLearningGradeList(s.grades, lang)}</div>
                                             </div>
                                         </div>
                                         <div style={{ fontSize: 13, lineHeight: 1.45, color: '#334155', fontWeight: 650 }}>
-                                            {pack.headline}
+                                            {tx(pack.headline)}
                                         </div>
                                         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 12 }}>
                                             {getSubjectBenchmarkPatterns(SUBJECT_ENRICHMENT_KEY[s.key]).slice(0, 2).map(item => (
@@ -432,28 +497,28 @@ export default function LearnPage() {
                     <div>
                         {activeSubjectPack && (
                             <div style={{ ...glass.card, marginBottom: 16, display: 'flex', gap: 14, alignItems: 'center', background: 'rgba(255,255,255,0.62)' }}>
-                                <Image src={withBasePath(activeSubjectPack.defaultVisual)} alt="" width={76} height={76} unoptimized style={{ width: 76, height: 76, objectFit: 'cover', borderRadius: 16, border: '1px solid rgba(15,23,42,0.08)' }} />
+                                <SafeLearningImage src={activeSubjectPack.defaultVisual} alt={tx(activeSubjectPack.label)} width={76} height={76} fallback={subject === 'science' ? '🔬' : subject === 'hisgeo' ? '🏛️' : subject === 'computing' ? '💻' : '📚'} style={{ width: 76, height: 76, objectFit: 'cover', borderRadius: 16, border: '1px solid rgba(15,23,42,0.08)' }} />
                                 <div style={{ flex: 1, minWidth: 0 }}>
-                                    <div style={{ fontSize: 18, fontWeight: 900, color: '#1e1b4b' }}>{activeSubjectPack.label}</div>
-                                    <div style={{ fontSize: 13, color: '#475569', lineHeight: 1.45, marginTop: 4 }}>{activeSubjectPack.coverage}</div>
+                                    <div style={{ fontSize: 18, fontWeight: 900, color: '#1e1b4b' }}>{tx(activeSubjectPack.label)}</div>
+                                    <div style={{ fontSize: 13, color: '#475569', lineHeight: 1.45, marginTop: 4 }}>{tx(activeSubjectPack.coverage)}</div>
                                     <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 10 }}>
                                         {activeSubjectPack.sessionRhythm.slice(0, 3).map(move => (
                                             <span key={move} style={{ padding: '5px 8px', borderRadius: 999, background: '#f8fafc', border: '1px solid #e2e8f0', color: '#334155', fontSize: 11, fontWeight: 750 }}>
-                                                {move}
+                                                {tx(move)}
                                             </span>
                                         ))}
                                     </div>
                                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 8, marginTop: 12 }}>
                                         <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 12, padding: 10 }}>
-                                            <div style={{ fontSize: 11, fontWeight: 900, color: '#475569', textTransform: 'uppercase' }}>Chuẩn đối chiếu</div>
+                                            <div style={{ fontSize: 11, fontWeight: 900, color: '#475569', textTransform: 'uppercase' }}>{tx('Chuẩn đối chiếu')}</div>
                                             <div style={{ fontSize: 12, color: '#334155', lineHeight: 1.35, marginTop: 4 }}>
-                                                {activeStandards.slice(0, 2).map(s => s.label).join(' · ')}
+                                                {activeStandards.slice(0, 2).map(s => tx(s.label)).join(' · ')}
                                             </div>
                                         </div>
                                         <div style={{ background: '#fff7ed', border: '1px solid #fed7aa', borderRadius: 12, padding: 10 }}>
                                             <div style={{ fontSize: 11, fontWeight: 900, color: '#9a3412', textTransform: 'uppercase' }}>Benchmark</div>
                                             <div style={{ fontSize: 12, color: '#9a3412', lineHeight: 1.35, marginTop: 4 }}>
-                                                {activeBenchmarks.slice(0, 2).map(b => `${b.product}: ${b.pattern}`).join(' · ')}
+                                                {activeBenchmarks.slice(0, 2).map(b => `${b.product}: ${tx(b.pattern)}`).join(' · ')}
                                             </div>
                                         </div>
                                     </div>
@@ -465,7 +530,7 @@ export default function LearnPage() {
                                                 ['Nâng cao', activeSubjectSummary.stretchCount],
                                             ].map(([label, value]) => (
                                                 <div key={label} style={{ background: 'rgba(255,255,255,0.68)', border: '1px solid #e2e8f0', borderRadius: 12, padding: 10 }}>
-                                                    <div style={{ fontSize: 11, color: '#64748b', fontWeight: 900 }}>{label}</div>
+                                                    <div style={{ fontSize: 11, color: '#64748b', fontWeight: 900 }}>{tx(String(label))}</div>
                                                     <div style={{ fontSize: 18, color: '#1e1b4b', fontWeight: 900, marginTop: 2 }}>{value}</div>
                                                 </div>
                                             ))}
@@ -478,8 +543,8 @@ export default function LearnPage() {
                         <div style={{ ...glass.card, marginBottom: 16, background: 'rgba(255,255,255,0.58)' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
                                 <div>
-                                    <div style={{ fontSize: 13, fontWeight: 900, color: '#334155' }}>Nhịp học đang chọn: {activeMode.label}</div>
-                                    <div style={{ fontSize: 12, color: '#64748b', marginTop: 4 }}>{activeMode.sessionPromise}</div>
+                                    <div style={{ fontSize: 13, fontWeight: 900, color: '#334155' }}>{tx('Nhịp học đang chọn')}: {tx(activeMode.label)}</div>
+                                    <div style={{ fontSize: 12, color: '#64748b', marginTop: 4 }}>{tx(activeMode.sessionPromise)}</div>
                                 </div>
                                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                                     {modeOptions.map(mode => (
@@ -493,7 +558,7 @@ export default function LearnPage() {
                                             cursor: 'pointer',
                                             fontSize: 12,
                                         }}>
-                                            {mode.label} · {mode.count}
+                                            {tx(mode.label)} · {mode.count}
                                         </button>
                                     ))}
                                 </div>
@@ -504,7 +569,7 @@ export default function LearnPage() {
                         <div style={{ display: 'flex', gap: 8, marginBottom: 20, flexWrap: 'wrap' }}>
                             {SUBJECTS.find(s => s.key === subject)?.grades.map(g => (
                                 <button key={g} style={glass.pill(grade === g, SUBJECTS.find(s => s.key === subject)!.color)}
-                                    onClick={() => setGrade(g)}>Lớp {g}</button>
+                                    onClick={() => setGrade(g)}>{formatLearningGrade(g, lang)}</button>
                             ))}
                         </div>
 
@@ -529,23 +594,23 @@ export default function LearnPage() {
                                             onMouseEnter={e => (e.currentTarget.style.transform = 'translateX(4px)')}
                                             onMouseLeave={e => (e.currentTarget.style.transform = 'translateX(0)')}>
                                             <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
-                                                <Image src={withBasePath(enrich.visual.src)} alt="" width={58} height={58} unoptimized style={{ width: 58, height: 58, borderRadius: 14, objectFit: 'cover', border: '1px solid rgba(15,23,42,0.08)', flex: '0 0 auto' }} />
+                                                <SafeLearningImage src={enrich.visual.src} alt={tx(enrich.visual.alt)} width={58} height={58} fallback={subject === 'hisgeo' ? '🏛️' : subject === 'science' ? '🔬' : subject === 'english' ? '📚' : subject === 'computing' ? '💻' : subject === 'art' ? '🎨' : subject === 'ethics' ? '🤝' : '📖'} style={{ width: 58, height: 58, borderRadius: 14, objectFit: 'cover', border: '1px solid rgba(15,23,42,0.08)', flex: '0 0 auto' }} />
                                                 <div style={{ minWidth: 0 }}>
                                                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                                                         <span style={{ fontSize: 24 }}>{t.icon}</span>
-                                                        <span style={{ fontWeight: 800, fontSize: 15 }}>{t.name}</span>
+                                                        <span style={{ fontWeight: 800, fontSize: 15 }}>{tx(t.name)}</span>
                                                     </div>
-                                                    <div style={{ fontSize: 12, color: '#666', marginTop: 4 }}>Lớp {t.gradeLevel} • {activeMode.count} câu • {activeMode.label}</div>
+                                                    <div style={{ fontSize: 12, color: '#666', marginTop: 4 }}>{formatLearningGrade(t.gradeLevel, lang)} • {formatLearningCount(activeMode.count, lang)} • {tx(activeMode.label)}</div>
                                                     <div style={{ fontSize: 12, color: '#334155', marginTop: 6, lineHeight: 1.4 }}>
-                                                        {blueprint.bigIdea}
+                                                        {tx(blueprint.bigIdea)}
                                                     </div>
                                                     <div style={{ fontSize: 12, color: '#475569', marginTop: 4, lineHeight: 1.4 }}>
-                                                        {enrich.masteryTargets[0]}
+                                                        {tx(enrich.masteryTargets[0])}
                                                     </div>
                                                     {/* Sample question preview */}
                                                     {evidence.sampleSize === 0 && (
                                                         <div style={{ fontSize: 12, color: '#1d4ed8', marginTop: 8, lineHeight: 1.5, background: '#eff6ff', borderRadius: 10, padding: '8px 12px', border: '1px solid #bfdbfe' }}>
-                                                            💡 Ví dụ: <em>{t.generator().question}</em>
+                                                            💡 {tx('Ví dụ')}: <em>{tx(t.generator().question)}</em>
                                                         </div>
                                                     )}
                                                     <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', marginTop: 8 }}>
@@ -555,11 +620,14 @@ export default function LearnPage() {
                                                             </span>
                                                         ))}
                                                         <span style={{ padding: '4px 7px', borderRadius: 999, background: evidence.sampleSize === 0 ? '#ecfdf5' : statusColor.bg, border: `1px solid ${evidence.sampleSize === 0 ? '#a7f3d0' : statusColor.border}`, color: evidence.sampleSize === 0 ? '#047857' : statusColor.fg, fontSize: 10, fontWeight: 850 }}>
-                                                            {evidence.challengeFitLabel}{evidence.accuracyPct !== null ? ` · ${evidence.accuracyPct}%` : ''}
+                                                            {tx(evidence.challengeFitLabel)}{evidence.accuracyPct !== null ? ` · ${evidence.accuracyPct}%` : ''}
                                                         </span>
                                                     </div>
                                                     <div style={{ fontSize: 11, color: evidence.sampleSize === 0 ? '#047857' : '#64748b', marginTop: 7, lineHeight: 1.35, fontWeight: evidence.sampleSize === 0 ? 700 : 400 }}>
-                                                        {evidence.sampleSize === 0 ? '▶ Bấm để bắt đầu học ngay' : evidence.evidenceSummary}
+                                                        {evidence.sampleSize === 0 ? `▶ ${tx('Bấm để bắt đầu học ngay')}` : tx(evidence.evidenceSummary)}
+                                                    </div>
+                                                    <div style={{ fontSize: 11, color: '#0f766e', marginTop: 6, lineHeight: 1.35 }}>
+                                                        {tx('Dữ liệu thật')}: {evidence.sampleSize === 0 ? tx('Cần bài chẩn đoán') : tx(evidence.challengeFitLabel)} · {tx(evidence.evidenceSummary)}
                                                     </div>
                                                 </div>
                                             </div>
@@ -570,14 +638,14 @@ export default function LearnPage() {
                                 {/* Play all topics button */}
                                 <button style={{ ...glass.btn(SUBJECTS.find(s => s.key === subject)!.color), width: '100%', justifyContent: 'center', marginTop: 8 }}
                                     onClick={() => startExercise(subject, grade)}>
-                                    Luyện tập hỗn hợp lớp {grade} ({activeMode.count} câu)
+                                    {tx('Luyện tập hỗn hợp')} {lang === 'vi' ? `lớp ${grade}` : `Grade ${grade}`} ({formatLearningCount(activeMode.count, lang)})
                                 </button>
                             </div>
                         ) : (
                             <div style={{ ...glass.card, textAlign: 'center', padding: 40 }}>
                                 <div style={{ fontSize: 48, marginBottom: 12 }}>🚧</div>
-                                <div style={{ fontWeight: 700, fontSize: 18, color: '#666' }}>Đang phát triển</div>
-                                <div style={{ fontSize: 14, color: '#999', marginTop: 8 }}>Môn {SUBJECTS.find(s => s.key === subject)?.name} lớp {grade} sẽ sớm ra mắt!</div>
+                                <div style={{ fontWeight: 700, fontSize: 18, color: '#666' }}>{tx('Đang phát triển')}</div>
+                                <div style={{ fontSize: 14, color: '#999', marginTop: 8 }}>{lang === 'vi' ? `Môn ${SUBJECTS.find(s => s.key === subject)?.name} lớp ${grade} sẽ sớm ra mắt!` : `${tx(SUBJECTS.find(s => s.key === subject)?.name)} Grade ${grade} will launch soon.`}</div>
                             </div>
                         )}
                     </div>
@@ -596,11 +664,11 @@ export default function LearnPage() {
 
                         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 14, padding: 12, marginBottom: 16 }}>
                             <div>
-                                <div style={{ fontSize: 11, color: '#64748b', fontWeight: 900, textTransform: 'uppercase' }}>Pha học hiện tại</div>
-                                <div style={{ fontSize: 15, color: '#1e1b4b', fontWeight: 900, marginTop: 3 }}>{currentPhase}</div>
+                                <div style={{ fontSize: 11, color: '#64748b', fontWeight: 900, textTransform: 'uppercase' }}>{tx('Pha học hiện tại')}</div>
+                                <div style={{ fontSize: 15, color: '#1e1b4b', fontWeight: 900, marginTop: 3 }}>{tx(currentPhase)}</div>
                             </div>
                             <div style={{ fontSize: 12, color: '#475569', lineHeight: 1.4, maxWidth: 360 }}>
-                                {activeMode.sessionPromise}
+                                {tx(activeMode.sessionPromise)}
                             </div>
                         </div>
 
@@ -608,27 +676,27 @@ export default function LearnPage() {
                             <div style={{ background: '#ffffffcc', border: '1px solid #dbeafe', borderRadius: 16, padding: 14, marginBottom: 18 }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', marginBottom: 10 }}>
                                     <div>
-                                        <div style={{ fontSize: 12, fontWeight: 900, color: '#1d4ed8', textTransform: 'uppercase' }}>Cách trình bày câu hỏi</div>
-                                        <div style={{ fontSize: 15, fontWeight: 900, color: '#1e293b', marginTop: 3 }}>{currentQuestionPlan.focus}</div>
+                                        <div style={{ fontSize: 12, fontWeight: 900, color: '#1d4ed8', textTransform: 'uppercase' }}>{tx('Cách trình bày câu hỏi')}</div>
+                                        <div style={{ fontSize: 15, fontWeight: 900, color: '#1e293b', marginTop: 3 }}>{tx(currentQuestionPlan.focus)}</div>
                                     </div>
                                     <div style={{ fontSize: 11, color: '#475569', lineHeight: 1.35, maxWidth: 260 }}>
-                                        {currentQuestionPlan.supportRule}
+                                        {tx(currentQuestionPlan.supportRule)}
                                     </div>
                                 </div>
                                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 8 }}>
                                     {currentQuestionPlan.beforeAnswer.map((step) => (
                                         <div key={step.label} style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 12, padding: 10 }}>
-                                            <div style={{ fontSize: 11, fontWeight: 900, color: '#1d4ed8' }}>{step.label}</div>
-                                            <div style={{ fontSize: 12, color: '#334155', lineHeight: 1.35, marginTop: 4 }}>{step.prompt}</div>
+                                            <div style={{ fontSize: 11, fontWeight: 900, color: '#1d4ed8' }}>{tx(step.label)}</div>
+                                            <div style={{ fontSize: 12, color: '#334155', lineHeight: 1.35, marginTop: 4 }}>{tx(step.prompt)}</div>
                                         </div>
                                     ))}
                                 </div>
                                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 8, marginTop: 10 }}>
                                     <div style={{ fontSize: 12, color: '#475569', lineHeight: 1.4, background: '#f8fafc', borderRadius: 12, padding: 10 }}>
-                                        Dữ liệu: {currentQuestionPlan.dataSignal}
+                                        {tx('Dữ liệu')}: {tx(currentQuestionPlan.dataSignal)}
                                     </div>
                                     <div style={{ fontSize: 12, color: '#475569', lineHeight: 1.4, background: '#f0fdf4', borderRadius: 12, padding: 10 }}>
-                                        Benchmark: {currentQuestionPlan.benchmarkSignal}
+                                        Benchmark: {tx(currentQuestionPlan.benchmarkSignal)}
                                     </div>
                                 </div>
                             </div>
@@ -638,9 +706,9 @@ export default function LearnPage() {
                             <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 16, padding: 14, marginBottom: 18 }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', marginBottom: 10 }}>
                                     <div>
-                                        <div style={{ fontSize: 12, fontWeight: 900, color: '#047857', textTransform: 'uppercase' }}>Audit CTGDPT trên từng câu</div>
+                                        <div style={{ fontSize: 12, fontWeight: 900, color: '#047857', textTransform: 'uppercase' }}>{tx('Audit CTGDPT trên từng câu')}</div>
                                         <div style={{ fontSize: 15, fontWeight: 900, color: '#064e3b', marginTop: 3 }}>
-                                            {currentProblem.curriculum.subjectLabel} lớp {currentProblem.curriculum.curriculumGrade} · {currentProblem.curriculum.topicName}
+                                            {tx(currentProblem.curriculum.subjectLabel)} {formatLearningGrade(currentProblem.curriculum.curriculumGrade, lang)} · {tx(currentProblem.curriculum.topicName)}
                                         </div>
                                     </div>
                                     <div style={{ fontSize: 11, color: '#166534', lineHeight: 1.35, maxWidth: 280 }}>
@@ -649,10 +717,10 @@ export default function LearnPage() {
                                 </div>
                                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 8 }}>
                                     <div style={{ fontSize: 12, color: '#14532d', lineHeight: 1.4, background: '#ffffffb8', borderRadius: 12, padding: 10 }}>
-                                        Mạch: {currentProblem.curriculum.curriculumOfficialStrand}
+                                        {tx('Mạch')}: {tx(currentProblem.curriculum.curriculumOfficialStrand)}
                                     </div>
                                     <div style={{ fontSize: 12, color: '#14532d', lineHeight: 1.4, background: '#ffffffb8', borderRadius: 12, padding: 10 }}>
-                                        Minh chứng lưu: {currentProblem.curriculum.requiredAttemptEvidence.slice(0, 3).join(' · ')}
+                                        {tx('Minh chứng lưu')}: {currentProblem.curriculum.requiredAttemptEvidence.slice(0, 3).map(item => tx(item)).join(' · ')}
                                     </div>
                                 </div>
                             </div>
@@ -661,7 +729,7 @@ export default function LearnPage() {
                         {/* Passage (for reading) */}
                         {'passage' in currentProblem && (currentProblem as VietnameseProblem).passage && (
                             <div style={{ background: 'rgba(139,92,246,0.08)', borderRadius: 12, padding: 16, marginBottom: 16, fontSize: 14, lineHeight: 1.8, whiteSpace: 'pre-line' }}>
-                                {(currentProblem as VietnameseProblem).passage}
+                                {tx((currentProblem as VietnameseProblem).passage)}
                             </div>
                         )}
 
@@ -669,25 +737,17 @@ export default function LearnPage() {
                         {currentVisual && (
                             <div style={{ marginBottom: 20, display: 'flex', justifyContent: 'center' }}>
                                 {typeof currentProblem.illustration !== 'object' ? (
-                                    <Image
-                                        src={withBasePath(currentVisual)}
-                                        alt={currentEnrichment?.visual.alt || 'Minh hoạ học tập'}
+                                    <SafeLearningImage
+                                        src={currentVisual}
+                                        alt={tx(currentEnrichment?.visual.alt || 'Minh hoạ học tập')}
                                         width={520}
                                         height={260}
-                                        unoptimized
-                                        onError={(e) => {
-                                            const target = e.currentTarget;
-                                            target.style.display = 'none';
-                                            const fallback = target.nextElementSibling as HTMLElement;
-                                            if (fallback) fallback.style.display = 'flex';
-                                        }}
-                                        style={{ maxHeight: 180, maxWidth: '100%', borderRadius: 12, border: '1px solid #e2e8f0', boxShadow: '0 2px 10px rgba(0,0,0,0.05)', objectFit: 'cover' }} />
+                                        fallback={subject === 'hisgeo' ? '🏛️' : subject === 'science' ? '🔬' : subject === 'english' ? '📚' : subject === 'computing' ? '💻' : '📖'}
+                                        style={{ maxHeight: 180, maxWidth: '100%', borderRadius: 12, border: '1px solid #e2e8f0', boxShadow: '0 2px 10px rgba(0,0,0,0.05)', objectFit: 'cover' }}
+                                    />
                                 ) : (
                                     currentProblem.illustration
                                 )}
-                                <div style={{ display: 'none', width: 180, height: 120, borderRadius: 12, background: 'linear-gradient(135deg, #e0e7ff, #fce7f3)', alignItems: 'center', justifyContent: 'center', fontSize: 48 }}>
-                                    {subject === 'hisgeo' ? '🏛️' : subject === 'science' ? '🔬' : subject === 'english' ? '📚' : subject === 'computing' ? '💻' : '📖'}
-                                </div>
                             </div>
                         )}
 
@@ -699,36 +759,36 @@ export default function LearnPage() {
                                 marginBottom: 20,
                             }}>
                                 <div style={{ background: '#f8fafc', borderRadius: 14, padding: 12, border: '1px solid #e2e8f0' }}>
-                                    <div style={{ fontSize: 11, color: '#64748b', fontWeight: 850, textTransform: 'uppercase', marginBottom: 6 }}>Mục tiêu</div>
-                                    <div style={{ fontSize: 13, color: '#334155', fontWeight: 750, lineHeight: 1.35 }}>{currentEnrichment.masteryTargets[0]}</div>
+                                    <div style={{ fontSize: 11, color: '#64748b', fontWeight: 850, textTransform: 'uppercase', marginBottom: 6 }}>{tx('Mục tiêu')}</div>
+                                    <div style={{ fontSize: 13, color: '#334155', fontWeight: 750, lineHeight: 1.35 }}>{tx(currentEnrichment.masteryTargets[0])}</div>
                                 </div>
                                 <div style={{ background: '#f0fdf4', borderRadius: 14, padding: 12, border: '1px solid #bbf7d0' }}>
-                                    <div style={{ fontSize: 11, color: '#15803d', fontWeight: 850, textTransform: 'uppercase', marginBottom: 6 }}>Cách học</div>
-                                    <div style={{ fontSize: 13, color: '#166534', fontWeight: 750, lineHeight: 1.35 }}>{currentEnrichment.lessonMoves[0]}</div>
+                                    <div style={{ fontSize: 11, color: '#15803d', fontWeight: 850, textTransform: 'uppercase', marginBottom: 6 }}>{tx('Cách học')}</div>
+                                    <div style={{ fontSize: 13, color: '#166534', fontWeight: 750, lineHeight: 1.35 }}>{tx(currentEnrichment.lessonMoves[0])}</div>
                                 </div>
                                 <div style={{ background: '#fff7ed', borderRadius: 14, padding: 12, border: '1px solid #fed7aa' }}>
                                     <div style={{ fontSize: 11, color: '#c2410c', fontWeight: 850, textTransform: 'uppercase', marginBottom: 6 }}>Benchmark</div>
-                                    <div style={{ fontSize: 13, color: '#9a3412', fontWeight: 750, lineHeight: 1.35 }}>{currentEnrichment.benchmarkTags[0]}</div>
+                                    <div style={{ fontSize: 13, color: '#9a3412', fontWeight: 750, lineHeight: 1.35 }}>{tx(currentEnrichment.benchmarkTags[0])}</div>
                                 </div>
                             </div>
                         )}
 
                         {currentBlueprint && (
                             <div style={{ background: 'rgba(255,255,255,0.72)', border: '1px solid rgba(148,163,184,0.32)', borderRadius: 16, padding: 14, marginBottom: 20 }}>
-                                <div style={{ fontSize: 12, fontWeight: 900, color: '#334155', textTransform: 'uppercase', marginBottom: 8 }}>Khung học nâng cao</div>
-                                <div style={{ fontSize: 14, color: '#1e293b', fontWeight: 800, lineHeight: 1.4 }}>{currentBlueprint.bigIdea}</div>
-                                <div style={{ fontSize: 13, color: '#475569', lineHeight: 1.5, marginTop: 6 }}>{currentBlueprint.matureLearnerFrame}</div>
+                                <div style={{ fontSize: 12, fontWeight: 900, color: '#334155', textTransform: 'uppercase', marginBottom: 8 }}>{tx('Khung học nâng cao')}</div>
+                                <div style={{ fontSize: 14, color: '#1e293b', fontWeight: 800, lineHeight: 1.4 }}>{tx(currentBlueprint.bigIdea)}</div>
+                                <div style={{ fontSize: 13, color: '#475569', lineHeight: 1.5, marginTop: 6 }}>{tx(currentBlueprint.matureLearnerFrame)}</div>
                                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 10, marginTop: 12 }}>
                                     <div style={{ background: '#eef2ff', borderRadius: 12, padding: 10 }}>
-                                        <div style={{ fontSize: 11, fontWeight: 900, color: '#3730a3', textTransform: 'uppercase' }}>Chuẩn vàng</div>
+                                        <div style={{ fontSize: 11, fontWeight: 900, color: '#3730a3', textTransform: 'uppercase' }}>{tx('Chuẩn vàng')}</div>
                                         <div style={{ fontSize: 12, color: '#3730a3', lineHeight: 1.35, marginTop: 4 }}>
-                                            {currentBlueprint.goldStandards.slice(0, 2).map(item => item.label).join(' · ')}
+                                            {currentBlueprint.goldStandards.slice(0, 2).map(item => tx(item.label)).join(' · ')}
                                         </div>
                                     </div>
                                     <div style={{ background: '#ecfdf5', borderRadius: 12, padding: 10 }}>
-                                        <div style={{ fontSize: 11, fontWeight: 900, color: '#047857', textTransform: 'uppercase' }}>Benchmark phần mềm</div>
+                                        <div style={{ fontSize: 11, fontWeight: 900, color: '#047857', textTransform: 'uppercase' }}>{tx('Benchmark phần mềm')}</div>
                                         <div style={{ fontSize: 12, color: '#047857', lineHeight: 1.35, marginTop: 4 }}>
-                                            {currentBlueprint.benchmarkPatterns.slice(0, 2).map(item => `${item.product}: ${item.pattern}`).join(' · ')}
+                                            {currentBlueprint.benchmarkPatterns.slice(0, 2).map(item => `${item.product}: ${tx(item.pattern)}`).join(' · ')}
                                         </div>
                                     </div>
                                 </div>
@@ -737,7 +797,7 @@ export default function LearnPage() {
 
                         {/* Question */}
                         <div style={{ fontSize: 20, fontWeight: 800, lineHeight: 1.5, marginBottom: 24, color: '#1e1b4b', textAlign: 'center' }}>
-                            {currentProblem.question}
+                            {tx(currentProblem.question)}
                         </div>
 
                         {/* Options */}
@@ -756,7 +816,7 @@ export default function LearnPage() {
                                             style={{ padding: '16px 20px', borderRadius: 16, border, background: bg, textAlign: 'left', fontSize: 17, cursor: selected ? 'default' : 'pointer', transition: 'all .2s ease', display: 'flex', alignItems: 'center', gap: 12, boxShadow: '0 2px 8px rgba(0,0,0,0.02)' }}>
                                             {showResult && isCorrect ? <div style={{ width: 24, height: 24, borderRadius: 12, background: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><CheckCircle2 size={16} color="#fff" /></div> : null}
                                             {showResult && isSelected && !isCorrect ? <div style={{ width: 24, height: 24, borderRadius: 12, background: '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><XCircle size={16} color="#fff" /></div> : null}
-                                            <span style={{ fontWeight: isSelected ? 800 : 600, color: '#334155' }}>{opt}</span>
+                                            <span style={{ fontWeight: isSelected ? 800 : 600, color: '#334155' }}>{tx(opt)}</span>
                                         </button>
                                     );
                                 })}
@@ -768,18 +828,18 @@ export default function LearnPage() {
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 24, gap: 12 }}>
                                 <button onClick={requestTutorHint}
                                     style={{ padding: '10px 20px', borderRadius: 20, border: '1px solid rgba(245,158,11,0.4)', background: 'rgba(245,158,11,0.1)', color: '#b45309', fontSize: 16, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, transition: 'all .2s' }}>
-                                    <Lightbulb size={18} /> {showHint ? `Gợi ý tiếp L${Math.min(5, hintLevelUsed + 1)}` : 'Mở AI gia sư L1'}
+                                    <Lightbulb size={18} /> {showHint ? `${tx('Gợi ý tiếp')} L${Math.min(5, hintLevelUsed + 1)}` : tx('Mở AI gia sư L1')}
                                 </button>
                                 {showHint && currentTutorHintTurn && (
                                     <div style={{ padding: '16px 20px', borderRadius: 16, background: '#fffbeb', border: '2px solid #fde68a', color: '#92400e', fontSize: 15, fontWeight: 650, maxWidth: '92%', textAlign: 'left', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' }}>
-                                        <div style={{ fontSize: 17, fontWeight: 850, marginBottom: 8 }}>AI gia sư L{hintLevelUsed}: {currentTutorHintTurn.move}</div>
-                                        <div style={{ marginBottom: 10, lineHeight: 1.5 }}>{currentTutorHintTurn.text}</div>
+                                        <div style={{ fontSize: 17, fontWeight: 850, marginBottom: 8 }}>AI tutor L{hintLevelUsed}: {tx(currentTutorHintTurn.move)}</div>
+                                        <div style={{ marginBottom: 10, lineHeight: 1.5 }}>{tx(currentTutorHintTurn.text)}</div>
                                         <div style={{ marginBottom: 10, fontSize: 13, color: '#78350f', lineHeight: 1.45 }}>
-                                            Bước con làm tiếp: {currentTutorHintTurn.nextPrompt}
+                                            {tx('Bước con làm tiếp')}: {tx(currentTutorHintTurn.nextPrompt)}
                                         </div>
                                         {currentEnrichment?.supportLadder.slice(0, 3).map(step => (
                                             <div key={step.level} style={{ padding: '8px 0', borderTop: '1px solid #fde68a' }}>
-                                                <strong>{step.level} - {step.title}:</strong> {step.action}
+                                                <strong>{step.level} - {tx(step.title)}:</strong> {tx(step.action)}
                                             </div>
                                         ))}
                                     </div>
@@ -791,51 +851,51 @@ export default function LearnPage() {
                         {selected && (
                             <div style={{ marginTop: 24, padding: 20, borderRadius: 16, background: selected === currentProblem.correctAnswer ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.08)', border: `2px solid ${selected === currentProblem.correctAnswer ? 'rgba(16,185,129,0.4)' : 'rgba(239,68,68,0.3)'}`, position: 'relative' }}>
                                 <div style={{ fontWeight: 800, fontSize: 18, marginBottom: 8, color: selected === currentProblem.correctAnswer ? '#059669' : '#dc2626', textAlign: 'center' }}>
-                                    {selected === currentProblem.correctAnswer ? 'Chính xác. Bây giờ kiểm tra cách nghĩ.' : 'Chưa đúng. Phân tích lại chiến lược.'}
+                                    {selected === currentProblem.correctAnswer ? tx('Chính xác. Bây giờ kiểm tra cách nghĩ.') : tx('Chưa đúng. Phân tích lại chiến lược.')}
                                 </div>
-                                <div style={{ fontSize: 16, color: '#475569', lineHeight: 1.6, textAlign: 'center', background: 'rgba(255,255,255,0.6)', padding: 12, borderRadius: 12, marginBottom: 16 }}>{currentProblem.explanation}</div>
+                                <div style={{ fontSize: 16, color: '#475569', lineHeight: 1.6, textAlign: 'center', background: 'rgba(255,255,255,0.6)', padding: 12, borderRadius: 12, marginBottom: 16 }}>{tx(currentProblem.explanation)}</div>
                                 {currentTutorFeedbackTurn && (
                                     <div style={{ textAlign: 'left', background: '#eef2ff', borderRadius: 14, padding: 14, border: '1px solid #c7d2fe', marginBottom: 16 }}>
-                                        <div style={{ fontSize: 13, fontWeight: 900, color: '#3730a3', marginBottom: 6 }}>AI gia sư phân tích câu trả lời</div>
-                                        <div style={{ fontSize: 13, color: '#312e81', lineHeight: 1.5 }}>{currentTutorFeedbackTurn.text}</div>
+                                        <div style={{ fontSize: 13, fontWeight: 900, color: '#3730a3', marginBottom: 6 }}>{tx('AI gia sư phân tích câu trả lời')}</div>
+                                        <div style={{ fontSize: 13, color: '#312e81', lineHeight: 1.5 }}>{tx(currentTutorFeedbackTurn.text)}</div>
                                         <div style={{ fontSize: 12, color: '#4338ca', lineHeight: 1.4, marginTop: 8 }}>
-                                            Bước tiếp theo: {currentTutorFeedbackTurn.nextPrompt}
+                                            {tx('Bước tiếp theo')}: {tx(currentTutorFeedbackTurn.nextPrompt)}
                                         </div>
                                     </div>
                                 )}
                                 {currentEnrichment && (
                                     <div style={{ textAlign: 'left', background: 'rgba(255,255,255,0.68)', borderRadius: 14, padding: 14, border: '1px solid rgba(148,163,184,0.28)', marginBottom: 16 }}>
-                                        <div style={{ fontSize: 13, fontWeight: 850, color: '#334155', marginBottom: 6 }}>Bước tiếp theo</div>
-                                        <div style={{ fontSize: 13, color: '#475569', lineHeight: 1.5 }}>{currentEnrichment.transferPrompt}</div>
-                                        <div style={{ fontSize: 13, color: '#475569', lineHeight: 1.5, marginTop: 8 }}>{currentEnrichment.parentMission}</div>
+                                        <div style={{ fontSize: 13, fontWeight: 850, color: '#334155', marginBottom: 6 }}>{tx('Bước tiếp theo')}</div>
+                                        <div style={{ fontSize: 13, color: '#475569', lineHeight: 1.5 }}>{tx(currentEnrichment.transferPrompt)}</div>
+                                        <div style={{ fontSize: 13, color: '#475569', lineHeight: 1.5, marginTop: 8 }}>{tx(currentEnrichment.parentMission)}</div>
                                     </div>
                                 )}
                                 {currentBlueprint && (
                                     <div style={{ textAlign: 'left', background: '#f8fafc', borderRadius: 14, padding: 14, border: '1px solid #e2e8f0', marginBottom: 16 }}>
-                                        <div style={{ fontSize: 13, fontWeight: 900, color: '#334155', marginBottom: 6 }}>Nhiệm vụ nâng cao</div>
-                                        <div style={{ fontSize: 13, color: '#475569', lineHeight: 1.5 }}>{currentBlueprint.stretchTask}</div>
+                                        <div style={{ fontSize: 13, fontWeight: 900, color: '#334155', marginBottom: 6 }}>{tx('Nhiệm vụ nâng cao')}</div>
+                                        <div style={{ fontSize: 13, color: '#475569', lineHeight: 1.5 }}>{tx(currentBlueprint.stretchTask)}</div>
                                         <div style={{ fontSize: 12, color: '#64748b', marginTop: 8 }}>
-                                            Bằng chứng thành thạo: {currentBlueprint.evidenceOfMastery.slice(0, 3).join(' · ')}
+                                            {tx('Bằng chứng thành thạo')}: {currentBlueprint.evidenceOfMastery.slice(0, 3).map(item => tx(item)).join(' · ')}
                                         </div>
                                     </div>
                                 )}
                                 {currentQuestionPlan && (
                                     <div style={{ textAlign: 'left', background: '#fff', borderRadius: 14, padding: 14, border: '1px solid #dbeafe', marginBottom: 16 }}>
-                                        <div style={{ fontSize: 13, fontWeight: 900, color: '#1d4ed8', marginBottom: 8 }}>Tự kiểm trước khi đi tiếp</div>
+                                        <div style={{ fontSize: 13, fontWeight: 900, color: '#1d4ed8', marginBottom: 8 }}>{tx('Tự kiểm trước khi đi tiếp')}</div>
                                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 8 }}>
                                             {currentQuestionPlan.selfCheck.slice(0, 3).map((item) => (
                                                 <div key={item} style={{ fontSize: 12, color: '#334155', lineHeight: 1.35, background: '#eff6ff', borderRadius: 10, padding: 9 }}>
-                                                    {item}
+                                                    {tx(item)}
                                                 </div>
                                             ))}
                                         </div>
                                         <div style={{ fontSize: 12, color: '#b91c1c', lineHeight: 1.4, marginTop: 10 }}>
-                                            Sai dễ gặp: {currentQuestionPlan.misconceptionCheck.join(' · ')}
+                                            {tx('Sai dễ gặp')}: {currentQuestionPlan.misconceptionCheck.map(item => tx(item)).join(' · ')}
                                         </div>
                                     </div>
                                 )}
                                 <button onClick={nextProblem} style={{ ...glass.btn('#3b82f6'), width: '100%', justifyContent: 'center', padding: '14px', fontSize: 16, borderRadius: 16, boxShadow: '0 4px 14px rgba(59,130,246,0.3)' }}>
-                                    Câu tiếp theo <ChevronRight size={20} />
+                                    {tx('Câu tiếp theo')} <ChevronRight size={20} />
                                 </button>
                             </div>
                         )}
@@ -845,11 +905,11 @@ export default function LearnPage() {
                 {/* ════ COMPLETION ════ */}
                 {problems.length > 0 && index >= problems.length && (
                     <div style={{ ...glass.card, textAlign: 'center', padding: '48px 24px' }}>
-                        <div style={{ fontSize: 26, fontWeight: 900, color: '#1e1b4b', marginBottom: 8 }}>Phiên học hoàn thành</div>
-                        <div style={{ fontSize: 16, color: '#475569', marginBottom: 24 }}>{activeMode.sessionPromise}</div>
+                        <div style={{ fontSize: 26, fontWeight: 900, color: '#1e1b4b', marginBottom: 8 }}>{tx('Phiên học hoàn thành')}</div>
+                        <div style={{ fontSize: 16, color: '#475569', marginBottom: 24 }}>{tx(activeMode.sessionPromise)}</div>
 
                         <div style={{ background: 'rgba(59,130,246,0.1)', borderRadius: 24, padding: '24px', margin: '0 auto 32px', display: 'inline-block', border: '2px dashed rgba(59,130,246,0.3)' }}>
-                            <div style={{ fontSize: 14, color: '#3b82f6', fontWeight: 700, textTransform: 'uppercase', letterSpacing: 2, marginBottom: 8 }}>ĐIỂM SỐ CỦA CON</div>
+                            <div style={{ fontSize: 14, color: '#3b82f6', fontWeight: 700, textTransform: 'uppercase', letterSpacing: 2, marginBottom: 8 }}>{tx('ĐIỂM SỐ CỦA CON')}</div>
                             <div style={{ fontSize: 48, fontWeight: 900, color: '#3b82f6', lineHeight: 1 }}>{score}<span style={{ fontSize: 24, color: '#94a3b8' }}>/{(problems.length * 10)}</span></div>
                         </div>
 
@@ -862,15 +922,15 @@ export default function LearnPage() {
                         {subject && (
                             <div style={{ maxWidth: 560, margin: '0 auto 28px', textAlign: 'left', display: 'grid', gap: 12 }}>
                                 <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 16, padding: 14 }}>
-                                    <div style={{ fontSize: 13, fontWeight: 900, color: '#334155', marginBottom: 8 }}>Bằng chứng cần đạt</div>
+                                    <div style={{ fontSize: 13, fontWeight: 900, color: '#334155', marginBottom: 8 }}>{tx('Bằng chứng cần đạt')}</div>
                                     {(selectedTopic ? getTopicLearningBlueprint(selectedTopic, SUBJECT_ENRICHMENT_KEY[subject]).evidenceOfMastery : activeMode.phases).slice(0, 4).map(item => (
-                                        <div key={item} style={{ fontSize: 13, color: '#475569', lineHeight: 1.45, padding: '4px 0' }}>• {item}</div>
+                                        <div key={item} style={{ fontSize: 13, color: '#475569', lineHeight: 1.45, padding: '4px 0' }}>• {tx(item)}</div>
                                     ))}
                                 </div>
                                 <div style={{ background: '#fff7ed', border: '1px solid #fed7aa', borderRadius: 16, padding: 14 }}>
-                                    <div style={{ fontSize: 13, fontWeight: 900, color: '#9a3412', marginBottom: 6 }}>Ôn lại có chủ đích</div>
+                                    <div style={{ fontSize: 13, fontWeight: 900, color: '#9a3412', marginBottom: 6 }}>{tx('Ôn lại có chủ đích')}</div>
                                     <div style={{ fontSize: 13, color: '#9a3412', lineHeight: 1.45 }}>
-                                        {selectedTopic ? getTopicLearningBlueprint(selectedTopic, SUBJECT_ENRICHMENT_KEY[subject]).reviewCadence : 'Chọn lại một chủ đề còn sai nhiều và ôn sau 1-3-7 ngày.'}
+                                        {tx(selectedTopic ? getTopicLearningBlueprint(selectedTopic, SUBJECT_ENRICHMENT_KEY[subject]).reviewCadence : 'Chọn lại một chủ đề còn sai nhiều và ôn sau 1-3-7 ngày.')}
                                     </div>
                                 </div>
                             </div>
@@ -878,10 +938,10 @@ export default function LearnPage() {
 
                         <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
                             <button style={{ ...glass.btn('#3b82f6'), padding: '16px 28px', fontSize: 16 }} onClick={() => startExercise(subject!, grade, selectedTopic || undefined)}>
-                                <RotateCcw size={20} /> Luyện lại phiên này
+                                <RotateCcw size={20} /> {tx('Luyện lại phiên này')}
                             </button>
                             <button style={{ ...glass.btn('#8b5cf6'), padding: '16px 28px', fontSize: 16 }} onClick={() => { setProblems([]); setSelectedTopic(null); }}>
-                                Chọn chủ đề khác
+                                {tx('Chọn chủ đề khác')}
                             </button>
                         </div>
                     </div>

@@ -242,8 +242,8 @@ export function buildTopicEvidenceProfile(args: {
         challengeFitLabel: getChallengeFitLabel(decision),
         dataQualityNote: getDataQualityNote(reliability, topicAttempts.length, independentAttempts.length),
         evidenceSummary: accuracyPct === null
-            ? 'Bấm để bắt đầu bài đầu tiên'
-            : `${topicAttempts.length} bài, đúng ${accuracyPct}%${hintDependencyPct ? `, gợi ý ${hintDependencyPct}%` : ''}${unresolvedMistakes.length > 0 ? `, ${unresolvedMistakes.length} lỗi cần sửa` : ''}`,
+            ? 'Chưa có accuracy vì chưa có bài làm thật.'
+            : `${topicAttempts.length} bài làm, đúng ${accuracyPct}%${hintDependencyPct ? `, gợi ý ${hintDependencyPct}%` : ''}${unresolvedMistakes.length > 0 ? `, ${unresolvedMistakes.length} lỗi cần sửa` : ''}`,
         ...move,
         benchmark,
         sourceIds: Array.from(new Set([...blueprint.goldStandards.map((item) => item.sourceId), benchmark.sourceId])),
