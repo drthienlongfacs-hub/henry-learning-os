@@ -4,6 +4,7 @@ import {
     BarChart3,
     BookOpen,
     CheckCircle2,
+    ClipboardCheck,
     ExternalLink,
     Gauge,
     ShieldAlert,
@@ -87,20 +88,27 @@ export default function ParentBenchmarkPage() {
     return (
         <main style={{ minHeight: '100dvh', background: '#f8fafc', fontFamily: 'var(--font-parent)' }}>
             <div className="page-container" style={{ maxWidth: '1040px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
-                    <Link href="/parent/dashboard">
-                        <button className="btn btn-ghost btn-sm" aria-label="Quay lại dashboard phụ huynh">
-                            <ArrowLeft size={18} />
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap', marginBottom: '1.25rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        <Link href="/parent/dashboard">
+                            <button className="btn btn-ghost btn-sm" aria-label="Quay lại dashboard phụ huynh">
+                                <ArrowLeft size={18} />
+                            </button>
+                        </Link>
+                        <div>
+                            <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.82rem', fontWeight: 700 }}>
+                                Benchmark full-stack cập nhật {HENRY_FULLSTACK_BENCHMARK.asOf}
+                            </div>
+                            <h1 style={{ fontWeight: 900, fontSize: '1.6rem', color: '#0f172a' }}>
+                                Henry Learning OS so với các nền tảng học hàng đầu
+                            </h1>
+                        </div>
+                    </div>
+                    <Link href="/parent/foundation" style={{ textDecoration: 'none' }}>
+                        <button className="btn btn-secondary btn-sm">
+                            <ClipboardCheck size={16} /> Nền móng
                         </button>
                     </Link>
-                    <div>
-                        <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.82rem', fontWeight: 700 }}>
-                            Benchmark full-stack cập nhật {HENRY_FULLSTACK_BENCHMARK.asOf}
-                        </div>
-                        <h1 style={{ fontWeight: 900, fontSize: '1.6rem', color: '#0f172a' }}>
-                            Henry Learning OS so với các nền tảng học hàng đầu
-                        </h1>
-                    </div>
                 </div>
 
                 <section id="live-upgrade" style={{ marginBottom: '1rem' }}>
