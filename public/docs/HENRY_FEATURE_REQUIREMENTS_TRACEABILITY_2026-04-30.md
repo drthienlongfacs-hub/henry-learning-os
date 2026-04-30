@@ -503,7 +503,7 @@ Nếu Henry được vận hành trong hệ sinh thái cá nhân của BS. Long/
 | 1 | AI tutor rubric và 50 scenario regression | AI là lõi khác biệt và rủi ro lớn nhất | Test chặn làm hộ, test hỏi gợi mở, test phân loại sai lầm |
 | 2 | Weekly RCA/PDCA outcome loop | Biến dữ liệu thành cải tiến thật | Top mistake -> parent mission -> recheck 7 ngày |
 | 3 | Privacy evidence panel | Sản phẩm cho trẻ cần minh bạch dữ liệu | Data inventory, purpose, retention, export/delete |
-| 4 | Human review queue | Muốn claim phủ chuẩn phải có người duyệt | reviewerId, approvedAt, block reason |
+| 4 | Human review queue | Muốn claim phủ chuẩn phải có người duyệt | Đã có queue/RCA/PDCA; cần reviewerId, approvedAt, block reason thật |
 | 5 | Diagnostic warm-start lớp 1 | Cá nhân hóa cần baseline | Diagnostic Toán/Tiếng Việt, confidence, plan 7 ngày |
 | 6 | Playwright/WCAG smoke CI | UI live phải kiểm được thật | Desktop/mobile smoke, focus, no blank page |
 | 7 | Pilot evidence pack 4 tuần | Muốn claim hiệu quả phải có dữ liệu thật | consent, pre/post, retention, cohort report |
@@ -528,9 +528,9 @@ Cập nhật sau đợt nâng cấp full-stack ngày 2026-04-30:
 | 1 | AI tutor rubric và 50 scenario regression | Đã triển khai nội bộ và live UI điều hành | `src/lib/ai/tutor-rubric.ts`, `__tests__/ai-tutor-rubric.test.ts`, `/parent/sot` | Có regression guardrail nội bộ theo SOT |
 | 2 | Weekly RCA/PDCA outcome loop | Đã triển khai engine và dashboard phụ huynh | `src/lib/evidence/weekly-pdca.ts`, `__tests__/weekly-pdca.test.ts`, `/parent/dashboard` | Có vòng observe/RCA/plan/recheck không bịa delta |
 | 3 | Privacy evidence panel | Đã triển khai inventory và UI phụ huynh | `src/lib/privacy/privacy-evidence.ts`, `__tests__/privacy-evidence.test.ts`, `/parent/settings` | Có privacy evidence inventory local-first |
-| 4 | Human review queue | Lane tiếp theo | SOT đã chỉ định, chưa triển khai UI duyệt item | Chỉ được nói sẵn sàng triển khai |
-| 5 | Diagnostic warm-start lớp 1 | Chưa triển khai | Còn trong roadmap | Chỉ được nói đã đặc tả |
+| 4 | Human review queue | Đã triển khai control plane và live UI | `src/lib/curriculum/review-queue.ts`, `__tests__/curriculum-review-queue.test.ts`, `/parent/review-queue` | Có workflow duyệt nội dung, RCA/PDCA và release gate nội bộ |
+| 5 | Diagnostic warm-start lớp 1 | Lane tiếp theo | Còn trong roadmap theo SOT | Chỉ được nói đã đặc tả |
 | 6 | Playwright/WCAG smoke gate | Chưa triển khai | Còn trong roadmap | Chưa claim production-grade/WCAG conformant |
 | 7 | Pilot evidence pack 4 tuần | Chưa có dữ liệu thật | Bị chặn bởi evidence | Không claim hiệu quả học tập |
 
-Điểm P0 readiness có thể tăng vì ba lane kỹ thuật đã có code/test/UI. Điểm hiệu quả học tập không được nâng nếu chưa có pilot có consent, pre-test, post-test, retention, attrition và phân tích cohort.
+Điểm P0 readiness có thể tăng vì bốn lane kỹ thuật đã có code/test/UI. Điểm hiệu quả học tập không được nâng nếu chưa có pilot có consent, pre-test, post-test, retention, attrition và phân tích cohort.

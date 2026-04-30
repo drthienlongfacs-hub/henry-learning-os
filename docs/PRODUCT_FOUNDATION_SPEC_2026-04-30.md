@@ -6,7 +6,7 @@ Ngày cập nhật: 2026-04-30
 
 Henry Learning OS được định vị là **Family-first Learning Evidence OS**: một hệ điều hành học tập cá nhân cho Henry từ lớp 1 đến 18 tuổi, trong đó AI giúp con suy nghĩ sâu hơn, ba mẹ đồng hành bằng nhiệm vụ ngắn và mọi claim mạnh đều đi qua evidence gate.
 
-Nền móng hiện đạt **94/100 P0 readiness**: đã chốt định vị, curriculum traceability lớp 1-5, no-overclaim gate, quy trình deploy live, AI tutor regression 50 scenario, privacy evidence panel và RCA/PDCA tuần theo số liệu local. Còn thiếu gate trưởng thành về cohort/pilot thật, human review queue, calibration, diagnostic warm-start và UI smoke/accessibility.
+Nền móng hiện đạt **94/100 P0 readiness**: đã chốt định vị, curriculum traceability lớp 1-5, no-overclaim gate, quy trình deploy live, AI tutor regression 50 scenario, privacy evidence panel, RCA/PDCA tuần theo số liệu local và human review queue cho item lớp 1-5. Còn thiếu gate trưởng thành về reviewer decisions thật, calibration, cohort/pilot thật, diagnostic warm-start và UI smoke/accessibility.
 
 Không được nâng điểm benchmark lên 100/100 chỉ vì đã có trang UI hoặc nguồn tham khảo. 100/100 chỉ mở khi có review người thật, calibration độ khó, pilot outcome, production monitoring và accessibility smoke.
 
@@ -57,7 +57,7 @@ Nguồn chuẩn dùng để benchmark foundation:
 
 | Kernel | Mục đích | Gate còn thiếu |
 |---|---|---|
-| Curriculum kernel | Biến chương trình lớp 1-5 thành topic/item/evidence có source version | Review queue, approved item bank, difficulty calibration |
+| Curriculum kernel | Biến chương trình lớp 1-5 thành topic/item/evidence có source version | Reviewer decisions thật, approved item bank, difficulty calibration |
 | Learning science kernel | Biến retrieval, spaced repetition, feedback, metacognition thành hành vi sản phẩm | Rubric explanation quality, retention dashboard, transfer task coverage |
 | AI orchestration kernel | Điều phối AI theo role an toàn: tutor, classmate, coach, examiner, parent assistant, safety guardian | 50 scenario tutor regression, rubric không làm hộ, post-check chất lượng |
 | Evidence data kernel | Thu dữ liệu vừa đủ để chạy RCA/PDCA: attempt, lỗi, hint, retention, transfer, parent observation | Cohort export, pre/post/retention protocol, weekly PDCA loop |
@@ -78,7 +78,7 @@ Nguồn chuẩn dùng để benchmark foundation:
 | P0-child-privacy | P0 | Implemented | Data tối thiểu, parent control, export/delete local, không ads/tracking | Legal/backend review trước claim tuân thủ |
 | P0-data-driven-pdca | P0 | Implemented | Observe-score-recommend-validate, không self-modification mơ hồ | Lưu plan/follow-up qua nhiều tuần |
 | P1-diagnostic-warm-start | P1 | Spec ready | Chẩn đoán 12-15 phút theo môn để đặt level ban đầu | Build diagnostic Toán/Tiếng Việt lớp 1 |
-| P1-review-queue | P1 | Spec ready | Hàng đợi duyệt item với reviewer metadata | Page/admin review queue |
+| P1-review-queue | P1 | Implemented | Hàng đợi duyệt item với reviewer metadata | ReviewerId/approvedAt/blockReason thật và calibration |
 | P1-weekly-outcome-loop | P1 | Implemented | Mục tiêu tuần, hành động phụ huynh, đo lại sau 7 ngày | Cohort/export cho pilot |
 | P1-accessibility-quality | P1 | Spec ready | Smoke visual mobile, keyboard/focus, target size theo WCAG 2.2 | Playwright smoke cho các trang chính |
 | P2-whole-child-portfolio | P2 | Spec ready | Portfolio 12 năm gồm đọc, viết, dự án, coding, reflection | Portfolio schema và page đầu tiên |
@@ -112,11 +112,11 @@ Protocol bắt buộc:
 | 1 | AI tutor rubric và 50 scenario regression | Đã triển khai live | DOCX, PRD, Khanmigo, NIST AI RMF, UNICEF | 50 scenario, rubric Socratic, test không làm hộ |
 | 2 | Weekly RCA/PDCA outcome loop | Đã triển khai live | Benchmark, EEF, WWC, Zearn, DOCX | Weekly issue, parent action, recheck 7 ngày, no fake delta |
 | 3 | Privacy evidence panel | Đã triển khai live | UNICEF, COPPA, FERPA, NIST AI RMF | Data inventory, purpose, retention, export/delete status |
-| 4 | Human review queue | Sẵn sàng triển khai | Bộ GDĐT, curriculum map, benchmark | reviewer metadata, block reason, release gate |
+| 4 | Human review queue | Đã triển khai live | Bộ GDĐT, curriculum map, benchmark | reviewer metadata, block reason, release gate |
 | 5 | Diagnostic warm-start lớp 1 | Sẵn sàng triển khai | IXL, DreamBox, CTGDPT, curriculum map | diagnostic Toán/Tiếng Việt, confidence, 7-day plan |
 | 6 | Playwright/WCAG smoke gate | Sẵn sàng triển khai | ISO 25010, WCAG 2.2, architecture | desktop/mobile smoke, route text, no blank page |
 
-Ba lane đầu theo SOT đã được triển khai nội bộ: **AI tutor rubric và 50 scenario regression**, **Weekly RCA/PDCA outcome loop**, **Privacy evidence panel**. Lane tiếp theo theo SOT là **Human review queue cho item lớp 1-5**. Không được nhảy sang tính năng hấp dẫn hơn nếu chưa ghi rõ vì sao bỏ qua rank 4.
+Bốn lane đầu theo SOT đã được triển khai nội bộ: **AI tutor rubric và 50 scenario regression**, **Weekly RCA/PDCA outcome loop**, **Privacy evidence panel**, **Human review queue cho item lớp 1-5**. Lane tiếp theo theo SOT là **Diagnostic warm-start lớp 1**. Không được nhảy sang tính năng hấp dẫn hơn nếu chưa ghi rõ vì sao bỏ qua rank 5.
 
 ## Hai mươi must-have feature
 
@@ -172,8 +172,8 @@ Không được gọi là tự tiến hóa nếu hệ thống tự sửa nội d
 
 ## Roadmap đúng thứ tự
 
-1. **Human review queue** để duyệt item theo curriculum map.
-2. **Diagnostic warm-start lớp 1** cho Toán và Tiếng Việt.
-3. **Playwright/WCAG smoke CI** trước khi gọi UI là production-grade.
-4. **Pilot evidence pack 4 tuần** trước mọi claim hiệu quả học tập.
+1. **Diagnostic warm-start lớp 1** cho Toán và Tiếng Việt.
+2. **Playwright/WCAG smoke CI** trước khi gọi UI là production-grade.
+3. **Pilot evidence pack 4 tuần** trước mọi claim hiệu quả học tập.
+4. **Reviewer decision persistence và calibration** cho item đã duyệt.
 5. **Lưu PDCA plan/follow-up qua nhiều tuần** để chuẩn bị cohort export.

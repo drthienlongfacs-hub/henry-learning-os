@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useAppStore } from '@/stores/app-store';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Settings, Calendar, Shield, TrendingUp, AlertTriangle, Target, Heart, Star, BarChart3, ClipboardCheck, GitBranch } from 'lucide-react';
+import { Settings, Calendar, Shield, TrendingUp, AlertTriangle, Target, Heart, Star, BarChart3, ClipboardCheck, ClipboardList, GitBranch } from 'lucide-react';
 import { buildWeeklyPdcaPlan } from '@/lib/evidence/weekly-pdca';
 
 export default function ParentDashboard() {
@@ -260,6 +260,12 @@ export default function ParentDashboard() {
                         <div className="card card-interactive" style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem' }}>
                             <GitBranch size={20} color="#0f766e" />
                             <span style={{ fontWeight: 600 }}>SOT Control Center: AI rubric, RCA/PDCA, privacy</span>
+                        </div>
+                    </Link>
+                    <Link href="/parent/review-queue" style={{ textDecoration: 'none' }}>
+                        <div className="card card-interactive" style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem' }}>
+                            <ClipboardList size={20} color="#d97706" />
+                            <span style={{ fontWeight: 600 }}>Human review queue: duyệt item lớp 1-5</span>
                         </div>
                     </Link>
                     <Link href="/parent/settings" style={{ textDecoration: 'none' }}>

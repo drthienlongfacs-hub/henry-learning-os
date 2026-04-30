@@ -190,9 +190,9 @@ describe('product foundation', () => {
     it('selects the next foundation upgrade from SOT instead of intuition', () => {
         const nextDecision = getNextFoundationUpgradeDecision();
 
-        expect(nextDecision?.id).toBe('human-review-queue');
-        expect(nextDecision?.targetRequirementIds).toContain('P1-review-queue');
-        expect(nextDecision?.sourceIds).toEqual(expect.arrayContaining(['repo-curriculum-map', 'moet-ctgdpt-2018']));
+        expect(nextDecision?.id).toBe('diagnostic-warm-start-grade1');
+        expect(nextDecision?.targetRequirementIds).toContain('P1-diagnostic-warm-start');
+        expect(nextDecision?.sourceIds).toEqual(expect.arrayContaining(['repo-curriculum-map', 'ixl-diagnostic']));
         expect(nextDecision?.antiOverclaim).toContain('Không');
     });
 });
