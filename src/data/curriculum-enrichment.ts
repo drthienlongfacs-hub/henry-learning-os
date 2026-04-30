@@ -7,7 +7,9 @@ export type LearningSubjectKey =
     | 'science'
     | 'hisgeo'
     | 'computing'
-    | 'elite';
+    | 'elite'
+    | 'ethics'
+    | 'art';
 
 export type SourceId =
     | 'moet-ctgdpt-2018'
@@ -583,6 +585,26 @@ export const SUBJECT_ENRICHMENT: Record<LearningSubjectKey, SubjectEnrichment> =
         benchmarkPattern: ['CASEL reflection', 'Civics roleplay', 'Decision quality', 'IB PYP learner profile & ATL skills'],
         sessionRhythm: ['Chọn phương án', 'Giải thích góc nhìn', 'Tìm hệ quả', 'Nói cách sửa lần sau'],
     },
+    ethics: {
+        subject: 'ethics',
+        label: 'Đạo đức',
+        headline: 'Nhận diện hành vi, thấu hiểu cảm xúc, thái độ chuẩn mực.',
+        coverage: 'Lễ phép, cảm xúc bản thân, tôn trọng người khác.',
+        defaultVisual: '/images/core/books_hd.svg',
+        sourceIds: ['moet-ctgdpt-2018', 'casel-framework', 'oecd-learning-compass'],
+        benchmarkPattern: ['CASEL SEL framework', 'Behavioral reflection'],
+        sessionRhythm: ['Tình huống', 'Chọn hành vi đúng', 'Giải thích lý do', 'Liên hệ thực tế'],
+    },
+    art: {
+        subject: 'art',
+        label: 'Nghệ thuật',
+        headline: 'Màu sắc, âm thanh và cảm thụ cái đẹp.',
+        coverage: 'Màu sắc cơ bản, nhịp điệu, sáng tạo.',
+        defaultVisual: '/images/core/books_hd.svg',
+        sourceIds: ['moet-ctgdpt-2018', 'cast-udl'],
+        benchmarkPattern: ['Arts expression', 'Sensory engagement'],
+        sessionRhythm: ['Nghe/Nhìn', 'Nhận diện', 'Tương tác', 'Biểu đạt'],
+    },
 };
 
 const SUBJECT_BY_TOPIC_PREFIX: Record<string, LearningSubjectKey> = {
@@ -628,6 +650,10 @@ const SUBJECT_BY_TOPIC_PREFIX: Record<string, LearningSubjectKey> = {
     hardware: 'computing',
     cyber: 'computing',
     comp: 'computing',
+    polite: 'ethics',
+    express: 'ethics',
+    basic: 'art',
+    music: 'art',
 };
 
 const TOPIC_OVERRIDES: Record<string, Partial<TopicEnrichment>> = {
@@ -878,6 +904,30 @@ const TOPIC_OVERRIDES: Record<string, Partial<TopicEnrichment>> = {
         visual: { src: '/images/computing/NXP_PCF8577C_LCD_driver_with_I_C2_B2C__Colour_Corrected_.jpg', alt: 'Bo mạch phần cứng máy tính với chip xử lý' },
         masteryTargets: ['Nhận biết các bộ phận: CPU, RAM, ổ cứng, màn hình', 'Nêu chức năng nhập/xử lý/xuất/lưu trữ', 'Không nhầm phần cứng với phần mềm'],
         commonPitfalls: ['Gọi tất cả là "máy tính" mà không biết bộ phận', 'Nhầm phần mềm (app) với phần cứng (thiết bị)', 'Không biết dữ liệu lưu ở đâu'],
+    },
+
+    // ── Đạo đức ──
+    polite_greet: {
+        visual: { src: '/images/core/books_hd.svg', alt: 'Hình ảnh trẻ em chào hỏi lễ phép' },
+        masteryTargets: ['Biết chào hỏi phù hợp với người lớn và bạn bè', 'Hiểu lý do vì sao cần chào hỏi lễ phép'],
+        commonPitfalls: ['Chào trống không', 'Ngại ngùng không dám chào'],
+    },
+    express_emotion: {
+        visual: { src: '/images/core/books_hd.svg', alt: 'Hình ảnh biểu cảm khuôn mặt' },
+        masteryTargets: ['Nhận biết được cảm xúc của bản thân (vui, buồn, tức giận)', 'Biết cách thể hiện cảm xúc mà không làm tổn thương người khác'],
+        commonPitfalls: ['Ném đồ đạc khi tức giận', 'Giấu nhẹm cảm xúc buồn bã'],
+    },
+
+    // ── Nghệ thuật ──
+    basic_colors: {
+        visual: { src: '/images/core/books_hd.svg', alt: 'Bảng pha màu cơ bản' },
+        masteryTargets: ['Nhận biết 3 màu cơ bản (đỏ, vàng, xanh lam)', 'Biết sự pha trộn tạo ra màu mới (đỏ + vàng = cam)'],
+        commonPitfalls: ['Gọi nhầm tên màu', 'Tô màu tràn viền không kiểm soát'],
+    },
+    music_rhythm: {
+        visual: { src: '/images/core/books_hd.svg', alt: 'Nốt nhạc và nhịp điệu' },
+        masteryTargets: ['Nhận biết nhịp điệu bài hát (nhanh, chậm)', 'Vỗ tay đúng nhịp 2/4'],
+        commonPitfalls: ['Vỗ tay không đều', 'Vỗ tay theo lời ca thay vì nhịp/phách'],
     },
 };
 

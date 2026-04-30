@@ -64,6 +64,16 @@ const SUBJECT_PROTOCOL: Record<LearningSubjectKey, string[]> = {
         'So sánh hệ quả cho mình và cho người khác.',
         'Chọn phương án, rồi nói điều kiện nào khiến con đổi ý.',
     ],
+    ethics: [
+        'Phân tích tình huống cẩn thận.',
+        'Chọn hành động phù hợp và giải thích lý do.',
+        'Liên hệ với cảm xúc và tác động đến người khác.',
+    ],
+    art: [
+        'Quan sát hoặc lắng nghe tác phẩm.',
+        'Nhận diện các đặc điểm (màu sắc, âm thanh, nhịp điệu).',
+        'Cảm nhận và biểu đạt sự sáng tạo cá nhân.',
+    ],
 };
 
 function focusFromEvidence(profile?: TopicEvidenceProfile) {

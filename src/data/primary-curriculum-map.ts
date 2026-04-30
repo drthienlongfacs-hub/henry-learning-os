@@ -4,7 +4,9 @@ export type PrimaryCurriculumSubjectKey =
     | 'english'
     | 'science'
     | 'hisgeo'
-    | 'computing';
+    | 'computing'
+    | 'ethics'
+    | 'art';
 
 export type PrimaryCurriculumMapStatus = 'item_traceable_needs_human_review';
 
@@ -158,6 +160,38 @@ const computing = (grade: 3 | 4 | 5, topicKey: string, topicName: string, strand
         'Trước khi claim phủ chuẩn, mỗi item phải có thiết bị/dữ liệu/thuật toán/an toàn, kèm thao tác kiểm chứng không cần chat tự do.',
     );
 
+const ethics = (grade: 1 | 2 | 3 | 4 | 5, topicKey: string, topicName: string, strand: string, expectedOutcome: string, exampleTask: string, misconceptionWatch: string[]) =>
+    mapTopic(
+        'ethics',
+        'Đạo đức',
+        grade,
+        topicKey,
+        topicName,
+        strand,
+        expectedOutcome,
+        `Ở lớp ${grade}, Đạo đức phải hướng tới hành vi, cảm xúc và thái độ chuẩn mực, không chỉ là kiến thức thuộc lòng.`,
+        exampleTask,
+        ['topicKey', 'gradeLevel', 'nhận diện hành vi', 'lý do chọn', 'cảm xúc liên quan'],
+        misconceptionWatch,
+        'Trước khi claim phủ chuẩn, mỗi item phải có tình huống thực tế, hành vi đúng sai và giải thích.',
+    );
+
+const art = (grade: 1 | 2 | 3 | 4 | 5, topicKey: string, topicName: string, strand: string, expectedOutcome: string, exampleTask: string, misconceptionWatch: string[]) =>
+    mapTopic(
+        'art',
+        'Nghệ thuật',
+        grade,
+        topicKey,
+        topicName,
+        strand,
+        expectedOutcome,
+        `Ở lớp ${grade}, Nghệ thuật (Âm nhạc, Mĩ thuật) tập trung vào nhận biết, thể hiện và cảm thụ cái đẹp cơ bản.`,
+        exampleTask,
+        ['topicKey', 'gradeLevel', 'nhận diện yếu tố nghệ thuật', 'sự sáng tạo', 'biểu đạt'],
+        misconceptionWatch,
+        'Trước khi claim phủ chuẩn, mỗi item phải có sự tương tác với màu sắc, âm thanh hoặc hình khối.',
+    );
+
 export const PRIMARY_CURRICULUM_TOPIC_MAP: PrimaryCurriculumTopicMap[] = [
     math(1, 'add_sub_10', 'Cộng trừ trong 10', 'Số và phép tính', 'Cộng, trừ trong phạm vi 10 và nói được cách đếm thêm hoặc đếm lùi.', 'Con dùng que tính hoặc chấm tròn để giải 6 + 3, sau đó nói vì sao kết quả là 9.', ['Đếm vẹt nhưng không hiểu thêm/bớt', 'Nhầm dấu cộng và dấu trừ']),
     math(1, 'add_sub_20', 'Cộng trừ trong 20', 'Số và phép tính', 'Cộng, trừ trong phạm vi 20, bước đầu biết tách số qua 10.', 'Con giải 8 + 5 bằng cách tách 5 thành 2 và 3 để làm tròn 10.', ['Qua 10 nhưng không biết tách số', 'Đếm lại từ 1 quá lâu']),
@@ -206,13 +240,17 @@ export const PRIMARY_CURRICULUM_TOPIC_MAP: PrimaryCurriculumTopicMap[] = [
     computing(3, 'hardware', 'Phần cứng căn bản', 'Máy tính và em', 'Nhận biết thiết bị số cơ bản, thao tác lưu, gõ, chọn và dùng an toàn.', 'Con chỉ màn hình, bàn phím, chuột và thực hiện thao tác lưu bài.', ['Gọi mọi thiết bị là máy tính', 'Không biết lưu trước khi thoát']),
     computing(4, 'cyber_safety', 'An toàn mạng', 'Đạo đức, pháp luật và văn hóa trong môi trường số', 'Biết bảo vệ mật khẩu, thông tin cá nhân và báo người lớn khi gặp rủi ro.', 'Con chọn không bấm link trúng thưởng lạ và nói cần báo phụ huynh.', ['Tò mò bấm link lạ', 'Nghĩ mật khẩu có thể chia sẻ cho bạn thân']),
     computing(5, 'comp_logic', 'Tư duy máy tính', 'Giải quyết vấn đề với sự trợ giúp của máy tính', 'Hiểu thuật toán là các bước rõ ràng và biết phát hiện/sửa lỗi đơn giản.', 'Con sắp xếp lệnh đi tới đích, chạy thử, phát hiện bước sai và sửa lại.', ['Không kiểm tra thứ tự bước', 'Nghĩ thuật toán chỉ là code khó']),
+    ethics(1, 'polite_greet', 'Chào hỏi lễ phép', 'Giáo dục đạo đức', 'Biết chào hỏi phù hợp với từng đối tượng (người lớn, bạn bè).', 'Con chọn cách khoanh tay chào ông bà và giải thích vì sao cần làm thế.', ['Chào trống không', 'Không phân biệt người lớn và bạn bè']),
+    ethics(2, 'express_emotion', 'Thể hiện cảm xúc', 'Giáo dục kĩ năng sống', 'Nhận biết và thể hiện cảm xúc bản thân đúng cách, tôn trọng cảm xúc người khác.', 'Con chọn cách hít thở sâu khi tức giận thay vì ném đồ chơi.', ['Cho rằng tức giận là xấu và phải giấu đi', 'Thể hiện cảm xúc làm tổn thương người khác']),
+    art(1, 'basic_colors', 'Màu sắc cơ bản', 'Mĩ thuật', 'Nhận biết các màu cơ bản và pha màu đơn giản.', 'Con chỉ ra màu đỏ, vàng, xanh lam trong bức tranh và biết đỏ pha vàng ra cam.', ['Gọi sai tên màu', 'Tô màu tràn viền không kiểm soát']),
+    art(2, 'music_rhythm', 'Nhịp điệu cơ bản', 'Âm nhạc', 'Nhận biết và vỗ tay theo nhịp điệu bài hát đơn giản.', 'Con vỗ tay đúng nhịp 2/4 theo bài hát thiếu nhi.', ['Vỗ tay nhanh/chậm hơn nhạc', 'Không cảm nhận được phách mạnh']),
 ];
 
 export const PRIMARY_CURRICULUM_MAP_STATS = {
     sourceVersion: CT_VERSION,
     topicMapCount: PRIMARY_CURRICULUM_TOPIC_MAP.length,
     gradeCoverage: [1, 2, 3, 4, 5] as const,
-    subjectCoverage: ['math', 'vietnamese', 'english', 'science', 'hisgeo', 'computing'] as const,
+    subjectCoverage: ['math', 'vietnamese', 'english', 'science', 'hisgeo', 'computing', 'ethics', 'art'] as const,
     evidenceFields: ['curriculumMapId', 'topicKey', 'gradeLevel', 'attempt result', 'support level', 'child explanation', 'source version', 'review status'],
     noOverclaim: 'Generated item hiện đã có curriculumMapId và source version. Muốn claim item bank phủ chuẩn 100% vẫn cần người duyệt và calibration bằng dữ liệu thật.',
 };

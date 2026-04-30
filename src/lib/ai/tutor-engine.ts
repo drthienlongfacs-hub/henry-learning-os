@@ -54,6 +54,8 @@ const SUBJECT_LABEL: Record<LearningSubjectKey, string> = {
     hisgeo: 'Lịch sử & Địa lý',
     computing: 'Tin học',
     elite: 'Năng lực tinh hoa',
+    ethics: 'Đạo đức',
+    art: 'Nghệ thuật',
 };
 
 function normalize(value: string) {

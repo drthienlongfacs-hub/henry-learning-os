@@ -11,6 +11,8 @@ import { ENGLISH_TOPICS, generateEnglishSet, type EnglishProblem } from '@/lib/c
 import { SCIENCE_TOPICS, generateScienceSet, type ScienceProblem } from '@/lib/content/science-generator';
 import { HISGEO_TOPICS, generateHisGeoSet, type HisGeoProblem } from '@/lib/content/history-geo-generator';
 import { COMPUTING_TOPICS, generateComputingSet, type ComputingProblem } from '@/lib/content/computing-generator';
+import { ETHICS_TOPICS, generateEthicsSet, type EthicsProblem } from '@/lib/content/ethics-generator';
+import { ART_TOPICS, generateArtSet, type ArtProblem } from '@/lib/content/art-generator';
 import { useAppStore } from '@/stores/app-store';
 import { ResourceAttribution } from '@/components/ResourceAttribution';
 import {
@@ -47,8 +49,8 @@ import {
 import type { PrimaryCurriculumSubjectKey } from '@/data/primary-curriculum-map';
 
 // ── Types ──
-type Subject = 'math' | 'vietnamese' | 'english' | 'science' | 'hisgeo' | 'computing' | 'elite';
-type GeneratedProblem = MathProblem | VietnameseProblem | EnglishProblem | ScienceProblem | HisGeoProblem | ComputingProblem;
+type Subject = 'math' | 'vietnamese' | 'english' | 'science' | 'hisgeo' | 'computing' | 'ethics' | 'art' | 'elite';
+type GeneratedProblem = MathProblem | VietnameseProblem | EnglishProblem | ScienceProblem | HisGeoProblem | ComputingProblem | EthicsProblem | ArtProblem;
 type Problem = CurriculumMappedProblem<GeneratedProblem>;
 // Augment problem types to support illustration
 type ProblemWithViz = Problem & { illustration?: React.ReactNode | string };
@@ -60,6 +62,8 @@ const SUBJECTS: { key: Subject; name: string; icon: React.ReactNode; color: stri
     { key: 'science', name: 'Khoa học', icon: <FlaskConical size={28} />, color: '#f59e0b', grades: [1, 2, 3, 4, 5] },
     { key: 'hisgeo', name: 'Lịch sử & Địa lý', icon: <Globe2 size={28} />, color: '#6366f1', grades: [4, 5] },
     { key: 'computing', name: 'Tin học', icon: <Brain size={28} />, color: '#14b8a6', grades: [3, 4, 5] },
+    { key: 'ethics', name: 'Đạo đức', icon: <BookOpen size={28} />, color: '#f43f5e', grades: [1, 2, 3, 4, 5] },
+    { key: 'art', name: 'Nghệ thuật', icon: <BookOpen size={28} />, color: '#d946ef', grades: [1, 2, 3, 4, 5] },
     { key: 'elite', name: 'Năng lực Tinh Hoa', icon: <Brain size={28} />, color: '#ef4444', grades: [1, 2, 3, 4, 5] },
 ];
 
@@ -70,10 +74,12 @@ const SUBJECT_ENRICHMENT_KEY: Record<Subject, LearningSubjectKey> = {
     science: 'science',
     hisgeo: 'hisgeo',
     computing: 'computing',
+    ethics: 'ethics',
+    art: 'art',
     elite: 'elite',
 };
 
-const PRIMARY_CURRICULUM_SUBJECTS: PrimaryCurriculumSubjectKey[] = ['math', 'vietnamese', 'english', 'science', 'hisgeo', 'computing'];
+const PRIMARY_CURRICULUM_SUBJECTS: PrimaryCurriculumSubjectKey[] = ['math', 'vietnamese', 'english', 'science', 'hisgeo', 'computing', 'ethics', 'art'];
 
 function isPrimaryCurriculumSubject(subj: Subject): subj is PrimaryCurriculumSubjectKey {
     return PRIMARY_CURRICULUM_SUBJECTS.includes(subj as PrimaryCurriculumSubjectKey);
@@ -131,6 +137,8 @@ export default function LearnPage() {
         else if (subj === 'science') p = generateScienceSet(g, topicKey, count);
         else if (subj === 'hisgeo') p = generateHisGeoSet(g, topicKey, count);
         else if (subj === 'computing') p = generateComputingSet(g, topicKey, count);
+        else if (subj === 'ethics') p = generateEthicsSet(g, topicKey, count);
+        else if (subj === 'art') p = generateArtSet(g, topicKey, count);
         setProblems(isPrimaryCurriculumSubject(subj) ? attachCurriculumAuditSet(subj, p) : []);
         setIndex(0); setSelected(null); setScore(0); setShowHint(false); setHintLevelUsed(0);
         startTime.current = Date.now();
@@ -307,7 +315,9 @@ export default function LearnPage() {
                 : subject === 'science' ? SCIENCE_TOPICS.filter(t => t.gradeLevel <= grade)
                     : subject === 'hisgeo' ? HISGEO_TOPICS.filter(t => t.gradeLevel <= grade)
                         : subject === 'computing' ? COMPUTING_TOPICS.filter(t => t.gradeLevel <= grade)
-                            : [];
+                            : subject === 'ethics' ? ETHICS_TOPICS.filter(t => t.gradeLevel <= grade)
+                                : subject === 'art' ? ART_TOPICS.filter(t => t.gradeLevel <= grade)
+                                    : [];
     const activeSubjectSummary = subject
         ? summarizeSubjectPlan(SUBJECT_ENRICHMENT_KEY[subject], topics.map(t => t.key), attempts)
         : null;

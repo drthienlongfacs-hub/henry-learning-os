@@ -102,6 +102,16 @@ const STANDARD_BY_SUBJECT: Record<LearningSubjectKey, StandardAlignment[]> = {
         { sourceId: 'casel-framework', label: 'CASEL SEL', application: 'Tự nhận thức, tự quản, quan hệ, ra quyết định.' },
         { sourceId: 'aap-family-media', label: 'AAP Family Media Plan', application: 'Phiên học ngắn, có giới hạn màn hình và tương tác phụ huynh.' },
     ],
+    ethics: [
+        { sourceId: 'moet-ctgdpt-2018', label: 'CTGDPT 2018 Đạo đức', application: 'Phát triển hành vi và thái độ chuẩn mực.' },
+        { sourceId: 'casel-framework', label: 'CASEL SEL', application: 'Quản lý cảm xúc và nhận thức xã hội.' },
+        { sourceId: 'oecd-learning-compass', label: 'OECD Learning Compass', application: 'Trách nhiệm cá nhân và xã hội.' },
+    ],
+    art: [
+        { sourceId: 'moet-ctgdpt-2018', label: 'CTGDPT 2018 Mĩ thuật & Âm nhạc', application: 'Nhận biết, thể hiện và cảm thụ cái đẹp.' },
+        { sourceId: 'cast-udl', label: 'Universal Design for Learning', application: 'Cung cấp nhiều cách để học sinh biểu đạt.' },
+        { sourceId: 'eef-metacognition', label: 'EEF Metacognition', application: 'Tự suy ngẫm về quá trình sáng tạo.' },
+    ],
 };
 
 const BENCHMARK_BY_SUBJECT: Record<LearningSubjectKey, BenchmarkPattern[]> = {
@@ -140,6 +150,16 @@ const BENCHMARK_BY_SUBJECT: Record<LearningSubjectKey, BenchmarkPattern[]> = {
         { sourceId: 'casel-framework', product: 'CASEL', pattern: 'Decision and relationship reflection', appUse: 'Không chỉ chọn đáp án; cần nêu hệ quả cho người khác.' },
         { sourceId: 'aap-family-media', product: 'AAP', pattern: 'Family media boundary', appUse: 'Phiên học có điểm dừng, nhiệm vụ ngoài màn hình và người lớn đồng hành.' },
     ],
+    ethics: [
+        { sourceId: 'casel-framework', product: 'CASEL', pattern: 'SEL integrated practice', appUse: 'Tập trung vào giải thích lý do cho hành vi.' },
+        { sourceId: 'khan-academy-kids', product: 'Khan Academy Kids', pattern: 'Guided reflection', appUse: 'Luyện tập tình huống xã hội thông qua câu chuyện.' },
+        { sourceId: 'oecd-learning-compass', product: 'OECD', pattern: 'Action reflection', appUse: 'Biến nhận thức thành hành động thực tế.' },
+    ],
+    art: [
+        { sourceId: 'khan-academy-kids', product: 'Khan Academy Kids', pattern: 'Creative play', appUse: 'Cho phép trẻ em tự do kết hợp màu sắc và âm thanh.' },
+        { sourceId: 'cast-udl', product: 'UDL', pattern: 'Multiple means of expression', appUse: 'Cho phép phản hồi bằng nhiều phương thức.' },
+        { sourceId: 'eef-metacognition', product: 'EEF', pattern: 'Creative process reflection', appUse: 'Hỏi về quá trình tạo ra sản phẩm nghệ thuật.' },
+    ],
 };
 
 const PRACTICE_BY_SUBJECT: Record<LearningSubjectKey, string[]> = {
@@ -150,6 +170,8 @@ const PRACTICE_BY_SUBJECT: Record<LearningSubjectKey, string[]> = {
     hisgeo: ['Đặt lên bản đồ hoặc dòng thời gian', 'Nêu nhân vật/địa điểm/bằng chứng', 'Giải thích vì sao sự kiện hoặc nơi đó quan trọng'],
     computing: ['Nói thuật toán bằng câu thường', 'Thử từng bước và tìm lỗi', 'Nêu quy tắc an toàn hoặc tác động xã hội'],
     elite: ['Nêu mục tiêu', 'So sánh hệ quả', 'Chọn phương án và điều kiện để đổi ý'],
+    ethics: ['Phân tích tình huống', 'Chọn hành động đúng', 'Giải thích lý do'],
+    art: ['Quan sát hoặc lắng nghe', 'Nhận diện đặc điểm', 'Biểu đạt cảm nhận'],
 };
 
 const ROUTINE_BY_SUBJECT: Record<LearningSubjectKey, string[]> = {
@@ -160,6 +182,8 @@ const ROUTINE_BY_SUBJECT: Record<LearningSubjectKey, string[]> = {
     hisgeo: ['Ảnh hoặc bản đồ', 'Mốc hoặc địa điểm', 'Nguyên nhân - hệ quả', 'Liên hệ hiện nay'],
     computing: ['Mục tiêu', 'Thuật toán', 'Debug', 'Quy tắc an toàn'],
     elite: ['Tình huống', 'Lựa chọn', 'Hệ quả', 'Tự đánh giá'],
+    ethics: ['Tình huống', 'Cảm xúc', 'Lựa chọn', 'Lý do'],
+    art: ['Tiếp nhận', 'Nhận diện', 'Cảm nhận', 'Sáng tạo'],
 };
 
 const PARENT_BY_SUBJECT: Record<LearningSubjectKey, string> = {
@@ -170,6 +194,8 @@ const PARENT_BY_SUBJECT: Record<LearningSubjectKey, string> = {
     hisgeo: 'Ba/mẹ hỏi bé đặt sự kiện/nơi chốn lên bản đồ hoặc dòng thời gian.',
     computing: 'Ba/mẹ hỏi bé đọc thuật toán từng bước và nêu một rủi ro an toàn.',
     elite: 'Ba/mẹ hỏi bé chọn lại nếu điều kiện thay đổi, để luyện linh hoạt.',
+    ethics: 'Ba/mẹ hỏi: "Vì sao con chọn cách xử sự này? Cảm xúc của bạn kia sẽ thế nào?"',
+    art: 'Ba/mẹ hỏi: "Con thấy màu/âm thanh này giống cái gì? Con cảm thấy thế nào?"',
 };
 
 function blueprint(
