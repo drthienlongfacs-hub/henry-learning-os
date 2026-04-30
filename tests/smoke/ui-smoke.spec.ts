@@ -195,10 +195,16 @@ for (const route of UI_SMOKE_ROUTES) {
                 return [`${element.tagName.toLowerCase()} "${(element.innerText || element.getAttribute('aria-label') || '').trim().slice(0, 40)}" ${Math.round(rect.width)}x${Math.round(rect.height)}`];
             });
 
+            const viewportWidth = Math.max(
+                document.documentElement.clientWidth,
+                window.innerWidth,
+                Math.floor(window.visualViewport?.width ?? 0)
+            );
+
             return {
                 bodyTextLength: document.body.innerText.trim().length,
                 hasMainContent: Boolean(mainRect && mainRect.width > 0 && mainRect.height > 120),
-                horizontalOverflowPx: Math.max(0, document.documentElement.scrollWidth - document.documentElement.clientWidth),
+                horizontalOverflowPx: Math.max(0, document.documentElement.scrollWidth - viewportWidth),
                 smallTargets,
             };
         }, UI_SMOKE_GATE);
