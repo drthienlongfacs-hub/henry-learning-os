@@ -636,6 +636,7 @@ const SUBJECT_BY_TOPIC_PREFIX: Record<string, LearningSubjectKey> = {
     vocabulary: 'vietnamese',
     reading: 'vietnamese',
     grammar: 'vietnamese',
+    writing: 'vietnamese',
     vocab: 'english',
     grammar_en: 'english',
     reading_en: 'english',

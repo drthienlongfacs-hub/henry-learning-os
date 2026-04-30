@@ -304,6 +304,50 @@ export function genGrammar(): VietnameseProblem {
 }
 
 // ══════════════════════════════════════════════
+// GRADE 4: Writing — Tập làm văn
+// ══════════════════════════════════════════════
+
+const WRITING_G4_QS = [
+    { q: 'Khi viết bài văn tả người, em nên bắt đầu phần mở bài bằng gì?', a: 'Giới thiệu người em định tả (ai, quan hệ)', opts: ['Giới thiệu người em định tả (ai, quan hệ)', 'Viết thẳng ngoại hình', 'Nêu cảm nghĩ cuối bài', 'Kể một câu chuyện dài'], e: 'Mở bài giới thiệu nhân vật: đó là ai, quan hệ thế nào với em.' },
+    { q: 'Trong bài văn tả cảnh, thân bài nên sắp xếp theo trình tự nào?', a: 'Theo không gian (xa → gần) hoặc thời gian (sáng → chiều)', opts: ['Theo không gian (xa → gần) hoặc thời gian (sáng → chiều)', 'Theo bảng chữ cái', 'Theo cảm hứng ngẫu nhiên', 'Theo số lượng câu'], e: 'Tả cảnh cần có trình tự rõ ràng để người đọc hình dung được bức tranh.' },
+    { q: 'Câu nào sau đây có hình ảnh so sánh?', a: 'Mặt trăng tròn như chiếc đĩa bạc', opts: ['Mặt trăng tròn như chiếc đĩa bạc', 'Trời hôm nay nắng đẹp', 'Em đi học mỗi ngày', 'Bố em là bác sĩ'], e: 'So sánh dùng từ "như", "tựa", "giống" để liên tưởng hai sự vật.' },
+    { q: 'Câu nào dùng biện pháp nhân hóa?', a: 'Ông mặt trời thức dậy', opts: ['Ông mặt trời thức dậy', 'Mặt trời mọc lúc 6 giờ', 'Ánh nắng chiếu qua cửa sổ', 'Trời nắng rất to'], e: 'Nhân hóa là gán hành động, tính chất của người cho vật (mặt trời "thức dậy").' },
+    { q: 'Kết bài của bài văn tả đồ vật thường viết gì?', a: 'Tình cảm của em với đồ vật đó', opts: ['Tình cảm của em với đồ vật đó', 'Giá tiền đồ vật', 'Nơi sản xuất', 'Tả lại từ đầu'], e: 'Kết bài nêu cảm nghĩ, tình cảm gắn bó của em với đồ vật được tả.' },
+];
+
+export function genWritingG4(): VietnameseProblem {
+    const item = WRITING_G4_QS[rand(0, WRITING_G4_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 4, difficulty: 4,
+        type: 'writing', topic: 'Tập làm văn', topicKey: 'writing_g4',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Nhớ cấu trúc: Mở bài → Thân bài → Kết bài', `Đáp án: ${item.a}`],
+    };
+}
+
+// ══════════════════════════════════════════════
+// GRADE 5: Writing — Nghị luận đơn giản
+// ══════════════════════════════════════════════
+
+const WRITING_G5_QS = [
+    { q: 'Khi viết bài văn nghị luận, em cần nêu rõ điều gì ở phần mở bài?', a: 'Ý kiến (quan điểm) của em về vấn đề', opts: ['Ý kiến (quan điểm) của em về vấn đề', 'Kể một câu chuyện dài', 'Tả cảnh thiên nhiên', 'Liệt kê sự kiện'], e: 'Nghị luận bắt đầu bằng việc nêu rõ quan điểm, ý kiến của người viết.' },
+    { q: 'Để bài văn nghị luận có sức thuyết phục, thân bài cần có gì?', a: 'Lý lẽ và dẫn chứng cụ thể', opts: ['Lý lẽ và dẫn chứng cụ thể', 'Nhiều hình ảnh đẹp', 'Thật nhiều câu dài', 'Lặp lại ý kiến nhiều lần'], e: 'Lý lẽ là giải thích vì sao; dẫn chứng là ví dụ cụ thể để chứng minh.' },
+    { q: 'Câu tục ngữ "Có công mài sắt, có ngày nên kim" khuyên ta điều gì?', a: 'Kiên trì, nhẫn nại sẽ thành công', opts: ['Kiên trì, nhẫn nại sẽ thành công', 'Cần nhiều tiền', 'Phải mài dao thật sắc', 'Đừng bao giờ cố gắng'], e: 'Tục ngữ dùng hình ảnh mài sắt thành kim để khuyên người ta kiên nhẫn.' },
+    { q: 'Trong câu "Đọc sách giúp mở rộng kiến thức", đâu là ý kiến?', a: 'Đọc sách giúp mở rộng kiến thức', opts: ['Đọc sách giúp mở rộng kiến thức', 'Sách là tập giấy', 'Kiến thức là danh từ', 'Đọc là động từ'], e: 'Ý kiến là nhận định có thể đồng ý hoặc phản bác, khác với sự thật hiển nhiên.' },
+    { q: 'Khi kết bài nghị luận, em nên:', a: 'Khẳng định lại ý kiến và mở rộng suy nghĩ', opts: ['Khẳng định lại ý kiến và mở rộng suy nghĩ', 'Kể thêm câu chuyện mới', 'Tả cảnh đẹp', 'Dừng đột ngột'], e: 'Kết bài nhắc lại quan điểm chính và gợi mở hướng suy nghĩ tiếp.' },
+];
+
+export function genWritingG5(): VietnameseProblem {
+    const item = WRITING_G5_QS[rand(0, WRITING_G5_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 5, difficulty: 5,
+        type: 'writing', topic: 'Nghị luận đơn giản', topicKey: 'writing_g5',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Nghị luận = ý kiến + lý lẽ + dẫn chứng', `Đáp án: ${item.a}`],
+    };
+}
+
+// ══════════════════════════════════════════════
 // TOPIC REGISTRY
 // ══════════════════════════════════════════════
 
@@ -321,6 +365,8 @@ export const VIETNAMESE_TOPICS: VnTopicInfo[] = [
     { key: 'vocabulary', name: 'Từ vựng chủ đề', gradeLevel: 2, generator: genVocabulary, icon: '📚' },
     { key: 'reading', name: 'Đọc hiểu', gradeLevel: 2, generator: genReadingComprehension, icon: '📖' },
     { key: 'grammar', name: 'Ngữ pháp', gradeLevel: 3, generator: genGrammar, icon: '✍️' },
+    { key: 'writing_g4', name: 'Tập làm văn', gradeLevel: 4, generator: genWritingG4, icon: '📝' },
+    { key: 'writing_g5', name: 'Nghị luận đơn giản', gradeLevel: 5, generator: genWritingG5, icon: '💡' },
 ];
 
 export function generateVietnameseSet(grade: number, topicKey?: string, count: number = 10): VietnameseProblem[] {
