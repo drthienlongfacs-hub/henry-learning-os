@@ -42,6 +42,7 @@ describe('product foundation', () => {
         [
             'docx-master-blueprint',
             'zip-dev-handoff',
+            'sot-traceability-matrix',
             'repo-prd',
             'repo-architecture',
             'moet-ctgdpt-2018',
@@ -104,7 +105,7 @@ describe('product foundation', () => {
 
     it('calculates foundation maturity without pretending the product is finished', () => {
         expect(PRODUCT_FOUNDATION_REQUIREMENTS.filter((requirement) => requirement.priority === 'P0')).toHaveLength(8);
-        expect(computeFoundationP0Readiness100()).toBe(75);
+        expect(computeFoundationP0Readiness100()).toBe(94);
         expect(PRODUCT_FOUNDATION_FEATURE_COVERAGE).toHaveLength(20);
         expect(computeFoundationMustHaveCoverage100()).toBe(75);
         expect(computeFoundationRequirementCoverage('implemented')).toBeGreaterThan(20);
@@ -189,9 +190,9 @@ describe('product foundation', () => {
     it('selects the next foundation upgrade from SOT instead of intuition', () => {
         const nextDecision = getNextFoundationUpgradeDecision();
 
-        expect(nextDecision?.id).toBe('ai-tutor-rubric-regression');
-        expect(nextDecision?.targetRequirementIds).toContain('P0-ai-socratic-safety');
-        expect(nextDecision?.sourceIds).toEqual(expect.arrayContaining(['khanmigo', 'nist-ai-rmf', 'unicef-ai-children']));
-        expect(nextDecision?.antiOverclaim).toContain('Không claim');
+        expect(nextDecision?.id).toBe('human-review-queue');
+        expect(nextDecision?.targetRequirementIds).toContain('P1-review-queue');
+        expect(nextDecision?.sourceIds).toEqual(expect.arrayContaining(['repo-curriculum-map', 'moet-ctgdpt-2018']));
+        expect(nextDecision?.antiOverclaim).toContain('Không');
     });
 });

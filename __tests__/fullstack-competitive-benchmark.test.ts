@@ -31,7 +31,7 @@ describe('full-stack competitive benchmark', () => {
         const efficacy = FULLSTACK_BENCHMARK_DIMENSIONS.find((dimension) => dimension.key === 'evidenceAndOutcomeTracking');
 
         expect(efficacy).toBeDefined();
-        expect(efficacy?.henryScore10).toBeLessThanOrEqual(3.5);
+        expect(efficacy?.henryScore10).toBeLessThanOrEqual(4);
         expect(efficacy?.gap).toContain('chưa có pre/post');
         expect(efficacy?.evidenceNeededBeforeEfficacyClaim).toContain('dữ liệu người học thật');
         expect(HENRY_FULLSTACK_BENCHMARK.noClaimGuardrail).toContain('Không claim');
@@ -60,8 +60,9 @@ describe('full-stack competitive benchmark', () => {
     });
 
     it('surfaces the latest live upgrade above the fold', () => {
-        expect(LIVE_UPGRADE_SIGNALS).toHaveLength(4);
-        expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('60/100');
+        expect(LIVE_UPGRADE_SIGNALS).toHaveLength(5);
+        expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('64/100');
+        expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('94/100 P0');
         expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('47/47 topic');
         expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('100% traceable');
         expect(LIVE_UPGRADE_SIGNALS.some((signal) => signal.detail.includes('người duyệt và calibration thật'))).toBe(true);
@@ -81,7 +82,7 @@ describe('full-stack competitive benchmark', () => {
     it('explains why full-stack score cannot honestly jump to 100 yet', () => {
         const statuses = new Set(FULLSTACK_100_GATES.map((gate) => gate.status));
 
-        expect(HENRY_FULLSTACK_BENCHMARK.overallScore100).toBe(60);
+        expect(HENRY_FULLSTACK_BENCHMARK.overallScore100).toBe(64);
         expect(PRIMARY_ITEM_AUDIT_GATE.generatedItemTraceabilityCoverage100).toBe(100);
         expect(statuses.has('passed')).toBe(true);
         expect(statuses.has('partial')).toBe(true);

@@ -4,7 +4,7 @@ import { useAppStore } from '@/stores/app-store';
 import { useTranslation } from '@/lib/i18n';
 import { LangToggle } from '@/components/LangToggle';
 import Link from 'next/link';
-import { BarChart3, BookOpen, Brain, ClipboardCheck, GraduationCap, Heart, Shield, Star } from 'lucide-react';
+import { BarChart3, BookOpen, Brain, ClipboardCheck, GitBranch, GraduationCap, Heart, Shield, Star } from 'lucide-react';
 
 export default function Home() {
   const { isOnboarded } = useAppStore();
@@ -72,6 +72,18 @@ export default function Home() {
               </div>
             </div>
           </Link>
+
+          <Link href="/parent/sot" style={{ textDecoration: 'none' }}>
+            <div className="card card-interactive animate-fade-in" style={{ display: 'flex', alignItems: 'center', gap: '1rem', animationDelay: '0.4s' }}>
+              <div style={{ width: '56px', height: '56px', borderRadius: 'var(--radius-lg)', background: 'linear-gradient(135deg, #0f766e, #2563eb)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <GitBranch size={28} color="white" />
+              </div>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: '1.1rem', color: 'var(--color-text-primary)' }}>SOT Control Center</div>
+                <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>AI rubric, RCA/PDCA và privacy evidence</div>
+              </div>
+            </div>
+          </Link>
         </div>
       </div>
     );
@@ -123,6 +135,12 @@ export default function Home() {
         <div style={{ marginTop: '0.7rem' }}>
           <Link href="/parent/foundation" style={{ color: '#6d28d9', fontWeight: 800, fontSize: '0.92rem', textDecoration: 'none' }}>
             Xem nền móng, mục đích và spec sản phẩm
+          </Link>
+        </div>
+
+        <div style={{ marginTop: '0.7rem' }}>
+          <Link href="/parent/sot" style={{ color: '#0f766e', fontWeight: 800, fontSize: '0.92rem', textDecoration: 'none' }}>
+            Xem SOT Control Center live
           </Link>
         </div>
 

@@ -102,5 +102,7 @@ describe('AI tutor engine', () => {
         expect(response.text).toContain('AI gia sư');
         expect(response.text).toContain('sai phép tính');
         expect(response.supportLevel).toBe('hint_medium');
+        expect(response.sotAudit?.passed).toBe(true);
+        expect(response.sotAudit?.blockedClaim).toContain('pilot/cohort');
     });
 });

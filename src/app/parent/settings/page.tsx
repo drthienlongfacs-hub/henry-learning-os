@@ -2,10 +2,34 @@
 
 import { useAppStore } from '@/stores/app-store';
 import Link from 'next/link';
-import { ArrowLeft, Shield, Eye, Clock, ExternalLink, Lock } from 'lucide-react';
+import { ArrowLeft, Shield, Eye, Clock, ExternalLink, Lock, Database, Download, Trash2 } from 'lucide-react';
+import { buildPrivacyEvidencePanel } from '@/lib/privacy/privacy-evidence';
 
 export default function SettingsPage() {
-    const { childProfile, aiInteractionLogs, safetyEvents } = useAppStore();
+    const {
+        childProfile,
+        parentProfile,
+        attempts,
+        mistakes,
+        reviewSchedules,
+        reflections,
+        readingEntries,
+        weeklyReviews,
+        aiInteractionLogs,
+        safetyEvents,
+    } = useAppStore();
+    const privacyPanel = buildPrivacyEvidencePanel({
+        child_profile: childProfile ? 1 : 0,
+        parent_profile: parentProfile ? 1 : 0,
+        attempts: attempts.length,
+        mistakes: mistakes.length,
+        review_schedules: reviewSchedules.length,
+        reflections: reflections.length,
+        reading_entries: readingEntries.length,
+        weekly_reviews: weeklyReviews.length,
+        ai_logs: aiInteractionLogs.length,
+        safety_events: safetyEvents.length,
+    });
 
     const safetyLevelLabels: Record<string, string> = {
         under_13: 'Dưới 13 tuổi — Bảo vệ tối đa',
@@ -56,6 +80,48 @@ export default function SettingsPage() {
                                         left: rule.active ? '20px' : '2px',
                                         transition: 'left 0.2s',
                                     }} />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="card" style={{ marginBottom: '1.5rem', borderLeft: '4px solid #2563eb' }}>
+                    <h3 style={{ fontWeight: 800, marginBottom: '0.7rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <Database size={17} color="#2563eb" /> Privacy evidence panel theo SOT
+                    </h3>
+                    <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.86rem', lineHeight: 1.5, marginBottom: '1rem' }}>
+                        {privacyPanel.allowedClaim} {privacyPanel.blockedClaim}
+                    </p>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.6rem', marginBottom: '1rem' }}>
+                        {[
+                            { label: 'Readiness', value: `${privacyPanel.readiness100}/100` },
+                            { label: 'Nhóm dữ liệu', value: privacyPanel.items.length },
+                            { label: 'Bản ghi local', value: privacyPanel.totalRecordCount },
+                        ].map((item) => (
+                            <div key={item.label} style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '10px', padding: '0.7rem', textAlign: 'center' }}>
+                                <div style={{ color: '#1d4ed8', fontWeight: 900, fontSize: '1.05rem' }}>{item.value}</div>
+                                <div style={{ color: '#64748b', fontWeight: 700, fontSize: '0.72rem' }}>{item.label}</div>
+                            </div>
+                        ))}
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.55rem' }}>
+                        {privacyPanel.items.map((item) => (
+                            <div key={item.id} style={{ border: '1px solid var(--color-border-light)', borderRadius: '10px', padding: '0.7rem', background: 'white' }}>
+                                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '0.6rem', marginBottom: '0.35rem' }}>
+                                    <div>
+                                        <div style={{ fontWeight: 800, color: '#0f172a', fontSize: '0.88rem' }}>{item.label}</div>
+                                        <div style={{ color: 'var(--color-text-muted)', fontSize: '0.74rem' }}>{item.recordCount} bản ghi · {item.storedIn}</div>
+                                    </div>
+                                    <span className="badge" style={{ color: item.sensitivity === 'high' ? '#dc2626' : '#2563eb', background: item.sensitivity === 'high' ? '#fee2e2' : '#dbeafe' }}>
+                                        {item.sensitivity === 'high' ? 'nhạy cảm cao' : item.sensitivity === 'medium' ? 'nhạy cảm vừa' : 'thấp'}
+                                    </span>
+                                </div>
+                                <p style={{ color: '#475569', fontSize: '0.78rem', lineHeight: 1.42, marginBottom: '0.45rem' }}>{item.purpose}</p>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', flexWrap: 'wrap', color: '#64748b', fontSize: '0.72rem' }}>
+                                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}><Download size={13} /> export local</span>
+                                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}><Trash2 size={13} /> xóa khi reset local</span>
+                                    <span>{item.retentionRule}</span>
                                 </div>
                             </div>
                         ))}

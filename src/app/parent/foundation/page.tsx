@@ -52,12 +52,14 @@ function statusLabel(status: FoundationRequirementStatus | FoundationGateStatus)
 }
 
 function decisionStatusColor(status: FoundationSotDecisionStatus) {
+    if (status === 'implemented') return '#059669';
     if (status === 'ready_for_implementation') return '#2563eb';
     if (status === 'monitor_only') return '#64748b';
     return '#dc2626';
 }
 
 function decisionStatusLabel(status: FoundationSotDecisionStatus) {
+    if (status === 'implemented') return 'Đã triển khai live';
     if (status === 'ready_for_implementation') return 'Sẵn sàng triển khai';
     if (status === 'monitor_only') return 'Theo dõi';
     return 'Bị chặn bởi evidence';
@@ -117,6 +119,11 @@ export default function ParentFoundationPage() {
                     <Link href="/parent/benchmark" style={{ textDecoration: 'none' }}>
                         <button className="btn btn-secondary btn-sm">
                             <BarChart3 size={16} /> Benchmark
+                        </button>
+                    </Link>
+                    <Link href="/parent/sot" style={{ textDecoration: 'none' }}>
+                        <button className="btn btn-secondary btn-sm">
+                            <GitBranch size={16} /> SOT live
                         </button>
                     </Link>
                 </div>

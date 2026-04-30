@@ -6,7 +6,7 @@ Ngày cập nhật: 2026-04-30
 
 Henry Learning OS được định vị là **Family-first Learning Evidence OS**: một hệ điều hành học tập cá nhân cho Henry từ lớp 1 đến 18 tuổi, trong đó AI giúp con suy nghĩ sâu hơn, ba mẹ đồng hành bằng nhiệm vụ ngắn và mọi claim mạnh đều đi qua evidence gate.
 
-Nền móng hiện đạt **75/100 P0 readiness**: đã chốt định vị, curriculum traceability lớp 1-5, no-overclaim gate và quy trình deploy live; còn thiếu các gate trưởng thành về AI tutor regression, real learner evidence, privacy panel và RCA/PDCA tự động theo số liệu.
+Nền móng hiện đạt **94/100 P0 readiness**: đã chốt định vị, curriculum traceability lớp 1-5, no-overclaim gate, quy trình deploy live, AI tutor regression 50 scenario, privacy evidence panel và RCA/PDCA tuần theo số liệu local. Còn thiếu gate trưởng thành về cohort/pilot thật, human review queue, calibration, diagnostic warm-start và UI smoke/accessibility.
 
 Không được nâng điểm benchmark lên 100/100 chỉ vì đã có trang UI hoặc nguồn tham khảo. 100/100 chỉ mở khi có review người thật, calibration độ khó, pilot outcome, production monitoring và accessibility smoke.
 
@@ -73,13 +73,13 @@ Nguồn chuẩn dùng để benchmark foundation:
 | P0-curriculum-traceability | P0 | Implemented | Mỗi topic/item truy vết được chương trình, source version, evidence | Review queue và khóa item thiếu metadata |
 | P0-no-overclaim | P0 | Implemented | Claim mạnh phải qua evidence gate | Mở rộng test no-overclaim sang foundation UI |
 | P0-release-gate | P0 | Implemented | TypeScript, test, lint, build, commit, push, Actions success, live verification | Thêm Playwright smoke CI |
-| P0-ai-socratic-safety | P0 | Partial | AI hỏi gợi mở, không làm hộ, có audit | 50 scenario tutor regression |
+| P0-ai-socratic-safety | P0 | Implemented | AI hỏi gợi mở, không làm hộ, có audit | Pilot hội thoại thật với trẻ/phụ huynh |
 | P0-real-evidence-engine | P0 | Partial | Quyết định dựa trên attempt/lỗi/hint/retention/transfer thật | Pilot evidence pack 4 tuần |
-| P0-child-privacy | P0 | Partial | Data tối thiểu, parent control, export/delete, không ads/tracking | Privacy evidence panel |
-| P0-data-driven-pdca | P0 | Partial | Observe-score-recommend-validate, không self-modification mơ hồ | Weekly outcome loop có audit trail |
+| P0-child-privacy | P0 | Implemented | Data tối thiểu, parent control, export/delete local, không ads/tracking | Legal/backend review trước claim tuân thủ |
+| P0-data-driven-pdca | P0 | Implemented | Observe-score-recommend-validate, không self-modification mơ hồ | Lưu plan/follow-up qua nhiều tuần |
 | P1-diagnostic-warm-start | P1 | Spec ready | Chẩn đoán 12-15 phút theo môn để đặt level ban đầu | Build diagnostic Toán/Tiếng Việt lớp 1 |
 | P1-review-queue | P1 | Spec ready | Hàng đợi duyệt item với reviewer metadata | Page/admin review queue |
-| P1-weekly-outcome-loop | P1 | Partial | Mục tiêu tuần, hành động phụ huynh, đo lại sau 7 ngày | Gắn mission với top recurring mistake |
+| P1-weekly-outcome-loop | P1 | Implemented | Mục tiêu tuần, hành động phụ huynh, đo lại sau 7 ngày | Cohort/export cho pilot |
 | P1-accessibility-quality | P1 | Spec ready | Smoke visual mobile, keyboard/focus, target size theo WCAG 2.2 | Playwright smoke cho các trang chính |
 | P2-whole-child-portfolio | P2 | Spec ready | Portfolio 12 năm gồm đọc, viết, dự án, coding, reflection | Portfolio schema và page đầu tiên |
 
@@ -109,14 +109,14 @@ Protocol bắt buộc:
 
 | Rank | Lane | Trạng thái | Căn cứ chính | Done definition tóm tắt |
 |---:|---|---|---|---|
-| 1 | AI tutor rubric và 50 scenario regression | Sẵn sàng triển khai | DOCX, PRD, Khanmigo, NIST AI RMF, UNICEF | 50 scenario, rubric Socratic, test không làm hộ |
-| 2 | Weekly RCA/PDCA outcome loop | Sẵn sàng triển khai | Benchmark, EEF, WWC, Zearn, DOCX | Weekly issue, parent action, recheck 7 ngày, no fake delta |
-| 3 | Privacy evidence panel | Sẵn sàng triển khai | UNICEF, COPPA, FERPA, NIST AI RMF | Data inventory, purpose, retention, export/delete status |
+| 1 | AI tutor rubric và 50 scenario regression | Đã triển khai live | DOCX, PRD, Khanmigo, NIST AI RMF, UNICEF | 50 scenario, rubric Socratic, test không làm hộ |
+| 2 | Weekly RCA/PDCA outcome loop | Đã triển khai live | Benchmark, EEF, WWC, Zearn, DOCX | Weekly issue, parent action, recheck 7 ngày, no fake delta |
+| 3 | Privacy evidence panel | Đã triển khai live | UNICEF, COPPA, FERPA, NIST AI RMF | Data inventory, purpose, retention, export/delete status |
 | 4 | Human review queue | Sẵn sàng triển khai | Bộ GDĐT, curriculum map, benchmark | reviewer metadata, block reason, release gate |
 | 5 | Diagnostic warm-start lớp 1 | Sẵn sàng triển khai | IXL, DreamBox, CTGDPT, curriculum map | diagnostic Toán/Tiếng Việt, confidence, 7-day plan |
 | 6 | Playwright/WCAG smoke gate | Sẵn sàng triển khai | ISO 25010, WCAG 2.2, architecture | desktop/mobile smoke, route text, no blank page |
 
-Lane tiếp theo theo SOT là **AI tutor rubric và 50 scenario regression**. Không được nhảy sang tính năng hấp dẫn hơn nếu chưa ghi rõ vì sao bỏ qua rank 1.
+Ba lane đầu theo SOT đã được triển khai nội bộ: **AI tutor rubric và 50 scenario regression**, **Weekly RCA/PDCA outcome loop**, **Privacy evidence panel**. Lane tiếp theo theo SOT là **Human review queue cho item lớp 1-5**. Không được nhảy sang tính năng hấp dẫn hơn nếu chưa ghi rõ vì sao bỏ qua rank 4.
 
 ## Hai mươi must-have feature
 
@@ -143,7 +143,7 @@ Hiện trạng coverage thực thi/partial là **15/20 = 75/100**.
 | Parent dashboard | Implemented | Dashboard phụ huynh live |
 | Daily parent mission | Implemented | Parent missions |
 | Portfolio vault | Spec ready | Một phần artifact qua reading/reflection |
-| Safety audit and parent control | Partial | Safety settings và AI logs |
+| Safety audit and parent control | Implemented | Safety settings, AI logs và privacy evidence panel |
 
 ## Claim gates
 
@@ -152,7 +152,7 @@ Hiện trạng coverage thực thi/partial là **15/20 = 75/100**.
 | Source foundation | Passed | Có nền tảng nguồn nội bộ và nguồn chuẩn | Không nói nguồn đủ để chứng minh hiệu quả |
 | Curriculum traceability | Passed | Topic/item đang có có đường truy vết lớp 1-5 | Không nói item bank đã được duyệt/calibration xong |
 | No-overclaim | Passed | Có guardrail không claim khi thiếu dữ liệu thật | Không nói tăng điểm hoặc vượt đối thủ |
-| AI tutor quality | Partial | Có AI tutor/hint ladder theo hướng Socratic | Không nói đã benchmark chất lượng với trẻ thật |
+| AI tutor quality | Passed | Có AI tutor/hint ladder và regression guardrail 50 scenario | Không nói đã benchmark chất lượng với trẻ thật |
 | Adaptive evidence | Partial | Có local data và adaptive engine | Không nói adaptive đã tối ưu bằng cohort |
 | Learning efficacy | Blocked | Chỉ nói sẵn sàng thiết kế pilot | Cấm claim tăng điểm, effect size, vượt ST Math/IXL/Khanmigo |
 | Production quality | Partial | Có TypeScript/test/lint/build/deploy gate | Không nói production-grade khi thiếu E2E/monitoring/accessibility audit |
@@ -172,10 +172,8 @@ Không được gọi là tự tiến hóa nếu hệ thống tự sửa nội d
 
 ## Roadmap đúng thứ tự
 
-1. **AI tutor rubric + 50 scenario regression** cho Toán, Tiếng Việt, Tiếng Anh lớp 1-5.
-2. **Weekly outcome loop** gắn parent mission với top recurring mistake và đo lại sau 7 ngày.
-3. **Privacy evidence panel**: data đang lưu, mục đích, nơi lưu, export/delete.
-4. **Human review queue** để duyệt item theo curriculum map.
-5. **Diagnostic warm-start lớp 1** cho Toán và Tiếng Việt.
-6. **Playwright/WCAG smoke CI** trước khi gọi UI là production-grade.
-7. **Pilot evidence pack 4 tuần** trước mọi claim hiệu quả học tập.
+1. **Human review queue** để duyệt item theo curriculum map.
+2. **Diagnostic warm-start lớp 1** cho Toán và Tiếng Việt.
+3. **Playwright/WCAG smoke CI** trước khi gọi UI là production-grade.
+4. **Pilot evidence pack 4 tuần** trước mọi claim hiệu quả học tập.
+5. **Lưu PDCA plan/follow-up qua nhiều tuần** để chuẩn bị cohort export.

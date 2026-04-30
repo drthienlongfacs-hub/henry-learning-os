@@ -4,7 +4,8 @@ import { useEffect } from 'react';
 import { useAppStore } from '@/stores/app-store';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Settings, Calendar, Shield, TrendingUp, AlertTriangle, Target, Heart, Star, BarChart3, ClipboardCheck } from 'lucide-react';
+import { Settings, Calendar, Shield, TrendingUp, AlertTriangle, Target, Heart, Star, BarChart3, ClipboardCheck, GitBranch } from 'lucide-react';
+import { buildWeeklyPdcaPlan } from '@/lib/evidence/weekly-pdca';
 
 export default function ParentDashboard() {
     const router = useRouter();
@@ -46,6 +47,13 @@ export default function ParentDashboard() {
         : 0;
     const dueReviews = reviewSchedules.filter((r) => new Date(r.scheduledAt) <= new Date()).length;
     const aiLogCount = aiInteractionLogs.length;
+    const weeklyPdca = buildWeeklyPdcaPlan({
+        attempts,
+        mistakes,
+        reviewSchedules,
+        now: new Date(),
+        childName: childProfile.nameOrNickname,
+    });
 
     // Top mistake type
     const errorCounts: Record<string, number> = {};
@@ -112,6 +120,44 @@ export default function ParentDashboard() {
                             <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--color-primary)' }}>Gợi ý hành động</span>
                         </div>
                         <p style={{ fontSize: '0.9rem' }}>{action}</p>
+                    </div>
+                </div>
+
+                <div className="card animate-fade-in" style={{ marginBottom: '2rem', borderLeft: '4px solid #7c3aed', padding: '1rem 1.25rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <GitBranch size={16} color="#7c3aed" />
+                            <span style={{ fontWeight: 800, fontSize: '0.85rem', color: '#7c3aed' }}>RCA/PDCA tuần này theo SOT</span>
+                        </div>
+                        <span className="badge" style={{ color: weeklyPdca.status === 'missing_data' ? '#d97706' : '#059669', background: weeklyPdca.status === 'missing_data' ? '#fef3c7' : '#dcfce7' }}>
+                            {weeklyPdca.status === 'missing_data' ? 'Cần thêm dữ liệu' : weeklyPdca.status === 'validated' ? 'Đã recheck' : 'Đã có kế hoạch'}
+                        </span>
+                    </div>
+                    <div style={{ fontWeight: 800, color: '#0f172a', marginBottom: '0.4rem' }}>{weeklyPdca.issueTitle}</div>
+                    <p style={{ fontSize: '0.86rem', color: 'var(--color-text-secondary)', lineHeight: 1.5, marginBottom: '0.75rem' }}>
+                        {weeklyPdca.evidenceSummary}
+                    </p>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0.6rem', marginBottom: '0.75rem' }}>
+                        {[
+                            { label: 'Accuracy', value: weeklyPdca.baseline.accuracyPct === null ? 'chưa có' : `${weeklyPdca.baseline.accuracyPct}%` },
+                            { label: 'Gợi ý', value: weeklyPdca.baseline.hintDependencyPct === null ? 'chưa có' : `${weeklyPdca.baseline.hintDependencyPct}%` },
+                            { label: 'Lỗi mở', value: weeklyPdca.baseline.unresolvedMistakeCount },
+                            { label: 'Recheck', value: new Date(weeklyPdca.recheck.recheckAt).toLocaleDateString('vi-VN') },
+                        ].map((item) => (
+                            <div key={item.label} style={{ border: '1px solid #ede9fe', borderRadius: '10px', padding: '0.65rem', background: '#faf5ff' }}>
+                                <div style={{ color: '#6d28d9', fontWeight: 800, fontSize: '0.72rem' }}>{item.label}</div>
+                                <div style={{ color: '#0f172a', fontWeight: 900, fontSize: '0.92rem' }}>{item.value}</div>
+                            </div>
+                        ))}
+                    </div>
+                    <div style={{ borderTop: '1px solid #ede9fe', paddingTop: '0.75rem' }}>
+                        <div style={{ color: '#0f766e', fontWeight: 800, fontSize: '0.78rem', marginBottom: '0.25rem' }}>Nhiệm vụ phụ huynh</div>
+                        <p style={{ fontSize: '0.86rem', color: '#334155', lineHeight: 1.5 }}>
+                            <strong>{weeklyPdca.parentMission.title}:</strong> {weeklyPdca.parentMission.description}
+                        </p>
+                        <p style={{ fontSize: '0.78rem', color: '#64748b', lineHeight: 1.45, marginTop: '0.35rem' }}>
+                            Minh chứng cần ghi: {weeklyPdca.parentMission.evidenceToCollect}. {weeklyPdca.noOverclaim}
+                        </p>
                     </div>
                 </div>
 
@@ -208,6 +254,12 @@ export default function ParentDashboard() {
                         <div className="card card-interactive" style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem' }}>
                             <ClipboardCheck size={20} color="#7c3aed" />
                             <span style={{ fontWeight: 600 }}>Nền móng, mục đích và spec sản phẩm</span>
+                        </div>
+                    </Link>
+                    <Link href="/parent/sot" style={{ textDecoration: 'none' }}>
+                        <div className="card card-interactive" style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem' }}>
+                            <GitBranch size={20} color="#0f766e" />
+                            <span style={{ fontWeight: 600 }}>SOT Control Center: AI rubric, RCA/PDCA, privacy</span>
                         </div>
                     </Link>
                     <Link href="/parent/settings" style={{ textDecoration: 'none' }}>

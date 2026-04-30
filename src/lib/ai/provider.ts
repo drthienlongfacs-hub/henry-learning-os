@@ -5,6 +5,7 @@
 
 import type { AIRole, SupportLevel, SafetyLevel } from '@/types';
 import { generateTutorTurn, type TutorProblem } from '@/lib/ai/tutor-engine';
+import { buildTutorTurnSotAudit, type TutorRubricAudit } from '@/lib/ai/tutor-rubric';
 import type { LearningSubjectKey } from '@/data/curriculum-enrichment';
 
 export interface AIRequest {
@@ -34,6 +35,7 @@ export interface AIResponse {
     safetyFlags: string[];
     isBlocked: boolean;
     blockReason?: string;
+    sotAudit?: TutorRubricAudit;
 }
 
 // Safety middleware
@@ -136,6 +138,20 @@ export function generateAIResponse(request: AIRequest): AIResponse {
                 });
                 responseText = turn.text;
                 supportLevel = turn.supportLevel;
+                const sotAudit = buildTutorTurnSotAudit(turn, {
+                    correctAnswer: problem.correctAnswer,
+                    revealAnswerAllowed: !!request.revealAnswerAllowed,
+                    childAnswerProvided: request.childAnswer !== undefined,
+                });
+
+                return {
+                    text: responseText,
+                    role: request.role,
+                    supportLevel,
+                    safetyFlags: [],
+                    isBlocked: false,
+                    sotAudit,
+                };
             } else {
                 const responses = tutorResponses[request.subject] || tutorResponses['Toán'];
                 const hintIndex = Math.max(0, Math.min(responses.length - 1, request.hintLevel ?? 0));
