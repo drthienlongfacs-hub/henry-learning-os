@@ -496,7 +496,7 @@ export default function ParentFoundationPage() {
                         <div style={{ color: '#1d4ed8', fontWeight: 900, marginBottom: '0.5rem' }}>Nguồn đang chống overclaim cho từng requirement</div>
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem' }}>
                             {getFoundationSourcesByIds(['wwc-standards', 'eef-metacognition', 'iso-25010', 'nist-ai-rmf', 'unicef-ai-children', 'wcag-22']).map((source) => (
-                                <span key={source.id} className="badge" style={{ color: '#1d4ed8', background: '#ffffff', border: '1px solid #bfdbfe' }}>
+                                <span key={source.id} className="badge" style={{ color: '#1d4ed8', background: '#ffffff', border: '1px solid #bfdbfe', maxWidth: '100%', whiteSpace: 'normal', overflowWrap: 'anywhere', textAlign: 'left', lineHeight: 1.3 }}>
                                     {source.label}
                                 </span>
                             ))}
