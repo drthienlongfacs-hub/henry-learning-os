@@ -43,7 +43,18 @@ export type SourceId =
     | 'oecd-learning-compass'
     | 'zearn-math'
     | 'st-math'
-    | 'dreambox-learning';
+    | 'dreambox-learning'
+    // ── Official Textbook Sets (Vietnam MOE Approved) ──
+    | 'sgk-ket-noi-tri-thuc'
+    | 'sgk-chan-troi-sang-tao'
+    | 'sgk-canh-dieu'
+    // ── International Curriculum Frameworks ──
+    | 'cambridge-primary-framework'
+    | 'cambridge-primary-english'
+    | 'cambridge-primary-science'
+    | 'singapore-moe-math'
+    | 'ib-pyp-framework'
+    | 'pearson-intl-primary';
 
 export interface LearningSource {
     id: SourceId;
@@ -408,6 +419,97 @@ export const LEARNING_SOURCES: Record<SourceId, LearningSource> = {
         useInApp: 'Benchmark adaptive instruction: cá nhân hóa đường học mà không làm phụ huynh quá tải.',
         retrievedAt: RETRIEVED_AT,
     },
+
+    // ══════════════════════════════════════════════════════════════
+    // OFFICIAL TEXTBOOK SETS — Vietnam MOE Approved (CTGDPT 2018)
+    // 3 bộ SGK chính thức được Bộ GD&ĐT phê duyệt
+    // ══════════════════════════════════════════════════════════════
+    'sgk-ket-noi-tri-thuc': {
+        id: 'sgk-ket-noi-tri-thuc',
+        title: 'SGK Kết nối tri thức với cuộc sống (Lớp 1-5)',
+        provider: 'Nhà xuất bản Giáo dục Việt Nam (NXB GD)',
+        kind: 'official',
+        sourceUrl: 'https://www.nxbgd.vn/bo-sach/ket-noi-tri-thuc-voi-cuoc-song',
+        useInApp: 'Đối chiếu nội dung bài học, thứ tự mạch kiến thức và bài tập mẫu theo bộ SGK phổ biến nhất.',
+        retrievedAt: RETRIEVED_AT,
+    },
+    'sgk-chan-troi-sang-tao': {
+        id: 'sgk-chan-troi-sang-tao',
+        title: 'SGK Chân trời sáng tạo (Lớp 1-5)',
+        provider: 'Nhà xuất bản Giáo dục Việt Nam (NXB GD)',
+        kind: 'official',
+        sourceUrl: 'https://www.nxbgd.vn/bo-sach/chan-troi-sang-tao',
+        useInApp: 'Bổ sung góc nhìn sáng tạo, hoạt động trải nghiệm và bài tập mở theo approach khám phá.',
+        retrievedAt: RETRIEVED_AT,
+    },
+    'sgk-canh-dieu': {
+        id: 'sgk-canh-dieu',
+        title: 'SGK Cánh diều (Lớp 1-5)',
+        provider: 'NXB Đại học Sư phạm / NXB Đại học Sư phạm TP.HCM',
+        kind: 'official',
+        sourceUrl: 'https://sachcanhdieu.com/',
+        useInApp: 'Cross-reference thứ tự bài học và mạch năng lực với approach thực hành đời sống.',
+        retrievedAt: RETRIEVED_AT,
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // INTERNATIONAL CURRICULUM FRAMEWORKS
+    // Dùng tại các trường quốc tế ở Việt Nam
+    // ══════════════════════════════════════════════════════════════
+    'cambridge-primary-framework': {
+        id: 'cambridge-primary-framework',
+        title: 'Cambridge Primary Curriculum Framework (Stages 1-6)',
+        provider: 'Cambridge Assessment International Education',
+        kind: 'official',
+        sourceUrl: 'https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-primary/',
+        useInApp: 'Framework quốc tế cho Toán, Tiếng Anh, Khoa học — đối chiếu chuẩn đầu ra và thinking skills.',
+        retrievedAt: RETRIEVED_AT,
+    },
+    'cambridge-primary-english': {
+        id: 'cambridge-primary-english',
+        title: 'Cambridge Primary English Curriculum',
+        provider: 'Cambridge Assessment International Education',
+        kind: 'official',
+        sourceUrl: 'https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-primary/curriculum/english/',
+        useInApp: 'Chuẩn đọc hiểu, viết, nói tiếng Anh theo stages — phonics, comprehension, writing craft.',
+        retrievedAt: RETRIEVED_AT,
+    },
+    'cambridge-primary-science': {
+        id: 'cambridge-primary-science',
+        title: 'Cambridge Primary Science Curriculum',
+        provider: 'Cambridge Assessment International Education',
+        kind: 'official',
+        sourceUrl: 'https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-primary/curriculum/science/',
+        useInApp: 'Enquiry-based science: thinking scientifically, biology, chemistry, physics, Earth & space.',
+        retrievedAt: RETRIEVED_AT,
+    },
+    'singapore-moe-math': {
+        id: 'singapore-moe-math',
+        title: 'Singapore MOE Primary Mathematics Syllabus',
+        provider: 'Ministry of Education, Singapore',
+        kind: 'official',
+        sourceUrl: 'https://www.moe.gov.sg/primary/curriculum/syllabus',
+        useInApp: 'Singapore Math framework: CPA approach, bar model, heuristics — phổ biến tại trường quốc tế VN.',
+        retrievedAt: RETRIEVED_AT,
+    },
+    'ib-pyp-framework': {
+        id: 'ib-pyp-framework',
+        title: 'IB Primary Years Programme (PYP)',
+        provider: 'International Baccalaureate Organization',
+        kind: 'official',
+        sourceUrl: 'https://www.ibo.org/programmes/primary-years-programme/',
+        useInApp: 'Inquiry-based, transdisciplinary learning — ATL skills, learner profile, central ideas.',
+        retrievedAt: RETRIEVED_AT,
+    },
+    'pearson-intl-primary': {
+        id: 'pearson-intl-primary',
+        title: 'Pearson International Primary Programme (iPrimary)',
+        provider: 'Pearson Education',
+        kind: 'official',
+        sourceUrl: 'https://qualifications.pearson.com/en/qualifications/edexcel-international-awards/primary.html',
+        useInApp: 'Progression framework cho Maths, English, Science — nhiều trường quốc tế VN sử dụng.',
+        retrievedAt: RETRIEVED_AT,
+    },
 };
 
 export const SUBJECT_ENRICHMENT: Record<LearningSubjectKey, SubjectEnrichment> = {
@@ -417,8 +519,8 @@ export const SUBJECT_ENRICHMENT: Record<LearningSubjectKey, SubjectEnrichment> =
         headline: 'Từ đồ vật -> hình ảnh -> phép tính -> lời giải thích.',
         coverage: 'Lớp 1-5: số học, cơ số 10, đo lường, hình học, phân số, dữ liệu, tỉ số.',
         defaultVisual: '/images/math/number_bonds.svg',
-        sourceIds: ['moet-ctgdpt-2018', 'common-core-math', 'cambridge-primary-math', 'khan-academy-mastery', 'ixl-diagnostic', 'beast-academy', 'zearn-math', 'st-math', 'dreambox-learning', 'ies-study-learning', 'aero-spacing-retrieval', 'eef-feedback'],
-        benchmarkPattern: ['Khan Academy mastery', 'IXL diagnostic path', 'Beast Academy depth', 'Zearn lesson rhythm', 'ST Math visual reasoning'],
+        sourceIds: ['moet-ctgdpt-2018', 'sgk-ket-noi-tri-thuc', 'sgk-chan-troi-sang-tao', 'sgk-canh-dieu', 'common-core-math', 'cambridge-primary-math', 'cambridge-primary-framework', 'singapore-moe-math', 'khan-academy-mastery', 'ixl-diagnostic', 'beast-academy', 'zearn-math', 'st-math', 'dreambox-learning', 'ies-study-learning', 'aero-spacing-retrieval', 'eef-feedback'],
+        benchmarkPattern: ['Khan Academy mastery', 'IXL diagnostic path', 'Beast Academy depth', 'Zearn lesson rhythm', 'ST Math visual reasoning', 'Singapore CPA bar model', 'Cambridge thinking & working mathematically'],
         sessionRhythm: ['Nhớ lại 1 câu cũ', 'Làm với hình hoặc đồ vật', 'Giải thích bằng lời', 'Đổi sang tình huống đời sống'],
     },
     vietnamese: {
@@ -427,8 +529,8 @@ export const SUBJECT_ENRICHMENT: Record<LearningSubjectKey, SubjectEnrichment> =
         headline: 'Đọc đúng, hiểu ý, dùng từ, kể lại bằng lời của con.',
         coverage: 'Âm chữ, dấu thanh, từ vựng, đọc hiểu, ngữ pháp, viết câu.',
         defaultVisual: '/images/core/books_hd.svg',
-        sourceIds: ['moet-ctgdpt-2018', 'national-reading-panel', 'ies-foundational-reading', 'ies-study-learning', 'open-library', 'aero-spacing-retrieval', 'eef-metacognition', 'cast-udl'],
-        benchmarkPattern: ['Science of reading', 'Evidence-based comprehension', 'Vocabulary depth'],
+        sourceIds: ['moet-ctgdpt-2018', 'sgk-ket-noi-tri-thuc', 'sgk-chan-troi-sang-tao', 'sgk-canh-dieu', 'national-reading-panel', 'ies-foundational-reading', 'ies-study-learning', 'open-library', 'aero-spacing-retrieval', 'eef-metacognition', 'cast-udl'],
+        benchmarkPattern: ['Science of reading', 'Evidence-based comprehension', 'Vocabulary depth', 'SGK Kết nối tri thức reading sequence'],
         sessionRhythm: ['Đọc ngắn', 'Tìm chi tiết trong câu', 'Nói nghĩa bằng lời con', 'Viết hoặc kể lại 1 câu'],
     },
     english: {
@@ -437,8 +539,8 @@ export const SUBJECT_ENRICHMENT: Record<LearningSubjectKey, SubjectEnrichment> =
         headline: 'Nghe - nhìn - nói - dùng trong câu, không học từ rời rạc.',
         coverage: 'Từ vựng chủ đề, ngữ pháp, đọc hiểu, câu giao tiếp, chuyển dịch Việt - Anh.',
         defaultVisual: '/images/english/Pink_lady_and_cross_section.jpg',
-        sourceIds: ['moet-ctgdpt-2018', 'national-reading-panel', 'ies-foundational-reading', 'duolingo-abc', 'gutendex', 'open-library', 'ies-study-learning', 'eef-feedback', 'cast-udl'],
-        benchmarkPattern: ['CEFR-like can-do', 'Duolingo ABC micro-lesson', 'Roleplay'],
+        sourceIds: ['moet-ctgdpt-2018', 'sgk-ket-noi-tri-thuc', 'cambridge-primary-english', 'cambridge-primary-framework', 'pearson-intl-primary', 'national-reading-panel', 'ies-foundational-reading', 'duolingo-abc', 'gutendex', 'open-library', 'ies-study-learning', 'eef-feedback', 'cast-udl'],
+        benchmarkPattern: ['CEFR-like can-do', 'Duolingo ABC micro-lesson', 'Roleplay', 'Cambridge Primary English stages', 'Pearson iPrimary progression'],
         sessionRhythm: ['Nhìn ảnh', 'Nói từ', 'Đặt câu', 'Dùng vào tình huống gia đình'],
     },
     science: {
@@ -447,8 +549,8 @@ export const SUBJECT_ENRICHMENT: Record<LearningSubjectKey, SubjectEnrichment> =
         headline: 'Quan sát, dự đoán, kiểm tra, giải thích bằng bằng chứng.',
         coverage: 'Cơ thể, sức khỏe, thực vật, động vật, thời tiết, Trái Đất, vật chất, môi trường.',
         defaultVisual: '/images/science/USGS_WaterCycle_English_ONLINE_20221013.png',
-        sourceIds: ['moet-ctgdpt-2018', 'ngss-three-dimensional', 'wikimedia-commons', 'openverse', 'ies-study-learning', 'eef-metacognition', 'harvard-executive-function'],
-        benchmarkPattern: ['NGSS 3D learning', 'Claim-Evidence-Reasoning', 'Hands-on science'],
+        sourceIds: ['moet-ctgdpt-2018', 'sgk-ket-noi-tri-thuc', 'sgk-chan-troi-sang-tao', 'cambridge-primary-science', 'ngss-three-dimensional', 'wikimedia-commons', 'openverse', 'ies-study-learning', 'eef-metacognition', 'harvard-executive-function'],
+        benchmarkPattern: ['NGSS 3D learning', 'Claim-Evidence-Reasoning', 'Hands-on science', 'Cambridge enquiry-based science'],
         sessionRhythm: ['Quan sát ảnh', 'Dự đoán', 'Chọn bằng chứng', 'Nói điều sẽ thử ở nhà'],
     },
     hisgeo: {
@@ -457,7 +559,7 @@ export const SUBJECT_ENRICHMENT: Record<LearningSubjectKey, SubjectEnrichment> =
         headline: 'Nhìn bản đồ, mốc thời gian, nhân vật và hệ quả.',
         coverage: 'Địa lý Việt Nam, mốc lịch sử, nơi chốn, biểu tượng, nguyên nhân - hệ quả.',
         defaultVisual: '/images/history-geo/Ha_Long_Bay_in_2019.jpg',
-        sourceIds: ['moet-ctgdpt-2018', 'wikimedia-commons', 'openverse', 'eef-metacognition', 'casel-framework', 'oecd-learning-compass'],
+        sourceIds: ['moet-ctgdpt-2018', 'sgk-ket-noi-tri-thuc', 'sgk-canh-dieu', 'wikimedia-commons', 'openverse', 'eef-metacognition', 'casel-framework', 'oecd-learning-compass'],
         benchmarkPattern: ['C3 inquiry arc adapted for Vietnam', 'Map literacy', 'Timeline reasoning'],
         sessionRhythm: ['Xem ảnh/bản đồ', 'Xác định nơi hoặc thời gian', 'Nói vì sao quan trọng', 'Liên hệ đời sống'],
     },
@@ -477,8 +579,8 @@ export const SUBJECT_ENRICHMENT: Record<LearningSubjectKey, SubjectEnrichment> =
         headline: 'Ra quyết định, thương lượng, tự chủ và hiểu hệ thống.',
         coverage: 'Xác suất, tài chính, công dân, thương lượng, đạo đức, phục hồi cảm xúc.',
         defaultVisual: '/images/core/bar_chart.svg',
-        sourceIds: ['eef-metacognition', 'casel-framework', 'unicef-ai-children', 'aap-family-media', 'self-determination-theory', 'oecd-learning-compass', 'harvard-executive-function'],
-        benchmarkPattern: ['CASEL reflection', 'Civics roleplay', 'Decision quality'],
+        sourceIds: ['eef-metacognition', 'casel-framework', 'unicef-ai-children', 'aap-family-media', 'self-determination-theory', 'oecd-learning-compass', 'harvard-executive-function', 'ib-pyp-framework'],
+        benchmarkPattern: ['CASEL reflection', 'Civics roleplay', 'Decision quality', 'IB PYP learner profile & ATL skills'],
         sessionRhythm: ['Chọn phương án', 'Giải thích góc nhìn', 'Tìm hệ quả', 'Nói cách sửa lần sau'],
     },
 };
@@ -588,6 +690,194 @@ const TOPIC_OVERRIDES: Record<string, Partial<TopicEnrichment>> = {
     comp_logic: {
         visual: { src: '/images/computing/Scratch_editor_screenshot.png', alt: 'Giao diện Scratch dạng khối lệnh' },
         masteryTargets: ['Sắp xếp bước theo thứ tự', 'Nhận ra điều kiện và lặp', 'Debug bằng cách thử từng bước'],
+    },
+
+    // ── Toán Lớp 1 ──
+    count_20: {
+        visual: { src: '/images/math/number_bonds.svg', alt: 'Sơ đồ số đến 20 với que chục và đơn vị' },
+        masteryTargets: ['Đếm xuôi/ngược trong 20', 'Biết số đứng trước và sau', 'Nhóm được 10 và phần còn lại'],
+        commonPitfalls: ['Bỏ sót số khi đếm qua 10', 'Nhầm 12 và 21', 'Chỉ đếm xuôi mà không đếm ngược được'],
+    },
+    shapes_g1: {
+        visual: { src: '/images/math/shapes_2d.svg', alt: 'Các hình phẳng 2D: vuông, tròn, tam giác, chữ nhật' },
+        masteryTargets: ['Nhận diện 4 hình cơ bản', 'Nêu ít nhất 1 thuộc tính (cạnh, góc)', 'Phân biệt hình giống nhưng khác thuộc tính'],
+        commonPitfalls: ['Chỉ nhận hình khi đặt đúng vị trí quen thuộc', 'Nhầm hình vuông và hình chữ nhật', 'Không đếm cạnh mà đoán theo tên'],
+    },
+    compare_g1: {
+        visual: { src: '/images/math/compare_numbers.svg', alt: 'So sánh số với dấu lớn hơn, nhỏ hơn, bằng' },
+        masteryTargets: ['Dùng đúng dấu >, <, =', 'Giải thích bằng lượng hoặc trục số', 'So sánh số có 2 chữ số theo hàng chục trước'],
+        commonPitfalls: ['Nhầm chiều dấu > và <', 'So sánh hàng đơn vị trước hàng chục', 'Không liên hệ với lượng thực tế'],
+    },
+    ordinal_spatial: {
+        visual: { src: '/images/math/ordinal_positions.svg', alt: 'Hàng các vật thể với vị trí thứ nhất, thứ hai, thứ ba' },
+        masteryTargets: ['Dùng đúng thứ nhất/thứ hai/thứ ba', 'Xác định trái/phải/trước/sau', 'Hiểu kết quả thay đổi khi đổi mốc nhìn'],
+        commonPitfalls: ['Đếm vị trí từ sai đầu', 'Nhầm trái/phải khi đổi hướng nhìn', 'Không chỉ rõ mốc tham chiếu'],
+    },
+
+    // ── Toán Lớp 2 ──
+    add_sub_carry: {
+        visual: { src: '/images/math/column_addition.svg', alt: 'Phép cộng cột dọc có nhớ với que chục' },
+        masteryTargets: ['Đặt tính đúng hàng chục và đơn vị', 'Giải thích nhớ 1 sang hàng chục', 'Kiểm tra bằng phép ngược'],
+        commonPitfalls: ['Quên nhớ 1 khi cộng', 'Đặt sai hàng trong tính cột dọc', 'Mượn chục nhưng không trừ ở hàng chục'],
+    },
+    even_odd: {
+        visual: { src: '/images/math/even_odd.svg', alt: 'Minh họa số chẵn và số lẻ bằng cặp đối xứng' },
+        masteryTargets: ['Phân biệt chẵn/lẻ bằng chia cặp', 'Dùng chữ số cuối để kiểm tra nhanh', 'Áp dụng vào chia nhóm đồ vật'],
+        commonPitfalls: ['Nhớ quy tắc nhưng không hiểu vì sao', 'Nhầm số 0 không phải chẵn', 'Không kiểm tra bằng thực tế chia cặp'],
+    },
+    intro_mult: {
+        visual: { src: '/images/math/intro_multiplication.svg', alt: 'Nhóm đồ vật bằng nhau minh họa phép nhân' },
+        masteryTargets: ['Nhận ra nhóm bằng nhau', 'Viết phép nhân tương ứng với hình', 'Phân biệt nhóm bằng nhau và không bằng nhau'],
+        commonPitfalls: ['Nhầm nhân với cộng khi nhóm không đều', 'Đếm tổng thay vì nhìn cấu trúc nhóm', 'Không liên hệ phép nhân với phép cộng lặp'],
+    },
+    intro_fractions: {
+        visual: { src: '/images/math/intro_fractions.svg', alt: 'Hình tròn chia đều thành 2 và 4 phần bằng nhau' },
+        masteryTargets: ['Nhận biết 1/2 và 1/4 trên hình', 'Kiểm tra các phần có bằng nhau không', 'Liên hệ phân số với chia đều đồ vật thật'],
+        commonPitfalls: ['Gọi là 1/2 nhưng phần chia không đều', 'Nhầm tử số và mẫu số', 'Chỉ thuộc tên mà không hiểu nghĩa'],
+    },
+    clock: {
+        visual: { src: '/images/math/clock_reading.svg', alt: 'Đồng hồ kim với giờ đúng và nửa giờ' },
+        masteryTargets: ['Đọc giờ đúng và nửa giờ', 'Hiểu kim giờ và kim phút', 'Nói được thời gian trước/sau một khoảng'],
+        commonPitfalls: ['Nhầm kim giờ và kim phút', 'Đọc sai giờ khi kim giờ nằm giữa hai số', 'Không phân biệt AM/PM'],
+    },
+    measure_cm: {
+        visual: { src: '/images/math/ruler_measurement.svg', alt: 'Thước kẻ đo vật bằng cm với mốc 0 rõ ràng' },
+        masteryTargets: ['Đặt thước từ mốc 0 đúng cách', 'Đọc kết quả đo bằng cm', 'Ước lượng trước khi đo thật'],
+        commonPitfalls: ['Không đặt mốc 0 tại đầu vật', 'Đọc sai vạch chia trên thước', 'Đo bằng đơn vị không chuẩn mà không biết so sánh'],
+    },
+    word_g2: {
+        visual: { src: '/images/math/word_problem.svg', alt: 'Bài toán có lời văn với sơ đồ phần-tổng' },
+        masteryTargets: ['Xác định dữ kiện và câu hỏi', 'Chọn phép tính phù hợp (cộng/trừ)', 'Trả lời bằng câu có đơn vị'],
+        commonPitfalls: ['Chọn phép tính theo từ khóa thay vì hiểu ý', 'Quên viết đơn vị trong đáp án', 'Không đọc hết đề'],
+    },
+
+    // ── Toán Lớp 3 ──
+    mult_div: {
+        visual: { src: '/images/core/multiplication.svg', alt: 'Bảng nhân chia cơ bản với nhóm đồ vật' },
+        masteryTargets: ['Thuộc bảng nhân 2-9', 'Hiểu phép chia là phép ngược của nhân', 'Giải thích bằng nhóm bằng nhau'],
+        commonPitfalls: ['Thuộc bảng nhân nhưng không hiểu cấu trúc', 'Nhầm chia cho 0', 'Không kiểm tra bằng phép ngược'],
+    },
+    perimeter: {
+        visual: { src: '/images/core/square.svg', alt: 'Hình vuông với các cạnh được đánh dấu độ dài' },
+        masteryTargets: ['Cộng đúng tất cả các cạnh', 'Nêu đơn vị độ dài trong kết quả', 'Phân biệt chu vi (đường bao) với diện tích (phần trong)'],
+        commonPitfalls: ['Quên cộng cạnh bị khuất', 'Nhầm chu vi và diện tích', 'Không ghi đơn vị đo'],
+    },
+    patterns: {
+        visual: { src: '/images/core/fibonacci.svg', alt: 'Dãy số có quy luật tăng dần' },
+        masteryTargets: ['Phát hiện quy luật trong dãy số', 'Tìm đúng số tiếp theo', 'Nói rõ quy tắc tạo dãy bằng lời'],
+        commonPitfalls: ['Đoán số tiếp theo mà không kiểm tra quy luật', 'Chỉ nhìn 2 số thay vì toàn dãy', 'Nhầm khi quy luật thay đổi giữa chừng'],
+    },
+    word_g3: {
+        visual: { src: '/images/core/girl_thinking.svg', alt: 'Học sinh đang suy nghĩ giải bài toán nhiều bước' },
+        masteryTargets: ['Tách bài thành từng bước nhỏ', 'Không dùng dữ kiện thừa', 'Ghi câu trả lời đúng đơn vị'],
+        commonPitfalls: ['Trộn dữ kiện bước 1 và bước 2', 'Dùng tất cả số trong đề mà không chọn lọc', 'Quên trả lời đúng câu hỏi cuối'],
+    },
+
+    // ── Toán Lớp 4 ──
+    fractions: {
+        visual: { src: '/images/core/fraction_1_4.svg', alt: 'Phân số trên trục số và hình tròn chia phần' },
+        masteryTargets: ['Nhận phân số tương đương đơn giản', 'So sánh phân số bằng mô hình hoặc trục số', 'Cộng trừ phân số cùng mẫu'],
+        commonPitfalls: ['Nhầm tử và mẫu khi so sánh', 'Cộng cả tử lẫn mẫu', 'Không rút gọn kết quả'],
+    },
+    area: {
+        visual: { src: '/images/core/square.svg', alt: 'Hình chữ nhật với lưới ô vuông bên trong' },
+        masteryTargets: ['Tính diện tích bằng đơn vị vuông', 'Phân biệt diện tích với chu vi', 'Tách hình phức tạp thành hình đơn giản'],
+        commonPitfalls: ['Nhầm diện tích với chu vi', 'Quên ghi đơn vị vuông (cm²)', 'Đếm ô vuông sai khi hình không đầy đủ'],
+    },
+    large_numbers: {
+        visual: { src: '/images/core/number_line.svg', alt: 'Trục số với các mốc hàng nghìn, hàng triệu' },
+        masteryTargets: ['Đọc viết số có 5-6 chữ số', 'So sánh theo hàng từ trái sang phải', 'Tách nhóm chữ số để đọc dễ hơn'],
+        commonPitfalls: ['Đọc sai tên hàng (nghìn, triệu)', 'So sánh số dài bằng hàng cuối thay vì đầu', 'Viết thiếu chữ số 0 giữ hàng'],
+    },
+    mass: {
+        visual: { src: '/images/core/weight.svg', alt: 'Cân bàn với vật được cân bằng gam và kg' },
+        masteryTargets: ['Chọn đơn vị phù hợp (g hoặc kg)', 'Đổi đơn vị cơ bản (1 kg = 1000 g)', 'Ước lượng khối lượng vật quen thuộc'],
+        commonPitfalls: ['Nhầm g và kg cho vật nặng/nhẹ', 'Quên nhân/chia 1000 khi đổi đơn vị', 'Ước lượng phi thực tế (quả táo 10 kg)'],
+    },
+
+    // ── Toán Lớp 5 ──
+    decimals: {
+        visual: { src: '/images/core/number_line.svg', alt: 'Số thập phân trên trục số từ 0 đến 1' },
+        masteryTargets: ['Đọc viết số thập phân 1-2 chữ số', 'So sánh theo hàng phần mười/phần trăm', 'Liên hệ với phân số đơn giản (0,5 = 1/2)'],
+        commonPitfalls: ['Nghĩ 0,9 < 0,12 vì 9 < 12', 'Không canh hàng dấu phẩy khi cộng trừ', 'Nhầm phần mười với phần trăm'],
+    },
+    percent: {
+        visual: { src: '/images/core/percent.svg', alt: 'Biểu đồ tròn chia 100 phần minh họa phần trăm' },
+        masteryTargets: ['Hiểu phần trăm là phần trên 100', 'Tính 10%, 25%, 50%, 75% nhanh', 'Giải thích bằng hình tròn hoặc thanh'],
+        commonPitfalls: ['Không hiểu 100% = toàn bộ', 'Tính phần trăm nhưng quên chia cho 100', 'Nhầm phần trăm với phần nghìn'],
+    },
+    ratio: {
+        visual: { src: '/images/core/ratio.svg', alt: 'Hai nhóm đồ vật so sánh tỉ số a:b' },
+        masteryTargets: ['Viết tỉ số dạng a:b', 'Tạo tỉ số tương đương', 'Phân biệt tỉ số với hiệu số'],
+        commonPitfalls: ['Nhầm tỉ số a:b với phép trừ a-b', 'Đảo thứ tự khi viết tỉ số', 'Không rút gọn tỉ số'],
+    },
+    charts: {
+        visual: { src: '/images/core/bar_chart.svg', alt: 'Biểu đồ cột với nhãn trục và dữ liệu' },
+        masteryTargets: ['Đọc nhãn trục và giá trị', 'So sánh dữ liệu giữa các cột/mục', 'Nêu kết luận có bằng chứng từ biểu đồ'],
+        commonPitfalls: ['Bỏ qua đơn vị trên trục', 'Đọc sai giá trị khi trục không bắt đầu từ 0', 'Kết luận mà không trích dẫn số liệu'],
+    },
+
+    // ── Tiếng Việt ──
+    alphabet: {
+        visual: { src: '/images/core/letters_vn.svg', alt: 'Bảng chữ cái tiếng Việt 29 chữ' },
+        masteryTargets: ['Nhận mặt chữ và nói tên/âm', 'Tìm chữ trong từ quen thuộc', 'Không nhầm các chữ gần giống (b/d, p/q)'],
+        commonPitfalls: ['Nhầm tên chữ với âm đọc', 'Không phân biệt b-d, p-q khi viết', 'Chỉ thuộc theo thứ tự mà không nhận mặt riêng lẻ'],
+    },
+    tones: {
+        visual: { src: '/images/core/letters_vn.svg', alt: 'Sáu thanh tiếng Việt với dấu và ví dụ' },
+        masteryTargets: ['Đọc đúng 6 thanh', 'Đặt dấu đúng vị trí trên nguyên âm', 'Nhận ra đổi thanh thì đổi nghĩa'],
+        commonPitfalls: ['Nhầm thanh hỏi và thanh ngã', 'Đặt dấu sai nguyên âm trong vần', 'Đọc thanh sai làm đổi nghĩa từ'],
+    },
+    vocabulary: {
+        visual: { src: '/images/core/open_book.svg', alt: 'Sách mở với từ vựng chủ đề và hình minh họa' },
+        masteryTargets: ['Giải thích nghĩa từ bằng lời mình', 'Dùng từ mới trong câu', 'Phân biệt từ gần nghĩa và trái nghĩa'],
+        commonPitfalls: ['Học từ rời rạc không gắn ngữ cảnh', 'Giải thích bằng cách đọc lại định nghĩa', 'Dùng sai từ do nhầm nghĩa bóng'],
+    },
+    grammar: {
+        visual: { src: '/images/core/pencil_icon.svg', alt: 'Bút chì đang viết câu với chủ ngữ và vị ngữ' },
+        masteryTargets: ['Nhận biết chủ ngữ - vị ngữ', 'Dùng dấu câu hợp lý (chấm, phẩy, hỏi)', 'Viết câu rõ nghĩa, đủ thành phần'],
+        commonPitfalls: ['Viết câu thiếu chủ ngữ hoặc vị ngữ', 'Lạm dụng dấu phẩy thay dấu chấm', 'Câu dài không rõ ý chính'],
+    },
+
+    // ── Tiếng Anh ──
+    grammar_en: {
+        visual: { src: '/images/core/pencil_icon.svg', alt: 'Cấu trúc câu tiếng Anh: Subject + Verb + Object' },
+        masteryTargets: ['Chọn mẫu câu S+V+O đúng', 'Chia động từ to be và thì hiện tại đơn', 'Đổi câu khẳng định thành câu hỏi/phủ định'],
+        commonPitfalls: ['Nhầm thứ tự từ theo tiếng Việt', 'Quên thêm s/es cho ngôi thứ 3', 'Dùng sai trợ động từ do/does'],
+    },
+    reading_en: {
+        visual: { src: '/images/core/books_hd.svg', alt: 'Sách tiếng Anh mở với đoạn văn ngắn' },
+        masteryTargets: ['Tìm ý chính của đoạn ngắn', 'Tìm chi tiết dựa vào câu hỏi who/what/where', 'Đoán nghĩa từ mới theo ngữ cảnh'],
+        commonPitfalls: ['Dịch từng chữ thay vì hiểu ý', 'Bỏ cuộc khi gặp từ lạ thay vì đoán nghĩa', 'Trả lời bằng kiến thức ngoài bài'],
+    },
+    sentence_en: {
+        visual: { src: '/images/core/pencil_icon.svg', alt: 'Các từ tiếng Anh được sắp xếp thành câu hoàn chỉnh' },
+        masteryTargets: ['Sắp xếp từ thành câu đúng ngữ pháp', 'Viết câu có nghĩa rõ ràng', 'Tự thay từ để tạo câu mới cùng mẫu'],
+        commonPitfalls: ['Sắp xếp theo thứ tự tiếng Việt', 'Quên viết hoa đầu câu và dấu chấm cuối', 'Câu đúng ngữ pháp nhưng vô nghĩa'],
+    },
+
+    // ── Khoa học ──
+    nature: {
+        visual: { src: '/images/science/Double-alaskan-rainbow.jpg', alt: 'Cầu vồng đôi trong thiên nhiên' },
+        masteryTargets: ['Phân loại thực vật/động vật cơ bản', 'Nêu nhu cầu sống (nước, ánh sáng, thức ăn)', 'Dùng bằng chứng quan sát để mô tả'],
+        commonPitfalls: ['Phân loại theo màu sắc thay vì đặc điểm sinh học', 'Nhầm nhu cầu của thực vật và động vật', 'Mô tả chung chung không có chi tiết quan sát'],
+    },
+    matter_energy: {
+        visual: { src: '/images/science/Double-alaskan-rainbow.jpg', alt: 'Ánh sáng tạo cầu vồng — năng lượng và vật chất' },
+        masteryTargets: ['Nêu tính chất vật chất (rắn/lỏng/khí)', 'Nhận biết sự biến đổi (tan, đông, bay hơi)', 'Giải thích bằng bằng chứng quan sát'],
+        commonPitfalls: ['Nhầm thay đổi vật lý và hóa học', 'Không phân biệt nguồn năng lượng', 'Mô tả hiện tượng mà không giải thích nguyên nhân'],
+    },
+    ecosystem: {
+        visual: { src: '/images/science/USGS_WaterCycle_English_ONLINE_20221013.png', alt: 'Vòng tuần hoàn nước trong hệ sinh thái' },
+        masteryTargets: ['Nêu quan hệ sinh vật - môi trường', 'Dự đoán hệ quả khi mất một mắt xích', 'Đề xuất hành vi bảo vệ môi trường'],
+        commonPitfalls: ['Nghĩ chuỗi thức ăn chỉ đi một chiều', 'Không thấy con người là phần của hệ sinh thái', 'Đề xuất bảo vệ chung chung không có hành động cụ thể'],
+    },
+
+    // ── Tin học ──
+    hardware: {
+        visual: { src: '/images/computing/NXP_PCF8577C_LCD_driver_with_I_C2_B2C__Colour_Corrected_.jpg', alt: 'Bo mạch phần cứng máy tính với chip xử lý' },
+        masteryTargets: ['Nhận biết các bộ phận: CPU, RAM, ổ cứng, màn hình', 'Nêu chức năng nhập/xử lý/xuất/lưu trữ', 'Không nhầm phần cứng với phần mềm'],
+        commonPitfalls: ['Gọi tất cả là "máy tính" mà không biết bộ phận', 'Nhầm phần mềm (app) với phần cứng (thiết bị)', 'Không biết dữ liệu lưu ở đâu'],
     },
 };
 
