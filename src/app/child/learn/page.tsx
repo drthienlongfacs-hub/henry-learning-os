@@ -38,10 +38,18 @@ import { createReviewItem } from '@/lib/spaced-repetition';
 import { buildTopicEvidenceProfile } from '@/lib/evidence/learning-evidence';
 import { buildQuestionPresentationPlan } from '@/lib/pedagogy/question-presentation';
 import { generateTutorTurn, type TutorTurn } from '@/lib/ai/tutor-engine';
+import { emitLearningEvent } from '@/lib/events/learning-events';
+import {
+    attachCurriculumAuditSet,
+    buildAttemptCurriculumEvidence,
+    type CurriculumMappedProblem,
+} from '@/lib/curriculum/item-audit';
+import type { PrimaryCurriculumSubjectKey } from '@/data/primary-curriculum-map';
 
 // ── Types ──
 type Subject = 'math' | 'vietnamese' | 'english' | 'science' | 'hisgeo' | 'computing' | 'elite';
-type Problem = MathProblem | VietnameseProblem | EnglishProblem | ScienceProblem | HisGeoProblem | ComputingProblem;
+type GeneratedProblem = MathProblem | VietnameseProblem | EnglishProblem | ScienceProblem | HisGeoProblem | ComputingProblem;
+type Problem = CurriculumMappedProblem<GeneratedProblem>;
 // Augment problem types to support illustration
 type ProblemWithViz = Problem & { illustration?: React.ReactNode | string };
 
@@ -64,6 +72,12 @@ const SUBJECT_ENRICHMENT_KEY: Record<Subject, LearningSubjectKey> = {
     computing: 'computing',
     elite: 'elite',
 };
+
+const PRIMARY_CURRICULUM_SUBJECTS: PrimaryCurriculumSubjectKey[] = ['math', 'vietnamese', 'english', 'science', 'hisgeo', 'computing'];
+
+function isPrimaryCurriculumSubject(subj: Subject): subj is PrimaryCurriculumSubjectKey {
+    return PRIMARY_CURRICULUM_SUBJECTS.includes(subj as PrimaryCurriculumSubjectKey);
+}
 
 const withBasePath = (src: string) =>
     src.startsWith('/') ? `${process.env.NODE_ENV === 'production' ? '/henry-learning-os' : ''}${src}` : src;
@@ -109,7 +123,7 @@ export default function LearnPage() {
     const modeOptions = Object.values(LESSON_MODE_CONFIG);
 
     const startExercise = useCallback((subj: Subject, g: number, topicKey?: string) => {
-        let p: Problem[] = [];
+        let p: GeneratedProblem[] = [];
         const count = getLessonModeConfig(lessonDepth).count;
         if (subj === 'math') p = generateMathSet(g, topicKey, count);
         else if (subj === 'vietnamese') p = generateVietnameseSet(g, topicKey, count);
@@ -117,7 +131,7 @@ export default function LearnPage() {
         else if (subj === 'science') p = generateScienceSet(g, topicKey, count);
         else if (subj === 'hisgeo') p = generateHisGeoSet(g, topicKey, count);
         else if (subj === 'computing') p = generateComputingSet(g, topicKey, count);
-        setProblems(p);
+        setProblems(isPrimaryCurriculumSubject(subj) ? attachCurriculumAuditSet(subj, p) : []);
         setIndex(0); setSelected(null); setScore(0); setShowHint(false); setHintLevelUsed(0);
         startTime.current = Date.now();
     }, [lessonDepth]);
@@ -133,12 +147,31 @@ export default function LearnPage() {
         const timeSpent = Math.round((Date.now() - (startTime.current || Date.now())) / 1000);
         if (childProfile) {
             const attemptId = `att-${Date.now()}`;
+            const curriculumEvidence = buildAttemptCurriculumEvidence(p);
             addAttempt({
                 id: attemptId, childId: childProfile.id, lessonId: p.id,
                 competencyId: p.topicKey, exerciseId: p.id, answer,
                 isCorrect, errorType: isCorrect ? null : 'concept',
                 hintLevelUsed, timeSpentSeconds: timeSpent,
-                confidenceSelfRating: 3, aiRoleUsed: 'tutor', createdAt: new Date().toISOString(),
+                confidenceSelfRating: 3, aiRoleUsed: 'tutor',
+                curriculum: curriculumEvidence,
+                createdAt: new Date().toISOString(),
+            });
+            emitLearningEvent({
+                childId: childProfile.id,
+                verb: isCorrect ? 'completed' : 'attempted',
+                object: `exercise:${p.id}`,
+                module: subject ? SUBJECT_ENRICHMENT_KEY[subject] : 'learning',
+                resourceProvider: 'internal',
+                success: isCorrect,
+                score: isCorrect ? 1 : 0,
+                durationSec: timeSpent,
+                confidence: 0.6,
+                aiAssistanceLevel: hintLevelUsed > 0 ? `hint_L${hintLevelUsed}` : undefined,
+                curriculumMapId: curriculumEvidence?.curriculumMapId,
+                curriculumSourceVersion: curriculumEvidence?.curriculumSourceVersion,
+                curriculumOfficialStrand: curriculumEvidence?.curriculumOfficialStrand,
+                curriculumReviewStatus: curriculumEvidence?.curriculumReviewStatus,
             });
             addAIInteractionLog({
                 id: `ai-${Date.now()}`,
@@ -583,6 +616,30 @@ export default function LearnPage() {
                                     </div>
                                     <div style={{ fontSize: 12, color: '#475569', lineHeight: 1.4, background: '#f0fdf4', borderRadius: 12, padding: 10 }}>
                                         Benchmark: {currentQuestionPlan.benchmarkSignal}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {currentProblem.curriculum && (
+                            <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 16, padding: 14, marginBottom: 18 }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', marginBottom: 10 }}>
+                                    <div>
+                                        <div style={{ fontSize: 12, fontWeight: 900, color: '#047857', textTransform: 'uppercase' }}>Audit CTGDPT trên từng câu</div>
+                                        <div style={{ fontSize: 15, fontWeight: 900, color: '#064e3b', marginTop: 3 }}>
+                                            {currentProblem.curriculum.subjectLabel} lớp {currentProblem.curriculum.curriculumGrade} · {currentProblem.curriculum.topicName}
+                                        </div>
+                                    </div>
+                                    <div style={{ fontSize: 11, color: '#166534', lineHeight: 1.35, maxWidth: 280 }}>
+                                        {currentProblem.curriculum.curriculumMapId} · {currentProblem.curriculum.curriculumReviewStatus}
+                                    </div>
+                                </div>
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 8 }}>
+                                    <div style={{ fontSize: 12, color: '#14532d', lineHeight: 1.4, background: '#ffffffb8', borderRadius: 12, padding: 10 }}>
+                                        Mạch: {currentProblem.curriculum.curriculumOfficialStrand}
+                                    </div>
+                                    <div style={{ fontSize: 12, color: '#14532d', lineHeight: 1.4, background: '#ffffffb8', borderRadius: 12, padding: 10 }}>
+                                        Minh chứng lưu: {currentProblem.curriculum.requiredAttemptEvidence.slice(0, 3).join(' · ')}
                                     </div>
                                 </div>
                             </div>

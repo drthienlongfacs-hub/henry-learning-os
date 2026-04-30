@@ -16,6 +16,7 @@ import {
     FULLSTACK_BENCHMARK_DIMENSIONS,
     FULLSTACK_BENCHMARK_ROADMAP,
     FULLSTACK_BENCHMARK_SOURCES,
+    FULLSTACK_100_GATES,
     HENRY_FULLSTACK_BENCHMARK,
     LIVE_UPGRADE_SIGNALS,
     PRIMARY_CURRICULUM_EXPLANATION_EXAMPLES,
@@ -25,6 +26,9 @@ import {
     VIETNAM_CURRICULUM_SUBJECT_COVERAGE,
     sourceLookup,
 } from '@/data/fullstack-competitive-benchmark';
+import {
+    PRIMARY_ITEM_AUDIT_GATE,
+} from '@/lib/curriculum/item-audit';
 import {
     PRIMARY_CURRICULUM_MAP_STATS,
     PRIMARY_CURRICULUM_TOPIC_MAP,
@@ -63,6 +67,18 @@ function signalToneColor(tone: string) {
     if (tone === 'warn') return '#d97706';
     if (tone === 'risk') return '#dc2626';
     return '#2563eb';
+}
+
+function gateStatusColor(status: string) {
+    if (status === 'passed') return '#059669';
+    if (status === 'partial') return '#d97706';
+    return '#dc2626';
+}
+
+function gateStatusLabel(status: string) {
+    if (status === 'passed') return 'Đã qua';
+    if (status === 'partial') return 'Đang làm';
+    return 'Chưa đủ dữ liệu';
 }
 
 const PRIMARY_GRADES = [1, 2, 3, 4, 5] as const;
@@ -149,6 +165,42 @@ export default function ParentBenchmarkPage() {
                                 </a>
                             ))}
                         </nav>
+                    </div>
+                </section>
+
+                <section id="path-to-100" style={{ marginBottom: '1.25rem', scrollMarginTop: '1rem' }}>
+                    <div className="card" style={{ borderRadius: '12px', padding: '1rem', border: '1px solid #fed7aa', background: '#fff7ed' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem', alignItems: 'flex-start', flexWrap: 'wrap', marginBottom: '0.85rem' }}>
+                            <div>
+                                <div style={{ color: '#c2410c', fontWeight: 900, fontSize: '0.8rem', marginBottom: '0.25rem' }}>
+                                    Vì sao chưa lên 100/100
+                                </div>
+                                <h2 style={{ fontSize: '1.12rem', fontWeight: 900, color: '#0f172a' }}>
+                                    100/100 chỉ được mở khi có đủ review người thật, calibration và pilot outcome
+                                </h2>
+                            </div>
+                            <div style={{ color: '#7c2d12', fontSize: '0.8rem', lineHeight: 1.45, maxWidth: '320px' }}>
+                                Bản này đã nâng từ traceability nguồn lên traceability từng item sinh ra; vẫn không claim hiệu quả học tập khi chưa có dữ liệu người học thật.
+                            </div>
+                        </div>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '0.75rem' }}>
+                            {FULLSTACK_100_GATES.map((gate) => (
+                                <article key={gate.key} style={{ border: '1px solid #fed7aa', borderRadius: '10px', padding: '0.85rem', background: '#ffffff' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: '0.5rem', alignItems: 'center', marginBottom: '0.4rem' }}>
+                                        <div style={{ fontWeight: 900, color: '#0f172a' }}>{gate.label}</div>
+                                        <span className="badge" style={{ color: gateStatusColor(gate.status), background: `${gateStatusColor(gate.status)}18`, whiteSpace: 'nowrap' }}>
+                                            {gateStatusLabel(gate.status)}
+                                        </span>
+                                    </div>
+                                    <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.78rem', lineHeight: 1.45, marginBottom: '0.45rem' }}>
+                                        {gate.currentEvidence}
+                                    </p>
+                                    <p style={{ color: '#7c2d12', fontSize: '0.76rem', lineHeight: 1.45 }}>
+                                        Cần để lên 100: {gate.requiredFor100}
+                                    </p>
+                                </article>
+                            ))}
+                        </div>
                     </div>
                 </section>
 
@@ -401,6 +453,48 @@ export default function ParentBenchmarkPage() {
                                 </div>
                             </article>
                         ))}
+                    </div>
+                </section>
+
+                <section id="item-audit" style={{ marginBottom: '1.5rem', scrollMarginTop: '1rem' }}>
+                    <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.1rem', fontWeight: 900, marginBottom: '0.75rem' }}>
+                        <CheckCircle2 size={18} color="#059669" /> Item audit và attempt evidence
+                    </h2>
+                    <div className="card" style={{ borderRadius: '12px', padding: '1rem', border: '1px solid #bbf7d0' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0.75rem', marginBottom: '0.9rem' }}>
+                            {[
+                                { label: 'Traceable topics', value: `${PRIMARY_ITEM_AUDIT_GATE.traceableTopicCount}/${PRIMARY_ITEM_AUDIT_GATE.requiredTopicCount}` },
+                                { label: 'Item traceability', value: `${PRIMARY_ITEM_AUDIT_GATE.generatedItemTraceabilityCoverage100}/100` },
+                                { label: 'Review status', value: 'needs_human_review' },
+                                { label: 'Calibration', value: 'needs_real_attempts' },
+                            ].map((item) => (
+                                <div key={item.label} style={{ border: '1px solid #e2e8f0', borderRadius: '10px', padding: '0.75rem' }}>
+                                    <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.76rem', fontWeight: 700 }}>{item.label}</div>
+                                    <div style={{ fontWeight: 900, color: item.value.includes('/100') || item.value.includes('/') ? '#059669' : '#0f172a' }}>{item.value}</div>
+                                </div>
+                            ))}
+                        </div>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '0.75rem' }}>
+                            <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '10px', padding: '0.85rem' }}>
+                                <div style={{ fontWeight: 900, color: '#047857', marginBottom: '0.35rem' }}>Đã nâng trong app học</div>
+                                <p style={{ color: '#14532d', fontSize: '0.82rem', lineHeight: 1.5 }}>
+                                    Generated item trong luồng học lớp 1-5 được gắn curriculumMapId, source version, official strand, review status và calibration status; attempt và learning event lưu các trường này để phân tích sau pilot.
+                                </p>
+                            </div>
+                            <div style={{ background: '#fff7ed', border: '1px solid #fed7aa', borderRadius: '10px', padding: '0.85rem' }}>
+                                <div style={{ fontWeight: 900, color: '#c2410c', marginBottom: '0.35rem' }}>Chưa được phép claim</div>
+                                <p style={{ color: '#7c2d12', fontSize: '0.82rem', lineHeight: 1.5 }}>
+                                    {PRIMARY_ITEM_AUDIT_GATE.noOverclaim}
+                                </p>
+                            </div>
+                        </div>
+                        <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap', marginTop: '0.9rem' }}>
+                            {PRIMARY_ITEM_AUDIT_GATE.attemptEvidenceFields.map((field) => (
+                                <span key={field} className="badge" style={{ background: '#ecfdf5', color: '#047857', border: '1px solid #bbf7d0' }}>
+                                    {field}
+                                </span>
+                            ))}
+                        </div>
                     </div>
                 </section>
 

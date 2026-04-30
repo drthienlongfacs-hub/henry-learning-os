@@ -1,4 +1,5 @@
 import { PRIMARY_CURRICULUM_MAP_STATS } from './primary-curriculum-map';
+import { PRIMARY_ITEM_AUDIT_GATE } from '@/lib/curriculum/item-audit';
 
 export type BenchmarkDimensionKey =
     | 'aiTutorScaffolding'
@@ -46,6 +47,14 @@ export interface BenchmarkRoadmapItem {
     title: string;
     whyNow: string;
     measurableGate: string;
+}
+
+export interface Benchmark100Gate {
+    key: string;
+    label: string;
+    status: 'passed' | 'partial' | 'blocked';
+    currentEvidence: string;
+    requiredFor100: string;
 }
 
 export interface LiveUpgradeSignal {
@@ -99,13 +108,13 @@ export interface PrimaryCurriculumExplanationExample {
     sourceIds: string[];
 }
 
-export const FULLSTACK_BENCHMARK_AS_OF = '2026-04-29';
+export const FULLSTACK_BENCHMARK_AS_OF = '2026-04-30';
 
 export const LIVE_UPGRADE_SIGNALS: LiveUpgradeSignal[] = [
     {
         label: 'Bản live mới',
-        value: '57/100',
-        detail: 'Điểm cạnh tranh tăng sau khi có curriculum map lớp 1-5; chưa nâng điểm hiệu quả học tập.',
+        value: '60/100',
+        detail: 'Điểm cạnh tranh tăng sau khi generated item có curriculumMapId, source version và evidence fields.',
         tone: 'info',
     },
     {
@@ -121,20 +130,67 @@ export const LIVE_UPGRADE_SIGNALS: LiveUpgradeSignal[] = [
         tone: 'good',
     },
     {
-        label: 'Gate còn thiếu',
-        value: 'Item audit',
-        detail: 'Bước tiếp theo là gắn curriculumMapId vào từng item, source version, người duyệt và calibration.',
-        tone: 'warn',
+        label: 'Item audit',
+        value: '100% traceable',
+        detail: 'Mỗi topic generator lớp 1-5 có thể sinh item kèm curriculumMapId; còn cần người duyệt và calibration thật.',
+        tone: 'good',
     },
 ];
 
 export const BENCHMARK_PAGE_NAV = [
     { href: '#live-upgrade', label: 'Live mới' },
+    { href: '#path-to-100', label: 'Đường 100' },
     { href: '#vietnam-curriculum', label: 'CT Việt Nam' },
     { href: '#primary-scope', label: 'Tiểu học' },
     { href: '#topic-map', label: '47 topic' },
+    { href: '#item-audit', label: 'Item audit' },
     { href: '#scorecard', label: 'Scorecard' },
     { href: '#sources', label: 'Nguồn' },
+];
+
+export const FULLSTACK_100_GATES: Benchmark100Gate[] = [
+    {
+        key: 'official-curriculum-source',
+        label: 'Nguồn CTGDPT Việt Nam',
+        status: 'passed',
+        currentEvidence: 'Đã có nguồn Bộ GDĐT, cập nhật 2025, mốc năm học 2026-2027 và scope tiểu học.',
+        requiredFor100: 'Duy trì version nguồn khi Bộ GDĐT công bố thay đổi mới.',
+    },
+    {
+        key: 'item-traceability',
+        label: 'Traceability từng item',
+        status: 'passed',
+        currentEvidence: `${PRIMARY_ITEM_AUDIT_GATE.traceableTopicCount}/${PRIMARY_ITEM_AUDIT_GATE.requiredTopicCount} topic generator có curriculumMapId, source version và trường evidence.`,
+        requiredFor100: 'Không cho generator mới chạy nếu thiếu curriculumMapId hoặc source version.',
+    },
+    {
+        key: 'human-review',
+        label: 'Người duyệt nội dung',
+        status: 'partial',
+        currentEvidence: 'Item đã có review status, nhưng chưa có màn hình/hàng đợi duyệt và người duyệt thật.',
+        requiredFor100: 'Có review queue, reviewerId, approvedAt, lý do block và test khóa item chưa duyệt.',
+    },
+    {
+        key: 'calibration',
+        label: 'Calibration độ khó',
+        status: 'partial',
+        currentEvidence: 'Item đã gắn calibrationStatus, nhưng chưa có thống kê độ khó, tỉ lệ phân biệt và lỗi thường gặp theo cohort.',
+        requiredFor100: 'Có dữ liệu attempt thật đủ mẫu để hiệu chỉnh độ khó theo lớp và chủ đề.',
+    },
+    {
+        key: 'pilot-outcome',
+        label: 'Pilot hiệu quả học tập',
+        status: 'blocked',
+        currentEvidence: 'Chưa có người học thật, cohort, pre/post, retention hoặc effect size.',
+        requiredFor100: 'Pilot 4 tuần có consent phụ huynh, pre-test, post-test, retention 7 ngày và phân tích mất mẫu.',
+    },
+    {
+        key: 'production-monitoring',
+        label: 'Vận hành production',
+        status: 'partial',
+        currentEvidence: 'Có Pages deploy và unit/build gate; chưa có E2E bắt buộc, live monitoring và export cohort.',
+        requiredFor100: 'Có Playwright smoke trong CI, monitoring live, export schema và dashboard cohort.',
+    },
 ];
 
 export const FULLSTACK_BENCHMARK_SOURCES: BenchmarkSource[] = [
@@ -307,16 +363,17 @@ export const FULLSTACK_BENCHMARK_DIMENSIONS: FullstackBenchmarkDimension[] = [
         key: 'curriculumDepth',
         label: 'Độ sâu chương trình và nhiệm vụ chuyển giao',
         weightPct: 11,
-        henryScore10: 6.8,
+        henryScore10: 8,
         topBenchmarks: ['Bộ GDĐT CTGDPT 2018/2025', 'Beast Academy', 'Khan Academy'],
         currentHenryEvidence: [
             'Có topic blueprint theo môn, practice design, parent coaching và stretch task.',
             'Có nhiều generator nội dung cho Toán, Tiếng Việt, Tiếng Anh, Khoa học, Lịch sử - Địa lý, Tin học.',
             'Đã bổ sung benchmark nguồn chính thức cho Chương trình GDPT Việt Nam năm học 2026-2027.',
             `Đã map ${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount}/${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount} topic generator lớp 1-5 tới mạch nội dung, yêu cầu cần đạt, ví dụ nhiệm vụ và minh chứng cần lưu.`,
+            `Generated item traceability đạt ${PRIMARY_ITEM_AUDIT_GATE.generatedItemTraceabilityCoverage100}/100: curriculumMapId, source version, review status và evidence fields được gắn vào item/attempt.`,
         ],
-        gap: 'Đã có topic-level curriculum map lớp 1-5, nhưng từng item cụ thể vẫn chưa có curriculumMapId, người duyệt và item calibration.',
-        nextUpgrade: 'Gắn curriculumMapId vào từng generated item, lưu source version trong attempt log và thêm review queue cho người duyệt.',
+        gap: 'Đã có curriculumMapId cho generated item, nhưng chưa có người duyệt nội dung và chưa có calibration độ khó bằng dữ liệu thật.',
+        nextUpgrade: 'Thêm review queue cho giáo viên/phụ huynh duyệt item và khóa release khi item chưa được duyệt.',
         evidenceNeededBeforeEfficacyClaim: 'Cần item bank đã duyệt, độ khó thực nghiệm, tỉ lệ phân biệt và lỗi thường gặp theo tuổi.',
         sourceIds: ['moet-ctgdpt-2018', 'moet-tt17-2025', 'moet-sgk-2026-2027', 'beast-academy', 'khanmigo'],
     },
@@ -339,11 +396,12 @@ export const FULLSTACK_BENCHMARK_DIMENSIONS: FullstackBenchmarkDimension[] = [
         key: 'evidenceAndOutcomeTracking',
         label: 'Hiệu quả học tập có bằng chứng',
         weightPct: 14,
-        henryScore10: 3.2,
+        henryScore10: 3.5,
         topBenchmarks: ['ST Math', 'EEF'],
         currentHenryEvidence: [
             'Có evidence dashboard nội bộ, anti-hallucination về thiếu mẫu và test không bịa accuracy.',
             'Có tài liệu audit nêu rõ các gate đã chạy.',
+            'Attempt/event có thể mang curriculumMapId và source version để phân tích hiệu quả theo item sau pilot.',
         ],
         gap: 'Chưa có người học thật, chưa có cohort, chưa có pre/post, retention hoặc effect size.',
         nextUpgrade: 'Thiết kế pilot 4 tuần: pre-test, post-test, retention sau 7 ngày, log thời gian học và lỗi tái phát.',
@@ -369,14 +427,15 @@ export const FULLSTACK_BENCHMARK_DIMENSIONS: FullstackBenchmarkDimension[] = [
         key: 'dataInfrastructure',
         label: 'Hạ tầng dữ liệu và vận hành',
         weightPct: 9,
-        henryScore10: 4.6,
+        henryScore10: 5.8,
         topBenchmarks: ['Zearn', 'IXL'],
         currentHenryEvidence: [
             'Có event model, local store và nhiều dashboard đọc dữ liệu thật trong app.',
             'Có test unit cho resource, evidence, tutor, mastery và scheduler.',
+            'Attempt và xAPI-like event đã có trường curriculumMapId, source version, official strand, review status.',
         ],
-        gap: 'Chưa có backend/persistence đồng bộ, export chuẩn và cohort analytics.',
-        nextUpgrade: 'Định nghĩa analytics export schema, snapshot weekly và adapter backend khi rời local-only.',
+        gap: 'Chưa có backend/persistence đồng bộ, export chuẩn, reviewer queue và cohort analytics.',
+        nextUpgrade: 'Định nghĩa analytics export schema, reviewer queue, snapshot weekly và adapter backend khi rời local-only.',
         evidenceNeededBeforeEfficacyClaim: 'Cần dữ liệu phiên học có timestamp, user cohort, version content và tracking mất mẫu.',
         sourceIds: ['zearn-reports', 'ixl-diagnostic'],
     },

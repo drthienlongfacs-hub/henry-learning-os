@@ -123,6 +123,27 @@ export type LearningEventType =
   | 'PARENT_MISSION_COMPLETED'
   | 'SAFETY_EVENT_CREATED';
 
+export type CurriculumReviewStatus =
+  | 'needs_human_review'
+  | 'approved'
+  | 'blocked';
+
+export type CurriculumCalibrationStatus =
+  | 'needs_real_attempts'
+  | 'calibrating'
+  | 'calibrated';
+
+export interface CurriculumEvidenceRef {
+  curriculumMapId: string;
+  curriculumSubject: string;
+  curriculumGrade: number;
+  curriculumTopicKey: string;
+  curriculumSourceVersion: string;
+  curriculumOfficialStrand: string;
+  curriculumReviewStatus: CurriculumReviewStatus;
+  curriculumCalibrationStatus: CurriculumCalibrationStatus;
+}
+
 // --- Core Entities ---
 
 export interface ChildProfile {
@@ -220,6 +241,9 @@ export interface Exercise {
   variations?: string[];
   tags?: string[];
   subject?: string;
+  topicKey?: string;
+  gradeLevel?: number;
+  curriculum?: CurriculumEvidenceRef;
 }
 
 export interface Attempt {
@@ -235,6 +259,7 @@ export interface Attempt {
   timeSpentSeconds: number;
   confidenceSelfRating: number; // 1-5
   aiRoleUsed: AIRole;
+  curriculum?: CurriculumEvidenceRef;
   createdAt: string;
 }
 

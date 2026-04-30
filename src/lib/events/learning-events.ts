@@ -23,6 +23,10 @@ export function emitLearningEvent(params: {
     score?: number;
     durationSec?: number;
     confidence?: number;
+    curriculumMapId?: string;
+    curriculumSourceVersion?: string;
+    curriculumOfficialStrand?: string;
+    curriculumReviewStatus?: string;
 }): LearningEvent {
     const event: LearningEvent = {
         id: `evt-${++idCounter}-${Date.now()}`,
@@ -34,6 +38,10 @@ export function emitLearningEvent(params: {
             resourceProvider: params.resourceProvider ?? 'internal',
             aiAssistanceLevel: params.aiAssistanceLevel,
             parentPresent: params.parentPresent,
+            curriculumMapId: params.curriculumMapId,
+            curriculumSourceVersion: params.curriculumSourceVersion,
+            curriculumOfficialStrand: params.curriculumOfficialStrand,
+            curriculumReviewStatus: params.curriculumReviewStatus,
         },
         result: (params.success !== undefined || params.score !== undefined)
             ? {

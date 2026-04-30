@@ -132,6 +132,10 @@ export interface LearningEvent {
         resourceProvider: string;      // adapter id or "internal"
         aiAssistanceLevel?: string;    // "none" | "hint_1" | "hint_2" | "explanation"
         parentPresent?: boolean;
+        curriculumMapId?: string;
+        curriculumSourceVersion?: string;
+        curriculumOfficialStrand?: string;
+        curriculumReviewStatus?: string;
     };
     result?: {
         success?: boolean;

@@ -84,7 +84,7 @@ function SessionContent() {
             competencyId: lesson.competencyIds[0], exerciseId: currentEx.id,
             answer: selectedAnswer, isCorrect: correct, errorType: correct ? null : 'unknown',
             hintLevelUsed: hintLevel, timeSpentSeconds: 0, confidenceSelfRating: mood,
-            aiRoleUsed: 'tutor', createdAt: new Date().toISOString(),
+            aiRoleUsed: 'tutor', curriculum: currentEx.curriculum, createdAt: new Date().toISOString(),
         };
         addAttempt(attempt);
         addAIInteractionLog({
@@ -123,6 +123,10 @@ function SessionContent() {
             success: correct,
             score: correct ? 1.0 : 0,
             aiAssistanceLevel: hintLevel > 0 ? `hint_L${hintLevel}` : undefined,
+            curriculumMapId: currentEx.curriculum?.curriculumMapId,
+            curriculumSourceVersion: currentEx.curriculum?.curriculumSourceVersion,
+            curriculumOfficialStrand: currentEx.curriculum?.curriculumOfficialStrand,
+            curriculumReviewStatus: currentEx.curriculum?.curriculumReviewStatus,
         });
     };
 

@@ -6,7 +6,7 @@ export type PrimaryCurriculumSubjectKey =
     | 'hisgeo'
     | 'computing';
 
-export type PrimaryCurriculumMapStatus = 'topic_mapped_needs_item_audit';
+export type PrimaryCurriculumMapStatus = 'item_traceable_needs_human_review';
 
 export interface PrimaryCurriculumTopicMap {
     subject: PrimaryCurriculumSubjectKey;
@@ -57,7 +57,7 @@ function mapTopic(
         misconceptionWatch,
         releaseGate,
         sourceIds: [...MOET_SOURCE_IDS, ...extraSourceIds],
-        status: 'topic_mapped_needs_item_audit',
+        status: 'item_traceable_needs_human_review',
     };
 }
 
@@ -213,8 +213,8 @@ export const PRIMARY_CURRICULUM_MAP_STATS = {
     topicMapCount: PRIMARY_CURRICULUM_TOPIC_MAP.length,
     gradeCoverage: [1, 2, 3, 4, 5] as const,
     subjectCoverage: ['math', 'vietnamese', 'english', 'science', 'hisgeo', 'computing'] as const,
-    evidenceFields: ['topicKey', 'gradeLevel', 'attempt result', 'support level', 'child explanation', 'source version'],
-    noOverclaim: 'Map hiện ở mức topic-to-generator. Muốn claim item bank phủ chuẩn phải gắn từng item cụ thể với yêu cầu cần đạt và người duyệt.',
+    evidenceFields: ['curriculumMapId', 'topicKey', 'gradeLevel', 'attempt result', 'support level', 'child explanation', 'source version', 'review status'],
+    noOverclaim: 'Generated item hiện đã có curriculumMapId và source version. Muốn claim item bank phủ chuẩn 100% vẫn cần người duyệt và calibration bằng dữ liệu thật.',
 };
 
 export function getPrimaryCurriculumTopicMap(subject: PrimaryCurriculumSubjectKey, topicKey: string) {

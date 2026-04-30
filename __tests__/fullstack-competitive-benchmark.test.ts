@@ -4,6 +4,7 @@ import {
     FULLSTACK_BENCHMARK_DIMENSIONS,
     FULLSTACK_BENCHMARK_ROADMAP,
     FULLSTACK_BENCHMARK_SOURCES,
+    FULLSTACK_100_GATES,
     HENRY_FULLSTACK_BENCHMARK,
     LIVE_UPGRADE_SIGNALS,
     PRIMARY_CURRICULUM_EXPLANATION_EXAMPLES,
@@ -15,6 +16,7 @@ import {
     computeVietnamCurriculumBenchmarkCoverage,
     computeWeightedBenchmarkScore,
 } from '@/data/fullstack-competitive-benchmark';
+import { PRIMARY_ITEM_AUDIT_GATE } from '@/lib/curriculum/item-audit';
 
 describe('full-stack competitive benchmark', () => {
     it('uses a complete weighted scorecard', () => {
@@ -59,18 +61,32 @@ describe('full-stack competitive benchmark', () => {
 
     it('surfaces the latest live upgrade above the fold', () => {
         expect(LIVE_UPGRADE_SIGNALS).toHaveLength(4);
-        expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('57/100');
+        expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('60/100');
         expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('47/47 topic');
-        expect(LIVE_UPGRADE_SIGNALS.some((signal) => signal.detail.includes('chưa nâng điểm hiệu quả học tập'))).toBe(true);
+        expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('100% traceable');
+        expect(LIVE_UPGRADE_SIGNALS.some((signal) => signal.detail.includes('người duyệt và calibration thật'))).toBe(true);
 
         expect(BENCHMARK_PAGE_NAV.map((item) => item.href)).toEqual([
             '#live-upgrade',
+            '#path-to-100',
             '#vietnam-curriculum',
             '#primary-scope',
             '#topic-map',
+            '#item-audit',
             '#scorecard',
             '#sources',
         ]);
+    });
+
+    it('explains why full-stack score cannot honestly jump to 100 yet', () => {
+        const statuses = new Set(FULLSTACK_100_GATES.map((gate) => gate.status));
+
+        expect(HENRY_FULLSTACK_BENCHMARK.overallScore100).toBe(60);
+        expect(PRIMARY_ITEM_AUDIT_GATE.generatedItemTraceabilityCoverage100).toBe(100);
+        expect(statuses.has('passed')).toBe(true);
+        expect(statuses.has('partial')).toBe(true);
+        expect(statuses.has('blocked')).toBe(true);
+        expect(FULLSTACK_100_GATES.find((gate) => gate.key === 'pilot-outcome')?.currentEvidence).toContain('Chưa có người học thật');
     });
 
     it('benchmarks Vietnam curriculum 2026-2027 at 100 percent source coverage without overclaiming product coverage', () => {

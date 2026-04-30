@@ -12,6 +12,11 @@ import { ENGLISH_TOPICS } from '@/lib/content/english-generator';
 import { SCIENCE_TOPICS } from '@/lib/content/science-generator';
 import { HISGEO_TOPICS } from '@/lib/content/history-geo-generator';
 import { COMPUTING_TOPICS } from '@/lib/content/computing-generator';
+import {
+    attachCurriculumAudit,
+    buildAttemptCurriculumEvidence,
+    buildCurriculumMapId,
+} from '@/lib/curriculum/item-audit';
 
 const topicSets: { subject: PrimaryCurriculumSubjectKey; topics: { key: string; gradeLevel: number }[] }[] = [
     { subject: 'math', topics: MATH_TOPICS },
@@ -48,7 +53,7 @@ describe('primary curriculum topic map', () => {
         expect(PRIMARY_CURRICULUM_MAP_STATS.sourceVersion).toContain('2026-2027');
 
         PRIMARY_CURRICULUM_TOPIC_MAP.forEach((item) => {
-            expect(item.status).toBe('topic_mapped_needs_item_audit');
+            expect(item.status).toBe('item_traceable_needs_human_review');
             expect(item.officialStrand.length).toBeGreaterThan(5);
             expect(item.expectedOutcome.length).toBeGreaterThan(40);
             expect(item.parentExplanation.length).toBeGreaterThan(60);
@@ -70,5 +75,24 @@ describe('primary curriculum topic map', () => {
         [1, 2, 3, 4, 5].forEach((grade) => {
             expect(PRIMARY_CURRICULUM_TOPIC_MAP.filter((item) => item.grade === grade).length).toBeGreaterThanOrEqual(5);
         });
+    });
+
+    it('attaches curriculumMapId and source version to generated items before attempts are stored', () => {
+        const sample = {
+            id: 'sample-add-sub-10',
+            topicKey: 'add_sub_10',
+            gradeLevel: 1,
+            question: '2 + 3 = ?',
+            correctAnswer: '5',
+        };
+        const audited = attachCurriculumAudit('math', sample);
+        const attemptEvidence = buildAttemptCurriculumEvidence(audited);
+
+        expect(audited.curriculumMapId).toBe(buildCurriculumMapId('math', 'add_sub_10'));
+        expect(audited.curriculum.curriculumSourceVersion).toContain('2026-2027');
+        expect(audited.curriculum.curriculumReviewStatus).toBe('needs_human_review');
+        expect(audited.curriculum.curriculumCalibrationStatus).toBe('needs_real_attempts');
+        expect(attemptEvidence?.curriculumMapId).toBe('primary:math:add_sub_10');
+        expect(attemptEvidence?.curriculumOfficialStrand).toBe('Số và phép tính');
     });
 });

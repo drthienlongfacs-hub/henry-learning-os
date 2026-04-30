@@ -241,6 +241,24 @@ describe('Learning Events', () => {
         expect(getEventCount()).toBe(1);
     });
 
+    it('stores curriculum traceability on learning events', () => {
+        const event = emitLearningEvent({
+            childId: 'henry',
+            verb: 'attempted',
+            object: 'exercise:math-1',
+            module: 'math',
+            curriculumMapId: 'primary:math:add_sub_10',
+            curriculumSourceVersion: 'CTGDPT 2018 + cập nhật 2025, dùng cho benchmark năm học 2026-2027',
+            curriculumOfficialStrand: 'Số và phép tính',
+            curriculumReviewStatus: 'needs_human_review',
+        });
+
+        expect(event.context.curriculumMapId).toBe('primary:math:add_sub_10');
+        expect(event.context.curriculumSourceVersion).toContain('2026-2027');
+        expect(event.context.curriculumOfficialStrand).toBe('Số và phép tính');
+        expect(event.context.curriculumReviewStatus).toBe('needs_human_review');
+    });
+
     it('clearEvents resets the store', () => {
         emitLearningEvent({
             childId: 'henry',
