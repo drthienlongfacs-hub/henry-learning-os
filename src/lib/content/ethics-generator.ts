@@ -68,6 +68,72 @@ export function genExpressEmotion(): EthicsProblem {
 }
 
 // ══════════════════════════════════════════════
+// Grade 3: Honesty (Trung thực)
+// ══════════════════════════════════════════════
+
+const HONESTY_QS = [
+    { q: 'Bạn Lan nhặt được chiếc bút rất đẹp trên sân trường. Em nghĩ bạn Lan nên làm gì?', a: 'Mang đến lớp trực hoặc thầy cô để tìm chủ nhân', opts: ['Mang đến lớp trực hoặc thầy cô để tìm chủ nhân', 'Giữ lại vì không ai nhìn thấy', 'Cho bạn thân', 'Vứt đi cho rồi'], e: 'Trung thực là trả lại đồ vật cho người mất, dù không ai biết.' },
+    { q: 'Em chưa làm bài tập về nhà nhưng cô giáo hỏi. Em nên trả lời thế nào?', a: 'Thưa cô, em chưa làm xong ạ. Em xin lỗi và sẽ hoàn thành.', opts: ['Thưa cô, em chưa làm xong ạ. Em xin lỗi và sẽ hoàn thành.', 'Nói dối là đã làm', 'Nói quên vở ở nhà', 'Im lặng không trả lời'], e: 'Thừa nhận lỗi lầm và cam kết sửa chữa là biểu hiện của sự trung thực.' },
+    { q: 'Trong giờ kiểm tra, bạn ngồi cạnh để lộ bài. Em nên:', a: 'Không nhìn bài bạn và tự làm bài của mình', opts: ['Không nhìn bài bạn và tự làm bài của mình', 'Nhìn lén vài câu khó', 'Chép hết bài bạn', 'Bảo bạn che bài rồi đổi bài sau'], e: 'Tự lực làm bài thể hiện sự trung thực trong học tập.' },
+    { q: 'Em vô tình làm vỡ bình hoa trong lớp nhưng không ai nhìn thấy. Em nên:', a: 'Tự giác nhận lỗi với cô giáo', opts: ['Tự giác nhận lỗi với cô giáo', 'Giả vờ không biết', 'Đổ lỗi cho bạn khác', 'Dọn dẹp rồi im lặng'], e: 'Dũng cảm nhận lỗi khi sai là hành vi trung thực đáng khen ngợi.' },
+    { q: 'Bạn Minh khoe rằng mình đạt điểm 10 nhưng thực tế chỉ được 8. Em nghĩ:', a: 'Khoe điểm sai sự thật là không trung thực', opts: ['Khoe điểm sai sự thật là không trung thực', 'Không sao vì ai cũng muốn được khen', 'Bình thường thôi', 'Nên khoe cao hơn nữa'], e: 'Nói đúng sự thật, kể cả khi kết quả chưa như ý, là biểu hiện của trung thực.' },
+];
+
+export function genHonesty(): EthicsProblem {
+    const item = HONESTY_QS[rand(0, HONESTY_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 3, difficulty: 3,
+        type: 'behavior', topic: 'Trung thực', topicKey: 'honesty',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Hãy nghĩ: nếu em là người bị ảnh hưởng, em muốn bạn làm gì?', `Đáp án: ${item.a}`],
+    };
+}
+
+// ══════════════════════════════════════════════
+// Grade 4: Responsibility (Trách nhiệm)
+// ══════════════════════════════════════════════
+
+const RESPONSIBILITY_QS = [
+    { q: 'Em được phân công trực nhật nhưng hôm đó trời mưa to và em muốn về sớm. Em nên:', a: 'Hoàn thành trực nhật rồi mới về', opts: ['Hoàn thành trực nhật rồi mới về', 'Bỏ về vì trời mưa', 'Nhờ bạn khác làm hộ', 'Nói với cô là bị ốm'], e: 'Trách nhiệm là hoàn thành nhiệm vụ được giao dù gặp khó khăn.' },
+    { q: 'Em nuôi một chú cá cảnh. Việc chăm sóc cá hàng ngày thuộc trách nhiệm của ai?', a: 'Của em vì em là người nuôi', opts: ['Của em vì em là người nuôi', 'Của bố mẹ', 'Của ai rảnh thì làm', 'Không cần chăm sóc'], e: 'Khi nhận nuôi thú cưng, em có trách nhiệm chăm sóc chúng mỗi ngày.' },
+    { q: 'Nhóm em làm bài tập nhóm, một bạn không chịu làm phần của mình. Em nên:', a: 'Nhắc nhở bạn và phân công lại rõ ràng', opts: ['Nhắc nhở bạn và phân công lại rõ ràng', 'Làm luôn phần của bạn', 'Mặc kệ bạn', 'Mách cô ngay'], e: 'Nhắc nhở bạn hoàn thành phần việc là thể hiện trách nhiệm với nhóm.' },
+    { q: 'Em thấy vòi nước trong nhà vệ sinh bị chảy nhưng không phải em mở. Em nên:', a: 'Tắt vòi nước và báo bảo vệ', opts: ['Tắt vòi nước và báo bảo vệ', 'Bỏ đi vì không phải lỗi em', 'Chơi nước', 'Đợi ai đó đến tắt'], e: 'Trách nhiệm với cộng đồng là hành động đúng kể cả khi đó không phải lỗi của mình.' },
+    { q: 'Em hứa sẽ giúp mẹ dọn nhà cuối tuần nhưng bạn rủ đi chơi. Em nên:', a: 'Giữ lời hứa với mẹ, hẹn bạn lần khác', opts: ['Giữ lời hứa với mẹ, hẹn bạn lần khác', 'Đi chơi vì bạn quan trọng hơn', 'Nói mẹ cho đi rồi dọn sau', 'Giả vờ bị ốm'], e: 'Giữ lời hứa là biểu hiện quan trọng của trách nhiệm.' },
+];
+
+export function genResponsibility(): EthicsProblem {
+    const item = RESPONSIBILITY_QS[rand(0, RESPONSIBILITY_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 4, difficulty: 4,
+        type: 'behavior', topic: 'Trách nhiệm', topicKey: 'responsibility',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Trách nhiệm là hoàn thành việc được giao và giữ lời hứa.', `Đáp án: ${item.a}`],
+    };
+}
+
+// ══════════════════════════════════════════════
+// Grade 5: Community Empathy (Đồng cảm cộng đồng)
+// ══════════════════════════════════════════════
+
+const EMPATHY_QS = [
+    { q: 'Trường em tổ chức quyên góp ủng hộ bạn vùng lũ. Em có ít tiền tiêu vặt. Em nên:', a: 'Đóng góp phần nhỏ trong khả năng hoặc quyên góp đồ dùng', opts: ['Đóng góp phần nhỏ trong khả năng hoặc quyên góp đồ dùng', 'Không góp vì em cũng ít tiền', 'Chỉ góp khi bị ép', 'Nói bố mẹ góp thay'], e: 'Đồng cảm cộng đồng là chia sẻ trong khả năng, không nhất thiết phải nhiều tiền.' },
+    { q: 'Bạn mới chuyển đến lớp, ngồi một mình không ai chơi cùng. Em nên:', a: 'Chủ động đến làm quen và rủ bạn chơi cùng', opts: ['Chủ động đến làm quen và rủ bạn chơi cùng', 'Đợi bạn ấy tự đến nói chuyện', 'Không quan tâm', 'Nói xấu bạn mới với nhóm'], e: 'Chủ động giúp đỡ người mới hòa nhập thể hiện sự đồng cảm và tử tế.' },
+    { q: 'Em thấy một bạn khuyết tật bị trêu chọc trên đường đi học. Em nên:', a: 'Can ngăn việc trêu chọc và an ủi bạn', opts: ['Can ngăn việc trêu chọc và an ủi bạn', 'Đi nhanh cho qua', 'Cười theo', 'Quay video'], e: 'Bảo vệ người yếu thế và phản đối sự bất công là biểu hiện cao của đồng cảm.' },
+    { q: 'Trong lớp có bạn nhà nghèo không có đủ sách vở. Em có thể làm gì?', a: 'Chia sẻ đồ dùng dư hoặc đề xuất cô giáo tổ chức hỗ trợ', opts: ['Chia sẻ đồ dùng dư hoặc đề xuất cô giáo tổ chức hỗ trợ', 'Không phải việc của em', 'Nói bạn xin bố mẹ mua', 'Chế giễu bạn'], e: 'Chia sẻ và giúp đỡ bạn bè khó khăn là trách nhiệm cộng đồng nhỏ.' },
+    { q: 'Bà cụ bán vé số ngồi giữa trưa nắng gần trường em. Em nghĩ thế nào?', a: 'Thương bà và mời bà vào bóng mát nghỉ nếu có thể', opts: ['Thương bà và mời bà vào bóng mát nghỉ nếu có thể', 'Không liên quan đến em', 'Bà ấy quen rồi', 'Tránh xa'], e: 'Quan tâm đến người xung quanh, đặc biệt người cao tuổi, là biểu hiện của lòng nhân ái.' },
+];
+
+export function genCommunityEmpathy(): EthicsProblem {
+    const item = EMPATHY_QS[rand(0, EMPATHY_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 5, difficulty: 5,
+        type: 'emotion', topic: 'Đồng cảm cộng đồng', topicKey: 'community_empathy',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Đặt mình vào vị trí của người khác để hiểu họ cần gì.', `Đáp án: ${item.a}`],
+    };
+}
+
+// ══════════════════════════════════════════════
 // TOPIC REGISTRY
 // ══════════════════════════════════════════════
 
@@ -82,6 +148,9 @@ export interface EthicsTopicInfo {
 export const ETHICS_TOPICS: EthicsTopicInfo[] = [
     { key: 'polite_greet', name: 'Chào hỏi lễ phép', gradeLevel: 1, generator: genPoliteGreet, icon: '🙏' },
     { key: 'express_emotion', name: 'Thể hiện cảm xúc', gradeLevel: 2, generator: genExpressEmotion, icon: '😊' },
+    { key: 'honesty', name: 'Trung thực', gradeLevel: 3, generator: genHonesty, icon: '💎' },
+    { key: 'responsibility', name: 'Trách nhiệm', gradeLevel: 4, generator: genResponsibility, icon: '🎯' },
+    { key: 'community_empathy', name: 'Đồng cảm cộng đồng', gradeLevel: 5, generator: genCommunityEmpathy, icon: '🤝' },
 ];
 
 export function generateEthicsSet(grade: number, topicKey?: string, count: number = 10): EthicsProblem[] {

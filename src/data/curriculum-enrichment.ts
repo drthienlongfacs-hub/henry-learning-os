@@ -652,8 +652,13 @@ const SUBJECT_BY_TOPIC_PREFIX: Record<string, LearningSubjectKey> = {
     comp: 'computing',
     polite: 'ethics',
     express: 'ethics',
+    honesty: 'ethics',
+    responsibility: 'ethics',
+    community: 'ethics',
     basic: 'art',
     music: 'art',
+    shapes_drawing: 'art',
+    art_appreciation: 'art',
 };
 
 const TOPIC_OVERRIDES: Record<string, Partial<TopicEnrichment>> = {
@@ -928,6 +933,40 @@ const TOPIC_OVERRIDES: Record<string, Partial<TopicEnrichment>> = {
         visual: { src: '/images/core/books_hd.svg', alt: 'Nốt nhạc và nhịp điệu' },
         masteryTargets: ['Nhận biết nhịp điệu bài hát (nhanh, chậm)', 'Vỗ tay đúng nhịp 2/4'],
         commonPitfalls: ['Vỗ tay không đều', 'Vỗ tay theo lời ca thay vì nhịp/phách'],
+    },
+
+    // ── Đạo đức (mở rộng G3-5) ──
+    honesty: {
+        visual: { src: '/images/core/books_hd.svg', alt: 'Tình huống trung thực trong lớp học' },
+        masteryTargets: ['Hiểu giá trị của trung thực', 'Dũng cảm nhận lỗi', 'Không gian lận trong kiểm tra'],
+        commonPitfalls: ['Nghĩ nói dối nhỏ không sao', 'Đổ lỗi cho người khác'],
+    },
+    responsibility: {
+        visual: { src: '/images/core/books_hd.svg', alt: 'Trách nhiệm hoàn thành nhiệm vụ' },
+        masteryTargets: ['Hoàn thành nhiệm vụ được giao', 'Giữ lời hứa', 'Chịu trách nhiệm với hành động'],
+        commonPitfalls: ['Tránh né việc khó', 'Quên lời hứa khi có việc thích hơn'],
+    },
+    community_empathy: {
+        visual: { src: '/images/core/books_hd.svg', alt: 'Đồng cảm và chia sẻ cộng đồng' },
+        masteryTargets: ['Biết đặt mình vào vị trí người khác', 'Chủ động giúp đỡ người yếu thế', 'Chia sẻ trong khả năng'],
+        commonPitfalls: ['Thờ ơ với khó khăn của người xung quanh', 'Chỉ giúp khi bị bắt buộc'],
+    },
+
+    // ── Nghệ thuật (mở rộng G3-5) ──
+    shapes_drawing: {
+        visual: { src: '/images/core/books_hd.svg', alt: 'Các loại đường nét và hình khối' },
+        masteryTargets: ['Phân biệt đường thẳng, cong, gấp khúc', 'Nhận biết hình 2D và 3D', 'Hiểu bố cục xa gần'],
+        commonPitfalls: ['Không phân biệt hình phẳng và hình khối', 'Chưa biết cách sắp xếp bố cục'],
+    },
+    music_instruments: {
+        visual: { src: '/images/core/books_hd.svg', alt: 'Nhạc cụ truyền thống Việt Nam' },
+        masteryTargets: ['Phân loại nhạc cụ theo bộ dây, hơi, gõ', 'Nhận biết đàn tranh, đàn bầu, sáo trúc', 'Biết đàn bầu chỉ có 1 dây'],
+        commonPitfalls: ['Nhầm nhạc cụ VN với nhạc cụ phương Tây', 'Không phân biệt nhóm nhạc cụ'],
+    },
+    art_appreciation: {
+        visual: { src: '/images/core/books_hd.svg', alt: 'Cảm thụ tranh và âm nhạc' },
+        masteryTargets: ['Quan sát tổng thể rồi chi tiết', 'Phân biệt màu ấm/lạnh', 'Nêu cảm nhận cá nhân có lý do'],
+        commonPitfalls: ['Chỉ nói thích/không thích mà không giải thích', 'Không chú ý bố cục và màu sắc chủ đạo'],
     },
 };
 
