@@ -1,3 +1,5 @@
+import { PRIMARY_CURRICULUM_MAP_STATS } from './primary-curriculum-map';
+
 export type UiSmokeRouteKey =
     | 'home'
     | 'child-learn'
@@ -78,7 +80,7 @@ export const UI_SMOKE_ROUTES: UiSmokeRoute[] = [
         key: 'parent-review-queue',
         path: '/parent/review-queue/',
         label: 'Human review queue',
-        requiredText: ['Hàng đợi duyệt item theo curriculum SOT', '47 item', 'Không được nói item bank đã được duyệt 100%'],
+        requiredText: ['Hàng đợi duyệt item theo curriculum SOT', `${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount} item`, 'Không được nói item bank đã được duyệt 100%'],
         minimumBodyTextLength: 800,
     },
     {

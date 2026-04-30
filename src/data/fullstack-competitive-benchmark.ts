@@ -121,7 +121,7 @@ export const LIVE_UPGRADE_SIGNALS: LiveUpgradeSignal[] = [
     },
     {
         label: 'Curriculum map',
-        value: '47/47 topic',
+        value: `${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount}/${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount} topic`,
         detail: 'Toàn bộ topic generator đang có trong app đã được map tới môn, lớp, mạch nội dung và minh chứng cần lưu.',
         tone: 'good',
     },
@@ -139,7 +139,7 @@ export const LIVE_UPGRADE_SIGNALS: LiveUpgradeSignal[] = [
     },
     {
         label: 'Review queue',
-        value: '47 item',
+        value: `${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount} item`,
         detail: 'Toàn bộ topic/item lớp 1-5 được đưa vào hàng đợi duyệt với RCA/PDCA, reviewer metadata và release gate.',
         tone: 'warn',
     },
@@ -168,7 +168,7 @@ export const BENCHMARK_PAGE_NAV = [
     { href: '#path-to-100', label: 'Đường 100' },
     { href: '#vietnam-curriculum', label: 'CT Việt Nam' },
     { href: '#primary-scope', label: 'Tiểu học' },
-    { href: '#topic-map', label: '47 topic' },
+    { href: '#topic-map', label: `${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount} topic` },
     { href: '#item-audit', label: 'Item audit' },
     { href: '#scorecard', label: 'Scorecard' },
     { href: '#sources', label: 'Nguồn' },
@@ -536,7 +536,7 @@ export const VIETNAM_CURRICULUM_BENCHMARK_CHECKS: VietnamCurriculumBenchmarkChec
         status: 'covered',
         requiredForBenchmark100Pct: true,
         evidence: [
-            'Các môn đang có trong Henry gồm Toán, Tiếng Việt, Tiếng Anh, Khoa học, Lịch sử - Địa lý và Tin học đều có mapping nguồn chương trình.',
+            'Các môn đang có trong Henry gồm Toán, Tiếng Việt, Tiếng Anh, Khoa học, Lịch sử - Địa lý, Tin học, Đạo đức và Nghệ thuật đều có mapping nguồn chương trình.',
             'Benchmark dùng CTGDPT Việt Nam làm nguồn chính, còn Khan Academy/Beast Academy/IXL/DreamBox là benchmark sản phẩm bổ trợ.',
         ],
         verificationGate: 'Không cho thêm môn hoặc generator mới nếu không có subject coverage, sourceIds và nextGate tương ứng.',
@@ -605,6 +605,22 @@ export const VIETNAM_CURRICULUM_SUBJECT_COVERAGE: VietnamCurriculumSubjectCovera
         sourceIds: ['moet-ctgdpt-2018'],
         nextGate: 'Map từng item tới thiết bị số, an toàn, dữ liệu, thuật toán và sản phẩm số.',
     },
+    {
+        subject: 'Đạo đức',
+        gradeBand: 'Lớp 1-5 bắt buộc trong CTGDPT 2018',
+        appSurface: 'ethics-generator, tình huống hành vi, cảm xúc, trung thực, trách nhiệm, đồng cảm',
+        status: 'source_mapped',
+        sourceIds: ['moet-ctgdpt-2018'],
+        nextGate: 'Map từng item tới tình huống đạo đức theo lớp, tiêu chí hành vi mở và phản hồi phụ huynh.',
+    },
+    {
+        subject: 'Nghệ thuật',
+        gradeBand: 'Âm nhạc + Mĩ thuật lớp 1-5 bắt buộc trong CTGDPT 2018',
+        appSurface: 'art-generator, màu sắc, nhịp điệu, đường nét, nhạc cụ VN, cảm thụ nghệ thuật',
+        status: 'source_mapped',
+        sourceIds: ['moet-ctgdpt-2018'],
+        nextGate: 'Map từng item tới rubric sản phẩm mở, minh chứng cảm thụ và tiêu chí sáng tạo.',
+    },
 ];
 
 export const PRIMARY_SCHOOL_CURRICULUM_SCOPE: PrimaryCurriculumScopeItem[] = [
@@ -635,10 +651,10 @@ export const PRIMARY_SCHOOL_CURRICULUM_SCOPE: PrimaryCurriculumScopeItem[] = [
         label: 'Đạo đức',
         gradeBand: 'Lớp 1-5',
         officialRole: 'mandatory',
-        status: 'benchmark_scope_only',
-        appSurface: 'Chưa có module riêng; cần nối với parent mission và tình huống gia đình/trường học',
+        status: 'in_app_mapped',
+        appSurface: 'ethics-generator, tình huống hành vi, cảm xúc, trung thực, trách nhiệm, đồng cảm cộng đồng',
         plainLanguage: 'Trẻ cần biết lựa chọn việc đúng trong tình huống gần gũi, nói được lý do và làm lại được trong đời sống.',
-        verificationGate: 'Trước khi claim coverage, cần tình huống đạo đức theo lớp, đáp án mở, tiêu chí hành vi và phản hồi phụ huynh.',
+        verificationGate: 'Mỗi item Đạo đức phải có tình huống theo lớp, đáp án mở, tiêu chí hành vi và phản hồi phụ huynh.',
         sourceIds: ['moet-ctgdpt-2018', 'moet-primary-scope-2018'],
     },
     {
@@ -712,10 +728,10 @@ export const PRIMARY_SCHOOL_CURRICULUM_SCOPE: PrimaryCurriculumScopeItem[] = [
         label: 'Nghệ thuật',
         gradeBand: 'Âm nhạc, Mĩ thuật lớp 1-5',
         officialRole: 'mandatory',
-        status: 'benchmark_scope_only',
-        appSurface: 'Chưa có module nghệ thuật; có thể nối với đọc sách, vẽ, kể chuyện và portfolio',
+        status: 'in_app_mapped',
+        appSurface: 'art-generator, màu sắc, nhịp điệu, đường nét, nhạc cụ Việt Nam, cảm thụ nghệ thuật',
         plainLanguage: 'Trẻ cần cảm thụ, thể hiện và nói về sản phẩm nghệ thuật; không nên chấm theo một đáp án cứng.',
-        verificationGate: 'Cần rubric sản phẩm mở, ảnh/ghi âm minh chứng, consent phụ huynh và tiêu chí khuyến khích sáng tạo.',
+        verificationGate: 'Mỗi item Nghệ thuật phải có rubric sản phẩm mở, minh chứng cảm thụ và tiêu chí khuyến khích sáng tạo.',
         sourceIds: ['moet-ctgdpt-2018', 'moet-primary-scope-2018'],
     },
     {
