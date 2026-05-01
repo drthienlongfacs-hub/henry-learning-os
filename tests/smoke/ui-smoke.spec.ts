@@ -259,6 +259,10 @@ test('Child learning engine switches core surface and topic cards to English', a
         await expect(page.locator('body'), `English learning surface contains ${requiredText}`).toContainText(requiredText);
     }
 
+    const exampleText = await page.getByText(/Example:/).first().innerText();
+    expect(exampleText, 'English sample question should not leave Vietnamese generator text on the topic card')
+        .not.toMatch(/[À-ỹ]/);
+
     await expect(page.locator('body')).not.toContainText('Cơ thể & Sức khỏe');
     await expect(page.locator('body')).not.toContainText('Chọn nhịp học');
 

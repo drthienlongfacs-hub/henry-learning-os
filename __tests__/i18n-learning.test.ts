@@ -19,6 +19,10 @@ describe('learning engine i18n', () => {
         expect(translateLearningText('Sẵn sàng học!', 'en')).toBe('Ready to learn!');
         expect(translateLearningText('Bấm để bắt đầu học ngay', 'en')).toBe('Tap to start learning now');
         expect(translateLearningText('Bấm để bắt đầu bài đầu tiên', 'en')).toBe('Tap to start the first question');
+        expect(translateLearningText('Khi bị thương chảy máu nhẹ, bước đầu tiên là gì?', 'en'))
+            .toBe('If a small wound is bleeding, what is the first step?');
+        expect(translateLearningText('Đáp án: Rửa sạch vết thương bằng nước sạch', 'en'))
+            .toBe('Answer: Clean the wound with clean water');
         expect(translateLearningText('Dữ liệu thật: Cần bài chẩn đoán · Chưa có accuracy vì chưa có bài làm thật.', 'en'))
             .toBe('Real data: Needs diagnostic check · No accuracy yet because there are no real attempts.');
     });
