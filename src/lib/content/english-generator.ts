@@ -36,6 +36,9 @@ const genId = () => `en-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
 const shuffle = <T>(arr: T[]): T[] => {
     const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = rand(0, i);[a[i], a[j]] = [a[j], a[i]]; } return a;
 };
+const ENGLISH_TOPIC_GRADE = {
+    reading: 4,
+} as const;
 
 // ══════════════════════════════════════════════
 // GRADE 3: Basic Vocabulary (Family, School, Colors, Numbers, Animals)
@@ -231,7 +234,7 @@ export function genReadingEn(): EnglishProblem {
     const p = EN_PASSAGES[rand(0, EN_PASSAGES.length - 1)];
     const qItem = p.questions[rand(0, p.questions.length - 1)];
     return {
-        id: genId(), gradeLevel: p.grade, difficulty: p.grade,
+        id: genId(), gradeLevel: ENGLISH_TOPIC_GRADE.reading, difficulty: p.grade,
         type: 'reading', topic: 'Reading Comprehension', topicKey: 'reading_en',
         passage: `📖 ${p.title}\n\n${p.text}`,
         question: qItem.q, correctAnswer: qItem.a, options: qItem.opts,

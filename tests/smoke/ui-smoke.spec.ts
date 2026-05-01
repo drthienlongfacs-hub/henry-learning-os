@@ -234,6 +234,28 @@ for (const route of UI_SMOKE_ROUTES) {
     });
 }
 
+test('Child learning engine starts a real science lesson from the topic card', async ({ page }) => {
+    const badLocalResponses: string[] = [];
+    const pageErrors: string[] = [];
+    page.on('response', (response) => {
+        if (response.url().startsWith(baseUrl) && response.status() >= 400) {
+            badLocalResponses.push(`${response.status()} ${response.url()}`);
+        }
+    });
+    page.on('pageerror', (error) => pageErrors.push(error.message));
+
+    await page.goto(`${baseUrl}${UI_SMOKE_BASE_PATH}/child/learn/`, { waitUntil: 'domcontentloaded' });
+    await page.waitForLoadState('networkidle', { timeout: 5_000 }).catch(() => undefined);
+    await page.getByText('Khoa học', { exact: true }).first().click();
+    await page.getByRole('button', { name: /Cơ thể & Sức khỏe/ }).click();
+
+    await expect(page.locator('body')).toContainText('Cách trình bày câu hỏi');
+    await expect(page.getByRole('button', { name: /Mở AI gia sư L1/ })).toBeVisible();
+    await expect(page.locator('button').filter({ hasText: /Trước khi ăn|Không nhìn|2 lần|5|Phổi|Xương|Dạ dày|Rửa sạch/ }).first()).toBeVisible();
+    expect(pageErrors).toEqual([]);
+    expect(badLocalResponses).toEqual([]);
+});
+
 test('Child learning engine switches core surface and topic cards to English', async ({ page }) => {
     await page.addInitScript(() => {
         localStorage.setItem('henry-lang', JSON.stringify({

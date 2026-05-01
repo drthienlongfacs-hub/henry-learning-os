@@ -589,10 +589,34 @@ export default function LearnPage() {
                                     });
                                     const statusColor = planColor[plan.status];
                                     return (
-                                        <div key={t.key} style={{ ...glass.card, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, cursor: 'pointer', transition: 'transform .2s' }}
+                                        <button
+                                            key={t.key}
+                                            type="button"
+                                            aria-label={`${tx('Bấm để bắt đầu học ngay')}: ${tx(t.name)}`}
+                                            style={{
+                                                ...glass.card,
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'space-between',
+                                                gap: 12,
+                                                cursor: 'pointer',
+                                                transition: 'transform .2s, border-color .2s, box-shadow .2s',
+                                                width: '100%',
+                                                color: 'inherit',
+                                                font: 'inherit',
+                                                textAlign: 'left',
+                                            }}
                                             onClick={() => { setSelectedTopic(t.key); startExercise(subject, grade, t.key); }}
-                                            onMouseEnter={e => (e.currentTarget.style.transform = 'translateX(4px)')}
-                                            onMouseLeave={e => (e.currentTarget.style.transform = 'translateX(0)')}>
+                                            onMouseEnter={e => {
+                                                e.currentTarget.style.transform = 'translateX(4px)';
+                                                e.currentTarget.style.borderColor = '#93c5fd';
+                                                e.currentTarget.style.boxShadow = '0 10px 30px rgba(37,99,235,0.16)';
+                                            }}
+                                            onMouseLeave={e => {
+                                                e.currentTarget.style.transform = 'translateX(0)';
+                                                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)';
+                                                e.currentTarget.style.boxShadow = '0 4px 30px rgba(0,0,0,0.08)';
+                                            }}>
                                             <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
                                                 <SafeLearningImage src={enrich.visual.src} alt={tx(enrich.visual.alt)} width={58} height={58} fallback={subject === 'hisgeo' ? '🏛️' : subject === 'science' ? '🔬' : subject === 'english' ? '📚' : subject === 'computing' ? '💻' : subject === 'art' ? '🎨' : subject === 'ethics' ? '🤝' : '📖'} style={{ width: 58, height: 58, borderRadius: 14, objectFit: 'cover', border: '1px solid rgba(15,23,42,0.08)', flex: '0 0 auto' }} />
                                                 <div style={{ minWidth: 0 }}>
@@ -632,7 +656,7 @@ export default function LearnPage() {
                                                 </div>
                                             </div>
                                             <ChevronRight size={20} color={evidence.sampleSize === 0 ? '#047857' : '#999'} style={{ flex: '0 0 auto' }} />
-                                        </div>
+                                        </button>
                                     );
                                 })}
                                 {/* Play all topics button */}

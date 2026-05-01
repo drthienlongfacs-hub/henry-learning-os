@@ -20,6 +20,13 @@ export interface ScienceProblem {
 
 const rand = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
 const genId = () => `sci-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+const SCIENCE_TOPIC_GRADE = {
+    body_health: 1,
+    nature: 2,
+    weather_earth: 3,
+    matter_energy: 4,
+    ecosystem: 5,
+} as const;
 
 // ══════════════════════════════════════════════
 // Grade 1-2: Body, Hygiene, Safety
@@ -39,7 +46,7 @@ const BODY_HEALTH_QS = [
 export function genBodyHealth(): ScienceProblem {
     const item = BODY_HEALTH_QS[rand(0, BODY_HEALTH_QS.length - 1)];
     return {
-        id: genId(), gradeLevel: item.grade, difficulty: item.grade,
+        id: genId(), gradeLevel: SCIENCE_TOPIC_GRADE.body_health, difficulty: item.grade,
         type: 'body', topic: 'Cơ thể & Sức khỏe', topicKey: 'body_health',
         question: item.q, correctAnswer: item.a, options: item.opts,
         explanation: item.e, hints: ['Nghĩ về chức năng các bộ phận cơ thể', `Đáp án: ${item.a}`],
@@ -65,7 +72,7 @@ const NATURE_QS = [
 export function genNature(): ScienceProblem {
     const item = NATURE_QS[rand(0, NATURE_QS.length - 1)];
     return {
-        id: genId(), gradeLevel: item.grade, difficulty: item.grade,
+        id: genId(), gradeLevel: SCIENCE_TOPIC_GRADE.nature, difficulty: item.grade,
         type: item.type, topic: item.type === 'plants' ? 'Thực vật' : 'Động vật', topicKey: 'nature',
         question: item.q, correctAnswer: item.a, options: item.opts,
         explanation: item.e, hints: ['Nghĩ về đặc điểm phân loại', `Đáp án: ${item.a}`],
@@ -91,7 +98,7 @@ const WEATHER_EARTH_QS = [
 export function genWeatherEarth(): ScienceProblem {
     const item = WEATHER_EARTH_QS[rand(0, WEATHER_EARTH_QS.length - 1)];
     return {
-        id: genId(), gradeLevel: item.grade || 3, difficulty: item.grade || 3,
+        id: genId(), gradeLevel: SCIENCE_TOPIC_GRADE.weather_earth, difficulty: item.grade || SCIENCE_TOPIC_GRADE.weather_earth,
         type: 'weather', topic: 'Thời tiết & Trái Đất', topicKey: 'weather_earth',
         question: item.q, correctAnswer: item.a, options: item.opts,
         explanation: item.e, hints: ['Quan sát tự nhiên xung quanh', `Đáp án: ${item.a}`],
@@ -115,7 +122,7 @@ const MATTER_ENERGY_QS = [
 export function genMatterEnergy(): ScienceProblem {
     const item = MATTER_ENERGY_QS[rand(0, MATTER_ENERGY_QS.length - 1)];
     return {
-        id: genId(), gradeLevel: item.grade, difficulty: item.grade,
+        id: genId(), gradeLevel: SCIENCE_TOPIC_GRADE.matter_energy, difficulty: item.grade,
         type: 'matter', topic: 'Vật chất & Năng lượng', topicKey: 'matter_energy',
         question: item.q, correctAnswer: item.a, options: item.opts,
         explanation: item.e, hints: ['Nghĩ về tính chất vật liệu', `Đáp án: ${item.a}`],
@@ -139,7 +146,7 @@ const ECO_QS = [
 export function genEcosystem(): ScienceProblem {
     const item = ECO_QS[rand(0, ECO_QS.length - 1)];
     return {
-        id: genId(), gradeLevel: 5, difficulty: 5,
+        id: genId(), gradeLevel: SCIENCE_TOPIC_GRADE.ecosystem, difficulty: SCIENCE_TOPIC_GRADE.ecosystem,
         type: 'ecosystem', topic: 'Hệ sinh thái & Môi trường', topicKey: 'ecosystem',
         question: item.q, correctAnswer: item.a, options: item.opts,
         explanation: item.e, hints: ['Nghĩ về mối quan hệ trong tự nhiên', `Đáp án: ${item.a}`],
@@ -160,11 +167,11 @@ export interface SciTopicInfo {
 }
 
 export const SCIENCE_TOPICS: SciTopicInfo[] = [
-    { key: 'body_health', name: 'Cơ thể & Sức khỏe', gradeLevel: 1, generator: genBodyHealth, icon: '🫀' },
-    { key: 'nature', name: 'Thực vật & Động vật', gradeLevel: 2, generator: genNature, icon: '🌿' },
-    { key: 'weather_earth', name: 'Thời tiết & Trái Đất', gradeLevel: 3, generator: genWeatherEarth, icon: '🌍' },
-    { key: 'matter_energy', name: 'Vật chất & Năng lượng', gradeLevel: 4, generator: genMatterEnergy, icon: '⚡' },
-    { key: 'ecosystem', name: 'Hệ sinh thái & MT', gradeLevel: 5, generator: genEcosystem, icon: '🌳' },
+    { key: 'body_health', name: 'Cơ thể & Sức khỏe', gradeLevel: SCIENCE_TOPIC_GRADE.body_health, generator: genBodyHealth, icon: '🫀' },
+    { key: 'nature', name: 'Thực vật & Động vật', gradeLevel: SCIENCE_TOPIC_GRADE.nature, generator: genNature, icon: '🌿' },
+    { key: 'weather_earth', name: 'Thời tiết & Trái Đất', gradeLevel: SCIENCE_TOPIC_GRADE.weather_earth, generator: genWeatherEarth, icon: '🌍' },
+    { key: 'matter_energy', name: 'Vật chất & Năng lượng', gradeLevel: SCIENCE_TOPIC_GRADE.matter_energy, generator: genMatterEnergy, icon: '⚡' },
+    { key: 'ecosystem', name: 'Hệ sinh thái & MT', gradeLevel: SCIENCE_TOPIC_GRADE.ecosystem, generator: genEcosystem, icon: '🌳' },
 ];
 
 export function generateScienceSet(grade: number, topicKey?: string, count: number = 10): ScienceProblem[] {

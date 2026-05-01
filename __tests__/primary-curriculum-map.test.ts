@@ -20,7 +20,13 @@ import {
     buildCurriculumMapId,
 } from '@/lib/curriculum/item-audit';
 
-const topicSets: { subject: PrimaryCurriculumSubjectKey; topics: { key: string; gradeLevel: number }[] }[] = [
+type GeneratorTopic = {
+    key: string;
+    gradeLevel: number;
+    generator: () => { topicKey: string; gradeLevel: number };
+};
+
+const topicSets: { subject: PrimaryCurriculumSubjectKey; topics: GeneratorTopic[] }[] = [
     { subject: 'math', topics: MATH_TOPICS },
     { subject: 'vietnamese', topics: VIETNAMESE_TOPICS },
     { subject: 'english', topics: ENGLISH_TOPICS },
@@ -98,5 +104,17 @@ describe('primary curriculum topic map', () => {
         expect(audited.curriculum.curriculumCalibrationStatus).toBe('needs_real_attempts');
         expect(attemptEvidence?.curriculumMapId).toBe('primary:math:add_sub_10');
         expect(attemptEvidence?.curriculumOfficialStrand).toBe('Số và phép tính');
+    });
+
+    it('keeps generated item grade aligned with each topic curriculum map', () => {
+        topicSets.forEach(({ subject, topics }) => {
+            topics.forEach((topic) => {
+                Array.from({ length: 20 }, () => topic.generator()).forEach((item) => {
+                    expect(item.topicKey).toBe(topic.key);
+                    expect(item.gradeLevel, `${subject}:${topic.key} generated a mismatched grade`).toBe(topic.gradeLevel);
+                    expect(() => attachCurriculumAudit(subject, item)).not.toThrow();
+                });
+            });
+        });
     });
 });
