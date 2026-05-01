@@ -11,6 +11,8 @@ import { useTranslation } from '@/lib/i18n';
 import { LangToggle } from '@/components/LangToggle';
 import { InteractiveReader } from '@/components/InteractiveReader';
 import { LocalTextbookVault } from '@/components/LocalTextbookVault';
+import dynamic from 'next/dynamic';
+const PdfReader = dynamic(() => import('@/components/PdfReader').then(mod => mod.PdfReader), { ssr: false });
 import Link from 'next/link';
 import {
     ArrowLeft, Home, RotateCcw, Brain, Sparkles, BookOpen,
@@ -35,7 +37,7 @@ import {
     type LibraryLicenseStatus,
 } from '@/data/textbook-library';
 
-type ViewMode = 'library' | 'book' | 'reader' | 'embedded-reader';
+type ViewMode = 'library' | 'book' | 'reader' | 'embedded-reader' | 'pdf';
 
 export default function LibraryPage() {
     const { t, lang } = useTranslation();
@@ -89,6 +91,8 @@ export default function LibraryPage() {
         } else if (viewMode === 'embedded-reader') {
             setViewMode('library');
             setSelectedEmbeddedBook(null);
+        } else if (viewMode === 'pdf') {
+            setViewMode('book');
         } else if (viewMode === 'book') {
             setViewMode('library');
             setSelectedBook(null);
@@ -383,17 +387,13 @@ export default function LibraryPage() {
                         ) : (
                             <div className="card" style={{ padding: '0.85rem', border: '1px solid rgba(99,102,241,0.14)' }}>
                                 {selectedEmbeddedBook.fileType === 'pdf' && selectedEmbeddedBook.dataUrl ? (
-                                    <iframe
-                                        title={selectedEmbeddedBook.title}
-                                        src={selectedEmbeddedBook.dataUrl}
-                                        style={{
-                                            width: '100%',
-                                            height: 'min(78dvh, 820px)',
-                                            border: '1px solid rgba(15,23,42,0.12)',
-                                            borderRadius: 12,
-                                            background: 'white',
-                                        }}
-                                    />
+                                    <div style={{ height: '70vh', background: 'white', borderRadius: 12, overflow: 'hidden' }}>
+                                        <PdfReader
+                                            fileUrl={selectedEmbeddedBook.dataUrl}
+                                            title={selectedEmbeddedBook.title}
+                                            onClose={goBack}
+                                        />
+                                    </div>
                                 ) : (
                                     <div style={{
                                         minHeight: 260,
@@ -420,6 +420,17 @@ export default function LibraryPage() {
                             </div>
                         )}
                     </>
+                )}
+
+                {/* ===================== NATIVE PDF VIEW ===================== */}
+                {viewMode === 'pdf' && selectedBook && selectedBook.pdfUrl && (
+                    <div style={{ height: '80vh', background: 'white', borderRadius: 12, overflow: 'hidden' }}>
+                        <PdfReader
+                            fileUrl={selectedBook.pdfUrl}
+                            title={lang === 'vi' ? selectedBook.titleVi : selectedBook.title}
+                            onClose={goBack}
+                        />
+                    </div>
                 )}
 
                 {/* ===================== BOOK VIEW ===================== */}
@@ -468,6 +479,18 @@ export default function LibraryPage() {
                                 )}
                             </div>
                         </div>
+                        
+                        {/* PDF View Action */}
+                        {selectedBook.pdfUrl && (
+                            <button
+                                className="btn btn-primary"
+                                style={{ width: '100%', marginBottom: '1rem', padding: '0.85rem' }}
+                                onClick={() => setViewMode('pdf')}
+                            >
+                                <BookOpen size={18} />
+                                {lang === 'vi' ? 'Đọc toàn văn SGK (PDF Interactive)' : 'Read full textbook (PDF Interactive)'}
+                            </button>
+                        )}
 
                         {/* Passage list */}
                         <h2 style={{ fontWeight: 700, fontSize: '1rem', marginBottom: '0.75rem' }}>

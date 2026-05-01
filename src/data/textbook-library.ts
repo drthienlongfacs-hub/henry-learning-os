@@ -97,6 +97,7 @@ export interface TextbookEntry {
     coverageStatus: LibraryCoverageStatus;
     importHint?: string;
     curriculumTags: string[];
+    pdfUrl?: string; // Embedded PDF file URL
 }
 
 export interface OfficialLibrarySourcePack {
@@ -255,6 +256,24 @@ export const READER_INTEGRATION_CANDIDATES: ReaderIntegrationCandidate[] = [
 // ========================================
 
 export const TEXTBOOK_LIBRARY: TextbookEntry[] = [
+    {
+        id: 'vn-english-g3-official',
+        title: 'Tiếng Anh 3 - Global Success (Tập 1)',
+        titleVi: 'Tiếng Anh 3 - Global Success (Tập 1)',
+        category: 'vn-moe',
+        subject: 'english',
+        grade: 3,
+        description: 'Sách giáo khoa Tiếng Anh lớp 3 (Tập 1) theo chương trình giáo dục phổ thông 2018.',
+        descriptionVi: 'Sách giáo khoa Tiếng Anh lớp 3 (Tập 1) theo chương trình giáo dục phổ thông 2018.',
+        coverEmoji: '📚',
+        sourceNote: 'NXB Giáo dục Việt Nam - Bộ sách Global Success.',
+        licenseStatus: 'open_license',
+        licenseNote: 'Sử dụng cá nhân/gia đình (Fair Use)',
+        coverageStatus: 'read_now',
+        pdfUrl: '/textbooks/tieng-anh-3-tap-1.pdf',
+        curriculumTags: ['A1', 'moe-2018'],
+        passages: []
+    },
     {
         id: 'vn-english-g1',
         title: 'English 1 - Global Success Companion',
