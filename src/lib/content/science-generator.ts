@@ -27,6 +27,13 @@ const SCIENCE_TOPIC_GRADE = {
     matter_energy: 4,
     ecosystem: 5,
 } as const;
+const SCIENCE_TOPIC_VISUAL = {
+    body_health: '/images/science/Lungs_diagram_detailed.svg.png',
+    nature: '/images/science/Double-alaskan-rainbow.jpg',
+    weather_earth: '/images/science/USGS_WaterCycle_English_ONLINE_20221013.png',
+    matter_energy: '/images/science/Double-alaskan-rainbow.jpg',
+    ecosystem: '/images/science/USGS_WaterCycle_English_ONLINE_20221013.png',
+} as const;
 
 // ══════════════════════════════════════════════
 // Grade 1-2: Body, Hygiene, Safety
@@ -50,7 +57,7 @@ export function genBodyHealth(): ScienceProblem {
         type: 'body', topic: 'Cơ thể & Sức khỏe', topicKey: 'body_health',
         question: item.q, correctAnswer: item.a, options: item.opts,
         explanation: item.e, hints: ['Nghĩ về chức năng các bộ phận cơ thể', `Đáp án: ${item.a}`],
-        illustration: '/images/core/science.svg',
+        illustration: SCIENCE_TOPIC_VISUAL.body_health,
     };
 }
 
@@ -76,7 +83,7 @@ export function genNature(): ScienceProblem {
         type: item.type, topic: item.type === 'plants' ? 'Thực vật' : 'Động vật', topicKey: 'nature',
         question: item.q, correctAnswer: item.a, options: item.opts,
         explanation: item.e, hints: ['Nghĩ về đặc điểm phân loại', `Đáp án: ${item.a}`],
-        illustration: '/images/core/science.svg',
+        illustration: SCIENCE_TOPIC_VISUAL.nature,
     };
 }
 
@@ -102,7 +109,7 @@ export function genWeatherEarth(): ScienceProblem {
         type: 'weather', topic: 'Thời tiết & Trái Đất', topicKey: 'weather_earth',
         question: item.q, correctAnswer: item.a, options: item.opts,
         explanation: item.e, hints: ['Quan sát tự nhiên xung quanh', `Đáp án: ${item.a}`],
-        illustration: '/images/core/science.svg',
+        illustration: SCIENCE_TOPIC_VISUAL.weather_earth,
     };
 }
 
@@ -126,7 +133,7 @@ export function genMatterEnergy(): ScienceProblem {
         type: 'matter', topic: 'Vật chất & Năng lượng', topicKey: 'matter_energy',
         question: item.q, correctAnswer: item.a, options: item.opts,
         explanation: item.e, hints: ['Nghĩ về tính chất vật liệu', `Đáp án: ${item.a}`],
-        illustration: '/images/core/science.svg',
+        illustration: SCIENCE_TOPIC_VISUAL.matter_energy,
     };
 }
 
@@ -150,7 +157,7 @@ export function genEcosystem(): ScienceProblem {
         type: 'ecosystem', topic: 'Hệ sinh thái & Môi trường', topicKey: 'ecosystem',
         question: item.q, correctAnswer: item.a, options: item.opts,
         explanation: item.e, hints: ['Nghĩ về mối quan hệ trong tự nhiên', `Đáp án: ${item.a}`],
-        illustration: '/images/core/science.svg',
+        illustration: SCIENCE_TOPIC_VISUAL.ecosystem,
     };
 }
 
