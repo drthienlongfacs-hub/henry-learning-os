@@ -9,6 +9,7 @@ export interface LearningSystemPlanCard {
     href: string;
     principleIds: LearningSciencePrincipleId[];
     benchmark: string;
+    benchmarkVi: string;
     tone: 'repair' | 'review' | 'learn' | 'stretch';
 }
 
@@ -41,6 +42,7 @@ export function buildWholeChildLearningPlan({ attempts, mistakes, reviewSchedule
             href: '/child/review',
             principleIds: ['retrieval', 'spacing'],
             benchmark: 'IES/WWC + AERO spacing/retrieval',
+            benchmarkVi: 'IES/WWC + AERO giãn cách/nhớ lại',
             tone: 'review',
         },
         {
@@ -53,6 +55,7 @@ export function buildWholeChildLearningPlan({ attempts, mistakes, reviewSchedule
             href: '/child/mistakes',
             principleIds: ['metacognition', 'adaptive_challenge'],
             benchmark: 'EEF feedback + IXL diagnostic',
+            benchmarkVi: 'Phản hồi EEF + chẩn đoán IXL',
             tone: 'repair',
         },
         {
@@ -65,6 +68,7 @@ export function buildWholeChildLearningPlan({ attempts, mistakes, reviewSchedule
             href: '/child/learn',
             principleIds: ['dual_coding', 'concrete_abstract', 'interleaving'],
             benchmark: 'Zearn + ST Math + Beast Academy',
+            benchmarkVi: 'Zearn + ST Math + Beast Academy',
             tone: recentAccuracy !== null && recentAccuracy >= 90 ? 'stretch' : 'learn',
         },
         {
@@ -77,6 +81,7 @@ export function buildWholeChildLearningPlan({ attempts, mistakes, reviewSchedule
             href: '/child/learn',
             principleIds: ['motivation', 'executive_function', 'udl'],
             benchmark: 'SDT + CAST UDL + Harvard EF',
+            benchmarkVi: 'SDT + CAST UDL + Harvard EF',
             tone: 'learn',
         },
     ];
@@ -86,4 +91,9 @@ export function summarizePrinciplesForCard(card: LearningSystemPlanCard) {
     return getLearningSciencePrinciples(card.principleIds)
         .map((principle) => principle.label)
         .join(' · ');
+}
+
+/** Get card benchmark in correct language */
+export function getCardBenchmark(card: LearningSystemPlanCard, lang: 'vi' | 'en' = 'vi'): string {
+    return lang === 'vi' ? card.benchmarkVi : card.benchmark;
 }

@@ -7,13 +7,13 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { BookOpen, Brain, Clock, AlertTriangle, Bookmark, RotateCcw, Home, Sparkles, Search, Type } from 'lucide-react';
 import { ENRICHMENT_STATS } from '@/data/curriculum-enrichment';
-import { LEARNING_SCIENCE_STATS, getLearningSciencePrinciples } from '@/data/learning-science-system';
-import { buildWholeChildLearningPlan, summarizePrinciplesForCard } from '@/lib/whole-child-learning-plan';
+import { LEARNING_SCIENCE_STATS, getLearningSciencePrinciples, getBenchmarkPattern } from '@/data/learning-science-system';
+import { buildWholeChildLearningPlan, summarizePrinciplesForCard, getCardBenchmark } from '@/lib/whole-child-learning-plan';
 
 export default function ChildDashboard() {
     const router = useRouter();
     const { childProfile, lessons, masteryStates, mistakes, reviewSchedules, attempts } = useAppStore();
-    const { t } = useTranslation();
+    const { t, lang } = useTranslation();
     const activeChild = childProfile ?? { nameOrNickname: 'Henry' };
 
     const unresolvedMistakes = mistakes.filter((m) => !m.resolvedAt).length;
@@ -107,7 +107,7 @@ export default function ChildDashboard() {
                             }}>
                                 <div style={{ fontWeight: 800, fontSize: '0.78rem' }}>{principle.label}</div>
                                 <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.7rem', lineHeight: 1.35, marginTop: '0.25rem' }}>
-                                    {principle.benchmarkPattern}
+                                    {getBenchmarkPattern(principle, lang)}
                                 </div>
                             </div>
                         ))}
@@ -133,7 +133,7 @@ export default function ChildDashboard() {
                                             <div style={{ fontWeight: 900, fontSize: '1.35rem', color: toneColor[card.tone], marginTop: '0.2rem' }}>{card.metric}</div>
                                         </div>
                                         <span style={{ padding: '0.28rem 0.5rem', borderRadius: 999, background: `${toneColor[card.tone]}18`, color: toneColor[card.tone], fontSize: '0.68rem', fontWeight: 850 }}>
-                                            {card.benchmark}
+                                            {getCardBenchmark(card, lang)}
                                         </span>
                                     </div>
                                     <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.78rem', lineHeight: 1.45, marginTop: '0.65rem' }}>
