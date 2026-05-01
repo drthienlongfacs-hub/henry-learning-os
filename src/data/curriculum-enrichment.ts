@@ -698,7 +698,7 @@ const TOPIC_OVERRIDES: Record<string, Partial<TopicEnrichment>> = {
         commonPitfalls: ['Học từ rời rạc không dùng vào câu', 'Dịch từng chữ khi đặt câu'],
     },
     body_health: {
-        visual: { src: '/images/science/Lungs_diagram_detailed.svg.png', alt: 'Sơ đồ phổi và cơ thể người' },
+        visual: { src: '/images/science/body-health.svg', alt: 'Sơ đồ cơ thể, phổi và hành vi sức khỏe' },
         masteryTargets: ['Nêu chức năng cơ quan', 'Chọn hành vi sức khỏe đúng', 'Giải thích bằng lý do đơn giản'],
         commonPitfalls: ['Nhớ tên cơ quan nhưng không biết chức năng', 'Chọn hành vi theo thói quen thay vì an toàn'],
     },

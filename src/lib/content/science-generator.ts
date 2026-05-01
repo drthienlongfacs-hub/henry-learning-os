@@ -28,7 +28,7 @@ const SCIENCE_TOPIC_GRADE = {
     ecosystem: 5,
 } as const;
 const SCIENCE_TOPIC_VISUAL = {
-    body_health: '/images/science/Lungs_diagram_detailed.svg.png',
+    body_health: '/images/science/body-health.svg',
     nature: '/images/science/Double-alaskan-rainbow.jpg',
     weather_earth: '/images/science/USGS_WaterCycle_English_ONLINE_20221013.png',
     matter_energy: '/images/science/Double-alaskan-rainbow.jpg',
