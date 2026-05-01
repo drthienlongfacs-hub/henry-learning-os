@@ -76,6 +76,35 @@ export default function ChildDashboard() {
                     </Link>
                 </div>
 
+                {/* Library entry */}
+                <Link href="/child/library" style={{ textDecoration: 'none' }}>
+                    <div className="card card-interactive animate-fade-in" style={{
+                        marginBottom: '1.25rem',
+                        background: 'linear-gradient(135deg, rgba(168,85,247,0.08), rgba(236,72,153,0.08))',
+                        border: '1px solid rgba(168,85,247,0.18)',
+                        display: 'flex', alignItems: 'center', gap: '0.85rem',
+                        cursor: 'pointer', transition: 'all 0.2s',
+                    }}>
+                        <div style={{
+                            width: 44, height: 44, borderRadius: 'var(--radius-md)',
+                            background: 'linear-gradient(135deg, #8b5cf6, #ec4899)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            fontSize: '1.3rem',
+                        }}>📚</div>
+                        <div style={{ flex: 1 }}>
+                            <div style={{ fontWeight: 800, fontSize: '0.95rem' }}>
+                                {lang === 'vi' ? 'Thư viện Sách — Đọc song ngữ' : 'Library — Bilingual Reader'}
+                            </div>
+                            <div style={{ fontSize: '0.78rem', color: 'var(--color-text-secondary)', lineHeight: 1.4 }}>
+                                {lang === 'vi'
+                                    ? 'SGK Bộ GD&ĐT • Cambridge • Oxford • Singapore • Chạm từ → xem nghĩa ngay'
+                                    : 'MOE Textbooks • Cambridge • Oxford • Singapore • Tap any word → instant definition'}
+                            </div>
+                        </div>
+                        <span style={{ fontSize: '1.2rem' }}>→</span>
+                    </div>
+                </Link>
+
                 {/* Learning quality layer */}
                 <div className="card animate-fade-in" style={{
                     marginBottom: '2rem',
