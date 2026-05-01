@@ -44,7 +44,7 @@ export const UI_SMOKE_ROUTES: UiSmokeRoute[] = [
         key: 'child-learn',
         path: '/child/learn/',
         label: 'Child learning engine',
-        requiredText: ['Learning engine', 'Chọn nhịp học', 'Toán'],
+        requiredText: ['Hôm nay con muốn học gì?', 'Chọn nhịp học', 'Toán'],
         minimumBodyTextLength: 600,
     },
     {

@@ -169,7 +169,7 @@ export function InteractiveReader({
         const viewportWidth = window.innerWidth;
 
         let top = rect.bottom + scrollY + 8;
-        let left = Math.max(12, Math.min(rect.left - 60, viewportWidth - 320));
+        const left = Math.max(12, Math.min(rect.left - 60, viewportWidth - 320));
 
         // If popup would go below viewport, show above
         if (rect.bottom + 250 > window.innerHeight) {

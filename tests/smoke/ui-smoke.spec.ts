@@ -249,9 +249,18 @@ test('Child learning engine starts a real science lesson from the topic card', a
     await page.getByText('Khoa học', { exact: true }).first().click();
     await page.getByRole('button', { name: /Cơ thể & Sức khỏe/ }).click();
 
-    await expect(page.locator('body')).toContainText('Cách trình bày câu hỏi');
-    await expect(page.getByRole('button', { name: /Mở AI gia sư L1/ })).toBeVisible();
-    await expect(page.locator('button').filter({ hasText: /Trước khi ăn|Không nhìn|2 lần|5|Phổi|Xương|Dạ dày|Rửa sạch/ }).first()).toBeVisible();
+    await expect(page.getByText(/\?$/).first()).toBeVisible();
+    await expect(page.getByRole('button', { name: /^Gợi ý$/ })).toBeVisible();
+    await expect.poll(async () => page.locator('button').evaluateAll((buttons) => buttons
+        .filter((button) => {
+            const text = (button as HTMLButtonElement).innerText.trim();
+            const rect = button.getBoundingClientRect();
+            return rect.width > 120 && rect.height > 40 && !/Gợi ý|EN|VN/.test(text);
+        })
+        .length)).toBeGreaterThanOrEqual(4);
+    await expect(page.getByText('Cách trình bày câu hỏi').first()).toBeHidden();
+    await expect(page.getByText('Audit CTGDPT trên từng câu').first()).toBeHidden();
+    await expect(page.getByText('Benchmark phần mềm').first()).toBeHidden();
     expect(pageErrors).toEqual([]);
     expect(badLocalResponses).toEqual([]);
 });
@@ -280,10 +289,6 @@ test('Child learning engine switches core surface and topic cards to English', a
     for (const requiredText of LEARNING_I18N_REQUIRED_EN_STRINGS) {
         await expect(page.locator('body'), `English learning surface contains ${requiredText}`).toContainText(requiredText);
     }
-
-    const exampleText = await page.getByText(/Example:/).first().innerText();
-    expect(exampleText, 'English sample question should not leave Vietnamese generator text on the topic card')
-        .not.toMatch(/[À-ỹ]/);
 
     await expect(page.locator('body')).not.toContainText('Cơ thể & Sức khỏe');
     await expect(page.locator('body')).not.toContainText('Chọn nhịp học');

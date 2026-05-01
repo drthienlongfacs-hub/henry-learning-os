@@ -11,12 +11,14 @@ describe('learning engine i18n', () => {
     it('translates the child learning surface terms that were previously partial', () => {
         expect(translateLearningText('Chọn nhịp học', 'en')).toBe('Choose learning rhythm');
         expect(translateLearningText('Chương trình học', 'en')).toBe('Curriculum');
+        expect(translateLearningText('Hôm nay con muốn học gì?', 'en')).toBe('What do you want to learn today?');
         expect(translateLearningText('Cơ thể & Sức khỏe', 'en')).toBe('Body & Health');
         expect(translateLearningText('Cơ thể là hệ thống các cơ quan phối hợp để sống khỏe.', 'en'))
             .toBe('The body is a system of organs working together to stay healthy.');
         expect(translateLearningText('Nêu chức năng cơ quan', 'en')).toBe('Name organ functions');
         expect(translateLearningText('Chưa có dữ liệu', 'en')).toBe('No real data yet');
         expect(translateLearningText('Sẵn sàng học!', 'en')).toBe('Ready to learn!');
+        expect(translateLearningText('Bắt đầu bài đầu tiên', 'en')).toBe('Start first question');
         expect(translateLearningText('Bấm để bắt đầu học ngay', 'en')).toBe('Tap to start learning now');
         expect(translateLearningText('Bấm để bắt đầu bài đầu tiên', 'en')).toBe('Tap to start the first question');
         expect(translateLearningText('Khi bị thương chảy máu nhẹ, bước đầu tiên là gì?', 'en'))
@@ -37,6 +39,6 @@ describe('learning engine i18n', () => {
         expect(formatLearningGrade(1, 'en')).toBe('Grade 1');
         expect(formatLearningGradeList([1, 2, 3], 'en')).toBe('Grades 1, 2, 3');
         expect(formatLearningCount(12, 'en')).toBe('12 questions');
-        expect(LEARNING_I18N_REQUIRED_EN_STRINGS).toContain('Real data: Needs diagnostic check');
+        expect(LEARNING_I18N_REQUIRED_EN_STRINGS).toContain('Start first question');
     });
 });

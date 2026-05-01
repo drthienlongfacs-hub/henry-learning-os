@@ -23,7 +23,7 @@ import {
 type GeneratorTopic = {
     key: string;
     gradeLevel: number;
-    generator: () => { topicKey: string; gradeLevel: number };
+    generator: () => { id: string; topicKey: string; gradeLevel: number };
 };
 
 const topicSets: { subject: PrimaryCurriculumSubjectKey; topics: GeneratorTopic[] }[] = [
