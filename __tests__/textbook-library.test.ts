@@ -13,6 +13,7 @@ describe('Textbook library governance', () => {
         expect(LIBRARY_STATS.readableBooks).toBeGreaterThanOrEqual(10);
         expect(LIBRARY_STATS.sourcePackCount).toBeGreaterThanOrEqual(5);
         expect(TEXTBOOK_COPYRIGHT_GUARDRAIL.blockedClaim).toContain('full 100%');
+        expect(TEXTBOOK_COPYRIGHT_GUARDRAIL.allowedClaim).toContain('nhúng trực tiếp');
     });
 
     it('keeps licensed-import textbooks free of bundled passages', () => {

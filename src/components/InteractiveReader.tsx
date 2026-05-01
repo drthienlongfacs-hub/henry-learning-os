@@ -11,6 +11,7 @@ import { useState, useCallback, useRef, useEffect, useMemo, type CSSProperties, 
 import { Volume2, X, BookOpen, Loader2, Sparkles, Languages, Lightbulb, ListChecks, NotebookText } from 'lucide-react';
 import type { DictionaryEntry } from '@/lib/resources/adapters/dictionary-adapter';
 import type { ComprehensionCheck, KeyVocabularyEntry, ReadingSupport, SentenceGuide } from '@/data/textbook-library';
+import { lookupLocalWordHint } from '@/lib/textbook/local-textbook';
 
 interface InteractiveReaderProps {
     text: string;
@@ -91,7 +92,7 @@ export function InteractiveReader({
         if (!word || word.length < 2) return;
 
         const rect = element.getBoundingClientRect();
-        const localEntry = vocabMap.get(word);
+        const localEntry = vocabMap.get(word) ?? lookupLocalWordHint(word);
 
         // Show popup immediately with local data
         setPopup({ word, rect, localEntry, dictEntry: undefined, loading: true });

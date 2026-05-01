@@ -142,11 +142,11 @@ const support = (
 
 export const TEXTBOOK_COPYRIGHT_GUARDRAIL = {
     allowedClaim:
-        'Thư viện có kệ sách chuẩn, đoạn đọc tự biên soạn, nguồn mở/public domain và cơ chế nhập tài liệu có quyền sử dụng.',
+        'Thư viện có kệ sách chuẩn, đoạn đọc tự biên soạn, nguồn mở/public domain và cơ chế nhúng trực tiếp tài liệu có quyền sử dụng vào app.',
     blockedClaim:
         'Không được nói app đã nhúng full 100% toàn văn SGK/textbook có bản quyền nếu chưa có giấy phép hoặc nguồn công khai cho phép cache/nội dung.',
     importPolicy:
-        'Gia đình có thể thêm PDF/EPUB đã mua hoặc được trường/cơ sở cấp quyền. App chỉ nên lưu cục bộ, ghi nguồn, trạng thái quyền và không xuất bản lại.',
+        'Gia đình có thể nhúng trực tiếp PDF/EPUB/TXT đã mua hoặc được trường/cơ sở cấp quyền. App lưu cục bộ trong trình duyệt, ghi nguồn, trạng thái quyền và không xuất bản lại.',
 };
 
 export const OFFICIAL_LIBRARY_SOURCE_PACKS: OfficialLibrarySourcePack[] = [
@@ -157,8 +157,8 @@ export const OFFICIAL_LIBRARY_SOURCE_PACKS: OfficialLibrarySourcePack[] = [
         program: 'Việt Nam',
         sourceUrl: 'https://moet.gov.vn',
         licenseStatus: 'link_only',
-        appPolicy: 'Dùng để map lớp, môn, mạch năng lực. Không tự chép toàn văn SGK.',
-        readerPlan: 'Hiển thị bản đồ chương trình, checklist bài học và đoạn đọc luyện tập tự biên soạn.',
+        appPolicy: 'Dùng để map lớp, môn, mạch năng lực; file sách hợp lệ được nhúng qua kho cục bộ trong app.',
+        readerPlan: 'Hiển thị bản đồ chương trình, checklist bài học, đoạn đọc luyện tập và mở file gia đình đã nhúng.',
     },
     {
         id: 'vn-global-success-official',
@@ -167,8 +167,8 @@ export const OFFICIAL_LIBRARY_SOURCE_PACKS: OfficialLibrarySourcePack[] = [
         program: 'Bộ GD&ĐT',
         sourceUrl: 'https://heid.vn/product/sach-giao-khoa-tieng-anh-lop-1-global-success/',
         licenseStatus: 'licensed_import_required',
-        appPolicy: 'Chỉ dẫn nguồn hoặc mở bản gia đình có quyền sử dụng. Không nhúng bản scan/PDF không rõ quyền.',
-        readerPlan: 'Khi có bản quyền: mở PDF/EPUB trong reader, phủ lớp tra từ/song ngữ lên trang đang đọc.',
+        appPolicy: 'Nguồn để gia đình lấy/mua bản hợp lệ; bản có quyền được nhúng trực tiếp bằng kho cục bộ của app.',
+        readerPlan: 'Khi gia đình chọn file: PDF mở trong app, TXT/OCR mở bằng reader song ngữ có tra từ trực tiếp.',
     },
     {
         id: 'oxford-owl-free-ebooks',
@@ -177,8 +177,8 @@ export const OFFICIAL_LIBRARY_SOURCE_PACKS: OfficialLibrarySourcePack[] = [
         program: 'Oxford',
         sourceUrl: 'https://www.oxfordowl.co.uk/for-home/library-page?type=book&view=default',
         licenseStatus: 'link_only',
-        appPolicy: 'Cần tài khoản miễn phí; app không copy nội dung, chỉ dẫn nguồn và ghi lại từ vựng/ghi chú học.',
-        readerPlan: 'Dùng làm nguồn đọc ngoài app; sau khi có quyền/exports hợp lệ mới nhập vào reader cục bộ.',
+        appPolicy: 'Cần tài khoản miễn phí; nếu có file/export hợp lệ thì nhúng trực tiếp vào kho cục bộ của app.',
+        readerPlan: 'Sau khi có quyền/export hợp lệ: nhập file vào reader cục bộ để đọc trong app.',
     },
     {
         id: 'singapore-moe-syllabuses',
@@ -188,7 +188,7 @@ export const OFFICIAL_LIBRARY_SOURCE_PACKS: OfficialLibrarySourcePack[] = [
         sourceUrl: 'https://www.moe.gov.sg/primary/curriculum/syllabus',
         licenseStatus: 'link_only',
         appPolicy: 'Dùng syllabus chính thức để map năng lực; textbook thương mại cần mua/giấy phép riêng.',
-        readerPlan: 'Dùng syllabus làm đối chiếu, còn bài đọc/bài toán trong app là companion practice tự biên soạn.',
+        readerPlan: 'Dùng syllabus làm đối chiếu; textbook thương mại được đọc trong app khi gia đình nhúng file có quyền.',
     },
     {
         id: 'project-gutenberg',
@@ -962,7 +962,7 @@ export const TEXTBOOK_LIBRARY: TextbookEntry[] = [
         licenseStatus: 'licensed_import_required',
         licenseNote: 'Cần bản quyền/giấy phép hoặc tài khoản hợp lệ trước khi mở toàn văn trong app.',
         coverageStatus: 'authorized_import_ready',
-        importHint: 'Bước kế tiếp: thêm EPUB/PDF reader cục bộ, checksum file, nguồn cấp quyền và không public lên GitHub Pages.',
+        importHint: 'Dùng nút "Nhúng sách trực tiếp vào app" ở đầu thư viện để chọn PDF/EPUB/TXT có quyền sử dụng từ thiết bị gia đình.',
         curriculumTags: ['authorized-import', 'pdf', 'epub', 'copyright-gate'],
         passages: [],
     },

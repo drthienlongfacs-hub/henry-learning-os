@@ -52,7 +52,7 @@ export const UI_SMOKE_ROUTES: UiSmokeRoute[] = [
         key: 'child-library',
         path: '/child/library/',
         label: 'Child bilingual textbook library',
-        requiredText: ['Thư viện Sách', 'Kệ SGK/textbook cứng', 'Đọc ngay: bài tự biên soạn'],
+        requiredText: ['Thư viện Sách', 'Nhúng sách trực tiếp vào app', 'Kệ SGK/textbook cứng', 'Đọc ngay: bài tự biên soạn'],
         minimumBodyTextLength: 1200,
     },
     {

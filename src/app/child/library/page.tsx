@@ -10,11 +10,17 @@ import { useState, useMemo } from 'react';
 import { useTranslation } from '@/lib/i18n';
 import { LangToggle } from '@/components/LangToggle';
 import { InteractiveReader } from '@/components/InteractiveReader';
+import { LocalTextbookVault } from '@/components/LocalTextbookVault';
 import Link from 'next/link';
 import {
     ArrowLeft, Home, RotateCcw, Brain, Sparkles, BookOpen,
-    Library, ChevronRight, ArrowRight, Filter, GraduationCap,
+    Library, ChevronRight, ArrowRight, Filter, GraduationCap, FileText,
 } from 'lucide-react';
+import {
+    buildLocalTextbookReaderSupport,
+    formatFileSize,
+    type LocalTextbookRecord,
+} from '@/lib/textbook/local-textbook';
 import {
     TEXTBOOK_LIBRARY,
     CATEGORY_LABELS,
@@ -29,13 +35,14 @@ import {
     type LibraryLicenseStatus,
 } from '@/data/textbook-library';
 
-type ViewMode = 'library' | 'book' | 'reader';
+type ViewMode = 'library' | 'book' | 'reader' | 'embedded-reader';
 
 export default function LibraryPage() {
     const { t, lang } = useTranslation();
     const [viewMode, setViewMode] = useState<ViewMode>('library');
     const [selectedBook, setSelectedBook] = useState<TextbookEntry | null>(null);
     const [selectedPassage, setSelectedPassage] = useState<TextbookPassage | null>(null);
+    const [selectedEmbeddedBook, setSelectedEmbeddedBook] = useState<LocalTextbookRecord | null>(null);
     const [gradeFilter, setGradeFilter] = useState<number | null>(null);
     const [categoryFilter, setCategoryFilter] = useState<TextbookCategory | null>(null);
     const [licenseFilter, setLicenseFilter] = useState<LibraryLicenseStatus | null>(null);
@@ -50,6 +57,11 @@ export default function LibraryPage() {
         });
     }, [gradeFilter, categoryFilter, licenseFilter]);
 
+    const embeddedReaderSupport = useMemo(() => {
+        if (!selectedEmbeddedBook?.textContent) return null;
+        return buildLocalTextbookReaderSupport(selectedEmbeddedBook.title, selectedEmbeddedBook.textContent);
+    }, [selectedEmbeddedBook]);
+
     const openBook = (book: TextbookEntry) => {
         setSelectedBook(book);
         setViewMode('book');
@@ -57,7 +69,16 @@ export default function LibraryPage() {
 
     const openPassage = (passage: TextbookPassage) => {
         setSelectedPassage(passage);
+        setSelectedEmbeddedBook(null);
         setViewMode('reader');
+        setLearnedCount(0);
+    };
+
+    const openEmbeddedBook = (book: LocalTextbookRecord) => {
+        setSelectedEmbeddedBook(book);
+        setSelectedBook(null);
+        setSelectedPassage(null);
+        setViewMode('embedded-reader');
         setLearnedCount(0);
     };
 
@@ -65,6 +86,9 @@ export default function LibraryPage() {
         if (viewMode === 'reader') {
             setViewMode('book');
             setSelectedPassage(null);
+        } else if (viewMode === 'embedded-reader') {
+            setViewMode('library');
+            setSelectedEmbeddedBook(null);
         } else if (viewMode === 'book') {
             setViewMode('library');
             setSelectedBook(null);
@@ -98,6 +122,7 @@ export default function LibraryPage() {
                             {viewMode === 'library' && (lang === 'vi' ? '📚 Thư viện Sách' : '📚 Library')}
                             {viewMode === 'book' && selectedBook && (lang === 'vi' ? selectedBook.titleVi : selectedBook.title)}
                             {viewMode === 'reader' && selectedPassage?.title}
+                            {viewMode === 'embedded-reader' && selectedEmbeddedBook?.title}
                         </h1>
                     </div>
                     <LangToggle />
@@ -126,6 +151,8 @@ export default function LibraryPage() {
                                     : 'Read original companion passages and public-domain content now. Copyrighted textbooks open only when the family has a licensed file or account.'}
                             </p>
                         </div>
+
+                        <LocalTextbookVault lang={lang} onOpenTextbook={openEmbeddedBook} />
 
                         {/* Copyright-aware hard textbook policy */}
                         <div className="card" style={{
@@ -287,6 +314,109 @@ export default function LibraryPage() {
                         {filteredBooks.length === 0 && (
                             <div className="card" style={{ textAlign: 'center', padding: '3rem' }}>
                                 <p style={{ fontWeight: 600 }}>{lang === 'vi' ? 'Không tìm thấy sách phù hợp' : 'No books match filter'}</p>
+                            </div>
+                        )}
+                    </>
+                )}
+
+                {/* ===================== EMBEDDED LOCAL READER VIEW ===================== */}
+                {viewMode === 'embedded-reader' && selectedEmbeddedBook && (
+                    <>
+                        <div className="card" style={{
+                            marginBottom: '1rem',
+                            background: 'linear-gradient(135deg, rgba(22,163,74,0.06), rgba(99,102,241,0.05))',
+                            border: '1px solid rgba(22,163,74,0.16)',
+                        }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.7rem', flexWrap: 'wrap' }}>
+                                <FileText size={22} color="#16a34a" />
+                                <div style={{ flex: 1, minWidth: 220 }}>
+                                    <div style={{ fontWeight: 900, fontSize: '1rem' }}>
+                                        {selectedEmbeddedBook.title}
+                                    </div>
+                                    <div style={{ color: 'var(--color-text-muted)', fontSize: '0.74rem', marginTop: '0.2rem' }}>
+                                        {selectedEmbeddedBook.fileType.toUpperCase()} • {formatFileSize(selectedEmbeddedBook.sizeBytes)} • {selectedEmbeddedBook.sourceLabel}
+                                    </div>
+                                </div>
+                                <span className="badge" style={{ background: 'rgba(22,163,74,0.1)', color: '#16a34a', fontSize: '0.72rem' }}>
+                                    {lang === 'vi' ? 'Đã nhúng trong app' : 'Embedded in app'}
+                                </span>
+                            </div>
+                            <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.78rem', lineHeight: 1.5, marginTop: '0.65rem' }}>
+                                {selectedEmbeddedBook.rightsNote}
+                            </p>
+                        </div>
+
+                        {selectedEmbeddedBook.textContent && embeddedReaderSupport ? (
+                            <>
+                                {embeddedReaderSupport.keyVocabulary.length > 0 && (
+                                    <div style={{
+                                        display: 'flex', alignItems: 'center', gap: '0.5rem',
+                                        marginBottom: '0.75rem', padding: '0.5rem 0.75rem',
+                                        background: 'rgba(34, 197, 94, 0.06)', borderRadius: 10,
+                                    }}>
+                                        <Sparkles size={14} color="#22c55e" />
+                                        <span style={{ fontSize: '0.8rem', fontWeight: 600, color: '#16a34a' }}>
+                                            {lang === 'vi'
+                                                ? `Đã khám phá ${learnedCount}/${embeddedReaderSupport.keyVocabulary.length} từ vựng gợi ý`
+                                                : `Explored ${learnedCount}/${embeddedReaderSupport.keyVocabulary.length} suggested words`}
+                                        </span>
+                                    </div>
+                                )}
+
+                                <div className="card" style={{ padding: '1.25rem' }}>
+                                    <InteractiveReader
+                                        text={selectedEmbeddedBook.textContent}
+                                        keyVocabulary={embeddedReaderSupport.keyVocabulary}
+                                        viSummary={embeddedReaderSupport.viSummary}
+                                        title={selectedEmbeddedBook.title}
+                                        difficulty="medium"
+                                        sentenceGuides={embeddedReaderSupport.sentenceGuides}
+                                        support={embeddedReaderSupport.support}
+                                        comprehensionChecks={embeddedReaderSupport.comprehensionChecks}
+                                        sourceAlignment={embeddedReaderSupport.sourceAlignment}
+                                        sourceNote={selectedEmbeddedBook.sourceLabel}
+                                        licenseNote={selectedEmbeddedBook.rightsNote}
+                                        onWordLearned={() => setLearnedCount(prev => prev + 1)}
+                                    />
+                                </div>
+                            </>
+                        ) : (
+                            <div className="card" style={{ padding: '0.85rem', border: '1px solid rgba(99,102,241,0.14)' }}>
+                                {selectedEmbeddedBook.fileType === 'pdf' && selectedEmbeddedBook.dataUrl ? (
+                                    <iframe
+                                        title={selectedEmbeddedBook.title}
+                                        src={selectedEmbeddedBook.dataUrl}
+                                        style={{
+                                            width: '100%',
+                                            height: 'min(78dvh, 820px)',
+                                            border: '1px solid rgba(15,23,42,0.12)',
+                                            borderRadius: 12,
+                                            background: 'white',
+                                        }}
+                                    />
+                                ) : (
+                                    <div style={{
+                                        minHeight: 260,
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        gap: '0.65rem',
+                                        color: 'var(--color-text-secondary)',
+                                        textAlign: 'center',
+                                        padding: '1.5rem',
+                                    }}>
+                                        <BookOpen size={34} color="var(--color-primary, #6366f1)" />
+                                        <div style={{ fontWeight: 900, color: 'var(--color-text-primary)' }}>
+                                            {lang === 'vi' ? 'File đã được nhúng trong app' : 'File embedded in the app'}
+                                        </div>
+                                        <p style={{ maxWidth: 520, fontSize: '0.84rem', lineHeight: 1.55 }}>
+                                            {lang === 'vi'
+                                                ? 'EPUB đã được lưu cục bộ. Nếu muốn tra từ từng câu như TXT/MD, hãy nhập thêm bản OCR/text của cùng sách hoặc chuyển EPUB sang TXT rồi nhúng lại.'
+                                                : 'The EPUB is stored locally. For sentence-level bilingual lookup like TXT/MD, import an OCR/text version of the same book or convert the EPUB to TXT and embed it again.'}
+                                        </p>
+                                    </div>
+                                )}
                             </div>
                         )}
                     </>
