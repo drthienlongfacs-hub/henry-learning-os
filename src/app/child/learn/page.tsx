@@ -767,7 +767,7 @@ export default function LearnPage() {
                                         width={520}
                                         height={260}
                                         fallback={subject === 'hisgeo' ? '🏛️' : subject === 'science' ? '🔬' : subject === 'english' ? '📚' : subject === 'computing' ? '💻' : '📖'}
-                                        style={{ maxHeight: 180, maxWidth: '100%', borderRadius: 12, border: '1px solid #e2e8f0', boxShadow: '0 2px 10px rgba(0,0,0,0.05)', objectFit: 'cover' }}
+                                        style={{ maxHeight: 180, maxWidth: '100%', borderRadius: 12, border: '1px solid #e2e8f0', boxShadow: '0 2px 10px rgba(0,0,0,0.05)', objectFit: 'contain', background: '#ffffffb8' }}
                                     />
                                 ) : (
                                     currentProblem.illustration
