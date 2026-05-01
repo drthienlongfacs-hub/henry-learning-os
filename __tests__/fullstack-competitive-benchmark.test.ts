@@ -17,6 +17,7 @@ import {
     computeWeightedBenchmarkScore,
 } from '@/data/fullstack-competitive-benchmark';
 import { PRIMARY_CURRICULUM_MAP_STATS } from '@/data/primary-curriculum-map';
+import { UI_SMOKE_GATE } from '@/data/ui-smoke-gate';
 import { PRIMARY_ITEM_AUDIT_GATE } from '@/lib/curriculum/item-audit';
 
 describe('full-stack competitive benchmark', () => {
@@ -67,7 +68,7 @@ describe('full-stack competitive benchmark', () => {
         expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain(`${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount}/${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount} topic`);
         expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain(`${PRIMARY_CURRICULUM_MAP_STATS.topicMapCount} item`);
         expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('12 item');
-        expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('8x2');
+        expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain(`${UI_SMOKE_GATE.routeCount}x${UI_SMOKE_GATE.viewportCount}`);
         expect(LIVE_UPGRADE_SIGNALS.map((signal) => signal.value)).toContain('100% traceable');
         expect(LIVE_UPGRADE_SIGNALS.some((signal) => signal.detail.includes('review queue'))).toBe(true);
 

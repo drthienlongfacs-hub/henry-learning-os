@@ -1,7 +1,7 @@
 'use client';
 
 // ========================================
-// Textbook Library — Browse & Read with Interactive Bilingual Reader
+// Textbook Library - Browse & Read with Interactive Bilingual Reader
 // Curated: CTGDPT 2018 + Cambridge + Oxford + Singapore + Classics
 // Tap any word → instant EN definition + VN translation
 // ========================================
@@ -18,10 +18,15 @@ import {
 import {
     TEXTBOOK_LIBRARY,
     CATEGORY_LABELS,
+    COVERAGE_STATUS_LABELS,
+    LICENSE_STATUS_LABELS,
     LIBRARY_STATS,
+    OFFICIAL_LIBRARY_SOURCE_PACKS,
+    TEXTBOOK_COPYRIGHT_GUARDRAIL,
     type TextbookEntry,
     type TextbookPassage,
     type TextbookCategory,
+    type LibraryLicenseStatus,
 } from '@/data/textbook-library';
 
 type ViewMode = 'library' | 'book' | 'reader';
@@ -33,15 +38,17 @@ export default function LibraryPage() {
     const [selectedPassage, setSelectedPassage] = useState<TextbookPassage | null>(null);
     const [gradeFilter, setGradeFilter] = useState<number | null>(null);
     const [categoryFilter, setCategoryFilter] = useState<TextbookCategory | null>(null);
+    const [licenseFilter, setLicenseFilter] = useState<LibraryLicenseStatus | null>(null);
     const [learnedCount, setLearnedCount] = useState(0);
 
     const filteredBooks = useMemo(() => {
         return TEXTBOOK_LIBRARY.filter(book => {
             if (gradeFilter !== null && book.grade !== gradeFilter) return false;
             if (categoryFilter !== null && book.category !== categoryFilter) return false;
+            if (licenseFilter !== null && book.licenseStatus !== licenseFilter) return false;
             return true;
         });
-    }, [gradeFilter, categoryFilter]);
+    }, [gradeFilter, categoryFilter, licenseFilter]);
 
     const openBook = (book: TextbookEntry) => {
         setSelectedBook(book);
@@ -109,15 +116,67 @@ export default function LibraryPage() {
                                 <Library size={20} style={{ color: 'var(--color-primary)' }} />
                                 <span style={{ fontWeight: 700, fontSize: '0.95rem' }}>
                                     {lang === 'vi'
-                                        ? `${LIBRARY_STATS.totalBooks} cuốn • ${LIBRARY_STATS.totalPassages} bài đọc`
-                                        : `${LIBRARY_STATS.totalBooks} books • ${LIBRARY_STATS.totalPassages} passages`}
+                                        ? `${LIBRARY_STATS.totalBooks} kệ sách • ${LIBRARY_STATS.readableBooks} đọc ngay • ${LIBRARY_STATS.totalPassages} bài đọc`
+                                        : `${LIBRARY_STATS.totalBooks} shelves • ${LIBRARY_STATS.readableBooks} read now • ${LIBRARY_STATS.totalPassages} passages`}
                                 </span>
                             </div>
                             <p style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
                                 {lang === 'vi'
-                                    ? 'Chạm vào bất kỳ từ nào khi đọc → xem nghĩa tiếng Anh + tiếng Việt ngay trên màn hình. Không cần tra từ điển!'
-                                    : 'Tap any word while reading → see English definition + Vietnamese translation right on screen. No dictionary needed!'}
+                                    ? 'Đọc ngay các đoạn luyện tập tự biên soạn và nguồn public domain. SGK/textbook có bản quyền chỉ mở toàn văn khi gia đình có file hoặc tài khoản hợp lệ.'
+                                    : 'Read original companion passages and public-domain content now. Copyrighted textbooks open only when the family has a licensed file or account.'}
                             </p>
+                        </div>
+
+                        {/* Copyright-aware hard textbook policy */}
+                        <div className="card" style={{
+                            marginBottom: '1rem',
+                            background: 'rgba(255,255,255,0.82)',
+                            border: '1px solid rgba(245,158,11,0.22)',
+                        }}>
+                            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+                                <div style={{
+                                    width: 40, height: 40, borderRadius: 10,
+                                    background: 'rgba(245,158,11,0.12)',
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    fontSize: '1.2rem',
+                                }}>🔐</div>
+                                <div style={{ flex: 1, minWidth: 220 }}>
+                                    <div style={{ fontWeight: 900, fontSize: '0.92rem' }}>
+                                        {lang === 'vi' ? 'Kệ SGK/textbook cứng có kiểm soát bản quyền' : 'Copyright-aware textbook shelf'}
+                                    </div>
+                                    <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.78rem', lineHeight: 1.5, marginTop: '0.25rem' }}>
+                                        {lang === 'vi' ? TEXTBOOK_COPYRIGHT_GUARDRAIL.importPolicy : TEXTBOOK_COPYRIGHT_GUARDRAIL.allowedClaim}
+                                    </p>
+                                </div>
+                            </div>
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: '0.5rem', marginTop: '0.75rem' }}>
+                                {OFFICIAL_LIBRARY_SOURCE_PACKS.slice(0, 4).map(source => (
+                                    <a
+                                        key={source.id}
+                                        href={source.sourceUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        style={{
+                                            textDecoration: 'none',
+                                            border: '1px solid rgba(15,23,42,0.08)',
+                                            background: 'rgba(15,23,42,0.025)',
+                                            borderRadius: 10,
+                                            padding: '0.65rem',
+                                            minHeight: 92,
+                                        }}
+                                    >
+                                        <div style={{ fontWeight: 850, color: 'var(--color-text-primary)', fontSize: '0.78rem', lineHeight: 1.25 }}>
+                                            {source.title}
+                                        </div>
+                                        <div style={{ color: 'var(--color-text-muted)', fontSize: '0.68rem', marginTop: '0.25rem' }}>
+                                            {source.provider}
+                                        </div>
+                                        <div style={{ color: LICENSE_STATUS_LABELS[source.licenseStatus].tone, fontWeight: 850, fontSize: '0.68rem', marginTop: '0.35rem' }}>
+                                            {lang === 'vi' ? LICENSE_STATUS_LABELS[source.licenseStatus].vi : LICENSE_STATUS_LABELS[source.licenseStatus].en}
+                                        </div>
+                                    </a>
+                                ))}
+                            </div>
                         </div>
 
                         {/* Filters */}
@@ -145,6 +204,16 @@ export default function LibraryPage() {
                                     style={{ fontSize: '0.75rem', padding: '0.25rem 0.6rem' }}
                                 >
                                     {CATEGORY_LABELS[c].emoji} {lang === 'vi' ? CATEGORY_LABELS[c].vi : CATEGORY_LABELS[c].en}
+                                </button>
+                            ))}
+                            {LIBRARY_STATS.licenseStatuses.map(status => (
+                                <button
+                                    key={status}
+                                    className={`btn btn-sm ${licenseFilter === status ? 'btn-primary' : 'btn-ghost'}`}
+                                    onClick={() => setLicenseFilter(licenseFilter === status ? null : status)}
+                                    style={{ fontSize: '0.75rem', padding: '0.25rem 0.6rem' }}
+                                >
+                                    {lang === 'vi' ? LICENSE_STATUS_LABELS[status].vi : LICENSE_STATUS_LABELS[status].en}
                                 </button>
                             ))}
                         </div>
@@ -196,6 +265,20 @@ export default function LibraryPage() {
                                         }}>
                                             {CATEGORY_LABELS[book.category].emoji} {lang === 'vi' ? CATEGORY_LABELS[book.category].vi : CATEGORY_LABELS[book.category].en}
                                         </span>
+                                        <span className="badge" style={{
+                                            background: `${LICENSE_STATUS_LABELS[book.licenseStatus].tone}14`,
+                                            color: LICENSE_STATUS_LABELS[book.licenseStatus].tone,
+                                            fontSize: '0.65rem',
+                                        }}>
+                                            {lang === 'vi' ? LICENSE_STATUS_LABELS[book.licenseStatus].vi : LICENSE_STATUS_LABELS[book.licenseStatus].en}
+                                        </span>
+                                        <span className="badge" style={{
+                                            background: 'rgba(15,23,42,0.05)',
+                                            color: 'var(--color-text-secondary)',
+                                            fontSize: '0.65rem',
+                                        }}>
+                                            {lang === 'vi' ? COVERAGE_STATUS_LABELS[book.coverageStatus].vi : COVERAGE_STATUS_LABELS[book.coverageStatus].en}
+                                        </span>
                                     </div>
                                 </button>
                             ))}
@@ -233,8 +316,26 @@ export default function LibraryPage() {
                             <p style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
                                 {lang === 'vi' ? selectedBook.descriptionVi : selectedBook.description}
                             </p>
-                            <div style={{ marginTop: '0.5rem', fontSize: '0.7rem', color: 'var(--color-text-muted)' }}>
-                                📖 {selectedBook.sourceNote}
+                            <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginTop: '0.65rem' }}>
+                                <span className="badge" style={{
+                                    background: `${LICENSE_STATUS_LABELS[selectedBook.licenseStatus].tone}14`,
+                                    color: LICENSE_STATUS_LABELS[selectedBook.licenseStatus].tone,
+                                    fontSize: '0.68rem',
+                                }}>
+                                    {lang === 'vi' ? LICENSE_STATUS_LABELS[selectedBook.licenseStatus].vi : LICENSE_STATUS_LABELS[selectedBook.licenseStatus].en}
+                                </span>
+                                <span className="badge" style={{ background: 'rgba(15,23,42,0.05)', color: 'var(--color-text-secondary)', fontSize: '0.68rem' }}>
+                                    {lang === 'vi' ? COVERAGE_STATUS_LABELS[selectedBook.coverageStatus].vi : COVERAGE_STATUS_LABELS[selectedBook.coverageStatus].en}
+                                </span>
+                            </div>
+                            <div style={{ marginTop: '0.6rem', fontSize: '0.72rem', color: 'var(--color-text-muted)', lineHeight: 1.45 }}>
+                                <div>📖 {selectedBook.sourceNote}</div>
+                                <div>🔎 {selectedBook.licenseNote}</div>
+                                {selectedBook.officialSourceUrl && (
+                                    <a href={selectedBook.officialSourceUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-primary)', fontWeight: 800, textDecoration: 'none' }}>
+                                        {lang === 'vi' ? 'Mở nguồn chính thức' : 'Open official source'}
+                                    </a>
+                                )}
                             </div>
                         </div>
 
@@ -242,7 +343,8 @@ export default function LibraryPage() {
                         <h2 style={{ fontWeight: 700, fontSize: '1rem', marginBottom: '0.75rem' }}>
                             {lang === 'vi' ? 'Bài đọc' : 'Passages'}
                         </h2>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        {selectedBook.passages.length > 0 ? (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                             {selectedBook.passages.map((passage, idx) => (
                                 <button
                                     key={passage.id}
@@ -277,7 +379,19 @@ export default function LibraryPage() {
                                     </div>
                                 </button>
                             ))}
-                        </div>
+                            </div>
+                        ) : (
+                            <div className="card" style={{ border: '1px solid rgba(220,38,38,0.18)', background: 'rgba(220,38,38,0.04)' }}>
+                                <div style={{ fontWeight: 900, color: '#dc2626', marginBottom: '0.35rem' }}>
+                                    {lang === 'vi' ? 'Chưa mở toàn văn trong app' : 'Full text is not bundled'}
+                                </div>
+                                <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.84rem', lineHeight: 1.55 }}>
+                                    {selectedBook.importHint ?? (lang === 'vi'
+                                        ? 'Cần file PDF/EPUB có quyền sử dụng hoặc tài khoản chính thức trước khi mở trong reader.'
+                                        : 'A licensed PDF/EPUB file or official account is required before opening it in the reader.')}
+                                </p>
+                            </div>
+                        )}
                     </>
                 )}
 
@@ -311,6 +425,12 @@ export default function LibraryPage() {
                                 viSummary={selectedPassage.viSummary}
                                 title={selectedPassage.title}
                                 difficulty={selectedPassage.difficulty}
+                                sentenceGuides={selectedPassage.sentenceGuides}
+                                support={selectedPassage.support}
+                                comprehensionChecks={selectedPassage.comprehensionChecks}
+                                sourceAlignment={selectedPassage.sourceAlignment}
+                                sourceNote={selectedBook.sourceNote}
+                                licenseNote={selectedBook.licenseNote}
                                 onWordLearned={() => setLearnedCount(prev => prev + 1)}
                             />
                         </div>

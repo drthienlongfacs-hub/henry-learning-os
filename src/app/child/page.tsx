@@ -97,8 +97,8 @@ export default function ChildDashboard() {
                             </div>
                             <div style={{ fontSize: '0.78rem', color: 'var(--color-text-secondary)', lineHeight: 1.4 }}>
                                 {lang === 'vi'
-                                    ? 'SGK Bộ GD&ĐT • Cambridge • Oxford • Singapore • Chạm từ → xem nghĩa ngay'
-                                    : 'MOE Textbooks • Cambridge • Oxford • Singapore • Tap any word → instant definition'}
+                                    ? 'Kệ SGK/textbook có quyền • Cambridge • Oxford • Singapore • Chạm từ → xem nghĩa ngay'
+                                    : 'Copyright-aware textbook shelf • Cambridge • Oxford • Singapore • Tap any word → instant definition'}
                             </div>
                         </div>
                         <span style={{ fontSize: '1.2rem' }}>→</span>

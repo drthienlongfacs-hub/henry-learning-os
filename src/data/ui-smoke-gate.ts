@@ -3,6 +3,7 @@ import { PRIMARY_CURRICULUM_MAP_STATS } from './primary-curriculum-map';
 export type UiSmokeRouteKey =
     | 'home'
     | 'child-learn'
+    | 'child-library'
     | 'parent-dashboard'
     | 'parent-benchmark'
     | 'parent-foundation'
@@ -46,6 +47,13 @@ export const UI_SMOKE_ROUTES: UiSmokeRoute[] = [
         label: 'Child learning engine',
         requiredText: ['Hôm nay con muốn học gì?', 'Chọn nhịp học', 'Toán'],
         minimumBodyTextLength: 600,
+    },
+    {
+        key: 'child-library',
+        path: '/child/library/',
+        label: 'Child bilingual textbook library',
+        requiredText: ['Thư viện Sách', 'Kệ SGK/textbook cứng', 'Đọc ngay: bài tự biên soạn'],
+        minimumBodyTextLength: 1200,
     },
     {
         key: 'parent-dashboard',
