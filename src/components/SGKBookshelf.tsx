@@ -556,6 +556,39 @@ export default function SGKBookshelf({ lang }: SGKBookshelfProps) {
                     </div>
                 )}
 
+                {/* ========== FAVORITES SHELF — Benchmark: Epic "My Collection" ========== */}
+                {favIds.length > 0 && !searchQuery && (
+                    <div style={{ marginBottom: '1rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.5rem' }}>
+                            <Heart size={14} color="#ef4444" fill="#ef4444" />
+                            <span style={{ fontWeight: 700, fontSize: '0.75rem', color: '#dc2626' }}>
+                                {lang === 'vi' ? `Yêu thích (${favIds.length})` : `Favorites (${favIds.length})`}
+                            </span>
+                        </div>
+                        <div style={{ display: 'flex', gap: '0.5rem', overflowX: 'auto', paddingBottom: '0.5rem' }}>
+                            {favIds.map(id => {
+                                const book = SGK_CATALOG.find(b => b.id === id);
+                                if (!book) return null;
+                                return (
+                                    <a key={id} href={book.ebookUrl} target="_blank" rel="noopener noreferrer"
+                                       onClick={() => trackBookOpen(book.id)}
+                                       style={{
+                                           minWidth: '70px', padding: '8px', borderRadius: '10px',
+                                           background: '#fef2f2', border: '1px solid #fca5a520',
+                                           textDecoration: 'none', textAlign: 'center',
+                                           transition: 'transform 0.15s', cursor: 'pointer',
+                                       }}>
+                                        <div style={{ fontSize: '1.3rem' }}>{book.coverEmoji}</div>
+                                        <div style={{ fontSize: '0.55rem', fontWeight: 600, color: book.coverColor, marginTop: '2px', lineHeight: 1.2 }}>
+                                            {book.subjectLabel} {book.grade}
+                                        </div>
+                                    </a>
+                                );
+                            })}
+                        </div>
+                    </div>
+                )}
+
                 {/* Learning Tips — Benchmark: Khan Academy / Epic coaching */}
                 <LearningTips lang={lang} grade={selectedGrade} />
 
