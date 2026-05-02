@@ -484,12 +484,41 @@ export default function LibraryPage() {
                         {selectedBook.pdfUrl && (
                             <button
                                 className="btn btn-primary"
-                                style={{ width: '100%', marginBottom: '1rem', padding: '0.85rem' }}
+                                style={{ width: '100%', marginBottom: '0.5rem', padding: '0.85rem' }}
                                 onClick={() => setViewMode('pdf')}
                             >
                                 <BookOpen size={18} />
                                 {lang === 'vi' ? 'Đọc toàn văn SGK (PDF Interactive)' : 'Read full textbook (PDF Interactive)'}
                             </button>
+                        )}
+
+                        {/* Official E-Book Reader Link */}
+                        {selectedBook.officialReaderUrl && (
+                            <a
+                                href={selectedBook.officialReaderUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="btn"
+                                style={{
+                                    width: '100%',
+                                    marginBottom: '1rem',
+                                    padding: '0.85rem',
+                                    background: 'linear-gradient(135deg, #16a34a, #15803d)',
+                                    color: '#fff',
+                                    fontWeight: 800,
+                                    textDecoration: 'none',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: '0.5rem',
+                                    borderRadius: '12px',
+                                    border: 'none',
+                                    fontSize: '0.92rem',
+                                }}
+                            >
+                                <GraduationCap size={18} />
+                                {lang === 'vi' ? 'Mở sách điện tử chính thức (Hành trang số)' : 'Open official e-book (Hành trang số)'}
+                            </a>
                         )}
 
                         {/* Passage list */}
