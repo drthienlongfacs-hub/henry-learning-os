@@ -37,7 +37,7 @@ import {
     type LibraryLicenseStatus,
 } from '@/data/textbook-library';
 
-type ViewMode = 'library' | 'book' | 'reader' | 'embedded-reader' | 'pdf';
+type ViewMode = 'library' | 'book' | 'reader' | 'embedded-reader' | 'pdf' | 'ebook';
 
 export default function LibraryPage() {
     const { t, lang } = useTranslation();
@@ -91,7 +91,7 @@ export default function LibraryPage() {
         } else if (viewMode === 'embedded-reader') {
             setViewMode('library');
             setSelectedEmbeddedBook(null);
-        } else if (viewMode === 'pdf') {
+        } else if (viewMode === 'pdf' || viewMode === 'ebook') {
             setViewMode('book');
         } else if (viewMode === 'book') {
             setViewMode('library');
@@ -433,6 +433,86 @@ export default function LibraryPage() {
                     </div>
                 )}
 
+                {/* ===================== EMBEDDED E-BOOK (Hành trang số) ===================== */}
+                {viewMode === 'ebook' && selectedBook && selectedBook.officialReaderUrl && (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+                        {/* Attribution banner */}
+                        <div style={{
+                            background: 'linear-gradient(135deg, #16a34a, #15803d)',
+                            color: '#fff',
+                            padding: '10px 16px',
+                            borderRadius: '12px 12px 0 0',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            fontSize: '0.82rem',
+                        }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <GraduationCap size={16} />
+                                <span style={{ fontWeight: 800 }}>
+                                    {lang === 'vi'
+                                        ? `${selectedBook.titleVi} — Nguồn: NXB Giáo dục Việt Nam (hanhtrangso.nxbgd.vn)`
+                                        : `${selectedBook.title} — Source: Vietnam Education Publishing House`}
+                                </span>
+                            </div>
+                            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                                <a
+                                    href={selectedBook.officialReaderUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ color: '#fff', fontSize: '0.72rem', textDecoration: 'underline', opacity: 0.9 }}
+                                >
+                                    {lang === 'vi' ? 'Mở tab mới ↗' : 'Open in new tab ↗'}
+                                </a>
+                                <button
+                                    onClick={goBack}
+                                    style={{
+                                        background: 'rgba(255,255,255,0.2)',
+                                        border: 'none',
+                                        color: '#fff',
+                                        borderRadius: '8px',
+                                        padding: '4px 10px',
+                                        cursor: 'pointer',
+                                        fontWeight: 700,
+                                        fontSize: '0.78rem',
+                                    }}
+                                >
+                                    ✕ {lang === 'vi' ? 'Đóng' : 'Close'}
+                                </button>
+                            </div>
+                        </div>
+                        {/* Legal notice */}
+                        <div style={{
+                            background: '#f0fdf4',
+                            padding: '6px 16px',
+                            fontSize: '0.68rem',
+                            color: '#15803d',
+                            lineHeight: 1.4,
+                            borderLeft: '1px solid #bbf7d0',
+                            borderRight: '1px solid #bbf7d0',
+                        }}>
+                            {lang === 'vi'
+                                ? '📋 Nội dung sách điện tử thuộc bản quyền NXB Giáo dục Việt Nam. Hiển thị trực tiếp từ hanhtrangso.nxbgd.vn phục vụ mục đích học tập cá nhân/gia đình theo Luật Sở hữu trí tuệ (Điều 25, Khoản 1a).'
+                                : '📋 E-book content is copyrighted by Vietnam Education Publishing House. Displayed directly from hanhtrangso.nxbgd.vn for personal/family educational use under IP Law Art. 25§1a.'}
+                        </div>
+                        {/* Iframe */}
+                        <iframe
+                            src={selectedBook.officialReaderUrl}
+                            title={`${selectedBook.titleVi} - Hành trang số`}
+                            style={{
+                                width: '100%',
+                                height: '82vh',
+                                border: '1px solid #bbf7d0',
+                                borderTop: 'none',
+                                borderRadius: '0 0 12px 12px',
+                                background: '#fff',
+                            }}
+                            sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                            referrerPolicy="no-referrer"
+                        />
+                    </div>
+                )}
+
                 {/* ===================== BOOK VIEW ===================== */}
                 {viewMode === 'book' && selectedBook && (
                     <>
@@ -492,12 +572,9 @@ export default function LibraryPage() {
                             </button>
                         )}
 
-                        {/* Official E-Book Reader Link */}
+                        {/* Official E-Book Reader — embedded directly */}
                         {selectedBook.officialReaderUrl && (
-                            <a
-                                href={selectedBook.officialReaderUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
+                            <button
                                 className="btn"
                                 style={{
                                     width: '100%',
@@ -506,7 +583,6 @@ export default function LibraryPage() {
                                     background: 'linear-gradient(135deg, #16a34a, #15803d)',
                                     color: '#fff',
                                     fontWeight: 800,
-                                    textDecoration: 'none',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
@@ -514,11 +590,13 @@ export default function LibraryPage() {
                                     borderRadius: '12px',
                                     border: 'none',
                                     fontSize: '0.92rem',
+                                    cursor: 'pointer',
                                 }}
+                                onClick={() => setViewMode('ebook')}
                             >
                                 <GraduationCap size={18} />
-                                {lang === 'vi' ? 'Mở sách điện tử chính thức (Hành trang số)' : 'Open official e-book (Hành trang số)'}
-                            </a>
+                                {lang === 'vi' ? 'Đọc sách điện tử chính thức (NXB Giáo dục)' : 'Read official e-book (NXB Giáo dục)'}
+                            </button>
                         )}
 
                         {/* Passage list */}
