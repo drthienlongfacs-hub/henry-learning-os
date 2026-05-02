@@ -15,6 +15,7 @@ import dynamic from 'next/dynamic';
 const PdfReader = dynamic(() => import('@/components/PdfReader').then(mod => mod.PdfReader), { ssr: false });
 import SGKBookshelf from '@/components/SGKBookshelf';
 const FreeStoriesShelf = dynamic(() => import('@/components/FreeStoriesShelf'), { ssr: false });
+const ReadingQuiz = dynamic(() => import('@/components/ReadingQuiz'), { ssr: false });
 import Link from 'next/link';
 import {
     ArrowLeft, Home, RotateCcw, Brain, Sparkles, BookOpen,
@@ -165,6 +166,9 @@ export default function LibraryPage() {
 
                         {/* ========== FREE STORIES — StoryWeaver CC-BY 4.0 ========== */}
                         <FreeStoriesShelf lang={lang} />
+
+                        {/* ========== READING QUIZ — Comprehension checks ========== */}
+                        <ReadingQuiz lang={lang} />
 
                         {/* Copyright-aware hard textbook policy */}
                         <div className="card" style={{
