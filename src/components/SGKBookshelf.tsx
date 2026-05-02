@@ -21,7 +21,7 @@ interface SGKBookshelfProps {
 }
 
 /* ========== PREMIUM BOOK CARD ========== */
-function BookCard({ book, lang }: { book: SGKBook; lang: string }) {
+function BookCard({ book, lang, isFav, onFav }: { book: SGKBook; lang: string; isFav?: boolean; onFav?: () => void }) {
     const [hovered, setHovered] = useState(false);
 
     return (
@@ -146,6 +146,33 @@ function BookCard({ book, lang }: { book: SGKBook; lang: string }) {
                     }}>
                         {book.volume}
                     </span>
+                )}
+
+                {/* Favorite heart */}
+                {onFav && (
+                    <button
+                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); onFav(); }}
+                        style={{
+                            position: 'absolute',
+                            top: '6px',
+                            right: '6px',
+                            width: '26px',
+                            height: '26px',
+                            borderRadius: '50%',
+                            border: 'none',
+                            background: isFav ? '#fee2e2' : 'rgba(255,255,255,0.7)',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            transition: 'all 0.2s ease',
+                            zIndex: 2,
+                            backdropFilter: 'blur(4px)',
+                        }}
+                        title={isFav ? 'Bỏ yêu thích' : 'Yêu thích'}
+                    >
+                        <Heart size={13} fill={isFav ? '#ef4444' : 'none'} color={isFav ? '#ef4444' : '#94a3b8'} />
+                    </button>
                 )}
 
                 {/* Bottom open indicator */}
@@ -434,6 +461,39 @@ export default function SGKBookshelf({ lang }: SGKBookshelfProps) {
                     </div>
                 )}
 
+                {/* ========== STREAK BADGES — Benchmark: Reading Eggs rewards ========== */}
+                {streak.currentStreak >= 3 && (
+                    <div style={{
+                        display: 'flex', gap: '0.5rem', marginBottom: '1rem', flexWrap: 'wrap',
+                    }}>
+                        {streak.currentStreak >= 3 && (
+                            <span style={{
+                                padding: '4px 12px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 700,
+                                background: '#fef3c7', color: '#92400e', border: '1px solid #fbbf2433',
+                            }}>🌟 3 ngày</span>
+                        )}
+                        {streak.currentStreak >= 7 && (
+                            <span style={{
+                                padding: '4px 12px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 700,
+                                background: '#dbeafe', color: '#1e40af', border: '1px solid #3b82f633',
+                            }}>🚀 7 ngày</span>
+                        )}
+                        {streak.currentStreak >= 14 && (
+                            <span style={{
+                                padding: '4px 12px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 700,
+                                background: '#f3e8ff', color: '#6b21a8', border: '1px solid #8b5cf633',
+                            }}>🏆 14 ngày</span>
+                        )}
+                        {streak.currentStreak >= 30 && (
+                            <span style={{
+                                padding: '4px 12px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: 700,
+                                background: 'linear-gradient(135deg, #fef3c7, #fde68a)', color: '#78350f',
+                                border: '1px solid #f59e0b55', boxShadow: '0 2px 8px rgba(245,158,11,0.2)',
+                            }}>👑 30 ngày — Siêu sao!</span>
+                        )}
+                    </div>
+                )}
+
                 {/* ========== SEARCH BAR — Benchmark: Epic library ========== */}
                 <div style={{
                     display: 'flex', alignItems: 'center', gap: '0.5rem',
@@ -561,7 +621,16 @@ export default function SGKBookshelf({ lang }: SGKBookshelfProps) {
                     padding: '0.25rem 0',
                 }}>
                     {filteredBooks.map(book => (
-                        <BookCard key={book.id} book={book} lang={lang} />
+                        <BookCard
+                            key={book.id}
+                            book={book}
+                            lang={lang}
+                            isFav={favIds.includes(book.id)}
+                            onFav={() => {
+                                const newState = toggleFavorite(book.id);
+                                setFavIds(newState ? [...favIds, book.id] : favIds.filter(id => id !== book.id));
+                            }}
+                        />
                     ))}
                 </div>
 
