@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { SGK_CATALOG, SGK_SUBJECTS, type SGKBook } from '@/data/sgk-catalog';
-import { GraduationCap, ExternalLink, BookOpen, Sparkles, Star, Users, Lightbulb } from 'lucide-react';
+import { GraduationCap, ExternalLink, BookOpen, Sparkles, Star, Users, Lightbulb, Search, Flame, Clock, Heart } from 'lucide-react';
+import { trackBookOpen, getStreak, getRecentBooks, toggleFavorite, getFavoriteBookIds, type DailyStreak } from '@/lib/reading-tracker';
 
 const GRADES = [1, 2, 3, 4, 5];
 
@@ -28,6 +29,7 @@ function BookCard({ book, lang }: { book: SGKBook; lang: string }) {
             href={book.ebookUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackBookOpen(book.id)}
             style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -276,14 +278,28 @@ function LearningTips({ lang, grade }: { lang: string; grade: number }) {
 export default function SGKBookshelf({ lang }: SGKBookshelfProps) {
     const [selectedGrade, setSelectedGrade] = useState(1);
     const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [streak, setStreak] = useState<DailyStreak>({ currentStreak: 0, longestStreak: 0, lastReadDate: '', totalBooksOpened: 0, todayBooksOpened: 0 });
+    const [recentIds, setRecentIds] = useState<string[]>([]);
+    const [favIds, setFavIds] = useState<string[]>([]);
+
+    useEffect(() => {
+        setStreak(getStreak());
+        setRecentIds(getRecentBooks(6).map(r => r.bookId));
+        setFavIds(getFavoriteBookIds());
+    }, []);
 
     const filteredBooks = useMemo(() => {
         let books = SGK_CATALOG.filter(b => b.grade === selectedGrade);
         if (selectedSubject) {
             books = books.filter(b => b.subject === selectedSubject);
         }
+        if (searchQuery.trim()) {
+            const q = searchQuery.toLowerCase();
+            books = SGK_CATALOG.filter(b => b.title.toLowerCase().includes(q) || b.subjectLabel.toLowerCase().includes(q));
+        }
         return books;
-    }, [selectedGrade, selectedSubject]);
+    }, [selectedGrade, selectedSubject, searchQuery]);
 
     const availableSubjects = useMemo(() => {
         const subjects = new Set(SGK_CATALOG.filter(b => b.grade === selectedGrade).map(b => b.subject));
@@ -383,6 +399,102 @@ export default function SGKBookshelf({ lang }: SGKBookshelfProps) {
 
             {/* ========== CONTENT AREA ========== */}
             <div style={{ padding: '1.25rem 1.5rem 1.5rem' }}>
+
+                {/* ========== STREAK + STATS BAR — Benchmark: Duolingo/Epic ========== */}
+                {(streak.currentStreak > 0 || streak.totalBooksOpened > 0) && (
+                    <div style={{
+                        display: 'flex', gap: '0.75rem', marginBottom: '1rem',
+                        flexWrap: 'wrap',
+                    }}>
+                        <div style={{
+                            display: 'flex', alignItems: 'center', gap: '0.4rem',
+                            padding: '8px 14px', borderRadius: '12px',
+                            background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+                            border: '1px solid #fbbf2433',
+                        }}>
+                            <Flame size={16} color="#ea580c" />
+                            <span style={{ fontWeight: 800, fontSize: '0.82rem', color: '#9a3412' }}>
+                                {streak.currentStreak}
+                            </span>
+                            <span style={{ fontSize: '0.65rem', color: '#92400e', fontWeight: 600 }}>
+                                {lang === 'vi' ? 'ngày liên tiếp' : 'day streak'}
+                            </span>
+                        </div>
+                        <div style={{
+                            display: 'flex', alignItems: 'center', gap: '0.4rem',
+                            padding: '8px 14px', borderRadius: '12px',
+                            background: '#f0fdf4', border: '1px solid #bbf7d033',
+                        }}>
+                            <BookOpen size={14} color="#16a34a" />
+                            <span style={{ fontWeight: 700, fontSize: '0.72rem', color: '#166534' }}>
+                                {streak.totalBooksOpened} {lang === 'vi' ? 'lần đọc' : 'reads'}
+                                {streak.todayBooksOpened > 0 && ` • ${streak.todayBooksOpened} ${lang === 'vi' ? 'hôm nay' : 'today'}`}
+                            </span>
+                        </div>
+                    </div>
+                )}
+
+                {/* ========== SEARCH BAR — Benchmark: Epic library ========== */}
+                <div style={{
+                    display: 'flex', alignItems: 'center', gap: '0.5rem',
+                    padding: '8px 14px', borderRadius: '14px',
+                    background: '#f8fafc', border: '1px solid #e2e8f0',
+                    marginBottom: '1rem',
+                }}>
+                    <Search size={16} color="#94a3b8" />
+                    <input
+                        type="text"
+                        placeholder={lang === 'vi' ? '🔍 Tìm sách... (vd: Toán, Tiếng Anh, Khoa học)' : '🔍 Search books...'}
+                        value={searchQuery}
+                        onChange={e => setSearchQuery(e.target.value)}
+                        style={{
+                            flex: 1, border: 'none', outline: 'none',
+                            background: 'transparent', fontSize: '0.8rem',
+                            color: '#1e293b', fontWeight: 500,
+                        }}
+                    />
+                    {searchQuery && (
+                        <button onClick={() => setSearchQuery('')} style={{
+                            border: 'none', background: '#e2e8f0', borderRadius: '50%',
+                            width: 22, height: 22, cursor: 'pointer', fontSize: '0.7rem',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            color: '#64748b',
+                        }}>✕</button>
+                    )}
+                </div>
+
+                {/* ========== RECENTLY OPENED — Benchmark: Epic history ========== */}
+                {recentIds.length > 0 && !searchQuery && (
+                    <div style={{ marginBottom: '1rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.5rem' }}>
+                            <Clock size={14} color="#6366f1" />
+                            <span style={{ fontWeight: 700, fontSize: '0.75rem', color: '#4338ca' }}>
+                                {lang === 'vi' ? 'Đọc gần đây' : 'Recently opened'}
+                            </span>
+                        </div>
+                        <div style={{ display: 'flex', gap: '0.5rem', overflowX: 'auto', paddingBottom: '0.5rem' }}>
+                            {recentIds.map(id => {
+                                const book = SGK_CATALOG.find(b => b.id === id);
+                                if (!book) return null;
+                                return (
+                                    <a key={id} href={book.ebookUrl} target="_blank" rel="noopener noreferrer"
+                                       onClick={() => trackBookOpen(book.id)}
+                                       style={{
+                                           minWidth: '70px', padding: '8px', borderRadius: '10px',
+                                           background: `${book.coverColor}10`, border: `1px solid ${book.coverColor}20`,
+                                           textDecoration: 'none', textAlign: 'center',
+                                           transition: 'transform 0.15s', cursor: 'pointer',
+                                       }}>
+                                        <div style={{ fontSize: '1.3rem' }}>{book.coverEmoji}</div>
+                                        <div style={{ fontSize: '0.55rem', fontWeight: 600, color: book.coverColor, marginTop: '2px', lineHeight: 1.2 }}>
+                                            {book.subjectLabel} {book.grade}
+                                        </div>
+                                    </a>
+                                );
+                            })}
+                        </div>
+                    </div>
+                )}
 
                 {/* Learning Tips — Benchmark: Khan Academy / Epic coaching */}
                 <LearningTips lang={lang} grade={selectedGrade} />
