@@ -8,6 +8,7 @@
 import React, { useState, useMemo } from 'react';
 import { TEXTBOOK_LIBRARY, type TextbookPassage, type ComprehensionCheck } from '@/data/textbook-library';
 import { BookOpen, CheckCircle, XCircle, RotateCcw, Sparkles, Brain, ChevronRight, Eye, EyeOff } from 'lucide-react';
+import { ReadToMe } from './ReadToMe';
 
 interface ReadingQuizProps {
     lang: string;
@@ -170,8 +171,11 @@ export default function ReadingQuiz({ lang }: ReadingQuizProps) {
                                     fontSize: '0.82rem', lineHeight: 1.7,
                                     color: '#1e293b',
                                 }}>
-                                    <div style={{ fontWeight: 700, marginBottom: '0.4rem', color: '#059669' }}>
-                                        📖 {passage.title}
+                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.4rem' }}>
+                                        <span style={{ fontWeight: 700, color: '#059669' }}>
+                                            📖 {passage.title}
+                                        </span>
+                                        <ReadToMe text={passage.text} lang="en" />
                                     </div>
                                     {passage.text}
                                     {passage.viSummary && (

@@ -2,8 +2,8 @@
 
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { SGK_CATALOG, SGK_SUBJECTS, type SGKBook } from '@/data/sgk-catalog';
-import { GraduationCap, ExternalLink, BookOpen, Sparkles, Star, Users, Lightbulb, Search, Flame, Clock, Heart } from 'lucide-react';
-import { trackBookOpen, getStreak, getRecentBooks, toggleFavorite, getFavoriteBookIds, type DailyStreak } from '@/lib/reading-tracker';
+import { GraduationCap, ExternalLink, BookOpen, Sparkles, Star, Users, Lightbulb, Search, Flame, Clock, Heart, CheckCircle2 } from 'lucide-react';
+import { trackBookOpen, getStreak, getRecentBooks, toggleFavorite, getFavoriteBookIds, getBookRecord, type DailyStreak } from '@/lib/reading-tracker';
 
 const GRADES = [1, 2, 3, 4, 5];
 
@@ -21,7 +21,7 @@ interface SGKBookshelfProps {
 }
 
 /* ========== PREMIUM BOOK CARD ========== */
-function BookCard({ book, lang, isFav, onFav }: { book: SGKBook; lang: string; isFav?: boolean; onFav?: () => void }) {
+function BookCard({ book, lang, isFav, onFav, openCount }: { book: SGKBook; lang: string; isFav?: boolean; onFav?: () => void; openCount?: number }) {
     const [hovered, setHovered] = useState(false);
 
     return (
@@ -95,6 +95,29 @@ function BookCard({ book, lang, isFav, onFav }: { book: SGKBook; lang: string; i
                         Bộ GD&ĐT
                     </span>
                 </div>
+
+                {/* Read count badge */}
+                {openCount != null && openCount > 0 && (
+                    <div style={{
+                        position: 'absolute',
+                        bottom: '6px',
+                        left: '6px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '2px',
+                        background: 'rgba(22,163,74,0.85)',
+                        color: '#fff',
+                        padding: '1px 6px',
+                        borderRadius: '6px',
+                        fontSize: '0.48rem',
+                        fontWeight: 700,
+                        backdropFilter: 'blur(4px)',
+                        zIndex: 2,
+                    }}>
+                        <CheckCircle2 size={9} />
+                        {openCount}x
+                    </div>
+                )}
 
                 {/* Big Emoji */}
                 <span style={{
@@ -659,6 +682,7 @@ export default function SGKBookshelf({ lang }: SGKBookshelfProps) {
                             book={book}
                             lang={lang}
                             isFav={favIds.includes(book.id)}
+                            openCount={getBookRecord(book.id)?.openCount || 0}
                             onFav={() => {
                                 const newState = toggleFavorite(book.id);
                                 setFavIds(newState ? [...favIds, book.id] : favIds.filter(id => id !== book.id));
