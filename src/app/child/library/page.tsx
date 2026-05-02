@@ -16,6 +16,7 @@ const PdfReader = dynamic(() => import('@/components/PdfReader').then(mod => mod
 import SGKBookshelf from '@/components/SGKBookshelf';
 const FreeStoriesShelf = dynamic(() => import('@/components/FreeStoriesShelf'), { ssr: false });
 const ReadingQuiz = dynamic(() => import('@/components/ReadingQuiz'), { ssr: false });
+const WordLookup = dynamic(() => import('@/components/WordLookup').then(m => m.WordLookup), { ssr: false });
 import Link from 'next/link';
 import {
     ArrowLeft, Home, RotateCcw, Brain, Sparkles, BookOpen,
@@ -157,6 +158,11 @@ export default function LibraryPage() {
                                     ? 'Đọc ngay các đoạn luyện tập tự biên soạn và nguồn public domain. SGK/textbook có bản quyền chỉ mở toàn văn khi gia đình có file hoặc tài khoản hợp lệ.'
                                     : 'Read original companion passages and public-domain content now. Copyrighted textbooks open only when the family has a licensed file or account.'}
                             </p>
+                        </div>
+
+                        {/* Dictionary quick-access */}
+                        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '0.5rem' }}>
+                            <WordLookup lang={lang} />
                         </div>
 
                         <LocalTextbookVault lang={lang} onOpenTextbook={openEmbeddedBook} />
