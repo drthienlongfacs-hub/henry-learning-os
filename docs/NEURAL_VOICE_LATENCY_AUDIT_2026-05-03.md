@@ -32,11 +32,23 @@ Changed surfaces:
   - Full passage now calls `speakLongPassage()`.
   - Current passage preloads Kokoro in the background after initial UI settles.
 - `src/components/ReadToMe.tsx`
-  - Removes unused engine import.
-  - Preloads neural speech in the background, while the first click remains instant.
+  - Uses `speakLongPassage()` so the first click remains instant.
+  - Preloads neural speech in the background after the UI has settled.
+- `src/components/PhonicsLab.tsx`, `src/components/VocabReview.tsx`
+  - Increases accent button touch targets on `/child/reading/` so the voice route passes the UI smoke accessibility gate on desktop and mobile.
 - `__tests__/voice-engine.test.ts`
   - Asserts uncached long-passage playback calls Web Speech after the 15 ms cancel gap.
   - Asserts click speech keeps `pitch = 1`.
+- `tests/smoke/ui-smoke.spec.ts`
+  - Asserts the live reading surface emits a `speechSynthesis.speak()` call within 250 ms when "Read full passage" is clicked, proving Kokoro background rendering is not blocking the interaction path.
+
+## Verification Evidence
+
+- `npx tsc --noEmit` - pass.
+- `npx eslint src/lib/voiceEngine.ts src/components/ReadToMe.tsx src/components/ReadingQuiz.tsx src/components/PhonicsLab.tsx src/components/VocabReview.tsx src/data/ui-smoke-gate.ts __tests__/voice-engine.test.ts __tests__/ui-smoke-gate.test.ts tests/smoke/ui-smoke.spec.ts` - pass, 0 warnings.
+- `npx vitest run __tests__/voice-engine.test.ts __tests__/ui-smoke-gate.test.ts __tests__/reading-quiz-history.test.ts` - pass, 9 tests.
+- `npm run build` - pass; `/child/reading` prerendered as static content.
+- `npm run smoke:ui` - pass, 26/26 tests across desktop and mobile.
 
 ## Claim Boundary
 

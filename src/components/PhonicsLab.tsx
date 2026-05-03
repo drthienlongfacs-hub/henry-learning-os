@@ -1,9 +1,7 @@
 'use client';
 import React, { useState, useCallback } from 'react';
-import { Volume2, CheckCircle, RotateCcw, Star, Mic, ChevronRight } from 'lucide-react';
+import { Volume2, CheckCircle, RotateCcw, Mic, ChevronRight } from 'lucide-react';
 import { speak, type Accent } from '@/lib/voiceEngine';
-
-type PhonicsAccent = Accent;
 
 const PHONICS_LESSONS = [
   {
@@ -67,7 +65,6 @@ export default function PhonicsLab({ lang }: { lang: string }) {
   const [pairIdx, setPairIdx] = useState(0);
   const [accent, setAccent] = useState<Accent>('en-US');
   const [practiced, setPracticed] = useState<Set<string>>(new Set());
-  const [showAll, setShowAll] = useState(false);
 
   const vi = lang === 'vi';
   const lesson = PHONICS_LESSONS[lessonIdx];
@@ -124,7 +121,7 @@ export default function PhonicsLab({ lang }: { lang: string }) {
           { k: 'en-AU' as Accent, f: '🇦🇺', l: 'AU' },
         ].map(a => (
           <button key={a.k} onClick={() => setAccent(a.k)} style={{
-            padding: '3px 8px', borderRadius: '6px', border: 'none', cursor: 'pointer',
+            minHeight: 28, padding: '5px 10px', borderRadius: '6px', border: 'none', cursor: 'pointer',
             fontSize: '0.58rem', fontWeight: accent === a.k ? 700 : 500,
             background: accent === a.k ? '#7c3aed' : '#f1f5f9',
             color: accent === a.k ? '#fff' : '#475569',

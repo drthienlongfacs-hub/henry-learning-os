@@ -159,7 +159,7 @@ export default function VocabReview({ lang }: { lang: string }) {
           { k: 'en-AU' as Accent, f: '🇦🇺', l: 'AU' },
         ].map(a => (
           <button key={a.k} onClick={() => setAccent(a.k)} style={{
-            padding: '3px 8px', borderRadius: '6px', border: 'none', cursor: 'pointer',
+            minHeight: 28, padding: '5px 10px', borderRadius: '6px', border: 'none', cursor: 'pointer',
             fontSize: '0.58rem', fontWeight: accent === a.k ? 700 : 500,
             background: accent === a.k ? '#2563eb' : '#f1f5f9',
             color: accent === a.k ? '#fff' : '#475569',

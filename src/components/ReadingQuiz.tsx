@@ -17,7 +17,7 @@ import {
 } from '@/lib/evidence/reading-quiz-history';
 import { BookOpen, CheckCircle, Sparkles, Brain, ChevronRight, RotateCcw, Volume2, X, Languages, Lightbulb, BookMarked, Loader2 } from 'lucide-react';
 
-import { speak, speakLongPassage, pauseSpeech, resumeSpeech, stopSpeech, getVoiceDebugInfo, type Accent } from '@/lib/voiceEngine';
+import { speak, speakLongPassage, preloadNeuralSpeech, pauseSpeech, resumeSpeech, stopSpeech, getVoiceDebugInfo, type Accent } from '@/lib/voiceEngine';
 import { awardXP } from '@/lib/xpEngine';
 import CelebrationOverlay from '@/components/gamification/CelebrationOverlay';
 
@@ -95,6 +95,7 @@ export default function ReadingQuiz({lang}:{lang:string}){
   const speakingRef=useRef(false);
 
   const p=passages[idx%passages.length]??null;
+  const passageText=p?.text??'';
   const vi=lang==='vi';
   const passageQuestionCounts=useMemo<Record<string,number>>(()=>Object.fromEntries(
     passages.map(passage=>[passage.id,passage.comprehensionChecks.length])
@@ -149,8 +150,13 @@ export default function ReadingQuiz({lang}:{lang:string}){
     return ()=>window.clearTimeout(timeout);
   },[]);
 
-
-
+  useEffect(()=>{
+    if(!passageText) return undefined;
+    const timeout=window.setTimeout(()=>{
+      void preloadNeuralSpeech(passageText,accent,speed);
+    },3500);
+    return ()=>window.clearTimeout(timeout);
+  },[passageText,accent,speed]);
 
   if(!p||!evidenceProfile) return null;
 

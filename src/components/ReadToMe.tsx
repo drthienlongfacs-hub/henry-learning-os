@@ -1,8 +1,8 @@
-import { speak, stopSpeech, pauseSpeech, resumeSpeech, type Accent } from '@/lib/voiceEngine';
+import { preloadNeuralSpeech, speakLongPassage, stopSpeech, pauseSpeech, resumeSpeech, type Accent } from '@/lib/voiceEngine';
 
 // ========================================
 // Text-to-Speech Reader — "Read to Me" feature
-// Uses centralized voiceEngine (Web Speech API, optimized)
+// Uses centralized voiceEngine (instant Web Speech + cached Kokoro)
 // ========================================
 
 import React, { useState, useCallback, useEffect } from 'react';
@@ -33,13 +33,19 @@ export function ReadToMe({ text, lang = 'en', label }: ReadToMeProps) {
         stop();
         setPlaying(true);
         setPaused(false);
-        speak(text, accent, rate, () => {
+        speakLongPassage(text, accent, rate, () => {
             setPlaying(false);
             setPaused(false);
         });
     }, [text, accent, rate, stop]);
 
-
+    useEffect(() => {
+        if (text.trim().length < 40) return undefined;
+        const timer = window.setTimeout(() => {
+            void preloadNeuralSpeech(text, accent, rate);
+        }, 3500);
+        return () => window.clearTimeout(timer);
+    }, [text, accent, rate]);
 
     const togglePause = () => {
         if (paused) {
