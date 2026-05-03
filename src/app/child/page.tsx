@@ -105,6 +105,31 @@ export default function ChildDashboard() {
                     </div>
                 </Link>
 
+                {/* Quick access — new learning modules */}
+                <div className="animate-fade-in" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem', marginBottom: '1.25rem' }}>
+                    <Link href="/child/reading#phonics" style={{ textDecoration: 'none' }}>
+                        <div className="card card-interactive" style={{ textAlign: 'center', padding: '0.75rem 0.5rem' }}>
+                            <div style={{ fontSize: '1.3rem', marginBottom: '0.15rem' }}>🔤</div>
+                            <div style={{ fontWeight: 700, fontSize: '0.68rem', color: '#7c3aed' }}>Phonics Lab</div>
+                            <div style={{ fontSize: '0.55rem', color: 'var(--color-text-muted)' }}>{lang === 'vi' ? 'IPA + 3 accent' : 'IPA + 3 accents'}</div>
+                        </div>
+                    </Link>
+                    <Link href="/child/reading#vocab" style={{ textDecoration: 'none' }}>
+                        <div className="card card-interactive" style={{ textAlign: 'center', padding: '0.75rem 0.5rem' }}>
+                            <div style={{ fontSize: '1.3rem', marginBottom: '0.15rem' }}>🧠</div>
+                            <div style={{ fontWeight: 700, fontSize: '0.68rem', color: '#059669' }}>Vocab SRS</div>
+                            <div style={{ fontSize: '0.55rem', color: 'var(--color-text-muted)' }}>{lang === 'vi' ? 'Flashcard SM-2' : 'Spaced repetition'}</div>
+                        </div>
+                    </Link>
+                    <Link href="/child/reading#wiki" style={{ textDecoration: 'none' }}>
+                        <div className="card card-interactive" style={{ textAlign: 'center', padding: '0.75rem 0.5rem' }}>
+                            <div style={{ fontSize: '1.3rem', marginBottom: '0.15rem' }}>📚</div>
+                            <div style={{ fontWeight: 700, fontSize: '0.68rem', color: '#0f766e' }}>Wiki</div>
+                            <div style={{ fontSize: '0.55rem', color: 'var(--color-text-muted)' }}>{lang === 'vi' ? '38 mục tri thức' : '38 entries'}</div>
+                        </div>
+                    </Link>
+                </div>
+
                 {/* Learning quality layer */}
                 <div className="card animate-fade-in" style={{
                     marginBottom: '2rem',
