@@ -12,7 +12,7 @@ export interface EnglishProblem {
     explanation: string;
     difficulty: number;
     hints: string[];
-    type: 'vocabulary' | 'grammar' | 'reading' | 'listening' | 'writing';
+    type: 'vocabulary' | 'grammar' | 'reading' | 'listening' | 'writing' | 'phonics' | 'sight_words';
     gradeLevel: number;
     topic: string;
     topicKey: string;
@@ -386,11 +386,9 @@ export function genSentenceEn(): EnglishProblem {
     };
 }
 
-// ══════════════════════════════════════════════
-// TOPIC REGISTRY
-// ══════════════════════════════════════════════
-
 import { generateUnitExercises, getUnitRegistry } from './english-unit-generator';
+import { generateInternationalExercises, getInternationalTopics } from './english-intl-generator';
+import { FRAMEWORK_INFO } from '@/data/english-international';
 
 export interface EnTopicInfo {
     key: string;
@@ -400,6 +398,9 @@ export interface EnTopicInfo {
     icon: string;
     isUnit?: boolean;
     unitNumber?: number;
+    isIntl?: boolean;
+    framework?: string;
+    category?: string;
 }
 
 // ── Core skill-based topics ──
@@ -412,7 +413,7 @@ const CORE_TOPICS: EnTopicInfo[] = [
     { key: 'sentence_en', name: 'Sentences', gradeLevel: 5, generator: genSentenceEn, icon: '✍️' },
 ];
 
-// ── SGK Unit-based topics (Global Success) ──
+// ── SGK Unit-based topics (Global Success 🇻🇳) ──
 function buildUnitTopics(): EnTopicInfo[] {
     const units: EnTopicInfo[] = [];
     for (const grade of [3, 4, 5] as const) {
@@ -425,6 +426,7 @@ function buildUnitTopics(): EnTopicInfo[] {
                 isUnit: true,
                 unitNumber: u.unitNumber,
                 icon: '📘',
+                framework: 'global_success',
                 generator: () => {
                     const exercises = generateUnitExercises(u.grade, u.unitId, 1);
                     return exercises[0] || genVocabEn();
@@ -435,15 +437,50 @@ function buildUnitTopics(): EnTopicInfo[] {
     return units;
 }
 
+// ── International Curriculum topics (Cambridge 🇬🇧, US 🇺🇸, Australian 🇦🇺) ──
+function buildIntlTopics(): EnTopicInfo[] {
+    const topics: EnTopicInfo[] = [];
+    for (const grade of [1, 2, 3, 4, 5]) {
+        const intlTopics = getInternationalTopics(grade);
+        // Only add topics at their native grade level (avoid duplicates)
+        for (const t of intlTopics.filter(it => it.gradeLevel === grade)) {
+            const info = FRAMEWORK_INFO[t.framework];
+            topics.push({
+                key: t.key,
+                name: `${info?.flag || '🌍'} ${t.name}`,
+                gradeLevel: t.gradeLevel,
+                isIntl: true,
+                framework: t.framework,
+                category: t.category,
+                icon: t.icon,
+                generator: () => {
+                    const exercises = generateInternationalExercises(t.gradeLevel, t.category, 1);
+                    return exercises[0] || genVocabEn();
+                },
+            });
+        }
+    }
+    return topics;
+}
+
 export const ENGLISH_TOPICS: EnTopicInfo[] = [
     ...CORE_TOPICS,
     ...buildUnitTopics(),
+    ...buildIntlTopics(),
 ];
 
 export function generateEnglishSet(grade: number, topicKey?: string, count: number = 10): EnglishProblem[] {
-    // If requesting a specific unit, use unit generator directly
+    // SGK unit-specific
     if (topicKey?.startsWith('g3_u') || topicKey?.startsWith('g4_u') || topicKey?.startsWith('g5_u')) {
         return generateUnitExercises(grade, topicKey, count);
+    }
+    // International category-specific
+    if (topicKey?.startsWith('ph_') || topicKey?.startsWith('gr_') || topicKey?.startsWith('rd_') || topicKey?.startsWith('sw_')) {
+        const cat = topicKey.startsWith('ph_') ? 'phonics'
+            : topicKey.startsWith('gr_') ? 'grammar'
+            : topicKey.startsWith('rd_') ? 'reading'
+            : 'sight_words';
+        return generateInternationalExercises(grade, cat, count);
     }
     const topics = ENGLISH_TOPICS.filter(t => t.gradeLevel <= grade && (!topicKey || t.key === topicKey));
     if (topics.length === 0) return [];
@@ -452,3 +489,4 @@ export function generateEnglishSet(grade: number, topicKey?: string, count: numb
         return t.generator();
     });
 }
+

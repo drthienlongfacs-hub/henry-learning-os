@@ -1,0 +1,278 @@
+// ═══════════════════════════════════════════════════════════
+// International English Exercise Generator
+// Phonics, Grammar, Reading Comprehension, Sight Words
+// Cambridge + US Common Core + Australian Curriculum
+// ═══════════════════════════════════════════════════════════
+
+import {
+  PHONICS_LEVELS, GRAMMAR_TOPICS, READING_PASSAGES, SIGHT_WORDS,
+  type PhonicsLevel, type GrammarTopic, type ReadingPassage,
+} from '@/data/english-international';
+import type { EnglishProblem } from './english-generator';
+
+const rand = (a: number, b: number) => Math.floor(Math.random() * (b - a + 1)) + a;
+const pick = <T>(arr: T[]): T => arr[rand(0, arr.length - 1)];
+const shuffle = <T>(arr: T[]): T[] => {
+  const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = rand(0, i);[a[i], a[j]] = [a[j], a[i]]; } return a;
+};
+const genId = () => `en-intl-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+
+// ── 1. Phonics: Letter Sound Recognition ──
+function genPhonicsLetterSound(level: PhonicsLevel): EnglishProblem {
+  if (level.letters.length === 0 && level.digraphs) {
+    // Digraph/blend recognition
+    const target = pick(level.digraphs);
+    const word = level.decodableWords.find(w => w.includes(target)) || pick(level.decodableWords);
+    const wrongs = shuffle(level.digraphs.filter(d => d !== target)).slice(0, 3);
+    return {
+      id: genId(), gradeLevel: level.grade, difficulty: level.grade,
+      type: 'phonics',
+      topic: level.title,
+      topicKey: level.levelId,
+      question: `Which sound do you hear at the start of "${word}"?`,
+      correctAnswer: target,
+      options: shuffle([target, ...wrongs]),
+      explanation: `"${word}" starts with the sound "${target}".`,
+      hints: [`Listen: ${word}`, `The sound is: ${target}`],
+    };
+  }
+  const letter = pick(level.letters.length > 0 ? level.letters : ['a']);
+  const word = level.decodableWords.find(w => w.startsWith(letter)) || pick(level.decodableWords);
+  const wrongs = shuffle(level.letters.filter(l => l !== letter)).slice(0, 3);
+  return {
+    id: genId(), gradeLevel: level.grade, difficulty: level.grade,
+    type: 'phonics',
+    topic: level.title,
+    topicKey: level.levelId,
+    question: `🔤 What letter does "${word}" start with?`,
+    correctAnswer: letter.toUpperCase(),
+    options: shuffle([letter.toUpperCase(), ...wrongs.map(w => w.toUpperCase())]),
+    explanation: `"${word}" starts with the letter "${letter.toUpperCase()}".`,
+    hints: [`Say the word: ${word}`, `First sound: /${letter}/`],
+  };
+}
+
+// ── 2. Phonics: Sight Word Flash ──
+function genSightWordFlash(level: PhonicsLevel): EnglishProblem {
+  const word = pick(level.sightWords);
+  const scrambled = shuffle(word.split('')).join('');
+  const wrongs = shuffle(level.sightWords.filter(w => w !== word)).slice(0, 3);
+  return {
+    id: genId(), gradeLevel: level.grade, difficulty: level.grade,
+    type: 'sight_words',
+    topic: level.title,
+    topicKey: level.levelId,
+    question: `🔍 Unscramble: "${scrambled}" — Which word is it?`,
+    correctAnswer: word,
+    options: shuffle([word, ...wrongs]),
+    explanation: `The word is "${word}". It's a sight word you should know by heart!`,
+    hints: [`It has ${word.length} letters`, `Starts with "${word[0]}"`],
+  };
+}
+
+// ── 3. Phonics: CVC / Decodable Word Build ──
+function genDecodableWord(level: PhonicsLevel): EnglishProblem {
+  const word = pick(level.decodableWords);
+  const missing = rand(0, word.length - 1);
+  const blank = word.slice(0, missing) + '_' + word.slice(missing + 1);
+  const correctLetter = word[missing];
+  const wrongLetters = shuffle('abcdefghijklmnopqrstuvwxyz'.split('').filter(l => l !== correctLetter)).slice(0, 3);
+  return {
+    id: genId(), gradeLevel: level.grade, difficulty: level.grade,
+    type: 'phonics',
+    topic: level.title,
+    topicKey: level.levelId,
+    question: `Fill in the missing letter: "${blank}"`,
+    correctAnswer: correctLetter,
+    options: shuffle([correctLetter, ...wrongLetters]),
+    explanation: `The word is "${word}". The missing letter is "${correctLetter}".`,
+    hints: [`Sound it out: ${word}`, `Missing: ${correctLetter}`],
+  };
+}
+
+// ── 4. Grammar: Rule Application ──
+function genGrammarRule(topic: GrammarTopic): EnglishProblem {
+  const rule = pick(topic.rules);
+  const idx = rand(0, rule.examples.length - 1);
+  const correct = rule.examples[idx];
+  const wrongs = shuffle(topic.rules.flatMap(r => r.examples).filter(e => e !== correct)).slice(0, 3);
+  if (wrongs.length < 3) {
+    wrongs.push(...['incorrect answer', 'wrong option', 'not this one'].slice(0, 3 - wrongs.length));
+  }
+  return {
+    id: genId(), gradeLevel: topic.grade, difficulty: topic.grade,
+    type: 'grammar',
+    topic: topic.title,
+    topicKey: topic.topicId,
+    question: `📝 ${rule.rule}.\nWhich is correct?`,
+    correctAnswer: correct,
+    options: shuffle([correct, ...wrongs]),
+    explanation: `${rule.rule}\n${rule.ruleVi}\nExample: ${correct} = ${rule.examplesVi[idx] || ''}`,
+    hints: [`Rule: ${rule.ruleVi}`, `Answer: ${correct}`],
+  };
+}
+
+// ── 5. Grammar: Error Correction ──
+function genGrammarCorrection(topic: GrammarTopic): EnglishProblem {
+  const rule = pick(topic.rules);
+  const correct = pick(rule.examples);
+  // Create intentional error
+  const errorVersions: Record<string, string> = {
+    'He plays football.': 'He play football.',
+    'She watches TV.': 'She watch TV.',
+    'Do you like milk?': 'Does you like milk?',
+    'I am reading.': 'I reading.',
+    'She is cooking.': 'She cooking.',
+    'They are playing.': 'They is playing.',
+  };
+  const errorSentence = errorVersions[correct] || correct.replace(/s\./, '.');
+  if (errorSentence === correct) {
+    return genGrammarRule(topic); // fallback
+  }
+  return {
+    id: genId(), gradeLevel: topic.grade, difficulty: topic.grade,
+    type: 'grammar',
+    topic: topic.title,
+    topicKey: topic.topicId,
+    question: `🔧 Find the correct sentence:`,
+    correctAnswer: correct,
+    options: shuffle([correct, errorSentence, `${correct.slice(0, -1)}?`, correct.toLowerCase()]).slice(0, 4),
+    explanation: `Correct: "${correct}"\nRule: ${rule.ruleVi}`,
+    hints: [`Check the verb form`, `${rule.rule}`],
+  };
+}
+
+// ── 6. Reading Comprehension ──
+function genReadingComprehension(passage: ReadingPassage): EnglishProblem {
+  const q = pick(passage.questions);
+  return {
+    id: genId(), gradeLevel: passage.grade, difficulty: passage.grade,
+    type: 'reading',
+    topic: passage.title,
+    topicKey: passage.passageId,
+    question: `📖 Read:\n"${passage.text}"\n\n${q.q}`,
+    correctAnswer: q.correct,
+    options: shuffle(q.options),
+    explanation: `${q.qVi}\nAnswer: ${q.correct}`,
+    hints: [`Re-read the passage carefully`, `${q.qVi}`],
+  };
+}
+
+// ── 7. Sight Words: Speed Challenge ──
+function genSightWordChallenge(grade: number): EnglishProblem {
+  const words = SIGHT_WORDS[grade] || SIGHT_WORDS[1];
+  const target = pick(words);
+  const wrongs = shuffle(words.filter(w => w !== target && w.length === target.length)).slice(0, 2);
+  // Add a near-miss (one letter different)
+  const nearMiss = target.length > 2
+    ? target.slice(0, -1) + (target.endsWith('e') ? 'a' : 'e')
+    : target + 's';
+  return {
+    id: genId(), gradeLevel: grade, difficulty: grade,
+    type: 'sight_words',
+    topic: `Sight Words Grade ${grade}`,
+    topicKey: `sw_g${grade}`,
+    question: `⚡ Which one is a real word? (Quick!)`,
+    correctAnswer: target,
+    options: shuffle([target, nearMiss, ...wrongs]).slice(0, 4),
+    explanation: `"${target}" is a sight word for Grade ${grade}. Practice reading it fast!`,
+    hints: [`Sound it out`, `It's a common word`],
+  };
+}
+
+// ══════════════════════════════════════
+// PUBLIC API
+// ══════════════════════════════════════
+
+const PHONICS_GENS = [genPhonicsLetterSound, genSightWordFlash, genDecodableWord];
+const GRAMMAR_GENS = [genGrammarRule, genGrammarCorrection];
+
+export function generateInternationalExercises(
+  grade: number,
+  category?: 'phonics' | 'grammar' | 'reading' | 'sight_words' | 'all',
+  count: number = 10
+): EnglishProblem[] {
+  const cat = category || 'all';
+  const exercises: EnglishProblem[] = [];
+
+  for (let i = 0; i < count; i++) {
+    const roll = cat === 'all' ? rand(0, 3) : { phonics: 0, grammar: 1, reading: 2, sight_words: 3 }[cat];
+    switch (roll) {
+      case 0: { // Phonics
+        const levels = PHONICS_LEVELS.filter(l => l.grade <= grade);
+        if (levels.length > 0) {
+          const level = pick(levels);
+          exercises.push(pick(PHONICS_GENS)(level));
+        }
+        break;
+      }
+      case 1: { // Grammar
+        const topics = GRAMMAR_TOPICS.filter(t => t.grade <= grade);
+        if (topics.length > 0) {
+          exercises.push(pick(GRAMMAR_GENS)(pick(topics)));
+        }
+        break;
+      }
+      case 2: { // Reading
+        const passages = READING_PASSAGES.filter(p => p.grade <= grade);
+        if (passages.length > 0) {
+          exercises.push(genReadingComprehension(pick(passages)));
+        }
+        break;
+      }
+      case 3: { // Sight Words
+        exercises.push(genSightWordChallenge(Math.min(grade, 5)));
+        break;
+      }
+    }
+  }
+  return exercises;
+}
+
+// ── Topic info for UI registration ──
+export interface IntlTopicInfo {
+  key: string;
+  name: string;
+  gradeLevel: number;
+  icon: string;
+  framework: string;
+  category: 'phonics' | 'grammar' | 'reading' | 'sight_words';
+}
+
+export function getInternationalTopics(grade: number): IntlTopicInfo[] {
+  const topics: IntlTopicInfo[] = [];
+
+  // Phonics (Grade 1-2)
+  PHONICS_LEVELS.filter(l => l.grade <= grade).forEach(l => {
+    topics.push({
+      key: l.levelId, name: `${l.title}`, gradeLevel: l.grade,
+      icon: '🔤', framework: l.framework, category: 'phonics',
+    });
+  });
+
+  // Grammar (Grade 3-5)
+  GRAMMAR_TOPICS.filter(t => t.grade <= grade).forEach(t => {
+    topics.push({
+      key: t.topicId, name: t.title, gradeLevel: t.grade,
+      icon: '📝', framework: t.framework, category: 'grammar',
+    });
+  });
+
+  // Reading (all grades)
+  READING_PASSAGES.filter(p => p.grade <= grade).forEach(p => {
+    topics.push({
+      key: p.passageId, name: `📖 ${p.title}`, gradeLevel: p.grade,
+      icon: '📖', framework: p.framework, category: 'reading',
+    });
+  });
+
+  // Sight Words (all grades)
+  if (SIGHT_WORDS[Math.min(grade, 5)]) {
+    topics.push({
+      key: `sw_g${grade}`, name: `Sight Words Lv.${grade}`, gradeLevel: grade,
+      icon: '⚡', framework: 'common_core', category: 'sight_words',
+    });
+  }
+
+  return topics;
+}

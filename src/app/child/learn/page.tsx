@@ -416,7 +416,7 @@ export default function LearnPage() {
     const topics = subject === 'math' ? MATH_TOPICS.filter(t => t.gradeLevel === grade)
         : subject === 'vietnamese' ? VIETNAMESE_TOPICS.filter(t => t.gradeLevel <= grade)
             : subject === 'english' ? ENGLISH_TOPICS.filter(t =>
-                ('isUnit' in t && t.isUnit) ? t.gradeLevel === grade : t.gradeLevel <= grade
+                ('isUnit' in t && t.isUnit) || ('isIntl' in t && t.isIntl) ? t.gradeLevel === grade : t.gradeLevel <= grade
               )
                 : subject === 'science' ? SCIENCE_TOPICS.filter(t => t.gradeLevel <= grade)
                     : subject === 'hisgeo' ? HISGEO_TOPICS.filter(t => t.gradeLevel <= grade)
@@ -770,6 +770,48 @@ export default function LearnPage() {
                                                 </div>
                                             </div>
                                             <ChevronRight size={20} color={evidence.sampleSize === 0 ? '#047857' : '#999'} style={{ flex: '0 0 auto' }} />
+                                        </button>
+                                    );
+                                })}
+                                    {/* International Curriculum section for English */}
+                                    {subject === 'english' && topics.some(t => 'isIntl' in t && t.isIntl) && (
+                                        <div style={{ fontSize: 15, fontWeight: 800, color: '#7c3aed', display: 'flex', alignItems: 'center', gap: 8, marginTop: 16, borderTop: '2px solid #e2e8f0', paddingTop: 16 }}>
+                                            🌍 Giáo trình Quốc tế — Cambridge · US · Australian
+                                        </div>
+                                    )}
+                                    {topics.filter(t => 'isIntl' in t && t.isIntl).map(t => {
+                                        const plan = getTopicLearningPlan(t.key, SUBJECT_ENRICHMENT_KEY[subject], attempts);
+                                    const evidence = buildTopicEvidenceProfile({
+                                        topicKey: t.key, subject: SUBJECT_ENRICHMENT_KEY[subject], attempts, mistakes, reviewSchedules,
+                                        });
+                                        const statusColor = planColor[plan.status];
+                                        return (
+                                        <button
+                                            key={`intl-${t.key}`}
+                                            type="button"
+                                            aria-label={`${tx('Bấm để bắt đầu học ngay')}: ${tx(t.name)}`}
+                                            style={{
+                                                ...glass.card,
+                                                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                                                gap: 12, cursor: 'pointer', width: '100%', color: 'inherit', font: 'inherit', textAlign: 'left',
+                                                transition: 'transform .2s, border-color .2s',
+                                                borderLeft: `4px solid ${statusColor}`,
+                                            }}
+                                            onClick={() => { setSelectedTopic(t.key); startExercise(subject, grade, t.key); }}
+                                            onMouseEnter={e => { e.currentTarget.style.transform = 'translateX(4px)'; }}
+                                            onMouseLeave={e => { e.currentTarget.style.transform = 'translateX(0)'; }}>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
+                                                <div style={{ width: 44, height: 44, borderRadius: 12, background: '#f3e8ff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>
+                                                    {t.icon}
+                                                </div>
+                                                <div style={{ minWidth: 0 }}>
+                                                    <div style={{ fontWeight: 700, fontSize: 14, color: '#1e1b4b' }}>{t.name}</div>
+                                                    <div style={{ fontSize: 11, color: '#7c3aed', marginTop: 3, fontWeight: 600 }}>
+                                                        {('category' in t && t.category) ? t.category.charAt(0).toUpperCase() + t.category.slice(1) : ''}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <ChevronRight size={18} color="#7c3aed" style={{ flex: '0 0 auto' }} />
                                         </button>
                                     );
                                 })}
