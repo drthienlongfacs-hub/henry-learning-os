@@ -386,6 +386,97 @@ export function genSentenceEn(): EnglishProblem {
     };
 }
 
+// ── BATCH 9: Colors & Numbers — Global Success 1 ──
+export function genColorsNumbers(): EnglishProblem {
+    const templates = [
+        { q: 'What colour is the sky?', a: 'Blue', opts: ['Blue', 'Red', 'Green', 'Yellow'], e: 'The sky is blue. Blue = xanh da trời.', grade: 1 },
+        { q: 'How many fingers do you have on one hand?', a: 'Five', opts: ['Five', 'Three', 'Ten', 'Four'], e: 'One hand has five fingers. Five = 5.', grade: 1 },
+        { q: 'What colour is a banana?', a: 'Yellow', opts: ['Yellow', 'Red', 'Blue', 'Purple'], e: 'A banana is yellow. Yellow = vàng.', grade: 1 },
+        { q: 'How do you say "10" in English?', a: 'Ten', opts: ['Ten', 'Two', 'Twelve', 'Twenty'], e: 'Ten = 10. Counting: ...eight, nine, ten.', grade: 1 },
+        { q: 'What colour is grass?', a: 'Green', opts: ['Green', 'Blue', 'Red', 'Orange'], e: 'Grass is green. Green = xanh lá.', grade: 1 },
+        { q: 'Which colour do you get when you mix red and yellow?', a: 'Orange', opts: ['Orange', 'Purple', 'Green', 'Brown'], e: 'Red + Yellow = Orange.', grade: 1 },
+    ];
+    const t = templates[rand(0, templates.length - 1)];
+    return {
+        id: genId(), gradeLevel: t.grade, difficulty: t.grade,
+        type: 'vocabulary', topic: 'Colors & Numbers', topicKey: 'colors_numbers',
+        question: t.q, correctAnswer: t.a, options: t.opts,
+        explanation: t.e, hints: ['Look at the colours around you!', `Answer: ${t.a}`],
+    };
+}
+
+// ── BATCH 9: My Body & School — Global Success 2 ──
+export function genBodySchool(): EnglishProblem {
+    const templates = [
+        { q: 'Point to your "nose". Where is it?', a: 'On your face', opts: ['On your face', 'On your hand', 'On your foot', 'On your leg'], e: 'Nose = mũi. It is in the middle of your face.', grade: 2 },
+        { q: 'What do you use to write?', a: 'A pencil', opts: ['A pencil', 'A ruler', 'A book', 'An eraser'], e: 'A pencil is used to write. Pencil = bút chì.', grade: 2 },
+        { q: 'How many eyes do you have?', a: 'Two', opts: ['Two', 'One', 'Three', 'Four'], e: 'We have two eyes. Eyes = mắt.', grade: 2 },
+        { q: 'What is a "ruler" used for?', a: 'To draw straight lines', opts: ['To draw straight lines', 'To write', 'To erase', 'To cut'], e: 'A ruler = thước kẻ. It helps draw straight lines and measure.', grade: 2 },
+        { q: 'Which of these is a school supply?', a: 'Eraser', opts: ['Eraser', 'Pillow', 'Cup', 'Shoe'], e: 'Eraser = cục tẩy (cục gôm). It is used at school.', grade: 2 },
+    ];
+    const t = templates[rand(0, templates.length - 1)];
+    return {
+        id: genId(), gradeLevel: t.grade, difficulty: t.grade,
+        type: 'vocabulary', topic: 'My Body & School', topicKey: 'body_school',
+        question: t.q, correctAnswer: t.a, options: t.opts,
+        explanation: t.e, hints: ['Look at your body and school bag!', `Answer: ${t.a}`],
+    };
+}
+
+// ── BATCH 9: Hobbies & Food — Global Success 3 ──
+export function genHobbiesFood(): EnglishProblem {
+    const templates = [
+        { q: 'What is your hobby? — I like _____.', a: 'swimming', opts: ['swimming', 'homework', 'sleeping all day', 'being angry'], e: 'Swimming is a popular hobby. Hobby = sở thích.', grade: 3 },
+        { q: 'Which food is from Vietnam?', a: 'Pho', opts: ['Pho', 'Sushi', 'Pizza', 'Hamburger'], e: 'Pho (phở) is a famous Vietnamese noodle soup.', grade: 3 },
+        { q: '"I like _____ football." Fill in the blank.', a: 'playing', opts: ['playing', 'play', 'plays', 'played'], e: '"I like + V-ing": I like playing football.', grade: 3 },
+        { q: 'What do you have for breakfast?', a: 'Bread and milk', opts: ['Bread and milk', 'Dinner and lunch', 'A car', 'A book'], e: 'Breakfast = bữa sáng. Common foods: bread, milk, eggs.', grade: 3 },
+        { q: 'Which is a fruit?', a: 'Mango', opts: ['Mango', 'Rice', 'Fish', 'Chicken'], e: 'Mango = xoài. It is a tropical fruit.', grade: 3 },
+    ];
+    const t = templates[rand(0, templates.length - 1)];
+    return {
+        id: genId(), gradeLevel: t.grade, difficulty: t.grade,
+        type: 'vocabulary', topic: 'Hobbies & Food', topicKey: 'hobbies_food',
+        question: t.q, correctAnswer: t.a, options: t.opts,
+        explanation: t.e, hints: ['Think about what you like to do and eat!', `Answer: ${t.a}`],
+    };
+}
+
+// ── BATCH 9: Daily Routines — Global Success 4 ──
+export function genDailyRoutines(): EnglishProblem {
+    const templates = [
+        { q: 'What time do you usually wake up?', a: 'I wake up at 6 o\'clock.', opts: ['I wake up at 6 o\'clock.', 'I like cats.', 'It is sunny.', 'I am 10.'], e: '"Wake up at + time" describes when you get up.', grade: 4 },
+        { q: 'What do you do after school?', a: 'I do my homework.', opts: ['I do my homework.', 'I go to bed.', 'I cook dinner.', 'I drive a car.'], e: 'After school = sau giờ học. Homework = bài tập về nhà.', grade: 4 },
+        { q: 'He _____ to school every day. (go)', a: 'goes', opts: ['goes', 'go', 'going', 'went'], e: 'Present Simple with He/She/It: add -s → He goes.', grade: 4 },
+        { q: 'What do you do at 7 pm?', a: 'I have dinner.', opts: ['I have dinner.', 'I go to school.', 'I wake up.', 'I have breakfast.'], e: '7 pm = buổi tối → dinner time. Dinner = bữa tối.', grade: 4 },
+        { q: '"She always _____ her teeth before bed." Fill in:', a: 'brushes', opts: ['brushes', 'brush', 'brushing', 'brushed'], e: 'She + Verb-s: She brushes her teeth. Always = luôn luôn.', grade: 4 },
+    ];
+    const t = templates[rand(0, templates.length - 1)];
+    return {
+        id: genId(), gradeLevel: t.grade, difficulty: t.grade,
+        type: 'grammar', topic: 'Daily Routines', topicKey: 'daily_routines',
+        question: t.q, correctAnswer: t.a, options: t.opts,
+        explanation: t.e, hints: ['Think about your daily schedule!', `Answer: ${t.a}`],
+    };
+}
+
+// ── BATCH 9: Travel & Environment — Global Success 5 ──
+export function genTravelEnvironment(): EnglishProblem {
+    const templates = [
+        { q: 'How do you go to school?', a: 'I go to school by bicycle.', opts: ['I go to school by bicycle.', 'I like cats.', 'I am happy.', 'It is cold.'], e: 'By + transport: by bicycle, by bus, on foot.', grade: 5 },
+        { q: 'What should we do to protect the environment?', a: 'Reduce, Reuse, Recycle', opts: ['Reduce, Reuse, Recycle', 'Cut down trees', 'Use more plastic', 'Waste water'], e: 'The 3Rs: Reduce, Reuse, Recycle help protect our environment.', grade: 5 },
+        { q: '"We _____ plant more trees." (should/must)', a: 'should', opts: ['should', 'can\'t', 'don\'t', 'isn\'t'], e: 'Should = nên. We should plant more trees to help the environment.', grade: 5 },
+        { q: 'Which is a means of transport?', a: 'Bus', opts: ['Bus', 'Apple', 'Pencil', 'House'], e: 'Bus = xe buýt. Transport = phương tiện giao thông.', grade: 5 },
+        { q: '"Pollution" means:', a: 'Making the environment dirty', opts: ['Making the environment dirty', 'Making food', 'Playing games', 'Sleeping'], e: 'Pollution = ô nhiễm. Air pollution, water pollution, noise pollution.', grade: 5 },
+    ];
+    const t = templates[rand(0, templates.length - 1)];
+    return {
+        id: genId(), gradeLevel: t.grade, difficulty: t.grade,
+        type: 'vocabulary', topic: 'Travel & Environment', topicKey: 'travel_environment',
+        question: t.q, correctAnswer: t.a, options: t.opts,
+        explanation: t.e, hints: ['Think about how you travel and nature around you!', `Answer: ${t.a}`],
+    };
+}
+
 import { generateUnitExercises, getUnitRegistry } from './english-unit-generator';
 import { generateInternationalTopicExercises, getInternationalTopics } from './english-intl-generator';
 import { FRAMEWORK_INFO } from '@/data/english-international';
@@ -406,11 +497,16 @@ export interface EnTopicInfo {
 // ── Core skill-based topics ──
 const CORE_TOPICS: EnTopicInfo[] = [
     { key: 'alphabet_en', name: 'Alphabet & Phonics', gradeLevel: 1, generator: genAlphabetEn, icon: '🔤' },
+    { key: 'colors_numbers', name: 'Colors & Numbers', gradeLevel: 1, generator: genColorsNumbers, icon: '🌈' },
     { key: 'greetings_en', name: 'Greetings & Phrases', gradeLevel: 2, generator: genGreetingsEn, icon: '👋' },
+    { key: 'body_school', name: 'My Body & School', gradeLevel: 2, generator: genBodySchool, icon: '🏫' },
     { key: 'vocab_en', name: 'Vocabulary Themes', gradeLevel: 3, generator: genVocabEn, icon: '📚' },
+    { key: 'hobbies_food', name: 'Hobbies & Food', gradeLevel: 3, generator: genHobbiesFood, icon: '🎾' },
     { key: 'grammar_en', name: 'Grammar', gradeLevel: 4, generator: genGrammarEn, icon: '📝' },
     { key: 'reading_en', name: 'Reading', gradeLevel: 4, generator: genReadingEn, icon: '📖' },
+    { key: 'daily_routines', name: 'Daily Routines', gradeLevel: 4, generator: genDailyRoutines, icon: '⏰' },
     { key: 'sentence_en', name: 'Sentences', gradeLevel: 5, generator: genSentenceEn, icon: '✍️' },
+    { key: 'travel_environment', name: 'Travel & Environment', gradeLevel: 5, generator: genTravelEnvironment, icon: '🌍' },
 ];
 
 // ── SGK Unit-based topics (Global Success 🇻🇳) ──
