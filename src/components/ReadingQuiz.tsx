@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback, useRef } from 'react';
 import { TEXTBOOK_LIBRARY, type TextbookPassage } from '@/data/textbook-library';
 import { lookupWord, type DictionaryEntry } from '@/lib/resources/adapters/dictionary-adapter';
 import {
@@ -16,10 +16,11 @@ const ACC:{k:Accent;f:string;l:string;v:string[]}[] = [
   {k:'en-GB',f:'🇬🇧',l:'British',v:['Daniel','Google UK English']},
   {k:'en-AU',f:'🇦🇺',l:'Australian',v:['Karen','Google Australian']},
 ];
-function speak(text:string, accent:Accent, rate=0.85){
+function speak(text:string, accent:Accent, rate=0.85, onEnd?:()=>void){
   if(typeof window==='undefined'||!window.speechSynthesis)return;
   window.speechSynthesis.cancel();
   const u=new SpeechSynthesisUtterance(text);
+  if(onEnd) u.onend=onEnd;
   u.lang=accent; u.rate=rate; u.pitch=1.05;
   const voices=window.speechSynthesis.getVoices();
   const info=ACC.find(a=>a.k===accent);
@@ -86,6 +87,8 @@ export default function ReadingQuiz({lang}:{lang:string}){
   const[attempts,setAttempts]=useState<ReadingQuizAttemptEvidence[]>([]);
   const[score,setScore]=useState(0);
   const[done,setDone]=useState(false);
+  const[speakingIdx,setSpeakingIdx]=useState<number|null>(null);
+  const speakingRef=useRef(false);
 
   if(!passages.length) return null;
   const p=passages[idx%passages.length];
@@ -126,6 +129,18 @@ export default function ReadingQuiz({lang}:{lang:string}){
 
   // Split passage text into sentences for sentence-level TTS
   const sentences=p.text.match(/[^.!?]+[.!?]+/g)||[p.text];
+
+  // Sequential reading: highlight each sentence as it's read aloud
+  const speakSequential=useCallback((startFrom=0)=>{
+    if(speakingRef.current){window.speechSynthesis?.cancel();speakingRef.current=false;setSpeakingIdx(null);return;}
+    speakingRef.current=true;
+    const readNext=(i:number)=>{
+      if(i>=sentences.length||!speakingRef.current){setSpeakingIdx(null);speakingRef.current=false;return;}
+      setSpeakingIdx(i);
+      speak(sentences[i].trim(),accent,speed,()=>readNext(i+1));
+    };
+    readNext(startFrom);
+  },[sentences,accent,speed]);
 
   const TABS:{key:Tab;icon:React.ReactNode;label:string}[]=[
     {key:'read',icon:<BookOpen size={13}/>,label:vi?'Đọc':'Read'},
@@ -191,25 +206,31 @@ export default function ReadingQuiz({lang}:{lang:string}){
                 })}
               </div>
 
-              {/* Read full passage button */}
-              <button onClick={()=>speak(p.text,accent,speed)} style={{margin:'0.6rem 0 0.3rem',padding:'8px 16px',borderRadius:'10px',border:'none',background:'linear-gradient(135deg,#6366f1,#8b5cf6)',color:'#fff',fontWeight:600,fontSize:'0.7rem',cursor:'pointer',display:'flex',alignItems:'center',gap:'4px',width:'100%',justifyContent:'center'}}>
-                <Volume2 size={14}/> {ACC.find(a=>a.k===accent)?.f} {vi?'Nghe đọc toàn bài':'Read full passage'} ({speed}x)
-              </button>
+              {/* Read buttons: full passage + sequential with highlight */}
+              <div style={{display:'flex',gap:'0.4rem',margin:'0.6rem 0 0.3rem'}}>
+                <button onClick={()=>speak(p.text,accent,speed)} style={{flex:1,padding:'8px 12px',borderRadius:'10px',border:'none',background:'linear-gradient(135deg,#6366f1,#8b5cf6)',color:'#fff',fontWeight:600,fontSize:'0.65rem',cursor:'pointer',display:'flex',alignItems:'center',gap:'4px',justifyContent:'center'}}>
+                  <Volume2 size={12}/> {vi?'Đọc toàn bài':'Full passage'}
+                </button>
+                <button onClick={()=>speakSequential(0)} style={{flex:1,padding:'8px 12px',borderRadius:'10px',border:'none',background:speakingIdx!==null?'linear-gradient(135deg,#dc2626,#ef4444)':'linear-gradient(135deg,#059669,#10b981)',color:'#fff',fontWeight:600,fontSize:'0.65rem',cursor:'pointer',display:'flex',alignItems:'center',gap:'4px',justifyContent:'center'}}>
+                  {speakingIdx!==null?'⏹':'▶️'} {vi?(speakingIdx!==null?'Dừng':'Đọc tuần tự + highlight'):(speakingIdx!==null?'Stop':'Read with highlight')}
+                </button>
+              </div>
 
-              {/* Sentence-by-sentence reading */}
-              <div style={{marginTop:'0.5rem',fontSize:'0.6rem',color:'#64748b',fontWeight:600,marginBottom:'0.3rem'}}>{vi?'📢 Đọc từng câu:':'📢 Read sentence by sentence:'}</div>
+              {/* Sentence-by-sentence reading with active highlight */}
+              <div style={{marginTop:'0.5rem',fontSize:'0.6rem',color:'#64748b',fontWeight:600,marginBottom:'0.3rem'}}>{vi?'📢 Đọc từng câu (chạm ▶ để highlight theo):':'📢 Sentence by sentence (tap ▶ to follow along):'}</div>
               <div style={{display:'flex',flexDirection:'column',gap:'0.3rem'}}>
                 {sentences.map((s,i)=>{
                   const trimmed=s.trim();
                   if(!trimmed)return null;
-                  // Find matching sentenceGuide
                   const guide=p.sentenceGuides.find(g=>trimmed.includes(g.en.replace(/[.!?]+$/,'').slice(0,20)));
-                  return <div key={i} style={{display:'flex',alignItems:'flex-start',gap:'0.4rem',padding:'0.4rem 0.6rem',borderRadius:'8px',background:i%2===0?'#f8fafc':'#fff',border:'1px solid #f1f5f9'}}>
-                    <button onClick={()=>speak(trimmed,accent,speed)} style={{flexShrink:0,border:'none',background:'#eef2ff',borderRadius:'50%',width:24,height:24,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',marginTop:'2px'}}><Volume2 size={10} color="#4f46e5"/></button>
+                  const isActive=speakingIdx===i;
+                  return <div key={i} id={`sentence-${i}`} style={{display:'flex',alignItems:'flex-start',gap:'0.4rem',padding:'0.5rem 0.6rem',borderRadius:'10px',background:isActive?'linear-gradient(135deg,#eff6ff,#dbeafe)':i%2===0?'#f8fafc':'#fff',border:isActive?'2px solid #3b82f6':'1px solid #f1f5f9',transition:'all 0.25s ease',transform:isActive?'scale(1.01)':'none',boxShadow:isActive?'0 2px 12px rgba(59,130,246,0.15)':'none'}}>
+                    <button onClick={()=>{setSpeakingIdx(i);speak(trimmed,accent,speed,()=>setSpeakingIdx(null));}} style={{flexShrink:0,border:'none',background:isActive?'#3b82f6':'#eef2ff',borderRadius:'50%',width:26,height:26,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',marginTop:'2px'}}><Volume2 size={11} color={isActive?'#fff':'#4f46e5'}/></button>
                     <div style={{flex:1}}>
-                      <div style={{fontSize:'0.78rem',color:'#1e293b',lineHeight:1.5}}>{trimmed}</div>
+                      <div style={{fontSize:'0.8rem',color:isActive?'#1e40af':'#1e293b',lineHeight:1.6,fontWeight:isActive?600:400}}>{trimmed}</div>
                       {guide&&<div style={{fontSize:'0.68rem',color:'#059669',fontStyle:'italic',marginTop:'2px'}}>🇻🇳 {guide.vi}</div>}
                     </div>
+                    {isActive&&<div style={{fontSize:'0.7rem',animation:'pulse-soft 1s infinite'}}>🔊</div>}
                   </div>;
                 })}
               </div>
