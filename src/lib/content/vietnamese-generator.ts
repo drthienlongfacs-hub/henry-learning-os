@@ -340,6 +340,40 @@ export function genLuyenTuCau(): VietnameseProblem {
     };
 }
 
+// ── NEW G2: Kể chuyện theo tranh — SGK Tiếng Việt 2 ──
+const KE_CHUYEN = [
+    { story: 'Bé đi học', frames: ['Bé thức dậy', 'Bé đánh răng rửa mặt', 'Bé ăn sáng', 'Bé đi đến trường'],
+      questions: [
+        { q: 'Bé làm gì đầu tiên sau khi thức dậy?', a: 'Đánh răng rửa mặt', opts: ['Đánh răng rửa mặt', 'Ăn sáng', 'Đi học', 'Ngủ tiếp'] },
+        { q: 'Sắp xếp đúng thứ tự: Bé ăn sáng → Bé ___ → Bé đi đến trường.', a: 'ăn sáng xong', opts: ['ăn sáng xong', 'ngủ trưa', 'xem tivi', 'chơi game'] },
+      ] },
+    { story: 'Cây lúa', frames: ['Nông dân gieo hạt', 'Mạ xanh mọc lên', 'Cấy lúa xuống ruộng', 'Thu hoạch lúa vàng'],
+      questions: [
+        { q: 'Việc gì diễn ra trước khi cấy lúa?', a: 'Mạ xanh mọc lên', opts: ['Mạ xanh mọc lên', 'Thu hoạch', 'Phơi lúa', 'Xay gạo'] },
+        { q: 'Bước cuối cùng là gì?', a: 'Thu hoạch lúa vàng', opts: ['Thu hoạch lúa vàng', 'Gieo hạt', 'Cấy lúa', 'Tưới nước'] },
+      ] },
+    { story: 'Chú bướm', frames: ['Trứng nằm trên lá', 'Sâu non chui ra', 'Sâu hóa kén', 'Bướm bay ra từ kén'],
+      questions: [
+        { q: 'Sau giai đoạn sâu non là gì?', a: 'Sâu hóa kén', opts: ['Sâu hóa kén', 'Bướm bay', 'Đẻ trứng', 'Ăn lá'] },
+        { q: 'Vòng đời bướm bắt đầu từ đâu?', a: 'Trứng', opts: ['Trứng', 'Sâu', 'Kén', 'Bướm'] },
+      ] },
+];
+
+export function genKeChuyenTheoTranh(): VietnameseProblem {
+    const item = KE_CHUYEN[rand(0, KE_CHUYEN.length - 1)];
+    const qItem = item.questions[rand(0, item.questions.length - 1)];
+    return {
+        id: genId(), gradeLevel: 2, difficulty: 2,
+        type: 'reading', topic: 'Kể chuyện theo tranh', topicKey: 'ke_chuyen',
+        question: `🖼️ Câu chuyện "${item.story}":\n${item.frames.map((f, i) => `Tranh ${i + 1}: ${f}`).join('\n')}\n\n${qItem.q}`,
+        correctAnswer: qItem.a,
+        options: qItem.opts,
+        illustration: '/images/core/story_icon.svg',
+        explanation: `Đáp án: ${qItem.a}. Thứ tự đúng: ${item.frames.join(' → ')}.`,
+        hints: ['Đọc kỹ thứ tự các tranh', `Đáp số: ${qItem.a}`],
+    };
+}
+
 // ══════════════════════════════════════════════
 // GRADES 2-3: Vocabulary by Theme
 // ══════════════════════════════════════════════
@@ -621,6 +655,7 @@ export const VIETNAMESE_TOPICS: VnTopicInfo[] = [
     { key: 'ghep_tu', name: 'Ghép từ', gradeLevel: 1, generator: genGhepTu, icon: '🧩' },
     { key: 'chinh_ta', name: 'Chính tả', gradeLevel: 2, generator: genChinhTa, icon: '✏️' },
     { key: 'tap_doc', name: 'Tập đọc', gradeLevel: 2, generator: genTapDoc, icon: '📗' },
+    { key: 'ke_chuyen', name: 'Kể chuyện theo tranh', gradeLevel: 2, generator: genKeChuyenTheoTranh, icon: '🖼️' },
     { key: 'vocabulary', name: 'Từ vựng chủ đề', gradeLevel: 2, generator: genVocabulary, icon: '📚' },
     { key: 'reading', name: 'Đọc hiểu', gradeLevel: 2, generator: genReadingComprehension, icon: '📖' },
     { key: 'luyen_tu_cau', name: 'Luyện từ & câu', gradeLevel: 3, generator: genLuyenTuCau, icon: '✏️' },

@@ -840,6 +840,91 @@ export function genMass(): MathProblem {
     };
 }
 
+// ── NEW G1: Đồng hồ giờ đúng — SGK Toán 1 Tập 2 ──
+export function genClockG1(): MathProblem {
+    const hour = rand(1, 12);
+    const templates = [
+        { q: `🕐 Kim ngắn chỉ số ${hour}, kim dài chỉ số 12. Mấy giờ?`, a: `${hour} giờ`, opts: [`${hour} giờ`, `${hour + 1} giờ`, `${hour} giờ 30`, `12 giờ`], e: `Kim ngắn chỉ ${hour}, kim dài chỉ 12 → ${hour} giờ đúng.` },
+        { q: `${hour} giờ đúng = kim ngắn chỉ vào số mấy?`, a: String(hour), opts: shuffle([String(hour), '12', String(hour + 1), String(hour > 1 ? hour - 1 : 11)]), e: `${hour} giờ → kim ngắn chỉ số ${hour}, kim dài chỉ số 12.` },
+        { q: `Bé đi ngủ lúc ${hour} giờ tối. Dậy sau 8 giờ. Bé dậy lúc mấy giờ?`, a: `${(hour + 8) % 12 || 12} giờ`, opts: shuffle([`${(hour + 8) % 12 || 12} giờ`, `${hour + 6} giờ`, `${hour} giờ`, `${hour + 10} giờ`]), e: `${hour} + 8 = ${hour + 8} giờ = ${(hour + 8) % 12 || 12} giờ sáng.` },
+    ];
+    const t = templates[rand(0, templates.length - 1)];
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'measurement', topic: 'Đồng hồ giờ đúng', topicKey: 'clock_g1',
+        question: t.q, correctAnswer: t.a,
+        options: t.opts,
+        illustration: '/images/math/clock.svg',
+        explanation: t.e, hints: ['Kim ngắn = giờ, Kim dài = phút', `Đáp số: ${t.a}`],
+    };
+}
+
+// ── NEW G3: Bảng chia — SGK Toán 3 ──
+export function genDivisionTable(): MathProblem {
+    const divisor = [2, 3, 4, 5, 6, 7, 8, 9][rand(0, 7)];
+    const quotient = rand(1, 10);
+    const dividend = divisor * quotient;
+    const templates = [
+        { q: `${dividend} : ${divisor} = ?`, a: String(quotient), e: `${dividend} ÷ ${divisor} = ${quotient}. (Vì ${divisor} × ${quotient} = ${dividend})` },
+        { q: `___ × ${divisor} = ${dividend}. Điền số thích hợp:`, a: String(quotient), e: `? × ${divisor} = ${dividend} → ? = ${dividend} ÷ ${divisor} = ${quotient}.` },
+        { q: `Có ${dividend} viên kẹo, chia đều cho ${divisor} bạn. Mỗi bạn được mấy viên?`, a: String(quotient), e: `${dividend} ÷ ${divisor} = ${quotient} viên/bạn.` },
+    ];
+    const t = templates[rand(0, templates.length - 1)];
+    return {
+        id: genId(), gradeLevel: 3, difficulty: 3,
+        type: 'arithmetic', topic: 'Bảng chia', topicKey: 'division_table',
+        question: t.q, correctAnswer: t.a,
+        options: makeOptions(quotient, 3),
+        illustration: '/images/math/division.svg',
+        explanation: t.e, hints: [`Nhớ: ${divisor} × ? = ${dividend}`, `Đáp số: ${t.a}`],
+    };
+}
+
+// ── NEW G4: Cộng trừ phân số cùng mẫu — SGK Toán 4 ──
+export function genFractionAddSub(): MathProblem {
+    const denom = [3, 4, 5, 6, 7, 8, 9, 10][rand(0, 7)];
+    const isAdd = rand(0, 1) === 0;
+    let a: number, b: number, result: number;
+    if (isAdd) {
+        a = rand(1, denom - 2);
+        b = rand(1, denom - a);
+        result = a + b;
+    } else {
+        a = rand(2, denom - 1);
+        b = rand(1, a - 1);
+        result = a - b;
+    }
+    const op = isAdd ? '+' : '-';
+    return {
+        id: genId(), gradeLevel: 4, difficulty: 4,
+        type: 'fraction', topic: 'Cộng trừ phân số', topicKey: 'fraction_add_sub',
+        question: `${a}/${denom} ${op} ${b}/${denom} = ?`,
+        correctAnswer: `${result}/${denom}`,
+        options: shuffle([`${result}/${denom}`, `${result + 1}/${denom}`, `${Math.max(1, result - 1)}/${denom}`, `${a + b}/${denom + 1}`]),
+        illustration: '/images/math/fractions.svg',
+        explanation: `${a}/${denom} ${op} ${b}/${denom} = ${result}/${denom}. Cùng mẫu → ${isAdd ? 'cộng' : 'trừ'} tử số: ${a} ${op} ${b} = ${result}.`,
+        hints: ['Cùng mẫu: giữ mẫu, cộng/trừ tử', `Đáp số: ${result}/${denom}`],
+    };
+}
+
+// ── NEW G5: Vận tốc - Quãng đường - Thời gian — SGK Toán 5 ──
+export function genSpeedDistanceTime(): MathProblem {
+    const templates: MathTemplateFactory[] = [
+        () => { const v = rand(30, 80), t = rand(2, 5); const s = v * t; return { q: `Xe chạy vận tốc ${v} km/h trong ${t} giờ. Quãng đường?`, a: `${s} km`, e: `s = v × t = ${v} × ${t} = ${s} km.` }; },
+        () => { const s = rand(100, 500), t = rand(2, 5); const v = s / t; return { q: `Đi ${s} km hết ${t} giờ. Vận tốc?`, a: `${v} km/h`, e: `v = s ÷ t = ${s} ÷ ${t} = ${v} km/h.` }; },
+        () => { const v = rand(40, 60), s = v * rand(2, 4); const t = s / v; return { q: `Vận tốc ${v} km/h, quãng đường ${s} km. Thời gian?`, a: `${t} giờ`, e: `t = s ÷ v = ${s} ÷ ${v} = ${t} giờ.` }; },
+    ];
+    const t = templates[rand(0, 2)]();
+    return {
+        id: genId(), gradeLevel: 5, difficulty: 5,
+        type: 'word_problem', topic: 'Vận tốc - Quãng đường - Thời gian', topicKey: 'speed_distance_time',
+        question: t.q, correctAnswer: String(t.a),
+        options: shuffle([String(t.a), `${rand(50, 300)} km`, `${rand(20, 80)} km/h`, `${rand(1, 6)} giờ`]),
+        illustration: '/images/math/speed.svg',
+        explanation: t.e, hints: ['v = s ÷ t | s = v × t | t = s ÷ v', `Đáp số: ${t.a}`],
+    };
+}
+
 // ══════════════════════════════════════════════
 // GRADE 5: Decimals, percentages, ratio, charts
 // ══════════════════════════════════════════════
@@ -939,6 +1024,7 @@ export const MATH_TOPICS: TopicInfo[] = [
     { key: 'add_sub_100', name: 'Cộng trừ trong 100', gradeLevel: 1, generator: genAddSub100, icon: '➕' },
     { key: 'measure_length', name: 'Đo độ dài (cm)', gradeLevel: 1, generator: genMeasureLength, icon: '📏' },
     { key: 'days_of_week', name: 'Ngày trong tuần', gradeLevel: 1, generator: genDaysOfWeek, icon: '📅' },
+    { key: 'clock_g1', name: 'Đồng hồ giờ đúng', gradeLevel: 1, generator: genClockG1, icon: '🕐' },
     // Grade 2 — CT 2018 + Singapore Math + Cambridge Primary
     { key: 'place_value', name: 'Hàng chục–đơn vị', gradeLevel: 2, generator: genPlaceValue, icon: '🏗️' },
     { key: 'add_sub_carry', name: 'Cộng trừ có nhớ', gradeLevel: 2, generator: genAddSubCarry, icon: '🧮' },
@@ -961,6 +1047,7 @@ export const MATH_TOPICS: TopicInfo[] = [
     { key: 'perimeter', name: 'Chu vi', gradeLevel: 3, generator: genPerimeter, icon: '📐' },
     { key: 'patterns', name: 'Quy luật dãy số', gradeLevel: 3, generator: genPatterns, icon: '🔄' },
     { key: 'word_g3', name: 'Toán đố lớp 3', gradeLevel: 3, generator: genWordProbG3, icon: '📖' },
+    { key: 'division_table', name: 'Bảng chia', gradeLevel: 3, generator: genDivisionTable, icon: '➗' },
     // Grade 4
     { key: 'fractions', name: 'Phân số', gradeLevel: 4, generator: genFractions, icon: '🥧' },
     { key: 'area', name: 'Diện tích', gradeLevel: 4, generator: genArea, icon: '⬛' },
@@ -968,6 +1055,7 @@ export const MATH_TOPICS: TopicInfo[] = [
     { key: 'average', name: 'Trung bình cộng', gradeLevel: 4, generator: genAverage, icon: '➗' },
     { key: 'large_numbers', name: 'Số lớn', gradeLevel: 4, generator: genLargeNumbers, icon: '🔟' },
     { key: 'mass', name: 'Khối lượng', gradeLevel: 4, generator: genMass, icon: '⚖️' },
+    { key: 'fraction_add_sub', name: 'Cộng trừ phân số', gradeLevel: 4, generator: genFractionAddSub, icon: '🧩' },
     // Grade 5
     { key: 'decimals', name: 'Số thập phân', gradeLevel: 5, generator: genDecimals, icon: '🔸' },
     { key: 'percent', name: 'Phần trăm', gradeLevel: 5, generator: genPercent, icon: '💯' },
@@ -975,6 +1063,7 @@ export const MATH_TOPICS: TopicInfo[] = [
     { key: 'volume', name: 'Thể tích', gradeLevel: 5, generator: genVolume, icon: '📦' },
     { key: 'triangle_area', name: 'DT tam giác', gradeLevel: 5, generator: genTriangleArea, icon: '🔺' },
     { key: 'charts', name: 'Biểu đồ & TK', gradeLevel: 5, generator: genCharts, icon: '📈' },
+    { key: 'speed_distance_time', name: 'Vận tốc - Quãng đường', gradeLevel: 5, generator: genSpeedDistanceTime, icon: '🚗' },
 ];
 
 /** Generate a set of problems for a given grade and topic */
