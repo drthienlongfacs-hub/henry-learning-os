@@ -415,7 +415,9 @@ export default function LearnPage() {
         : activeMode.phases[0];
     const topics = subject === 'math' ? MATH_TOPICS.filter(t => t.gradeLevel === grade)
         : subject === 'vietnamese' ? VIETNAMESE_TOPICS.filter(t => t.gradeLevel <= grade)
-            : subject === 'english' ? ENGLISH_TOPICS.filter(t => t.gradeLevel <= grade)
+            : subject === 'english' ? ENGLISH_TOPICS.filter(t =>
+                ('isUnit' in t && t.isUnit) ? t.gradeLevel === grade : t.gradeLevel <= grade
+              )
                 : subject === 'science' ? SCIENCE_TOPICS.filter(t => t.gradeLevel <= grade)
                     : subject === 'hisgeo' ? HISGEO_TOPICS.filter(t => t.gradeLevel <= grade)
                         : subject === 'computing' ? COMPUTING_TOPICS.filter(t => t.gradeLevel <= grade)
@@ -627,7 +629,13 @@ export default function LearnPage() {
                         {/* Topic cards */}
                         {topics.length > 0 ? (
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                                    {topics.map(t => {
+                                    {/* Section headers for English SGK vs Skills */}
+                                    {subject === 'english' && topics.some(t => 'isUnit' in t && t.isUnit) && (
+                                        <div style={{ fontSize: 15, fontWeight: 800, color: '#1e40af', display: 'flex', alignItems: 'center', gap: 8, marginTop: 4 }}>
+                                            📘 Bài SGK — Global Success Lớp {grade}
+                                        </div>
+                                    )}
+                                    {topics.filter(t => 'isUnit' in t && t.isUnit).map(t => {
                                         const enrich = getTopicEnrichment(t.key, SUBJECT_ENRICHMENT_KEY[subject]);
                                         const plan = getTopicLearningPlan(t.key, SUBJECT_ENRICHMENT_KEY[subject], attempts);
                                     const evidence = buildTopicEvidenceProfile({
@@ -694,6 +702,72 @@ export default function LearnPage() {
                                                             {evidence.sampleSize === 0 ? `▶ ${tx('Bấm để bắt đầu học ngay')}` : tx('Bấm để học tiếp')}
                                                         </div>
                                                     </div>
+                                            </div>
+                                            <ChevronRight size={20} color={evidence.sampleSize === 0 ? '#047857' : '#999'} style={{ flex: '0 0 auto' }} />
+                                        </button>
+                                    );
+                                })}
+                                    {/* Skill-based topics section for English */}
+                                    {subject === 'english' && topics.some(t => !('isUnit' in t && t.isUnit)) && (
+                                        <div style={{ fontSize: 15, fontWeight: 800, color: '#047857', display: 'flex', alignItems: 'center', gap: 8, marginTop: 12 }}>
+                                            🎯 Luyện kỹ năng
+                                        </div>
+                                    )}
+                                    {topics.filter(t => subject !== 'english' || !('isUnit' in t && t.isUnit)).map(t => {
+                                        const enrich = getTopicEnrichment(t.key, SUBJECT_ENRICHMENT_KEY[subject]);
+                                        const plan = getTopicLearningPlan(t.key, SUBJECT_ENRICHMENT_KEY[subject], attempts);
+                                    const evidence = buildTopicEvidenceProfile({
+                                        topicKey: t.key,
+                                        subject: SUBJECT_ENRICHMENT_KEY[subject],
+                                        attempts,
+                                        mistakes,
+                                        reviewSchedules,
+                                        });
+                                        const statusColor = planColor[plan.status];
+                                        const actionLabel = evidence.sampleSize === 0
+                                            ? 'Bắt đầu bài đầu tiên'
+                                            : plan.status === 'repair'
+                                                ? 'Ôn câu sai'
+                                                : plan.status === 'stretch'
+                                                    ? 'Thử thách thêm'
+                                                    : 'Tiếp tục luyện';
+                                        return (
+                                        <button
+                                            key={`skill-${t.key}`}
+                                            type="button"
+                                            aria-label={`${tx('Bấm để bắt đầu học ngay')}: ${tx(t.name)}`}
+                                            style={{
+                                                ...glass.card,
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'space-between',
+                                                gap: 12,
+                                                cursor: 'pointer',
+                                                transition: 'transform .2s, border-color .2s, box-shadow .2s',
+                                                width: '100%',
+                                                color: 'inherit',
+                                                font: 'inherit',
+                                                textAlign: 'left',
+                                            }}
+                                            onClick={() => { setSelectedTopic(t.key); startExercise(subject, grade, t.key); }}
+                                            onMouseEnter={e => {
+                                                e.currentTarget.style.transform = 'translateX(4px)';
+                                                e.currentTarget.style.borderColor = '#93c5fd';
+                                            }}
+                                            onMouseLeave={e => {
+                                                e.currentTarget.style.transform = 'translateX(0)';
+                                                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)';
+                                            }}>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
+                                                <div style={{ width: 44, height: 44, borderRadius: 12, background: statusColor + '22', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22 }}>
+                                                    {t.icon}
+                                                </div>
+                                                <div style={{ minWidth: 0 }}>
+                                                    <div style={{ fontWeight: 800, fontSize: 15, color: '#1e1b4b' }}>{tx(t.name)}</div>
+                                                    <div style={{ fontSize: 11, color: evidence.sampleSize === 0 ? '#047857' : '#64748b', marginTop: 4 }}>
+                                                        {evidence.sampleSize === 0 ? `▶ ${tx('Bấm để bắt đầu học ngay')}` : tx('Bấm để học tiếp')}
+                                                    </div>
+                                                </div>
                                             </div>
                                             <ChevronRight size={20} color={evidence.sampleSize === 0 ? '#047857' : '#999'} style={{ flex: '0 0 auto' }} />
                                         </button>
