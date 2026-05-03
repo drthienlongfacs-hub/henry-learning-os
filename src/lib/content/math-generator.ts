@@ -207,6 +207,167 @@ export function genOrdinalSpatial(): MathProblem {
     };
 }
 
+// ── NEW G1: Số đến 100 — SGK Tập 2 Bài 21-25 ──
+export function genCountTo100(): MathProblem {
+    const n = rand(20, 99);
+    const tens = Math.floor(n / 10);
+    const ones = n % 10;
+    const templates: (MathTemplate | MathTemplateFactory)[] = [
+        { q: `Số gồm ${tens} chục và ${ones} đơn vị là số nào?`, a: String(n), e: `${tens} chục ${ones} đơn vị = ${n}.` },
+        () => { const a = rand(10, 99), b = rand(10, 99); return { q: `So sánh: ${a} ___ ${b}`, a: a > b ? '>' : a < b ? '<' : '=', e: `${a} ${a > b ? '>' : a < b ? '<' : '='} ${b}` }; },
+        { q: `Đếm tiếp: ${n}, ${n + 1}, ${n + 2}, ___`, a: String(n + 3), e: `Đếm tiếp: ${n}, ${n + 1}, ${n + 2}, ${n + 3}.` },
+        { q: `Số liền sau của ${n} là bao nhiêu?`, a: String(n + 1), e: `Số liền sau ${n} là ${n + 1}.` },
+    ];
+    const t = resolveTemplate(templates[rand(0, templates.length - 1)]);
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'arithmetic', topic: 'Số đến 100', topicKey: 'count_100',
+        question: t.q, correctAnswer: String(t.a),
+        options: t.q.includes('So sánh') ? ['>', '<', '='] : makeOptions(Number(t.a), 5),
+        illustration: '/images/math/place_value.svg',
+        explanation: t.e, hints: ['Nhớ: chục ở bên trái, đơn vị bên phải', `Đáp số: ${t.a}`],
+    };
+}
+
+// ── NEW G1: Cộng trừ trong 100 không nhớ — SGK Tập 2 Bài 26-30 ──
+export function genAddSub100(): MathProblem {
+    const type = rand(0, 1);
+    const templates: MathTemplateFactory[] = [
+        () => { const a = rand(10, 60), b = rand(1, 9); return { q: `${a} + ${b} = ?`, a: String(a + b), e: `${a} + ${b} = ${a + b}. Cộng đơn vị: ${a % 10} + ${b} = ${a % 10 + b}.` }; },
+        () => { const a = rand(20, 80), b = rand(10, 40); return { q: `${a} + ${b} = ?`, a: String(a + b), e: `${a} + ${b} = ${a + b}. Cộng chục với chục, đơn vị với đơn vị.` }; },
+        () => { const a = rand(30, 90), b = rand(1, 9); return { q: `${a} - ${b} = ?`, a: String(a - b), e: `${a} - ${b} = ${a - b}.` }; },
+        () => { const a = rand(50, 99), b = rand(10, 40); return { q: `${a} - ${b} = ?`, a: String(a - b), e: `${a} - ${b} = ${a - b}. Trừ chục với chục, đơn vị với đơn vị.` }; },
+    ];
+    const t = templates[rand(0, 3)]();
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'arithmetic', topic: 'Cộng trừ trong 100', topicKey: 'add_sub_100',
+        question: t.q, correctAnswer: String(t.a),
+        options: makeOptions(Number(t.a), 8),
+        illustration: '/images/math/addition.svg',
+        explanation: t.e, hints: ['Cộng/trừ đơn vị trước, rồi chục', `Đáp số: ${t.a}`],
+    };
+}
+
+// ── NEW G1: Đo độ dài (cm) — SGK Bài 31 ──
+export function genMeasureLength(): MathProblem {
+    const items = ['bút chì', 'tẩy', 'thước kẻ', 'quyển sách', 'ngón tay', 'cái bàn'];
+    const item = items[rand(0, items.length - 1)];
+    const len = rand(3, 30);
+    const templates = [
+        { q: `Cây ${item} dài ${len} cm. Cây ${items[rand(0, 5)]} dài ${len + rand(2, 8)} cm. Cây nào dài hơn?`, a: `Cây ${items[rand(0, 5)]}`, e: `So sánh: ${len} cm < ${len + rand(2, 8)} cm.` },
+        { q: `Đoạn thẳng AB dài ${len} cm. Nếu nối thêm ${rand(2, 5)} cm thì tổng bao nhiêu cm?`, a: String(len + rand(2, 5)), e: `${len} + thêm = tổng cm.` },
+    ];
+    const t = templates[rand(0, 1)];
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'measurement', topic: 'Đo độ dài (cm)', topicKey: 'measure_length',
+        question: t.q, correctAnswer: t.a,
+        options: makeOptions(len, 5).map(x => x + ' cm'),
+        illustration: '/images/math/ruler.svg',
+        explanation: t.e, hints: ['1 cm ≈ độ rộng đầu ngón tay', `Đáp số: ${t.a}`],
+    };
+}
+
+// ── NEW G1: Ngày trong tuần — SGK Bài 32 ──
+export function genDaysOfWeek(): MathProblem {
+    const days = ['Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy', 'Chủ Nhật'];
+    const idx = rand(0, 6);
+    const templates = [
+        { q: `Sau ${days[idx]} là ngày nào?`, a: days[(idx + 1) % 7], opts: shuffle(days).slice(0, 4), e: `Sau ${days[idx]} là ${days[(idx + 1) % 7]}.` },
+        { q: `Trước ${days[idx]} là ngày nào?`, a: days[(idx + 6) % 7], opts: shuffle(days).slice(0, 4), e: `Trước ${days[idx]} là ${days[(idx + 6) % 7]}.` },
+        { q: `Một tuần có bao nhiêu ngày?`, a: '7 ngày', opts: ['5 ngày', '6 ngày', '7 ngày', '8 ngày'], e: 'Một tuần có 7 ngày: Thứ 2, 3, 4, 5, 6, Thứ 7, Chủ Nhật.' },
+        { q: `${days[idx]} là ngày thứ mấy trong tuần?`, a: String(idx + 2 > 7 ? 'CN' : idx + 2), opts: shuffle(['2', '3', '4', '5', '6', '7', 'CN']).slice(0, 4), e: `${days[idx]} = thứ ${idx + 2 > 7 ? 'CN' : idx + 2} trong tuần.` },
+    ];
+    const t = templates[rand(0, templates.length - 1)];
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'measurement', topic: 'Ngày trong tuần', topicKey: 'days_of_week',
+        question: t.q, correctAnswer: t.a,
+        options: t.opts || shuffle(days).slice(0, 4),
+        illustration: '/images/math/calendar.svg',
+        explanation: t.e, hints: ['T2, T3, T4, T5, T6, T7, CN', `Đáp số: ${t.a}`],
+    };
+}
+
+// ── NEW G2: Phép chia đều — SGK L2 ──
+export function genDivision(): MathProblem {
+    const divisor = [2, 3, 4, 5][rand(0, 3)];
+    const quotient = rand(2, 9);
+    const dividend = divisor * quotient;
+    const templates = [
+        { q: `${dividend} : ${divisor} = ?`, a: String(quotient), e: `${dividend} ÷ ${divisor} = ${quotient}. (Vì ${divisor} × ${quotient} = ${dividend})` },
+        { q: `Chia đều ${dividend} quả cam cho ${divisor} bạn. Mỗi bạn được mấy quả?`, a: String(quotient), e: `${dividend} ÷ ${divisor} = ${quotient} quả/bạn.` },
+    ];
+    const t = templates[rand(0, 1)];
+    return {
+        id: genId(), gradeLevel: 2, difficulty: 2,
+        type: 'arithmetic', topic: 'Phép chia', topicKey: 'division_g2',
+        question: t.q, correctAnswer: t.a,
+        options: makeOptions(quotient, 3),
+        illustration: '/images/math/division.svg',
+        explanation: t.e, hints: ['Chia = chia đều thành các nhóm bằng nhau', `Đáp số: ${t.a}`],
+    };
+}
+
+// ── NEW G2: Số đến 1000 — SGK L2 ──
+export function genNumbersTo1000(): MathProblem {
+    const n = rand(100, 999);
+    const h = Math.floor(n / 100), t = Math.floor((n % 100) / 10), o = n % 10;
+    const templates: (MathTemplate | MathTemplateFactory)[] = [
+        { q: `Số ${n} gồm: ___ trăm, ___ chục, ___ đơn vị?`, a: `${h} trăm ${t} chục ${o} đơn vị`, e: `${n} = ${h} trăm + ${t} chục + ${o} đơn vị.` },
+        { q: `Số gồm ${h} trăm, ${t} chục, ${o} đơn vị là số nào?`, a: String(n), e: `${h}×100 + ${t}×10 + ${o} = ${n}.` },
+        () => { const a = rand(100, 999), b = rand(100, 999); return { q: `So sánh: ${a} ___ ${b}`, a: a > b ? '>' : a < b ? '<' : '=', e: `${a} ${a > b ? '>' : a < b ? '<' : '='} ${b}.` }; },
+    ];
+    const t2 = resolveTemplate(templates[rand(0, templates.length - 1)]);
+    return {
+        id: genId(), gradeLevel: 2, difficulty: 2,
+        type: 'arithmetic', topic: 'Số đến 1000', topicKey: 'numbers_1000',
+        question: t2.q, correctAnswer: String(t2.a),
+        options: t2.q.includes('So sánh') ? ['>', '<', '='] : makeOptions(n, 50).map(String),
+        illustration: '/images/math/place_value.svg',
+        explanation: t2.e, hints: ['Trăm > Chục > Đơn vị', `Đáp số: ${t2.a}`],
+    };
+}
+
+// ── NEW G2: Đo khối lượng (kg, g) & Dung tích (lít) — SGK L2 ──
+export function genMassVolume(): MathProblem {
+    const templates: MathTemplate[] = [
+        { q: '1 kg = ___ g?', a: '1000', e: '1 kilogram = 1000 gram.' },
+        (() => { const kg = rand(1, 9); return { q: `Túi gạo nặng ${kg} kg. Đổi ra gram?`, a: `${kg * 1000} g`, e: `${kg} kg = ${kg} × 1000 = ${kg * 1000} g.` }; })(),
+        (() => { const l = rand(2, 10); return { q: `Bình nước chứa ${l} lít. Nếu rót đi 2 lít, còn mấy lít?`, a: `${l - 2} lít`, e: `${l} - 2 = ${l - 2} lít.` }; })(),
+        (() => { const a = rand(100, 500), b = rand(100, 500); return { q: `Quả dưa ${a} g, quả cam ${b} g. Tổng bao nhiêu g?`, a: `${a + b} g`, e: `${a} + ${b} = ${a + b} g.` }; })(),
+    ];
+    const t = templates[rand(0, templates.length - 1)];
+    return {
+        id: genId(), gradeLevel: 2, difficulty: 2,
+        type: 'measurement', topic: 'Khối lượng & Dung tích', topicKey: 'mass_volume_g2',
+        question: t.q, correctAnswer: String(t.a),
+        options: shuffle([String(t.a), `${rand(500, 2000)}`, `${rand(100, 900)}`, `${rand(1, 9)} kg`]),
+        illustration: '/images/math/scale.svg',
+        explanation: t.e, hints: ['1 kg = 1000 g, 1 lít = 1000 ml', `Đáp số: ${t.a}`],
+    };
+}
+
+// ── NEW G2: Tiền Việt Nam — SGK L2 ──
+export function genVietnameseMoney(): MathProblem {
+    const bills = [1000, 2000, 5000, 10000, 20000, 50000];
+    const templates: MathTemplate[] = [
+        (() => { const b1 = bills[rand(0, 3)], b2 = bills[rand(0, 3)]; return { q: `Em có 1 tờ ${b1.toLocaleString('vi')} đồng và 1 tờ ${b2.toLocaleString('vi')} đồng. Tổng bao nhiêu?`, a: `${(b1 + b2).toLocaleString('vi')} đồng`, e: `${b1.toLocaleString('vi')} + ${b2.toLocaleString('vi')} = ${(b1 + b2).toLocaleString('vi')} đồng.` }; })(),
+        (() => { const price = rand(2, 9) * 1000, paid = price + rand(1, 5) * 1000; return { q: `Cây bút giá ${price.toLocaleString('vi')} đồng. Em đưa ${paid.toLocaleString('vi')} đồng. Tiền thừa?`, a: `${(paid - price).toLocaleString('vi')} đồng`, e: `${paid.toLocaleString('vi')} - ${price.toLocaleString('vi')} = ${(paid - price).toLocaleString('vi')} đồng.` }; })(),
+        { q: 'Tờ tiền nào có giá trị lớn nhất: 2.000đ, 5.000đ, 1.000đ, 10.000đ?', a: '10.000đ', e: '10.000đ > 5.000đ > 2.000đ > 1.000đ.', opts: ['2.000đ', '5.000đ', '1.000đ', '10.000đ'] },
+    ];
+    const t = templates[rand(0, templates.length - 1)];
+    return {
+        id: genId(), gradeLevel: 2, difficulty: 2,
+        type: 'arithmetic', topic: 'Tiền Việt Nam', topicKey: 'money_vn',
+        question: t.q, correctAnswer: String(t.a),
+        options: t.opts || shuffle([String(t.a), `${rand(1, 20) * 1000} đồng`, `${rand(1, 20) * 1000} đồng`, `${rand(1, 20) * 1000} đồng`]),
+        illustration: '/images/math/money.svg',
+        explanation: t.e, hints: ['Nhớ giá trị các tờ tiền VN', `Đáp số: ${t.a}`],
+    };
+}
+
 // ── NEW G2: Phân tích hàng chục – đơn vị (Place Value) — CT 2018 Core ──
 export function genPlaceValue(): MathProblem {
     const n = rand(10, 99);
@@ -774,6 +935,10 @@ export const MATH_TOPICS: TopicInfo[] = [
     { key: 'shapes_3d', name: 'Khối hình 3D', gradeLevel: 1, generator: genShapes3D, icon: '🧊' },
     { key: 'compare_g1', name: 'So sánh số', gradeLevel: 1, generator: genCompareG1, icon: '⚖️' },
     { key: 'ordinal_spatial', name: 'Thứ tự & Vị trí', gradeLevel: 1, generator: genOrdinalSpatial, icon: '📍' },
+    { key: 'count_100', name: 'Số đến 100', gradeLevel: 1, generator: genCountTo100, icon: '💯' },
+    { key: 'add_sub_100', name: 'Cộng trừ trong 100', gradeLevel: 1, generator: genAddSub100, icon: '➕' },
+    { key: 'measure_length', name: 'Đo độ dài (cm)', gradeLevel: 1, generator: genMeasureLength, icon: '📏' },
+    { key: 'days_of_week', name: 'Ngày trong tuần', gradeLevel: 1, generator: genDaysOfWeek, icon: '📅' },
     // Grade 2 — CT 2018 + Singapore Math + Cambridge Primary
     { key: 'place_value', name: 'Hàng chục–đơn vị', gradeLevel: 2, generator: genPlaceValue, icon: '🏗️' },
     { key: 'add_sub_carry', name: 'Cộng trừ có nhớ', gradeLevel: 2, generator: genAddSubCarry, icon: '🧮' },
@@ -783,6 +948,10 @@ export const MATH_TOPICS: TopicInfo[] = [
     { key: 'clock', name: 'Xem đồng hồ', gradeLevel: 2, generator: genClock, icon: '🕐' },
     { key: 'measure_cm', name: 'Đo độ dài (cm)', gradeLevel: 2, generator: genMeasureCm, icon: '📏' },
     { key: 'word_g2', name: 'Toán đố lớp 2', gradeLevel: 2, generator: genWordProbG2, icon: '📝' },
+    { key: 'division_g2', name: 'Phép chia', gradeLevel: 2, generator: genDivision, icon: '➗' },
+    { key: 'numbers_1000', name: 'Số đến 1000', gradeLevel: 2, generator: genNumbersTo1000, icon: '🔟' },
+    { key: 'mass_volume_g2', name: 'Khối lượng & Dung tích', gradeLevel: 2, generator: genMassVolume, icon: '⚖️' },
+    { key: 'money_vn', name: 'Tiền Việt Nam', gradeLevel: 2, generator: genVietnameseMoney, icon: '💰' },
     // Grade 3
     { key: 'mult_div', name: 'Nhân chia cơ bản', gradeLevel: 3, generator: genMultDiv, icon: '✖️' },
     { key: 'mult_table', name: 'Bảng nhân', gradeLevel: 3, generator: genMultTable, icon: '🔢' },
