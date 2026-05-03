@@ -342,6 +342,86 @@ export function genNhietChat(): ScienceProblem {
     };
 }
 
+// ── BATCH 12: Thời tiết & Mùa (G2) ──
+const THOI_TIET_MUA = [
+    { q: 'Việt Nam có mấy mùa?', a: '4 mùa (Bắc) hoặc 2 mùa (Nam)', opts: ['4 mùa (Bắc) hoặc 2 mùa (Nam)', 'Chỉ 1 mùa', '6 mùa', '3 mùa'], e: 'Miền Bắc: 4 mùa (xuân hạ thu đông). Miền Nam: 2 mùa (mưa, khô).' },
+    { q: 'Khi trời mưa, ta nên mang theo gì?', a: 'Ô (dù) hoặc áo mưa', opts: ['Ô (dù) hoặc áo mưa', 'Kính râm', 'Kem chống nắng', 'Quạt'], e: 'Mưa → mang ô hoặc áo mưa để không bị ướt.' },
+    { q: 'Mùa hè thời tiết thế nào?', a: 'Nóng, nắng nhiều', opts: ['Nóng, nắng nhiều', 'Lạnh, có tuyết', 'Mưa suốt ngày', 'Rất lạnh'], e: 'Mùa hè = nóng bức, nắng nhiều, ngày dài hơn đêm.' },
+    { q: 'Nhiệt kế dùng để đo gì?', a: 'Nhiệt độ', opts: ['Nhiệt độ', 'Sức gió', 'Lượng mưa', 'Áp suất'], e: 'Nhiệt kế đo nhiệt độ (°C). Nhiệt kế y tế đo thân nhiệt.' },
+    { q: 'Gió mạnh, mưa to, sấm sét gọi là gì?', a: 'Giông bão', opts: ['Giông bão', 'Nắng nóng', 'Sương mù', 'Hạn hán'], e: 'Giông bão = hiện tượng thời tiết nguy hiểm, cần trú ẩn an toàn.' },
+];
+
+export function genThoiTietMua(): ScienceProblem {
+    const item = THOI_TIET_MUA[rand(0, THOI_TIET_MUA.length - 1)];
+    return {
+        id: genId(), gradeLevel: 2, difficulty: 2,
+        type: 'weather', topic: 'Thời tiết & Mùa', topicKey: 'thoi_tiet_mua',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Nhìn ra ngoài cửa sổ', `Đáp án: ${item.a}`],
+        illustration: '/images/core/science.svg',
+    };
+}
+
+// ── BATCH 12: Cây cối quanh em (G2) ──
+const CAY_COI = [
+    { q: 'Cây xanh cần gì để sống?', a: 'Nước, ánh sáng, đất', opts: ['Nước, ánh sáng, đất', 'Chỉ cần nước', 'Chỉ cần đất', 'Không cần gì'], e: 'Cây cần nước + ánh sáng + chất dinh dưỡng (đất) + không khí để quang hợp.' },
+    { q: 'Phần nào của cây hút nước từ đất?', a: 'Rễ', opts: ['Rễ', 'Lá', 'Hoa', 'Quả'], e: 'Rễ cây hút nước và chất khoáng từ đất lên nuôi cây.' },
+    { q: 'Lá cây có màu xanh vì chứa chất gì?', a: 'Diệp lục (chất xanh lá)', opts: ['Diệp lục (chất xanh lá)', 'Nước', 'Đường', 'Muối'], e: 'Diệp lục (chlorophyll) hấp thụ ánh sáng để quang hợp, tạo màu xanh cho lá.' },
+    { q: 'Hoa có vai trò gì cho cây?', a: 'Sinh sản (tạo quả và hạt)', opts: ['Sinh sản (tạo quả và hạt)', 'Hút nước', 'Quang hợp', 'Giữ cây đứng thẳng'], e: 'Hoa → thụ phấn → quả → hạt → cây con mới.' },
+    { q: 'Cây nào KHÔNG phải cây ăn quả?', a: 'Cây bàng', opts: ['Cây bàng', 'Cây xoài', 'Cây cam', 'Cây ổi'], e: 'Cây bàng là cây bóng mát, không phải cây ăn quả.' },
+];
+
+export function genCayCoi(): ScienceProblem {
+    const item = CAY_COI[rand(0, CAY_COI.length - 1)];
+    return {
+        id: genId(), gradeLevel: 2, difficulty: 2,
+        type: 'plants', topic: 'Cây cối quanh em', topicKey: 'cay_coi',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Quan sát vườn nhà em', `Đáp án: ${item.a}`],
+        illustration: '/images/core/science.svg',
+    };
+}
+
+// ── BATCH 12: Điện cơ bản (G5) ──
+const DIEN_CO_BAN = [
+    { q: 'Dòng điện chạy trong mạch kín nhờ thiết bị nào?', a: 'Pin hoặc ổ cắm (nguồn điện)', opts: ['Pin hoặc ổ cắm (nguồn điện)', 'Bóng đèn', 'Dây dẫn', 'Công tắc'], e: 'Nguồn điện (pin, ổ cắm) cung cấp năng lượng cho mạch điện hoạt động.' },
+    { q: 'Vật nào dẫn điện tốt?', a: 'Kim loại (đồng, sắt, nhôm)', opts: ['Kim loại (đồng, sắt, nhôm)', 'Gỗ', 'Nhựa', 'Cao su'], e: 'Kim loại dẫn điện tốt. Gỗ, nhựa, cao su là chất cách điện.' },
+    { q: 'Khi thấy dây điện đứt rơi, em nên:', a: 'Tránh xa và báo người lớn', opts: ['Tránh xa và báo người lớn', 'Nhặt lên', 'Giẫm lên', 'Cắm lại'], e: 'Dây điện đứt rất nguy hiểm, có thể gây giật chết người. Tránh xa + gọi người lớn.' },
+    { q: 'Công tắc dùng để:', a: 'Đóng/mở mạch điện', opts: ['Đóng/mở mạch điện', 'Tạo ra điện', 'Đo điện', 'Sửa dây điện'], e: 'Công tắc ON = mạch kín → dòng điện chạy. OFF = mạch hở → dòng điện ngừng.' },
+    { q: 'Để tiết kiệm điện, ta nên:', a: 'Tắt thiết bị khi không dùng', opts: ['Tắt thiết bị khi không dùng', 'Bật đèn suốt ngày', 'Mở quạt khi đi ra ngoài', 'Dùng nhiều thiết bị cùng lúc'], e: 'Tiết kiệm điện: tắt khi không dùng, dùng đèn LED, điều hòa 26°C.' },
+];
+
+export function genDienCoBan(): ScienceProblem {
+    const item = DIEN_CO_BAN[rand(0, DIEN_CO_BAN.length - 1)];
+    return {
+        id: genId(), gradeLevel: 5, difficulty: 5,
+        type: 'matter', topic: 'Điện cơ bản', topicKey: 'dien_co_ban',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Nhớ quy tắc an toàn điện', `Đáp án: ${item.a}`],
+        illustration: '/images/core/science.svg',
+    };
+}
+
+// ── BATCH 12: Dinh dưỡng & Sức khỏe (G3) ──
+const DINH_DUONG = [
+    { q: '4 nhóm thực phẩm cơ bản là:', a: 'Tinh bột, Đạm, Béo, Vitamin & Khoáng', opts: ['Tinh bột, Đạm, Béo, Vitamin & Khoáng', 'Cơm, phở, bánh mì', 'Thịt, cá, trứng', 'Rau, trái cây'], e: 'Ăn đủ 4 nhóm: Đường bột (gạo, khoai), Đạm (thịt, cá), Béo (dầu), Vitamin (rau, quả).' },
+    { q: 'Vitamin C có nhiều trong:', a: 'Cam, chanh, ổi', opts: ['Cam, chanh, ổi', 'Thịt bò', 'Cơm', 'Cá'], e: 'Vitamin C có nhiều trong trái cây chua (cam, chanh, bưởi, ổi).' },
+    { q: 'Uống đủ nước mỗi ngày khoảng bao nhiêu?', a: '6-8 ly', opts: ['6-8 ly', '1 ly', '20 ly', 'Không cần'], e: 'Trẻ em nên uống 6-8 ly nước/ngày. Nước giúp cơ thể hoạt động tốt.' },
+    { q: 'Ăn quá nhiều đồ ngọt gây hại gì?', a: 'Sâu răng và béo phì', opts: ['Sâu răng và béo phì', 'Cao hơn', 'Thông minh hơn', 'Không có gì'], e: 'Đường gây sâu răng, ăn nhiều đồ ngọt → béo phì, tiểu đường.' },
+    { q: 'Bữa ăn sáng có quan trọng không?', a: 'Rất quan trọng — cung cấp năng lượng cho cả ngày', opts: ['Rất quan trọng — cung cấp năng lượng cho cả ngày', 'Không cần', 'Chỉ cần ăn trưa', 'Ăn chiều thay được'], e: 'Bữa sáng = năng lượng cho buổi học, giúp tập trung và nhớ bài tốt hơn.' },
+];
+
+export function genDinhDuong(): ScienceProblem {
+    const item = DINH_DUONG[rand(0, DINH_DUONG.length - 1)];
+    return {
+        id: genId(), gradeLevel: 3, difficulty: 3,
+        type: 'health', topic: 'Dinh dưỡng & Sức khỏe', topicKey: 'dinh_duong',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Ăn đủ 4 nhóm, uống đủ nước', `Đáp án: ${item.a}`],
+        illustration: '/images/core/science.svg',
+    };
+}
+
 // ══════════════════════════════════════════════
 // TOPIC REGISTRY
 // ══════════════════════════════════════════════
@@ -361,7 +441,10 @@ export const SCIENCE_TOPICS: SciTopicInfo[] = [
     { key: 'safety_home', name: 'An toàn (lửa, điện, nước)', gradeLevel: 1, generator: genSafetyHome, icon: '🔥' },
     { key: 've_sinh', name: 'Vệ sinh cá nhân', gradeLevel: 1, generator: genVeSinh, icon: '🧼' },
     { key: 'nature', name: 'Thực vật & Động vật', gradeLevel: SCIENCE_TOPIC_GRADE.nature, generator: genNature, icon: '🌿' },
+    { key: 'thoi_tiet_mua', name: 'Thời tiết & Mùa', gradeLevel: 2, generator: genThoiTietMua, icon: '🌤️' },
+    { key: 'cay_coi', name: 'Cây cối quanh em', gradeLevel: 2, generator: genCayCoi, icon: '🌳' },
     { key: 'nuoc_khong_khi', name: 'Nước & Không khí', gradeLevel: 3, generator: genNuocKhongKhi, icon: '💧' },
+    { key: 'dinh_duong', name: 'Dinh dưỡng & Sức khỏe', gradeLevel: 3, generator: genDinhDuong, icon: '🥗' },
     { key: 'weather_earth', name: 'Thời tiết & Trái Đất', gradeLevel: SCIENCE_TOPIC_GRADE.weather_earth, generator: genWeatherEarth, icon: '🌍' },
     { key: 'nhiet_chat', name: 'Nhiệt & Chất', gradeLevel: 4, generator: genNhietChat, icon: '🌡️' },
     { key: 'sound_light', name: 'Âm thanh & Ánh sáng', gradeLevel: 4, generator: genSoundLight, icon: '🔦' },
@@ -369,6 +452,7 @@ export const SCIENCE_TOPICS: SciTopicInfo[] = [
     { key: 'ecosystem', name: 'Hệ sinh thái & MT', gradeLevel: SCIENCE_TOPIC_GRADE.ecosystem, generator: genEcosystem, icon: '🌳' },
     { key: 'food_chain', name: 'Chuỗi thức ăn', gradeLevel: 5, generator: genFoodChain, icon: '🔗' },
     { key: 'sinh_san', name: 'Sinh sản TV & ĐV', gradeLevel: 5, generator: genSinhSan, icon: '🌱' },
+    { key: 'dien_co_ban', name: 'Điện cơ bản', gradeLevel: 5, generator: genDienCoBan, icon: '🔌' },
 ];
 
 export function generateScienceSet(grade: number, topicKey?: string, count: number = 10): ScienceProblem[] {

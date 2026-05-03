@@ -160,6 +160,86 @@ export function genHistoryG5(): HisGeoProblem {
     };
 }
 
+// ── BATCH 11: Nhân vật lịch sử tiêu biểu (G4) ──
+const NHAN_VAT_LS = [
+    { q: 'Ai được tôn là "Bà Mẹ của dân tộc" vì công cuộc khởi nghĩa năm 40?', a: 'Hai Bà Trưng', opts: ['Hai Bà Trưng', 'Bà Triệu', 'Bà Huyện Thanh Quan', 'Hồ Xuân Hương'], e: 'Hai Bà Trưng (Trưng Trắc, Trưng Nhị) khởi nghĩa chống Đông Hán năm 40.' },
+    { q: 'Danh tướng nào được phong "Hưng Đạo Đại Vương"?', a: 'Trần Quốc Tuấn', opts: ['Trần Quốc Tuấn', 'Lý Thường Kiệt', 'Lê Lợi', 'Ngô Quyền'], e: 'Trần Quốc Tuấn (Trần Hưng Đạo) 3 lần đánh bại quân Mông Nguyên.' },
+    { q: 'Nguyễn Trãi nổi tiếng với tác phẩm nào?', a: 'Bình Ngô đại cáo', opts: ['Bình Ngô đại cáo', 'Hịch tướng sĩ', 'Nam Quốc Sơn Hà', 'Truyện Kiều'], e: 'Bình Ngô đại cáo (1428) — bản Tuyên ngôn Độc lập thứ hai, do Nguyễn Trãi soạn.' },
+    { q: 'Vua nào thống nhất đất nước lập ra nhà Nguyễn?', a: 'Gia Long', opts: ['Gia Long', 'Quang Trung', 'Lê Thánh Tông', 'Trần Thái Tông'], e: 'Gia Long (Nguyễn Ánh) thống nhất đất nước năm 1802, lập nhà Nguyễn.' },
+    { q: 'Tướng Võ Nguyên Giáp nổi tiếng với chiến thắng nào?', a: 'Điện Biên Phủ 1954', opts: ['Điện Biên Phủ 1954', 'Bạch Đằng 938', 'Lam Sơn 1428', 'Đống Đa 1789'], e: 'Đại tướng Võ Nguyên Giáp chỉ huy chiến thắng Điện Biên Phủ 7/5/1954.' },
+];
+
+export function genNhanVatLS(): HisGeoProblem {
+    const item = NHAN_VAT_LS[rand(0, NHAN_VAT_LS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 4, difficulty: 4,
+        type: 'history', topic: 'Nhân vật lịch sử', topicKey: 'nhan_vat_ls',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Nhớ các anh hùng dân tộc', `Đáp án: ${item.a}`],
+        illustration: '/images/core/history.svg',
+    };
+}
+
+// ── BATCH 11: Bản đồ & Phương hướng (G4) ──
+const BAN_DO = [
+    { q: 'Trên bản đồ, hướng Bắc thường nằm ở phía nào?', a: 'Phía trên', opts: ['Phía trên', 'Phía dưới', 'Bên trái', 'Bên phải'], e: 'Quy ước: trên = Bắc, dưới = Nam, trái = Tây, phải = Đông.' },
+    { q: 'Tỉ lệ 1:100.000 nghĩa là 1cm trên bản đồ bằng bao nhiêu?', a: '1 km ngoài thực tế', opts: ['1 km ngoài thực tế', '100 m', '10 km', '100 km'], e: '1:100.000 → 1 cm = 100.000 cm = 1.000 m = 1 km.' },
+    { q: 'Chú giải (legend) trên bản đồ dùng để:', a: 'Giải thích ý nghĩa các ký hiệu', opts: ['Giải thích ý nghĩa các ký hiệu', 'Chỉ đường đi', 'Đo khoảng cách', 'Trang trí'], e: 'Chú giải liệt kê ý nghĩa màu sắc, ký hiệu trên bản đồ.' },
+    { q: 'La bàn dùng để xác định:', a: 'Phương hướng', opts: ['Phương hướng', 'Nhiệt độ', 'Độ cao', 'Thời gian'], e: 'Kim nam châm la bàn luôn chỉ hướng Bắc → xác định 4 phương chính.' },
+    { q: 'Có bao nhiêu phương hướng chính?', a: '4: Đông, Tây, Nam, Bắc', opts: ['4: Đông, Tây, Nam, Bắc', '2', '6', '8'], e: '4 hướng chính + 4 hướng phụ (Đông Bắc, Tây Bắc, Đông Nam, Tây Nam) = 8 hướng.' },
+];
+
+export function genBanDo(): HisGeoProblem {
+    const item = BAN_DO[rand(0, BAN_DO.length - 1)];
+    return {
+        id: genId(), gradeLevel: 4, difficulty: 4,
+        type: 'geography', topic: 'Bản đồ & Phương hướng', topicKey: 'ban_do',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Nhớ quy ước bản đồ', `Đáp án: ${item.a}`],
+        illustration: '/images/core/history.svg',
+    };
+}
+
+// ── BATCH 11: Dân cư & Kinh tế VN (G5) ──
+const DAN_CU_KT = [
+    { q: 'Dân số Việt Nam khoảng bao nhiêu triệu? (2025)', a: 'Hơn 100 triệu', opts: ['Hơn 100 triệu', '50 triệu', '200 triệu', '30 triệu'], e: 'VN dân số hơn 100 triệu (2025), xếp thứ 15 thế giới.' },
+    { q: 'Nghề nào là nghề truyền thống phổ biến nhất VN?', a: 'Nông nghiệp trồng lúa', opts: ['Nông nghiệp trồng lúa', 'Công nghệ thông tin', 'Khai khoáng', 'Du lịch'], e: 'VN là nước nông nghiệp truyền thống, lúa gạo là cây trồng chính.' },
+    { q: 'Vùng nào trồng lúa nhiều nhất VN?', a: 'Đồng bằng sông Cửu Long', opts: ['Đồng bằng sông Cửu Long', 'Tây Nguyên', 'Đông Bắc', 'Tây Bắc'], e: 'ĐBSCL = vựa lúa lớn nhất, sản xuất hơn 50% lúa gạo cả nước.' },
+    { q: 'Đơn vị hành chính lớn nhất là:', a: 'Tỉnh / Thành phố trực thuộc TW', opts: ['Tỉnh / Thành phố trực thuộc TW', 'Huyện', 'Xã', 'Thôn'], e: 'VN có 63 tỉnh/thành → huyện/quận → xã/phường → thôn/ấp.' },
+    { q: 'Ngành kinh tế nào phát triển mạnh nhất ở TP. HCM?', a: 'Thương mại & Dịch vụ', opts: ['Thương mại & Dịch vụ', 'Nông nghiệp', 'Lâm nghiệp', 'Ngư nghiệp'], e: 'TP.HCM là trung tâm kinh tế, thương mại dịch vụ lớn nhất cả nước.' },
+];
+
+export function genDanCuKT(): HisGeoProblem {
+    const item = DAN_CU_KT[rand(0, DAN_CU_KT.length - 1)];
+    return {
+        id: genId(), gradeLevel: 5, difficulty: 5,
+        type: 'geography', topic: 'Dân cư & Kinh tế VN', topicKey: 'dan_cu_kt',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['VN hơn 100 triệu dân, 63 tỉnh thành', `Đáp án: ${item.a}`],
+        illustration: '/images/core/history.svg',
+    };
+}
+
+// ── BATCH 11: Di tích & Di sản VN (G5) ──
+const DI_TICH = [
+    { q: 'Cố đô nào được UNESCO công nhận Di sản Thế giới?', a: 'Huế', opts: ['Huế', 'Hà Nội', 'Hội An', 'Đà Nẵng'], e: 'Quần thể di tích Cố đô Huế — Di sản Thế giới UNESCO năm 1993.' },
+    { q: 'Phố cổ Hội An thuộc tỉnh nào?', a: 'Quảng Nam', opts: ['Quảng Nam', 'Đà Nẵng', 'Thừa Thiên Huế', 'Quảng Ngãi'], e: 'Hội An (Quảng Nam) — đô thị cổ, Di sản Văn hóa Thế giới UNESCO 1999.' },
+    { q: 'Thánh địa Mỹ Sơn gắn liền với nền văn hóa nào?', a: 'Chăm Pa', opts: ['Chăm Pa', 'Đại Việt', 'Óc Eo', 'Đông Sơn'], e: 'Mỹ Sơn (Quảng Nam) có tháp Chăm cổ, Di sản Thế giới UNESCO 1999.' },
+    { q: 'Vịnh Hạ Long thuộc loại di sản nào?', a: 'Di sản Thiên nhiên Thế giới', opts: ['Di sản Thiên nhiên Thế giới', 'Di sản Văn hóa', 'Di sản Phi vật thể', 'Khu dự trữ sinh quyển'], e: 'Vịnh Hạ Long — Di sản Thiên nhiên Thế giới UNESCO (1994, 2000).' },
+    { q: 'Nhã nhạc cung đình Huế là loại di sản gì?', a: 'Di sản Phi vật thể', opts: ['Di sản Phi vật thể', 'Di sản Thiên nhiên', 'Di tích Quốc gia', 'Danh lam thắng cảnh'], e: 'Nhã nhạc Huế — Kiệt tác Di sản Phi vật thể UNESCO 2003.' },
+];
+
+export function genDiTich(): HisGeoProblem {
+    const item = DI_TICH[rand(0, DI_TICH.length - 1)];
+    return {
+        id: genId(), gradeLevel: 5, difficulty: 5,
+        type: 'geography', topic: 'Di tích & Di sản VN', topicKey: 'di_tich_di_san',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['VN có nhiều Di sản Thế giới UNESCO', `Đáp án: ${item.a}`],
+        illustration: '/images/core/history.svg',
+    };
+}
+
 // ══════════════════════════════════════════════
 // TOPIC REGISTRY
 // ══════════════════════════════════════════════
@@ -175,8 +255,12 @@ export interface HisGeoTopicInfo {
 export const HISGEO_TOPICS: HisGeoTopicInfo[] = [
     { key: 'history_g4', name: 'Lịch sử dân tộc', gradeLevel: 4, generator: genHistoryG4, icon: '📜' },
     { key: 'dia_ly_g4', name: 'Địa lý tự nhiên VN', gradeLevel: 4, generator: genDiaLyG4, icon: '🏔️' },
+    { key: 'nhan_vat_ls', name: 'Nhân vật lịch sử', gradeLevel: 4, generator: genNhanVatLS, icon: '⚔️' },
+    { key: 'ban_do', name: 'Bản đồ & Phương hướng', gradeLevel: 4, generator: genBanDo, icon: '🧭' },
     { key: 'geography', name: 'Địa lý Việt Nam', gradeLevel: 5, generator: genGeography, icon: '🗺️' },
     { key: 'history_g5', name: 'Lịch sử VN hiện đại', gradeLevel: 5, generator: genHistoryG5, icon: '🇻🇳' },
+    { key: 'dan_cu_kt', name: 'Dân cư & Kinh tế VN', gradeLevel: 5, generator: genDanCuKT, icon: '🏭' },
+    { key: 'di_tich_di_san', name: 'Di tích & Di sản VN', gradeLevel: 5, generator: genDiTich, icon: '🏛️' },
 ];
 
 export function generateHisGeoSet(grade: number, topicKey?: string, count: number = 10): HisGeoProblem[] {

@@ -11,7 +11,7 @@ export interface EthicsProblem {
     explanation: string;
     difficulty: number;
     hints: string[];
-    type: 'behavior' | 'emotion';
+    type: 'behavior' | 'emotion' | 'values';
     gradeLevel: number;
     topic: string;
     topicKey: string;
@@ -248,6 +248,78 @@ export function genBaoVeMoiTruong(): EthicsProblem {
     };
 }
 
+// ── BATCH 12: Kỷ luật tự giác (G2) ──
+const KY_LUAT = [
+    { q: 'Khi cô giáo đang giảng bài, em nên:', a: 'Ngồi ngay ngắn, chú ý lắng nghe', opts: ['Ngồi ngay ngắn, chú ý lắng nghe', 'Nói chuyện với bạn', 'Vẽ vời', 'Chơi đồ chơi'], e: 'Kỷ luật = tự giác ngồi yên, chú ý → hiểu bài, tôn trọng cô và bạn.' },
+    { q: 'Khi xếp hàng, em nên:', a: 'Đứng đúng vị trí, không xô đẩy', opts: ['Đứng đúng vị trí, không xô đẩy', 'Chen lên đầu', 'Chạy vòng quanh', 'Không cần xếp'], e: 'Xếp hàng = kỷ luật, công bằng, tôn trọng người đến trước.' },
+    { q: 'Khi đến trường muộn, em nên:', a: 'Xin lỗi cô giáo và nhẹ nhàng vào lớp', opts: ['Xin lỗi cô giáo và nhẹ nhàng vào lớp', 'Chạy ào vào', 'Trốn không vào', 'Đổ lỗi cho người khác'], e: 'Trung thực nhận lỗi, xin lỗi → thể hiện kỷ luật và trách nhiệm.' },
+    { q: 'Tự giác có nghĩa là:', a: 'Tự mình làm việc đúng mà không cần ai nhắc', opts: ['Tự mình làm việc đúng mà không cần ai nhắc', 'Chờ người khác làm', 'Chỉ làm khi bị bắt', 'Không làm gì'], e: 'Tự giác = biết việc nào nên làm và tự mình thực hiện, không cần nhắc nhở.' },
+];
+
+export function genKyLuat(): EthicsProblem {
+    const item = KY_LUAT[rand(0, KY_LUAT.length - 1)];
+    return {
+        id: genId(), gradeLevel: 2, difficulty: 2,
+        type: 'behavior', topic: 'Kỷ luật tự giác', topicKey: 'ky_luat',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Tự giác = không cần ai nhắc', `Đáp án: ${item.a}`],
+    };
+}
+
+// ── BATCH 12: Tôn sư trọng đạo (G3) ──
+const TON_SU = [
+    { q: 'Ngày Nhà giáo Việt Nam là ngày nào?', a: '20/11', opts: ['20/11', '1/6', '8/3', '30/4'], e: '20/11 hằng năm là ngày tôn vinh thầy cô giáo.' },
+    { q: 'Khi gặp thầy cô, em nên:', a: 'Cúi đầu chào lễ phép', opts: ['Cúi đầu chào lễ phép', 'Lờ đi', 'Nói trống không', 'Chạy tránh'], e: 'Chào thầy cô lễ phép thể hiện lòng kính trọng, biết ơn.' },
+    { q: '"Tôn sư trọng đạo" nghĩa là:', a: 'Kính trọng thầy, quý trọng đạo học', opts: ['Kính trọng thầy, quý trọng đạo học', 'Sợ thầy cô', 'Chỉ học giỏi', 'Tặng quà thầy cô'], e: 'Tôn sư = kính thầy. Trọng đạo = quý trọng con đường học vấn.' },
+    { q: 'Cách thể hiện biết ơn thầy cô tốt nhất:', a: 'Chăm chỉ học tập, lễ phép', opts: ['Chăm chỉ học tập, lễ phép', 'Tặng quà đắt tiền', 'Nịnh thầy cô', 'Không cần thể hiện'], e: 'Thầy cô vui nhất khi thấy học trò chăm ngoan, tiến bộ.' },
+];
+
+export function genTonSu(): EthicsProblem {
+    const item = TON_SU[rand(0, TON_SU.length - 1)];
+    return {
+        id: genId(), gradeLevel: 3, difficulty: 3,
+        type: 'values', topic: 'Tôn sư trọng đạo', topicKey: 'ton_su',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['20/11 — Ngày Nhà giáo Việt Nam', `Đáp án: ${item.a}`],
+    };
+}
+
+// ── BATCH 12: Yêu quê hương đất nước (G4) ──
+const YEU_QUE_HUONG = [
+    { q: 'Quốc ca Việt Nam tên là gì?', a: 'Tiến quân ca', opts: ['Tiến quân ca', 'Như có Bác Hồ', 'Đoàn Quân', 'Lá cờ Đảng'], e: 'Tiến quân ca do nhạc sĩ Văn Cao sáng tác, là Quốc ca từ 1945.' },
+    { q: 'Cờ Tổ quốc có những màu gì?', a: 'Nền đỏ, sao vàng', opts: ['Nền đỏ, sao vàng', 'Nền xanh, sao trắng', 'Nền trắng, sao đỏ', 'Nền vàng, sao đỏ'], e: 'Cờ đỏ sao vàng 5 cánh — biểu tượng nước CHXHCN Việt Nam.' },
+    { q: 'Yêu quê hương thể hiện qua hành động nào?', a: 'Giữ gìn vệ sinh, bảo vệ di tích, học tập tốt', opts: ['Giữ gìn vệ sinh, bảo vệ di tích, học tập tốt', 'Chỉ nói yêu nước', 'Không quan tâm', 'Chê bai quê hương'], e: 'Yêu nước = hành động: học tốt, giữ môi trường, bảo tồn văn hóa.' },
+    { q: 'Ai sáng tác Quốc ca Việt Nam?', a: 'Văn Cao', opts: ['Văn Cao', 'Phạm Tuyên', 'Trịnh Công Sơn', 'Phong Nhã'], e: 'Nhạc sĩ Văn Cao sáng tác Tiến quân ca năm 1944.' },
+];
+
+export function genYeuQueHuong(): EthicsProblem {
+    const item = YEU_QUE_HUONG[rand(0, YEU_QUE_HUONG.length - 1)];
+    return {
+        id: genId(), gradeLevel: 4, difficulty: 4,
+        type: 'values', topic: 'Yêu quê hương đất nước', topicKey: 'yeu_que_huong',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Cờ đỏ sao vàng, Tiến quân ca', `Đáp án: ${item.a}`],
+    };
+}
+
+// ── BATCH 12: Hợp tác & Làm việc nhóm (G5) ──
+const HOP_TAC = [
+    { q: 'Khi làm việc nhóm, điều quan trọng nhất là:', a: 'Lắng nghe ý kiến mọi người và đóng góp', opts: ['Lắng nghe ý kiến mọi người và đóng góp', 'Chỉ làm theo ý mình', 'Để bạn khác làm hết', 'Không tham gia'], e: 'Hợp tác = lắng nghe + đóng góp + tôn trọng ý kiến khác biệt.' },
+    { q: 'Khi bạn trong nhóm có ý kiến khác, em nên:', a: 'Lắng nghe rồi thảo luận', opts: ['Lắng nghe rồi thảo luận', 'Bỏ qua', 'Cãi nhau', 'Bỏ nhóm'], e: 'Tôn trọng sự khác biệt, thảo luận để tìm giải pháp tốt nhất cho cả nhóm.' },
+    { q: '"Một cây làm chẳng nên non, ba cây chụm lại nên hòn núi cao" nghĩa là:', a: 'Đoàn kết, hợp tác sẽ thành công', opts: ['Đoàn kết, hợp tác sẽ thành công', 'Trồng nhiều cây', 'Đi leo núi', 'Không liên quan'], e: 'Ca dao nói về sức mạnh đoàn kết: hợp tác sẽ làm được việc lớn.' },
+    { q: 'Phân công trong nhóm nghĩa là:', a: 'Mỗi người đảm nhận 1 phần việc', opts: ['Mỗi người đảm nhận 1 phần việc', '1 người làm tất cả', 'Không ai làm', 'Chỉ trưởng nhóm làm'], e: 'Phân công = chia việc đều, mỗi người chịu trách nhiệm phần của mình.' },
+];
+
+export function genHopTac(): EthicsProblem {
+    const item = HOP_TAC[rand(0, HOP_TAC.length - 1)];
+    return {
+        id: genId(), gradeLevel: 5, difficulty: 5,
+        type: 'behavior', topic: 'Hợp tác & Làm việc nhóm', topicKey: 'hop_tac',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Đoàn kết = sức mạnh', `Đáp án: ${item.a}`],
+    };
+}
+
 // ══════════════════════════════════════════════
 // TOPIC REGISTRY
 // ══════════════════════════════════════════════
@@ -266,12 +338,16 @@ export const ETHICS_TOPICS: EthicsTopicInfo[] = [
     { key: 'giu_ve_sinh', name: 'Giữ gìn vệ sinh', gradeLevel: 1, generator: genGiuVeSinh, icon: '🧹' },
     { key: 'express_emotion', name: 'Thể hiện cảm xúc', gradeLevel: 2, generator: genExpressEmotion, icon: '😊' },
     { key: 'doan_ket', name: 'Đoàn kết bạn bè', gradeLevel: 2, generator: genDoanKetBanBe, icon: '🤗' },
+    { key: 'ky_luat', name: 'Kỷ luật tự giác', gradeLevel: 2, generator: genKyLuat, icon: '📏' },
     { key: 'honesty', name: 'Trung thực', gradeLevel: 3, generator: genHonesty, icon: '💎' },
     { key: 'bao_ve_moi_truong', name: 'Bảo vệ môi trường', gradeLevel: 3, generator: genBaoVeMoiTruong, icon: '🌍' },
+    { key: 'ton_su', name: 'Tôn sư trọng đạo', gradeLevel: 3, generator: genTonSu, icon: '🎓' },
     { key: 'responsibility', name: 'Trách nhiệm', gradeLevel: 4, generator: genResponsibility, icon: '🎯' },
     { key: 'children_rights', name: 'Quyền trẻ em', gradeLevel: 4, generator: genChildrenRights, icon: '🛡️' },
+    { key: 'yeu_que_huong', name: 'Yêu quê hương đất nước', gradeLevel: 4, generator: genYeuQueHuong, icon: '🇻🇳' },
     { key: 'community_empathy', name: 'Đồng cảm cộng đồng', gradeLevel: 5, generator: genCommunityEmpathy, icon: '🤝' },
     { key: 'internet_safety', name: 'An toàn trên mạng', gradeLevel: 5, generator: genInternetSafety, icon: '🔒' },
+    { key: 'hop_tac', name: 'Hợp tác & Làm việc nhóm', gradeLevel: 5, generator: genHopTac, icon: '👥' },
 ];
 
 export function generateEthicsSet(grade: number, topicKey?: string, count: number = 10): EthicsProblem[] {
