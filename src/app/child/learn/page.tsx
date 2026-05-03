@@ -39,6 +39,7 @@ import {
     getTopicLearningBlueprint,
     type LessonDepth,
 } from '@/data/learning-benchmark-system';
+import { ENGLISH_CURRICULUM_EVIDENCE } from '@/data/english-curriculum-evidence';
 import {
     getTopicLearningPlan,
     summarizeSubjectPlan,
@@ -557,8 +558,28 @@ export default function LearnPage() {
                                             {tx('Chọn chủ đề để bắt đầu câu hỏi đầu tiên.')}
                                         </div>
                                     </div>
+                            </div>
+                        )}
+
+                        {subject === 'english' && (
+                            <ParentOnlyDetails label={tx('Phụ huynh xem đối chiếu Bộ, Sở và quốc tế')} style={{ marginBottom: 16 }}>
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 10 }}>
+                                    {ENGLISH_CURRICULUM_EVIDENCE.evidenceItems.map((item) => {
+                                        const color = item.status === 'implemented' ? '#047857' : item.status === 'guarded' ? '#b45309' : '#6d28d9';
+                                        return (
+                                            <div key={item.label} style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: 12, padding: 12 }}>
+                                                <div style={{ fontSize: 12, fontWeight: 900, color }}>{tx(item.label)}</div>
+                                                <div style={{ fontSize: 13, fontWeight: 850, color: '#1e293b', marginTop: 6, lineHeight: 1.35 }}>{tx(item.source)}</div>
+                                                <div style={{ fontSize: 12, color: '#475569', marginTop: 6, lineHeight: 1.45 }}>{tx(item.detail)}</div>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
-                            )}
+                                <div style={{ marginTop: 10, fontSize: 12, color: '#92400e', lineHeight: 1.45, fontWeight: 750 }}>
+                                    {tx(ENGLISH_CURRICULUM_EVIDENCE.noOverclaim)}
+                                </div>
+                            </ParentOnlyDetails>
+                        )}
 
                         <div style={{ ...glass.card, marginBottom: 16, background: 'rgba(255,255,255,0.58)' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
@@ -759,11 +780,26 @@ export default function LearnPage() {
                                                 e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)';
                                             }}>
                                             <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
-                                                <div style={{ width: 44, height: 44, borderRadius: 12, background: statusColor + '22', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22 }}>
+                                                <div style={{
+                                                    width: 44,
+                                                    height: 44,
+                                                    borderRadius: 12,
+                                                    background: evidence.sampleSize === 0 ? '#ecfdf5' : statusColor.bg,
+                                                    border: `1px solid ${evidence.sampleSize === 0 ? '#a7f3d0' : statusColor.border}`,
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    fontSize: 22,
+                                                }}>
                                                     {t.icon}
                                                 </div>
                                                 <div style={{ minWidth: 0 }}>
                                                     <div style={{ fontWeight: 800, fontSize: 15, color: '#1e1b4b' }}>{tx(t.name)}</div>
+                                                    <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', marginTop: 7 }}>
+                                                        <span style={{ padding: '4px 7px', borderRadius: 999, background: evidence.sampleSize === 0 ? '#ecfdf5' : statusColor.bg, border: `1px solid ${evidence.sampleSize === 0 ? '#a7f3d0' : statusColor.border}`, color: evidence.sampleSize === 0 ? '#047857' : statusColor.fg, fontSize: 10, fontWeight: 850 }}>
+                                                            {tx(actionLabel)}
+                                                        </span>
+                                                    </div>
                                                     <div style={{ fontSize: 11, color: evidence.sampleSize === 0 ? '#047857' : '#64748b', marginTop: 4 }}>
                                                         {evidence.sampleSize === 0 ? `▶ ${tx('Bấm để bắt đầu học ngay')}` : tx('Bấm để học tiếp')}
                                                     </div>

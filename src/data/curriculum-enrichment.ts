@@ -13,6 +13,10 @@ export type LearningSubjectKey =
 
 export type SourceId =
     | 'moet-ctgdpt-2018'
+    | 'moet-english-grade-1-2'
+    | 'hcmc-integrated-english-5695'
+    | 'cambridge-primary-esl'
+    | 'cambridge-young-learners'
     | 'common-core-math'
     | 'cambridge-primary-math'
     | 'aero-spacing-retrieval'
@@ -109,6 +113,7 @@ export interface SubjectEnrichment {
 }
 
 const RETRIEVED_AT = '2026-04-29T00:00:00.000Z';
+const ENGLISH_RETRIEVED_AT = '2026-05-03T05:20:00.000Z';
 
 export const LEARNING_SOURCES: Record<SourceId, LearningSource> = {
     'moet-ctgdpt-2018': {
@@ -119,6 +124,42 @@ export const LEARNING_SOURCES: Record<SourceId, LearningSource> = {
         sourceUrl: 'https://moet.gov.vn/Pages/tim-kiem.aspx?ItemID=5755',
         useInApp: 'Chuẩn đầu ra Việt Nam cho môn học tiểu học và mạch năng lực.',
         retrievedAt: RETRIEVED_AT,
+    },
+    'moet-english-grade-1-2': {
+        id: 'moet-english-grade-1-2',
+        title: 'Chương trình giáo dục phổ thông Làm quen Tiếng Anh lớp 1 và lớp 2',
+        provider: 'Bộ Giáo dục và Đào tạo Việt Nam',
+        kind: 'official',
+        sourceUrl: 'https://moet.gov.vn/tintuc/Pages/gop-y-dt-ct-cac-mon-hoc.aspx?ItemID=5301',
+        useInApp: 'Khóa lớp 1-2 ở mức làm quen/tự chọn, ưu tiên nghe - nói, chữ cái, âm, từ quen thuộc và câu ngắn.',
+        retrievedAt: ENGLISH_RETRIEVED_AT,
+    },
+    'hcmc-integrated-english-5695': {
+        id: 'hcmc-integrated-english-5695',
+        title: 'TP.HCM - Chương trình Tiếng Anh tích hợp theo Đề án 5695',
+        provider: 'Sở Giáo dục và Đào tạo Thành phố Hồ Chí Minh / Phòng GDĐT',
+        kind: 'official',
+        sourceUrl: 'https://fileth.hcm.edu.vn/data/doc/2024/thlethirieng/2024_10/11/phuluc-cv9481792024-huongdan-chuyenmon-2024-2025signed199202414_1110202410.pdf',
+        useInApp: 'Đối chiếu khung TP.HCM: lớp 1-5, 8 tiết/tuần gồm Tiếng Anh, Toán và Khoa học; giữ guardrail không thay giáo trình trường.',
+        retrievedAt: ENGLISH_RETRIEVED_AT,
+    },
+    'cambridge-primary-esl': {
+        id: 'cambridge-primary-esl',
+        title: 'Cambridge Primary English as a Second Language (0057)',
+        provider: 'Cambridge International Education',
+        kind: 'official',
+        sourceUrl: 'https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-primary/curriculum/english-as-a-second-language/',
+        useInApp: 'Benchmark quốc tế phù hợp trẻ nói tiếng Việt ở nhà: Reading, Writing, Use of English, Listening, Speaking.',
+        retrievedAt: ENGLISH_RETRIEVED_AT,
+    },
+    'cambridge-young-learners': {
+        id: 'cambridge-young-learners',
+        title: 'Cambridge English Qualifications for Young Learners',
+        provider: 'Cambridge English',
+        kind: 'benchmark',
+        sourceUrl: 'https://www.cambridgeenglish.org/exams-and-tests/qualifications/young-learners/',
+        useInApp: 'Mốc Pre A1 Starters, A1 Movers và A2 Flyers để theo dõi tiến bộ nghe, nói, đọc, viết nhẹ nhàng.',
+        retrievedAt: ENGLISH_RETRIEVED_AT,
     },
     'common-core-math': {
         id: 'common-core-math',
@@ -538,12 +579,12 @@ export const SUBJECT_ENRICHMENT: Record<LearningSubjectKey, SubjectEnrichment> =
     english: {
         subject: 'english',
         label: 'Tiếng Anh',
-        headline: 'Nghe - nhìn - nói - dùng trong câu, không học từ rời rạc.',
-        coverage: 'Từ vựng chủ đề, ngữ pháp, đọc hiểu, câu giao tiếp, chuyển dịch Việt - Anh.',
+        headline: 'Từ lớp 1: nghe - nói - âm chữ; lên lớp lớn mới tăng đọc, viết, ngữ pháp.',
+        coverage: 'Lớp 1-2 làm quen/tự chọn theo Bộ GDĐT; TP.HCM tích hợp 8 tiết/tuần; bổ sung Cambridge ESL, Young Learners, Common Core và Australian phonics/reading.',
         defaultVisual: '/images/english/Pink_lady_and_cross_section.jpg',
-        sourceIds: ['moet-ctgdpt-2018', 'sgk-ket-noi-tri-thuc', 'cambridge-primary-english', 'cambridge-primary-framework', 'pearson-intl-primary', 'national-reading-panel', 'ies-foundational-reading', 'duolingo-abc', 'gutendex', 'open-library', 'ies-study-learning', 'eef-feedback', 'cast-udl'],
-        benchmarkPattern: ['CEFR-like can-do', 'Duolingo ABC micro-lesson', 'Roleplay', 'Cambridge Primary English stages', 'Pearson iPrimary progression'],
-        sessionRhythm: ['Nhìn ảnh', 'Nói từ', 'Đặt câu', 'Dùng vào tình huống gia đình'],
+        sourceIds: ['moet-ctgdpt-2018', 'moet-english-grade-1-2', 'hcmc-integrated-english-5695', 'sgk-ket-noi-tri-thuc', 'cambridge-primary-esl', 'cambridge-young-learners', 'cambridge-primary-english', 'cambridge-primary-framework', 'pearson-intl-primary', 'national-reading-panel', 'ies-foundational-reading', 'duolingo-abc', 'gutendex', 'open-library', 'ies-study-learning', 'eef-feedback', 'cast-udl'],
+        benchmarkPattern: ['MOET Grade 1-2 familiarization', 'HCMC integrated English 8 periods/week', 'Cambridge ESL five strands', 'Cambridge Young Learners milestones', 'Duolingo ABC micro-lesson', 'Roleplay'],
+        sessionRhythm: ['Nghe/nhìn', 'Nói lại', 'Chọn hoặc ghép từ', 'Đặt câu trong tình huống gia đình'],
     },
     science: {
         subject: 'science',

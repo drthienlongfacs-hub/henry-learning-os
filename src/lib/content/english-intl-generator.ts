@@ -229,6 +229,26 @@ export function generateInternationalExercises(
   return exercises;
 }
 
+export function generateInternationalTopicExercises(topicKey: string, count: number = 10): EnglishProblem[] {
+  if (topicKey.startsWith('ph_')) {
+    const level = PHONICS_LEVELS.find(l => l.levelId === topicKey);
+    return level ? Array.from({ length: count }, () => pick(PHONICS_GENS)(level)) : [];
+  }
+  if (topicKey.startsWith('gr_')) {
+    const topic = GRAMMAR_TOPICS.find(t => t.topicId === topicKey);
+    return topic ? Array.from({ length: count }, () => pick(GRAMMAR_GENS)(topic)) : [];
+  }
+  if (topicKey.startsWith('rd_')) {
+    const passage = READING_PASSAGES.find(p => p.passageId === topicKey);
+    return passage ? Array.from({ length: count }, () => genReadingComprehension(passage)) : [];
+  }
+  if (topicKey.startsWith('sw_g')) {
+    const grade = Number(topicKey.replace('sw_g', ''));
+    return Number.isFinite(grade) ? Array.from({ length: count }, () => genSightWordChallenge(Math.min(Math.max(grade, 1), 5))) : [];
+  }
+  return [];
+}
+
 // ── Topic info for UI registration ──
 export interface IntlTopicInfo {
   key: string;

@@ -1,3 +1,9 @@
+import { GRADE1_UNITS, GRADE2_UNITS } from './english-units-g1g2';
+import { GRADE3_UNITS, type UnitData } from './english-units-g3';
+import { GRADE4_UNITS } from './english-units-g4';
+import { GRADE5_UNITS } from './english-units-g5';
+import { GRAMMAR_TOPICS, PHONICS_LEVELS, READING_PASSAGES, SIGHT_WORDS } from './english-international';
+
 export type PrimaryCurriculumSubjectKey =
     | 'math'
     | 'vietnamese'
@@ -111,6 +117,109 @@ const english = (grade: 1 | 2 | 3 | 4 | 5, topicKey: string, topicName: string, 
         'Trước khi claim phủ chuẩn, mỗi item Ngoại ngữ 1 phải có kỹ năng đo, tình huống giao tiếp, từ/mẫu câu và mức hỗ trợ.',
     );
 
+const englishSourceIds = (grade: number) =>
+    grade <= 2
+        ? ['moet-english-grade-1-2', 'hcmc-integrated-english-5695', 'cambridge-primary-esl', 'cambridge-young-learners']
+        : ['hcmc-integrated-english-5695', 'cambridge-primary-esl', 'cambridge-young-learners'];
+
+function englishUnitMap(unit: UnitData): PrimaryCurriculumTopicMap {
+    const grade = unit.grade as 1 | 2 | 3 | 4 | 5;
+    const strand = grade <= 2
+        ? 'Làm quen tiếng Anh: nghe - nói, từ vựng, mẫu câu quen thuộc'
+        : 'Ngoại ngữ 1: nghe - nói - đọc - viết theo chủ đề giao tiếp';
+    return mapTopic(
+        'english',
+        'Ngoại ngữ 1',
+        grade,
+        unit.unitId,
+        `Global Success Unit ${unit.unitNumber}: ${unit.title}`,
+        strand,
+        `Học sinh dùng được từ vựng và mẫu câu của Unit ${unit.unitNumber} (${unit.titleVi}) trong tình huống quen thuộc, có hỗ trợ tiếng Việt khi cần.`,
+        `Ở lớp ${grade}, Unit này phải giúp con nghe, nói và dùng câu trong đời sống; riêng lớp 1-2 giữ đúng mức làm quen nhẹ nhàng.`,
+        `Con luyện Unit ${unit.unitNumber}: nghe hoặc nhìn từ khóa, chọn nghĩa đúng, hoàn thành mẫu câu và nói lại một câu về bản thân.`,
+        ['topicKey', 'gradeLevel', 'unitId', 'từ hoặc mẫu câu mục tiêu', 'kỹ năng nghe/nói/đọc/viết', 'mức hỗ trợ tiếng Việt'],
+        ['Thuộc từ nhưng không dùng được trong câu', 'Chọn đúng khi nhìn chữ nhưng chưa nói được trong ngữ cảnh'],
+        'Trước khi claim Unit SGK đã phủ chuẩn, cần sinh được bài thật, lưu attempt theo unitId, có câu hỏi nghe/nói/đọc/viết và còn trạng thái needs_human_review.',
+        englishSourceIds(grade),
+    );
+}
+
+function englishPhonicsMap(level: (typeof PHONICS_LEVELS)[number]): PrimaryCurriculumTopicMap {
+    const grade = level.grade as 1 | 2 | 3 | 4 | 5;
+    return mapTopic(
+        'english',
+        'Ngoại ngữ 1',
+        grade,
+        level.levelId,
+        level.title,
+        'International phonics: âm chữ, sight words và decodable words',
+        `Học sinh nhận diện âm/chữ trong ${level.titleVi}, đọc từ giải mã được và nhận ra một số sight words phù hợp lớp ${grade}.`,
+        `Ở lớp ${grade}, phonics là nền đọc tiếng Anh: con cần nối âm với chữ, đọc từ ngắn và không chỉ học thuộc mặt chữ.`,
+        `Con nghe hoặc nhìn "${level.decodableWords[0]}", chọn âm/chữ đầu, rồi đọc lại từ trong một câu ngắn.`,
+        ['topicKey', 'gradeLevel', 'phonics level', 'letter/digraph/blend target', 'decodable word', 'sight word response'],
+        ['Đọc tên chữ cái thay vì âm', 'Đoán từ theo hình mà không nhìn âm/chữ'],
+        'Trước khi claim phonics đủ chuẩn quốc tế, mỗi level phải sinh bài đúng levelId, có từ giải mã, sight word và dữ liệu lỗi âm/chữ.',
+        ['cambridge-primary-esl', 'cambridge-young-learners', 'national-reading-panel', 'ies-foundational-reading'],
+    );
+}
+
+function englishGrammarMap(topic: (typeof GRAMMAR_TOPICS)[number]): PrimaryCurriculumTopicMap {
+    const grade = topic.grade as 1 | 2 | 3 | 4 | 5;
+    return mapTopic(
+        'english',
+        'Ngoại ngữ 1',
+        grade,
+        topic.topicId,
+        topic.title,
+        'International grammar: Use of English trong câu giao tiếp',
+        `Học sinh dùng được quy tắc ${topic.titleVi} trong câu ngắn và sửa được một lỗi mẫu ở mức lớp ${grade}.`,
+        `Ở lớp ${grade}, ngữ pháp phải phục vụ giao tiếp rõ ý; con không cần học thuật ngữ nặng nếu chưa dùng được trong câu.`,
+        `Con chọn câu đúng theo quy tắc ${topic.rules[0]?.ruleVi ?? topic.titleVi}, sau đó đổi một từ để tạo câu mới.`,
+        ['topicKey', 'gradeLevel', 'grammar rule', 'selected sentence', 'error correction', 'new sentence attempt'],
+        ['Học tên quy tắc nhưng không dùng được trong câu', 'Dịch thứ tự tiếng Việt sang tiếng Anh'],
+        'Trước khi claim grammar đủ chuẩn quốc tế, mỗi topic phải sinh đúng topicId, có rule, ví dụ đúng/sai và dữ liệu câu con tự tạo.',
+        ['cambridge-primary-esl', 'cambridge-primary-english', 'pearson-intl-primary'],
+    );
+}
+
+function englishReadingMap(passage: (typeof READING_PASSAGES)[number]): PrimaryCurriculumTopicMap {
+    const grade = passage.grade as 1 | 2 | 3 | 4 | 5;
+    return mapTopic(
+        'english',
+        'Ngoại ngữ 1',
+        grade,
+        passage.passageId,
+        `Reading: ${passage.title}`,
+        'International reading: đọc hiểu văn bản ngắn',
+        `Học sinh đọc đoạn ${passage.wordCount} từ, tìm chi tiết trong bài và trả lời câu hỏi bằng bằng chứng từ văn bản.`,
+        `Ở lớp ${grade}, đọc hiểu tiếng Anh phải bắt đầu từ văn bản ngắn, câu hỏi rõ và bằng chứng trong bài, không đoán ngoài đoạn.`,
+        `Con đọc "${passage.title}", chọn đáp án cho một câu hỏi who/what/where và chỉ lại câu chứa bằng chứng.`,
+        ['topicKey', 'gradeLevel', 'passageId', 'word count', 'question type', 'text evidence'],
+        ['Trả lời bằng suy đoán ngoài bài', 'Bỏ cuộc khi gặp từ lạ thay vì tìm ngữ cảnh'],
+        'Trước khi claim reading đủ chuẩn quốc tế, mỗi passage phải sinh đúng passageId, có câu hỏi đọc hiểu và lưu evidence từ văn bản.',
+        ['cambridge-primary-esl', 'cambridge-young-learners', 'ies-foundational-reading'],
+    );
+}
+
+function englishSightWordMap(grade: 1 | 2 | 3 | 4 | 5): PrimaryCurriculumTopicMap {
+    const words = SIGHT_WORDS[grade] ?? [];
+    return mapTopic(
+        'english',
+        'Ngoại ngữ 1',
+        grade,
+        `sw_g${grade}`,
+        `Sight Words lớp ${grade}`,
+        'International literacy: sight words và fluency',
+        `Học sinh nhận ra nhanh các từ thông dụng lớp ${grade}, đọc đúng trong câu ngắn và không chỉ đoán theo chữ cái đầu.`,
+        `Ở lớp ${grade}, sight words giúp con đọc trôi hơn, nhưng vẫn cần kiểm tra bằng câu ngắn và từ gần giống để tránh đoán mò.`,
+        `Con nhìn nhanh một từ như "${words[0] ?? 'the'}", chọn đúng trong 4 lựa chọn và đọc lại trong một câu ngắn.`,
+        ['topicKey', 'gradeLevel', 'sight word', 'response speed', 'near-miss option', 'read-aloud check'],
+        ['Nhầm từ gần giống', 'Đọc từng chữ rời rạc mà chưa nhận từ nguyên khối'],
+        'Trước khi claim sight words đủ chuẩn quốc tế, mỗi lớp phải sinh đúng sw_g, có distractor gần giống và lưu dữ liệu nhận diện nhanh.',
+        ['cambridge-primary-esl', 'cambridge-young-learners', 'ies-foundational-reading'],
+    );
+}
+
 const science = (grade: 1 | 2 | 3 | 4 | 5, topicKey: string, topicName: string, strand: string, expectedOutcome: string, exampleTask: string, misconceptionWatch: string[]) =>
     mapTopic(
         'science',
@@ -192,6 +301,14 @@ const art = (grade: 1 | 2 | 3 | 4 | 5, topicKey: string, topicName: string, stra
         'Trước khi claim phủ chuẩn, mỗi item phải có sự tương tác với màu sắc, âm thanh hoặc hình khối.',
     );
 
+const ENGLISH_UNIT_TOPIC_MAPS = [...GRADE1_UNITS, ...GRADE2_UNITS, ...GRADE3_UNITS, ...GRADE4_UNITS, ...GRADE5_UNITS].map(englishUnitMap);
+const ENGLISH_INTERNATIONAL_TOPIC_MAPS = [
+    ...PHONICS_LEVELS.map(englishPhonicsMap),
+    ...GRAMMAR_TOPICS.map(englishGrammarMap),
+    ...READING_PASSAGES.map(englishReadingMap),
+    ...([1, 2, 3, 4, 5] as const).map(englishSightWordMap),
+];
+
 export const PRIMARY_CURRICULUM_TOPIC_MAP: PrimaryCurriculumTopicMap[] = [
     math(1, 'add_sub_10', 'Cộng trừ trong 10', 'Số và phép tính', 'Cộng, trừ trong phạm vi 10 và nói được cách đếm thêm hoặc đếm lùi.', 'Con dùng que tính hoặc chấm tròn để giải 6 + 3, sau đó nói vì sao kết quả là 9.', ['Đếm vẹt nhưng không hiểu thêm/bớt', 'Nhầm dấu cộng và dấu trừ']),
     math(1, 'add_sub_20', 'Cộng trừ trong 20', 'Số và phép tính', 'Cộng, trừ trong phạm vi 20, bước đầu biết tách số qua 10.', 'Con giải 8 + 5 bằng cách tách 5 thành 2 và 3 để làm tròn 10.', ['Qua 10 nhưng không biết tách số', 'Đếm lại từ 1 quá lâu']),
@@ -210,19 +327,30 @@ export const PRIMARY_CURRICULUM_TOPIC_MAP: PrimaryCurriculumTopicMap[] = [
     math(2, 'measure_cm', 'Đo độ dài (cm)', 'Hình học và đo lường', 'Đo, ước lượng và so sánh độ dài bằng xăng-ti-mét trong tình huống quen thuộc.', 'Con đặt thước từ vạch 0 để đo cây bút dài 12 cm.', ['Đặt thước lệch vạch 0', 'Đọc nhầm đơn vị']),
     math(2, 'word_g2', 'Toán đố lớp 2', 'Giải quyết vấn đề', 'Đọc bài toán một bước hoặc hai bước đơn giản, chọn phép tính phù hợp.', 'Con gạch dữ kiện, nói cần tìm gì và giải bài toán thêm/bớt đồ vật.', ['Chỉ thấy số là cộng', 'Không đọc câu hỏi cuối']),
     math(3, 'mult_div', 'Nhân chia cơ bản', 'Số và phép tính', 'Dùng bảng nhân/chia và hiểu quan hệ nhân-chia.', 'Con giải 24 : 6 bằng cách hỏi 6 nhân mấy bằng 24.', ['Thuộc bảng nhân nhưng không thấy phép chia ngược', 'Nhầm thương và tích']),
+    math(3, 'mult_table', 'Bảng nhân', 'Số và phép tính', 'Ghi nhớ bảng nhân 2-9 dựa trên nhóm bằng nhau, đếm cách và quan hệ phép nhân.', 'Con chọn bảng nhân 6, giải 6 x 7 bằng nhóm bằng nhau rồi kiểm bằng 7 x 6.', ['Học vẹt bảng nhân nhưng không hiểu nhóm bằng nhau', 'Nhầm tích với thừa số']),
+    math(3, 'rounding', 'Làm tròn số', 'Số và phép tính', 'Làm tròn số theo hàng chục, hàng trăm và giải thích dựa trên mốc gần nhất.', 'Con đặt 367 giữa 300 và 400, nhìn chữ số hàng chục để làm tròn đến hàng trăm.', ['Nhìn sai hàng cần làm tròn', 'Không hiểu vì sao 5 thì làm tròn lên']),
+    math(3, 'basic_stats', 'Thống kê đơn giản', 'Thống kê và xác suất', 'Thu thập, đọc và so sánh dữ liệu đơn giản từ bảng hoặc biểu đồ tranh.', 'Con đếm số bạn thích từng loại trái cây, lập bảng và nói loại nào nhiều nhất bằng dữ liệu.', ['Nhìn tranh mà không đếm số lượng', 'Kết luận không dựa trên dữ liệu']),
+    math(3, 'numbers_10000', 'Số đến 10.000', 'Số và phép tính', 'Đọc, viết, phân tích và so sánh số đến 10.000 theo hàng nghìn, trăm, chục, đơn vị.', 'Con phân tích 4.582 thành 4 nghìn, 5 trăm, 8 chục, 2 đơn vị rồi so sánh với 4.528.', ['Đọc sai chữ số 0 giữ hàng', 'So sánh từ hàng đơn vị trước']),
     math(3, 'perimeter', 'Chu vi', 'Hình học và đo lường', 'Tính chu vi hình đơn giản bằng tổng độ dài các cạnh.', 'Con đo bốn cạnh hình chữ nhật và cộng lại để tìm chu vi.', ['Nhầm chu vi với diện tích', 'Quên cộng đủ cạnh']),
     math(3, 'patterns', 'Quy luật dãy số', 'Số và phép tính', 'Nhận ra quy luật tăng/giảm và nêu được bước lặp.', 'Con nhìn dãy 3, 6, 9, 12 và nói mỗi bước thêm 3.', ['Đoán số tiếp theo nhưng không nêu quy luật', 'Không kiểm tra nhiều khoảng cách']),
     math(3, 'word_g3', 'Toán đố lớp 3', 'Giải quyết vấn đề', 'Giải bài toán có phép nhân, chia hoặc hai bước tính.', 'Con tóm tắt bài toán chia đều đồ vật rồi viết phép chia và lời đáp.', ['Không phân biệt chia đều và chia theo nhóm', 'Bỏ đơn vị trong lời đáp']),
     math(4, 'fractions', 'Phân số', 'Số và phép tính', 'Hiểu phân số, so sánh phân số đơn giản và liên hệ phần của toàn bộ.', 'Con so sánh 1/2 và 1/4 bằng cùng một hình được chia đều.', ['So sánh mẫu số lớn là phân số lớn', 'Không kiểm tra cùng một toàn bộ']),
     math(4, 'area', 'Diện tích', 'Hình học và đo lường', 'Tính diện tích hình chữ nhật/hình vuông và hiểu đơn vị vuông.', 'Con lát ô vuông trong hình chữ nhật 4 x 6 để thấy diện tích là 24 ô vuông.', ['Nhầm diện tích với chu vi', 'Quên đơn vị vuông']),
+    math(4, 'angles', 'Góc', 'Hình học và đo lường', 'Nhận biết góc vuông, góc nhọn, góc tù và liên hệ với hình học trong vật thật.', 'Con tìm 3 góc trong phòng học, phân loại góc vuông, góc nhọn, góc tù và giải thích bằng quan sát.', ['Gọi mọi góc là góc vuông', 'Nhầm độ mở của góc với độ dài cạnh']),
+    math(4, 'average', 'Trung bình cộng', 'Số và phép tính', 'Hiểu trung bình cộng là chia đều tổng cho số phần và dùng để so sánh nhóm dữ liệu.', 'Con tính trung bình số sách đọc trong 4 tuần bằng cách cộng tổng rồi chia cho 4.', ['Chỉ cộng mà quên chia', 'Không hiểu trung bình có thể không phải một giá trị đã xuất hiện']),
     math(4, 'large_numbers', 'Số lớn', 'Số và phép tính', 'Đọc, viết, phân tích và so sánh số lớn theo hàng/lớp.', 'Con đọc 125 304 và phân tích thành trăm nghìn, chục nghìn, nghìn, trăm, đơn vị.', ['Bỏ qua chữ số 0 ở giữa', 'Không tách lớp nghìn']),
     math(4, 'mass', 'Khối lượng', 'Hình học và đo lường', 'Đọc, đổi và so sánh đơn vị khối lượng trong tình huống đời sống.', 'Con đổi 2 kg 500 g thành 2500 g khi tính cân nặng túi gạo.', ['Nhầm kg và g', 'Đổi đơn vị theo 10 thay vì 1000']),
     math(5, 'decimals', 'Số thập phân', 'Số và phép tính', 'Đọc, viết, so sánh số thập phân và liên hệ phân số thập phân.', 'Con đặt 3,45 lên bảng hàng phần mười, phần trăm và so sánh với 3,5.', ['So sánh theo số chữ số sau dấu phẩy', 'Không hiểu giá trị vị trí phần thập phân']),
     math(5, 'percent', 'Phần trăm', 'Số và phép tính', 'Hiểu phần trăm là số phần trên 100 và dùng trong bài toán đời sống.', 'Con tính 25% của 80 bằng cách hiểu là 25 trên 100 của 80.', ['Xem phần trăm như số tự nhiên', 'Không xác định toàn bộ là gì']),
     math(5, 'ratio', 'Tỉ số', 'Số và phép tính', 'Hiểu tỉ số, so sánh hai đại lượng và giải tình huống đơn giản.', 'Con giải tỉ số 2:3 bằng hình 2 phần màu đỏ và 3 phần màu xanh.', ['Nhầm tỉ số với hiệu', 'Không giữ cùng đơn vị']),
+    math(5, 'volume', 'Thể tích', 'Hình học và đo lường', 'Hiểu thể tích là số đơn vị khối lấp đầy vật thể và tính với hình hộp đơn giản.', 'Con đếm số khối lập phương trong một hộp 3 x 4 x 2 để giải thích thể tích là 24 đơn vị khối.', ['Nhầm thể tích với diện tích mặt đáy', 'Quên đơn vị khối']),
+    math(5, 'triangle_area', 'Diện tích tam giác', 'Hình học và đo lường', 'Tính diện tích tam giác từ đáy và chiều cao, hiểu tam giác là nửa hình chữ nhật tương ứng.', 'Con ghép hai tam giác bằng nhau thành hình chữ nhật rồi suy ra diện tích bằng đáy x chiều cao chia 2.', ['Quên chia 2', 'Dùng cạnh xiên thay cho chiều cao']),
     math(5, 'charts', 'Biểu đồ và thống kê', 'Thống kê và xác suất', 'Đọc biểu đồ, rút thông tin và trả lời câu hỏi bằng dữ liệu.', 'Con đọc biểu đồ số sách đã đọc từng tháng và tìm tháng tăng nhiều nhất.', ['Nhìn cột cao nhất nhưng không đọc số', 'Không phân biệt trục và nhãn']),
     vietnamese(1, 'alphabet', 'Bảng chữ cái', 'Đọc - viết nền tảng', 'Nhận biết chữ cái tiếng Việt, thứ tự chữ và âm tương ứng.', 'Con nghe âm, chọn chữ cái đúng, viết lại và nói một tiếng có chữ đó.', ['Nhầm chữ in hoa/in thường', 'Nhầm âm và tên chữ']),
     vietnamese(1, 'tones', 'Dấu thanh', 'Đọc - viết nền tảng', 'Nhận biết 6 thanh và hiểu đổi dấu có thể đổi nghĩa.', 'Con đọc ma, má, mà, mã, mả, mạ và nói tiếng nào chỉ mẹ.', ['Nhầm hỏi/ngã', 'Đặt dấu sai vị trí']),
+    vietnamese(1, 'van', 'Vần', 'Đọc - viết nền tảng', 'Nhận biết vần trong tiếng, ghép âm đầu với vần và tìm được tiếng cùng vần.', 'Con nhìn tiếng "bạn", tách âm đầu b và vần an, rồi tìm thêm hai tiếng có vần an.', ['Nhầm vần với phụ âm đầu', 'Đọc thuộc tiếng nhưng chưa tách được cấu trúc']),
+    vietnamese(1, 'ghep_tu', 'Ghép từ', 'Mở rộng vốn từ', 'Ghép hai tiếng thành từ có nghĩa và dùng từ đó trong câu gần gũi.', 'Con ghép "sách" với "vở" thành "sách vở", giải thích nghĩa và đặt một câu về lớp học.', ['Ghép tiếng ngẫu nhiên không có nghĩa', 'Biết nghĩa nhưng chưa dùng được trong câu']),
+    vietnamese(2, 'chinh_ta', 'Chính tả', 'Đọc - viết nền tảng', 'Viết đúng các cặp âm/chữ dễ nhầm như s/x, ch/tr, gi/d, ng/ngh, g/gh, c/k.', 'Con điền chữ còn thiếu trong "trường học", nói quy tắc chính tả và viết lại cả từ.', ['Chọn theo thói quen phát âm địa phương', 'Nhớ quy tắc nhưng không áp dụng khi viết từ thật']),
     vietnamese(2, 'vocabulary', 'Từ vựng chủ đề', 'Mở rộng vốn từ', 'Hiểu nghĩa từ theo chủ đề và dùng từ trong câu gần gũi.', 'Con chọn nghĩa của từ "thư viện" rồi đặt một câu về thư viện trường.', ['Chọn nghĩa theo đoán âm', 'Không dùng được từ trong câu']),
     vietnamese(2, 'reading', 'Đọc hiểu', 'Đọc hiểu văn bản', 'Tìm thông tin rõ ràng, ý chính đơn giản và trả lời bằng câu đủ ý.', 'Con đọc đoạn ngắn về con mèo, tìm chi tiết mèo làm gì mỗi tối.', ['Chỉ nhớ chi tiết đầu đoạn', 'Trả lời cụt không đủ ý']),
     vietnamese(3, 'grammar', 'Ngữ pháp', 'Kiến thức tiếng Việt', 'Nhận biết từ loại, dấu câu và dùng câu đúng trong ngữ cảnh.', 'Con chọn danh từ trong câu rồi viết lại câu có dấu chấm đúng chỗ.', ['Học thuộc tên từ loại nhưng không nhận trong câu', 'Quên dấu câu cuối câu']),
@@ -232,9 +360,13 @@ export const PRIMARY_CURRICULUM_TOPIC_MAP: PrimaryCurriculumTopicMap[] = [
     english(4, 'grammar_en', 'Grammar', 'Ngữ pháp trong câu giao tiếp', 'Dùng mẫu câu đơn giản như hiện tại đơn, đại từ, giới từ trong ngữ cảnh.', 'Con chọn "She goes to school" rồi nói vì sao dùng "goes".', ['Gắn s/es máy móc', 'Dịch tiếng Việt từng chữ sang tiếng Anh']),
     english(4, 'reading_en', 'Reading', 'Đọc hiểu văn bản ngắn', 'Đọc đoạn ngắn, tìm thông tin và hiểu ý chính bằng tiếng Anh có hỗ trợ.', 'Con đọc đoạn về bạn Minh và trả lời Minh thích làm gì.', ['Tìm từ khóa rời rạc', 'Không hiểu câu hỏi hỏi ai/lúc nào']),
     english(5, 'sentence_en', 'Sentences', 'Viết câu ngắn', 'Viết câu đơn giản đúng ý, có chủ ngữ và động từ phù hợp.', 'Con viết 3 câu về thói quen lành mạnh, mỗi câu có một ý rõ.', ['Viết cụm từ chưa thành câu', 'Thiếu chủ ngữ hoặc động từ']),
+    ...ENGLISH_UNIT_TOPIC_MAPS,
+    ...ENGLISH_INTERNATIONAL_TOPIC_MAPS,
     vietnamese(4, 'writing_g4', 'Tập làm văn', 'Kĩ năng viết văn', 'Viết bài văn tả (người, cảnh, đồ vật) có cấu trúc Mở - Thân - Kết và biện pháp tu từ.', 'Con viết mở bài giới thiệu người cần tả, dùng so sánh hoặc nhân hóa ở thân bài.', ['Thiếu cấu trúc 3 phần', 'Không dùng biện pháp tu từ nào']),
     vietnamese(5, 'writing_g5', 'Nghị luận đơn giản', 'Kĩ năng viết văn', 'Viết bài nghị luận có ý kiến, lý lẽ và dẫn chứng.', 'Con nêu ý kiến về việc đọc sách, đưa ra 2 lý do và một ví dụ cụ thể.', ['Chỉ nêu ý kiến mà không có dẫn chứng', 'Nhầm nghị luận với kể chuyện']),
     science(1, 'body_health', 'Cơ thể và sức khỏe', 'Con người và sức khỏe', 'Nhận biết bộ phận cơ thể, giác quan, vệ sinh và an toàn cá nhân.', 'Con chọn khi nào cần rửa tay và nói vì sao trước khi ăn phải rửa tay.', ['Học thuộc tên cơ quan nhưng không biết hành vi an toàn', 'Chọn đáp án theo thói quen sai']),
+    science(1, 'family_community', 'Gia đình và cộng đồng', 'Con người và sức khỏe', 'Nhận biết thành viên gia đình, vai trò trong cộng đồng và cách ứng xử an toàn, tôn trọng.', 'Con chọn hành động phù hợp khi gặp hàng xóm hoặc người thân cần giúp đỡ, rồi nói vì sao an toàn.', ['Nhầm người quen với người được phép đi theo', 'Không phân biệt giúp đỡ và tự đặt mình vào rủi ro']),
+    science(1, 'traffic_safety', 'An toàn giao thông', 'Con người và sức khỏe', 'Nhận biết tín hiệu giao thông, cách đi bộ/qua đường an toàn và hành vi cần tránh.', 'Con nhìn đèn đỏ, vạch qua đường và chọn khi nào được qua đường cùng người lớn.', ['Qua đường theo bạn mà không quan sát', 'Không hiểu tín hiệu đèn và vạch qua đường']),
     science(2, 'nature', 'Thực vật và động vật', 'Tự nhiên quanh em', 'Quan sát cây, con vật, nhu cầu sống và đặc điểm đơn giản.', 'Con xem cây bị héo, nói cây cần nước/ánh sáng/không khí và cách chăm sóc.', ['Nói cây chỉ cần nước', 'Nhầm côn trùng và động vật khác']),
     science(3, 'weather_earth', 'Thời tiết và Trái Đất', 'Trái Đất và bầu trời', 'Quan sát thời tiết, vòng tuần hoàn nước và hiện tượng tự nhiên gần gũi.', 'Con mô tả mưa hình thành từ hơi nước ngưng tụ thành mây rồi rơi xuống.', ['Học thuộc chu trình nhưng không giải thích được hiện tượng', 'Nhầm bay hơi và ngưng tụ']),
     science(4, 'matter_energy', 'Vật chất và năng lượng', 'Vật chất và năng lượng', 'Nhận biết tính chất vật liệu, ánh sáng, âm thanh, nhiệt và năng lượng.', 'Con dự đoán đường tan nhanh hơn trong nước nóng hay lạnh rồi giải thích bằng quan sát.', ['Gọi tan là biến mất', 'Không phân biệt dẫn nhiệt và cách nhiệt']),
@@ -248,7 +380,9 @@ export const PRIMARY_CURRICULUM_TOPIC_MAP: PrimaryCurriculumTopicMap[] = [
     ethics(2, 'express_emotion', 'Thể hiện cảm xúc', 'Giáo dục kĩ năng sống', 'Nhận biết và thể hiện cảm xúc bản thân đúng cách, tôn trọng cảm xúc người khác.', 'Con chọn cách hít thở sâu khi tức giận thay vì ném đồ chơi.', ['Cho rằng tức giận là xấu và phải giấu đi', 'Thể hiện cảm xúc làm tổn thương người khác']),
     ethics(3, 'honesty', 'Trung thực', 'Giáo dục đạo đức', 'Hiểu ý nghĩa của trung thực, dũng cảm nhận lỗi và không gian lận.', 'Con chọn tự giác nhận lỗi khi vô tình làm vỡ bình hoa trong lớp.', ['Nghĩ rằng nói dối nhỏ không sao', 'Đổ lỗi cho người khác để tránh bị phạt']),
     ethics(4, 'responsibility', 'Trách nhiệm', 'Giáo dục đạo đức', 'Hiểu trách nhiệm cá nhân, giữ lời hứa và hoàn thành nhiệm vụ được giao.', 'Con giữ lời hứa giúp mẹ dọn nhà thay vì đi chơi với bạn.', ['Tránh né việc khó', 'Không giữ lời hứa vì lý do không chính đáng']),
+    ethics(4, 'children_rights', 'Quyền trẻ em', 'Giáo dục pháp luật và quyền trẻ em', 'Nhận biết quyền được an toàn, học tập, chăm sóc và biết tìm người lớn tin cậy khi quyền bị xâm phạm.', 'Con chọn người lớn tin cậy để báo khi bị ép làm điều không an toàn và giải thích quyền được bảo vệ.', ['Nghĩ quyền trẻ em là muốn gì cũng được', 'Không biết nhờ người lớn tin cậy khi gặp rủi ro']),
     ethics(5, 'community_empathy', 'Đồng cảm cộng đồng', 'Giáo dục đạo đức', 'Biết quan tâm, chia sẻ với người yếu thế và cộng đồng xung quanh.', 'Con chủ động làm quen và rủ bạn mới chuyển trường chơi cùng.', ['Thờ ơ với khó khăn của người khác', 'Chỉ giúp đỡ khi bị ép buộc']),
+    ethics(5, 'internet_safety', 'An toàn trên mạng', 'Đạo đức số và an toàn cá nhân', 'Biết bảo vệ thông tin cá nhân, nhận diện rủi ro trực tuyến và báo phụ huynh khi gặp nội dung/người lạ.', 'Con phân loại thông tin nào không được chia sẻ trên mạng và chọn báo ba/mẹ khi có tin nhắn lạ.', ['Chia sẻ tên trường, địa chỉ hoặc ảnh cá nhân', 'Tự xử lý tin nhắn lạ mà không báo người lớn']),
     art(1, 'basic_colors', 'Màu sắc cơ bản', 'Mĩ thuật', 'Nhận biết các màu cơ bản và pha màu đơn giản.', 'Con chỉ ra màu đỏ, vàng, xanh lam trong bức tranh và biết đỏ pha vàng ra cam.', ['Gọi sai tên màu', 'Tô màu tràn viền không kiểm soát']),
     art(2, 'music_rhythm', 'Nhịp điệu cơ bản', 'Âm nhạc', 'Nhận biết và vỗ tay theo nhịp điệu bài hát đơn giản.', 'Con vỗ tay đúng nhịp 2/4 theo bài hát thiếu nhi.', ['Vỗ tay nhanh/chậm hơn nhạc', 'Không cảm nhận được phách mạnh']),
     art(3, 'shapes_drawing', 'Đường nét và hình khối', 'Mĩ thuật', 'Nhận biết các loại đường nét, hình khối cơ bản và ý nghĩa biểu cảm.', 'Con phân biệt đường thẳng ngang (vững chãi) và đường cong (mềm mại) trong bài vẽ.', ['Không phân biệt 2D và 3D', 'Chưa biết bố cục xa gần']),

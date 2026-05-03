@@ -387,7 +387,7 @@ export function genSentenceEn(): EnglishProblem {
 }
 
 import { generateUnitExercises, getUnitRegistry } from './english-unit-generator';
-import { generateInternationalExercises, getInternationalTopics } from './english-intl-generator';
+import { generateInternationalTopicExercises, getInternationalTopics } from './english-intl-generator';
 import { FRAMEWORK_INFO } from '@/data/english-international';
 
 export interface EnTopicInfo {
@@ -454,7 +454,7 @@ function buildIntlTopics(): EnTopicInfo[] {
                 category: t.category,
                 icon: t.icon,
                 generator: () => {
-                    const exercises = generateInternationalExercises(t.gradeLevel, t.category, 1);
+                    const exercises = generateInternationalTopicExercises(t.key, 1);
                     return exercises[0] || genVocabEn();
                 },
             });
@@ -476,11 +476,7 @@ export function generateEnglishSet(grade: number, topicKey?: string, count: numb
     }
     // International category-specific
     if (topicKey?.startsWith('ph_') || topicKey?.startsWith('gr_') || topicKey?.startsWith('rd_') || topicKey?.startsWith('sw_')) {
-        const cat = topicKey.startsWith('ph_') ? 'phonics'
-            : topicKey.startsWith('gr_') ? 'grammar'
-            : topicKey.startsWith('rd_') ? 'reading'
-            : 'sight_words';
-        return generateInternationalExercises(grade, cat, count);
+        return generateInternationalTopicExercises(topicKey, count);
     }
     const topics = ENGLISH_TOPICS.filter(t => t.gradeLevel <= grade && (!topicKey || t.key === topicKey));
     if (topics.length === 0) return [];
@@ -489,4 +485,3 @@ export function generateEnglishSet(grade: number, topicKey?: string, count: numb
         return t.generator();
     });
 }
-

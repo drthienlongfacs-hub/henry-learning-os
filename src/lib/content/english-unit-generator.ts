@@ -108,7 +108,7 @@ export function generateUnitExercises(
     unitId?: string,
     count: number = 10
 ): EnglishProblem[] {
-    const gradeMap: Record<number, UnitData[]> = { 3: GRADE3_UNITS, 4: GRADE4_UNITS, 5: GRADE5_UNITS };
+    const gradeMap: Record<number, UnitData[]> = { 1: GRADE1_UNITS, 2: GRADE2_UNITS, 3: GRADE3_UNITS, 4: GRADE4_UNITS, 5: GRADE5_UNITS };
     const pool = gradeMap[grade] || [];
     const units = unitId ? pool.filter(u => u.unitId === unitId) : pool;
     if (units.length === 0) return [];
