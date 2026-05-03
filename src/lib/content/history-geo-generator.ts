@@ -240,6 +240,44 @@ export function genDiTich(): HisGeoProblem {
     };
 }
 
+// ── FINAL: Vùng miền VN (G4) ──
+const VUNG_MIEN = [
+    { q: 'Việt Nam có bao nhiêu vùng kinh tế - xã hội?', a: '6 vùng', opts: ['6 vùng', '3 vùng', '8 vùng', '10 vùng'], e: '6 vùng: Bắc Bộ, Bắc Trung Bộ, Nam Trung Bộ, Tây Nguyên, Đông Nam Bộ, Tây Nam Bộ.' },
+    { q: 'Đồng bằng sông Cửu Long nổi tiếng về:', a: 'Trồng lúa, trái cây, thủy sản', opts: ['Trồng lúa, trái cây, thủy sản', 'Khai thác than', 'Sản xuất ô tô', 'Du lịch biển'], e: 'ĐBSCL là vựa lúa lớn nhất VN, xuất khẩu gạo hàng đầu thế giới.' },
+    { q: 'Tây Nguyên nổi tiếng với:', a: 'Cà phê, cao su, bazan', opts: ['Cà phê, cao su, bazan', 'Lúa gạo', 'Hải sản', 'Than đá'], e: 'Tây Nguyên có đất đỏ bazan → trồng cà phê (Đắk Lắk #1 VN), cao su, tiêu.' },
+    { q: 'Thành phố lớn nhất Việt Nam:', a: 'TP. Hồ Chí Minh', opts: ['TP. Hồ Chí Minh', 'Hà Nội', 'Đà Nẵng', 'Hải Phòng'], e: 'TP.HCM (9+ triệu dân) là trung tâm kinh tế lớn nhất, trước là Sài Gòn.' },
+];
+
+export function genVungMien(): HisGeoProblem {
+    const item = VUNG_MIEN[rand(0, VUNG_MIEN.length - 1)];
+    return {
+        id: genId(), gradeLevel: 4, difficulty: 4,
+        type: 'geography', topic: 'Vùng miền VN', topicKey: 'vung_mien',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['VN có 6 vùng kinh tế - xã hội', `Đáp án: ${item.a}`],
+        illustration: '/images/core/history.svg',
+    };
+}
+
+// ── FINAL: Châu lục & Đại dương (G5) ──
+const CHAU_LUC = [
+    { q: 'Trên thế giới có bao nhiêu châu lục?', a: '7 châu lục', opts: ['7 châu lục', '5 châu lục', '6 châu lục', '4 châu lục'], e: '7 châu: Á, Âu, Phi, Bắc Mỹ, Nam Mỹ, Đại Dương (Châu Úc), Nam Cực.' },
+    { q: 'Việt Nam nằm ở châu lục nào?', a: 'Châu Á', opts: ['Châu Á', 'Châu Âu', 'Châu Phi', 'Châu Úc'], e: 'VN nằm ở Đông Nam Á, thuộc châu Á — châu lục lớn nhất thế giới.' },
+    { q: 'Đại dương lớn nhất thế giới:', a: 'Thái Bình Dương', opts: ['Thái Bình Dương', 'Đại Tây Dương', 'Ấn Độ Dương', 'Bắc Băng Dương'], e: 'Thái Bình Dương chiếm ~1/3 diện tích Trái Đất, lớn hơn tổng đất liền.' },
+    { q: 'Châu lục nào lạnh nhất, không có người sinh sống thường xuyên?', a: 'Châu Nam Cực', opts: ['Châu Nam Cực', 'Châu Á', 'Châu Âu', 'Châu Phi'], e: 'Nam Cực: -60°C trung bình, chỉ có nhà khoa học đến nghiên cứu.' },
+];
+
+export function genChauLuc(): HisGeoProblem {
+    const item = CHAU_LUC[rand(0, CHAU_LUC.length - 1)];
+    return {
+        id: genId(), gradeLevel: 5, difficulty: 5,
+        type: 'geography', topic: 'Châu lục & Đại dương', topicKey: 'chau_luc',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['7 châu lục, 4 đại dương', `Đáp án: ${item.a}`],
+        illustration: '/images/core/history.svg',
+    };
+}
+
 // ══════════════════════════════════════════════
 // TOPIC REGISTRY
 // ══════════════════════════════════════════════
@@ -257,10 +295,12 @@ export const HISGEO_TOPICS: HisGeoTopicInfo[] = [
     { key: 'dia_ly_g4', name: 'Địa lý tự nhiên VN', gradeLevel: 4, generator: genDiaLyG4, icon: '🏔️' },
     { key: 'nhan_vat_ls', name: 'Nhân vật lịch sử', gradeLevel: 4, generator: genNhanVatLS, icon: '⚔️' },
     { key: 'ban_do', name: 'Bản đồ & Phương hướng', gradeLevel: 4, generator: genBanDo, icon: '🧭' },
+    { key: 'vung_mien', name: 'Vùng miền VN', gradeLevel: 4, generator: genVungMien, icon: '🏞️' },
     { key: 'geography', name: 'Địa lý Việt Nam', gradeLevel: 5, generator: genGeography, icon: '🗺️' },
     { key: 'history_g5', name: 'Lịch sử VN hiện đại', gradeLevel: 5, generator: genHistoryG5, icon: '🇻🇳' },
     { key: 'dan_cu_kt', name: 'Dân cư & Kinh tế VN', gradeLevel: 5, generator: genDanCuKT, icon: '🏭' },
     { key: 'di_tich_di_san', name: 'Di tích & Di sản VN', gradeLevel: 5, generator: genDiTich, icon: '🏛️' },
+    { key: 'chau_luc', name: 'Châu lục & Đại dương', gradeLevel: 5, generator: genChauLuc, icon: '🌏' },
 ];
 
 export function generateHisGeoSet(grade: number, topicKey?: string, count: number = 10): HisGeoProblem[] {

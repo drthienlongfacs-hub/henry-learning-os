@@ -11,7 +11,7 @@ export interface ScienceProblem {
     explanation: string;
     difficulty: number;
     hints: string[];
-    type: 'body' | 'plants' | 'animals' | 'matter' | 'earth' | 'ecosystem' | 'health' | 'weather';
+    type: 'body' | 'plants' | 'animals' | 'matter' | 'earth' | 'ecosystem' | 'health' | 'weather' | 'physical';
     gradeLevel: number;
     topic: string;
     topicKey: string;
@@ -422,6 +422,44 @@ export function genDinhDuong(): ScienceProblem {
     };
 }
 
+// ── FINAL: Nam châm (G4) ──
+const NAM_CHAM = [
+    { q: 'Nam châm có mấy cực?', a: '2 cực (Bắc và Nam)', opts: ['2 cực (Bắc và Nam)', '1 cực', '3 cực', '4 cực'], e: 'Nam châm luôn có 2 cực: cực Bắc (N) và cực Nam (S).' },
+    { q: 'Nam châm hút được vật liệu nào?', a: 'Sắt (kim loại từ tính)', opts: ['Sắt (kim loại từ tính)', 'Nhựa', 'Gỗ', 'Giấy'], e: 'Nam châm hút sắt, thép, niken, cobalt — gọi là vật liệu từ tính.' },
+    { q: 'Hai cực cùng tên của 2 nam châm sẽ:', a: 'Đẩy nhau', opts: ['Đẩy nhau', 'Hút nhau', 'Không tác dụng', 'Nổ'], e: 'Cùng cực đẩy nhau (N-N, S-S). Khác cực hút nhau (N-S).' },
+    { q: 'La bàn hoạt động dựa trên nguyên lý gì?', a: 'Kim nam châm luôn chỉ hướng Bắc-Nam', opts: ['Kim nam châm luôn chỉ hướng Bắc-Nam', 'Pin điện', 'Ánh sáng mặt trời', 'Gió'], e: 'Kim la bàn là nam châm nhỏ, tự quay về hướng Bắc-Nam của Trái Đất.' },
+];
+
+export function genNamCham(): ScienceProblem {
+    const item = NAM_CHAM[rand(0, NAM_CHAM.length - 1)];
+    return {
+        id: genId(), gradeLevel: 4, difficulty: 4,
+        type: 'physical', topic: 'Nam châm', topicKey: 'nam_cham',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Cùng cực đẩy, khác cực hút', `Đáp án: ${item.a}`],
+        illustration: '/images/core/science.svg',
+    };
+}
+
+// ── FINAL: Biến đổi khí hậu (G5) ──
+const BIEN_DOI_KH = [
+    { q: 'Hiệu ứng nhà kính là gì?', a: 'Khí CO₂ giữ nhiệt, làm Trái Đất nóng lên', opts: ['Khí CO₂ giữ nhiệt, làm Trái Đất nóng lên', 'Nhà kính trồng rau', 'Kính chống nắng', 'Mùa đông lạnh hơn'], e: 'CO₂, CH₄ giữ nhiệt như lớp kính → Trái Đất nóng lên = hiệu ứng nhà kính.' },
+    { q: 'Nguyên nhân chính gây biến đổi khí hậu:', a: 'Đốt nhiên liệu hóa thạch (than, dầu, khí)', opts: ['Đốt nhiên liệu hóa thạch (than, dầu, khí)', 'Trồng cây', 'Mưa nhiều', 'Gió mạnh'], e: 'Đốt than, dầu, khí gas thải CO₂ → tăng hiệu ứng nhà kính → nóng lên toàn cầu.' },
+    { q: 'Biến đổi khí hậu gây ra hậu quả gì?', a: 'Băng tan, nước biển dâng, thời tiết cực đoan', opts: ['Băng tan, nước biển dâng, thời tiết cực đoan', 'Cây xanh mọc tốt hơn', 'Không ảnh hưởng', 'Trái Đất lạnh hơn'], e: 'Nóng lên → băng tan → nước biển dâng → bão lũ, hạn hán tăng.' },
+    { q: 'Em có thể giúp giảm biến đổi khí hậu bằng cách:', a: 'Tiết kiệm điện, trồng cây, đi xe đạp', opts: ['Tiết kiệm điện, trồng cây, đi xe đạp', 'Dùng nhiều điện', 'Đốt rác', 'Không cần làm gì'], e: '3R + tiết kiệm năng lượng + trồng cây + giao thông xanh.' },
+];
+
+export function genBienDoiKH(): ScienceProblem {
+    const item = BIEN_DOI_KH[rand(0, BIEN_DOI_KH.length - 1)];
+    return {
+        id: genId(), gradeLevel: 5, difficulty: 5,
+        type: 'earth', topic: 'Biến đổi khí hậu', topicKey: 'bien_doi_kh',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['CO₂ → nóng lên → băng tan', `Đáp án: ${item.a}`],
+        illustration: '/images/core/science.svg',
+    };
+}
+
 // ══════════════════════════════════════════════
 // TOPIC REGISTRY
 // ══════════════════════════════════════════════
@@ -448,11 +486,13 @@ export const SCIENCE_TOPICS: SciTopicInfo[] = [
     { key: 'weather_earth', name: 'Thời tiết & Trái Đất', gradeLevel: SCIENCE_TOPIC_GRADE.weather_earth, generator: genWeatherEarth, icon: '🌍' },
     { key: 'nhiet_chat', name: 'Nhiệt & Chất', gradeLevel: 4, generator: genNhietChat, icon: '🌡️' },
     { key: 'sound_light', name: 'Âm thanh & Ánh sáng', gradeLevel: 4, generator: genSoundLight, icon: '🔦' },
+    { key: 'nam_cham', name: 'Nam châm', gradeLevel: 4, generator: genNamCham, icon: '🧲' },
     { key: 'matter_energy', name: 'Vật chất & Năng lượng', gradeLevel: SCIENCE_TOPIC_GRADE.matter_energy, generator: genMatterEnergy, icon: '⚡' },
     { key: 'ecosystem', name: 'Hệ sinh thái & MT', gradeLevel: SCIENCE_TOPIC_GRADE.ecosystem, generator: genEcosystem, icon: '🌳' },
     { key: 'food_chain', name: 'Chuỗi thức ăn', gradeLevel: 5, generator: genFoodChain, icon: '🔗' },
     { key: 'sinh_san', name: 'Sinh sản TV & ĐV', gradeLevel: 5, generator: genSinhSan, icon: '🌱' },
     { key: 'dien_co_ban', name: 'Điện cơ bản', gradeLevel: 5, generator: genDienCoBan, icon: '🔌' },
+    { key: 'bien_doi_kh', name: 'Biến đổi khí hậu', gradeLevel: 5, generator: genBienDoiKH, icon: '🌡️' },
 ];
 
 export function generateScienceSet(grade: number, topicKey?: string, count: number = 10): ScienceProblem[] {
