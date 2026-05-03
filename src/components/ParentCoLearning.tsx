@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { Users, ChevronDown, ChevronUp, Star, BookOpen, MessageCircle, Clock, Lightbulb } from 'lucide-react';
+import { Users, ChevronDown, ChevronUp, MessageCircle, Clock, Lightbulb } from 'lucide-react';
 
 interface CoLearningTip {
   id: string;
@@ -45,7 +45,7 @@ const TIPS: CoLearningTip[] = [
     descriptionVi:'Nhờ con tóm tắt lại bằng tiếng Việt. Kết nối tiếng mẹ đẻ - tiếng Anh, xác nhận hiểu bài.',
     timeMinutes:3, icon:'🇻🇳', evidence:'Cummins (1979) Linguistic Interdependence' },
   { id:'a2', category:'after', title:'Connect to real life', titleVi:'Kết nối với đời thực',
-    description:'"Have you ever seen a penguin? Where?" — Transfer learning from screen to real world. Evidence: bridging doubles retention.',
+    description:'"Have you ever seen a penguin? Where?" — Transfer learning from screen to real world; keep the claim descriptive until local retention data exists.',
     descriptionVi:'"Con đã bao giờ thấy chim cánh cụt chưa? Ở đâu?" — Chuyển học từ màn hình sang đời thực.',
     timeMinutes:2, icon:'🌍', evidence:'Transfer theory — Bransford (1999)' },
   { id:'a3', category:'after', title:'Star rating together', titleVi:'Cùng chấm sao',
@@ -68,7 +68,8 @@ export default function ParentCoLearning({ lang }: { lang: string }) {
   const toggleDone = (id: string) => {
     setDoneTips(prev => {
       const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
       return next;
     });
   };
@@ -98,8 +99,8 @@ export default function ParentCoLearning({ lang }: { lang: string }) {
             </div>
             <p style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.85)', margin: 0 }}>
               {vi
-                ? `${TIPS.length} hoạt động • ~${totalTime} phút • ${doneCount}/${TIPS.length} đã làm • Bằng chứng: đồng học tăng gấp đôi output`
-                : `${TIPS.length} activities • ~${totalTime}min • ${doneCount}/${TIPS.length} done • Evidence: co-learning doubles output`}
+                ? `${TIPS.length} hoạt động • ~${totalTime} phút • ${doneCount}/${TIPS.length} đã làm • Nguồn hướng dẫn, chưa claim hiệu quả định lượng`
+                : `${TIPS.length} activities • ~${totalTime}min • ${doneCount}/${TIPS.length} done • Source-guided, no quantified claim yet`}
             </p>
           </div>
           {expanded ? <ChevronUp size={18} color="#fff" /> : <ChevronDown size={18} color="#fff" />}
@@ -163,8 +164,8 @@ export default function ParentCoLearning({ lang }: { lang: string }) {
 
           <div style={{ marginTop: '0.3rem', fontSize: '0.5rem', color: '#94a3b8', lineHeight: 1.5, display: 'flex', alignItems: 'center', gap: '4px' }}>
             <MessageCircle size={8} />
-            {vi ? 'Bằng chứng: Whitehurst (1988), Cummins (1979), Beck (2002). Co-learning tăng gấp đôi output ngôn ngữ so với dùng app một mình.'
-              : 'Evidence: Whitehurst (1988), Cummins (1979), Beck (2002). Co-learning doubles language output vs solo app use.'}
+            {vi ? 'Nguồn tham chiếu: AAP Family Media Plan, IES reading comprehension guide, UNICEF AI for children. Hiệu quả định lượng cần dữ liệu phiên học Henry.'
+              : 'Sources: AAP Family Media Plan, IES reading comprehension guide, UNICEF AI for children. Quantified impact requires Henry session data.'}
           </div>
         </div>
       )}

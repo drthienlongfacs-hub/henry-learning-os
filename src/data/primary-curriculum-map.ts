@@ -95,7 +95,7 @@ const vietnamese = (grade: 1 | 2 | 3 | 4 | 5, topicKey: string, topicName: strin
         'Trước khi claim phủ chuẩn, mỗi item Tiếng Việt phải có kỹ năng ngôn ngữ, văn bản/ngữ liệu, lỗi thường gặp và tiêu chí tự sửa.',
     );
 
-const english = (grade: 3 | 4 | 5, topicKey: string, topicName: string, strand: string, expectedOutcome: string, exampleTask: string, misconceptionWatch: string[]) =>
+const english = (grade: 1 | 2 | 3 | 4 | 5, topicKey: string, topicName: string, strand: string, expectedOutcome: string, exampleTask: string, misconceptionWatch: string[]) =>
     mapTopic(
         'english',
         'Ngoại ngữ 1',
@@ -226,6 +226,8 @@ export const PRIMARY_CURRICULUM_TOPIC_MAP: PrimaryCurriculumTopicMap[] = [
     vietnamese(2, 'vocabulary', 'Từ vựng chủ đề', 'Mở rộng vốn từ', 'Hiểu nghĩa từ theo chủ đề và dùng từ trong câu gần gũi.', 'Con chọn nghĩa của từ "thư viện" rồi đặt một câu về thư viện trường.', ['Chọn nghĩa theo đoán âm', 'Không dùng được từ trong câu']),
     vietnamese(2, 'reading', 'Đọc hiểu', 'Đọc hiểu văn bản', 'Tìm thông tin rõ ràng, ý chính đơn giản và trả lời bằng câu đủ ý.', 'Con đọc đoạn ngắn về con mèo, tìm chi tiết mèo làm gì mỗi tối.', ['Chỉ nhớ chi tiết đầu đoạn', 'Trả lời cụt không đủ ý']),
     vietnamese(3, 'grammar', 'Ngữ pháp', 'Kiến thức tiếng Việt', 'Nhận biết từ loại, dấu câu và dùng câu đúng trong ngữ cảnh.', 'Con chọn danh từ trong câu rồi viết lại câu có dấu chấm đúng chỗ.', ['Học thuộc tên từ loại nhưng không nhận trong câu', 'Quên dấu câu cuối câu']),
+    english(1, 'alphabet_en', 'Alphabet & Phonics', 'Nghe - nói - nhận biết chữ cái', 'Nhận biết 26 chữ cái, phân biệt hoa/thường, bước đầu phát âm phonics.', 'Con nghe âm /k/, chọn chữ C và nói một từ bắt đầu bằng C: "cat".', ['Nhầm chữ hoa và chữ thường', 'Nhầm tên chữ cái với âm phonics']),
+    english(2, 'greetings_en', 'Greetings & Phrases', 'Nghe - nói giao tiếp cơ bản', 'Dùng được 10+ mẫu chào hỏi, xin phép, cảm ơn trong tình huống quen thuộc.', 'Con nghe "Good morning!" và trả lời, sau đó tự nói khi gặp cô giáo.', ['Chỉ thuộc lòng, không dùng đúng tình huống', 'Nhầm Good morning / Good night']),
     english(3, 'vocab_en', 'Vocabulary', 'Nghe - nói - đọc - viết từ vựng', 'Hiểu và dùng từ quen thuộc về gia đình, trường học, đồ vật, con vật.', 'Con nghe "book", chọn hình quyển sách, nói lại từ và đặt câu "This is my book".', ['Dịch từng từ nhưng không dùng trong câu', 'Nhầm phát âm gần giống']),
     english(4, 'grammar_en', 'Grammar', 'Ngữ pháp trong câu giao tiếp', 'Dùng mẫu câu đơn giản như hiện tại đơn, đại từ, giới từ trong ngữ cảnh.', 'Con chọn "She goes to school" rồi nói vì sao dùng "goes".', ['Gắn s/es máy móc', 'Dịch tiếng Việt từng chữ sang tiếng Anh']),
     english(4, 'reading_en', 'Reading', 'Đọc hiểu văn bản ngắn', 'Đọc đoạn ngắn, tìm thông tin và hiểu ý chính bằng tiếng Anh có hỗ trợ.', 'Con đọc đoạn về bạn Minh và trả lời Minh thích làm gì.', ['Tìm từ khóa rời rạc', 'Không hiểu câu hỏi hỏi ai/lúc nào']),

@@ -66,7 +66,7 @@ type ProblemWithViz = Problem & { illustration?: React.ReactNode | string };
 const SUBJECTS: { key: Subject; name: string; icon: React.ReactNode; color: string; grades: number[] }[] = [
     { key: 'math', name: 'Toán', icon: <Calculator size={28} />, color: '#3b82f6', grades: [1, 2, 3, 4, 5] },
     { key: 'vietnamese', name: 'Tiếng Việt', icon: <BookOpen size={28} />, color: '#8b5cf6', grades: [1, 2, 3, 4, 5] },
-    { key: 'english', name: 'Tiếng Anh', icon: <Globe2 size={28} />, color: '#10b981', grades: [3, 4, 5] },
+    { key: 'english', name: 'Tiếng Anh', icon: <Globe2 size={28} />, color: '#10b981', grades: [1, 2, 3, 4, 5] },
     { key: 'science', name: 'Khoa học', icon: <FlaskConical size={28} />, color: '#f59e0b', grades: [1, 2, 3, 4, 5] },
     { key: 'hisgeo', name: 'Lịch sử & Địa lý', icon: <Globe2 size={28} />, color: '#6366f1', grades: [4, 5] },
     { key: 'computing', name: 'Tin học', icon: <Brain size={28} />, color: '#14b8a6', grades: [3, 4, 5] },
@@ -319,9 +319,13 @@ export default function LearnPage() {
     const currentEnrichment = currentProblem?.topicKey
         ? getTopicEnrichment(currentProblem.topicKey, subject ? SUBJECT_ENRICHMENT_KEY[subject] : undefined)
         : null;
+    // IMPORTANT: Only show illustration that the generator explicitly attached
+    // to THIS specific problem (e.g., per-vocab-pair image).
+    // Do NOT fall back to topic-level enrichment images — those are generic
+    // topic thumbnails and cause mismatches (e.g., apple img for "windy" question).
     const currentVisual = typeof currentProblem?.illustration === 'string'
         ? currentProblem.illustration
-        : currentEnrichment?.visual.src;
+        : undefined;
     const activeSubjectPack = subject ? getSubjectEnrichment(SUBJECT_ENRICHMENT_KEY[subject]) : null;
     const activeStandards = subject ? getSubjectGoldStandards(SUBJECT_ENRICHMENT_KEY[subject]) : [];
     const activeBenchmarks = subject ? getSubjectBenchmarkPatterns(SUBJECT_ENRICHMENT_KEY[subject]) : [];

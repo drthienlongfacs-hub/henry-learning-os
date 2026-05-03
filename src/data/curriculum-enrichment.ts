@@ -345,7 +345,7 @@ export const LEARNING_SOURCES: Record<SourceId, LearningSource> = {
         title: 'Organizing Instruction and Study to Improve Student Learning',
         provider: 'Institute of Education Sciences / What Works Clearinghouse',
         kind: 'research',
-        sourceUrl: 'https://ies.ed.gov/ncee/wwc/PracticeGuide.aspx?sid=1',
+        sourceUrl: 'https://ies.ed.gov/ncee/wwc/PracticeGuide/1',
         useInApp: 'Căn cứ cho spacing, worked examples, dual coding, concrete-abstract connection, retrieval quiz.',
         retrievedAt: RETRIEVED_AT,
     },
@@ -637,6 +637,8 @@ const SUBJECT_BY_TOPIC_PREFIX: Record<string, LearningSubjectKey> = {
     reading: 'vietnamese',
     grammar: 'vietnamese',
     writing: 'vietnamese',
+    alphabet_en: 'english',
+    greetings_en: 'english',
     vocab: 'english',
     grammar_en: 'english',
     reading_en: 'english',
@@ -692,8 +694,19 @@ const TOPIC_OVERRIDES: Record<string, Partial<TopicEnrichment>> = {
         masteryTargets: ['Đọc đoạn ngắn', 'Tìm chi tiết trong văn bản', 'Trả lời bằng một câu trọn ý'],
         commonPitfalls: ['Trả lời theo trí nhớ ngoài đoạn văn', 'Bỏ qua từ khóa ai, ở đâu, khi nào'],
     },
+    // ── Tiếng Anh ──
+    alphabet_en: {
+        visual: { src: '/images/core/letters_vn.svg', alt: 'Bảng chữ cái tiếng Anh A-Z' },
+        masteryTargets: ['Nhận biết 26 chữ cái hoa/thường', 'Nói âm phonics đầu của mỗi chữ', 'Ghép chữ cái với từ bắt đầu bằng chữ đó'],
+        commonPitfalls: ['Nhầm chữ hoa và chữ thường giống nhau (b/d, p/q)', 'Nhầm tên chữ cái với âm phonics', 'Chỉ đọc theo thứ tự ABC mà không nhận riêng lẻ'],
+    },
+    greetings_en: {
+        visual: { src: '/images/core/books_hd.svg', alt: 'Các câu chào hỏi tiếng Anh cơ bản' },
+        masteryTargets: ['Nói được 10+ câu chào hỏi cơ bản', 'Phân biệt chào buổi sáng/chiều/tối', 'Dùng đúng trong tình huống giao tiếp thật'],
+        commonPitfalls: ['Chỉ thuộc lòng mà không biết dùng khi nào', 'Nhầm Good morning / Good night', 'Trả lời cứng nhắc một mẫu duy nhất'],
+    },
     vocab_en: {
-        visual: { src: '/images/english/Pink_lady_and_cross_section.jpg', alt: 'Ảnh thật minh họa từ vựng tiếng Anh' },
+        visual: { src: '/images/core/open_book.svg', alt: 'Từ vựng tiếng Anh theo chủ đề' },
         masteryTargets: ['Nhìn ảnh nói từ tiếng Anh', 'Nói nghĩa tiếng Việt', 'Đặt một câu ngắn'],
         commonPitfalls: ['Học từ rời rạc không dùng vào câu', 'Dịch từng chữ khi đặt câu'],
     },

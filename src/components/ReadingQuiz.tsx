@@ -90,14 +90,32 @@ export default function ReadingQuiz({lang}:{lang:string}){
   const[speakingIdx,setSpeakingIdx]=useState<number|null>(null);
   const speakingRef=useRef(false);
 
-  if(!passages.length) return null;
-  const p=passages[idx%passages.length];
+  const p=passages[idx%passages.length]??null;
   const vi=lang==='vi';
-  const evidenceProfile=buildReadingQuizEvidenceProfile({
+  const evidenceProfile=p?buildReadingQuizEvidenceProfile({
     passageId:p.id,
     questionCount:p.comprehensionChecks.length,
     attempts,
-  });
+  }):null;
+
+  // Split passage text into sentences for sentence-level TTS
+  const sentences=useMemo(()=>p?(p.text.match(/[^.!?]+[.!?]+/g)||[p.text]):[],[p]);
+
+  // Sequential reading: highlight each sentence as it's read aloud
+  const speakSequential=useCallback((startFrom=0)=>{
+    if(speakingRef.current){window.speechSynthesis?.cancel();speakingRef.current=false;setSpeakingIdx(null);return;}
+    speakingRef.current=true;
+    const readNext=(i:number)=>{
+      if(i>=sentences.length||!speakingRef.current){setSpeakingIdx(null);speakingRef.current=false;return;}
+      const sentence=sentences[i];
+      if(!sentence){setSpeakingIdx(null);speakingRef.current=false;return;}
+      setSpeakingIdx(i);
+      speak(sentence.trim(),accent,speed,()=>readNext(i+1));
+    };
+    readNext(startFrom);
+  },[sentences,accent,speed]);
+
+  if(!p||!evidenceProfile) return null;
 
   const handleCheck=(i:number)=>{
     const answer=answers[i]||'';
@@ -126,21 +144,6 @@ export default function ReadingQuiz({lang}:{lang:string}){
 
   const next=()=>{setIdx(i=>i+1);setAnswers({});setChecked({});setHints({});setAttempts([]);setTab('read');if(idx+1>=passages.length)setDone(true);};
   const restart=()=>{setIdx(0);setAnswers({});setChecked({});setHints({});setAttempts([]);setScore(0);setDone(false);setTab('read');};
-
-  // Split passage text into sentences for sentence-level TTS
-  const sentences=p.text.match(/[^.!?]+[.!?]+/g)||[p.text];
-
-  // Sequential reading: highlight each sentence as it's read aloud
-  const speakSequential=useCallback((startFrom=0)=>{
-    if(speakingRef.current){window.speechSynthesis?.cancel();speakingRef.current=false;setSpeakingIdx(null);return;}
-    speakingRef.current=true;
-    const readNext=(i:number)=>{
-      if(i>=sentences.length||!speakingRef.current){setSpeakingIdx(null);speakingRef.current=false;return;}
-      setSpeakingIdx(i);
-      speak(sentences[i].trim(),accent,speed,()=>readNext(i+1));
-    };
-    readNext(startFrom);
-  },[sentences,accent,speed]);
 
   const TABS:{key:Tab;icon:React.ReactNode;label:string}[]=[
     {key:'read',icon:<BookOpen size={13}/>,label:vi?'Đọc':'Read'},

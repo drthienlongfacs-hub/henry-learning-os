@@ -1,6 +1,7 @@
 // =====================================================
-// English Language Generator — CT 2018 Grades 3-5
-// Sources: CT 2018, Cambridge Primary English, US Common Core ELA
+// English Language Generator — CT 2018 Grades 1-5
+// Sources: CT 2018 (Grade 3+ mandatory), enrichment Grades 1-2
+// Cambridge Primary English, US Common Core ELA, Jolly Phonics
 // =====================================================
 
 export interface EnglishProblem {
@@ -46,7 +47,7 @@ const ENGLISH_TOPIC_GRADE = {
 
 const VOCAB_BANKS: VocabBank[] = [
     {
-        theme: 'Family', img: '/images/english/Huskiesatrest.jpg', pairs: [
+        theme: 'Family', pairs: [
             { en: 'mother', vi: 'mẹ' }, { en: 'father', vi: 'bố' }, { en: 'brother', vi: 'anh/em trai' },
             { en: 'sister', vi: 'chị/em gái' }, { en: 'grandmother', vi: 'bà' }, { en: 'grandfather', vi: 'ông' },
             { en: 'uncle', vi: 'chú/cậu' }, { en: 'aunt', vi: 'cô/dì' }, { en: 'cousin', vi: 'anh chị em họ' },
@@ -67,7 +68,7 @@ const VOCAB_BANKS: VocabBank[] = [
         ]
     },
     {
-        theme: 'Animals', img: '/images/english/Huskiesatrest.jpg', pairs: [
+        theme: 'Animals', pairs: [
             { en: 'dog', vi: 'chó', img: '/images/english/Huskiesatrest.jpg' },
             { en: 'cat', vi: 'mèo', img: '/images/english/Cat_August_2010-4.jpg' },
             { en: 'bird', vi: 'chim', img: '/images/english/Passer_domesticus_male__15_.jpg' },
@@ -112,10 +113,112 @@ const VOCAB_BANKS: VocabBank[] = [
     },
 ];
 
+// ══════════════════════════════════════════════
+// GRADE 1: Alphabet Recognition & Phonics Intro
+// ══════════════════════════════════════════════
+
+const ALPHABET_DATA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(l => ({
+    upper: l, lower: l.toLowerCase(),
+    phonics: { A:'æ', B:'b', C:'k', D:'d', E:'ɛ', F:'f', G:'ɡ', H:'h', I:'ɪ',
+               J:'dʒ', K:'k', L:'l', M:'m', N:'n', O:'ɒ', P:'p', Q:'kw', R:'r',
+               S:'s', T:'t', U:'ʌ', V:'v', W:'w', X:'ks', Y:'j', Z:'z' }[l] || l.toLowerCase(),
+    word: { A:'apple', B:'ball', C:'cat', D:'dog', E:'egg', F:'fish', G:'go', H:'hat',
+            I:'ink', J:'jam', K:'kite', L:'lamp', M:'moon', N:'net', O:'ox', P:'pen',
+            Q:'queen', R:'red', S:'sun', T:'top', U:'up', V:'van', W:'web', X:'box',
+            Y:'yes', Z:'zoo' }[l] || 'apple',
+}));
+
+export function genAlphabetEn(): EnglishProblem {
+    const templates = [
+        // uppercase → lowercase matching
+        () => {
+            const letter = ALPHABET_DATA[rand(0, 25)];
+            const wrongs = shuffle(ALPHABET_DATA.filter(l => l.upper !== letter.upper)).slice(0, 3);
+            return {
+                q: `Chữ hoa "${letter.upper}" viết thường là gì?`,
+                a: letter.lower, opts: shuffle([letter.lower, ...wrongs.map(w => w.lower)]),
+                e: `${letter.upper} viết thường là ${letter.lower}.`,
+            };
+        },
+        // letter → beginning sound word
+        () => {
+            const letter = ALPHABET_DATA[rand(0, 25)];
+            const wrongs = shuffle(ALPHABET_DATA.filter(l => l.upper !== letter.upper)).slice(0, 3);
+            return {
+                q: `Which word starts with "${letter.upper}"?`,
+                a: letter.word, opts: shuffle([letter.word, ...wrongs.map(w => w.word)]),
+                e: `"${letter.word}" starts with ${letter.upper} /${letter.phonics}/.`,
+            };
+        },
+        // phonics sound
+        () => {
+            const letter = ALPHABET_DATA[rand(0, 25)];
+            const wrongs = shuffle(ALPHABET_DATA.filter(l => l.upper !== letter.upper)).slice(0, 3);
+            return {
+                q: `Chữ "${letter.upper}" phát âm bắt đầu /${letter.phonics}/. Từ nào bắt đầu bằng âm này?`,
+                a: letter.word, opts: shuffle([letter.word, ...wrongs.map(w => w.word)]),
+                e: `/${letter.phonics}/ → "${letter.word}" (${letter.upper}${letter.lower}).`,
+            };
+        },
+    ];
+    const t = templates[rand(0, templates.length - 1)]();
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'vocabulary', topic: 'Alphabet & Phonics', topicKey: 'alphabet_en',
+        question: t.q, correctAnswer: t.a, options: t.opts,
+        explanation: t.e, hints: ['Look at the first letter', `Answer: ${t.a}`],
+    };
+}
+
+// ══════════════════════════════════════════════
+// GRADE 2: Basic Greetings & Simple Phrases
+// ══════════════════════════════════════════════
+
+const GREETING_PAIRS = [
+    { en: 'Hello!', vi: 'Xin chào!' },
+    { en: 'Good morning!', vi: 'Chào buổi sáng!' },
+    { en: 'Good afternoon!', vi: 'Chào buổi chiều!' },
+    { en: 'Good night!', vi: 'Chúc ngủ ngon!' },
+    { en: 'Goodbye!', vi: 'Tạm biệt!' },
+    { en: 'Thank you!', vi: 'Cảm ơn!' },
+    { en: 'Sorry!', vi: 'Xin lỗi!' },
+    { en: 'Yes', vi: 'Vâng/Có' },
+    { en: 'No', vi: 'Không' },
+    { en: 'Please', vi: 'Làm ơn' },
+    { en: 'How are you?', vi: 'Bạn khỏe không?' },
+    { en: 'I am fine.', vi: 'Tôi khỏe.' },
+    { en: 'What is your name?', vi: 'Bạn tên là gì?' },
+    { en: 'My name is...', vi: 'Tên tôi là...' },
+    { en: 'Stand up!', vi: 'Đứng lên!' },
+    { en: 'Sit down!', vi: 'Ngồi xuống!' },
+];
+
+export function genGreetingsEn(): EnglishProblem {
+    const pair = GREETING_PAIRS[rand(0, GREETING_PAIRS.length - 1)];
+    const direction = Math.random() > 0.5;
+    const others = shuffle(GREETING_PAIRS.filter(p => p.en !== pair.en)).slice(0, 3);
+    const opts = direction
+        ? shuffle([pair.vi, ...others.map(o => o.vi)])
+        : shuffle([pair.en, ...others.map(o => o.en)]);
+    return {
+        id: genId(), gradeLevel: 2, difficulty: 2,
+        type: 'vocabulary', topic: 'Greetings & Phrases', topicKey: 'greetings_en',
+        question: direction ? `"${pair.en}" nghĩa là gì?` : `"${pair.vi}" in English?`,
+        correctAnswer: direction ? pair.vi : pair.en,
+        options: opts,
+        explanation: `${pair.en} = ${pair.vi}.`,
+        hints: ['Think about daily conversations', `Answer: ${direction ? pair.vi : pair.en}`],
+    };
+}
+
+// ══════════════════════════════════════════════
+// GRADE 3: Vocabulary Themes
+// ══════════════════════════════════════════════
+
 export function genVocabEn(): EnglishProblem {
     const bank = VOCAB_BANKS[rand(0, VOCAB_BANKS.length - 1)];
     const pair = bank.pairs[rand(0, bank.pairs.length - 1)];
-    const direction = Math.random() > 0.5; // true = en→vi, false = vi→en
+    const direction = Math.random() > 0.5;
     const others = shuffle(bank.pairs.filter(p => p.en !== pair.en)).slice(0, 3);
     const opts = direction
         ? shuffle([pair.vi, ...others.map(o => o.vi)])
@@ -296,7 +399,9 @@ export interface EnTopicInfo {
 }
 
 export const ENGLISH_TOPICS: EnTopicInfo[] = [
-    { key: 'vocab_en', name: 'Vocabulary', gradeLevel: 3, generator: genVocabEn, icon: '🔤' },
+    { key: 'alphabet_en', name: 'Alphabet & Phonics', gradeLevel: 1, generator: genAlphabetEn, icon: '🔤' },
+    { key: 'greetings_en', name: 'Greetings & Phrases', gradeLevel: 2, generator: genGreetingsEn, icon: '👋' },
+    { key: 'vocab_en', name: 'Vocabulary', gradeLevel: 3, generator: genVocabEn, icon: '📚' },
     { key: 'grammar_en', name: 'Grammar', gradeLevel: 4, generator: genGrammarEn, icon: '📝' },
     { key: 'reading_en', name: 'Reading', gradeLevel: 4, generator: genReadingEn, icon: '📖' },
     { key: 'sentence_en', name: 'Sentences', gradeLevel: 5, generator: genSentenceEn, icon: '✍️' },

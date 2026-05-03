@@ -1,10 +1,17 @@
 'use client';
 import React, { useState, useMemo } from 'react';
-import { WIKI_ENTRIES, WIKI_CATEGORIES, WIKI_STATS, searchWiki, getByCategory, getRelated, getById, type WikiEntry, type WikiCategory } from '@/data/wiki-knowledge-base';
+import { WIKI_ENTRIES, WIKI_CATEGORIES, WIKI_STATS, searchWiki, getByCategory, getRelated, type WikiEntry, type WikiCategory } from '@/data/wiki-knowledge-base';
+import {
+  EVIDENCE_SOURCE_LEDGER_STATS,
+  evidenceStatusLabel,
+  getInternetEvidenceSource,
+  getWikiEvidenceRecord,
+} from '@/data/evidence-source-ledger';
 import { Search, BookOpen, Link2, Tag, ArrowLeft, ExternalLink, ChevronRight, Sparkles } from 'lucide-react';
 
 function EntryCard({ entry, vi, onSelect }: { entry: WikiEntry; vi: boolean; onSelect: (e: WikiEntry) => void }) {
   const cat = WIKI_CATEGORIES.find(c => c.key === entry.category);
+  const evidence = getWikiEvidenceRecord(entry.id);
   return (
     <div onClick={() => onSelect(entry)} style={{
       padding: '0.8rem 1rem', borderRadius: '12px', background: '#fff',
@@ -22,6 +29,18 @@ function EntryCard({ entry, vi, onSelect }: { entry: WikiEntry; vi: boolean; onS
       </div>
       {entry.tags.length > 0 && (
         <div style={{ display: 'flex', gap: '0.2rem', flexWrap: 'wrap', marginTop: '0.3rem' }}>
+          {evidence && (
+            <span style={{
+              padding: '1px 5px',
+              borderRadius: '4px',
+              background: evidence.status.includes('needs') ? '#fef3c7' : '#dcfce7',
+              fontSize: '0.5rem',
+              color: evidence.status.includes('needs') ? '#92400e' : '#166534',
+              fontWeight: 700,
+            }}>
+              {vi ? evidenceStatusLabel(evidence.status) : evidence.status}
+            </span>
+          )}
           {entry.tags.slice(0, 3).map(t => (
             <span key={t} style={{ padding: '1px 5px', borderRadius: '4px', background: '#f1f5f9', fontSize: '0.5rem', color: '#64748b', fontWeight: 600 }}>{t}</span>
           ))}
@@ -34,6 +53,7 @@ function EntryCard({ entry, vi, onSelect }: { entry: WikiEntry; vi: boolean; onS
 function EntryDetail({ entry, vi, onBack, onSelect }: { entry: WikiEntry; vi: boolean; onBack: () => void; onSelect: (e: WikiEntry) => void }) {
   const cat = WIKI_CATEGORIES.find(c => c.key === entry.category);
   const related = getRelated(entry);
+  const evidence = getWikiEvidenceRecord(entry.id);
 
   return (
     <div>
@@ -86,6 +106,40 @@ function EntryDetail({ entry, vi, onBack, onSelect }: { entry: WikiEntry; vi: bo
         {entry.source && (
           <div style={{ marginTop: '0.5rem', fontSize: '0.6rem', color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '4px' }}>
             <ExternalLink size={10} /> {entry.source}
+          </div>
+        )}
+
+        {evidence && (
+          <div style={{ marginTop: '0.6rem', padding: '0.6rem', borderRadius: '10px', background: '#fff', border: '1px solid #e2e8f0' }}>
+            <div style={{ fontSize: '0.66rem', fontWeight: 800, color: evidence.status.includes('needs') ? '#92400e' : '#166534', marginBottom: '0.25rem' }}>
+              {vi ? 'Evidence gate' : 'Evidence gate'}: {vi ? evidenceStatusLabel(evidence.status) : evidence.status} · {evidence.confidence}
+            </div>
+            <div style={{ fontSize: '0.62rem', color: '#475569', lineHeight: 1.5 }}>
+              {evidence.operationalRule}
+            </div>
+            <div style={{ fontSize: '0.56rem', color: '#94a3b8', lineHeight: 1.45, marginTop: '0.25rem' }}>
+              {evidence.caveat}
+            </div>
+            {evidence.internetSourceIds.length > 0 && (
+              <div style={{ display: 'flex', gap: '0.25rem', flexWrap: 'wrap', marginTop: '0.4rem' }}>
+                {evidence.internetSourceIds.map(sourceId => {
+                  const source = getInternetEvidenceSource(sourceId);
+                  return source ? (
+                    <a key={sourceId} href={source.url} target="_blank" rel="noopener noreferrer" style={{
+                      padding: '2px 6px', borderRadius: '5px', background: '#eff6ff', color: '#1d4ed8',
+                      fontSize: '0.52rem', fontWeight: 700, textDecoration: 'none',
+                    }}>
+                      {source.provider}
+                    </a>
+                  ) : null;
+                })}
+              </div>
+            )}
+            {evidence.localEvidence.length > 0 && (
+              <div style={{ marginTop: '0.35rem', fontSize: '0.54rem', color: '#64748b', lineHeight: 1.45 }}>
+                {vi ? 'Evidence nội bộ' : 'Local evidence'}: {evidence.localEvidence.slice(0, 2).map(ref => ref.path).join(' · ')}
+              </div>
+            )}
           </div>
         )}
 
@@ -161,8 +215,8 @@ export default function WikiExplorer({ lang }: { lang: string }) {
           </div>
           <p style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.85)', margin: 0 }}>
             {vi
-              ? `${WIKI_STATS.totalEntries} mục • ${WIKI_STATS.evidenceBased} có bằng chứng khoa học • ${WIKI_STATS.crossLinks} liên kết chéo • Karpathy-style`
-              : `${WIKI_STATS.totalEntries} entries • ${WIKI_STATS.evidenceBased} evidence-based • ${WIKI_STATS.crossLinks} cross-links`}
+              ? `${WIKI_STATS.totalEntries} mục • ${EVIDENCE_SOURCE_LEDGER_STATS.sourceBackedCount} source-backed • ${EVIDENCE_SOURCE_LEDGER_STATS.localEvidenceRefCount} evidence nội bộ`
+              : `${WIKI_STATS.totalEntries} entries • ${EVIDENCE_SOURCE_LEDGER_STATS.sourceBackedCount} source-backed • ${EVIDENCE_SOURCE_LEDGER_STATS.localEvidenceRefCount} local evidence refs`}
           </p>
         </div>
       </div>
@@ -221,8 +275,8 @@ export default function WikiExplorer({ lang }: { lang: string }) {
         {/* Footer */}
         <div style={{ marginTop: '0.5rem', fontSize: '0.5rem', color: '#94a3b8', lineHeight: 1.5, display: 'flex', alignItems: 'center', gap: '4px' }}>
           <Sparkles size={8} />
-          {vi ? 'Tri thức có cấu trúc, cross-linked — Karpathy second-brain pattern. Nguồn: NRP, Cambridge, Vygotsky, Krashen, Dweck.'
-            : 'Structured, cross-linked knowledge — Karpathy second-brain pattern. Sources: NRP, Cambridge, Vygotsky, Krashen, Dweck.'}
+          {vi ? `Tri thức có ledger: ${EVIDENCE_SOURCE_LEDGER_STATS.internetSourceCount} nguồn internet đã kiểm, ${EVIDENCE_SOURCE_LEDGER_STATS.needsReviewCount} mục chưa được claim mạnh.`
+            : `Knowledge with ledger: ${EVIDENCE_SOURCE_LEDGER_STATS.internetSourceCount} verified internet sources, ${EVIDENCE_SOURCE_LEDGER_STATS.needsReviewCount} items held for review.`}
         </div>
       </div>
     </div>
