@@ -97,6 +97,12 @@ export default function Home() {
             </div>
           </Link>
         </div>
+
+        {/* Copyright */}
+        <div style={{ textAlign: 'center', padding: '2rem 0 1rem', fontSize: '0.68rem', color: '#94a3b8', lineHeight: 1.6 }}>
+          <div>© 2026 ThS.BS CK2. Lê Trọng Thiên Long</div>
+          <div style={{ opacity: 0.7 }}>All rights reserved</div>
+        </div>
       </div>
     );
   }
@@ -159,6 +165,12 @@ export default function Home() {
         <p style={{ marginTop: '1.5rem', fontSize: '0.8rem', color: '#94a3b8', maxWidth: '400px', marginLeft: 'auto', marginRight: 'auto' }}>
           {t('landing_privacy')}
         </p>
+
+        {/* Copyright */}
+        <div style={{ padding: '2rem 0 1rem', fontSize: '0.68rem', color: '#94a3b8', lineHeight: 1.6 }}>
+          <div>© 2026 ThS.BS CK2. Lê Trọng Thiên Long</div>
+          <div style={{ opacity: 0.7 }}>All rights reserved</div>
+        </div>
       </div>
     </div>
   );

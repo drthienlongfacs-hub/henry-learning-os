@@ -85,3 +85,22 @@ __tests__/                  # 4 test suites, 86 tests total
 - [ ] Thêm môn học: Khoa học, Lịch sử, Âm nhạc
 - [ ] Voice input cho trẻ chưa biết đánh máy
 - [ ] Multi-child support
+
+## 🛡️ Quyền riêng tư
+
+- **Không thu thập dữ liệu** — toàn bộ lưu trên thiết bị (LocalStorage)
+- **Không quảng cáo** — hoàn toàn miễn phí
+- **Không cần đăng ký** — sử dụng ngay
+- **Under-13 compliant** — không chat AI tự do, chỉ trong bài học
+
+## 📄 Rights
+
+Copyright © 2026 ThS.BS CK2. Lê Trọng Thiên Long. All rights reserved.
+
+Repository này không phát hành theo giấy phép MIT. Nguồn code, UI/UX, chương trình học, adaptive engine và nhận diện thương hiệu được bảo lưu quyền sở hữu, ngoại trừ các thư viện hoặc nguồn dữ liệu open-source của bên thứ ba có giấy phép riêng.
+
+Chi tiết xem tại `COPYRIGHT.md`.
+
+---
+
+**Made with ❤️ for Henry** 🇻🇳
