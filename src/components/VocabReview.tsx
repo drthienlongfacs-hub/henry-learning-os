@@ -2,8 +2,7 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { TEXTBOOK_LIBRARY } from '@/data/textbook-library';
 import { Volume2, Check, X, Brain, Sparkles } from 'lucide-react';
-
-type Accent = 'en-US' | 'en-GB' | 'en-AU';
+import { speak, type Accent } from '@/lib/voiceEngine';
 
 interface VocabCard {
   word: string;
@@ -35,30 +34,8 @@ function saveReviewStates(states: Record<string, ReviewState>) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(states));
 }
 
-// ── Voice matching v3 — ZERO pitch manipulation, natural sound only ──
-const VOICE_CFG:{k:Accent;names:string[];lang:string}[] = [
-  {k:'en-US',names:['Samantha','Allison','Ava','Nicky','Tom','Alex','Google US English'],lang:'en-US'},
-  {k:'en-GB',names:['Daniel','Kate','Oliver','Serena','Google UK English'],lang:'en-GB'},
-  {k:'en-AU',names:['Karen','Lee','Catherine','Google Australian'],lang:'en-AU'},
-];
-function speak(text: string, accent: Accent, rate = 0.9) {
-  if (typeof window === 'undefined' || !window.speechSynthesis) return;
-  window.speechSynthesis.cancel();
-  const voices=window.speechSynthesis.getVoices();
-  const u = new SpeechSynthesisUtterance(text);
-  const cfg=VOICE_CFG.find(c=>c.k===accent);
-  let voice:SpeechSynthesisVoice|undefined;
-  if(cfg){
-    for(const n of cfg.names){voice=voices.find(vo=>vo.name.includes(n));if(voice) break;}
-    if(!voice) voice=voices.find(vo=>vo.lang===cfg.lang)||voices.find(vo=>vo.lang.startsWith(cfg.lang));
-  }
-  if(!voice) voice=voices.find(vo=>vo.lang.startsWith('en'));
-  if(voice) u.voice=voice;
-  u.lang = accent;
-  u.rate = rate;
-  u.pitch = 1.0;
-  window.speechSynthesis.speak(u);
-}
+
+
 
 export default function VocabReview({ lang }: { lang: string }) {
   const vi = lang === 'vi';

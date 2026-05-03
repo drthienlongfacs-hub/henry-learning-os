@@ -17,65 +17,14 @@ import {
 } from '@/lib/evidence/reading-quiz-history';
 import { BookOpen, CheckCircle, Sparkles, Brain, ChevronRight, RotateCcw, Volume2, X, Languages, Lightbulb, BookMarked, Loader2 } from 'lucide-react';
 
-type Accent = 'en-US'|'en-GB'|'en-AU';
+import { speak, pauseSpeech, resumeSpeech, stopSpeech, findBestVoice, getVoiceDebugInfo, type Accent } from '@/lib/voiceEngine';
 
-// ── Accent config — ZERO pitch/rate manipulation for natural sound ──
-// Accent differentiation comes ONLY from selecting the correct voice object.
-// pitch=1.0, rate=1.0 = unprocessed, clean audio from the native TTS engine.
-const ACC:{k:Accent;f:string;l:string;namePatterns:string[];langPrefix:string}[] = [
-  {k:'en-US',f:'🇺🇸',l:'American',
-   namePatterns:['Samantha','Allison','Ava','Nicky','Tom','Alex','Fred',
-     'Google US English','Microsoft Zira','Microsoft David'],
-   langPrefix:'en-US'},
-  {k:'en-GB',f:'🇬🇧',l:'British',
-   namePatterns:['Daniel','Kate','Oliver','Serena','Stephanie','Arthur',
-     'Google UK English','Microsoft Hazel'],
-   langPrefix:'en-GB'},
-  {k:'en-AU',f:'🇦🇺',l:'Australian',
-   namePatterns:['Karen','Lee','Catherine','Gordon',
-     'Google Australian'],
-   langPrefix:'en-AU'},
+// ── Accent UI config (rendering only — voice logic is in voiceEngine.ts) ──
+const ACC = [
+  { k: 'en-US' as Accent, f: '🇺🇸', l: 'American' },
+  { k: 'en-GB' as Accent, f: '🇬🇧', l: 'British' },
+  { k: 'en-AU' as Accent, f: '🇦🇺', l: 'Australian' },
 ];
-
-function findBestVoice(accent:Accent):SpeechSynthesisVoice|null{
-  if(typeof window==='undefined'||!window.speechSynthesis) return null;
-  const voices=window.speechSynthesis.getVoices();
-  if(voices.length===0) return null;
-  const info=ACC.find(a=>a.k===accent);
-  if(!info) return null;
-  // Pass 1: exact name match from curated list (highest quality voices)
-  for(const pat of info.namePatterns){
-    const v=voices.find(vo=>vo.name.includes(pat));
-    if(v) return v;
-  }
-  // Pass 2: match by exact lang code (en-US, en-GB, en-AU)
-  const byLang=voices.find(vo=>vo.lang===info.langPrefix);
-  if(byLang) return byLang;
-  // Pass 3: match by lang prefix (e.g. en-GB-*)
-  const byPrefix=voices.find(vo=>vo.lang.startsWith(info.langPrefix));
-  if(byPrefix) return byPrefix;
-  // Pass 4: any English voice as fallback
-  return voices.find(vo=>vo.lang.startsWith('en'))||null;
-}
-
-function speak(text:string, accent:Accent, rate=0.9, onEnd?:()=>void){
-  if(typeof window==='undefined'||!window.speechSynthesis)return;
-  window.speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(text);
-  if(onEnd) u.onend=onEnd;
-  u.onerror=()=>{if(onEnd) onEnd();};
-  // Voice FIRST — let the native engine speak naturally
-  const voice=findBestVoice(accent);
-  if(voice) u.voice=voice;
-  u.lang=accent;
-  u.rate=rate;   // pass through directly — no multiplier
-  u.pitch=1.0;   // ALWAYS 1.0 — any other value causes digital distortion
-  window.speechSynthesis.speak(u);
-}
-
-function pauseSpeech(){window.speechSynthesis?.pause();}
-function resumeSpeech(){window.speechSynthesis?.resume();}
-function stopSpeech(){window.speechSynthesis?.cancel();}
 
 function WordPopup({word,onClose}:{word:string;onClose:()=>void}){
   const[entry,setEntry]=useState<DictionaryEntry|null>(null);

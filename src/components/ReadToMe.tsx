@@ -1,4 +1,5 @@
 'use client';
+import { findBestVoice } from '@/lib/voiceEngine';
 
 // ========================================
 // Text-to-Speech Reader — "Read to Me" feature
@@ -34,31 +35,34 @@ export function ReadToMe({ text, lang = 'en', label }: ReadToMeProps) {
         if (!window.speechSynthesis) return;
         stop();
 
-        const utter = new SpeechSynthesisUtterance(text);
-        utter.rate = rate;
-        utter.pitch = 1.05;
+        // 50ms delay after cancel() — prevents audio pipeline crackling
+        // (LinguaKids RCA-040: immediate speak after cancel causes glitch)
+        setTimeout(() => {
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.rate = rate;
+            utter.pitch = 1.0;   // ALWAYS 1.0 — other values cause distortion
+            utter.volume = 0.92; // Slightly below max for warmth
 
-        // Find best voice — check fresh every time
-        const voices = window.speechSynthesis.getVoices();
-        let preferred: SpeechSynthesisVoice | undefined;
-        if (lang === 'vi') {
-            preferred = voices.find(v => v.lang.startsWith('vi'));
-        } else {
-            // Try specific high-quality names first
-            const enNames = ['Samantha','Allison','Ava','Tom','Alex','Google US English'];
-            for (const n of enNames) { preferred = voices.find(v => v.name.includes(n)); if (preferred) break; }
-            if (!preferred) preferred = voices.find(v => v.lang === 'en-US') || voices.find(v => v.lang.startsWith('en'));
-        }
-        utter.lang = lang === 'vi' ? 'vi-VN' : 'en-US';
-        if (preferred) utter.voice = preferred;
+            // Use production voice engine for platform-aware voice selection
+            if (lang === 'vi') {
+                const voices = window.speechSynthesis.getVoices();
+                const viVoice = voices.find(v => v.lang.startsWith('vi'));
+                if (viVoice) utter.voice = viVoice;
+                utter.lang = 'vi-VN';
+            } else {
+                const voice = findBestVoice('en-US');
+                if (voice) utter.voice = voice;
+                utter.lang = 'en-US';
+            }
 
-        utter.onend = () => { setPlaying(false); setPaused(false); };
-        utter.onerror = () => { setPlaying(false); setPaused(false); };
+            utter.onend = () => { setPlaying(false); setPaused(false); };
+            utter.onerror = () => { setPlaying(false); setPaused(false); };
 
-        utterRef.current = utter;
-        window.speechSynthesis.speak(utter);
-        setPlaying(true);
-        setPaused(false);
+            utterRef.current = utter;
+            window.speechSynthesis.speak(utter);
+            setPlaying(true);
+            setPaused(false);
+        }, 50);
     }, [text, lang, rate, stop]);
 
     const togglePause = () => {
