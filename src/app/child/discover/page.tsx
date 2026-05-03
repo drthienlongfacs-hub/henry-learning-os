@@ -19,7 +19,7 @@ export default function DiscoverPage() {
     const [results, setResults] = useState<NormalizedLearningResource[]>([]);
     const [loading, setLoading] = useState(false);
     const [searched, setSearched] = useState(false);
-    const [activeSource, setActiveSource] = useState<'open-library' | 'gutendex'>('open-library');
+    const [activeSource, setActiveSource] = useState<'open-library' | 'gutendex' | 'storyweaver'>('open-library');
 
     const searchBooks = useCallback(async () => {
         if (!query.trim()) return;
@@ -32,6 +32,12 @@ export default function DiscoverPage() {
                 const res = await openLibraryAdapter.fetchMetadata({ query: query.trim(), limit: 12 });
                 setResults(res);
             } else {
+                if (activeSource === 'storyweaver') {
+                    const { storyWeaverAdapter } = await import('@/lib/resources/adapters/storyweaver-adapter');
+                    const res = await storyWeaverAdapter.fetchMetadata({ query: query.trim(), ageBand: '6-8', limit: 12 });
+                    setResults(res);
+                    return;
+                }
                 const { gutendexAdapter } = await import('@/lib/resources/adapters/gutendex-adapter');
                 const res = await gutendexAdapter.fetchMetadata({ query: query.trim(), limit: 12 });
                 setResults(res);
@@ -94,6 +100,12 @@ export default function DiscoverPage() {
                             onClick={() => setActiveSource('gutendex')}
                         >
                             Project Gutenberg
+                        </button>
+                        <button
+                            className={`btn btn-sm ${activeSource === 'storyweaver' ? 'btn-primary' : 'btn-ghost'}`}
+                            onClick={() => setActiveSource('storyweaver')}
+                        >
+                            StoryWeaver
                         </button>
                     </div>
                 </div>

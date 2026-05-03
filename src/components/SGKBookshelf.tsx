@@ -334,9 +334,12 @@ export default function SGKBookshelf({ lang }: SGKBookshelfProps) {
     const [favIds, setFavIds] = useState<string[]>([]);
 
     useEffect(() => {
-        setStreak(getStreak());
-        setRecentIds(getRecentBooks(6).map(r => r.bookId));
-        setFavIds(getFavoriteBookIds());
+        const timer = window.setTimeout(() => {
+            setStreak(getStreak());
+            setRecentIds(getRecentBooks(6).map(r => r.bookId));
+            setFavIds(getFavoriteBookIds());
+        }, 0);
+        return () => window.clearTimeout(timer);
     }, []);
 
     const filteredBooks = useMemo(() => {

@@ -5,7 +5,7 @@
 // Benchmark: Epic! "Read to Me" free library
 // ========================================
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { BookOpen, Globe, ExternalLink, RefreshCw } from 'lucide-react';
 import { searchStoryWeaver, type StoryWeaverBook } from '@/lib/resources/adapters/storyweaver-adapter';
 
@@ -126,7 +126,7 @@ export default function FreeStoriesShelf({ lang }: FreeStoriesShelfProps) {
     const [selectedLevel, setSelectedLevel] = useState<string>('1');
     const [error, setError] = useState('');
 
-    const fetchStories = async () => {
+    const fetchStories = useCallback(async () => {
         setLoading(true);
         setError('');
         try {
@@ -141,11 +141,14 @@ export default function FreeStoriesShelf({ lang }: FreeStoriesShelfProps) {
             setError(lang === 'vi' ? 'Lỗi kết nối' : 'Connection error');
         }
         setLoading(false);
-    };
+    }, [lang, selectedLang, selectedLevel]);
 
     useEffect(() => {
-        fetchStories();
-    }, [selectedLang, selectedLevel]);
+        const timer = window.setTimeout(() => {
+            void fetchStories();
+        }, 0);
+        return () => window.clearTimeout(timer);
+    }, [fetchStories]);
 
     return (
         <div style={{

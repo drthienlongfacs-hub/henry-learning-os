@@ -1,7 +1,13 @@
 'use client';
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 import { TEXTBOOK_LIBRARY, type TextbookPassage } from '@/data/textbook-library';
 import { lookupWord, type DictionaryEntry } from '@/lib/resources/adapters/dictionary-adapter';
+import {
+  buildReadingQuizEvidenceProfile,
+  evaluateComprehensionAnswer,
+  type ReadingEvidenceDecision,
+  type ReadingQuizAttemptEvidence,
+} from '@/lib/evidence/reading-quiz-evidence';
 import { BookOpen, CheckCircle, Sparkles, Brain, ChevronRight, RotateCcw, Volume2, X, Languages, Lightbulb, BookMarked, Loader2 } from 'lucide-react';
 
 type Accent = 'en-US'|'en-GB'|'en-AU';
@@ -42,7 +48,7 @@ function WordPopup({word,onClose}:{word:string;onClose:()=>void}){
           </div>
           {entry.meanings.slice(0,2).map((m,i)=><div key={i} style={{marginBottom:'0.4rem'}}>
             <span style={{padding:'1px 6px',borderRadius:'4px',background:'#eef2ff',color:'#4338ca',fontSize:'0.58rem',fontWeight:700}}>{m.partOfSpeech}</span>
-            {m.definitions.slice(0,2).map((d,di)=><div key={di} style={{fontSize:'0.75rem',color:'#334155',margin:'0.2rem 0 0 0.5rem',lineHeight:1.5}}>{di+1}. {d.definition}{d.example&&<div style={{fontStyle:'italic',color:'#64748b',fontSize:'0.68rem'}}>"{d.example}"</div>}</div>)}
+            {m.definitions.slice(0,2).map((d,di)=><div key={di} style={{fontSize:'0.75rem',color:'#334155',margin:'0.2rem 0 0 0.5rem',lineHeight:1.5}}>{di+1}. {d.definition}{d.example&&<div style={{fontStyle:'italic',color:'#64748b',fontSize:'0.68rem'}}>&quot;{d.example}&quot;</div>}</div>)}
           </div>)}
         </>}
         {!loading&&!entry&&<div style={{fontSize:'0.78rem',color:'#94a3b8',padding:'0.5rem'}}>Không tìm thấy</div>}
@@ -60,8 +66,15 @@ function getAll():TextbookPassage[]{
 
 type Tab='read'|'bilingual'|'hard'|'vocab';
 
+const DECISION_LABELS:Record<ReadingEvidenceDecision,{vi:string;en:string;color:string;bg:string}>={
+  collect_evidence:{vi:'Cần thêm dữ liệu',en:'Collect evidence',color:'#2563eb',bg:'#eff6ff'},
+  repair:{vi:'Ôn lại ý trong bài',en:'Repair understanding',color:'#dc2626',bg:'#fee2e2'},
+  practice:{vi:'Luyện cùng mức',en:'Practice at this level',color:'#d97706',bg:'#fef3c7'},
+  stretch:{vi:'Thêm thử thách',en:'Ready to stretch',color:'#059669',bg:'#dcfce7'},
+};
+
 export default function ReadingQuiz({lang}:{lang:string}){
-  const passages=useMemo(getAll,[]);
+  const passages=useMemo(()=>getAll(),[]);
   const[idx,setIdx]=useState(0);
   const[tab,setTab]=useState<Tab>('read');
   const[selWord,setSelWord]=useState<string|null>(null);
@@ -70,23 +83,46 @@ export default function ReadingQuiz({lang}:{lang:string}){
   const[answers,setAnswers]=useState<Record<number,string>>({});
   const[checked,setChecked]=useState<Record<number,'correct'|'hint'>>({});
   const[hints,setHints]=useState<Record<number,boolean>>({});
+  const[attempts,setAttempts]=useState<ReadingQuizAttemptEvidence[]>([]);
   const[score,setScore]=useState(0);
   const[done,setDone]=useState(false);
 
   if(!passages.length) return null;
   const p=passages[idx%passages.length];
   const vi=lang==='vi';
+  const evidenceProfile=buildReadingQuizEvidenceProfile({
+    passageId:p.id,
+    questionCount:p.comprehensionChecks.length,
+    attempts,
+  });
 
   const handleCheck=(i:number)=>{
-    const ua=(answers[i]||'').trim().toLowerCase();
-    const hw=p.comprehensionChecks[i].answerHint.toLowerCase().split(/\s+/).filter(w=>w.length>2);
-    const mc=hw.filter(w=>ua.includes(w)).length;
-    if(mc>=Math.max(1,Math.floor(hw.length*0.4))){setChecked(x=>({...x,[i]:'correct'}));setScore(s=>s+1);}
+    const answer=answers[i]||'';
+    const evaluation=evaluateComprehensionAnswer(answer,p.comprehensionChecks[i].answerHint);
+    setAttempts(prev=>[
+      ...prev,
+      {
+        id:`${p.id}-${i}-${prev.filter(a=>a.questionIndex===i).length+1}-${Date.now()}`,
+        passageId:p.id,
+        questionIndex:i,
+        answer,
+        isCorrect:evaluation.isCorrect,
+        hintUsedBeforeAttempt:hints[i]===true,
+        hintShownAfterAttempt:!evaluation.isCorrect,
+        matchedTerms:evaluation.matchedTerms,
+        expectedTerms:evaluation.expectedTerms,
+        createdAt:new Date().toISOString(),
+      },
+    ]);
+    if(evaluation.isCorrect){
+      setChecked(x=>({...x,[i]:'correct'}));
+      if(checked[i]!=='correct')setScore(s=>s+1);
+    }
     else{setChecked(x=>({...x,[i]:'hint'}));setHints(x=>({...x,[i]:true}));}
   };
 
-  const next=()=>{setIdx(i=>i+1);setAnswers({});setChecked({});setHints({});setTab('read');if(idx+1>=passages.length)setDone(true);};
-  const restart=()=>{setIdx(0);setAnswers({});setChecked({});setHints({});setScore(0);setDone(false);setTab('read');};
+  const next=()=>{setIdx(i=>i+1);setAnswers({});setChecked({});setHints({});setAttempts([]);setTab('read');if(idx+1>=passages.length)setDone(true);};
+  const restart=()=>{setIdx(0);setAnswers({});setChecked({});setHints({});setAttempts([]);setScore(0);setDone(false);setTab('read');};
 
   // Split passage text into sentences for sentence-level TTS
   const sentences=p.text.match(/[^.!?]+[.!?]+/g)||[p.text];
@@ -231,6 +267,31 @@ export default function ReadingQuiz({lang}:{lang:string}){
 
             {/* ===== TAB: QUIZ ===== */}
             {tab==='hard'&&<div style={{display:'flex',flexDirection:'column',gap:'0.75rem'}}>
+              <div style={{padding:'0.75rem 0.9rem',borderRadius:'12px',background:'#f8fafc',border:'1px solid #e2e8f0'}}>
+                <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:'0.5rem',flexWrap:'wrap',marginBottom:'0.45rem'}}>
+                  <span style={{fontSize:'0.72rem',fontWeight:800,color:'#1e293b'}}>{vi?'Bằng chứng đọc hiểu':'Reading evidence'}</span>
+                  <span style={{padding:'2px 8px',borderRadius:'999px',fontSize:'0.58rem',fontWeight:800,color:DECISION_LABELS[evidenceProfile.decision].color,background:DECISION_LABELS[evidenceProfile.decision].bg}}>
+                    {vi?DECISION_LABELS[evidenceProfile.decision].vi:DECISION_LABELS[evidenceProfile.decision].en}
+                  </span>
+                </div>
+                <div style={{display:'grid',gridTemplateColumns:'repeat(4,minmax(0,1fr))',gap:'0.35rem',marginBottom:'0.45rem'}}>
+                  {[
+                    {k:vi?'Thử':'Attempts',v:evidenceProfile.attemptCount},
+                    {k:vi?'Đúng':'Correct',v:`${evidenceProfile.completedQuestionCount}/${evidenceProfile.questionCount}`},
+                    {k:vi?'Tự lực':'Independent',v:evidenceProfile.independentAccuracyPct===null?'--':`${evidenceProfile.independentAccuracyPct}%`},
+                    {k:vi?'Gợi ý':'Hints',v:evidenceProfile.hintDependencyPct===null?'--':`${evidenceProfile.hintDependencyPct}%`},
+                  ].map(item=><div key={item.k} style={{padding:'0.4rem',borderRadius:'8px',background:'#fff',border:'1px solid #eef2f7',minWidth:0}}>
+                    <div style={{fontSize:'0.52rem',color:'#64748b',fontWeight:700,whiteSpace:'nowrap'}}>{item.k}</div>
+                    <div style={{fontSize:'0.78rem',color:'#0f172a',fontWeight:850}}>{item.v}</div>
+                  </div>)}
+                </div>
+                <div style={{fontSize:'0.64rem',color:'#475569',lineHeight:1.45}}>
+                  {evidenceProfile.evidenceSummary} {evidenceProfile.nextLearningMove}
+                </div>
+                <div style={{fontSize:'0.58rem',color:'#94a3b8',lineHeight:1.4,marginTop:'0.25rem'}}>
+                  {evidenceProfile.riskGuardrail}
+                </div>
+              </div>
               {p.comprehensionChecks.map((c,i)=>(
                 <div key={i} style={{padding:'0.75rem 1rem',borderRadius:'12px',background:checked[i]==='correct'?'#f0fdf4':checked[i]==='hint'?'#fef3c7':'#f8fafc',border:`1px solid ${checked[i]==='correct'?'#bbf7d0':checked[i]==='hint'?'#fde68a':'#e2e8f0'}`}}>
                   <div style={{display:'flex',alignItems:'center',gap:'0.4rem',marginBottom:'0.4rem'}}>

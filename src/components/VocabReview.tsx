@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { TEXTBOOK_LIBRARY } from '@/data/textbook-library';
-import { Volume2, RotateCcw, Check, X, Brain, Sparkles, Trophy } from 'lucide-react';
+import { Volume2, Check, X, Brain, Sparkles } from 'lucide-react';
 
 type Accent = 'en-US' | 'en-GB' | 'en-AU';
 
@@ -51,8 +51,15 @@ export default function VocabReview({ lang }: { lang: string }) {
   const [sessionDone, setSessionDone] = useState(0);
   const [sessionCorrect, setSessionCorrect] = useState(0);
   const [reviewStates, setReviewStates] = useState<Record<string, ReviewState>>({});
+  const [nowMs, setNowMs] = useState(0);
 
-  useEffect(() => { setReviewStates(getReviewStates()); }, []);
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setNowMs(Date.now());
+      setReviewStates(getReviewStates());
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   // Collect ALL vocab from ALL textbooks
   const allVocab: VocabCard[] = useMemo(() => {
@@ -76,7 +83,7 @@ export default function VocabReview({ lang }: { lang: string }) {
 
   // Sort by review urgency — due items first, then new
   const sortedCards = useMemo(() => {
-    const now = Date.now();
+    const now = nowMs;
     return [...allVocab].sort((a, b) => {
       const sa = reviewStates[a.word];
       const sb = reviewStates[b.word];
@@ -84,20 +91,20 @@ export default function VocabReview({ lang }: { lang: string }) {
       const db = sb ? sb.nextReview - now : -Infinity;
       return da - db;
     });
-  }, [allVocab, reviewStates]);
+  }, [allVocab, reviewStates, nowMs]);
 
   const currentCard = sortedCards[cardIdx % sortedCards.length];
   const dueCount = useMemo(() => {
-    const now = Date.now();
     return allVocab.filter(v => {
       const s = reviewStates[v.word];
-      return !s || s.nextReview <= now;
+      return !s || s.nextReview <= nowMs;
     }).length;
-  }, [allVocab, reviewStates]);
+  }, [allVocab, reviewStates, nowMs]);
 
   const handleResult = useCallback((correct: boolean) => {
+    if (!currentCard) return;
     const word = currentCard.word;
-    const existing = reviewStates[word] || { word, nextReview: 0, interval: 1, ease: 2.0, reps: 0 };
+    const existing = { ...(reviewStates[word] || { word, nextReview: 0, interval: 1, ease: 2.0, reps: 0 }) };
 
     if (correct) {
       existing.reps += 1;
@@ -108,11 +115,13 @@ export default function VocabReview({ lang }: { lang: string }) {
       existing.interval = 1; // reset to 1 hour
       existing.ease = Math.max(existing.ease - 0.2, 1.3);
     }
-    existing.nextReview = Date.now() + existing.interval * 3600000;
+    const now = Date.now();
+    existing.nextReview = now + existing.interval * 3600000;
 
     const updated = { ...reviewStates, [word]: existing };
     setReviewStates(updated);
     saveReviewStates(updated);
+    setNowMs(now);
     setSessionDone(d => d + 1);
     setFlipped(false);
     setCardIdx(i => i + 1);

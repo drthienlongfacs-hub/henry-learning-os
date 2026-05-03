@@ -26,22 +26,24 @@ function StatCard({ icon, label, value, sub, color }: { icon: React.ReactNode; l
   );
 }
 
-function StreakCalendar({ streak }: { streak: DailyStreak }) {
+function StreakCalendar({ streak, todayMs }: { streak: DailyStreak; todayMs: number | null }) {
   // Generate last 7 days
   const days = useMemo(() => {
     const result: { date: string; label: string; active: boolean }[] = [];
     const dayNames = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
+    if (todayMs === null) return result;
+    const streakStart = new Date(todayMs - (streak.currentStreak - 1) * 86400000).toISOString().slice(0, 10);
     for (let i = 6; i >= 0; i--) {
-      const d = new Date(Date.now() - i * 86400000);
+      const d = new Date(todayMs - i * 86400000);
       const dateStr = d.toISOString().slice(0, 10);
       result.push({
         date: dateStr,
         label: dayNames[d.getDay()],
-        active: dateStr <= streak.lastReadDate && dateStr >= new Date(Date.now() - (streak.currentStreak - 1) * 86400000).toISOString().slice(0, 10),
+        active: dateStr <= streak.lastReadDate && dateStr >= streakStart,
       });
     }
     return result;
-  }, [streak]);
+  }, [streak, todayMs]);
 
   return (
     <div style={{ display: 'flex', gap: '0.4rem', justifyContent: 'center', margin: '0.5rem 0' }}>
@@ -67,11 +69,16 @@ export default function ReadingProgressDashboard({ lang }: { lang: string }) {
   const [streak, setStreak] = useState<DailyStreak>({ currentStreak: 0, longestStreak: 0, lastReadDate: '', totalBooksOpened: 0, todayBooksOpened: 0 });
   const [recent, setRecent] = useState<ReadingRecord[]>([]);
   const [favIds, setFavIds] = useState<string[]>([]);
+  const [todayMs, setTodayMs] = useState<number | null>(null);
 
   useEffect(() => {
-    setStreak(getStreak());
-    setRecent(getRecentBooks(8));
-    setFavIds(getFavoriteBookIds());
+    const timer = window.setTimeout(() => {
+      setTodayMs(Date.now());
+      setStreak(getStreak());
+      setRecent(getRecentBooks(8));
+      setFavIds(getFavoriteBookIds());
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   const vi = lang === 'vi';
@@ -125,7 +132,7 @@ export default function ReadingProgressDashboard({ lang }: { lang: string }) {
               {vi ? `Chuỗi đọc: ${streak.currentStreak} ngày 🔥` : `Reading streak: ${streak.currentStreak} days 🔥`}
             </span>
           </div>
-          <StreakCalendar streak={streak} />
+          <StreakCalendar streak={streak} todayMs={todayMs} />
           <div style={{ fontSize: '0.6rem', color: '#9a3412', textAlign: 'center' }}>
             {vi ? `Kỷ lục: ${streak.longestStreak} ngày` : `Best: ${streak.longestStreak} days`}
           </div>

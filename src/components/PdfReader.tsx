@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/TextLayer.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
-import { lookupWord } from '@/lib/resources/adapters/dictionary-adapter';
+import { lookupWord, type DictionaryEntry } from '@/lib/resources/adapters/dictionary-adapter';
 import { X, Volume2, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
 
 // Set worker from CDN
@@ -24,7 +24,7 @@ export function PdfReader({ fileUrl, onClose, title }: PdfReaderProps) {
 
     // Dictionary State
     const [selectedText, setSelectedText] = useState<string>('');
-    const [definition, setDefinition] = useState<any>(null);
+    const [definition, setDefinition] = useState<DictionaryEntry | { error: string } | null>(null);
     const [dictLoading, setDictLoading] = useState(false);
     const [popupPos, setPopupPos] = useState<{ x: number; y: number } | null>(null);
 
@@ -136,13 +136,16 @@ export function PdfReader({ fileUrl, onClose, title }: PdfReaderProps) {
                         
                         {dictLoading ? (
                             <div style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}><Loader2 size={16} className="animate-spin" /></div>
-                        ) : definition && !definition.error ? (
+                        ) : definition && !('error' in definition) ? (
                             <div>
                                 {definition.phonetics && definition.phonetics[0]?.text && (
                                     <div style={{ fontSize: '0.85rem', color: '#4b5563', marginBottom: '5px', display: 'flex', alignItems: 'center', gap: '5px' }}>
                                         <span>{definition.phonetics[0].text}</span>
                                         {definition.phonetics[0]?.audio && (
-                                            <button onClick={() => playAudio(definition.phonetics[0].audio)} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+                                            <button onClick={() => {
+                                                const audio = definition.phonetics[0]?.audio;
+                                                if (audio) playAudio(audio);
+                                            }} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                                                 <Volume2 size={14} color="#6366f1" />
                                             </button>
                                         )}
@@ -154,7 +157,7 @@ export function PdfReader({ fileUrl, onClose, title }: PdfReaderProps) {
                             </div>
                         ) : (
                             <div style={{ fontSize: '0.85rem', color: '#6b7280' }}>
-                                {definition?.error || 'Could not find definition.'}
+                                {definition && 'error' in definition ? definition.error : 'Could not find definition.'}
                             </div>
                         )}
                     </div>

@@ -142,7 +142,7 @@ export function WordLookup({ lang }: WordLookupProps) {
                                                 </div>
                                                 {d.example && (
                                                     <div style={{ fontSize: '0.7rem', color: '#64748b', fontStyle: 'italic', margin: '0.15rem 0 0 0.5rem' }}>
-                                                        "{d.example}"
+                                                        &quot;{d.example}&quot;
                                                     </div>
                                                 )}
                                             </div>
