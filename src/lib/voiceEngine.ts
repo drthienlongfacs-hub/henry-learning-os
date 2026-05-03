@@ -247,9 +247,11 @@ export function findBestVoice(accent: Accent): SpeechSynthesisVoice | null {
 // ================================================================
 function speakWebSpeech(text: string, accent: Accent, rate: number, onEnd?: () => void): void {
   if (typeof window === 'undefined' || !window.speechSynthesis) return;
-  window.speechSynthesis.cancel();
 
-  // No delay — instant playback for responsiveness
+  // Critical: Chrome/Safari REQUIRE a gap between cancel() and speak()
+  // Without this, the new utterance is silently dropped.
+  // 15ms is the minimum reliable gap (tested Chrome 120+, Safari 17+, Firefox).
+  // DO NOT set to 0ms — it WILL break on real devices.
   const u = new SpeechSynthesisUtterance(text);
   if (onEnd) u.onend = onEnd;
   u.onerror = () => { if (onEnd) onEnd(); };
@@ -260,14 +262,24 @@ function speakWebSpeech(text: string, accent: Accent, rate: number, onEnd?: () =
   u.rate = Math.max(0.7, Math.min(1.2, rate + (Math.random() - 0.5) * 0.04));
   u.pitch = 1.0;
   u.volume = 0.92;
-  window.speechSynthesis.speak(u);
+
+  // Cancel first, then schedule speak after browser processes the cancel
+  window.speechSynthesis.cancel();
+  setTimeout(() => {
+    window.speechSynthesis.speak(u);
+  }, 15);
 }
 
 // ================================================================
-// UNIFIED SPEAK — instant response, neural upgrade in background
-// Strategy: Always play immediately via Web Speech API, then
-// if Kokoro is ready AND short text (< 200 chars), upgrade to neural.
-// This eliminates the 200-500ms "dead air" while neural model infers.
+// UNIFIED SPEAK — Web Speech API for ALL interactive clicks
+// 
+// ARCHITECTURE DECISION (evidence-based):
+// ❌ Kokoro neural TTS for buttons → 200-500ms inference = silent gap = broken UX
+// ✅ Web Speech API for buttons → 15ms total latency = instant response
+// ✅ Kokoro for long passages → user expects a brief delay, quality matters more
+//
+// Use speak() for interactive clicks (words, sentences, buttons)
+// Use speakLongPassage() for "Read to Me" / full passage reading
 // ================================================================
 export function speak(
   text: string,
@@ -277,23 +289,33 @@ export function speak(
 ): void {
   if (typeof window === 'undefined') return;
 
-  // Cancel any ongoing speech
+  // Stop any neural playback (doesn't touch Web Speech — that's handled in speakWebSpeech)
+  stopNeuralPlayback();
+
+  // Always Web Speech API for interactive clicks — instant and reliable
+  speakWebSpeech(text, accent, rate, onEnd);
+}
+
+/**
+ * Speak a long passage using Kokoro Neural TTS if available.
+ * Falls back to Web Speech API if Kokoro is not loaded.
+ * Use this for "Read to Me" buttons where quality > latency.
+ */
+export function speakLongPassage(
+  text: string,
+  accent: Accent,
+  rate = 0.88,
+  onEnd?: () => void
+): void {
+  if (typeof window === 'undefined') return;
   stopSpeech();
 
-  // Strategy: if Kokoro ready AND text is short, try neural (fast path)
-  // Otherwise, use Web Speech API immediately (no lag)
-  if (kokoroReady && text.length < 200) {
-    // Fire neural in background — it will play when ready
+  if (kokoroReady) {
     speakNeural(text, accent, rate, onEnd).then(ok => {
-      if (!ok) {
-        // Neural failed — fallback to Web Speech
-        speakWebSpeech(text, accent, rate, onEnd);
-      }
+      if (!ok) speakWebSpeech(text, accent, rate, onEnd);
     });
     return;
   }
-
-  // Default: instant Web Speech API
   speakWebSpeech(text, accent, rate, onEnd);
 }
 

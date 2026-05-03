@@ -1,4 +1,4 @@
-import { speak as engineSpeak, stopSpeech, pauseSpeech, resumeSpeech, type Accent } from '@/lib/voiceEngine';
+import { speak as engineSpeak, speakLongPassage, stopSpeech, pauseSpeech, resumeSpeech, type Accent } from '@/lib/voiceEngine';
 
 // ========================================
 // Text-to-Speech Reader — "Read to Me" feature
@@ -33,7 +33,8 @@ export function ReadToMe({ text, lang = 'en', label }: ReadToMeProps) {
         setPlaying(true);
         setPaused(false);
         const accent: Accent = lang === 'vi' ? 'en-US' : 'en-US';
-        engineSpeak(text, accent, rate, () => {
+        // Use long-passage mode for reading content — neural TTS when available
+        speakLongPassage(text, accent, rate, () => {
             setPlaying(false);
             setPaused(false);
         });
