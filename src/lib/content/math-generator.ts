@@ -1135,6 +1135,174 @@ export function genCharts(): MathProblem {
     };
 }
 
+// ── BATCH 8: Phép tính với số 0 — SGK Toán 1 ──
+export function genZeroOps(): MathProblem {
+    const a = rand(1, 20);
+    const templates = [
+        { q: `${a} + 0 = ?`, a: String(a), e: `Cộng với 0: bất kỳ số nào cộng 0 vẫn bằng chính nó. ${a} + 0 = ${a}.` },
+        { q: `0 + ${a} = ?`, a: String(a), e: `0 + ${a} = ${a}. Số 0 là phần tử trung hòa của phép cộng.` },
+        { q: `${a} - 0 = ?`, a: String(a), e: `Trừ đi 0: ${a} - 0 = ${a}.` },
+        { q: `${a} - ${a} = ?`, a: '0', e: `Một số trừ chính nó bằng 0. ${a} - ${a} = 0.` },
+        { q: `${a} × 0 = ?`, a: '0', e: `Nhân với 0 luôn bằng 0. ${a} × 0 = 0.` },
+        { q: `0 × ${a} = ?`, a: '0', e: `0 × bất kỳ = 0. Tính chất đặc biệt của số 0.` },
+    ];
+    const t = templates[rand(0, templates.length - 1)];
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'arithmetic', topic: 'Phép tính với số 0', topicKey: 'zero_ops',
+        question: t.q, correctAnswer: t.a,
+        options: makeOptions(Number(t.a), 5),
+        illustration: '/images/core/number_line.svg',
+        explanation: t.e, hints: ['Cộng 0 = giữ nguyên, trừ chính nó = 0', `Đáp số: ${t.a}`],
+    };
+}
+
+// ── BATCH 8: Bài toán có lời văn G1 ──
+export function genWordProbG1(): MathProblem {
+    const a = rand(2, 9), b = rand(1, 8);
+    const templates = [
+        { q: `Lan có ${a} quả táo. Mẹ cho thêm ${b} quả. Hỏi Lan có tất cả bao nhiêu quả táo?`, a: a + b, e: `${a} + ${b} = ${a + b} (quả táo).` },
+        { q: `Trên cây có ${a + b} con chim. Bay đi ${b} con. Còn lại mấy con chim?`, a: a, e: `${a + b} - ${b} = ${a} (con chim).` },
+        { q: `Tổ 1 có ${a} bạn, tổ 2 có ${b} bạn. Cả 2 tổ có mấy bạn?`, a: a + b, e: `${a} + ${b} = ${a + b} (bạn).` },
+    ];
+    const t = templates[rand(0, templates.length - 1)];
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'word_problem', topic: 'Toán đố lớp 1', topicKey: 'word_g1',
+        question: t.q, correctAnswer: String(t.a),
+        options: makeOptions(t.a, 5),
+        illustration: '/images/core/apple.svg',
+        explanation: t.e, hints: ['Tìm từ khóa: "tất cả" = cộng, "còn lại" = trừ', `Đáp số: ${t.a}`],
+    };
+}
+
+// ── BATCH 8: Bảng cửu chương 2,3,4,5 đầy đủ — SGK Toán 2 ──
+export function genMultTable2_5(): MathProblem {
+    const table = [2, 3, 4, 5][rand(0, 3)];
+    const n = rand(1, 10);
+    const result = table * n;
+    const templates = [
+        { q: `${table} × ${n} = ?`, a: result, e: `Bảng nhân ${table}: ${table} × ${n} = ${result}.` },
+        { q: `${n} × ${table} = ?`, a: result, e: `Tính chất giao hoán: ${n} × ${table} = ${result}.` },
+        { q: `${result} : ${table} = ?`, a: n, e: `Phép chia ngược: ${result} ÷ ${table} = ${n}.` },
+    ];
+    const t = templates[rand(0, templates.length - 1)];
+    return {
+        id: genId(), gradeLevel: 2, difficulty: 2,
+        type: 'arithmetic', topic: 'Bảng nhân 2-5', topicKey: 'mult_table_2_5',
+        question: t.q, correctAnswer: String(t.a),
+        options: makeOptions(t.a, 5),
+        illustration: '/images/core/multiplication.svg',
+        explanation: t.e, hints: [`Nhớ bảng nhân ${table}`, `Đáp số: ${t.a}`],
+    };
+}
+
+// ── BATCH 8: Đường gấp khúc — SGK Toán 2 ──
+export function genDuongGapKhuc(): MathProblem {
+    const a = rand(2, 8), b = rand(2, 8), c = rand(2, 8);
+    const total = a + b + c;
+    return {
+        id: genId(), gradeLevel: 2, difficulty: 2,
+        type: 'geometry', topic: 'Đường gấp khúc', topicKey: 'duong_gap_khuc',
+        question: `Đường gấp khúc ABC có 3 đoạn thẳng: AB = ${a} cm, BC = ${b} cm, CD = ${c} cm. Tính độ dài đường gấp khúc ABCD.`,
+        correctAnswer: `${total} cm`,
+        options: [`${total} cm`, `${total + 2} cm`, `${total - 1} cm`, `${a + b} cm`],
+        illustration: '/images/core/zigzag.svg',
+        explanation: `Độ dài = ${a} + ${b} + ${c} = ${total} cm.`,
+        hints: ['Cộng tất cả các đoạn thẳng lại', `Đáp số: ${total} cm`],
+    };
+}
+
+// ── BATCH 8: Bảng đơn vị đo độ dài — SGK Toán 3 ──
+const DON_VI_DO_DATA = [
+    { q: '1 m = ? cm', a: '100', e: '1 mét = 100 xen-ti-mét.' },
+    { q: '1 km = ? m', a: '1000', e: '1 ki-lô-mét = 1000 mét.' },
+    { q: '1 dm = ? cm', a: '10', e: '1 đề-xi-mét = 10 xen-ti-mét.' },
+    { q: '1 m = ? dm', a: '10', e: '1 mét = 10 đề-xi-mét.' },
+    { q: '5 m = ? cm', a: '500', e: '5 × 100 = 500 cm.' },
+    { q: '3 km = ? m', a: '3000', e: '3 × 1000 = 3000 m.' },
+    { q: '200 cm = ? m', a: '2', e: '200 ÷ 100 = 2 m.' },
+    { q: '40 mm = ? cm', a: '4', e: '40 ÷ 10 = 4 cm. (1 cm = 10 mm)' },
+];
+
+export function genDonViDo(): MathProblem {
+    const item = DON_VI_DO_DATA[rand(0, DON_VI_DO_DATA.length - 1)];
+    return {
+        id: genId(), gradeLevel: 3, difficulty: 3,
+        type: 'measurement', topic: 'Đơn vị đo độ dài', topicKey: 'don_vi_do',
+        question: item.q, correctAnswer: item.a,
+        options: makeOptions(Number(item.a), 100),
+        illustration: '/images/core/ruler.svg',
+        explanation: item.e, hints: ['mm → cm → dm → m → km (×10 mỗi bậc)', `Đáp số: ${item.a}`],
+    };
+}
+
+// ── BATCH 8: Góc vuông / Góc không vuông — SGK Toán 3 ──
+const GOC_VUONG_DATA = [
+    { q: 'Góc vuông bằng bao nhiêu độ?', a: '90°', opts: ['90°', '45°', '180°', '60°'], e: 'Góc vuông = 90°. Dùng ê-ke để kiểm tra.' },
+    { q: 'Góc nhọn là góc có số đo:', a: 'Nhỏ hơn 90°', opts: ['Nhỏ hơn 90°', 'Bằng 90°', 'Lớn hơn 90°', 'Bằng 180°'], e: 'Góc nhọn < 90°, góc vuông = 90°, góc tù > 90°.' },
+    { q: 'Hình chữ nhật có mấy góc vuông?', a: '4', opts: ['4', '2', '3', '1'], e: 'Hình chữ nhật có 4 góc vuông (mỗi góc = 90°).' },
+    { q: 'Góc tù là góc có số đo:', a: 'Lớn hơn 90° và nhỏ hơn 180°', opts: ['Lớn hơn 90° và nhỏ hơn 180°', 'Bằng 90°', 'Nhỏ hơn 90°', 'Bằng 180°'], e: '90° < Góc tù < 180°.' },
+    { q: 'Dụng cụ nào dùng để kiểm tra góc vuông?', a: 'Ê-ke', opts: ['Ê-ke', 'Thước kẻ', 'Com-pa', 'Bút chì'], e: 'Ê-ke có 1 góc vuông 90°, dùng để kiểm tra góc vuông.' },
+];
+
+export function genGocVuong(): MathProblem {
+    const item = GOC_VUONG_DATA[rand(0, GOC_VUONG_DATA.length - 1)];
+    return {
+        id: genId(), gradeLevel: 3, difficulty: 3,
+        type: 'geometry', topic: 'Góc vuông', topicKey: 'goc_vuong',
+        question: item.q, correctAnswer: item.a,
+        options: item.opts,
+        illustration: '/images/core/angle.svg',
+        explanation: item.e, hints: ['Nhớ: nhọn < 90° < tù < 180°', `Đáp số: ${item.a}`],
+    };
+}
+
+// ── BATCH 8: Phân số thập phân — SGK Toán 4 ──
+export function genPhanSoThapPhan(): MathProblem {
+    const denominators = [10, 100, 1000];
+    const den = denominators[rand(0, 2)];
+    const num = rand(1, den - 1);
+    const decimal = num / den;
+    const templates = [
+        { q: `Viết phân số thập phân ${num}/${den} dưới dạng số thập phân:`, a: String(decimal), e: `${num}/${den} = ${decimal} (chia tử cho mẫu).` },
+        { q: `${decimal} viết dưới dạng phân số thập phân là:`, a: `${num}/${den}`, e: `${decimal} = ${num}/${den}.` },
+    ];
+    const t = templates[rand(0, 1)];
+    return {
+        id: genId(), gradeLevel: 4, difficulty: 4,
+        type: 'arithmetic', topic: 'Phân số thập phân', topicKey: 'phan_so_thap_phan',
+        question: t.q, correctAnswer: t.a,
+        options: [t.a, String(decimal * 10), String(num), `${num * 2}/${den}`],
+        illustration: '/images/core/fraction_decimal.svg',
+        explanation: t.e, hints: ['PS thập phân có mẫu = 10, 100, 1000', `Đáp số: ${t.a}`],
+    };
+}
+
+// ── BATCH 8: Số đo thời gian — SGK Toán 5 ──
+const TIME_MEASURE_DATA = [
+    { q: '1 giờ = ? phút', a: '60', e: '1 giờ = 60 phút.' },
+    { q: '1 phút = ? giây', a: '60', e: '1 phút = 60 giây.' },
+    { q: '1 ngày = ? giờ', a: '24', e: '1 ngày = 24 giờ.' },
+    { q: '2 giờ 30 phút = ? phút', a: '150', e: '2 × 60 + 30 = 150 phút.' },
+    { q: '1 năm = ? tháng', a: '12', e: '1 năm = 12 tháng.' },
+    { q: '1 thế kỷ = ? năm', a: '100', e: '1 thế kỷ = 100 năm. Thế kỷ XXI = 2001-2100.' },
+    { q: '3 giờ = ? phút', a: '180', e: '3 × 60 = 180 phút.' },
+    { q: '120 phút = ? giờ', a: '2', e: '120 ÷ 60 = 2 giờ.' },
+];
+
+export function genTimeMeasure(): MathProblem {
+    const item = TIME_MEASURE_DATA[rand(0, TIME_MEASURE_DATA.length - 1)];
+    return {
+        id: genId(), gradeLevel: 5, difficulty: 5,
+        type: 'measurement', topic: 'Số đo thời gian', topicKey: 'time_measure',
+        question: item.q, correctAnswer: item.a,
+        options: makeOptions(Number(item.a), 10),
+        illustration: '/images/core/clock.svg',
+        explanation: item.e, hints: ['1h = 60min, 1min = 60s, 1 ngày = 24h', `Đáp số: ${item.a}`],
+    };
+}
+
 // ══════════════════════════════════════════════
 // MASTER GENERATOR & TOPIC REGISTRY
 // ══════════════════════════════════════════════
@@ -1162,6 +1330,8 @@ export const MATH_TOPICS: TopicInfo[] = [
     { key: 'measure_length', name: 'Đo độ dài (cm)', gradeLevel: 1, generator: genMeasureLength, icon: '📏' },
     { key: 'days_of_week', name: 'Ngày trong tuần', gradeLevel: 1, generator: genDaysOfWeek, icon: '📅' },
     { key: 'clock_g1', name: 'Đồng hồ giờ đúng', gradeLevel: 1, generator: genClockG1, icon: '🕐' },
+    { key: 'zero_ops', name: 'Phép tính với số 0', gradeLevel: 1, generator: genZeroOps, icon: '0️⃣' },
+    { key: 'word_g1', name: 'Toán đố lớp 1', gradeLevel: 1, generator: genWordProbG1, icon: '📖' },
     // Grade 2 — CT 2018 + Singapore Math + Cambridge Primary
     { key: 'place_value', name: 'Hàng chục–đơn vị', gradeLevel: 2, generator: genPlaceValue, icon: '🏗️' },
     { key: 'add_sub_carry', name: 'Cộng trừ có nhớ', gradeLevel: 2, generator: genAddSubCarry, icon: '🧮' },
@@ -1175,6 +1345,8 @@ export const MATH_TOPICS: TopicInfo[] = [
     { key: 'numbers_1000', name: 'Số đến 1000', gradeLevel: 2, generator: genNumbersTo1000, icon: '🔟' },
     { key: 'mass_volume_g2', name: 'Khối lượng & Dung tích', gradeLevel: 2, generator: genMassVolume, icon: '⚖️' },
     { key: 'money_vn', name: 'Tiền Việt Nam', gradeLevel: 2, generator: genVietnameseMoney, icon: '💰' },
+    { key: 'mult_table_2_5', name: 'Bảng nhân 2-5', gradeLevel: 2, generator: genMultTable2_5, icon: '🔢' },
+    { key: 'duong_gap_khuc', name: 'Đường gấp khúc', gradeLevel: 2, generator: genDuongGapKhuc, icon: '📐' },
     // Grade 3
     { key: 'mult_div', name: 'Nhân chia cơ bản', gradeLevel: 3, generator: genMultDiv, icon: '✖️' },
     { key: 'mult_table', name: 'Bảng nhân', gradeLevel: 3, generator: genMultTable, icon: '🔢' },
@@ -1186,6 +1358,8 @@ export const MATH_TOPICS: TopicInfo[] = [
     { key: 'word_g3', name: 'Toán đố lớp 3', gradeLevel: 3, generator: genWordProbG3, icon: '📖' },
     { key: 'division_table', name: 'Bảng chia', gradeLevel: 3, generator: genDivisionTable, icon: '➗' },
     { key: 'roman_numerals', name: 'Số La Mã', gradeLevel: 3, generator: genRomanNumerals, icon: '🏛️' },
+    { key: 'don_vi_do', name: 'Đơn vị đo độ dài', gradeLevel: 3, generator: genDonViDo, icon: '📏' },
+    { key: 'goc_vuong', name: 'Góc vuông', gradeLevel: 3, generator: genGocVuong, icon: '📐' },
     // Grade 4
     { key: 'fractions', name: 'Phân số', gradeLevel: 4, generator: genFractions, icon: '🥧' },
     { key: 'area', name: 'Diện tích', gradeLevel: 4, generator: genArea, icon: '⬛' },
@@ -1197,6 +1371,7 @@ export const MATH_TOPICS: TopicInfo[] = [
     { key: 'fraction_mult_div', name: 'Nhân chia phân số', gradeLevel: 4, generator: genFractionMultDiv, icon: '✖️' },
     { key: 'divisibility_rules', name: 'Dấu hiệu chia hết', gradeLevel: 4, generator: genDivisibilityRules, icon: '🔍' },
     { key: 'parallelogram_shapes', name: 'Hình BH/thoi/thang', gradeLevel: 4, generator: genParallelogramShapes, icon: '⬟' },
+    { key: 'phan_so_thap_phan', name: 'Phân số thập phân', gradeLevel: 4, generator: genPhanSoThapPhan, icon: '🔢' },
     // Grade 5
     { key: 'decimals', name: 'Số thập phân', gradeLevel: 5, generator: genDecimals, icon: '🔸' },
     { key: 'percent', name: 'Phần trăm', gradeLevel: 5, generator: genPercent, icon: '💯' },
@@ -1207,6 +1382,7 @@ export const MATH_TOPICS: TopicInfo[] = [
     { key: 'speed_distance_time', name: 'Vận tốc - Quãng đường', gradeLevel: 5, generator: genSpeedDistanceTime, icon: '🚗' },
     { key: 'circle_area', name: 'Hình tròn', gradeLevel: 5, generator: genCircleArea, icon: '⭕' },
     { key: 'map_scale', name: 'Tỉ lệ bản đồ', gradeLevel: 5, generator: genMapScale, icon: '🗺️' },
+    { key: 'time_measure', name: 'Số đo thời gian', gradeLevel: 5, generator: genTimeMeasure, icon: '⏱️' },
 ];
 
 /** Generate a set of problems for a given grade and topic */

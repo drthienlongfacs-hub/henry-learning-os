@@ -374,6 +374,137 @@ export function genKeChuyenTheoTranh(): VietnameseProblem {
     };
 }
 
+// ── BATCH 9: Nghe kể chuyện — SGK TV1 ──
+const NGHE_KE_CHUYEN = [
+    { story: 'Con Thỏ và Rùa thi chạy. Thỏ chủ quan ngủ trưa. Rùa kiên trì chạy từ từ và thắng cuộc.',
+      questions: [
+        { q: 'Ai thắng cuộc thi chạy?', a: 'Rùa', opts: ['Rùa', 'Thỏ', 'Cả hai', 'Không ai'] },
+        { q: 'Vì sao Thỏ thua?', a: 'Vì Thỏ chủ quan ngủ trưa', opts: ['Vì Thỏ chủ quan ngủ trưa', 'Vì Thỏ chạy chậm', 'Vì Rùa gian lận', 'Vì trời mưa'] },
+      ] },
+    { story: 'Tích Chu ham chơi, không chăm bà ốm. Tiên biến bà thành chim. Tích Chu hối hận, tìm nước suối tiên cứu bà.',
+      questions: [
+        { q: 'Bà bị biến thành gì?', a: 'Con chim', opts: ['Con chim', 'Con cá', 'Con thỏ', 'Cây hoa'] },
+        { q: 'Bài học từ câu chuyện là gì?', a: 'Phải biết chăm sóc người thân', opts: ['Phải biết chăm sóc người thân', 'Nên đi chơi nhiều', 'Không cần học', 'Tiên rất giỏi'] },
+      ] },
+];
+
+export function genNgheKeChuyen(): VietnameseProblem {
+    const item = NGHE_KE_CHUYEN[rand(0, NGHE_KE_CHUYEN.length - 1)];
+    const qItem = item.questions[rand(0, item.questions.length - 1)];
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'reading', topic: 'Nghe kể chuyện', topicKey: 'nghe_ke_chuyen',
+        question: `📖 Nghe kể:\n"${item.story}"\n\n${qItem.q}`,
+        correctAnswer: qItem.a, options: qItem.opts,
+        illustration: '/images/core/book_open.svg',
+        explanation: `Đáp án: ${qItem.a}.`, hints: ['Nghe kỹ câu chuyện', `Đáp số: ${qItem.a}`],
+    };
+}
+
+// ── BATCH 9: Tập đọc thơ — SGK TV1 ──
+const THO_G1 = [
+    { tho: 'Trăng ơi... từ đâu đến?\nHay từ cánh đồng xa?\nTrăng hồng như quả chín\nLơ lửng trước hiên nhà.', author: 'Trần Đăng Khoa',
+      questions: [
+        { q: 'Trăng được so sánh với gì?', a: 'Quả chín', opts: ['Quả chín', 'Ngôi sao', 'Bông hoa', 'Con thuyền'] },
+        { q: 'Trăng ở đâu?', a: 'Trước hiên nhà', opts: ['Trước hiên nhà', 'Trên cánh đồng', 'Dưới biển', 'Trong rừng'] },
+      ] },
+    { tho: 'Con cò mà đi ăn đêm\nĐậu phải cành mềm lộn cổ xuống ao\nÔng ơi ông vớt tôi nao\nTôi có lòng nào ông hãy xáo măng.', author: 'Ca dao',
+      questions: [
+        { q: 'Con cò bị gì?', a: 'Lộn cổ xuống ao', opts: ['Lộn cổ xuống ao', 'Bay lên trời', 'Ngủ quên', 'Bị bắt'] },
+        { q: '"Con cò" trong bài thường tượng trưng cho ai?', a: 'Người nông dân', opts: ['Người nông dân', 'Trẻ em', 'Ông tiên', 'Chú bộ đội'] },
+      ] },
+];
+
+export function genTapDocTho(): VietnameseProblem {
+    const item = THO_G1[rand(0, THO_G1.length - 1)];
+    const qItem = item.questions[rand(0, item.questions.length - 1)];
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'reading', topic: 'Tập đọc thơ', topicKey: 'tap_doc_tho',
+        question: `📝 Đọc bài thơ:\n"${item.tho}"\n(${item.author})\n\n${qItem.q}`,
+        correctAnswer: qItem.a, options: qItem.opts,
+        illustration: '/images/core/poem.svg',
+        explanation: `Đáp án: ${qItem.a}.`, hints: ['Đọc kỹ từng câu thơ', `Đáp số: ${qItem.a}`],
+    };
+}
+
+// ── BATCH 9: Đọc hiểu văn bản G3 — SGK TV3 ──
+const DOC_HIEU_G3 = [
+    { passage: 'Mùa thu, bầu trời xanh trong. Lá cây chuyển sang vàng. Những cánh diều bay cao trên đồng cỏ. Trẻ em vui vẻ chơi thả diều.',
+      questions: [
+        { q: 'Bài văn tả cảnh mùa gì?', a: 'Mùa thu', opts: ['Mùa thu', 'Mùa hè', 'Mùa đông', 'Mùa xuân'] },
+        { q: 'Lá cây chuyển màu gì?', a: 'Vàng', opts: ['Vàng', 'Đỏ', 'Xanh', 'Tím'] },
+        { q: 'Trẻ em chơi trò gì?', a: 'Thả diều', opts: ['Thả diều', 'Đá bóng', 'Nhảy dây', 'Trốn tìm'] },
+      ] },
+    { passage: 'Làng em có một con sông nhỏ. Nước trong veo, nhìn thấy cá bơi. Hai bên bờ là hàng tre xanh. Chiều chiều, các bạn ra sông tắm mát.',
+      questions: [
+        { q: 'Nước sông thế nào?', a: 'Trong veo', opts: ['Trong veo', 'Đục ngầu', 'Đen kịt', 'Đỏ au'] },
+        { q: 'Hai bên bờ có gì?', a: 'Hàng tre xanh', opts: ['Hàng tre xanh', 'Hàng phượng', 'Hàng dừa', 'Hàng xoài'] },
+      ] },
+];
+
+export function genDocHieuG3(): VietnameseProblem {
+    const item = DOC_HIEU_G3[rand(0, DOC_HIEU_G3.length - 1)];
+    const qItem = item.questions[rand(0, item.questions.length - 1)];
+    return {
+        id: genId(), gradeLevel: 3, difficulty: 3,
+        type: 'reading', topic: 'Đọc hiểu G3', topicKey: 'doc_hieu_g3',
+        question: `📖 Đọc đoạn văn:\n"${item.passage}"\n\n${qItem.q}`,
+        correctAnswer: qItem.a, options: qItem.opts,
+        illustration: '/images/core/book_open.svg',
+        explanation: `Đáp án: ${qItem.a}.`, hints: ['Đọc kỹ đoạn văn, tìm chi tiết', `Đáp số: ${qItem.a}`],
+    };
+}
+
+// ── BATCH 9: Từ Hán Việt — SGK TV4 ──
+const TU_HAN_VIET = [
+    { q: '"Quốc gia" có nghĩa là:', a: 'Đất nước', opts: ['Đất nước', 'Gia đình', 'Trường học', 'Bệnh viện'], e: 'Quốc = nước, gia = nhà → Quốc gia = đất nước.' },
+    { q: '"Nhân dân" có nghĩa là:', a: 'Mọi người trong nước', opts: ['Mọi người trong nước', 'Nhân viên', 'Gia đình', 'Bạn bè'], e: 'Nhân = người, dân = dân → nhân dân = mọi người.' },
+    { q: 'Từ nào là từ Hán Việt?', a: 'Thiên nhiên', opts: ['Thiên nhiên', 'Cây cối', 'Bông hoa', 'Con mèo'], e: 'Thiên = trời, nhiên = tự nhiên → Thiên nhiên = tự nhiên.' },
+    { q: '"Giáo dục" nghĩa là:', a: 'Dạy dỗ, nuôi dưỡng', opts: ['Dạy dỗ, nuôi dưỡng', 'Chơi game', 'Đi làm', 'Nấu ăn'], e: 'Giáo = dạy, dục = nuôi dưỡng.' },
+    { q: '"Hải sản" gồm từ nào?', a: 'Hải (biển) + Sản (sản phẩm)', opts: ['Hải (biển) + Sản (sản phẩm)', 'Hải (trời) + Sản (đất)', 'Hải (núi) + Sản (rừng)', 'Hải (sông) + Sản (cá)'], e: 'Hải = biển, sản = sản phẩm → hải sản = sản phẩm từ biển.' },
+];
+
+export function genTuHanViet(): VietnameseProblem {
+    const item = TU_HAN_VIET[rand(0, TU_HAN_VIET.length - 1)];
+    return {
+        id: genId(), gradeLevel: 4, difficulty: 4,
+        type: 'grammar', topic: 'Từ Hán Việt', topicKey: 'tu_han_viet',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        illustration: '/images/core/scroll.svg',
+        explanation: item.e, hints: ['Từ Hán Việt gốc chữ Hán, thường trang trọng', `Đáp số: ${item.a}`],
+    };
+}
+
+// ── BATCH 9: Văn tả cảnh — SGK TV5 ──
+const VAN_TA_CANH = [
+    { prompt: 'Tả cảnh buổi sáng trên cánh đồng.',
+      sample: 'Buổi sáng, cánh đồng bát ngát. Sương mai đọng trên lá lúa. Mặt trời từ từ nhô lên, phủ ánh vàng khắp nơi. Xa xa, tiếng gà gáy vang.',
+      questions: [
+        { q: 'Bài văn tả cảnh dùng giác quan nào?', a: 'Thị giác và thính giác', opts: ['Thị giác và thính giác', 'Chỉ vị giác', 'Chỉ xúc giác', 'Khứu giác'] },
+        { q: 'Trình tự tả trong bài này là:', a: 'Từ gần đến xa', opts: ['Từ gần đến xa', 'Từ xa đến gần', 'Từ trên xuống dưới', 'Từ trái sang phải'] },
+      ] },
+    { prompt: 'Tả cảnh biển vào buổi chiều.',
+      sample: 'Hoàng hôn buông xuống. Mặt trời như quả cầu lửa từ từ chìm vào biển. Sóng vỗ nhè nhẹ bờ cát. Gió biển mát rượi, mang theo vị mặn.',
+      questions: [
+        { q: '"Mặt trời như quả cầu lửa" dùng biện pháp gì?', a: 'So sánh', opts: ['So sánh', 'Nhân hóa', 'Ẩn dụ', 'Điệp ngữ'] },
+        { q: 'Bài văn tả theo trình tự nào?', a: 'Trình tự thời gian', opts: ['Trình tự thời gian', 'Trình tự không gian', 'Theo cảm xúc', 'Ngẫu nhiên'] },
+      ] },
+];
+
+export function genVanTaCanh(): VietnameseProblem {
+    const item = VAN_TA_CANH[rand(0, VAN_TA_CANH.length - 1)];
+    const qItem = item.questions[rand(0, item.questions.length - 1)];
+    return {
+        id: genId(), gradeLevel: 5, difficulty: 5,
+        type: 'grammar', topic: 'Văn tả cảnh', topicKey: 'van_ta_canh',
+        question: `✏️ Đề: "${item.prompt}"\n\nĐoạn mẫu:\n"${item.sample}"\n\n${qItem.q}`,
+        correctAnswer: qItem.a, options: qItem.opts,
+        illustration: '/images/core/landscape.svg',
+        explanation: `Đáp án: ${qItem.a}.`, hints: ['Tả cảnh: quan sát + trình tự + cảm xúc', `Đáp số: ${qItem.a}`],
+    };
+}
+
 // ── NEW G1: Tập viết (Nét cơ bản) — SGK TV1 ──
 const TAP_VIET = [
     { q: 'Chữ "a" gồm những nét gì?', a: 'Nét cong kín và nét móc ngược', opts: ['Nét cong kín và nét móc ngược', 'Nét sổ thẳng', 'Nét ngang', 'Nét xiên phải'], e: 'Chữ "a" = nét cong kín + nét móc ngược (phải).' },
@@ -754,6 +885,8 @@ export const VIETNAMESE_TOPICS: VnTopicInfo[] = [
     { key: 'van_extended', name: 'Vần mở rộng', gradeLevel: 1, generator: genVanExtended, icon: '📋' },
     { key: 'ghep_tu', name: 'Ghép từ', gradeLevel: 1, generator: genGhepTu, icon: '🧩' },
     { key: 'tap_viet', name: 'Tập viết', gradeLevel: 1, generator: genTapViet, icon: '✒️' },
+    { key: 'nghe_ke_chuyen', name: 'Nghe kể chuyện', gradeLevel: 1, generator: genNgheKeChuyen, icon: '📖' },
+    { key: 'tap_doc_tho', name: 'Tập đọc thơ', gradeLevel: 1, generator: genTapDocTho, icon: '🎶' },
     { key: 'chinh_ta', name: 'Chính tả', gradeLevel: 2, generator: genChinhTa, icon: '✏️' },
     { key: 'tap_doc', name: 'Tập đọc', gradeLevel: 2, generator: genTapDoc, icon: '📗' },
     { key: 'ke_chuyen', name: 'Kể chuyện theo tranh', gradeLevel: 2, generator: genKeChuyenTheoTranh, icon: '🖼️' },
@@ -762,9 +895,12 @@ export const VIETNAMESE_TOPICS: VnTopicInfo[] = [
     { key: 'luyen_tu_cau', name: 'Luyện từ & câu', gradeLevel: 3, generator: genLuyenTuCau, icon: '✏️' },
     { key: 'chinh_ta_g3', name: 'Chính tả nâng cao', gradeLevel: 3, generator: genChinhTaG3, icon: '📝' },
     { key: 'viet_doan_van', name: 'Viết đoạn văn', gradeLevel: 3, generator: genVietDoanVan, icon: '📄' },
+    { key: 'doc_hieu_g3', name: 'Đọc hiểu G3', gradeLevel: 3, generator: genDocHieuG3, icon: '📘' },
     { key: 'grammar', name: 'Ngữ pháp', gradeLevel: 3, generator: genGrammar, icon: '✍️' },
     { key: 'bien_phap_tu_tu', name: 'Biện pháp tu từ', gradeLevel: 4, generator: genBienPhapTuTu, icon: '🎭' },
+    { key: 'tu_han_viet', name: 'Từ Hán Việt', gradeLevel: 4, generator: genTuHanViet, icon: '📜' },
     { key: 'writing_g4', name: 'Tập làm văn', gradeLevel: 4, generator: genWritingG4, icon: '📝' },
+    { key: 'van_ta_canh', name: 'Văn tả cảnh', gradeLevel: 5, generator: genVanTaCanh, icon: '🏞️' },
     { key: 'writing_g5', name: 'Nghị luận đơn giản', gradeLevel: 5, generator: genWritingG5, icon: '💡' },
 ];
 
