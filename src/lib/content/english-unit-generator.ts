@@ -4,6 +4,10 @@
 // ═══════════════════════════════════════════════════════
 
 import { GRADE3_UNITS, type UnitData } from '@/data/english-units-g3';
+import { GRADE4_UNITS } from '@/data/english-units-g4';
+import { GRADE5_UNITS } from '@/data/english-units-g5';
+
+const ALL_UNITS = [...GRADE3_UNITS, ...GRADE4_UNITS, ...GRADE5_UNITS];
 import type { EnglishProblem } from './english-generator';
 
 const rand = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
@@ -79,7 +83,7 @@ function genListenChoose(unit: UnitData): EnglishProblem {
 // ── Exercise Type 4: Sentence Match (Pattern → Vietnamese) ──
 function genSentenceMatch(unit: UnitData): EnglishProblem {
     const pattern = unit.patterns[rand(0, unit.patterns.length - 1)];
-    const otherUnits = GRADE3_UNITS.filter(u => u.unitId !== unit.unitId);
+    const otherUnits = ALL_UNITS.filter(u => u.unitId !== unit.unitId);
     const wrongPatterns = shuffle(otherUnits.flatMap(u => u.patterns)).slice(0, 3);
     return {
         id: genId(), gradeLevel: unit.grade, difficulty: unit.grade,
@@ -103,15 +107,9 @@ export function generateUnitExercises(
     unitId?: string,
     count: number = 10
 ): EnglishProblem[] {
-    let units: UnitData[];
-    if (grade === 3) {
-        units = unitId
-            ? GRADE3_UNITS.filter(u => u.unitId === unitId)
-            : GRADE3_UNITS;
-    } else {
-        // Future: add GRADE4_UNITS, GRADE5_UNITS
-        return [];
-    }
+    const gradeMap: Record<number, UnitData[]> = { 3: GRADE3_UNITS, 4: GRADE4_UNITS, 5: GRADE5_UNITS };
+    const pool = gradeMap[grade] || [];
+    const units = unitId ? pool.filter(u => u.unitId === unitId) : pool;
     if (units.length === 0) return [];
 
     return Array.from({ length: count }, () => {
@@ -135,17 +133,16 @@ export interface UnitInfo {
 }
 
 export function getUnitRegistry(grade: number): UnitInfo[] {
-    if (grade === 3) {
-        return GRADE3_UNITS.map(u => ({
-            unitId: u.unitId,
-            unitNumber: u.unitNumber,
-            grade: u.grade,
-            title: u.title,
-            titleVi: u.titleVi,
-            textbook: u.textbook,
-            vocabCount: u.vocabulary.length,
-            patternCount: u.patterns.length,
-        }));
-    }
-    return [];
+    const gradeMap: Record<number, UnitData[]> = { 3: GRADE3_UNITS, 4: GRADE4_UNITS, 5: GRADE5_UNITS };
+    const pool = gradeMap[grade] || [];
+    return pool.map(u => ({
+        unitId: u.unitId,
+        unitNumber: u.unitNumber,
+        grade: u.grade,
+        title: u.title,
+        titleVi: u.titleVi,
+        textbook: u.textbook,
+        vocabCount: u.vocabulary.length,
+        patternCount: u.patterns.length,
+    }));
 }

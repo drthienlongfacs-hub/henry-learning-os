@@ -415,7 +415,7 @@ const CORE_TOPICS: EnTopicInfo[] = [
 // ── SGK Unit-based topics (Global Success) ──
 function buildUnitTopics(): EnTopicInfo[] {
     const units: EnTopicInfo[] = [];
-    for (const grade of [3] as const) {
+    for (const grade of [3, 4, 5] as const) {
         const registry = getUnitRegistry(grade);
         for (const u of registry) {
             units.push({
