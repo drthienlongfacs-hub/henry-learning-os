@@ -224,6 +224,11 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     tags:['decoding','grade-1','high-impact'], relatedIds:['ph-03','ph-01'],
     examples:['-at: cat, bat, hat', '-ig: big, dig, pig', '-op: top, hop, mop'],
     source:'Wylie & Durrell (1970) Elementary English' },
+  { id:'lm-12', term:'Agent Orchestration (Symphony)', termVi:'Điều phối tác nhân (Symphony)', category:'learning-method',
+    definition:'OpenAI Symphony (2026): task tracker → isolated agent sandboxes with Guides (rules), Sensors (linter/type-check), Proof of Work (CI pass). Evaluated and rejected for Henry OS — overkill for single-dev project. Core principles already implemented via our CI/CD + Agent Rules.',
+    definitionVi:'OpenAI Symphony (2026): điều phối nhiều AI agent song song. Đã đánh giá và KHÔNG áp dụng cho Henry OS — quá nặng cho dự án 1 người. Nguyên tắc cốt lõi đã triển khai qua CI/CD + Agent Rules.',
+    tags:['AI','architecture','evaluated-rejected','2026'], relatedIds:['lm-11'],
+    source:'OpenAI Symphony (March 2026) — Apache 2.0' },
 ];
 
 // === SEARCH & FILTER FUNCTIONS ===
