@@ -69,6 +69,18 @@ export const PRIVACY_INVENTORY: PrivacyInventoryItem[] = [
         sourceIds: ['sot-traceability-matrix', 'wwc-standards', 'eef-metacognition'],
     },
     {
+        id: 'reading_quiz_history',
+        label: 'Lịch sử evidence đọc hiểu đã redacted',
+        sensitivity: 'medium',
+        storedIn: 'localStorage: henry-reading-quiz-history-v1',
+        purpose: 'Theo dõi số lần thử, đúng/sai, gợi ý và độ tin cậy của từng đoạn đọc.',
+        minimizationRule: 'Không lưu câu trả lời thô; chỉ lưu metadata chấm câu hỏi và matched terms đã giới hạn.',
+        retentionRule: 'Giữ local tối đa theo giới hạn attempt history; phụ huynh có thể reset local app.',
+        exportStatus: 'available_local',
+        deleteStatus: 'available_local',
+        sourceIds: ['sot-traceability-matrix', 'ies-foundational-reading', 'unicef-ai-children'],
+    },
+    {
         id: 'mistakes',
         label: 'Sổ lỗi sai',
         sensitivity: 'high',
@@ -181,4 +193,3 @@ export function buildPrivacyEvidencePanel(counts: Partial<Record<string, number>
         sourceIds: Array.from(new Set(items.flatMap((item) => item.sourceIds))),
     };
 }
-

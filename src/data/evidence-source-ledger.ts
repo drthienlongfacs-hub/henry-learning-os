@@ -133,6 +133,7 @@ export const WIKI_EVIDENCE_LEDGER: WikiEvidenceRecord[] = [
         internetSourceIds: ['aero-spacing-retrieval-2021', 'ies-study-learning-2007'],
         localEvidence: [
             { path: 'src/lib/evidence/reading-quiz-evidence.ts', signal: 'Quiz decisions are based on attempts before showing the next move.' },
+            { path: 'src/lib/evidence/reading-quiz-history.ts', signal: 'Reading attempt history persists redacted metadata for passage-level trend evidence.' },
             { path: 'src/components/ReadingQuiz.tsx', signal: 'Reading answers are checked before the hint becomes evidence.' },
         ],
         operationalRule: 'Ask for retrieval before explanation; use hints only after an attempt.',
@@ -172,6 +173,7 @@ export const WIKI_EVIDENCE_LEDGER: WikiEvidenceRecord[] = [
         localEvidence: [
             { path: 'src/lib/evidence/learning-evidence.ts', signal: 'Topic evidence chooses observe/repair/practice/stretch from local attempts and reviews.' },
             { path: 'src/lib/evidence/reading-quiz-evidence.ts', signal: 'Reading evidence separates first attempt, hint use and retry success.' },
+            { path: 'src/lib/evidence/reading-quiz-history.ts', signal: 'History summaries report no-data, collecting and usable states without inventing accuracy.' },
         ],
         operationalRule: 'Feedback must name the next learning move, not just correct/incorrect.',
         caveat: 'Parent-facing claims must state sample size and reliability.',
@@ -309,6 +311,7 @@ export const WIKI_EVIDENCE_LEDGER: WikiEvidenceRecord[] = [
         internetSourceIds: ['ies-study-learning-2007'],
         localEvidence: [
             { path: 'src/lib/evidence/reading-quiz-evidence.ts', signal: 'Challenge decisions read independent accuracy, hint dependency and completion.' },
+            { path: 'src/lib/evidence/reading-quiz-history.ts', signal: 'Cross-passage reading history separates stored evidence from raw child answers.' },
             { path: 'src/lib/evidence/learning-evidence.ts', signal: 'Topic challenge fit uses local sample size and reliability.' },
         ],
         operationalRule: 'Increase challenge only after independent success and low hint dependency.',

@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useMemo, useCallback, useRef } from 'react';
+import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { TEXTBOOK_LIBRARY, type TextbookPassage } from '@/data/textbook-library';
 import { lookupWord, type DictionaryEntry } from '@/lib/resources/adapters/dictionary-adapter';
 import {
@@ -8,6 +8,13 @@ import {
   type ReadingEvidenceDecision,
   type ReadingQuizAttemptEvidence,
 } from '@/lib/evidence/reading-quiz-evidence';
+import {
+  appendReadingQuizAttemptHistory,
+  buildReadingQuizHistorySummary,
+  getPassageReadingAttempts,
+  readReadingQuizHistory,
+  writeReadingQuizHistory,
+} from '@/lib/evidence/reading-quiz-history';
 import { BookOpen, CheckCircle, Sparkles, Brain, ChevronRight, RotateCcw, Volume2, X, Languages, Lightbulb, BookMarked, Loader2 } from 'lucide-react';
 
 type Accent = 'en-US'|'en-GB'|'en-AU';
@@ -85,6 +92,7 @@ export default function ReadingQuiz({lang}:{lang:string}){
   const[checked,setChecked]=useState<Record<number,'correct'|'hint'>>({});
   const[hints,setHints]=useState<Record<number,boolean>>({});
   const[attempts,setAttempts]=useState<ReadingQuizAttemptEvidence[]>([]);
+  const[historyHydrated,setHistoryHydrated]=useState(false);
   const[score,setScore]=useState(0);
   const[done,setDone]=useState(false);
   const[speakingIdx,setSpeakingIdx]=useState<number|null>(null);
@@ -92,10 +100,18 @@ export default function ReadingQuiz({lang}:{lang:string}){
 
   const p=passages[idx%passages.length]??null;
   const vi=lang==='vi';
+  const passageQuestionCounts=useMemo<Record<string,number>>(()=>Object.fromEntries(
+    passages.map(passage=>[passage.id,passage.comprehensionChecks.length])
+  ),[passages]);
+  const passageAttempts=useMemo(()=>p?getPassageReadingAttempts(attempts,p.id):[],[attempts,p]);
+  const historySummary=useMemo(()=>buildReadingQuizHistorySummary({
+    attempts,
+    passageQuestionCounts,
+  }),[attempts,passageQuestionCounts]);
   const evidenceProfile=p?buildReadingQuizEvidenceProfile({
     passageId:p.id,
     questionCount:p.comprehensionChecks.length,
-    attempts,
+    attempts:passageAttempts,
   }):null;
 
   // Split passage text into sentences for sentence-level TTS
@@ -115,15 +131,22 @@ export default function ReadingQuiz({lang}:{lang:string}){
     readNext(startFrom);
   },[sentences,accent,speed]);
 
+  useEffect(()=>{
+    const timeout=window.setTimeout(()=>{
+      setAttempts(readReadingQuizHistory());
+      setHistoryHydrated(true);
+    },0);
+    return ()=>window.clearTimeout(timeout);
+  },[]);
+
   if(!p||!evidenceProfile) return null;
 
   const handleCheck=(i:number)=>{
     const answer=answers[i]||'';
     const evaluation=evaluateComprehensionAnswer(answer,p.comprehensionChecks[i].answerHint);
-    setAttempts(prev=>[
-      ...prev,
-      {
-        id:`${p.id}-${i}-${prev.filter(a=>a.questionIndex===i).length+1}-${Date.now()}`,
+    setAttempts(prev=>{
+      const next=appendReadingQuizAttemptHistory(prev,{
+        id:`${p.id}-${i}-${prev.filter(a=>a.passageId===p.id&&a.questionIndex===i).length+1}-${Date.now()}`,
         passageId:p.id,
         questionIndex:i,
         answer,
@@ -133,8 +156,10 @@ export default function ReadingQuiz({lang}:{lang:string}){
         matchedTerms:evaluation.matchedTerms,
         expectedTerms:evaluation.expectedTerms,
         createdAt:new Date().toISOString(),
-      },
-    ]);
+      });
+      writeReadingQuizHistory(next);
+      return next;
+    });
     if(evaluation.isCorrect){
       setChecked(x=>({...x,[i]:'correct'}));
       if(checked[i]!=='correct')setScore(s=>s+1);
@@ -142,8 +167,8 @@ export default function ReadingQuiz({lang}:{lang:string}){
     else{setChecked(x=>({...x,[i]:'hint'}));setHints(x=>({...x,[i]:true}));}
   };
 
-  const next=()=>{setIdx(i=>i+1);setAnswers({});setChecked({});setHints({});setAttempts([]);setTab('read');if(idx+1>=passages.length)setDone(true);};
-  const restart=()=>{setIdx(0);setAnswers({});setChecked({});setHints({});setAttempts([]);setScore(0);setDone(false);setTab('read');};
+  const next=()=>{setIdx(i=>i+1);setAnswers({});setChecked({});setHints({});setTab('read');if(idx+1>=passages.length)setDone(true);};
+  const restart=()=>{setIdx(0);setAnswers({});setChecked({});setHints({});setScore(0);setDone(false);setTab('read');};
 
   const TABS:{key:Tab;icon:React.ReactNode;label:string}[]=[
     {key:'read',icon:<BookOpen size={13}/>,label:vi?'Đọc':'Read'},
@@ -163,7 +188,7 @@ export default function ReadingQuiz({lang}:{lang:string}){
             <h2 style={{fontWeight:800,fontSize:'0.95rem',margin:0,color:'#fff'}}>{vi?'📖 Luyện Đọc & Phát Âm':'📖 Reading & Pronunciation'}</h2>
           </div>
           <p style={{fontSize:'0.65rem',color:'rgba(255,255,255,0.85)',margin:0}}>
-            {vi?`Bài ${idx+1}/${passages.length} • Điểm: ${score} ⭐ • Chạm từ xem nghĩa`:`Passage ${idx+1}/${passages.length} • Score: ${score} ⭐`}
+            {vi?`Bài ${idx+1}/${passages.length} • Điểm phiên này: ${score} ⭐ • Real data: ${historySummary.attemptCount} lần thử`:`Passage ${idx+1}/${passages.length} • Session score: ${score} ⭐ • Real data: ${historySummary.attemptCount} attempts`}
           </p>
         </div>
       </div>
@@ -314,6 +339,17 @@ export default function ReadingQuiz({lang}:{lang:string}){
                 </div>
                 <div style={{fontSize:'0.58rem',color:'#94a3b8',lineHeight:1.4,marginTop:'0.25rem'}}>
                   {evidenceProfile.riskGuardrail}
+                </div>
+                <div style={{marginTop:'0.45rem',padding:'0.45rem 0.55rem',borderRadius:'8px',background:'#fff',border:'1px dashed #cbd5e1'}}>
+                  <div style={{fontSize:'0.56rem',fontWeight:800,color:'#0f766e',marginBottom:'0.2rem'}}>
+                    {vi?'Lịch sử đọc local':'Local reading history'} · {historySummary.status}
+                  </div>
+                  <div style={{fontSize:'0.6rem',color:'#475569',lineHeight:1.45}}>
+                    {historyHydrated?(vi?historySummary.summaryVi:historySummary.summaryEn):(vi?'Đang đọc dữ liệu local...':'Loading local evidence...')}
+                  </div>
+                  <div style={{fontSize:'0.52rem',color:'#94a3b8',lineHeight:1.35,marginTop:'0.2rem'}}>
+                    {vi?'Không lưu câu trả lời thô; chỉ lưu metadata đã redacted trên thiết bị này.':'Raw answers are not persisted; only redacted metadata stays on this device.'}
+                  </div>
                 </div>
               </div>
               {p.comprehensionChecks.map((c,i)=>(
