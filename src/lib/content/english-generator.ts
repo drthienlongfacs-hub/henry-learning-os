@@ -416,7 +416,7 @@ const CORE_TOPICS: EnTopicInfo[] = [
 // ── SGK Unit-based topics (Global Success 🇻🇳) ──
 function buildUnitTopics(): EnTopicInfo[] {
     const units: EnTopicInfo[] = [];
-    for (const grade of [3, 4, 5] as const) {
+    for (const grade of [1, 2, 3, 4, 5] as const) {
         const registry = getUnitRegistry(grade);
         for (const u of registry) {
             units.push({
@@ -471,7 +471,7 @@ export const ENGLISH_TOPICS: EnTopicInfo[] = [
 
 export function generateEnglishSet(grade: number, topicKey?: string, count: number = 10): EnglishProblem[] {
     // SGK unit-specific
-    if (topicKey?.startsWith('g3_u') || topicKey?.startsWith('g4_u') || topicKey?.startsWith('g5_u')) {
+    if (topicKey?.startsWith('g1_u') || topicKey?.startsWith('g2_u') || topicKey?.startsWith('g3_u') || topicKey?.startsWith('g4_u') || topicKey?.startsWith('g5_u')) {
         return generateUnitExercises(grade, topicKey, count);
     }
     // International category-specific

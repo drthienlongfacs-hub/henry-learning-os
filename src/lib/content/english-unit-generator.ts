@@ -6,8 +6,9 @@
 import { GRADE3_UNITS, type UnitData } from '@/data/english-units-g3';
 import { GRADE4_UNITS } from '@/data/english-units-g4';
 import { GRADE5_UNITS } from '@/data/english-units-g5';
+import { GRADE1_UNITS, GRADE2_UNITS } from '@/data/english-units-g1g2';
 
-const ALL_UNITS = [...GRADE3_UNITS, ...GRADE4_UNITS, ...GRADE5_UNITS];
+const ALL_UNITS = [...GRADE1_UNITS, ...GRADE2_UNITS, ...GRADE3_UNITS, ...GRADE4_UNITS, ...GRADE5_UNITS];
 import type { EnglishProblem } from './english-generator';
 
 const rand = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
@@ -133,7 +134,7 @@ export interface UnitInfo {
 }
 
 export function getUnitRegistry(grade: number): UnitInfo[] {
-    const gradeMap: Record<number, UnitData[]> = { 3: GRADE3_UNITS, 4: GRADE4_UNITS, 5: GRADE5_UNITS };
+    const gradeMap: Record<number, UnitData[]> = { 1: GRADE1_UNITS, 2: GRADE2_UNITS, 3: GRADE3_UNITS, 4: GRADE4_UNITS, 5: GRADE5_UNITS };
     const pool = gradeMap[grade] || [];
     return pool.map(u => ({
         unitId: u.unitId,
