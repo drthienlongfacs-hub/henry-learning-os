@@ -18,22 +18,71 @@ import {
 import { BookOpen, CheckCircle, Sparkles, Brain, ChevronRight, RotateCcw, Volume2, X, Languages, Lightbulb, BookMarked, Loader2 } from 'lucide-react';
 
 type Accent = 'en-US'|'en-GB'|'en-AU';
-const ACC:{k:Accent;f:string;l:string;v:string[]}[] = [
-  {k:'en-US',f:'🇺🇸',l:'American',v:['Samantha','Google US English']},
-  {k:'en-GB',f:'🇬🇧',l:'British',v:['Daniel','Google UK English']},
-  {k:'en-AU',f:'🇦🇺',l:'Australian',v:['Karen','Google Australian']},
+
+// ── Accent config with WIDE voice name patterns for macOS/Chrome/iOS/Android ──
+const ACC:{k:Accent;f:string;l:string;pitch:number;namePatterns:string[];langPrefix:string}[] = [
+  {k:'en-US',f:'🇺🇸',l:'American', pitch:1.0,
+   namePatterns:['Samantha','Allison','Ava','Nicky','Tom','Alex','Fred',
+     'Google US English','Microsoft Zira','Microsoft David','en-US','en_US'],
+   langPrefix:'en-US'},
+  {k:'en-GB',f:'🇬🇧',l:'British', pitch:1.1,
+   namePatterns:['Daniel','Kate','Oliver','Serena','Stephanie','Arthur',
+     'Google UK English','Microsoft Hazel','en-GB','en_GB'],
+   langPrefix:'en-GB'},
+  {k:'en-AU',f:'🇦🇺',l:'Australian', pitch:0.95,
+   namePatterns:['Karen','Lee','Catherine','Gordon',
+     'Google Australian','en-AU','en_AU'],
+   langPrefix:'en-AU'},
 ];
+
+// ── Cached voices (async-loaded) ──
+let _voices:SpeechSynthesisVoice[]=[];
+function loadVoices(){
+  if(typeof window==='undefined'||!window.speechSynthesis) return;
+  _voices=window.speechSynthesis.getVoices();
+  if(_voices.length===0){
+    window.speechSynthesis.onvoiceschanged=()=>{_voices=window.speechSynthesis.getVoices();};
+  }
+}
+if(typeof window!=='undefined') loadVoices();
+
+function findBestVoice(accent:Accent):SpeechSynthesisVoice|null{
+  if(_voices.length===0 && typeof window!=='undefined') _voices=window.speechSynthesis.getVoices();
+  const info=ACC.find(a=>a.k===accent);
+  if(!info) return null;
+  // Pass 1: exact name match
+  for(const pat of info.namePatterns){
+    const v=_voices.find(vo=>vo.name.includes(pat));
+    if(v) return v;
+  }
+  // Pass 2: match by lang property
+  const byLang=_voices.find(vo=>vo.lang===info.langPrefix);
+  if(byLang) return byLang;
+  // Pass 3: match by lang prefix (e.g. en-GB matches en-GB-*)
+  const byPrefix=_voices.find(vo=>vo.lang.startsWith(info.langPrefix));
+  if(byPrefix) return byPrefix;
+  // Pass 4: any English voice as last resort (differentiated by pitch)
+  return _voices.find(vo=>vo.lang.startsWith('en'))||null;
+}
+
 function speak(text:string, accent:Accent, rate=0.85, onEnd?:()=>void){
   if(typeof window==='undefined'||!window.speechSynthesis)return;
   window.speechSynthesis.cancel();
   const u=new SpeechSynthesisUtterance(text);
   if(onEnd) u.onend=onEnd;
-  u.lang=accent; u.rate=rate; u.pitch=1.05;
-  const voices=window.speechSynthesis.getVoices();
+  u.onerror=()=>{if(onEnd) onEnd();};
   const info=ACC.find(a=>a.k===accent);
-  if(info) for(const p of info.v){const v=voices.find(vo=>vo.name.includes(p));if(v){u.voice=v;break;}}
+  u.lang=accent;
+  u.rate=rate;
+  u.pitch=info?.pitch??1.0;
+  const voice=findBestVoice(accent);
+  if(voice) u.voice=voice;
   window.speechSynthesis.speak(u);
 }
+
+function pauseSpeech(){window.speechSynthesis?.pause();}
+function resumeSpeech(){window.speechSynthesis?.resume();}
+function stopSpeech(){window.speechSynthesis?.cancel();}
 
 function WordPopup({word,onClose}:{word:string;onClose:()=>void}){
   const[entry,setEntry]=useState<DictionaryEntry|null>(null);
@@ -96,6 +145,8 @@ export default function ReadingQuiz({lang}:{lang:string}){
   const[score,setScore]=useState(0);
   const[done,setDone]=useState(false);
   const[speakingIdx,setSpeakingIdx]=useState<number|null>(null);
+  const[isPaused,setIsPaused]=useState(false);
+  const[isFullPlaying,setIsFullPlaying]=useState(false);
   const speakingRef=useRef(false);
 
   const p=passages[idx%passages.length]??null;
@@ -119,8 +170,8 @@ export default function ReadingQuiz({lang}:{lang:string}){
 
   // Sequential reading: highlight each sentence as it's read aloud
   const speakSequential=useCallback((startFrom=0)=>{
-    if(speakingRef.current){window.speechSynthesis?.cancel();speakingRef.current=false;setSpeakingIdx(null);return;}
-    speakingRef.current=true;
+    if(speakingRef.current){stopSpeech();speakingRef.current=false;setSpeakingIdx(null);setIsPaused(false);return;}
+    speakingRef.current=true;setIsPaused(false);
     const readNext=(i:number)=>{
       if(i>=sentences.length||!speakingRef.current){setSpeakingIdx(null);speakingRef.current=false;return;}
       const sentence=sentences[i];
@@ -130,6 +181,20 @@ export default function ReadingQuiz({lang}:{lang:string}){
     };
     readNext(startFrom);
   },[sentences,accent,speed]);
+
+  // Full passage playback with onEnd
+  const speakFullPassage=useCallback(()=>{
+    if(isFullPlaying){stopSpeech();setIsFullPlaying(false);setIsPaused(false);return;}
+    setIsFullPlaying(true);setIsPaused(false);
+    if(!p) return;
+    speak(p.text,accent,speed,()=>{setIsFullPlaying(false);setIsPaused(false);});
+  },[p,accent,speed,isFullPlaying]);
+
+  // Toggle pause/resume for any active speech
+  const togglePause=useCallback(()=>{
+    if(isPaused){resumeSpeech();setIsPaused(false);}
+    else{pauseSpeech();setIsPaused(true);}
+  },[isPaused]);
 
   useEffect(()=>{
     const timeout=window.setTimeout(()=>{
@@ -200,6 +265,12 @@ export default function ReadingQuiz({lang}:{lang:string}){
         <span style={{color:'#e2e8f0'}}>|</span>
         {[0.6,0.75,0.85,1.0].map(s=><button key={s} onClick={()=>setSpeed(s)} style={{minWidth:34,minHeight:28,padding:'5px 7px',borderRadius:'7px',border:'none',cursor:'pointer',fontSize:'0.56rem',fontWeight:speed===s?700:400,background:speed===s?'#4f46e5':'transparent',color:speed===s?'#fff':'#94a3b8'}}>{s}x</button>)}
       </div>
+      {/* Voice indicator */}
+      <div style={{padding:'0 1.25rem',marginTop:'2px'}}>
+        <span style={{fontSize:'0.48rem',color:'#94a3b8',fontStyle:'italic'}}>
+          🎤 {(()=>{const v=findBestVoice(accent);return v?`${v.name} (${v.lang})`:'Default system voice';})()}
+        </span>
+      </div>
 
       {/* Tabs */}
       <div style={{display:'flex',padding:'0.4rem 1.25rem 0',borderBottom:'1px solid #f1f5f9'}}>
@@ -234,14 +305,19 @@ export default function ReadingQuiz({lang}:{lang:string}){
                 })}
               </div>
 
-              {/* Read buttons: full passage + sequential with highlight */}
-              <div style={{display:'flex',gap:'0.4rem',margin:'0.6rem 0 0.3rem'}}>
-                <button onClick={()=>speak(p.text,accent,speed)} style={{flex:1,padding:'8px 12px',borderRadius:'10px',border:'none',background:'linear-gradient(135deg,#6366f1,#8b5cf6)',color:'#fff',fontWeight:600,fontSize:'0.65rem',cursor:'pointer',display:'flex',alignItems:'center',gap:'4px',justifyContent:'center'}}>
-                  <Volume2 size={12}/> {vi?'Đọc toàn bài':'Full passage'}
+              {/* Read buttons: full passage + sequential + pause/resume */}
+              <div style={{display:'flex',gap:'0.35rem',margin:'0.6rem 0 0.3rem',flexWrap:'wrap'}}>
+                <button onClick={speakFullPassage} style={{flex:1,minWidth:'120px',padding:'8px 12px',borderRadius:'10px',border:'none',background:isFullPlaying?'linear-gradient(135deg,#dc2626,#ef4444)':'linear-gradient(135deg,#6366f1,#8b5cf6)',color:'#fff',fontWeight:600,fontSize:'0.65rem',cursor:'pointer',display:'flex',alignItems:'center',gap:'4px',justifyContent:'center'}}>
+                  {isFullPlaying?'⏹':'🔊'} {vi?(isFullPlaying?'Dừng đọc':'Đọc toàn bài'):(isFullPlaying?'Stop':'Full passage')}
                 </button>
-                <button onClick={()=>speakSequential(0)} style={{flex:1,padding:'8px 12px',borderRadius:'10px',border:'none',background:speakingIdx!==null?'linear-gradient(135deg,#dc2626,#ef4444)':'linear-gradient(135deg,#059669,#10b981)',color:'#fff',fontWeight:600,fontSize:'0.65rem',cursor:'pointer',display:'flex',alignItems:'center',gap:'4px',justifyContent:'center'}}>
-                  {speakingIdx!==null?'⏹':'▶️'} {vi?(speakingIdx!==null?'Dừng':'Đọc tuần tự + highlight'):(speakingIdx!==null?'Stop':'Read with highlight')}
+                <button onClick={()=>speakSequential(0)} style={{flex:1,minWidth:'120px',padding:'8px 12px',borderRadius:'10px',border:'none',background:speakingIdx!==null?'linear-gradient(135deg,#dc2626,#ef4444)':'linear-gradient(135deg,#059669,#10b981)',color:'#fff',fontWeight:600,fontSize:'0.65rem',cursor:'pointer',display:'flex',alignItems:'center',gap:'4px',justifyContent:'center'}}>
+                  {speakingIdx!==null?'⏹':'▶️'} {vi?(speakingIdx!==null?'Dừng':'Đọc tuần tự'):(speakingIdx!==null?'Stop':'Sequential')}
                 </button>
+                {(isFullPlaying||speakingIdx!==null)&&(
+                  <button onClick={togglePause} style={{flex:'0 0 auto',padding:'8px 16px',borderRadius:'10px',border:'none',background:isPaused?'linear-gradient(135deg,#059669,#10b981)':'linear-gradient(135deg,#f59e0b,#fbbf24)',color:'#fff',fontWeight:700,fontSize:'0.65rem',cursor:'pointer',display:'flex',alignItems:'center',gap:'4px',justifyContent:'center',animation:isPaused?'pulse-soft 1.5s infinite':'none'}}>
+                    {isPaused?'▶️':'⏸️'} {vi?(isPaused?'Tiếp tục':'Tạm dừng'):(isPaused?'Resume':'Pause')}
+                  </button>
+                )}
               </div>
 
               {/* Sentence-by-sentence reading with active highlight */}
@@ -303,10 +379,17 @@ export default function ReadingQuiz({lang}:{lang:string}){
                 </div>
               )}
 
-              {/* Read all button */}
-              <button onClick={()=>speak(p.text,accent,speed)} style={{marginTop:'0.6rem',padding:'8px 16px',borderRadius:'10px',border:'none',background:'linear-gradient(135deg,#6366f1,#8b5cf6)',color:'#fff',fontWeight:600,fontSize:'0.7rem',cursor:'pointer',display:'flex',alignItems:'center',gap:'4px',width:'100%',justifyContent:'center'}}>
-                <Volume2 size={14}/> {ACC.find(a=>a.k===accent)?.f} {vi?'Nghe đọc toàn bài':'Read full passage'}
-              </button>
+              {/* Read all + pause */}
+              <div style={{display:'flex',gap:'0.35rem',marginTop:'0.6rem'}}>
+                <button onClick={speakFullPassage} style={{flex:1,padding:'8px 16px',borderRadius:'10px',border:'none',background:isFullPlaying?'linear-gradient(135deg,#dc2626,#ef4444)':'linear-gradient(135deg,#6366f1,#8b5cf6)',color:'#fff',fontWeight:600,fontSize:'0.7rem',cursor:'pointer',display:'flex',alignItems:'center',gap:'4px',justifyContent:'center'}}>
+                  {isFullPlaying?'⏹':'🔊'} {ACC.find(a=>a.k===accent)?.f} {vi?(isFullPlaying?'Dừng':'Nghe đọc toàn bài'):(isFullPlaying?'Stop':'Read full passage')}
+                </button>
+                {isFullPlaying&&(
+                  <button onClick={togglePause} style={{flex:'0 0 auto',padding:'8px 14px',borderRadius:'10px',border:'none',background:isPaused?'linear-gradient(135deg,#059669,#10b981)':'linear-gradient(135deg,#f59e0b,#fbbf24)',color:'#fff',fontWeight:700,fontSize:'0.7rem',cursor:'pointer'}}>
+                    {isPaused?'▶️':'⏸️'}
+                  </button>
+                )}
+              </div>
 
               {p.viSummary&&<div style={{marginTop:'0.5rem',padding:'0.5rem',borderRadius:'8px',background:'#f0fdf4'}}>
                 <button onClick={()=>{}} style={{border:'none',background:'transparent',cursor:'pointer',fontSize:'0.68rem',color:'#059669',fontWeight:600}}>✨ 🇻🇳 {vi?'Xem tóm tắt tiếng Việt':'Vietnamese summary'}</button>

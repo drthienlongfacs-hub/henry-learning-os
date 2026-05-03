@@ -35,13 +35,29 @@ function saveReviewStates(states: Record<string, ReviewState>) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(states));
 }
 
+// ── Robust voice matching (same engine as ReadingQuiz) ──
+const VOICE_CFG:{k:Accent;pitch:number;names:string[];lang:string}[] = [
+  {k:'en-US',pitch:1.0,names:['Samantha','Allison','Ava','Nicky','Tom','Alex','Google US English','en-US'],lang:'en-US'},
+  {k:'en-GB',pitch:1.1,names:['Daniel','Kate','Oliver','Serena','Google UK English','en-GB'],lang:'en-GB'},
+  {k:'en-AU',pitch:0.95,names:['Karen','Lee','Catherine','Google Australian','en-AU'],lang:'en-AU'},
+];
+let _vVoices:SpeechSynthesisVoice[]=[];
 function speak(text: string, accent: Accent, rate = 0.7) {
   if (typeof window === 'undefined' || !window.speechSynthesis) return;
   window.speechSynthesis.cancel();
+  if(_vVoices.length===0) _vVoices=window.speechSynthesis.getVoices();
   const u = new SpeechSynthesisUtterance(text);
-  u.lang = accent; u.rate = rate; u.pitch = 1.05;
+  const cfg=VOICE_CFG.find(c=>c.k===accent);
+  u.lang = accent; u.rate = rate; u.pitch = cfg?.pitch??1.0;
+  if(cfg){
+    for(const n of cfg.names){const v=_vVoices.find(vo=>vo.name.includes(n));if(v){u.voice=v;break;}}
+    if(!u.voice){const v=_vVoices.find(vo=>vo.lang===cfg.lang)||_vVoices.find(vo=>vo.lang.startsWith(cfg.lang));if(v) u.voice=v;}
+  }
   window.speechSynthesis.speak(u);
 }
+try{if(typeof window!=='undefined'){
+  window.speechSynthesis?.onvoiceschanged=()=>{_vVoices=window.speechSynthesis.getVoices();};
+}}catch{}
 
 export default function VocabReview({ lang }: { lang: string }) {
   const vi = lang === 'vi';
