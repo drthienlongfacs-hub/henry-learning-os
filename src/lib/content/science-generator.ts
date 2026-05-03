@@ -204,6 +204,66 @@ export function genEcosystem(): ScienceProblem {
     };
 }
 
+// ── NEW: An toàn (lửa, điện, nước) — TNXH L1-2 ──
+const SAFETY_HOME_QS = [
+    { q: 'Khi thấy ổ điện hở, em nên:', a: 'Không chạm vào và báo cho người lớn', opts: ['Không chạm vào và báo cho người lớn', 'Cho tay vào thử', 'Đổ nước lên', 'Không cần làm gì'], e: 'Điện rất nguy hiểm! KHÔNG chạm ổ điện hở. Báo ngay cho bố mẹ.' },
+    { q: 'Nếu quần áo bị cháy, em nên:', a: 'Nằm xuống, lăn tròn', opts: ['Nằm xuống, lăn tròn', 'Chạy nhanh', 'Đứng yên', 'Quạt lửa'], e: 'Kỹ thuật STOP-DROP-ROLL: Dừng lại – Nằm xuống – Lăn tròn để dập lửa.' },
+    { q: 'Khi bơi, em phải có ai bên cạnh?', a: 'Người lớn biết bơi', opts: ['Người lớn biết bơi', 'Bạn bè cùng tuổi', 'Không cần ai', 'Chú chó'], e: 'Luôn bơi có người lớn giám sát. Trẻ em KHÔNG bơi một mình.' },
+    { q: 'Thấy khói bốc lên trong nhà, em nên:', a: 'Bò sát đất và thoát ra ngoài', opts: ['Bò sát đất và thoát ra ngoài', 'Trốn dưới gầm giường', 'Mở cửa sổ', 'Đứng yên'], e: 'Khói bay lên cao. Bò sát sàn để tránh hít khói và thoát ra ngoài.' },
+    { q: 'Tay ướt có được cắm ổ điện không?', a: 'Không, rất nguy hiểm', opts: ['Không, rất nguy hiểm', 'Được', 'Được nếu cẩn thận', 'Chỉ khi khẩn cấp'], e: 'Nước dẫn điện. Tay ướt cắm điện có thể bị giật chết.' },
+];
+
+export function genSafetyHome(): ScienceProblem {
+    const item = SAFETY_HOME_QS[rand(0, SAFETY_HOME_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'health', topic: 'An toàn (lửa, điện, nước)', topicKey: 'safety_home',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Luôn nhờ người lớn khi gặp nguy hiểm', `Đáp án: ${item.a}`],
+        illustration: '🔥',
+    };
+}
+
+// ── NEW: Âm thanh & Ánh sáng — Khoa học L4 ──
+const SOUND_LIGHT_QS = [
+    { q: 'Âm thanh truyền được qua môi trường nào?', a: 'Chất rắn, lỏng và khí', opts: ['Chất rắn, lỏng và khí', 'Chỉ chất khí', 'Chỉ chất rắn', 'Chân không'], e: 'Âm thanh là sóng cơ học, truyền qua rắn, lỏng, khí nhưng KHÔNG truyền qua chân không.' },
+    { q: 'Ánh sáng truyền theo đường nào?', a: 'Đường thẳng', opts: ['Đường thẳng', 'Đường cong', 'Đường xoắn', 'Đường gấp khúc'], e: 'Ánh sáng truyền theo đường thẳng. Vì vậy ta thấy bóng đổ khi có vật cản.' },
+    { q: 'Vật nào trong suốt cho ánh sáng truyền qua?', a: 'Kính cửa sổ', opts: ['Kính cửa sổ', 'Tấm gỗ', 'Tờ giấy dày', 'Bức tường'], e: 'Vật trong suốt (kính, nước) cho ánh sáng truyền qua hoàn toàn.' },
+    { q: 'Tiếng sấm nghe sau ánh chớp vì:', a: 'Ánh sáng truyền nhanh hơn âm thanh', opts: ['Ánh sáng truyền nhanh hơn âm thanh', 'Âm thanh nhanh hơn', 'Chúng xảy ra cùng lúc', 'Sấm ở xa hơn'], e: 'Ánh sáng: 300.000 km/s. Âm thanh: ~340 m/s. Nên ta thấy chớp trước khi nghe sấm.' },
+    { q: 'Gương phẳng phản xạ ánh sáng như thế nào?', a: 'Góc phản xạ bằng góc tới', opts: ['Góc phản xạ bằng góc tới', 'Góc phản xạ lớn hơn', 'Không phản xạ', 'Góc phản xạ nhỏ hơn'], e: 'Định luật phản xạ ánh sáng: góc phản xạ = góc tới.' },
+];
+
+export function genSoundLight(): ScienceProblem {
+    const item = SOUND_LIGHT_QS[rand(0, SOUND_LIGHT_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 4, difficulty: 4,
+        type: 'matter', topic: 'Âm thanh & Ánh sáng', topicKey: 'sound_light',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Nghĩ về cách sóng truyền trong các môi trường', `Đáp án: ${item.a}`],
+        illustration: '🔦',
+    };
+}
+
+// ── NEW: Chuỗi thức ăn — Khoa học L5 ──
+const FOOD_CHAIN_QS = [
+    { q: 'Trong chuỗi thức ăn: Cỏ → Châu chấu → Ếch → Rắn. Sinh vật sản xuất là gì?', a: 'Cỏ', opts: ['Cỏ', 'Châu chấu', 'Ếch', 'Rắn'], e: 'Sinh vật sản xuất = thực vật (tự tạo thức ăn bằng quang hợp). Cỏ là sinh vật sản xuất.' },
+    { q: 'Sinh vật tiêu thụ bậc 1 trong chuỗi: Lúa → Chuột → Mèo là:', a: 'Chuột', opts: ['Chuột', 'Lúa', 'Mèo', 'Không có'], e: 'Sinh vật tiêu thụ bậc 1 = ăn trực tiếp sinh vật sản xuất. Chuột ăn lúa → bậc 1.' },
+    { q: 'Nếu rắn bị tiêu diệt hết, số lượng ếch sẽ:', a: 'Tăng lên rồi giảm', opts: ['Tăng lên rồi giảm', 'Giảm ngay', 'Không thay đổi', 'Tăng mãi'], e: 'Ban đầu ếch tăng (không bị rắn ăn), nhưng sau đó thiếu thức ăn (sâu bọ) nên giảm.' },
+    { q: 'Quang hợp cần gì để tạo thức ăn?', a: 'Ánh sáng, nước, CO₂', opts: ['Ánh sáng, nước, CO₂', 'Chỉ nước', 'Chỉ ánh sáng', 'Phân bón'], e: 'Quang hợp: CO₂ + H₂O + ánh sáng → glucose + O₂ (diệp lục xanh).' },
+    { q: 'Lưới thức ăn khác chuỗi thức ăn ở chỗ nào?', a: 'Gồm nhiều chuỗi đan xen', opts: ['Gồm nhiều chuỗi đan xen', 'Chỉ có 1 loài', 'Không có sinh vật sản xuất', 'Đơn giản hơn'], e: 'Lưới thức ăn = nhiều chuỗi thức ăn liên kết, phức tạp hơn chuỗi đơn.' },
+];
+
+export function genFoodChain(): ScienceProblem {
+    const item = FOOD_CHAIN_QS[rand(0, FOOD_CHAIN_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 5, difficulty: 5,
+        type: 'ecosystem', topic: 'Chuỗi thức ăn', topicKey: 'food_chain',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Nhớ: Sinh vật SX → Tiêu thụ bậc 1 → bậc 2 → ...', `Đáp án: ${item.a}`],
+        illustration: '🔗',
+    };
+}
+
 // ══════════════════════════════════════════════
 // TOPIC REGISTRY
 // ══════════════════════════════════════════════
@@ -220,10 +280,13 @@ export const SCIENCE_TOPICS: SciTopicInfo[] = [
     { key: 'body_health', name: 'Cơ thể & Sức khỏe', gradeLevel: SCIENCE_TOPIC_GRADE.body_health, generator: genBodyHealth, icon: '🫀' },
     { key: 'family_community', name: 'Gia đình & Cộng đồng', gradeLevel: 1, generator: genFamilyCommunity, icon: '👨‍👩‍👧‍👦' },
     { key: 'traffic_safety', name: 'An toàn giao thông', gradeLevel: 1, generator: genTrafficSafety, icon: '🚦' },
+    { key: 'safety_home', name: 'An toàn (lửa, điện, nước)', gradeLevel: 1, generator: genSafetyHome, icon: '🔥' },
     { key: 'nature', name: 'Thực vật & Động vật', gradeLevel: SCIENCE_TOPIC_GRADE.nature, generator: genNature, icon: '🌿' },
     { key: 'weather_earth', name: 'Thời tiết & Trái Đất', gradeLevel: SCIENCE_TOPIC_GRADE.weather_earth, generator: genWeatherEarth, icon: '🌍' },
+    { key: 'sound_light', name: 'Âm thanh & Ánh sáng', gradeLevel: 4, generator: genSoundLight, icon: '🔦' },
     { key: 'matter_energy', name: 'Vật chất & Năng lượng', gradeLevel: SCIENCE_TOPIC_GRADE.matter_energy, generator: genMatterEnergy, icon: '⚡' },
     { key: 'ecosystem', name: 'Hệ sinh thái & MT', gradeLevel: SCIENCE_TOPIC_GRADE.ecosystem, generator: genEcosystem, icon: '🌳' },
+    { key: 'food_chain', name: 'Chuỗi thức ăn', gradeLevel: 5, generator: genFoodChain, icon: '🔗' },
 ];
 
 export function generateScienceSet(grade: number, topicKey?: string, count: number = 10): ScienceProblem[] {
