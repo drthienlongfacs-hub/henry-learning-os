@@ -7,10 +7,14 @@ import { LangToggle } from '@/components/LangToggle';
 import { generateId, formatDate } from '@/lib/utils';
 import Link from 'next/link';
 import { ArrowLeft, Plus, BookOpen, Home, RotateCcw, Brain, Sparkles } from 'lucide-react';
+import ReadingQuiz from '@/components/ReadingQuiz';
+import PhonicsLab from '@/components/PhonicsLab';
+import VocabReview from '@/components/VocabReview';
+import ReadingProgressDashboard from '@/components/ReadingProgressDashboard';
 
 export default function ReadingPage() {
     const { readingEntries, addReadingEntry, childProfile } = useAppStore();
-    const { t } = useTranslation();
+    const { t, lang } = useTranslation();
     const [showForm, setShowForm] = useState(false);
     const [bookTitle, setBookTitle] = useState('');
     const [author, setAuthor] = useState('');
@@ -77,6 +81,12 @@ export default function ReadingPage() {
                         <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>{t('reading_empty_sub')}</p>
                     </div>
                 )}
+
+                {/* ===== NEW MODULES: Full-stack learning experience ===== */}
+                <ReadingProgressDashboard lang={lang} />
+                <ReadingQuiz lang={lang} />
+                <PhonicsLab lang={lang} />
+                <VocabReview lang={lang} />
 
                 {readingEntries.slice().reverse().map((entry, idx) => (
                     <div key={entry.id} className="card animate-fade-in" style={{ marginBottom: '0.75rem', animationDelay: `${idx * 0.05}s` }}>
