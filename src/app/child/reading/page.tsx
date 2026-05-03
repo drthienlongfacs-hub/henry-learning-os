@@ -12,6 +12,7 @@ import PhonicsLab from '@/components/PhonicsLab';
 import VocabReview from '@/components/VocabReview';
 import ReadingProgressDashboard from '@/components/ReadingProgressDashboard';
 import WikiExplorer from '@/components/WikiExplorer';
+import ParentCoLearning from '@/components/ParentCoLearning';
 
 export default function ReadingPage() {
     const { readingEntries, addReadingEntry, childProfile } = useAppStore();
@@ -89,6 +90,7 @@ export default function ReadingPage() {
                 <PhonicsLab lang={lang} />
                 <VocabReview lang={lang} />
                 <WikiExplorer lang={lang} />
+                <ParentCoLearning lang={lang} />
 
                 {readingEntries.slice().reverse().map((entry, idx) => (
                     <div key={entry.id} className="card animate-fade-in" style={{ marginBottom: '0.75rem', animationDelay: `${idx * 0.05}s` }}>
