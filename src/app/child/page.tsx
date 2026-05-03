@@ -1,46 +1,84 @@
 'use client';
 
+import { useState, useMemo } from 'react';
 import { useAppStore } from '@/stores/app-store';
 import { useTranslation } from '@/lib/i18n';
 import { LangToggle } from '@/components/LangToggle';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { BookOpen, Brain, Clock, AlertTriangle, Bookmark, RotateCcw, Home, Sparkles, Search, Type } from 'lucide-react';
-import { ENRICHMENT_STATS } from '@/data/curriculum-enrichment';
-import { LEARNING_SCIENCE_STATS, getLearningSciencePrinciples, getBenchmarkPattern } from '@/data/learning-science-system';
+import {
+    BookOpen, Brain, Clock, AlertTriangle, Bookmark, RotateCcw,
+    Home, Sparkles, Search, Type, ChevronRight, Play, Zap,
+    Target, Flame, Trophy, Star, GraduationCap,
+} from 'lucide-react';
 import { buildWholeChildLearningPlan, summarizePrinciplesForCard, getCardBenchmark } from '@/lib/whole-child-learning-plan';
+
+// ── Subject config ──
+const SUBJECTS: { key: string; name: string; icon: string; color: string; emoji: string; minGrade?: number }[] = [
+    { key: 'math', name: 'Toán', icon: '🔢', color: '#3b82f6', emoji: '➕' },
+    { key: 'vietnamese', name: 'T. Việt', icon: '📖', color: '#8b5cf6', emoji: '✍️' },
+    { key: 'english', name: 'T. Anh', icon: '🇬🇧', color: '#10b981', emoji: '🌍' },
+    { key: 'science', name: 'Khoa học', icon: '🔬', color: '#f59e0b', emoji: '🧪' },
+    { key: 'ethics', name: 'Đạo đức', icon: '💛', color: '#f43f5e', emoji: '🤝' },
+    { key: 'art', name: 'Nghệ thuật', icon: '🎨', color: '#d946ef', emoji: '🎵' },
+    { key: 'computing', name: 'Tin học', icon: '💻', color: '#14b8a6', emoji: '🖥️', minGrade: 3 },
+    { key: 'hisgeo', name: 'Sử/Địa', icon: '🌏', color: '#6366f1', emoji: '🗺️', minGrade: 4 },
+];
+
+const toneColor = {
+    repair: '#ef4444',
+    review: '#3b82f6',
+    learn: '#10b981',
+    stretch: '#8b5cf6',
+} as const;
 
 export default function ChildDashboard() {
     const router = useRouter();
-    const { childProfile, lessons, masteryStates, mistakes, reviewSchedules, attempts } = useAppStore();
+    const { childProfile, masteryStates, mistakes, reviewSchedules, attempts } = useAppStore();
     const { t, lang } = useTranslation();
-    const activeChild = childProfile ?? { nameOrNickname: 'Henry' };
+    const activeChild = childProfile ?? { nameOrNickname: 'Henry', gradeLevel: 3 };
+    const grade = (childProfile as { gradeLevel?: number } | null)?.gradeLevel || 3;
 
     const unresolvedMistakes = mistakes.filter((m) => !m.resolvedAt).length;
     const dueReviews = reviewSchedules.filter((r) => new Date(r.scheduledAt) <= new Date()).length;
     const masteredCount = masteryStates.filter((ms) => ms.state === 'mastered').length;
-    const totalCount = masteryStates.length;
-    const progressPct = totalCount > 0 ? Math.round((masteredCount / totalCount) * 100) : 0;
+    const totalAttempts = attempts.length;
+    const correctAttempts = attempts.filter(a => a.isCorrect).length;
+    const accuracy = totalAttempts > 0 ? Math.round((correctAttempts / totalAttempts) * 100) : 0;
+    const progressPct = masteryStates.length > 0 ? Math.round((masteredCount / masteryStates.length) * 100) : 0;
 
-    const todaysLessons = lessons.slice(0, 3);
+    // Streak calculation
+    const streak = useMemo(() => {
+        const dates = attempts
+            .filter(a => a.isCorrect)
+            .map(a => new Date(a.createdAt).toDateString());
+        const unique = [...new Set(dates)].sort().reverse();
+        let count = 0;
+        const today = new Date();
+        for (let i = 0; i < unique.length; i++) {
+            const d = new Date(unique[i]);
+            const diff = Math.floor((today.getTime() - d.getTime()) / 86400000);
+            if (diff <= i + 1) count++;
+            else break;
+        }
+        return count;
+    }, [attempts]);
+
+    // Build action plan from real data
     const systemPlan = buildWholeChildLearningPlan({ attempts, mistakes, reviewSchedules });
-    const sciencePrinciples = getLearningSciencePrinciples(['retrieval', 'spacing', 'adaptive_challenge', 'motivation']);
-    const toneColor = {
-        repair: '#ef4444',
-        review: '#3b82f6',
-        learn: '#10b981',
-        stretch: '#8b5cf6',
-    } as const;
+
+    // Available subjects for this grade
+    const availableSubjects = SUBJECTS.filter(s => !s.minGrade || grade >= s.minGrade);
 
     return (
         <div style={{ paddingBottom: '5rem', background: 'var(--color-bg-child)', minHeight: '100dvh' }}>
             <div className="page-container">
-                {/* Header */}
-                <div className="animate-fade-in" style={{ marginBottom: '2rem' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                {/* ═══ Header ═══ */}
+                <div className="animate-fade-in" style={{ marginBottom: '1.5rem' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <div>
-                            <div style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)' }}>{t('greeting')}</div>
-                            <h1 style={{ fontSize: '1.75rem', fontWeight: 800 }}>{activeChild.nameOrNickname} 👋</h1>
+                            <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>{t('greeting')}</div>
+                            <h1 style={{ fontSize: '1.6rem', fontWeight: 800 }}>{activeChild.nameOrNickname} 👋</h1>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                             <LangToggle />
@@ -51,289 +89,226 @@ export default function ChildDashboard() {
                     </div>
                 </div>
 
-                {/* Quick stats */}
-                <div className="animate-fade-in" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem', marginBottom: '2rem' }}>
-                    <Link href="/child/mistakes" style={{ textDecoration: 'none' }}>
-                        <div className="card card-interactive" style={{ textAlign: 'center', padding: '1rem' }}>
-                            <AlertTriangle size={20} color="var(--color-warning)" />
-                            <div style={{ fontWeight: 800, fontSize: '1.5rem' }}>{unresolvedMistakes}</div>
-                            <div style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)' }}>{t('errors_to_fix')}</div>
-                        </div>
-                    </Link>
-                    <Link href="/child/review" style={{ textDecoration: 'none' }}>
-                        <div className="card card-interactive" style={{ textAlign: 'center', padding: '1rem' }}>
-                            <RotateCcw size={20} color="var(--color-info)" />
-                            <div style={{ fontWeight: 800, fontSize: '1.5rem' }}>{dueReviews}</div>
-                            <div style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)' }}>{t('need_review')}</div>
-                        </div>
-                    </Link>
-                    <Link href="/child/reading" style={{ textDecoration: 'none' }}>
-                        <div className="card card-interactive" style={{ textAlign: 'center', padding: '1rem' }}>
-                            <Bookmark size={20} color="var(--color-success)" />
-                            <div style={{ fontWeight: 800, fontSize: '1.5rem' }}>{masteredCount}</div>
-                            <div style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)' }}>{t('mastered')}</div>
-                        </div>
-                    </Link>
-                </div>
-
-                {/* Library entry */}
-                <Link href="/child/library" style={{ textDecoration: 'none' }}>
-                    <div className="card card-interactive animate-fade-in" style={{
-                        marginBottom: '1.25rem',
-                        background: 'linear-gradient(135deg, rgba(168,85,247,0.08), rgba(236,72,153,0.08))',
-                        border: '1px solid rgba(168,85,247,0.18)',
-                        display: 'flex', alignItems: 'center', gap: '0.85rem',
-                        cursor: 'pointer', transition: 'all 0.2s',
-                    }}>
-                        <div style={{
-                            width: 44, height: 44, borderRadius: 'var(--radius-md)',
-                            background: 'linear-gradient(135deg, #8b5cf6, #ec4899)',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            fontSize: '1.3rem',
-                        }}>📚</div>
-                        <div style={{ flex: 1 }}>
-                            <div style={{ fontWeight: 800, fontSize: '0.95rem' }}>
-                                {lang === 'vi' ? 'Thư viện Sách — Đọc song ngữ' : 'Library — Bilingual Reader'}
-                            </div>
-                            <div style={{ fontSize: '0.78rem', color: 'var(--color-text-secondary)', lineHeight: 1.4 }}>
-                                {lang === 'vi'
-                                    ? 'Kệ SGK/textbook có quyền • Cambridge • Oxford • Singapore • Chạm từ → xem nghĩa ngay'
-                                    : 'Copyright-aware textbook shelf • Cambridge • Oxford • Singapore • Tap any word → instant definition'}
-                            </div>
-                        </div>
-                        <span style={{ fontSize: '1.2rem' }}>→</span>
+                {/* ═══ Stats Row ═══ */}
+                <div className="animate-fade-in" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.5rem', marginBottom: '1.25rem' }}>
+                    <div className="card" style={{ padding: '0.6rem', textAlign: 'center', background: 'linear-gradient(135deg, #667eea11, #764ba211)' }}>
+                        <Target size={16} color="#667eea" />
+                        <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#667eea' }}>{accuracy}%</div>
+                        <div style={{ fontSize: '0.6rem', color: 'var(--color-text-muted)' }}>Độ chính xác</div>
                     </div>
-                </Link>
-
-                {/* Quick access — new learning modules */}
-                <div className="animate-fade-in" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem', marginBottom: '1.25rem' }}>
-                    <Link href="/child/reading#phonics" style={{ textDecoration: 'none' }}>
-                        <div className="card card-interactive" style={{ textAlign: 'center', padding: '0.75rem 0.5rem' }}>
-                            <div style={{ fontSize: '1.3rem', marginBottom: '0.15rem' }}>🔤</div>
-                            <div style={{ fontWeight: 700, fontSize: '0.68rem', color: '#7c3aed' }}>Phonics Lab</div>
-                            <div style={{ fontSize: '0.55rem', color: 'var(--color-text-muted)' }}>{lang === 'vi' ? 'IPA + 3 accent' : 'IPA + 3 accents'}</div>
-                        </div>
-                    </Link>
-                    <Link href="/child/reading#vocab" style={{ textDecoration: 'none' }}>
-                        <div className="card card-interactive" style={{ textAlign: 'center', padding: '0.75rem 0.5rem' }}>
-                            <div style={{ fontSize: '1.3rem', marginBottom: '0.15rem' }}>🧠</div>
-                            <div style={{ fontWeight: 700, fontSize: '0.68rem', color: '#059669' }}>Vocab SRS</div>
-                            <div style={{ fontSize: '0.55rem', color: 'var(--color-text-muted)' }}>{lang === 'vi' ? 'Flashcard SM-2' : 'Spaced repetition'}</div>
-                        </div>
-                    </Link>
-                    <Link href="/child/reading#wiki" style={{ textDecoration: 'none' }}>
-                        <div className="card card-interactive" style={{ textAlign: 'center', padding: '0.75rem 0.5rem' }}>
-                            <div style={{ fontSize: '1.3rem', marginBottom: '0.15rem' }}>📚</div>
-                            <div style={{ fontWeight: 700, fontSize: '0.68rem', color: '#0f766e' }}>Wiki</div>
-                            <div style={{ fontSize: '0.55rem', color: 'var(--color-text-muted)' }}>{lang === 'vi' ? '38 mục tri thức' : '38 entries'}</div>
-                        </div>
-                    </Link>
+                    <div className="card" style={{ padding: '0.6rem', textAlign: 'center', background: 'linear-gradient(135deg, #f5923611, #ff6b6b11)' }}>
+                        <Flame size={16} color="#f59236" />
+                        <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#f59236' }}>{streak}</div>
+                        <div style={{ fontSize: '0.6rem', color: 'var(--color-text-muted)' }}>Chuỗi ngày</div>
+                    </div>
+                    <div className="card" style={{ padding: '0.6rem', textAlign: 'center', background: 'linear-gradient(135deg, #ef444411, #f4735e11)' }}>
+                        <AlertTriangle size={16} color="#ef4444" />
+                        <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#ef4444' }}>{unresolvedMistakes}</div>
+                        <div style={{ fontSize: '0.6rem', color: 'var(--color-text-muted)' }}>Lỗi cần sửa</div>
+                    </div>
+                    <div className="card" style={{ padding: '0.6rem', textAlign: 'center', background: 'linear-gradient(135deg, #10b98111, #059e6511)' }}>
+                        <Trophy size={16} color="#10b981" />
+                        <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#10b981' }}>{totalAttempts}</div>
+                        <div style={{ fontSize: '0.6rem', color: 'var(--color-text-muted)' }}>Tổng bài</div>
+                    </div>
                 </div>
 
-                {/* Learning quality layer */}
-                <div className="card animate-fade-in" style={{
-                    marginBottom: '2rem',
-                    background: 'linear-gradient(135deg, rgba(59,130,246,0.10), rgba(16,185,129,0.10))',
-                    border: '1px solid rgba(59,130,246,0.22)',
+                {/* ═══ Quick Actions ═══ */}
+                <div className="animate-fade-in" style={{
+                    display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem', marginBottom: '1.25rem',
                 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flexWrap: 'wrap' }}>
-                        <div style={{
-                            width: '44px', height: '44px', borderRadius: 'var(--radius-md)',
-                            background: '#2563eb',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    <button
+                        className="card card-interactive"
+                        onClick={() => router.push('/child/learn')}
+                        style={{
+                            display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer',
+                            background: 'linear-gradient(135deg, #3b82f611, #10b98111)',
+                            border: '2px solid #3b82f633', textAlign: 'left',
                         }}>
-                            <Sparkles size={22} color="white" />
-                        </div>
-                        <div style={{ flex: 1, minWidth: 220 }}>
-                            <div style={{ fontWeight: 800, fontSize: '1rem' }}>Học sâu, có nguồn và có hỗ trợ</div>
-                            <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.82rem', lineHeight: 1.45 }}>
-                                {ENRICHMENT_STATS.sourceCount} nguồn chuẩn/benchmark • {LEARNING_SCIENCE_STATS.principleCount} nguyên lý học tập • gợi ý L0-L5 • nhiệm vụ ba mẹ 10 phút
-                            </div>
-                        </div>
-                    </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(118px, 1fr))', gap: '0.6rem', marginTop: '1rem' }}>
-                        {sciencePrinciples.map((principle) => (
-                            <div key={principle.id} style={{
-                                background: 'rgba(255,255,255,0.72)',
-                                border: '1px solid rgba(59,130,246,0.16)',
-                                borderRadius: 'var(--radius-md)',
-                                padding: '0.65rem',
-                            }}>
-                                <div style={{ fontWeight: 800, fontSize: '0.78rem' }}>{principle.label}</div>
-                                <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.7rem', lineHeight: 1.35, marginTop: '0.25rem' }}>
-                                    {getBenchmarkPattern(principle, lang)}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Whole-child learning system */}
-                <div className="animate-fade-in" style={{ marginBottom: '2rem' }}>
-                    <h2 style={{ fontWeight: 700, fontSize: '1.2rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <Brain size={20} color="var(--color-primary)" /> Hệ điều hành học tập
-                    </h2>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '0.75rem' }}>
-                        {systemPlan.map((card) => (
-                            <Link key={card.id} href={card.href} style={{ textDecoration: 'none' }}>
-                                <div className="card card-interactive" style={{
-                                    border: `2px solid ${toneColor[card.tone]}30`,
-                                    background: `linear-gradient(135deg, ${toneColor[card.tone]}14, rgba(255,255,255,0.78))`,
-                                    minHeight: 164,
-                                }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.75rem' }}>
-                                        <div>
-                                            <div style={{ fontWeight: 850, fontSize: '1rem', color: 'var(--color-text-primary)' }}>{card.title}</div>
-                                            <div style={{ fontWeight: 900, fontSize: '1.35rem', color: toneColor[card.tone], marginTop: '0.2rem' }}>{card.metric}</div>
-                                        </div>
-                                        <span style={{ padding: '0.28rem 0.5rem', borderRadius: 999, background: `${toneColor[card.tone]}18`, color: toneColor[card.tone], fontSize: '0.68rem', fontWeight: 850 }}>
-                                            {getCardBenchmark(card, lang)}
-                                        </span>
-                                    </div>
-                                    <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.78rem', lineHeight: 1.45, marginTop: '0.65rem' }}>
-                                        {card.nextAction}
-                                    </div>
-                                    <div style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem', lineHeight: 1.35, marginTop: '0.65rem' }}>
-                                        {summarizePrinciplesForCard(card)}
-                                    </div>
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Elite Capability Entry */}
-                <Link href="/child/elite" style={{ textDecoration: 'none', display: 'block', marginBottom: '2rem' }}>
-                    <div className="card card-interactive animate-fade-in" style={{
-                        background: 'linear-gradient(135deg, #8b5cf622, #6366f122)',
-                        border: '2px solid #8b5cf644',
-                        display: 'flex', alignItems: 'center', gap: '1rem',
-                    }}>
                         <div style={{
-                            width: '48px', height: '48px', borderRadius: 'var(--radius-md)',
-                            background: 'linear-gradient(135deg, #8b5cf6, #6366f1)',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        }}>
-                            <Sparkles size={24} color="white" />
-                        </div>
-                        <div style={{ flex: 1 }}>
-                            <div style={{ fontWeight: 700, fontSize: '1rem' }}>{t('elite_title')}</div>
-                            <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.8rem' }}>{t('elite_desc')}</div>
-                        </div>
-                        <div style={{ fontWeight: 700, color: '#8b5cf6', fontSize: '1.5rem' }}>→</div>
-                    </div>
-                </Link>
-
-                {/* Curriculum Navigator - Full CT 2018 */}
-                <Link href="/child/learn" style={{ textDecoration: 'none', display: 'block', marginBottom: '1rem' }}>
-                    <div className="card card-interactive animate-fade-in" style={{
-                        background: 'linear-gradient(135deg, #3b82f622, #10b98122)',
-                        border: '2px solid #3b82f644',
-                        display: 'flex', alignItems: 'center', gap: '1rem',
-                    }}>
-                        <div style={{
-                            width: '48px', height: '48px', borderRadius: 'var(--radius-md)',
+                            width: 40, height: 40, borderRadius: 12,
                             background: 'linear-gradient(135deg, #3b82f6, #10b981)',
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
                         }}>
-                            <BookOpen size={24} color="white" />
+                            <Play size={20} color="white" />
+                        </div>
+                        <div>
+                            <div style={{ fontWeight: 800, fontSize: '0.9rem' }}>📚 Học bài mới</div>
+                            <div style={{ fontSize: '0.7rem', color: 'var(--color-text-secondary)' }}>8 môn • Lớp {grade}</div>
+                        </div>
+                    </button>
+                    <button
+                        className="card card-interactive"
+                        onClick={() => router.push('/child/review')}
+                        style={{
+                            display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer',
+                            background: 'linear-gradient(135deg, #8b5cf611, #6366f111)',
+                            border: '2px solid #8b5cf633', textAlign: 'left',
+                        }}>
+                        <div style={{
+                            width: 40, height: 40, borderRadius: 12,
+                            background: 'linear-gradient(135deg, #8b5cf6, #6366f1)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        }}>
+                            <RotateCcw size={20} color="white" />
+                        </div>
+                        <div>
+                            <div style={{ fontWeight: 800, fontSize: '0.9rem' }}>🧠 Ôn tập</div>
+                            <div style={{ fontSize: '0.7rem', color: 'var(--color-text-secondary)' }}>
+                                {dueReviews > 0 ? `${dueReviews} mục cần ôn` : 'Quiz tổng hợp'}
+                            </div>
+                        </div>
+                    </button>
+                </div>
+
+                {/* ═══ Subject Grid — Click to start ═══ */}
+                <div className="animate-fade-in" style={{ marginBottom: '1.5rem' }}>
+                    <h2 style={{ fontWeight: 700, fontSize: '1rem', marginBottom: '0.6rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                        <GraduationCap size={18} color="var(--color-primary)" /> Chọn môn học
+                    </h2>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.5rem' }}>
+                        {availableSubjects.map(s => (
+                            <button
+                                key={s.key}
+                                className="card card-interactive"
+                                onClick={() => router.push(`/child/learn?subject=${s.key}`)}
+                                style={{
+                                    textAlign: 'center', padding: '0.7rem 0.3rem', cursor: 'pointer',
+                                    border: `1.5px solid ${s.color}22`,
+                                    background: `linear-gradient(135deg, ${s.color}08, ${s.color}04)`,
+                                    transition: 'all 0.2s',
+                                }}>
+                                <div style={{ fontSize: '1.4rem', marginBottom: '0.2rem' }}>{s.icon}</div>
+                                <div style={{ fontWeight: 700, fontSize: '0.68rem', color: s.color }}>{s.name}</div>
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                {/* ═══ Learning Plan Cards ═══ */}
+                <div className="animate-fade-in" style={{ marginBottom: '1.5rem' }}>
+                    <h2 style={{ fontWeight: 700, fontSize: '1rem', marginBottom: '0.6rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                        <Brain size={18} color="var(--color-primary)" /> Hệ thống học tập
+                    </h2>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '0.6rem' }}>
+                        {systemPlan.map((card) => (
+                            <button
+                                key={card.id}
+                                className="card card-interactive"
+                                onClick={() => router.push(card.href)}
+                                style={{
+                                    cursor: 'pointer', textAlign: 'left',
+                                    border: `2px solid ${toneColor[card.tone]}25`,
+                                    background: `linear-gradient(135deg, ${toneColor[card.tone]}08, rgba(255,255,255,0.85))`,
+                                    minHeight: 120,
+                                }}>
+                                <div style={{ fontWeight: 800, fontSize: '0.85rem', color: 'var(--color-text-primary)', marginBottom: '0.3rem' }}>
+                                    {card.title}
+                                </div>
+                                <div style={{ fontWeight: 900, fontSize: '1.15rem', color: toneColor[card.tone], marginBottom: '0.3rem' }}>
+                                    {card.metric}
+                                </div>
+                                <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.7rem', lineHeight: 1.4 }}>
+                                    {card.nextAction.slice(0, 80)}{card.nextAction.length > 80 ? '…' : ''}
+                                </div>
+                                <div style={{
+                                    marginTop: '0.5rem', padding: '0.15rem 0.4rem', borderRadius: 999,
+                                    background: `${toneColor[card.tone]}12`, color: toneColor[card.tone],
+                                    fontSize: '0.6rem', fontWeight: 700, display: 'inline-block',
+                                }}>
+                                    {getCardBenchmark(card, lang)}
+                                </div>
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                {/* ═══ More Tools ═══ */}
+                <div className="animate-fade-in" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.5rem', marginBottom: '1.25rem' }}>
+                    <Link href="/child/library" style={{ textDecoration: 'none' }}>
+                        <div className="card card-interactive" style={{ textAlign: 'center', padding: '0.7rem 0.3rem' }}>
+                            <div style={{ fontSize: '1.3rem', marginBottom: '0.15rem' }}>📚</div>
+                            <div style={{ fontWeight: 700, fontSize: '0.68rem', color: '#7c3aed' }}>Thư viện</div>
+                            <div style={{ fontSize: '0.55rem', color: 'var(--color-text-muted)' }}>Sách song ngữ</div>
+                        </div>
+                    </Link>
+                    <Link href="/child/discover" style={{ textDecoration: 'none' }}>
+                        <div className="card card-interactive" style={{ textAlign: 'center', padding: '0.7rem 0.3rem' }}>
+                            <div style={{ fontSize: '1.3rem', marginBottom: '0.15rem' }}>🔍</div>
+                            <div style={{ fontWeight: 700, fontSize: '0.68rem', color: '#06b6d4' }}>Khám phá</div>
+                            <div style={{ fontSize: '0.55rem', color: 'var(--color-text-muted)' }}>Open Library</div>
+                        </div>
+                    </Link>
+                    <Link href="/child/elite" style={{ textDecoration: 'none' }}>
+                        <div className="card card-interactive" style={{ textAlign: 'center', padding: '0.7rem 0.3rem' }}>
+                            <div style={{ fontSize: '1.3rem', marginBottom: '0.15rem' }}>⭐</div>
+                            <div style={{ fontWeight: 700, fontSize: '0.68rem', color: '#8b5cf6' }}>Tinh hoa</div>
+                            <div style={{ fontSize: '0.55rem', color: 'var(--color-text-muted)' }}>Năng lực cao</div>
+                        </div>
+                    </Link>
+                </div>
+
+                {/* ═══ Mistakes Quick Fix ═══ */}
+                {unresolvedMistakes > 0 && (
+                    <button
+                        className="card card-interactive animate-fade-in"
+                        onClick={() => router.push('/child/mistakes')}
+                        style={{
+                            width: '100%', marginBottom: '1rem', cursor: 'pointer', textAlign: 'left',
+                            background: 'linear-gradient(135deg, #ef444408, #fef2f208)',
+                            border: '2px solid #ef444425',
+                            display: 'flex', alignItems: 'center', gap: '0.75rem',
+                        }}>
+                        <div style={{
+                            width: 40, height: 40, borderRadius: 12,
+                            background: '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        }}>
+                            <Zap size={20} color="white" />
                         </div>
                         <div style={{ flex: 1 }}>
-                            <div style={{ fontWeight: 700, fontSize: '1rem' }}>Chương trình học</div>
-                            <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.8rem' }}>Toán • Tiếng Việt • Tiếng Anh • Khoa học — Lớp 1-5</div>
+                            <div style={{ fontWeight: 800, fontSize: '0.9rem', color: '#ef4444' }}>
+                                {unresolvedMistakes} lỗi cần sửa ngay
+                            </div>
+                            <div style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)' }}>
+                                Bấm để xem và sửa lỗi đã mắc
+                            </div>
                         </div>
-                        <div style={{ fontWeight: 700, color: '#3b82f6', fontSize: '1.5rem' }}>→</div>
-                    </div>
-                </Link>
+                        <ChevronRight size={20} color="#ef4444" />
+                    </button>
+                )}
 
-                {/* New modules: Discover + Vocab */}
-                <div className="animate-fade-in" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '2rem' }}>
-                    <Link href="/child/discover" style={{ textDecoration: 'none' }}>
-                        <div className="card card-interactive" style={{
-                            textAlign: 'center', padding: '1.25rem',
-                            background: 'linear-gradient(135deg, #06b6d422, #0ea5e922)',
-                            border: '2px solid #06b6d444',
-                        }}>
-                            <Search size={28} color="#06b6d4" />
-                            <div style={{ fontWeight: 700, marginTop: '0.5rem', fontSize: '0.9rem' }}>
-                                {t('discover_title') || 'Discover Books'}
-                            </div>
-                            <div style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)', marginTop: '0.25rem' }}>
-                                {t('discover_desc') || 'Open Library & Gutenberg'}
-                            </div>
-                        </div>
-                    </Link>
-                    <Link href="/child/vocab" style={{ textDecoration: 'none' }}>
-                        <div className="card card-interactive" style={{
-                            textAlign: 'center', padding: '1.25rem',
-                            background: 'linear-gradient(135deg, #f59e0b22, #f9731622)',
-                            border: '2px solid #f59e0b44',
-                        }}>
-                            <Type size={28} color="#f59e0b" />
-                            <div style={{ fontWeight: 700, marginTop: '0.5rem', fontSize: '0.9rem' }}>
-                                {t('vocab_title') || 'Vocabulary Builder'}
-                            </div>
-                            <div style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)', marginTop: '0.25rem' }}>
-                                {t('vocab_desc') || 'Learn & quiz words'}
-                            </div>
-                        </div>
-                    </Link>
-                </div>
-
-                {/* Today's learning plan */}
-                <div className="animate-fade-in">
-                    <h2 style={{ fontWeight: 700, fontSize: '1.2rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <Clock size={20} color="var(--color-primary)" /> {t('today_plan')}
-                    </h2>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                        {todaysLessons.map((lesson, idx) => {
-                            const subjectIcons: Record<string, string> = { 'Toán': '🔢', 'Tiếng Việt': '📖', 'Tiếng Anh': '🌍' };
-                            const subjectColors: Record<string, string> = { 'Toán': '#6366f1', 'Tiếng Việt': '#10b981', 'Tiếng Anh': '#f59e0b' };
-                            return (
-                                <div
-                                    key={lesson.id}
-                                    className="card card-interactive"
-                                    style={{ display: 'flex', alignItems: 'center', gap: '1rem', animationDelay: `${0.1 * idx}s` }}
-                                    onClick={() => router.push(`/session?lessonId=${lesson.id}`)}
-                                >
-                                    <div style={{
-                                        width: '48px', height: '48px', borderRadius: 'var(--radius-md)',
-                                        background: `linear-gradient(135deg, ${subjectColors[lesson.subject] || '#6366f1'}22, ${subjectColors[lesson.subject] || '#6366f1'}11)`,
-                                        display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem',
-                                    }}>
-                                        {subjectIcons[lesson.subject] || '📚'}
-                                    </div>
-                                    <div style={{ flex: 1 }}>
-                                        <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>{lesson.title}</div>
-                                        <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.8rem' }}>
-                                            {lesson.subject} • {lesson.exercises.length} {t('exercises')}
-                                        </div>
-                                    </div>
-                                    <button className="btn btn-primary btn-sm">{t('learn_btn')}</button>
+                {/* ═══ Recent Activity ═══ */}
+                {attempts.length > 0 && (
+                    <div className="animate-fade-in">
+                        <h2 style={{ fontWeight: 700, fontSize: '1rem', marginBottom: '0.6rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                            <Clock size={18} color="var(--color-primary)" /> Hoạt động gần đây
+                        </h2>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                            {attempts.slice(-5).reverse().map((a) => (
+                                <div key={a.id} className="card" style={{
+                                    padding: '0.5rem 0.75rem',
+                                    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                                }}>
+                                    <span style={{ fontSize: '0.8rem', fontWeight: 600 }}>
+                                        {a.isCorrect ? '✅' : '❌'} {a.competencyId?.replace(/_/g, ' ').slice(0, 30)}
+                                    </span>
+                                    <span style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)' }}>
+                                        {new Date(a.createdAt).toLocaleDateString('vi')}
+                                    </span>
                                 </div>
-                            );
-                        })}
+                            ))}
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
 
-            {/* Bottom Navigation */}
+            {/* ═══ Bottom Navigation ═══ */}
             <nav className="bottom-nav">
-                <Link href="/child" className="nav-item active">
-                    <Home size={20} /><span>{t('nav_home')}</span>
-                </Link>
-                <Link href="/child/elite" className="nav-item">
-                    <Sparkles size={20} /><span>{t('nav_elite')}</span>
-                </Link>
-                <Link href="/child/review" className="nav-item">
-                    <RotateCcw size={20} /><span>{t('nav_review')}</span>
-                </Link>
-                <Link href="/child/mistakes" className="nav-item">
-                    <Brain size={20} /><span>{t('nav_mistakes')}</span>
-                </Link>
-                <Link href="/child/reading" className="nav-item">
-                    <BookOpen size={20} /><span>{t('nav_reading')}</span>
-                </Link>
+                <Link href="/child" className="nav-item active"><Home size={20} /><span>{t('nav_home')}</span></Link>
+                <Link href="/child/elite" className="nav-item"><Sparkles size={20} /><span>{t('nav_elite')}</span></Link>
+                <Link href="/child/review" className="nav-item"><RotateCcw size={20} /><span>{t('nav_review')}</span></Link>
+                <Link href="/child/mistakes" className="nav-item"><Brain size={20} /><span>{t('nav_mistakes')}</span></Link>
+                <Link href="/child/reading" className="nav-item"><BookOpen size={20} /><span>{t('nav_reading')}</span></Link>
             </nav>
         </div>
     );
