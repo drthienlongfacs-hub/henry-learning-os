@@ -669,7 +669,9 @@ export function genBasicStats(): MathProblem {
         id: genId(), gradeLevel: 3, difficulty: 3,
         type: 'data', topic: 'Thống kê đơn giản', topicKey: 'basic_stats',
         question: t.q, correctAnswer: t.a,
-        options: t.q.includes('nhiều') ? shuffle([...items]) : makeOptions(total, 5),
+        options: t.q.includes('nhiều')
+            ? (() => { const wrongs = shuffle(items.filter(x => x !== t.a)).slice(0, 3); return shuffle([t.a, ...wrongs]); })()
+            : makeOptions(total, 5),
         illustration: '/images/math/pictograph.svg',
         explanation: t.e, hints: ['Đọc kỹ từng số', `Đáp số: ${t.a}`],
     };
@@ -1129,7 +1131,9 @@ export function genCharts(): MathProblem {
         id: genId(), gradeLevel: 5, difficulty: 5,
         type: 'data', topic: 'Biểu đồ & Thống kê', topicKey: 'charts',
         question: t.q, correctAnswer: t.a,
-        options: t.q.includes('Môn') ? shuffle([...subjects]).slice(0, 4) : makeOptions(Number(t.a), 3),
+        options: t.q.includes('Môn')
+            ? (() => { const wrongs = shuffle(subjects.filter(s => s !== t.a)).slice(0, 3); return shuffle([t.a, ...wrongs]); })()
+            : makeOptions(Number(t.a), 3),
         illustration: '/images/core/bar_chart.svg',
         explanation: t.e, hints: ['Đọc kỹ dữ liệu', `Đáp số: ${t.a}`],
     };

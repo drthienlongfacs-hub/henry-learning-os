@@ -17,38 +17,68 @@ const shuffle = <T>(arr: T[]): T[] => {
 };
 const genId = () => `en-intl-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 
+// ── SAFETY: Guarantee correctAnswer always exists in options ──
+function ensureCorrectInOptions(correct: string, opts: string[]): string[] {
+  // Remove correct from wrongs, deduplicate
+  const wrongs = [...new Set(opts.filter(o => o !== correct))];
+  // Take exactly 3 wrongs
+  while (wrongs.length < 3) wrongs.push(`${correct}?`);
+  const final3 = wrongs.slice(0, 3);
+  // Correct + 3 wrongs, shuffled
+  return shuffle([correct, ...final3]);
+}
+
 // ── 1. Phonics: Letter Sound Recognition ──
 function genPhonicsLetterSound(level: PhonicsLevel): EnglishProblem {
   if (level.letters.length === 0 && level.digraphs) {
     // Digraph/blend recognition
     const target = pick(level.digraphs);
-    const word = level.decodableWords.find(w => w.includes(target)) || pick(level.decodableWords);
-    const wrongs = shuffle(level.digraphs.filter(d => d !== target)).slice(0, 3);
+    // FIX: word MUST contain the target digraph — if not found, pick another target that has a matching word
+    let word = level.decodableWords.find(w => w.startsWith(target));
+    let actualTarget = target;
+    if (!word) {
+      // Try to find any digraph that has a matching decodable word
+      for (const dg of shuffle(level.digraphs)) {
+        const match = level.decodableWords.find(w => w.startsWith(dg));
+        if (match) { word = match; actualTarget = dg; break; }
+      }
+    }
+    if (!word) { word = pick(level.decodableWords); actualTarget = word.slice(0, 2); }
+    const wrongs = shuffle(level.digraphs.filter(d => d !== actualTarget)).slice(0, 3);
     return {
       id: genId(), gradeLevel: level.grade, difficulty: level.grade,
       type: 'phonics',
       topic: level.title,
       topicKey: level.levelId,
       question: `Which sound do you hear at the start of "${word}"?`,
-      correctAnswer: target,
-      options: shuffle([target, ...wrongs]),
-      explanation: `"${word}" starts with the sound "${target}".`,
-      hints: [`Listen: ${word}`, `The sound is: ${target}`],
+      correctAnswer: actualTarget,
+      options: ensureCorrectInOptions(actualTarget, [actualTarget, ...wrongs]),
+      explanation: `"${word}" starts with the sound "${actualTarget}".`,
+      hints: [`Listen: ${word}`, `The sound is: ${actualTarget}`],
     };
   }
-  const letter = pick(level.letters.length > 0 ? level.letters : ['a']);
-  const word = level.decodableWords.find(w => w.startsWith(letter)) || pick(level.decodableWords);
-  const wrongs = shuffle(level.letters.filter(l => l !== letter)).slice(0, 3);
+  // FIX: Pick a letter that actually has a matching decodable word
+  const lettersWithWords = (level.letters.length > 0 ? level.letters : ['a']).filter(
+    l => level.decodableWords.some(w => w.startsWith(l))
+  );
+  const letter = lettersWithWords.length > 0 ? pick(lettersWithWords) : pick(level.letters.length > 0 ? level.letters : ['a']);
+  const word = level.decodableWords.find(w => w.startsWith(letter))!;
+  // If still no match (shouldn't happen), derive letter from actual word
+  const actualLetter = word ? letter : level.decodableWords[0][0];
+  const actualWord = word || level.decodableWords[0];
+  const wrongs = shuffle(
+    (level.letters.length > 0 ? level.letters : 'abcdefghijklm'.split('')).filter(l => l !== actualLetter)
+  ).slice(0, 3);
   return {
     id: genId(), gradeLevel: level.grade, difficulty: level.grade,
     type: 'phonics',
     topic: level.title,
     topicKey: level.levelId,
-    question: `🔤 What letter does "${word}" start with?`,
-    correctAnswer: letter.toUpperCase(),
-    options: shuffle([letter.toUpperCase(), ...wrongs.map(w => w.toUpperCase())]),
-    explanation: `"${word}" starts with the letter "${letter.toUpperCase()}".`,
-    hints: [`Say the word: ${word}`, `First sound: /${letter}/`],
+    question: `🔤 What letter does "${actualWord}" start with?`,
+    correctAnswer: actualLetter.toUpperCase(),
+    options: ensureCorrectInOptions(actualLetter.toUpperCase(), [actualLetter.toUpperCase(), ...wrongs.map(w => w.toUpperCase())]),
+    explanation: `"${actualWord}" starts with the letter "${actualLetter.toUpperCase()}".`,
+    hints: [`Say the word: ${actualWord}`, `First sound: /${actualLetter}/`],
   };
 }
 
@@ -129,6 +159,13 @@ function genGrammarCorrection(topic: GrammarTopic): EnglishProblem {
   if (errorSentence === correct) {
     return genGrammarRule(topic); // fallback
   }
+  // FIX: Build distinct wrong options, avoid duplicates with correct
+  const wrongOpts = [errorSentence];
+  const candidate1 = `${correct.slice(0, -1)}?`;
+  const candidate2 = correct.charAt(0).toLowerCase() + correct.slice(1);
+  if (candidate1 !== correct && !wrongOpts.includes(candidate1)) wrongOpts.push(candidate1);
+  if (candidate2 !== correct && !wrongOpts.includes(candidate2)) wrongOpts.push(candidate2);
+  if (wrongOpts.length < 3) wrongOpts.push(correct.replace(/\./, '!'));
   return {
     id: genId(), gradeLevel: topic.grade, difficulty: topic.grade,
     type: 'grammar',
@@ -136,7 +173,7 @@ function genGrammarCorrection(topic: GrammarTopic): EnglishProblem {
     topicKey: topic.topicId,
     question: `🔧 Find the correct sentence:`,
     correctAnswer: correct,
-    options: shuffle([correct, errorSentence, `${correct.slice(0, -1)}?`, correct.toLowerCase()]).slice(0, 4),
+    options: ensureCorrectInOptions(correct, [correct, ...wrongOpts.slice(0, 3)]),
     explanation: `Correct: "${correct}"\nRule: ${rule.ruleVi}`,
     hints: [`Check the verb form`, `${rule.rule}`],
   };
@@ -167,6 +204,11 @@ function genSightWordChallenge(grade: number): EnglishProblem {
   const nearMiss = target.length > 2
     ? target.slice(0, -1) + (target.endsWith('e') ? 'a' : 'e')
     : target + 's';
+  // FIX: Ensure we always have 4 unique options including the correct answer
+  const allOpts = [target, nearMiss, ...wrongs];
+  // Pad if needed
+  const moreFiller = shuffle(words.filter(w => w !== target && !allOpts.includes(w))).slice(0, 4);
+  allOpts.push(...moreFiller);
   return {
     id: genId(), gradeLevel: grade, difficulty: grade,
     type: 'sight_words',
@@ -174,7 +216,7 @@ function genSightWordChallenge(grade: number): EnglishProblem {
     topicKey: `sw_g${grade}`,
     question: `⚡ Which one is a real word? (Quick!)`,
     correctAnswer: target,
-    options: shuffle([target, nearMiss, ...wrongs]).slice(0, 4),
+    options: ensureCorrectInOptions(target, allOpts),
     explanation: `"${target}" is a sight word for Grade ${grade}. Practice reading it fast!`,
     hints: [`Sound it out`, `It's a common word`],
   };
