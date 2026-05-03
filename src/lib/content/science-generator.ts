@@ -61,6 +61,49 @@ export function genBodyHealth(): ScienceProblem {
     };
 }
 
+// ── NEW: Gia đình & Cộng đồng (Family & Community) — TNXH G1-2 ──
+const FAMILY_COMMUNITY_QS = [
+    { q: 'Gia đình em thường có những ai?', a: 'Ông bà, bố mẹ, anh chị em', opts: ['Ông bà, bố mẹ, anh chị em', 'Chỉ bố mẹ', 'Chỉ bạn bè', 'Chỉ thầy cô'], e: 'Gia đình gồm nhiều thế hệ: ông bà, bố mẹ, con cháu.', grade: 1 },
+    { q: 'Ai chăm sóc em khi ốm?', a: 'Bố mẹ và bác sĩ', opts: ['Bố mẹ và bác sĩ', 'Bạn bè', 'Không ai', 'Tự khỏi'], e: 'Bố mẹ chăm sóc tại nhà, bác sĩ khám và kê thuốc.', grade: 1 },
+    { q: 'Hàng xóm là gì?', a: 'Những người sống gần nhà ta', opts: ['Những người sống gần nhà ta', 'Bạn cùng lớp', 'Họ hàng xa', 'Người lạ'], e: 'Hàng xóm = láng giềng, sống cạnh hoặc gần nhà.', grade: 1 },
+    { q: 'Khi gặp người lớn, em nên làm gì?', a: 'Chào hỏi lễ phép', opts: ['Chào hỏi lễ phép', 'Quay đi', 'La hét', 'Chạy trốn'], e: 'Chào hỏi lễ phép thể hiện sự tôn trọng.', grade: 1 },
+    { q: 'Trường học có những phòng nào?', a: 'Phòng học, thư viện, sân chơi, phòng GV', opts: ['Phòng học, thư viện, sân chơi, phòng GV', 'Chỉ phòng học', 'Chỉ sân chơi', 'Phòng ngủ'], e: 'Trường học có nhiều khu vực cho hoạt động khác nhau.', grade: 1 },
+    { q: 'Bưu điện dùng để làm gì?', a: 'Gửi thư và bưu phẩm', opts: ['Gửi thư và bưu phẩm', 'Mua rau', 'Khám bệnh', 'Học bài'], e: 'Bưu điện là nơi gửi/nhận thư, bưu phẩm, chuyển phát.', grade: 2 },
+    { q: 'Bệnh viện có ai làm việc?', a: 'Bác sĩ, y tá, hộ lý', opts: ['Bác sĩ, y tá, hộ lý', 'Thầy giáo', 'Nông dân', 'Thợ xây'], e: 'Bệnh viện gồm bác sĩ (khám), y tá (chăm sóc), hộ lý (hỗ trợ).', grade: 2 },
+];
+
+export function genFamilyCommunity(): ScienceProblem {
+    const item = FAMILY_COMMUNITY_QS[rand(0, FAMILY_COMMUNITY_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 1, difficulty: item.grade,
+        type: 'health', topic: 'Gia đình & Cộng đồng', topicKey: 'family_community',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Nghĩ về cuộc sống hàng ngày', `Đáp án: ${item.a}`],
+        illustration: '/images/core/science.svg',
+    };
+}
+
+// ── NEW: An toàn giao thông (Traffic Safety) — TNXH G1-2 ──
+const TRAFFIC_SAFETY_QS = [
+    { q: 'Đèn giao thông có mấy màu?', a: '3 màu', opts: ['3 màu', '2 màu', '4 màu', '1 màu'], e: 'Đèn giao thông: Đỏ (dừng), Vàng (chậm lại), Xanh (đi).', grade: 1 },
+    { q: 'Đèn đỏ có nghĩa là gì?', a: 'Dừng lại', opts: ['Dừng lại', 'Đi nhanh', 'Rẽ trái', 'Bấm còi'], e: 'Đèn đỏ = DỪNG. Phải dừng lại chờ đèn xanh.', grade: 1 },
+    { q: 'Khi qua đường, em nên nhìn hướng nào?', a: 'Trái — Phải — Trái', opts: ['Trái — Phải — Trái', 'Chỉ nhìn trái', 'Chỉ nhìn phải', 'Không cần nhìn'], e: 'Nhìn trái trước (xe đến từ trái), rồi phải, rồi trái lần nữa.', grade: 1 },
+    { q: 'Ngồi xe máy phải đội gì?', a: 'Mũ bảo hiểm', opts: ['Mũ bảo hiểm', 'Mũ vải', 'Nón lá', 'Không cần'], e: 'Mũ bảo hiểm bảo vệ đầu khi có tai nạn. Bắt buộc theo luật.', grade: 1 },
+    { q: 'Vạch trắng trên đường dành cho ai?', a: 'Người đi bộ', opts: ['Người đi bộ', 'Xe máy', 'Ô tô', 'Xe đạp'], e: 'Vạch kẻ đường (zebra crossing) = lối qua đường cho người đi bộ.', grade: 2 },
+    { q: 'Biển báo hình tam giác viền đỏ là loại gì?', a: 'Biển cảnh báo nguy hiểm', opts: ['Biển cảnh báo nguy hiểm', 'Biển cấm', 'Biển chỉ dẫn', 'Biển phụ'], e: 'Tam giác viền đỏ = cảnh báo. Tròn viền đỏ = cấm. Chữ nhật xanh = chỉ dẫn.', grade: 2 },
+];
+
+export function genTrafficSafety(): ScienceProblem {
+    const item = TRAFFIC_SAFETY_QS[rand(0, TRAFFIC_SAFETY_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 1, difficulty: item.grade,
+        type: 'health', topic: 'An toàn giao thông', topicKey: 'traffic_safety',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Nhớ quy tắc giao thông cơ bản', `Đáp án: ${item.a}`],
+        illustration: '/images/core/science.svg',
+    };
+}
+
 // ══════════════════════════════════════════════
 // Grade 2-3: Plants & Animals
 // ══════════════════════════════════════════════
@@ -175,6 +218,8 @@ export interface SciTopicInfo {
 
 export const SCIENCE_TOPICS: SciTopicInfo[] = [
     { key: 'body_health', name: 'Cơ thể & Sức khỏe', gradeLevel: SCIENCE_TOPIC_GRADE.body_health, generator: genBodyHealth, icon: '🫀' },
+    { key: 'family_community', name: 'Gia đình & Cộng đồng', gradeLevel: 1, generator: genFamilyCommunity, icon: '👨‍👩‍👧‍👦' },
+    { key: 'traffic_safety', name: 'An toàn giao thông', gradeLevel: 1, generator: genTrafficSafety, icon: '🚦' },
     { key: 'nature', name: 'Thực vật & Động vật', gradeLevel: SCIENCE_TOPIC_GRADE.nature, generator: genNature, icon: '🌿' },
     { key: 'weather_earth', name: 'Thời tiết & Trái Đất', gradeLevel: SCIENCE_TOPIC_GRADE.weather_earth, generator: genWeatherEarth, icon: '🌍' },
     { key: 'matter_energy', name: 'Vật chất & Năng lượng', gradeLevel: SCIENCE_TOPIC_GRADE.matter_energy, generator: genMatterEnergy, icon: '⚡' },

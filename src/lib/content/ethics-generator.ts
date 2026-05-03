@@ -134,6 +134,50 @@ export function genCommunityEmpathy(): EthicsProblem {
 }
 
 // ══════════════════════════════════════════════
+// Grade 4: Children's Rights (Quyền trẻ em) — UNCRC + CT 2018
+// ══════════════════════════════════════════════
+
+const CHILDREN_RIGHTS_QS = [
+    { q: 'Trẻ em có quyền gì quan trọng nhất?', a: 'Được bảo vệ, học hành và vui chơi', opts: ['Được bảo vệ, học hành và vui chơi', 'Được mua đồ chơi', 'Được xem TV cả ngày', 'Không có quyền gì'], e: 'Theo Công ước Liên hợp quốc (UNCRC), trẻ em có quyền sống, phát triển, bảo vệ và tham gia.' },
+    { q: 'Nếu em thấy bạn bị đánh ở trường, em nên:', a: 'Báo ngay cho thầy cô hoặc người lớn', opts: ['Báo ngay cho thầy cô hoặc người lớn', 'Quay video', 'Bỏ đi', 'Đánh lại giúp bạn'], e: 'Bạo lực học đường vi phạm quyền trẻ em. Báo cho người lớn là cách xử lý đúng.' },
+    { q: 'Trẻ em có được phép lao động nặng nhọc không?', a: 'Không, luật cấm lao động trẻ em', opts: ['Không, luật cấm lao động trẻ em', 'Được nếu bố mẹ cho phép', 'Được nếu trả tiền', 'Chỉ được vào cuối tuần'], e: 'Luật Trẻ em Việt Nam nghiêm cấm sử dụng lao động trẻ em.' },
+    { q: 'Em có quyền gì khi đến trường?', a: 'Quyền học tập trong môi trường an toàn', opts: ['Quyền học tập trong môi trường an toàn', 'Quyền không làm bài', 'Quyền nghỉ học bất cứ lúc nào', 'Không có quyền'], e: 'Mọi trẻ em đều có quyền được giáo dục trong môi trường lành mạnh.' },
+    { q: 'Khi người lạ rủ em đi theo họ, em nên:', a: 'Từ chối và chạy đến chỗ đông người/người lớn tin cậy', opts: ['Từ chối và chạy đến chỗ đông người/người lớn tin cậy', 'Đi theo nếu họ cho quà', 'Lên xe của họ', 'Nghe theo vì họ là người lớn'], e: 'Em có quyền từ chối và bảo vệ bản thân. Luôn nói với bố mẹ/thầy cô.' },
+];
+
+export function genChildrenRights(): EthicsProblem {
+    const item = CHILDREN_RIGHTS_QS[rand(0, CHILDREN_RIGHTS_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 4, difficulty: 4,
+        type: 'behavior', topic: 'Quyền trẻ em', topicKey: 'children_rights',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Trẻ em có quyền được bảo vệ, học hành, và vui chơi', `Đáp án: ${item.a}`],
+    };
+}
+
+// ══════════════════════════════════════════════
+// Grade 5: Internet Safety (An toàn trên mạng) — CT 2018 + UNICEF
+// ══════════════════════════════════════════════
+
+const INTERNET_SAFETY_QS = [
+    { q: 'Khi chơi game online, có người lạ hỏi địa chỉ nhà em. Em nên:', a: 'Không bao giờ chia sẻ thông tin cá nhân', opts: ['Không bao giờ chia sẻ thông tin cá nhân', 'Cho địa chỉ vì họ thân thiện', 'Hỏi bạn bè rồi cho', 'Cho số điện thoại thay vì địa chỉ'], e: 'KHÔNG BAO GIỜ chia sẻ thông tin cá nhân (tên thật, địa chỉ, trường, SĐT) trên mạng.' },
+    { q: 'Em nhận được tin nhắn trúng thưởng trên mạng. Em nên:', a: 'Không nhấp vào link và báo cho bố mẹ', opts: ['Không nhấp vào link và báo cho bố mẹ', 'Nhấp vào ngay để nhận quà', 'Gửi tiếp cho bạn', 'Điền thông tin để nhận thưởng'], e: 'Tin nhắn trúng thưởng online thường là lừa đảo (scam). Luôn hỏi ý kiến bố mẹ.' },
+    { q: 'Mỗi ngày em nên dùng máy tính/điện thoại tối đa bao lâu?', a: '1-2 giờ (theo khuyến cáo WHO)', opts: ['1-2 giờ (theo khuyến cáo WHO)', 'Bao lâu cũng được', '5-6 giờ', 'Cả ngày nếu nghỉ'], e: 'WHO khuyến cáo trẻ em dưới 12 tuổi không nên sử dụng màn hình quá 2 giờ/ngày.' },
+    { q: 'Khi thấy nội dung bạo lực/sợ hãi trên mạng, em nên:', a: 'Tắt ngay và nói cho bố mẹ biết', opts: ['Tắt ngay và nói cho bố mẹ biết', 'Xem thêm cho hết', 'Gửi cho bạn xem', 'Giữ bí mật'], e: 'Nội dung không phù hợp có thể gây ảnh hưởng tâm lý. Báo cho người lớn ngay.' },
+    { q: 'Mật khẩu tốt nên có đặc điểm gì?', a: 'Dài, có cả chữ, số và ký tự đặc biệt', opts: ['Dài, có cả chữ, số và ký tự đặc biệt', 'Tên + ngày sinh', 'Số 123456', 'Giống nhau cho mọi tài khoản'], e: 'Mật khẩu mạnh: ≥8 ký tự, kết hợp chữ HOA/thường + số + ký tự đặc biệt.' },
+];
+
+export function genInternetSafety(): EthicsProblem {
+    const item = INTERNET_SAFETY_QS[rand(0, INTERNET_SAFETY_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 5, difficulty: 5,
+        type: 'behavior', topic: 'An toàn trên mạng', topicKey: 'internet_safety',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Bảo vệ thông tin cá nhân là quan trọng nhất', `Đáp án: ${item.a}`],
+    };
+}
+
+// ══════════════════════════════════════════════
 // TOPIC REGISTRY
 // ══════════════════════════════════════════════
 
@@ -150,7 +194,9 @@ export const ETHICS_TOPICS: EthicsTopicInfo[] = [
     { key: 'express_emotion', name: 'Thể hiện cảm xúc', gradeLevel: 2, generator: genExpressEmotion, icon: '😊' },
     { key: 'honesty', name: 'Trung thực', gradeLevel: 3, generator: genHonesty, icon: '💎' },
     { key: 'responsibility', name: 'Trách nhiệm', gradeLevel: 4, generator: genResponsibility, icon: '🎯' },
+    { key: 'children_rights', name: 'Quyền trẻ em', gradeLevel: 4, generator: genChildrenRights, icon: '🛡️' },
     { key: 'community_empathy', name: 'Đồng cảm cộng đồng', gradeLevel: 5, generator: genCommunityEmpathy, icon: '🤝' },
+    { key: 'internet_safety', name: 'An toàn trên mạng', gradeLevel: 5, generator: genInternetSafety, icon: '🔒' },
 ];
 
 export function generateEthicsSet(grade: number, topicKey?: string, count: number = 10): EthicsProblem[] {
