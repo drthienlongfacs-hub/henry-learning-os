@@ -477,6 +477,96 @@ export function genTravelEnvironment(): EnglishProblem {
     };
 }
 
+// ── BATCH 13: Animals — Global Success G1 ──
+export function genAnimalsEn(): EnglishProblem {
+    const templates = [
+        { q: 'What animal says "Meow"?', a: 'Cat', opts: ['Cat', 'Dog', 'Bird', 'Fish'], e: 'Cat = mèo. Cats say "Meow!".', grade: 1 },
+        { q: 'Which animal can fly?', a: 'Bird', opts: ['Bird', 'Fish', 'Dog', 'Cat'], e: 'Birds have wings and can fly. Bird = chim.', grade: 1 },
+        { q: 'How many legs does a dog have?', a: 'Four', opts: ['Four', 'Two', 'Six', 'Eight'], e: 'A dog has four legs. Dog = chó.', grade: 1 },
+        { q: 'Which animal lives in water?', a: 'Fish', opts: ['Fish', 'Cat', 'Rabbit', 'Chicken'], e: 'Fish live in water (rivers, lakes, sea). Fish = cá.', grade: 1 },
+        { q: '"Elephant" in Vietnamese is:', a: 'Con voi', opts: ['Con voi', 'Con hổ', 'Con gấu', 'Con sư tử'], e: 'Elephant = con voi. It is the largest land animal.', grade: 1 },
+    ];
+    const t = templates[rand(0, templates.length - 1)];
+    return {
+        id: genId(), gradeLevel: t.grade, difficulty: t.grade,
+        type: 'vocabulary', topic: 'Animals', topicKey: 'animals_en',
+        question: t.q, correctAnswer: t.a, options: t.opts,
+        explanation: t.e, hints: ['Think about pets and zoo animals!', `Answer: ${t.a}`],
+    };
+}
+
+// ── BATCH 13: Family Members — Global Success G2 ──
+export function genFamilyEn(): EnglishProblem {
+    const templates = [
+        { q: 'Who is your mother\'s mother?', a: 'Grandmother', opts: ['Grandmother', 'Aunt', 'Sister', 'Mother'], e: 'Grandmother = bà ngoại/bà nội. Your mother\'s mother is your grandmother.', grade: 2 },
+        { q: '"Brother" means:', a: 'Anh/em trai', opts: ['Anh/em trai', 'Chị/em gái', 'Bố', 'Mẹ'], e: 'Brother = anh trai hoặc em trai.', grade: 2 },
+        { q: 'How many people are there in your family? — There are ___ people.', a: 'four', opts: ['four', 'many much', 'is four', 'has four'], e: '"There are + number + people in my family." Number words: one, two, three, four, five.', grade: 2 },
+        { q: '"She is my ___." (mẹ)', a: 'mother', opts: ['mother', 'father', 'brother', 'sister'], e: 'Mother = mẹ. Father = bố. Sister = chị/em gái.', grade: 2 },
+        { q: 'What do you call your father\'s brother?', a: 'Uncle', opts: ['Uncle', 'Aunt', 'Cousin', 'Nephew'], e: 'Uncle = chú/bác. Your father\'s or mother\'s brother is your uncle.', grade: 2 },
+    ];
+    const t = templates[rand(0, templates.length - 1)];
+    return {
+        id: genId(), gradeLevel: t.grade, difficulty: t.grade,
+        type: 'vocabulary', topic: 'Family Members', topicKey: 'family_en',
+        question: t.q, correctAnswer: t.a, options: t.opts,
+        explanation: t.e, hints: ['Think about your family!', `Answer: ${t.a}`],
+    };
+}
+
+// ── BATCH 13: Weather & Seasons — Global Success G3 ──
+export function genWeatherEn(): EnglishProblem {
+    const templates = [
+        { q: 'What is the weather like today? — It is _____.', a: 'sunny', opts: ['sunny', 'sun', 'the sun', 'sunning'], e: '"It is + adjective": It is sunny / rainy / cloudy / windy.', grade: 3 },
+        { q: 'In winter, the weather is:', a: 'Cold', opts: ['Cold', 'Hot', 'Warm', 'Cool'], e: 'Winter = mùa đông → cold (lạnh). Summer = mùa hè → hot (nóng).', grade: 3 },
+        { q: 'How many seasons are there in a year? (in temperate zones)', a: 'Four', opts: ['Four', 'Two', 'Three', 'Six'], e: 'Four seasons: Spring, Summer, Autumn (Fall), Winter.', grade: 3 },
+        { q: '"It\'s raining." means:', a: 'Trời đang mưa', opts: ['Trời đang mưa', 'Trời nắng', 'Trời có gió', 'Trời lạnh'], e: 'Rain = mưa. It\'s raining = Trời đang mưa. Present continuous.', grade: 3 },
+        { q: 'Which is NOT a weather word?', a: 'Happy', opts: ['Happy', 'Sunny', 'Rainy', 'Cloudy'], e: 'Happy = vui vẻ (feeling, not weather). Weather: sunny, rainy, cloudy, windy, stormy.', grade: 3 },
+    ];
+    const t = templates[rand(0, templates.length - 1)];
+    return {
+        id: genId(), gradeLevel: t.grade, difficulty: t.grade,
+        type: 'vocabulary', topic: 'Weather & Seasons', topicKey: 'weather_en',
+        question: t.q, correctAnswer: t.a, options: t.opts,
+        explanation: t.e, hints: ['Look outside the window!', `Answer: ${t.a}`],
+    };
+}
+
+// ── BATCH 13: Past Tense — Global Success G4 ──
+export function genPastTense(): EnglishProblem {
+    const templates = [
+        { q: '"I _____ to the park yesterday." (go)', a: 'went', opts: ['went', 'go', 'goes', 'going'], e: 'Past tense of "go" = "went" (irregular verb). Yesterday → Past Simple.', grade: 4 },
+        { q: '"She _____ a book last night." (read)', a: 'read', opts: ['read', 'reads', 'reading', 'readed'], e: '"Read" past tense = "read" (same spelling, different pronunciation: /red/).', grade: 4 },
+        { q: 'Which word signals Past Simple tense?', a: 'Yesterday', opts: ['Yesterday', 'Tomorrow', 'Now', 'Always'], e: 'Time markers: yesterday, last week, ago → Past Simple. Tomorrow → Future.', grade: 4 },
+        { q: '"They _____ football last Sunday." (play)', a: 'played', opts: ['played', 'play', 'plays', 'playing'], e: 'Regular verb: play → played (add -ed). Last Sunday → Past Simple.', grade: 4 },
+        { q: '"Did you _____ your homework?" Fill in:', a: 'do', opts: ['do', 'did', 'does', 'doing'], e: '"Did + subject + base verb?" → Did you do...? Did she eat...? Did they go...?', grade: 4 },
+    ];
+    const t = templates[rand(0, templates.length - 1)];
+    return {
+        id: genId(), gradeLevel: t.grade, difficulty: t.grade,
+        type: 'grammar', topic: 'Past Tense', topicKey: 'past_tense',
+        question: t.q, correctAnswer: t.a, options: t.opts,
+        explanation: t.e, hints: ['Past Simple: V-ed or irregular form', `Answer: ${t.a}`],
+    };
+}
+
+// ── BATCH 13: Storytelling & Writing — Global Success G5 ──
+export function genStoryWriting(): EnglishProblem {
+    const templates = [
+        { q: 'A story usually has: beginning, _____, and ending.', a: 'middle', opts: ['middle', 'title', 'picture', 'question'], e: 'Story structure: Beginning → Middle → Ending. Middle has the main events.', grade: 5 },
+        { q: '"Once upon a time" is used to start a:', a: 'Fairy tale', opts: ['Fairy tale', 'Letter', 'Report', 'Recipe'], e: '"Once upon a time..." = "Ngày xửa ngày xưa..." — opening of fairy tales.', grade: 5 },
+        { q: 'Which is a correct way to end a letter?', a: 'Best wishes,', opts: ['Best wishes,', 'Once upon a time', 'Dear Sir', 'Hello'], e: 'Letter ending: Best wishes, / Yours sincerely, / Kind regards,', grade: 5 },
+        { q: '"Dear Mom, ..." is used in:', a: 'A letter or email', opts: ['A letter or email', 'A recipe', 'A report', 'A test'], e: '"Dear + name" = cách mở đầu thư/email. Dear Mom = Mẹ thân mến.', grade: 5 },
+        { q: 'Put in order: "the / boy / kicked / ball / the"', a: 'The boy kicked the ball.', opts: ['The boy kicked the ball.', 'The ball kicked the boy.', 'Boy the kicked ball the.', 'Kicked the boy the ball.'], e: 'SVO order: Subject (The boy) + Verb (kicked) + Object (the ball).', grade: 5 },
+    ];
+    const t = templates[rand(0, templates.length - 1)];
+    return {
+        id: genId(), gradeLevel: t.grade, difficulty: t.grade,
+        type: 'writing', topic: 'Storytelling & Writing', topicKey: 'story_writing',
+        question: t.q, correctAnswer: t.a, options: t.opts,
+        explanation: t.e, hints: ['Remember: Beginning → Middle → Ending', `Answer: ${t.a}`],
+    };
+}
+
 import { generateUnitExercises, getUnitRegistry } from './english-unit-generator';
 import { generateInternationalTopicExercises, getInternationalTopics } from './english-intl-generator';
 import { FRAMEWORK_INFO } from '@/data/english-international';
@@ -498,15 +588,20 @@ export interface EnTopicInfo {
 const CORE_TOPICS: EnTopicInfo[] = [
     { key: 'alphabet_en', name: 'Alphabet & Phonics', gradeLevel: 1, generator: genAlphabetEn, icon: '🔤' },
     { key: 'colors_numbers', name: 'Colors & Numbers', gradeLevel: 1, generator: genColorsNumbers, icon: '🌈' },
+    { key: 'animals_en', name: 'Animals', gradeLevel: 1, generator: genAnimalsEn, icon: '🐾' },
     { key: 'greetings_en', name: 'Greetings & Phrases', gradeLevel: 2, generator: genGreetingsEn, icon: '👋' },
     { key: 'body_school', name: 'My Body & School', gradeLevel: 2, generator: genBodySchool, icon: '🏫' },
+    { key: 'family_en', name: 'Family Members', gradeLevel: 2, generator: genFamilyEn, icon: '👨‍👩‍👧' },
     { key: 'vocab_en', name: 'Vocabulary Themes', gradeLevel: 3, generator: genVocabEn, icon: '📚' },
     { key: 'hobbies_food', name: 'Hobbies & Food', gradeLevel: 3, generator: genHobbiesFood, icon: '🎾' },
+    { key: 'weather_en', name: 'Weather & Seasons', gradeLevel: 3, generator: genWeatherEn, icon: '🌦️' },
     { key: 'grammar_en', name: 'Grammar', gradeLevel: 4, generator: genGrammarEn, icon: '📝' },
     { key: 'reading_en', name: 'Reading', gradeLevel: 4, generator: genReadingEn, icon: '📖' },
     { key: 'daily_routines', name: 'Daily Routines', gradeLevel: 4, generator: genDailyRoutines, icon: '⏰' },
+    { key: 'past_tense', name: 'Past Tense', gradeLevel: 4, generator: genPastTense, icon: '⏪' },
     { key: 'sentence_en', name: 'Sentences', gradeLevel: 5, generator: genSentenceEn, icon: '✍️' },
     { key: 'travel_environment', name: 'Travel & Environment', gradeLevel: 5, generator: genTravelEnvironment, icon: '🌍' },
+    { key: 'story_writing', name: 'Storytelling & Writing', gradeLevel: 5, generator: genStoryWriting, icon: '📝' },
 ];
 
 // ── SGK Unit-based topics (Global Success 🇻🇳) ──

@@ -12,7 +12,7 @@ export interface ComputingProblem {
     explanation: string;
     difficulty: number;
     hints: string[];
-    type: 'safety' | 'logic' | 'hardware';
+    type: 'safety' | 'logic' | 'hardware' | 'software';
     gradeLevel: number;
     topic: string;
     topicKey: string;
@@ -166,6 +166,66 @@ export function genScratchBasic(): ComputingProblem {
     };
 }
 
+// ── BATCH 13: Internet cơ bản (G3) ──
+const INTERNET_QS = [
+    { q: 'Internet dùng để làm gì?', a: 'Tìm kiếm thông tin, liên lạc, học tập', opts: ['Tìm kiếm thông tin, liên lạc, học tập', 'Chỉ chơi game', 'Chỉ xem phim', 'Không có ích'], e: 'Internet = mạng toàn cầu, giúp tìm kiếm, liên lạc, học tập, giải trí.' },
+    { q: 'Trình duyệt web (browser) nào phổ biến nhất?', a: 'Google Chrome', opts: ['Google Chrome', 'Microsoft Word', 'Calculator', 'Paint'], e: 'Browser: Chrome, Firefox, Edge, Safari — dùng để truy cập website.' },
+    { q: 'URL là gì?', a: 'Địa chỉ trang web', opts: ['Địa chỉ trang web', 'Tên máy tính', 'Loại file', 'Phần mềm'], e: 'URL (Uniform Resource Locator) = địa chỉ trang web, ví dụ: google.com.' },
+    { q: 'Khi lên mạng, KHÔNG nên làm gì?', a: 'Chia sẻ mật khẩu với người lạ', opts: ['Chia sẻ mật khẩu với người lạ', 'Tìm kiếm bài học', 'Đọc tin tức', 'Gửi email cho bạn'], e: 'Không chia sẻ mật khẩu, thông tin cá nhân (địa chỉ nhà, SĐT) với người lạ.' },
+    { q: 'Trang web google.com dùng để:', a: 'Tìm kiếm thông tin', opts: ['Tìm kiếm thông tin', 'Soạn văn bản', 'Vẽ hình', 'Nghe nhạc'], e: 'Google là công cụ tìm kiếm (search engine) phổ biến nhất thế giới.' },
+];
+
+export function genInternetBasic(): ComputingProblem {
+    const item = INTERNET_QS[rand(0, INTERNET_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 3, difficulty: 3,
+        type: 'software', topic: 'Internet cơ bản', topicKey: 'internet_basic',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Internet = mạng toàn cầu', `Đáp án: ${item.a}`],
+        illustration: '/images/core/computing.svg',
+    };
+}
+
+// ── BATCH 13: Bảng tính Excel (G4) ──
+const EXCEL_QS = [
+    { q: 'Phần mềm bảng tính phổ biến nhất là:', a: 'Microsoft Excel', opts: ['Microsoft Excel', 'Microsoft Word', 'PowerPoint', 'Paint'], e: 'Excel (hoặc Google Sheets) dùng để tạo bảng, tính toán, vẽ biểu đồ.' },
+    { q: 'Ô A1 trong Excel nằm ở đâu?', a: 'Cột A, hàng 1 (góc trên trái)', opts: ['Cột A, hàng 1 (góc trên trái)', 'Cột 1, hàng A', 'Ở giữa', 'Góc dưới phải'], e: 'Excel dùng chữ cái cho cột (A, B, C...) và số cho hàng (1, 2, 3...).' },
+    { q: 'Hàm nào dùng để tính tổng trong Excel?', a: '=SUM()', opts: ['=SUM()', '=MAX()', '=AVG()', '=COUNT()'], e: '=SUM(A1:A10) tính tổng các ô từ A1 đến A10.' },
+    { q: 'Muốn tính trung bình, dùng hàm nào?', a: '=AVERAGE()', opts: ['=AVERAGE()', '=SUM()', '=MAX()', '=MIN()'], e: '=AVERAGE() tính trung bình cộng. VD: =AVERAGE(B1:B5).' },
+    { q: 'Biểu đồ (chart) trong Excel dùng để:', a: 'Trình bày dữ liệu trực quan', opts: ['Trình bày dữ liệu trực quan', 'Soạn văn bản', 'Vẽ hình', 'Chơi game'], e: 'Biểu đồ giúp nhìn dữ liệu dễ hiểu hơn: cột, tròn, đường...' },
+];
+
+export function genExcelBasic(): ComputingProblem {
+    const item = EXCEL_QS[rand(0, EXCEL_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 4, difficulty: 4,
+        type: 'software', topic: 'Bảng tính Excel', topicKey: 'excel_basic',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Excel = bảng tính, =SUM() tính tổng', `Đáp án: ${item.a}`],
+        illustration: '/images/core/computing.svg',
+    };
+}
+
+// ── BATCH 13: Thuyết trình PowerPoint (G5) ──
+const PPT_QS = [
+    { q: 'Phần mềm nào dùng để tạo bài thuyết trình?', a: 'PowerPoint', opts: ['PowerPoint', 'Excel', 'Word', 'Paint'], e: 'PowerPoint (hoặc Google Slides) dùng để tạo slide trình bày.' },
+    { q: 'Mỗi trang trong PowerPoint gọi là gì?', a: 'Slide', opts: ['Slide', 'Sheet', 'Page', 'Document'], e: 'Slide = 1 trang trình chiếu. Bài thuyết trình gồm nhiều slide.' },
+    { q: 'Hiệu ứng chuyển slide gọi là:', a: 'Transition', opts: ['Transition', 'Animation', 'Design', 'Layout'], e: 'Transition = hiệu ứng chuyển giữa 2 slide. Animation = hiệu ứng cho đối tượng trên slide.' },
+    { q: 'Khi thuyết trình, phím nào dùng để chiếu toàn màn hình?', a: 'F5', opts: ['F5', 'F1', 'F12', 'Esc'], e: 'F5 = trình chiếu từ đầu. Shift+F5 = trình chiếu từ slide hiện tại.' },
+    { q: 'Quy tắc vàng khi làm slide:', a: 'Ít chữ, nhiều hình, rõ ràng', opts: ['Ít chữ, nhiều hình, rõ ràng', 'Viết thật nhiều chữ', 'Dùng nhiều màu sặc sỡ', 'Để trống slide'], e: 'Slide tốt: ít chữ, hình ảnh minh họa, font rõ ràng, màu hài hòa.' },
+];
+
+export function genPowerPoint(): ComputingProblem {
+    const item = PPT_QS[rand(0, PPT_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 5, difficulty: 5,
+        type: 'software', topic: 'Thuyết trình PowerPoint', topicKey: 'ppt_basic',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Slide = trang trình bày, F5 = chiếu', `Đáp án: ${item.a}`],
+        illustration: '/images/core/computing.svg',
+    };
+}
+
 // ══════════════════════════════════════════════
 // TOPIC REGISTRY
 // ══════════════════════════════════════════════
@@ -181,10 +241,13 @@ export interface CompTopicInfo {
 export const COMPUTING_TOPICS: CompTopicInfo[] = [
     { key: 'hardware', name: 'Phần cứng Căn bản', gradeLevel: 3, generator: genHardware, icon: '💻' },
     { key: 'word_processing', name: 'Soạn thảo văn bản', gradeLevel: 3, generator: genWordProcessing, icon: '📝' },
+    { key: 'internet_basic', name: 'Internet cơ bản', gradeLevel: 3, generator: genInternetBasic, icon: '🌐' },
     { key: 'cyber_safety', name: 'An toàn mạng', gradeLevel: 4, generator: genCyberSafety, icon: '🛡️' },
     { key: 'paint_drawing', name: 'Vẽ trên máy tính', gradeLevel: 4, generator: genPaintDrawing, icon: '🎨' },
+    { key: 'excel_basic', name: 'Bảng tính Excel', gradeLevel: 4, generator: genExcelBasic, icon: '📊' },
     { key: 'comp_logic', name: 'Tư duy máy tính', gradeLevel: 5, generator: genLogic, icon: '🧠' },
     { key: 'scratch_basic', name: 'Lập trình Scratch', gradeLevel: 5, generator: genScratchBasic, icon: '🐱' },
+    { key: 'ppt_basic', name: 'Thuyết trình PowerPoint', gradeLevel: 5, generator: genPowerPoint, icon: '📽️' },
 ];
 
 export function generateComputingSet(grade: number, topicKey?: string, count: number = 10): ComputingProblem[] {

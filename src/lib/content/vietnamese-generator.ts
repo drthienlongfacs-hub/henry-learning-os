@@ -12,7 +12,7 @@ export interface VietnameseProblem {
     explanation: string;
     difficulty: number;
     hints: string[];
-    type: 'alphabet' | 'reading' | 'vocabulary' | 'grammar' | 'writing' | 'tone';
+    type: 'alphabet' | 'reading' | 'vocabulary' | 'grammar' | 'writing' | 'tone' | 'spelling';
     gradeLevel: number;
     topic: string;
     topicKey: string;
@@ -865,6 +865,25 @@ export function genWritingG5(): VietnameseProblem {
     };
 }
 
+// ── BATCH 13: Kể chuyện sáng tạo (G5) ──
+const KE_CHUYEN_ST = [
+    { q: 'Khi kể lại câu chuyện đã đọc, bước đầu tiên là:', a: 'Xác định các nhân vật chính và sự kiện chính', opts: ['Xác định các nhân vật chính và sự kiện chính', 'Học thuộc lòng', 'Chép lại nguyên văn', 'Vẽ hình minh họa'], e: 'Kể chuyện ≠ đọc thuộc. Cần hiểu nhân vật + sự kiện → kể bằng lời của mình.' },
+    { q: 'Khi sáng tác truyện, em cần có:', a: 'Nhân vật, bối cảnh, cốt truyện', opts: ['Nhân vật, bối cảnh, cốt truyện', 'Chỉ cần tên truyện', 'Chỉ cần nhân vật', 'Chỉ cần kết thúc'], e: '3 yếu tố: Ai? (nhân vật) Ở đâu, khi nào? (bối cảnh) Chuyện gì xảy ra? (cốt truyện).' },
+    { q: 'Kết thúc truyện sáng tạo nên:', a: 'Bất ngờ hoặc để lại bài học', opts: ['Bất ngờ hoặc để lại bài học', 'Luôn buồn', 'Luôn vui', 'Không quan trọng'], e: 'Kết thúc hay = bất ngờ hợp lý hoặc gửi gắm bài học ý nghĩa.' },
+    { q: '"Ngày xưa, ở một ngôi làng nhỏ..." thuộc phần nào của truyện?', a: 'Mở đầu (giới thiệu)', opts: ['Mở đầu (giới thiệu)', 'Thân bài', 'Kết bài', 'Cao trào'], e: 'Mở đầu giới thiệu bối cảnh (thời gian, địa điểm) và nhân vật chính.' },
+    { q: 'Để nhân vật sống động, em nên dùng:', a: 'Đối thoại và hành động', opts: ['Đối thoại và hành động', 'Chỉ tả ngoại hình', 'Chỉ kể sự kiện', 'Chỉ dùng tính từ'], e: 'Nhân vật nói gì (đối thoại) + làm gì (hành động) → sống động, hấp dẫn.' },
+];
+
+export function genKeChuyenST(): VietnameseProblem {
+    const item = KE_CHUYEN_ST[rand(0, KE_CHUYEN_ST.length - 1)];
+    return {
+        id: genId(), gradeLevel: 5, difficulty: 5,
+        type: 'writing', topic: 'Kể chuyện sáng tạo', topicKey: 'ke_chuyen_st',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Nhân vật + bối cảnh + cốt truyện = truyện hay', `Đáp án: ${item.a}`],
+    };
+}
+
 // ══════════════════════════════════════════════
 // TOPIC REGISTRY
 // ══════════════════════════════════════════════
@@ -902,6 +921,7 @@ export const VIETNAMESE_TOPICS: VnTopicInfo[] = [
     { key: 'writing_g4', name: 'Tập làm văn', gradeLevel: 4, generator: genWritingG4, icon: '📝' },
     { key: 'van_ta_canh', name: 'Văn tả cảnh', gradeLevel: 5, generator: genVanTaCanh, icon: '🏞️' },
     { key: 'writing_g5', name: 'Nghị luận đơn giản', gradeLevel: 5, generator: genWritingG5, icon: '💡' },
+    { key: 'ke_chuyen_st', name: 'Kể chuyện sáng tạo', gradeLevel: 5, generator: genKeChuyenST, icon: '📝' },
 ];
 
 export function generateVietnameseSet(grade: number, topicKey?: string, count: number = 10): VietnameseProblem[] {

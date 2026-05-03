@@ -223,6 +223,60 @@ export function genSangTacChuDe(): ArtProblem {
     };
 }
 
+// ── BATCH 13: Nặn tạo hình (G1) ──
+const NAN_TAO_HINH = [
+    { q: 'Đất nặn dùng để:', a: 'Tạo hình 3D (con vật, hoa quả, đồ vật)', opts: ['Tạo hình 3D (con vật, hoa quả, đồ vật)', 'Vẽ tranh', 'Viết chữ', 'Cắt dán giấy'], e: 'Đất nặn (đất sét, plasticine) dùng để tạo hình 3 chiều.' },
+    { q: 'Khi nặn, em cần làm gì đầu tiên?', a: 'Nhào đất cho mềm', opts: ['Nhào đất cho mềm', 'Cắt đất', 'Tô màu', 'Vẽ phác'], e: 'Nhào đất cho mềm, dẻo → dễ tạo hình. Nếu khô → thêm ít nước.' },
+    { q: 'Hình khối nào dễ nặn nhất?', a: 'Hình cầu (tròn)', opts: ['Hình cầu (tròn)', 'Hình ngôi sao', 'Hình người', 'Hình nhà'], e: 'Hình cầu: lăn tròn đất trong lòng bàn tay → dễ nhất cho bạn mới tập.' },
+    { q: 'Để nặn quả táo, cần tạo hình gì trước?', a: 'Hình cầu tròn', opts: ['Hình cầu tròn', 'Hình vuông', 'Hình tam giác', 'Hình que dài'], e: 'Quả táo ≈ hình cầu + thêm cuống (hình que nhỏ) + lá.' },
+];
+
+export function genNanTaoHinh(): ArtProblem {
+    const item = NAN_TAO_HINH[rand(0, NAN_TAO_HINH.length - 1)];
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'visual', topic: 'Nặn tạo hình', topicKey: 'nan_tao_hinh',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Nhào đất → tạo hình cơ bản → thêm chi tiết', `Đáp án: ${item.a}`],
+    };
+}
+
+// ── BATCH 13: Hát đồng dao & Dân ca (G3) ──
+const DONG_DAO = [
+    { q: '"Rồng rắn lên mây" là thể loại gì?', a: 'Đồng dao (bài hát khi chơi)', opts: ['Đồng dao (bài hát khi chơi)', 'Dân ca', 'Nhạc pop', 'Nhạc cổ điển'], e: 'Đồng dao = bài hát truyền miệng dành cho trẻ em, thường gắn với trò chơi.' },
+    { q: 'Dân ca Bắc Bộ nổi tiếng nhất là:', a: 'Quan họ Bắc Ninh', opts: ['Quan họ Bắc Ninh', 'Vọng cổ', 'Hò Huế', 'Lý ngựa ô'], e: 'Quan họ Bắc Ninh — Di sản Phi vật thể UNESCO, hát đối đáp nam nữ.' },
+    { q: '"Bà ơi bà, cháu yêu bà lắm" nằm trong bài hát nào?', a: 'Cháu yêu bà', opts: ['Cháu yêu bà', 'Rồng rắn lên mây', 'Cả nhà thương nhau', 'Lý cây xanh'], e: 'Bài "Cháu yêu bà" — sáng tác Xuân Giao, dạy về tình yêu gia đình.' },
+    { q: 'Nhạc cụ nào thường đệm cho hát dân ca?', a: 'Đàn bầu, đàn tranh', opts: ['Đàn bầu, đàn tranh', 'Guitar điện', 'Trống jazz', 'Piano cổ điển'], e: 'Nhạc cụ dân tộc: đàn bầu, đàn tranh, sáo trúc, đàn nguyệt...' },
+];
+
+export function genDongDao(): ArtProblem {
+    const item = DONG_DAO[rand(0, DONG_DAO.length - 1)];
+    return {
+        id: genId(), gradeLevel: 3, difficulty: 3,
+        type: 'audio', topic: 'Hát đồng dao & Dân ca', topicKey: 'dong_dao',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Đồng dao = bài hát trẻ em, dân ca = bài hát vùng miền', `Đáp án: ${item.a}`],
+    };
+}
+
+// ── BATCH 13: Tranh dân gian VN (G4) ──
+const TRANH_DAN_GIAN = [
+    { q: 'Dòng tranh dân gian nổi tiếng nhất Việt Nam là:', a: 'Tranh Đông Hồ', opts: ['Tranh Đông Hồ', 'Tranh sơn dầu', 'Tranh thủy mặc', 'Tranh kỹ thuật số'], e: 'Tranh Đông Hồ (Bắc Ninh) in từ bản khắc gỗ, dùng màu tự nhiên.' },
+    { q: 'Tranh "Đám cưới chuột" thuộc dòng tranh nào?', a: 'Tranh Đông Hồ', opts: ['Tranh Đông Hồ', 'Tranh Hàng Trống', 'Tranh lụa', 'Tranh sơn mài'], e: '"Đám cưới chuột" — tranh Đông Hồ nổi tiếng, phê phán xã hội.' },
+    { q: 'Sơn mài là gì?', a: 'Kỹ thuật vẽ bằng sơn ta, mài nhiều lớp', opts: ['Kỹ thuật vẽ bằng sơn ta, mài nhiều lớp', 'Loại bút vẽ', 'Loại giấy', 'Tên họa sĩ'], e: 'Sơn mài = tranh sơn nhiều lớp, mài phẳng → sáng bóng, đặc trưng VN.' },
+    { q: 'Tranh Hàng Trống khác tranh Đông Hồ ở:', a: 'Vẽ tay bằng bút lông, dùng phẩm nhuộm', opts: ['Vẽ tay bằng bút lông, dùng phẩm nhuộm', 'In bản gỗ', 'Vẽ trên máy tính', 'Dùng sơn dầu'], e: 'Hàng Trống (Hà Nội): vẽ tay bằng bút lông. Đông Hồ: in bản khắc gỗ.' },
+];
+
+export function genTranhDanGian(): ArtProblem {
+    const item = TRANH_DAN_GIAN[rand(0, TRANH_DAN_GIAN.length - 1)];
+    return {
+        id: genId(), gradeLevel: 4, difficulty: 4,
+        type: 'visual', topic: 'Tranh dân gian VN', topicKey: 'tranh_dan_gian',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Đông Hồ in gỗ, Hàng Trống vẽ tay', `Đáp án: ${item.a}`],
+    };
+}
+
 // ══════════════════════════════════════════════
 // TOPIC REGISTRY
 // ══════════════════════════════════════════════
@@ -238,12 +292,15 @@ export interface ArtTopicInfo {
 export const ART_TOPICS: ArtTopicInfo[] = [
     { key: 'basic_colors', name: 'Màu sắc cơ bản', gradeLevel: 1, generator: genBasicColors, icon: '🎨' },
     { key: 'hat_thieu_nhi', name: 'Hát thiếu nhi', gradeLevel: 1, generator: genHatThieuNhi, icon: '🎤' },
+    { key: 'nan_tao_hinh', name: 'Nặn tạo hình', gradeLevel: 1, generator: genNanTaoHinh, icon: '🏺' },
     { key: 'music_rhythm', name: 'Nhịp điệu cơ bản', gradeLevel: 2, generator: genMusicRhythm, icon: '🎵' },
     { key: 've_theo_mau', name: 'Vẽ theo mẫu', gradeLevel: 2, generator: genVeTheoMau, icon: '🖌️' },
     { key: 'shapes_drawing', name: 'Đường nét và hình khối', gradeLevel: 3, generator: genShapesDrawing, icon: '✏️' },
     { key: 'thu_cong', name: 'Thủ công cắt dán', gradeLevel: 3, generator: genThuCong, icon: '✂️' },
+    { key: 'dong_dao', name: 'Hát đồng dao & Dân ca', gradeLevel: 3, generator: genDongDao, icon: '🎶' },
     { key: 'music_instruments', name: 'Nhạc cụ Việt Nam', gradeLevel: 4, generator: genMusicalInstruments, icon: '🪕' },
     { key: 'trang_tri_hoa_tiet', name: 'Trang trí họa tiết', gradeLevel: 4, generator: genTrangTriHoaTiet, icon: '🌺' },
+    { key: 'tranh_dan_gian', name: 'Tranh dân gian VN', gradeLevel: 4, generator: genTranhDanGian, icon: '🖼️' },
     { key: 'art_appreciation', name: 'Cảm thụ nghệ thuật', gradeLevel: 5, generator: genArtAppreciation, icon: '🖼️' },
     { key: 'sang_tac_chu_de', name: 'Sáng tác theo chủ đề', gradeLevel: 5, generator: genSangTacChuDe, icon: '🎭' },
 ];
