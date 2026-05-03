@@ -218,7 +218,7 @@ export default function ReadingQuiz({lang}:{lang:string}){
       {/* Voice indicator */}
       <div style={{padding:'0 1.25rem',marginTop:'2px'}}>
         <span style={{fontSize:'0.48rem',color:'#94a3b8',fontStyle:'italic'}}>
-          🎤 {(()=>{const v=findBestVoice(accent);return v?`${v.name} (${v.lang})`:'Default system voice';})()}
+          {getVoiceDebugInfo(accent)}
         </span>
       </div>
 
