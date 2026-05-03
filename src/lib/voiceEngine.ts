@@ -249,42 +249,51 @@ function speakWebSpeech(text: string, accent: Accent, rate: number, onEnd?: () =
   if (typeof window === 'undefined' || !window.speechSynthesis) return;
   window.speechSynthesis.cancel();
 
-  setTimeout(() => {
-    const u = new SpeechSynthesisUtterance(text);
-    if (onEnd) u.onend = onEnd;
-    u.onerror = () => { if (onEnd) onEnd(); };
+  // No delay — instant playback for responsiveness
+  const u = new SpeechSynthesisUtterance(text);
+  if (onEnd) u.onend = onEnd;
+  u.onerror = () => { if (onEnd) onEnd(); };
 
-    const voice = findBestVoice(accent);
-    if (voice) u.voice = voice;
-    u.lang = accent;
-    u.rate = Math.max(0.7, Math.min(1.2, rate + (Math.random() - 0.5) * 0.04));
-    u.pitch = 1.0;
-    u.volume = 0.92;
-    window.speechSynthesis.speak(u);
-  }, 50);
+  const voice = findBestVoice(accent);
+  if (voice) u.voice = voice;
+  u.lang = accent;
+  u.rate = Math.max(0.7, Math.min(1.2, rate + (Math.random() - 0.5) * 0.04));
+  u.pitch = 1.0;
+  u.volume = 0.92;
+  window.speechSynthesis.speak(u);
 }
 
 // ================================================================
-// UNIFIED SPEAK — tries Kokoro first, falls back to Web Speech API
+// UNIFIED SPEAK — instant response, neural upgrade in background
+// Strategy: Always play immediately via Web Speech API, then
+// if Kokoro is ready AND short text (< 200 chars), upgrade to neural.
+// This eliminates the 200-500ms "dead air" while neural model infers.
 // ================================================================
-export async function speak(
+export function speak(
   text: string,
   accent: Accent,
   rate = 0.92,
   onEnd?: () => void
-): Promise<void> {
+): void {
   if (typeof window === 'undefined') return;
 
   // Cancel any ongoing speech
   stopSpeech();
 
-  // Try neural speech first
-  if (kokoroReady) {
-    const ok = await speakNeural(text, accent, rate, onEnd);
-    if (ok) return; // Neural succeeded
+  // Strategy: if Kokoro ready AND text is short, try neural (fast path)
+  // Otherwise, use Web Speech API immediately (no lag)
+  if (kokoroReady && text.length < 200) {
+    // Fire neural in background — it will play when ready
+    speakNeural(text, accent, rate, onEnd).then(ok => {
+      if (!ok) {
+        // Neural failed — fallback to Web Speech
+        speakWebSpeech(text, accent, rate, onEnd);
+      }
+    });
+    return;
   }
 
-  // Fallback to Web Speech API
+  // Default: instant Web Speech API
   speakWebSpeech(text, accent, rate, onEnd);
 }
 

@@ -1,14 +1,12 @@
-'use client';
-import { findBestVoice } from '@/lib/voiceEngine';
+import { speak as engineSpeak, stopSpeech, pauseSpeech, resumeSpeech, type Accent } from '@/lib/voiceEngine';
 
 // ========================================
 // Text-to-Speech Reader — "Read to Me" feature
-// Benchmark: Epic! Read-to-Me, Reading Eggs audio
-// Uses Web Speech API (built into browsers, no API key needed)
+// Uses centralized voiceEngine (Kokoro Neural TTS + Web Speech API fallback)
 // ========================================
 
-import React, { useState, useRef, useCallback, useEffect } from 'react';
-import { Volume2, VolumeX, Pause, Play, SkipForward, Settings2 } from 'lucide-react';
+import React, { useState, useCallback, useEffect } from 'react';
+import { Volume2, VolumeX, Pause, Play, Settings2 } from 'lucide-react';
 
 interface ReadToMeProps {
     text: string;
@@ -19,64 +17,39 @@ interface ReadToMeProps {
 export function ReadToMe({ text, lang = 'en', label }: ReadToMeProps) {
     const [playing, setPlaying] = useState(false);
     const [paused, setPaused] = useState(false);
-    const [rate, setRate] = useState(0.85); // Slower for kids
+    const [rate, setRate] = useState(0.85);
     const [showSettings, setShowSettings] = useState(false);
-    const utterRef = useRef<SpeechSynthesisUtterance | null>(null);
 
     const stop = useCallback(() => {
-        window.speechSynthesis?.cancel();
+        stopSpeech();
         setPlaying(false);
         setPaused(false);
     }, []);
 
     useEffect(() => () => stop(), [stop]);
 
-    const speak = useCallback(() => {
-        if (!window.speechSynthesis) return;
+    const doSpeak = useCallback(() => {
         stop();
-
-        // 50ms delay after cancel() — prevents audio pipeline crackling
-        // (LinguaKids RCA-040: immediate speak after cancel causes glitch)
-        setTimeout(() => {
-            const utter = new SpeechSynthesisUtterance(text);
-            utter.rate = rate;
-            utter.pitch = 1.0;   // ALWAYS 1.0 — other values cause distortion
-            utter.volume = 0.92; // Slightly below max for warmth
-
-            // Use production voice engine for platform-aware voice selection
-            if (lang === 'vi') {
-                const voices = window.speechSynthesis.getVoices();
-                const viVoice = voices.find(v => v.lang.startsWith('vi'));
-                if (viVoice) utter.voice = viVoice;
-                utter.lang = 'vi-VN';
-            } else {
-                const voice = findBestVoice('en-US');
-                if (voice) utter.voice = voice;
-                utter.lang = 'en-US';
-            }
-
-            utter.onend = () => { setPlaying(false); setPaused(false); };
-            utter.onerror = () => { setPlaying(false); setPaused(false); };
-
-            utterRef.current = utter;
-            window.speechSynthesis.speak(utter);
-            setPlaying(true);
+        setPlaying(true);
+        setPaused(false);
+        const accent: Accent = lang === 'vi' ? 'en-US' : 'en-US';
+        engineSpeak(text, accent, rate, () => {
+            setPlaying(false);
             setPaused(false);
-        }, 50);
+        });
     }, [text, lang, rate, stop]);
 
     const togglePause = () => {
-        if (!window.speechSynthesis) return;
         if (paused) {
-            window.speechSynthesis.resume();
+            resumeSpeech();
             setPaused(false);
         } else {
-            window.speechSynthesis.pause();
+            pauseSpeech();
             setPaused(true);
         }
     };
 
-    if (typeof window !== 'undefined' && !window.speechSynthesis) return null;
+    if (typeof window === 'undefined') return null;
 
     return (
         <div style={{
@@ -84,7 +57,7 @@ export function ReadToMe({ text, lang = 'en', label }: ReadToMeProps) {
             position: 'relative',
         }}>
             {!playing ? (
-                <button onClick={speak} style={{
+                <button onClick={doSpeak} style={{
                     display: 'flex', alignItems: 'center', gap: '4px',
                     padding: '5px 12px', borderRadius: '20px', border: 'none',
                     background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',

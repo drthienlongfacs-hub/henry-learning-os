@@ -47,6 +47,21 @@
     font-family: var(--font-child);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Eliminate 300ms tap delay on mobile */
+    touch-action: manipulation;
+  }
+
+  /* ── Universal tap feedback for ALL buttons ── */
+  button {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
+    transition: transform 0.1s ease, opacity 0.1s ease;
+  }
+
+  button:active {
+    transform: scale(0.95) !important;
+    opacity: 0.85;
   }
 }
 
