@@ -19,35 +19,31 @@ import { BookOpen, CheckCircle, Sparkles, Brain, ChevronRight, RotateCcw, Volume
 
 type Accent = 'en-US'|'en-GB'|'en-AU';
 
-// ── Accent config: dramatic pitch/rate differences so accents are audibly distinct ──
-const ACC:{k:Accent;f:string;l:string;pitch:number;rateMultiplier:number;
-  namePatterns:string[];langPrefix:string}[] = [
-  {k:'en-US',f:'🇺🇸',l:'American', pitch:1.0, rateMultiplier:1.0,
+// ── Accent config — ZERO pitch/rate manipulation for natural sound ──
+// Accent differentiation comes ONLY from selecting the correct voice object.
+// pitch=1.0, rate=1.0 = unprocessed, clean audio from the native TTS engine.
+const ACC:{k:Accent;f:string;l:string;namePatterns:string[];langPrefix:string}[] = [
+  {k:'en-US',f:'🇺🇸',l:'American',
    namePatterns:['Samantha','Allison','Ava','Nicky','Tom','Alex','Fred',
      'Google US English','Microsoft Zira','Microsoft David'],
    langPrefix:'en-US'},
-  {k:'en-GB',f:'🇬🇧',l:'British', pitch:1.2, rateMultiplier:0.92,
+  {k:'en-GB',f:'🇬🇧',l:'British',
    namePatterns:['Daniel','Kate','Oliver','Serena','Stephanie','Arthur',
      'Google UK English','Microsoft Hazel'],
    langPrefix:'en-GB'},
-  {k:'en-AU',f:'🇦🇺',l:'Australian', pitch:0.85, rateMultiplier:1.05,
+  {k:'en-AU',f:'🇦🇺',l:'Australian',
    namePatterns:['Karen','Lee','Catherine','Gordon',
      'Google Australian'],
    langPrefix:'en-AU'},
 ];
 
-// Always get fresh voices — never rely on stale cache
-function getAvailableVoices():SpeechSynthesisVoice[]{
-  if(typeof window==='undefined'||!window.speechSynthesis) return [];
-  return window.speechSynthesis.getVoices();
-}
-
 function findBestVoice(accent:Accent):SpeechSynthesisVoice|null{
-  const voices=getAvailableVoices();
+  if(typeof window==='undefined'||!window.speechSynthesis) return null;
+  const voices=window.speechSynthesis.getVoices();
   if(voices.length===0) return null;
   const info=ACC.find(a=>a.k===accent);
   if(!info) return null;
-  // Pass 1: exact name match from our curated list
+  // Pass 1: exact name match from curated list (highest quality voices)
   for(const pat of info.namePatterns){
     const v=voices.find(vo=>vo.name.includes(pat));
     if(v) return v;
@@ -55,26 +51,25 @@ function findBestVoice(accent:Accent):SpeechSynthesisVoice|null{
   // Pass 2: match by exact lang code (en-US, en-GB, en-AU)
   const byLang=voices.find(vo=>vo.lang===info.langPrefix);
   if(byLang) return byLang;
-  // Pass 3: match by lang prefix
+  // Pass 3: match by lang prefix (e.g. en-GB-*)
   const byPrefix=voices.find(vo=>vo.lang.startsWith(info.langPrefix));
   if(byPrefix) return byPrefix;
-  // Pass 4: any English voice (still differentiated by pitch/rate)
+  // Pass 4: any English voice as fallback
   return voices.find(vo=>vo.lang.startsWith('en'))||null;
 }
 
-function speak(text:string, accent:Accent, rate=0.85, onEnd?:()=>void){
+function speak(text:string, accent:Accent, rate=0.9, onEnd?:()=>void){
   if(typeof window==='undefined'||!window.speechSynthesis)return;
   window.speechSynthesis.cancel();
   const u=new SpeechSynthesisUtterance(text);
   if(onEnd) u.onend=onEnd;
   u.onerror=()=>{if(onEnd) onEnd();};
-  const info=ACC.find(a=>a.k===accent);
-  // Set voice FIRST, then lang — some browsers ignore voice if lang is set first
+  // Voice FIRST — let the native engine speak naturally
   const voice=findBestVoice(accent);
   if(voice) u.voice=voice;
   u.lang=accent;
-  u.rate=rate*(info?.rateMultiplier??1.0);
-  u.pitch=info?.pitch??1.0;
+  u.rate=rate;   // pass through directly — no multiplier
+  u.pitch=1.0;   // ALWAYS 1.0 — any other value causes digital distortion
   window.speechSynthesis.speak(u);
 }
 

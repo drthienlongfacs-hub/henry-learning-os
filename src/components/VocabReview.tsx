@@ -35,13 +35,13 @@ function saveReviewStates(states: Record<string, ReviewState>) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(states));
 }
 
-// ── Robust voice matching v2 — always fresh, dramatic differences ──
-const VOICE_CFG:{k:Accent;pitch:number;rateMul:number;names:string[];lang:string}[] = [
-  {k:'en-US',pitch:1.0,rateMul:1.0,names:['Samantha','Allison','Ava','Nicky','Tom','Alex','Google US English'],lang:'en-US'},
-  {k:'en-GB',pitch:1.2,rateMul:0.92,names:['Daniel','Kate','Oliver','Serena','Google UK English'],lang:'en-GB'},
-  {k:'en-AU',pitch:0.85,rateMul:1.05,names:['Karen','Lee','Catherine','Google Australian'],lang:'en-AU'},
+// ── Voice matching v3 — ZERO pitch manipulation, natural sound only ──
+const VOICE_CFG:{k:Accent;names:string[];lang:string}[] = [
+  {k:'en-US',names:['Samantha','Allison','Ava','Nicky','Tom','Alex','Google US English'],lang:'en-US'},
+  {k:'en-GB',names:['Daniel','Kate','Oliver','Serena','Google UK English'],lang:'en-GB'},
+  {k:'en-AU',names:['Karen','Lee','Catherine','Google Australian'],lang:'en-AU'},
 ];
-function speak(text: string, accent: Accent, rate = 0.7) {
+function speak(text: string, accent: Accent, rate = 0.9) {
   if (typeof window === 'undefined' || !window.speechSynthesis) return;
   window.speechSynthesis.cancel();
   const voices=window.speechSynthesis.getVoices();
@@ -55,8 +55,8 @@ function speak(text: string, accent: Accent, rate = 0.7) {
   if(!voice) voice=voices.find(vo=>vo.lang.startsWith('en'));
   if(voice) u.voice=voice;
   u.lang = accent;
-  u.rate = rate*(cfg?.rateMul??1.0);
-  u.pitch = cfg?.pitch??1.0;
+  u.rate = rate;
+  u.pitch = 1.0;
   window.speechSynthesis.speak(u);
 }
 
