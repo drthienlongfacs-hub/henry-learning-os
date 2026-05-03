@@ -91,6 +91,97 @@ export function genTones(): VietnameseProblem {
     };
 }
 
+// ── NEW G1: Vần (Syllable/Rhyme Recognition) — CT 2018 Core ──
+const VANS = [
+    { van: 'an', words: ['ban', 'man', 'tan', 'can'] },
+    { van: 'at', words: ['bat', 'mat', 'hat', 'cat'] },
+    { van: 'am', words: ['cam', 'dam', 'ham', 'lam'] },
+    { van: 'ong', words: ['bong', 'cong', 'dong', 'song'] },
+    { van: 'en', words: ['ben', 'den', 'hen', 'ken'] },
+    { van: 'in', words: ['bin', 'din', 'kin', 'tin'] },
+    { van: 'oi', words: ['boi', 'coi', 'doi', 'goi'] },
+    { van: 'ai', words: ['bai', 'cai', 'dai', 'hai'] },
+    { van: 'uon', words: ['buon', 'cuon', 'muon', 'luon'] },
+    { van: 'ien', words: ['bien', 'chien', 'dien', 'kien'] },
+];
+
+export function genVan(): VietnameseProblem {
+    const v = VANS[rand(0, VANS.length - 1)];
+    const word = v.words[rand(0, v.words.length - 1)];
+    const otherVans = shuffle(VANS.filter(x => x.van !== v.van)).slice(0, 3);
+    const templates = [
+        { q: `Từ "${word}" có vần gì?`, a: v.van, opts: shuffle([v.van, ...otherVans.map(x => x.van)]), e: `"${word}" = phụ âm + vần "${v.van}".` },
+        { q: `Tìm từ cùng vần "${v.van}":`, a: v.words[0], opts: shuffle([v.words[0], ...otherVans.map(x => x.words[0])]), e: `Các từ vần "${v.van}": ${v.words.join(', ')}.` },
+    ];
+    const t = templates[rand(0, 1)];
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'alphabet', topic: 'Vần', topicKey: 'van',
+        question: t.q, correctAnswer: t.a,
+        options: t.opts,
+        illustration: '/images/core/letters_vn.svg',
+        explanation: t.e, hints: ['Vần = phần cuối của tiếng', `Đáp số: ${t.a}`],
+    };
+}
+
+// ── NEW G1: Ghép từ (Word Building) — CT 2018 Core ──
+const GHEP_TU = [
+    { parts: ['nhà', 'cửa'], result: 'nhà cửa', meaning: 'nơi ở' },
+    { parts: ['ông', 'bà'], result: 'ông bà', meaning: 'ông và bà' },
+    { parts: ['sách', 'vở'], result: 'sách vở', meaning: 'đồ dùng học tập' },
+    { parts: ['hoa', 'quả'], result: 'hoa quả', meaning: 'trái cây' },
+    { parts: ['bàn', 'ghế'], result: 'bàn ghế', meaning: 'đồ nội thất' },
+    { parts: ['trời', 'đất'], result: 'trời đất', meaning: 'thiên nhiên' },
+    { parts: ['xe', 'cộ'], result: 'xe cộ', meaning: 'phương tiện đi lại' },
+    { parts: ['con', 'cái'], result: 'con cái', meaning: 'con của bố mẹ' },
+];
+
+export function genGhepTu(): VietnameseProblem {
+    const item = GHEP_TU[rand(0, GHEP_TU.length - 1)];
+    const others = shuffle(GHEP_TU.filter(x => x.result !== item.result)).slice(0, 3);
+    const templates = [
+        { q: `Ghép "${item.parts[0]}" với từ nào để thành từ có nghĩa?`, a: item.parts[1], opts: shuffle([item.parts[1], ...others.map(x => x.parts[1])]), e: `"${item.parts[0]}" + "${item.parts[1]}" = "${item.result}" (${item.meaning}).` },
+        { q: `"${item.result}" gồm mấy tiếng?`, a: '2 tiếng', opts: ['1 tiếng', '2 tiếng', '3 tiếng', '4 tiếng'], e: `"${item.result}" = "${item.parts[0]}" + "${item.parts[1]}" → 2 tiếng.` },
+    ];
+    const t = templates[rand(0, 1)];
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'vocabulary', topic: 'Ghép từ', topicKey: 'ghep_tu',
+        question: t.q, correctAnswer: t.a,
+        options: t.opts,
+        illustration: '/images/core/letters_vn.svg',
+        explanation: t.e, hints: ['Ghép 2 tiếng thành 1 từ có nghĩa', `Đáp số: ${t.a}`],
+    };
+}
+
+// ── NEW G2: Chính tả (Spelling Rules) — CT 2018 Core ──
+const CHINH_TA = [
+    { q: 'Điền "s" hay "x": ___inh nhật?', a: 's', full: 'sinh nhật', rule: '"sinh" viết với "s"' },
+    { q: 'Điền "ch" hay "tr": ___ường học?', a: 'tr', full: 'trường học', rule: '"trường" viết với "tr"' },
+    { q: 'Điền "gi" hay "d": ___a đình?', a: 'gi', full: 'gia đình', rule: '"gia" viết với "gi"' },
+    { q: 'Điền "ng" hay "ngh": ___ỉ hè?', a: 'ngh', full: 'nghỉ hè', rule: '"nghỉ" viết với "ngh" (trước i, e, ê)' },
+    { q: 'Điền "g" hay "gh": ___ế ngồi?', a: 'gh', full: 'ghế ngồi', rule: '"ghế" viết với "gh" (trước e, ê, i)' },
+    { q: 'Điền "c" hay "k": ___éo dài?', a: 'k', full: 'kéo dài', rule: '"kéo" viết với "k" (trước e, ê, i)' },
+];
+
+export function genChinhTa(): VietnameseProblem {
+    const item = CHINH_TA[rand(0, CHINH_TA.length - 1)];
+    const opts = item.q.includes('"s" hay "x"') ? ['s', 'x'] :
+        item.q.includes('"ch" hay "tr"') ? ['ch', 'tr'] :
+        item.q.includes('"gi" hay "d"') ? ['gi', 'd'] :
+        item.q.includes('"ng" hay "ngh"') ? ['ng', 'ngh'] :
+        item.q.includes('"g" hay "gh"') ? ['g', 'gh'] : ['c', 'k'];
+    return {
+        id: genId(), gradeLevel: 2, difficulty: 2,
+        type: 'alphabet', topic: 'Chính tả', topicKey: 'chinh_ta',
+        question: item.q, correctAnswer: item.a,
+        options: opts,
+        illustration: '/images/core/pencil_icon.svg',
+        explanation: `Đáp án: "${item.full}". Quy tắc: ${item.rule}.`,
+        hints: ['Nhớ quy tắc chính tả', `Đáp số: ${item.a}`],
+    };
+}
+
 // ══════════════════════════════════════════════
 // GRADES 2-3: Vocabulary by Theme
 // ══════════════════════════════════════════════
@@ -366,6 +457,9 @@ export interface VnTopicInfo {
 export const VIETNAMESE_TOPICS: VnTopicInfo[] = [
     { key: 'alphabet', name: 'Bảng chữ cái', gradeLevel: 1, generator: genAlphabet, icon: '🔤' },
     { key: 'tones', name: 'Dấu thanh', gradeLevel: 1, generator: genTones, icon: '🎵' },
+    { key: 'van', name: 'Vần', gradeLevel: 1, generator: genVan, icon: '🔠' },
+    { key: 'ghep_tu', name: 'Ghép từ', gradeLevel: 1, generator: genGhepTu, icon: '🧩' },
+    { key: 'chinh_ta', name: 'Chính tả', gradeLevel: 2, generator: genChinhTa, icon: '✏️' },
     { key: 'vocabulary', name: 'Từ vựng chủ đề', gradeLevel: 2, generator: genVocabulary, icon: '📚' },
     { key: 'reading', name: 'Đọc hiểu', gradeLevel: 2, generator: genReadingComprehension, icon: '📖' },
     { key: 'grammar', name: 'Ngữ pháp', gradeLevel: 3, generator: genGrammar, icon: '✍️' },
