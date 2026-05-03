@@ -18,6 +18,8 @@ import {
 import { BookOpen, CheckCircle, Sparkles, Brain, ChevronRight, RotateCcw, Volume2, X, Languages, Lightbulb, BookMarked, Loader2 } from 'lucide-react';
 
 import { speak, pauseSpeech, resumeSpeech, stopSpeech, findBestVoice, getVoiceDebugInfo, type Accent } from '@/lib/voiceEngine';
+import { awardXP, type XPResult } from '@/lib/xpEngine';
+import CelebrationOverlay from '@/components/gamification/CelebrationOverlay';
 
 // ── Accent UI config (rendering only — voice logic is in voiceEngine.ts) ──
 const ACC = [
@@ -86,6 +88,7 @@ export default function ReadingQuiz({lang}:{lang:string}){
   const[historyHydrated,setHistoryHydrated]=useState(false);
   const[score,setScore]=useState(0);
   const[done,setDone]=useState(false);
+  const[celebration,setCelebration]=useState<{type:'correct'|'perfect'|'streak';xp:number}|null>(null);
   const[speakingIdx,setSpeakingIdx]=useState<number|null>(null);
   const[isPaused,setIsPaused]=useState(false);
   const[isFullPlaying,setIsFullPlaying]=useState(false);
@@ -169,7 +172,12 @@ export default function ReadingQuiz({lang}:{lang:string}){
     });
     if(evaluation.isCorrect){
       setChecked(x=>({...x,[i]:'correct'}));
-      if(checked[i]!=='correct')setScore(s=>s+1);
+      if(checked[i]!=='correct'){
+        setScore(s=>s+1);
+        // Award XP + show celebration
+        const xpResult=awardXP('quiz_correct');
+        setCelebration({type:'correct',xp:xpResult.earnedXP});
+      }
     }
     else{setChecked(x=>({...x,[i]:'hint'}));setHints(x=>({...x,[i]:true}));}
   };
@@ -418,6 +426,13 @@ export default function ReadingQuiz({lang}:{lang:string}){
       </div>
 
       {selWord&&<WordPopup word={selWord} onClose={()=>setSelWord(null)}/>}
+      {celebration && (
+        <CelebrationOverlay
+          type={celebration.type}
+          xpGained={celebration.xp}
+          onDone={() => setCelebration(null)}
+        />
+      )}
     </div>
   );
 }

@@ -12,6 +12,8 @@ import {
     Target, Flame, Trophy, Zap,
 } from 'lucide-react';
 import { buildWholeChildLearningPlan, getCardBenchmark } from '@/lib/whole-child-learning-plan';
+import XPDashboard from '@/components/gamification/XPDashboard';
+import WordOfDay from '@/components/gamification/WordOfDay';
 
 // ── Subject config ──
 const SUBJECTS: { key: string; name: string; icon: string; color: string; bg: string; minGrade?: number }[] = [
@@ -121,6 +123,12 @@ export default function ChildDashboard() {
                             <span style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', fontWeight: 600 }}>{s.label}</span>
                         </div>
                     ))}
+                </div>
+
+                {/* ═══ XP Dashboard + Word of Day ═══ */}
+                <div className="animate-fade-in" style={{ display: 'grid', gap: '0.75rem', marginBottom: '1rem' }}>
+                    <XPDashboard lang={lang} />
+                    <WordOfDay lang={lang} />
                 </div>
 
                 {/* ═══ Hero CTA ═══ */}
