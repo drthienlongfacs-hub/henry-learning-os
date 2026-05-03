@@ -36,16 +36,20 @@ export function ReadToMe({ text, lang = 'en', label }: ReadToMeProps) {
 
         const utter = new SpeechSynthesisUtterance(text);
         utter.rate = rate;
-        utter.pitch = 1.1; // Slightly higher pitch for kids
-        utter.lang = lang === 'vi' ? 'vi-VN' : 'en-US';
+        utter.pitch = 1.05;
 
-        // Try to find a good voice
+        // Find best voice — check fresh every time
         const voices = window.speechSynthesis.getVoices();
-        const preferred = voices.find(v =>
-            lang === 'vi'
-                ? v.lang.startsWith('vi')
-                : (v.name.includes('Samantha') || v.name.includes('Google') || v.lang.startsWith('en'))
-        );
+        let preferred: SpeechSynthesisVoice | undefined;
+        if (lang === 'vi') {
+            preferred = voices.find(v => v.lang.startsWith('vi'));
+        } else {
+            // Try specific high-quality names first
+            const enNames = ['Samantha','Allison','Ava','Tom','Alex','Google US English'];
+            for (const n of enNames) { preferred = voices.find(v => v.name.includes(n)); if (preferred) break; }
+            if (!preferred) preferred = voices.find(v => v.lang === 'en-US') || voices.find(v => v.lang.startsWith('en'));
+        }
+        utter.lang = lang === 'vi' ? 'vi-VN' : 'en-US';
         if (preferred) utter.voice = preferred;
 
         utter.onend = () => { setPlaying(false); setPaused(false); };

@@ -58,29 +58,32 @@ const PHONICS_LESSONS = [
   },
 ];
 
-// ── Robust voice matching (same engine as ReadingQuiz) ──
-const VOICE_CFG:{k:Accent;pitch:number;names:string[];lang:string}[] = [
-  {k:'en-US',pitch:1.0,names:['Samantha','Allison','Ava','Nicky','Tom','Alex','Google US English','en-US'],lang:'en-US'},
-  {k:'en-GB',pitch:1.1,names:['Daniel','Kate','Oliver','Serena','Google UK English','en-GB'],lang:'en-GB'},
-  {k:'en-AU',pitch:0.95,names:['Karen','Lee','Catherine','Google Australian','en-AU'],lang:'en-AU'},
+// ── Robust voice matching v2 — always fresh, dramatic differences ──
+const VOICE_CFG:{k:Accent;pitch:number;rateMul:number;names:string[];lang:string}[] = [
+  {k:'en-US',pitch:1.0,rateMul:1.0,names:['Samantha','Allison','Ava','Nicky','Tom','Alex','Google US English'],lang:'en-US'},
+  {k:'en-GB',pitch:1.2,rateMul:0.92,names:['Daniel','Kate','Oliver','Serena','Google UK English'],lang:'en-GB'},
+  {k:'en-AU',pitch:0.85,rateMul:1.05,names:['Karen','Lee','Catherine','Google Australian'],lang:'en-AU'},
 ];
-let _pVoices:SpeechSynthesisVoice[]=[];
 function speak(text: string, accent: Accent, rate = 0.7) {
   if (typeof window === 'undefined' || !window.speechSynthesis) return;
   window.speechSynthesis.cancel();
-  if(_pVoices.length===0) _pVoices=window.speechSynthesis.getVoices();
+  const voices=window.speechSynthesis.getVoices();
   const u = new SpeechSynthesisUtterance(text);
   const cfg=VOICE_CFG.find(c=>c.k===accent);
-  u.lang = accent; u.rate = rate; u.pitch = cfg?.pitch??1.0;
+  // Find best voice
+  let voice:SpeechSynthesisVoice|undefined;
   if(cfg){
-    for(const n of cfg.names){const v=_pVoices.find(vo=>vo.name.includes(n));if(v){u.voice=v;break;}}
-    if(!u.voice){const v=_pVoices.find(vo=>vo.lang===cfg.lang)||_pVoices.find(vo=>vo.lang.startsWith(cfg.lang));if(v) u.voice=v;}
+    for(const n of cfg.names){voice=voices.find(vo=>vo.name.includes(n));if(voice) break;}
+    if(!voice) voice=voices.find(vo=>vo.lang===cfg.lang)||voices.find(vo=>vo.lang.startsWith(cfg.lang));
   }
+  if(!voice) voice=voices.find(vo=>vo.lang.startsWith('en'));
+  // Set voice BEFORE lang
+  if(voice) u.voice=voice;
+  u.lang = accent;
+  u.rate = rate*(cfg?.rateMul??1.0);
+  u.pitch = cfg?.pitch??1.0;
   window.speechSynthesis.speak(u);
 }
-try{if(typeof window!=='undefined'){
-  window.speechSynthesis?.onvoiceschanged=()=>{_pVoices=window.speechSynthesis.getVoices();};
-}}catch{}
 
 export default function PhonicsLab({ lang }: { lang: string }) {
   const [lessonIdx, setLessonIdx] = useState(0);

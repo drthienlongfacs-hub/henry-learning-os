@@ -19,50 +19,47 @@ import { BookOpen, CheckCircle, Sparkles, Brain, ChevronRight, RotateCcw, Volume
 
 type Accent = 'en-US'|'en-GB'|'en-AU';
 
-// ── Accent config with WIDE voice name patterns for macOS/Chrome/iOS/Android ──
-const ACC:{k:Accent;f:string;l:string;pitch:number;namePatterns:string[];langPrefix:string}[] = [
-  {k:'en-US',f:'🇺🇸',l:'American', pitch:1.0,
+// ── Accent config: dramatic pitch/rate differences so accents are audibly distinct ──
+const ACC:{k:Accent;f:string;l:string;pitch:number;rateMultiplier:number;
+  namePatterns:string[];langPrefix:string}[] = [
+  {k:'en-US',f:'🇺🇸',l:'American', pitch:1.0, rateMultiplier:1.0,
    namePatterns:['Samantha','Allison','Ava','Nicky','Tom','Alex','Fred',
-     'Google US English','Microsoft Zira','Microsoft David','en-US','en_US'],
+     'Google US English','Microsoft Zira','Microsoft David'],
    langPrefix:'en-US'},
-  {k:'en-GB',f:'🇬🇧',l:'British', pitch:1.1,
+  {k:'en-GB',f:'🇬🇧',l:'British', pitch:1.2, rateMultiplier:0.92,
    namePatterns:['Daniel','Kate','Oliver','Serena','Stephanie','Arthur',
-     'Google UK English','Microsoft Hazel','en-GB','en_GB'],
+     'Google UK English','Microsoft Hazel'],
    langPrefix:'en-GB'},
-  {k:'en-AU',f:'🇦🇺',l:'Australian', pitch:0.95,
+  {k:'en-AU',f:'🇦🇺',l:'Australian', pitch:0.85, rateMultiplier:1.05,
    namePatterns:['Karen','Lee','Catherine','Gordon',
-     'Google Australian','en-AU','en_AU'],
+     'Google Australian'],
    langPrefix:'en-AU'},
 ];
 
-// ── Cached voices (async-loaded) ──
-let _voices:SpeechSynthesisVoice[]=[];
-function loadVoices(){
-  if(typeof window==='undefined'||!window.speechSynthesis) return;
-  _voices=window.speechSynthesis.getVoices();
-  if(_voices.length===0){
-    window.speechSynthesis.onvoiceschanged=()=>{_voices=window.speechSynthesis.getVoices();};
-  }
+// Always get fresh voices — never rely on stale cache
+function getAvailableVoices():SpeechSynthesisVoice[]{
+  if(typeof window==='undefined'||!window.speechSynthesis) return [];
+  return window.speechSynthesis.getVoices();
 }
-if(typeof window!=='undefined') loadVoices();
 
 function findBestVoice(accent:Accent):SpeechSynthesisVoice|null{
-  if(_voices.length===0 && typeof window!=='undefined') _voices=window.speechSynthesis.getVoices();
+  const voices=getAvailableVoices();
+  if(voices.length===0) return null;
   const info=ACC.find(a=>a.k===accent);
   if(!info) return null;
-  // Pass 1: exact name match
+  // Pass 1: exact name match from our curated list
   for(const pat of info.namePatterns){
-    const v=_voices.find(vo=>vo.name.includes(pat));
+    const v=voices.find(vo=>vo.name.includes(pat));
     if(v) return v;
   }
-  // Pass 2: match by lang property
-  const byLang=_voices.find(vo=>vo.lang===info.langPrefix);
+  // Pass 2: match by exact lang code (en-US, en-GB, en-AU)
+  const byLang=voices.find(vo=>vo.lang===info.langPrefix);
   if(byLang) return byLang;
-  // Pass 3: match by lang prefix (e.g. en-GB matches en-GB-*)
-  const byPrefix=_voices.find(vo=>vo.lang.startsWith(info.langPrefix));
+  // Pass 3: match by lang prefix
+  const byPrefix=voices.find(vo=>vo.lang.startsWith(info.langPrefix));
   if(byPrefix) return byPrefix;
-  // Pass 4: any English voice as last resort (differentiated by pitch)
-  return _voices.find(vo=>vo.lang.startsWith('en'))||null;
+  // Pass 4: any English voice (still differentiated by pitch/rate)
+  return voices.find(vo=>vo.lang.startsWith('en'))||null;
 }
 
 function speak(text:string, accent:Accent, rate=0.85, onEnd?:()=>void){
@@ -72,11 +69,12 @@ function speak(text:string, accent:Accent, rate=0.85, onEnd?:()=>void){
   if(onEnd) u.onend=onEnd;
   u.onerror=()=>{if(onEnd) onEnd();};
   const info=ACC.find(a=>a.k===accent);
-  u.lang=accent;
-  u.rate=rate;
-  u.pitch=info?.pitch??1.0;
+  // Set voice FIRST, then lang — some browsers ignore voice if lang is set first
   const voice=findBestVoice(accent);
   if(voice) u.voice=voice;
+  u.lang=accent;
+  u.rate=rate*(info?.rateMultiplier??1.0);
+  u.pitch=info?.pitch??1.0;
   window.speechSynthesis.speak(u);
 }
 
