@@ -1,8 +1,8 @@
-import { speak as engineSpeak, speakLongPassage, stopSpeech, pauseSpeech, resumeSpeech, type Accent } from '@/lib/voiceEngine';
+import { speak, stopSpeech, pauseSpeech, resumeSpeech, type Accent } from '@/lib/voiceEngine';
 
 // ========================================
 // Text-to-Speech Reader — "Read to Me" feature
-// Uses centralized voiceEngine (Kokoro Neural TTS + Web Speech API fallback)
+// Uses centralized voiceEngine (Web Speech API, optimized)
 // ========================================
 
 import React, { useState, useCallback, useEffect } from 'react';
@@ -19,6 +19,7 @@ export function ReadToMe({ text, lang = 'en', label }: ReadToMeProps) {
     const [paused, setPaused] = useState(false);
     const [rate, setRate] = useState(0.85);
     const [showSettings, setShowSettings] = useState(false);
+    const accent: Accent = 'en-US';
 
     const stop = useCallback(() => {
         stopSpeech();
@@ -32,13 +33,13 @@ export function ReadToMe({ text, lang = 'en', label }: ReadToMeProps) {
         stop();
         setPlaying(true);
         setPaused(false);
-        const accent: Accent = lang === 'vi' ? 'en-US' : 'en-US';
-        // Use long-passage mode for reading content — neural TTS when available
-        speakLongPassage(text, accent, rate, () => {
+        speak(text, accent, rate, () => {
             setPlaying(false);
             setPaused(false);
         });
-    }, [text, lang, rate, stop]);
+    }, [text, accent, rate, stop]);
+
+
 
     const togglePause = () => {
         if (paused) {

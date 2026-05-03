@@ -17,8 +17,8 @@ import {
 } from '@/lib/evidence/reading-quiz-history';
 import { BookOpen, CheckCircle, Sparkles, Brain, ChevronRight, RotateCcw, Volume2, X, Languages, Lightbulb, BookMarked, Loader2 } from 'lucide-react';
 
-import { speak, pauseSpeech, resumeSpeech, stopSpeech, findBestVoice, getVoiceDebugInfo, type Accent } from '@/lib/voiceEngine';
-import { awardXP, type XPResult } from '@/lib/xpEngine';
+import { speak, speakLongPassage, pauseSpeech, resumeSpeech, stopSpeech, getVoiceDebugInfo, type Accent } from '@/lib/voiceEngine';
+import { awardXP } from '@/lib/xpEngine';
 import CelebrationOverlay from '@/components/gamification/CelebrationOverlay';
 
 // ── Accent UI config (rendering only — voice logic is in voiceEngine.ts) ──
@@ -132,7 +132,7 @@ export default function ReadingQuiz({lang}:{lang:string}){
     if(isFullPlaying){stopSpeech();setIsFullPlaying(false);setIsPaused(false);return;}
     setIsFullPlaying(true);setIsPaused(false);
     if(!p) return;
-    speak(p.text,accent,speed,()=>{setIsFullPlaying(false);setIsPaused(false);});
+    speakLongPassage(p.text,accent,speed,()=>{setIsFullPlaying(false);setIsPaused(false);});
   },[p,accent,speed,isFullPlaying]);
 
   // Toggle pause/resume for any active speech
@@ -148,6 +148,9 @@ export default function ReadingQuiz({lang}:{lang:string}){
     },0);
     return ()=>window.clearTimeout(timeout);
   },[]);
+
+
+
 
   if(!p||!evidenceProfile) return null;
 

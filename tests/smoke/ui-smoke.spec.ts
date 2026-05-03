@@ -9,6 +9,20 @@ import {
 } from '../../src/data/ui-smoke-gate';
 import { LEARNING_I18N_REQUIRED_EN_STRINGS } from '../../src/lib/i18n-learning';
 
+type VoiceSmokeEvent = {
+    type: 'cancel' | 'speak';
+    at: number;
+    text?: string;
+    pitch?: number;
+};
+
+declare global {
+    interface Window {
+        __henryVoiceEvents?: VoiceSmokeEvent[];
+        __henryVoiceClickStart?: number;
+    }
+}
+
 const outDir = path.resolve(process.cwd(), 'out');
 const mimeByExtension: Record<string, string> = {
     '.css': 'text/css; charset=utf-8',
@@ -302,4 +316,78 @@ test('Child learning engine switches core surface and topic cards to English', a
 
     expect(brokenImages).toEqual([]);
     expect(badLocalResponses).toEqual([]);
+});
+
+test('Child reading full-passage voice responds before Kokoro background rendering', async ({ page }) => {
+    await page.addInitScript(() => {
+        class MockSpeechSynthesisUtterance {
+            text: string;
+            lang = '';
+            rate = 1;
+            pitch = 1;
+            volume = 1;
+            voice: SpeechSynthesisVoice | null = null;
+            onend: (() => void) | null = null;
+            onerror: (() => void) | null = null;
+
+            constructor(text: string) {
+                this.text = text;
+            }
+        }
+
+        window.__henryVoiceEvents = [];
+        Object.defineProperty(window, 'SpeechSynthesisUtterance', {
+            configurable: true,
+            value: MockSpeechSynthesisUtterance,
+        });
+        Object.defineProperty(window, 'speechSynthesis', {
+            configurable: true,
+            value: {
+                speaking: false,
+                getVoices: () => [{
+                    name: 'Samantha',
+                    lang: 'en-US',
+                    localService: true,
+                    default: true,
+                    voiceURI: 'Samantha',
+                }],
+                cancel: () => window.__henryVoiceEvents?.push({ type: 'cancel', at: performance.now() }),
+                speak: (utterance: MockSpeechSynthesisUtterance) => {
+                    window.__henryVoiceEvents?.push({
+                        type: 'speak',
+                        at: performance.now(),
+                        text: utterance.text,
+                        pitch: utterance.pitch,
+                    });
+                    window.setTimeout(() => utterance.onend?.(), 0);
+                },
+                pause: () => undefined,
+                resume: () => undefined,
+            },
+        });
+    });
+
+    await page.goto(`${baseUrl}${UI_SMOKE_BASE_PATH}/child/reading/`, { waitUntil: 'domcontentloaded' });
+    await page.waitForLoadState('networkidle', { timeout: 5_000 }).catch(() => undefined);
+
+    await page.evaluate(() => {
+        window.__henryVoiceClickStart = performance.now();
+    });
+    await page.getByRole('button', { name: /Đọc toàn bài|Full passage/ }).first().click();
+    await page.waitForFunction(() => window.__henryVoiceEvents?.some((event) => event.type === 'speak'));
+
+    const voiceResult = await page.evaluate(() => {
+        const start = window.__henryVoiceClickStart ?? 0;
+        const speak = window.__henryVoiceEvents?.find((event) => event.type === 'speak');
+        return {
+            delayMs: speak ? speak.at - start : null,
+            pitch: speak?.pitch,
+            textLength: speak?.text?.length ?? 0,
+        };
+    });
+
+    expect(voiceResult.delayMs).not.toBeNull();
+    expect(voiceResult.delayMs ?? Infinity).toBeLessThan(250);
+    expect(voiceResult.pitch).toBe(1);
+    expect(voiceResult.textLength).toBeGreaterThan(80);
 });

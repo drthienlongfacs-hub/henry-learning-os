@@ -1,155 +1,26 @@
 /**
- * voiceEngine.ts — Hybrid Neural Voice Engine for Henry Learning OS
+ * voiceEngine.ts — Production Voice Engine for Henry Learning OS
  * 
- * Architecture (production-grade, 2 tiers):
- *   Tier 1: Kokoro TTS (82M neural model, runs in-browser via WebGPU/WASM)
- *           → Natural speech, like real conversation
- *           → No API key, no server, free, offline-capable
- *   Tier 2: Web Speech API (OS native voices)
- *           → Instant fallback while Kokoro loads, or on unsupported devices
+ * Architecture: Web Speech API with platform-aware voice selection
  * 
- * Voices:
- *   🇺🇸 American: af_heart (F), am_adam (M)
- *   🇬🇧 British:  bf_emma (F), bm_george (M)
- *   🇦🇺 Australian: af_nicole (F) — Kokoro lacks AU, use closest
- *
- * Benchmarked against: ELSA Speak, LinguaKids, Google TTS, Azure Neural
+ * Quality improvements over browser defaults:
+ *   1. Platform-specific voice DB (exact names per OS)
+ *   2. Prefer "enhanced"/"premium"/"natural" quality voices
+ *   3. Prefer localService voices (offline = higher quality)
+ *   4. 15ms cancel-to-speak gap (Chrome/Safari requirement)
+ *   5. pitch = 1.0 always (any other value causes distortion)
+ *   6. Rate jitter ±0.02 for human-like variation
+ *   7. Volume 0.92 (warmth, not "shouting")
+ * 
+ * Benchmarked against: ELSA Speak, LinguaKids, Google TTS
  */
 
 export type Accent = 'en-US' | 'en-GB' | 'en-AU';
 
 // ================================================================
-// KOKORO NEURAL VOICE CONFIG
-// ================================================================
-const KOKORO_VOICES: Record<Accent, { primary: string; fallback: string }> = {
-  'en-US': { primary: 'af_heart',   fallback: 'am_adam' },
-  'en-GB': { primary: 'bf_emma',    fallback: 'bm_george' },
-  'en-AU': { primary: 'af_nicole',  fallback: 'af_sarah' },
-};
-
-// ================================================================
-// KOKORO TTS SINGLETON (lazy-loaded, cached)
-// ================================================================
-let kokoroInstance: any = null;
-let kokoroLoading = false;
-let kokoroReady = false;
-let kokoroFailed = false;
-const kokoroReadyCallbacks: (() => void)[] = [];
-
-// Current audio context for neural playback
-let currentAudioSource: AudioBufferSourceNode | null = null;
-let audioContext: AudioContext | null = null;
-let gainNode: GainNode | null = null;
-let neuralPlaying = false;
-let neuralPaused = false;
-
-function getAudioContext(): AudioContext {
-  if (!audioContext || audioContext.state === 'closed') {
-    audioContext = new AudioContext({ sampleRate: 24000 });
-    gainNode = audioContext.createGain();
-    gainNode.gain.value = 0.92;
-    gainNode.connect(audioContext.destination);
-  }
-  if (audioContext.state === 'suspended') audioContext.resume();
-  return audioContext;
-}
-
-async function loadKokoro(): Promise<boolean> {
-  if (kokoroReady) return true;
-  if (kokoroFailed) return false;
-  if (kokoroLoading) {
-    return new Promise((resolve) => {
-      kokoroReadyCallbacks.push(() => resolve(kokoroReady));
-    });
-  }
-
-  kokoroLoading = true;
-  try {
-    const { KokoroTTS } = await import('kokoro-js');
-    kokoroInstance = await KokoroTTS.from_pretrained(
-      'onnx-community/Kokoro-82M-v1.0-ONNX',
-      { dtype: 'q8', device: 'wasm' as any }
-    );
-    kokoroReady = true;
-    console.log('[VoiceEngine] ✅ Kokoro Neural TTS loaded (82M params)');
-  } catch (err) {
-    kokoroFailed = true;
-    console.warn('[VoiceEngine] ⚠️ Kokoro TTS unavailable, using Web Speech API fallback:', err);
-  }
-  kokoroLoading = false;
-  kokoroReadyCallbacks.forEach(cb => cb());
-  kokoroReadyCallbacks.length = 0;
-  return kokoroReady;
-}
-
-// Start loading immediately when module is imported (but don't block)
-if (typeof window !== 'undefined') {
-  // Delay load slightly to not block initial render
-  setTimeout(() => loadKokoro(), 2000);
-}
-
-// ================================================================
-// NEURAL SPEAK (Kokoro TTS)
-// ================================================================
-async function speakNeural(
-  text: string,
-  accent: Accent,
-  rate: number,
-  onEnd?: () => void,
-): Promise<boolean> {
-  if (!kokoroReady || !kokoroInstance) return false;
-
-  try {
-    // Stop any current neural playback
-    stopNeuralPlayback();
-
-    const voiceConfig = KOKORO_VOICES[accent] || KOKORO_VOICES['en-US'];
-    const audio = await kokoroInstance.generate(text, {
-      voice: voiceConfig.primary,
-      speed: rate,
-    });
-
-    // Get raw audio data
-    const samples = audio.audio;  // Float32Array
-    const sampleRate = audio.sampling_rate || 24000;
-
-    const ctx = getAudioContext();
-    const buffer = ctx.createBuffer(1, samples.length, sampleRate);
-    buffer.getChannelData(0).set(samples);
-
-    currentAudioSource = ctx.createBufferSource();
-    currentAudioSource.buffer = buffer;
-    currentAudioSource.connect(gainNode || ctx.destination);
-    
-    neuralPlaying = true;
-    neuralPaused = false;
-
-    currentAudioSource.onended = () => {
-      neuralPlaying = false;
-      neuralPaused = false;
-      currentAudioSource = null;
-      if (onEnd) onEnd();
-    };
-
-    currentAudioSource.start(0);
-    return true;
-  } catch (err) {
-    console.warn('[VoiceEngine] Kokoro generation failed, falling back:', err);
-    return false;
-  }
-}
-
-function stopNeuralPlayback() {
-  if (currentAudioSource) {
-    try { currentAudioSource.stop(); } catch {}
-    currentAudioSource = null;
-  }
-  neuralPlaying = false;
-  neuralPaused = false;
-}
-
-// ================================================================
-// PLATFORM-SPECIFIC VOICE DATABASE (Web Speech API fallback)
+// PLATFORM-SPECIFIC VOICE DATABASE
+// Source: github.com/HadrienGardeur/web-speech-recommended-voices
+// Verified: Chrome Android, iOS Safari, macOS Chrome/Safari, Windows
 // ================================================================
 const VOICE_DB: Record<string, Record<string, { female: string[]; male: string[] }>> = {
   android: {
@@ -174,12 +45,18 @@ const VOICE_DB: Record<string, Record<string, { female: string[]; male: string[]
   },
 };
 
+// ================================================================
+// ACCENT PROFILES
+// ================================================================
 export const ACCENT_PROFILES: { id: string; k: Accent; flag: string; label: string; lang: string }[] = [
   { id: 'us', k: 'en-US', flag: '🇺🇸', label: 'American', lang: 'en-US' },
   { id: 'uk', k: 'en-GB', flag: '🇬🇧', label: 'British',  lang: 'en-GB' },
   { id: 'au', k: 'en-AU', flag: '🇦🇺', label: 'Australian', lang: 'en-AU' },
 ];
 
+// ================================================================
+// PLATFORM DETECTION
+// ================================================================
 function detectPlatform(): string {
   if (typeof navigator === 'undefined') return 'unknown';
   const ua = navigator.userAgent;
@@ -191,10 +68,17 @@ function detectPlatform(): string {
 }
 
 // ================================================================
-// SMART VOICE FINDER (Web Speech API — fallback tier)
+// SMART VOICE FINDER (7-pass, production-grade)
+// Priority: platform DB → enhanced/premium → localService → any
 // ================================================================
+let voiceCache: Record<string, SpeechSynthesisVoice> = {};
+
 export function findBestVoice(accent: Accent): SpeechSynthesisVoice | null {
   if (typeof window === 'undefined' || !window.speechSynthesis) return null;
+
+  // Cache hit — avoid re-scanning voices every call
+  if (voiceCache[accent]) return voiceCache[accent];
+
   const voices = window.speechSynthesis.getVoices();
   if (voices.length === 0) return null;
 
@@ -202,56 +86,92 @@ export function findBestVoice(accent: Accent): SpeechSynthesisVoice | null {
   const lang = accent;
   const langBase = lang.split('-')[0];
 
-  // Pass 1: Platform DB
+  let found: SpeechSynthesisVoice | null = null;
+
+  // Pass 1: Platform-specific voice DB
   const platDB = VOICE_DB[platform];
-  if (platDB?.[lang]) {
+  if (!found && platDB?.[lang]) {
     const candidates = [...(platDB[lang].female || []), ...(platDB[lang].male || [])];
     for (const name of candidates) {
       const match = voices.find(v => v.name.includes(name));
-      if (match) return match;
+      if (match) { found = match; break; }
     }
   }
 
   // Pass 2: Cross-platform DB
-  for (const plat of Object.values(VOICE_DB)) {
-    if (plat[lang]) {
-      const candidates = [...(plat[lang].female || []), ...(plat[lang].male || [])];
-      for (const name of candidates) {
-        const match = voices.find(v => v.name.includes(name));
-        if (match) return match;
+  if (!found) {
+    for (const plat of Object.values(VOICE_DB)) {
+      if (plat[lang]) {
+        const candidates = [...(plat[lang].female || []), ...(plat[lang].male || [])];
+        for (const name of candidates) {
+          const match = voices.find(v => v.name.includes(name));
+          if (match) { found = match; break; }
+        }
+        if (found) break;
       }
     }
   }
 
-  // Pass 3: Enhanced/premium
-  const exactLang = voices.filter(v => v.lang === lang);
-  const enhanced = exactLang.find(v =>
-    /enhanced|premium|natural/i.test(v.name)
-  );
-  if (enhanced) return enhanced;
+  // Pass 3: Enhanced/premium/natural
+  if (!found) {
+    const exactLang = voices.filter(v => v.lang === lang);
+    found = exactLang.find(v => /enhanced|premium|natural/i.test(v.name)) || null;
 
-  // Pass 4: Local service
-  const localExact = exactLang.find(v => v.localService);
-  if (localExact) return localExact;
+    // Pass 4: Local service
+    if (!found) found = exactLang.find(v => v.localService) || null;
 
-  // Pass 5-7: Progressively broader matches
-  if (exactLang.length > 0) return exactLang[0];
-  const prefixMatch = voices.filter(v => v.lang.startsWith(lang));
-  if (prefixMatch.length > 0) return prefixMatch.find(v => v.localService) || prefixMatch[0];
-  const anyEn = voices.filter(v => v.lang.startsWith(langBase));
-  return anyEn.find(v => v.localService) || anyEn[0] || null;
+    // Pass 5: Any exact lang
+    if (!found && exactLang.length > 0) found = exactLang[0];
+  }
+
+  // Pass 6-7: Broader matches
+  if (!found) {
+    const prefixMatch = voices.filter(v => v.lang.startsWith(lang));
+    found = prefixMatch.find(v => v.localService) || prefixMatch[0] || null;
+  }
+  if (!found) {
+    const anyEn = voices.filter(v => v.lang.startsWith(langBase));
+    found = anyEn.find(v => v.localService) || anyEn[0] || null;
+  }
+
+  // Cache for next call
+  if (found) voiceCache[accent] = found;
+  return found;
+}
+
+// Pre-warm voice cache when voices load
+if (typeof window !== 'undefined' && window.speechSynthesis) {
+  window.speechSynthesis.onvoiceschanged = () => {
+    voiceCache = {}; // Clear cache when voices update
+    findBestVoice('en-US');
+    findBestVoice('en-GB');
+    findBestVoice('en-AU');
+  };
 }
 
 // ================================================================
-// WEB SPEECH API SPEAK (fallback tier)
+// SPEAK — instant response, production-grade
+// 
+// Critical timing: Chrome/Safari REQUIRE ≥15ms gap between
+// cancel() and speak(). Without this, utterance is silently dropped.
 // ================================================================
-function speakWebSpeech(text: string, accent: Accent, rate: number, onEnd?: () => void): void {
+let speakTimeout: ReturnType<typeof setTimeout> | null = null;
+
+export function speak(
+  text: string,
+  accent: Accent,
+  rate = 0.92,
+  onEnd?: () => void
+): void {
   if (typeof window === 'undefined' || !window.speechSynthesis) return;
 
-  // Critical: Chrome/Safari REQUIRE a gap between cancel() and speak()
-  // Without this, the new utterance is silently dropped.
-  // 15ms is the minimum reliable gap (tested Chrome 120+, Safari 17+, Firefox).
-  // DO NOT set to 0ms — it WILL break on real devices.
+  // Clear any pending speak
+  if (speakTimeout) { clearTimeout(speakTimeout); speakTimeout = null; }
+
+  // Cancel ongoing speech
+  window.speechSynthesis.cancel();
+
+  // Build utterance immediately (while waiting for cancel to process)
   const u = new SpeechSynthesisUtterance(text);
   if (onEnd) u.onend = onEnd;
   u.onerror = () => { if (onEnd) onEnd(); };
@@ -263,119 +183,39 @@ function speakWebSpeech(text: string, accent: Accent, rate: number, onEnd?: () =
   u.pitch = 1.0;
   u.volume = 0.92;
 
-  // Cancel first, then schedule speak after browser processes the cancel
-  window.speechSynthesis.cancel();
-  setTimeout(() => {
+  // 15ms gap: minimum for Chrome 120+, Safari 17+, Firefox
+  speakTimeout = setTimeout(() => {
     window.speechSynthesis.speak(u);
+    speakTimeout = null;
   }, 15);
 }
 
-// ================================================================
-// UNIFIED SPEAK — Web Speech API for ALL interactive clicks
-// 
-// ARCHITECTURE DECISION (evidence-based):
-// ❌ Kokoro neural TTS for buttons → 200-500ms inference = silent gap = broken UX
-// ✅ Web Speech API for buttons → 15ms total latency = instant response
-// ✅ Kokoro for long passages → user expects a brief delay, quality matters more
-//
-// Use speak() for interactive clicks (words, sentences, buttons)
-// Use speakLongPassage() for "Read to Me" / full passage reading
-// ================================================================
-export function speak(
-  text: string,
-  accent: Accent,
-  rate = 0.92,
-  onEnd?: () => void
-): void {
-  if (typeof window === 'undefined') return;
-
-  // Stop any neural playback (doesn't touch Web Speech — that's handled in speakWebSpeech)
-  stopNeuralPlayback();
-
-  // Always Web Speech API for interactive clicks — instant and reliable
-  speakWebSpeech(text, accent, rate, onEnd);
-}
-
-/**
- * Speak a long passage using Kokoro Neural TTS if available.
- * Falls back to Web Speech API if Kokoro is not loaded.
- * Use this for "Read to Me" buttons where quality > latency.
- */
-export function speakLongPassage(
-  text: string,
-  accent: Accent,
-  rate = 0.88,
-  onEnd?: () => void
-): void {
-  if (typeof window === 'undefined') return;
-  stopSpeech();
-
-  if (kokoroReady) {
-    speakNeural(text, accent, rate, onEnd).then(ok => {
-      if (!ok) speakWebSpeech(text, accent, rate, onEnd);
-    });
-    return;
-  }
-  speakWebSpeech(text, accent, rate, onEnd);
-}
+// Alias for long passages (same engine, but can be enhanced later)
+export const speakLongPassage = speak;
 
 // ================================================================
-// UNIFIED PLAYBACK CONTROLS
+// PLAYBACK CONTROLS
 // ================================================================
-export function pauseSpeech(): void {
-  if (neuralPlaying && audioContext) {
-    audioContext.suspend();
-    neuralPaused = true;
-  }
-  window.speechSynthesis?.pause();
-}
-
-export function resumeSpeech(): void {
-  if (neuralPaused && audioContext) {
-    audioContext.resume();
-    neuralPaused = false;
-  }
-  window.speechSynthesis?.resume();
-}
-
+export function pauseSpeech(): void { window.speechSynthesis?.pause(); }
+export function resumeSpeech(): void { window.speechSynthesis?.resume(); }
 export function stopSpeech(): void {
-  stopNeuralPlayback();
+  if (speakTimeout) { clearTimeout(speakTimeout); speakTimeout = null; }
   window.speechSynthesis?.cancel();
 }
-
-export function isSpeaking(): boolean {
-  return neuralPlaying || (window.speechSynthesis?.speaking ?? false);
-}
+export function isSpeaking(): boolean { return window.speechSynthesis?.speaking ?? false; }
 
 // ================================================================
-// STATUS & DEBUG
+// DEBUG
 // ================================================================
-export function getEngineStatus(): { engine: string; ready: boolean; loading: boolean } {
-  if (kokoroReady) return { engine: 'Kokoro Neural (82M)', ready: true, loading: false };
-  if (kokoroLoading) return { engine: 'Loading Kokoro...', ready: false, loading: true };
-  return { engine: 'Web Speech API (fallback)', ready: true, loading: false };
-}
-
 export function getVoiceDebugInfo(accent: Accent): string {
-  if (kokoroReady) {
-    const v = KOKORO_VOICES[accent] || KOKORO_VOICES['en-US'];
-    return `🧠 Kokoro Neural: ${v.primary}`;
-  }
   const voice = findBestVoice(accent);
   if (!voice) return 'No voice available';
-  return `📢 ${voice.name} (${voice.lang}) ${voice.localService ? '🟢 Local' : '🌐 Network'}`;
+  return `🎤 ${voice.name} (${voice.lang}) ${voice.localService ? '🟢 Local' : '🌐 Network'}`;
 }
 
-/**
- * Force-load Kokoro TTS engine (call from UI "upgrade voice" button)
- */
-export async function loadNeuralEngine(): Promise<boolean> {
-  return loadKokoro();
+export function getEngineStatus() {
+  return { engine: 'Web Speech API (optimized)', ready: true, loading: false };
 }
 
-/**
- * Check if neural engine is available
- */
-export function isNeuralReady(): boolean {
-  return kokoroReady;
-}
+export function isNeuralReady(): boolean { return false; }
+export async function loadNeuralEngine(): Promise<boolean> { return false; }
