@@ -177,6 +177,77 @@ export function genInternetSafety(): EthicsProblem {
     };
 }
 
+// ── NEW G1: Yêu thương gia đình — Đạo đức L1 ──
+const GIA_DINH_QS = [
+    { q: 'Khi bố mẹ đi làm về, em nên:', a: 'Chào bố mẹ vui vẻ', opts: ['Chào bố mẹ vui vẻ', 'Không nói gì', 'Xin tiền ngay', 'Kêu bố mẹ nấu cơm'], e: 'Chào bố mẹ khi đi làm về thể hiện sự yêu thương và lễ phép.' },
+    { q: 'Em có thể giúp bố mẹ việc gì?', a: 'Dọn dẹp, xếp quần áo, tưới cây', opts: ['Dọn dẹp, xếp quần áo, tưới cây', 'Không việc nào', 'Chỉ xem TV', 'Đi chơi cả ngày'], e: 'Giúp bố mẹ việc nhà là cách yêu thương và chia sẻ.' },
+    { q: 'Khi em bé em khóc, em nên:', a: 'Dỗ dành hoặc gọi bố mẹ', opts: ['Dỗ dành hoặc gọi bố mẹ', 'Khóc theo', 'Bỏ đi', 'La mắng em'], e: 'Anh chị yêu thương em bé, giúp bố mẹ trông nom.' },
+    { q: 'Ông bà già yếu, em nên:', a: 'Nói chuyện vui, lễ phép với ông bà', opts: ['Nói chuyện vui, lễ phép với ông bà', 'Tránh xa', 'Không nghe ông bà', 'Chỉ chơi game'], e: 'Kính trọng ông bà là truyền thống tốt đẹp của người Việt.' },
+];
+
+export function genYeuThuongGiaDinh(): EthicsProblem {
+    const item = GIA_DINH_QS[rand(0, GIA_DINH_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'behavior', topic: 'Yêu thương gia đình', topicKey: 'yeu_thuong_gia_dinh',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Gia đình là nơi yêu thương nhất', `Đáp án: ${item.a}`],
+    };
+}
+
+// ── NEW G1: Giữ gìn vệ sinh — Đạo đức L1 ──
+const GIU_VE_SINH_QS = [
+    { q: 'Ăn xong kẹo, em nên bỏ giấy kẹo vào đâu?', a: 'Thùng rác', opts: ['Thùng rác', 'Xuống đất', 'Bàn học', 'Túi bạn'], e: 'Bỏ rác đúng nơi giữ cho môi trường sạch đẹp.' },
+    { q: 'Vì sao phải rửa tay trước khi ăn?', a: 'Để diệt vi khuẩn, phòng bệnh', opts: ['Để diệt vi khuẩn, phòng bệnh', 'Để tay đẹp', 'Vì cô bắt', 'Không cần rửa'], e: 'Rửa tay loại bỏ vi khuẩn gây bệnh tiêu chảy, giun sán.' },
+    { q: 'Quần áo bẩn em nên làm gì?', a: 'Thay ra và bỏ vào chậu giặt', opts: ['Thay ra và bỏ vào chậu giặt', 'Mặc tiếp', 'Vứt đi', 'Giấu dưới giường'], e: 'Mặc quần áo sạch sẽ giúp phòng bệnh da và tự tin hơn.' },
+];
+
+export function genGiuVeSinh(): EthicsProblem {
+    const item = GIU_VE_SINH_QS[rand(0, GIU_VE_SINH_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'behavior', topic: 'Giữ gìn vệ sinh', topicKey: 'giu_ve_sinh',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Sạch sẽ → khỏe mạnh', `Đáp án: ${item.a}`],
+    };
+}
+
+// ── NEW G2: Đoàn kết bạn bè — Đạo đức L2 ──
+const DOAN_KET_QS = [
+    { q: 'Khi bạn bị ngã, em nên:', a: 'Đỡ bạn dậy và hỏi thăm', opts: ['Đỡ bạn dậy và hỏi thăm', 'Cười bạn', 'Bỏ đi', 'Quay video'], e: 'Giúp đỡ bạn khi gặp khó khăn là đoàn kết thân ái.' },
+    { q: 'Hai bạn cãi nhau về đồ chơi. Em nên:', a: 'Rủ hai bạn chơi chung hoặc luân phiên', opts: ['Rủ hai bạn chơi chung hoặc luân phiên', 'Cổ vũ bạn mạnh hơn', 'Lấy đồ chơi cho mình', 'Bỏ đi'], e: 'Chia sẻ và nhường nhịn giúp bạn bè hòa thuận.' },
+    { q: 'Làm việc nhóm, bạn nào cũng muốn làm thủ lĩnh. Em nên:', a: 'Bầu chọn công bằng hoặc luân phiên', opts: ['Bầu chọn công bằng hoặc luân phiên', 'Tranh giành', 'Bỏ nhóm', 'Để ai mạnh nhất'], e: 'Công bằng và tôn trọng ý kiến nhau là nền tảng đoàn kết.' },
+    { q: 'Bạn mới chuyển đến lớp, nói giọng khác. Em nên:', a: 'Chào đón và làm quen thân thiện', opts: ['Chào đón và làm quen thân thiện', 'Trêu chọc giọng bạn', 'Không chơi với bạn', 'Nói xấu sau lưng'], e: 'Tôn trọng sự khác biệt là biểu hiện của lòng đoàn kết.' },
+];
+
+export function genDoanKetBanBe(): EthicsProblem {
+    const item = DOAN_KET_QS[rand(0, DOAN_KET_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 2, difficulty: 2,
+        type: 'behavior', topic: 'Đoàn kết bạn bè', topicKey: 'doan_ket',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Đoàn kết = chia sẻ + tôn trọng + giúp đỡ', `Đáp án: ${item.a}`],
+    };
+}
+
+// ── NEW G3: Bảo vệ môi trường — Đạo đức L3 ──
+const MOI_TRUONG_QS = [
+    { q: 'Tại sao phải phân loại rác?', a: 'Để tái chế, giảm ô nhiễm', opts: ['Để tái chế, giảm ô nhiễm', 'Không cần phân loại', 'Để vui', 'Chỉ người lớn làm'], e: 'Phân loại rác (hữu cơ, vô cơ, tái chế) giúp bảo vệ môi trường.' },
+    { q: 'Em có thể làm gì để bảo vệ cây xanh?', a: 'Không bẻ cành, tưới cây, trồng cây mới', opts: ['Không bẻ cành, tưới cây, trồng cây mới', 'Chặt cây', 'Không cần quan tâm', 'Viết lên cây'], e: 'Cây xanh cho khí O₂, bóng mát, giảm ô nhiễm. Hãy bảo vệ cây!' },
+    { q: 'Nên tiết kiệm điện bằng cách nào?', a: 'Tắt đèn/quạt khi ra khỏi phòng', opts: ['Tắt đèn/quạt khi ra khỏi phòng', 'Bật đèn cả ngày', 'Không cần tiết kiệm', 'Chỉ dùng nến'], e: 'Tiết kiệm điện = tiết kiệm tài nguyên + giảm ô nhiễm.' },
+    { q: 'Sử dụng túi vải thay túi ni-lông vì:', a: 'Túi ni-lông khó phân hủy, gây ô nhiễm', opts: ['Túi ni-lông khó phân hủy, gây ô nhiễm', 'Túi vải đẹp hơn', 'Túi ni-lông đắt hơn', 'Không lý do'], e: 'Túi ni-lông mất 500-1000 năm phân hủy. Dùng túi vải bảo vệ trái đất.' },
+];
+
+export function genBaoVeMoiTruong(): EthicsProblem {
+    const item = MOI_TRUONG_QS[rand(0, MOI_TRUONG_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 3, difficulty: 3,
+        type: 'behavior', topic: 'Bảo vệ môi trường', topicKey: 'bao_ve_moi_truong',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['3R: Reduce (giảm) - Reuse (tái sử dụng) - Recycle (tái chế)', `Đáp án: ${item.a}`],
+    };
+}
+
 // ══════════════════════════════════════════════
 // TOPIC REGISTRY
 // ══════════════════════════════════════════════
@@ -191,8 +262,12 @@ export interface EthicsTopicInfo {
 
 export const ETHICS_TOPICS: EthicsTopicInfo[] = [
     { key: 'polite_greet', name: 'Chào hỏi lễ phép', gradeLevel: 1, generator: genPoliteGreet, icon: '🙏' },
+    { key: 'yeu_thuong_gia_dinh', name: 'Yêu thương gia đình', gradeLevel: 1, generator: genYeuThuongGiaDinh, icon: '❤️' },
+    { key: 'giu_ve_sinh', name: 'Giữ gìn vệ sinh', gradeLevel: 1, generator: genGiuVeSinh, icon: '🧹' },
     { key: 'express_emotion', name: 'Thể hiện cảm xúc', gradeLevel: 2, generator: genExpressEmotion, icon: '😊' },
+    { key: 'doan_ket', name: 'Đoàn kết bạn bè', gradeLevel: 2, generator: genDoanKetBanBe, icon: '🤗' },
     { key: 'honesty', name: 'Trung thực', gradeLevel: 3, generator: genHonesty, icon: '💎' },
+    { key: 'bao_ve_moi_truong', name: 'Bảo vệ môi trường', gradeLevel: 3, generator: genBaoVeMoiTruong, icon: '🌍' },
     { key: 'responsibility', name: 'Trách nhiệm', gradeLevel: 4, generator: genResponsibility, icon: '🎯' },
     { key: 'children_rights', name: 'Quyền trẻ em', gradeLevel: 4, generator: genChildrenRights, icon: '🛡️' },
     { key: 'community_empathy', name: 'Đồng cảm cộng đồng', gradeLevel: 5, generator: genCommunityEmpathy, icon: '🤝' },
