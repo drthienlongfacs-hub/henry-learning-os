@@ -459,9 +459,158 @@ export function genWordProbG3(): MathProblem {
     };
 }
 
-// ══════════════════════════════════════════════
-// GRADE 4: Fractions, area, large numbers, mass
-// ══════════════════════════════════════════════
+// ── NEW G3: Bảng nhân (Multiplication Tables) — CT 2018 core ──
+export function genMultTable(): MathProblem {
+    const table = rand(2, 9);
+    const m = rand(2, 9);
+    const ans = table * m;
+    return {
+        id: genId(), gradeLevel: 3, difficulty: 3,
+        type: 'arithmetic', topic: 'Bảng nhân', topicKey: 'mult_table',
+        question: `Bảng nhân ${table}: ${table} × ${m} = ?`,
+        correctAnswer: String(ans),
+        options: makeOptions(ans, 8),
+        illustration: '/images/math/multiplication_table.svg',
+        explanation: `${table} × ${m} = ${ans}. Thuộc bảng nhân ${table}.`,
+        hints: [`Đếm ${m} lần ${table}`, `Đáp số: ${ans}`],
+    };
+}
+
+// ── NEW G3: Làm tròn số — CT 2018 + Cambridge ──
+export function genRounding(): MathProblem {
+    const n = rand(10, 999);
+    const place = n < 100 ? 10 : 100;
+    const rounded = Math.round(n / place) * place;
+    return {
+        id: genId(), gradeLevel: 3, difficulty: 3,
+        type: 'arithmetic', topic: 'Làm tròn số', topicKey: 'rounding',
+        question: `Làm tròn ${n} đến hàng ${place === 10 ? 'chục' : 'trăm'} gần nhất.`,
+        correctAnswer: String(rounded),
+        options: makeOptions(rounded, place),
+        illustration: '/images/math/rounding.svg',
+        explanation: `${n} ≈ ${rounded}. Chữ số cần xét ${n % place >= place / 2 ? '≥ 5 → làm tròn lên' : '< 5 → làm tròn xuống'}.`,
+        hints: ['Chữ số ≥ 5 → tròn lên, < 5 → tròn xuống', `Đáp số: ${rounded}`],
+    };
+}
+
+// ── NEW G3: Thống kê đơn giản (Pictograph/Tally) — CT 2018 ──
+export function genBasicStats(): MathProblem {
+    const items = ['cam', 'táo', 'chuối', 'nho'];
+    const counts = items.map(() => rand(2, 10));
+    const maxIdx = counts.indexOf(Math.max(...counts));
+    const total = counts.reduce((a, b) => a + b, 0);
+    const templates = [
+        { q: `Bảng đếm: ${items.map((it, i) => `${it}: ${counts[i]}`).join(', ')}. Loại nào nhiều nhất?`, a: items[maxIdx], e: `${items[maxIdx]} = ${counts[maxIdx]} (nhiều nhất).` },
+        { q: `Bảng đếm: ${items.map((it, i) => `${it}: ${counts[i]}`).join(', ')}. Tổng cộng có bao nhiêu?`, a: String(total), e: `${counts.join(' + ')} = ${total}.` },
+    ];
+    const t = templates[rand(0, 1)];
+    return {
+        id: genId(), gradeLevel: 3, difficulty: 3,
+        type: 'data', topic: 'Thống kê đơn giản', topicKey: 'basic_stats',
+        question: t.q, correctAnswer: t.a,
+        options: t.q.includes('nhiều') ? shuffle([...items]) : makeOptions(total, 5),
+        illustration: '/images/math/pictograph.svg',
+        explanation: t.e, hints: ['Đọc kỹ từng số', `Đáp số: ${t.a}`],
+    };
+}
+
+// ── NEW G3: Số đến 10.000 — CT 2018 ──
+export function genNumbersTo10000(): MathProblem {
+    const n = rand(100, 9999);
+    const thousands = Math.floor(n / 1000);
+    const hundreds = Math.floor((n % 1000) / 100);
+    const templates = [
+        { q: `Số ${n.toLocaleString('vi')}: chữ số hàng trăm là bao nhiêu?`, a: String(hundreds), e: `Trong số ${n}, chữ số hàng trăm là ${hundreds}.` },
+        () => { const a = rand(100, 5000), b = rand(100, 5000); const s = a > b ? '>' : a < b ? '<' : '='; return { q: `So sánh: ${a} ___ ${b}`, a: s, e: `${a} ${s} ${b}.` }; },
+    ];
+    const t = resolveTemplate(templates[rand(0, 1)]);
+    return {
+        id: genId(), gradeLevel: 3, difficulty: 3,
+        type: 'arithmetic', topic: 'Số đến 10.000', topicKey: 'numbers_10000',
+        question: t.q, correctAnswer: String(t.a),
+        options: t.q.includes('So sánh') ? ['>', '<', '='] : makeOptions(hundreds, 3),
+        illustration: '/images/math/place_value.svg',
+        explanation: t.e, hints: ['Nhớ thứ tự: đơn vị, chục, trăm, nghìn', `Đáp số: ${t.a}`],
+    };
+}
+
+// ── NEW G4: Góc — CT 2018 ──
+export function genAngles(): MathProblem {
+    const angles = [
+        { name: 'góc vuông', deg: 90, desc: 'đúng 90°' },
+        { name: 'góc nhọn', deg: rand(10, 89), desc: 'nhỏ hơn 90°' },
+        { name: 'góc tù', deg: rand(91, 179), desc: 'lớn hơn 90° và nhỏ hơn 180°' },
+        { name: 'góc bẹt', deg: 180, desc: 'đúng 180°' },
+    ];
+    const a = angles[rand(0, angles.length - 1)];
+    const templates = [
+        { q: `Góc ${a.deg}° là góc gì?`, a: a.name, opts: shuffle(angles.map(x => x.name)), e: `${a.deg}° ${a.desc} → ${a.name}.` },
+        { q: `${a.name} có số đo bao nhiêu độ? (ước lượng)`, a: `${a.deg}°`, opts: shuffle(angles.map(x => `${x.deg}°`)), e: `${a.name} ${a.desc}.` },
+    ];
+    const t = templates[rand(0, 1)];
+    return {
+        id: genId(), gradeLevel: 4, difficulty: 4,
+        type: 'geometry', topic: 'Góc', topicKey: 'angles',
+        question: t.q, correctAnswer: t.a,
+        options: t.opts,
+        illustration: '/images/math/angles.svg',
+        explanation: t.e, hints: ['Nhọn < 90° < Tù < 180° = Bẹt', `Đáp số: ${t.a}`],
+    };
+}
+
+// ── NEW G4: Trung bình cộng — CT 2018 ──
+export function genAverage(): MathProblem {
+    const count = rand(3, 5);
+    const nums = Array.from({ length: count }, () => rand(5, 50));
+    const sum = nums.reduce((a, b) => a + b, 0);
+    const avg = Math.round(sum / count);
+    return {
+        id: genId(), gradeLevel: 4, difficulty: 4,
+        type: 'arithmetic', topic: 'Trung bình cộng', topicKey: 'average',
+        question: `Tìm trung bình cộng: ${nums.join(', ')}`,
+        correctAnswer: String(avg),
+        options: makeOptions(avg, 5),
+        illustration: '/images/math/average.svg',
+        explanation: `TBC = (${nums.join(' + ')}) ÷ ${count} = ${sum} ÷ ${count} = ${avg}.`,
+        hints: ['TBC = Tổng ÷ Số lượng', `Đáp số: ${avg}`],
+    };
+}
+
+// ── NEW G5: Thể tích — CT 2018 ──
+export function genVolume(): MathProblem {
+    const templates = [
+        () => { const s = rand(2, 8); return { q: `Hình lập phương cạnh ${s} cm. Tính thể tích.`, a: s ** 3, u: 'cm³', e: `V = cạnh³ = ${s}³ = ${s ** 3} cm³.` }; },
+        () => { const l = rand(3, 10), w = rand(2, l), h = rand(2, 8); return { q: `Hình hộp chữ nhật dài ${l}, rộng ${w}, cao ${h} cm. Tính thể tích.`, a: l * w * h, u: 'cm³', e: `V = dài × rộng × cao = ${l} × ${w} × ${h} = ${l * w * h} cm³.` }; },
+    ];
+    const t = templates[rand(0, 1)]();
+    return {
+        id: genId(), gradeLevel: 5, difficulty: 5,
+        type: 'geometry', topic: 'Thể tích', topicKey: 'volume',
+        question: t.q, correctAnswer: `${t.a} ${t.u}`,
+        options: shuffle([`${t.a} ${t.u}`, `${t.a + rand(5, 20)} ${t.u}`, `${Math.max(1, t.a - rand(5, 15))} ${t.u}`, `${t.a * 2} ${t.u}`]),
+        illustration: '/images/math/volume.svg',
+        explanation: t.e, hints: ['V hộp = dài × rộng × cao', 'V lập phương = cạnh³', `Đáp số: ${t.a} ${t.u}`],
+    };
+}
+
+// ── NEW G5: Hình tam giác — CT 2018 ──
+export function genTriangleArea(): MathProblem {
+    const base = rand(4, 20);
+    const height = rand(3, 15);
+    const area = base * height / 2;
+    return {
+        id: genId(), gradeLevel: 5, difficulty: 5,
+        type: 'geometry', topic: 'Diện tích tam giác', topicKey: 'triangle_area',
+        question: `Tam giác đáy ${base} cm, chiều cao ${height} cm. Tính diện tích.`,
+        correctAnswer: `${area} cm²`,
+        options: shuffle([`${area} cm²`, `${base * height} cm²`, `${area + rand(3, 10)} cm²`, `${Math.max(1, area - rand(2, 8))} cm²`]),
+        illustration: '/images/math/triangle_area.svg',
+        explanation: `S = đáy × cao ÷ 2 = ${base} × ${height} ÷ 2 = ${area} cm².`,
+        hints: ['S tam giác = đáy × cao ÷ 2', `Đáp số: ${area} cm²`],
+    };
+}
+
+
 
 export function genFractions(): MathProblem {
     const templates = [
@@ -636,18 +785,26 @@ export const MATH_TOPICS: TopicInfo[] = [
     { key: 'word_g2', name: 'Toán đố lớp 2', gradeLevel: 2, generator: genWordProbG2, icon: '📝' },
     // Grade 3
     { key: 'mult_div', name: 'Nhân chia cơ bản', gradeLevel: 3, generator: genMultDiv, icon: '✖️' },
+    { key: 'mult_table', name: 'Bảng nhân', gradeLevel: 3, generator: genMultTable, icon: '🔢' },
+    { key: 'rounding', name: 'Làm tròn số', gradeLevel: 3, generator: genRounding, icon: '🎯' },
+    { key: 'basic_stats', name: 'Thống kê đơn giản', gradeLevel: 3, generator: genBasicStats, icon: '📊' },
+    { key: 'numbers_10000', name: 'Số đến 10.000', gradeLevel: 3, generator: genNumbersTo10000, icon: '🔟' },
     { key: 'perimeter', name: 'Chu vi', gradeLevel: 3, generator: genPerimeter, icon: '📐' },
     { key: 'patterns', name: 'Quy luật dãy số', gradeLevel: 3, generator: genPatterns, icon: '🔄' },
     { key: 'word_g3', name: 'Toán đố lớp 3', gradeLevel: 3, generator: genWordProbG3, icon: '📖' },
     // Grade 4
     { key: 'fractions', name: 'Phân số', gradeLevel: 4, generator: genFractions, icon: '🥧' },
     { key: 'area', name: 'Diện tích', gradeLevel: 4, generator: genArea, icon: '⬛' },
+    { key: 'angles', name: 'Góc', gradeLevel: 4, generator: genAngles, icon: '📐' },
+    { key: 'average', name: 'Trung bình cộng', gradeLevel: 4, generator: genAverage, icon: '➗' },
     { key: 'large_numbers', name: 'Số lớn', gradeLevel: 4, generator: genLargeNumbers, icon: '🔟' },
     { key: 'mass', name: 'Khối lượng', gradeLevel: 4, generator: genMass, icon: '⚖️' },
     // Grade 5
     { key: 'decimals', name: 'Số thập phân', gradeLevel: 5, generator: genDecimals, icon: '🔸' },
     { key: 'percent', name: 'Phần trăm', gradeLevel: 5, generator: genPercent, icon: '💯' },
     { key: 'ratio', name: 'Tỉ số', gradeLevel: 5, generator: genRatio, icon: '📊' },
+    { key: 'volume', name: 'Thể tích', gradeLevel: 5, generator: genVolume, icon: '📦' },
+    { key: 'triangle_area', name: 'DT tam giác', gradeLevel: 5, generator: genTriangleArea, icon: '🔺' },
     { key: 'charts', name: 'Biểu đồ & TK', gradeLevel: 5, generator: genCharts, icon: '📈' },
 ];
 
