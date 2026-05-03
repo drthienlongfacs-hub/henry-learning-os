@@ -23,7 +23,7 @@ export default function MistakesPage() {
     };
 
     return (
-        <div style={{ paddingBottom: '5rem', background: 'var(--color-bg-child)', minHeight: '100dvh' }}>
+        <div style={{ paddingBottom: '5rem', minHeight: '100dvh', background: 'linear-gradient(180deg, #eef2ff 0%, #f0f4ff 40%, #faf5ff 100%)' }}>
             <div className="page-container">
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -90,10 +90,10 @@ export default function MistakesPage() {
 
             <nav className="bottom-nav">
                 <Link href="/child" className="nav-item"><Home size={20} /><span>{t('nav_home')}</span></Link>
-                <Link href="/child/elite" className="nav-item"><Sparkles size={20} /><span>{t('nav_elite')}</span></Link>
+                <Link href="/child/learn" className="nav-item"><BookOpen size={20} /><span>Học</span></Link>
                 <Link href="/child/review" className="nav-item"><RotateCcw size={20} /><span>{t('nav_review')}</span></Link>
                 <Link href="/child/mistakes" className="nav-item active"><Brain size={20} /><span>{t('nav_mistakes')}</span></Link>
-                <Link href="/child/reading" className="nav-item"><BookOpen size={20} /><span>{t('nav_reading')}</span></Link>
+                <Link href="/child/elite" className="nav-item"><Sparkles size={20} /><span>{t('nav_elite')}</span></Link>
             </nav>
         </div>
     );

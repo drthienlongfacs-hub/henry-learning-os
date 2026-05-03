@@ -192,7 +192,7 @@ export default function ReviewPage() {
 
     // ── RENDER ──
     return (
-        <div style={{ paddingBottom: '5rem', background: 'var(--color-bg-child)', minHeight: '100dvh' }}>
+        <div style={{ paddingBottom: '5rem', minHeight: '100dvh', background: 'linear-gradient(180deg, #eef2ff 0%, #f0f4ff 40%, #faf5ff 100%)' }}>
             <div className="page-container">
                 {/* Header */}
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
@@ -235,8 +235,8 @@ export default function ReviewPage() {
                             style={{
                                 padding: '0.4rem 0.75rem', borderRadius: '2rem', border: 'none', cursor: 'pointer',
                                 fontSize: '0.8rem', fontWeight: 600, whiteSpace: 'nowrap',
-                                background: filter === f.key ? 'var(--color-primary)' : 'var(--color-surface)',
-                                color: filter === f.key ? 'white' : 'var(--color-text)',
+                                background: filter === f.key ? 'var(--color-primary)' : 'rgba(255,255,255,0.7)',
+                                color: filter === f.key ? 'white' : 'var(--color-text-primary)',
                                 transition: 'all 0.2s', transform: filter === f.key ? 'scale(1.05)' : 'scale(1)',
                             }}>
                             {f.icon} {f.label}
@@ -304,7 +304,7 @@ export default function ReviewPage() {
                                 <span>Câu {currentIdx + 1}/{questions.length}</span>
                                 <span>Đúng: {sessionCorrect}/{sessionTotal}</span>
                             </div>
-                            <div style={{ height: '8px', borderRadius: '4px', background: 'var(--color-surface)', overflow: 'hidden' }}>
+                            <div style={{ height: '8px', borderRadius: '4px', background: 'rgba(0,0,0,0.06)', overflow: 'hidden' }}>
                                 <div style={{
                                     height: '100%', borderRadius: '4px',
                                     background: 'linear-gradient(90deg, #667eea, #764ba2)',
@@ -330,7 +330,7 @@ export default function ReviewPage() {
                             {/* Question */}
                             <div style={{
                                 padding: '1.25rem', marginBottom: '1rem', borderRadius: '0.75rem',
-                                background: 'linear-gradient(135deg, var(--color-surface), transparent)',
+                                background: 'linear-gradient(135deg, rgba(99,102,241,0.04), transparent)',
                                 minHeight: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center',
                             }}>
                                 <p style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.7, textAlign: 'center' }}>
@@ -344,9 +344,9 @@ export default function ReviewPage() {
                                     const isSelected = selected === opt;
                                     const isCorrectOpt = opt === currentQ.correctAnswer;
                                     const answered = selected !== null;
-                                    let bg = 'var(--color-surface)';
+                                    let bg = 'rgba(241,245,249,0.8)';
                                     let border = '2px solid transparent';
-                                    let color = 'var(--color-text)';
+                                    let color = 'var(--color-text-primary)';
                                     if (answered && isCorrectOpt) {
                                         bg = '#10b98122'; border = '2px solid #10b981'; color = '#047857';
                                     } else if (answered && isSelected && !isCorrectOpt) {
@@ -449,10 +449,10 @@ export default function ReviewPage() {
 
             <nav className="bottom-nav">
                 <Link href="/child" className="nav-item"><Home size={20} /><span>{t('nav_home')}</span></Link>
-                <Link href="/child/elite" className="nav-item"><Sparkles size={20} /><span>{t('nav_elite')}</span></Link>
+                <Link href="/child/learn" className="nav-item"><BookOpen size={20} /><span>Học</span></Link>
                 <Link href="/child/review" className="nav-item active"><RotateCcw size={20} /><span>{t('nav_review')}</span></Link>
                 <Link href="/child/mistakes" className="nav-item"><Brain size={20} /><span>{t('nav_mistakes')}</span></Link>
-                <Link href="/child/reading" className="nav-item"><BookOpen size={20} /><span>{t('nav_reading')}</span></Link>
+                <Link href="/child/elite" className="nav-item"><Sparkles size={20} /><span>{t('nav_elite')}</span></Link>
             </nav>
         </div>
     );
