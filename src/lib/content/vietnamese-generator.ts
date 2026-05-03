@@ -374,6 +374,106 @@ export function genKeChuyenTheoTranh(): VietnameseProblem {
     };
 }
 
+// ── NEW G1: Tập viết (Nét cơ bản) — SGK TV1 ──
+const TAP_VIET = [
+    { q: 'Chữ "a" gồm những nét gì?', a: 'Nét cong kín và nét móc ngược', opts: ['Nét cong kín và nét móc ngược', 'Nét sổ thẳng', 'Nét ngang', 'Nét xiên phải'], e: 'Chữ "a" = nét cong kín + nét móc ngược (phải).' },
+    { q: 'Chữ nào có nét khuyết trên?', a: 'b', opts: ['b', 'a', 'c', 'o'], e: 'Chữ "b" có nét khuyết trên (thân chữ vươn lên cao).' },
+    { q: 'Chữ "o" gồm nét gì?', a: 'Nét cong kín', opts: ['Nét cong kín', 'Nét sổ thẳng', 'Nét móc', 'Nét xiên'], e: 'Chữ "o" chỉ có 1 nét: nét cong kín.' },
+    { q: 'Chữ nào có nét khuyết dưới?', a: 'g', opts: ['g', 'a', 'e', 'o'], e: 'Chữ "g" có nét khuyết dưới (phần dưới cong xuống).' },
+    { q: 'Khi viết, chữ nào cao 2,5 ô li?', a: 'h', opts: ['h', 'a', 'e', 'o'], e: 'Chữ h, k, l, b có thân cao 2,5 ô li. Chữ thường a, e, o cao 1 ô li.' },
+    { q: 'Nét nào dùng để viết chữ "m"?', a: 'Nét móc xuôi và nét móc hai đầu', opts: ['Nét móc xuôi và nét móc hai đầu', 'Nét cong', 'Nét khuyết', 'Nét sổ thẳng'], e: 'Chữ "m" = 3 nét: móc xuôi + móc hai đầu + móc xuôi.' },
+];
+
+export function genTapViet(): VietnameseProblem {
+    const item = TAP_VIET[rand(0, TAP_VIET.length - 1)];
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'alphabet', topic: 'Tập viết', topicKey: 'tap_viet',
+        question: item.q, correctAnswer: item.a,
+        options: item.opts,
+        illustration: '/images/core/pencil_icon.svg',
+        explanation: item.e, hints: ['Nhớ các nét cơ bản: cong, sổ, móc, khuyết', `Đáp số: ${item.a}`],
+    };
+}
+
+// ── NEW G3: Chính tả nâng cao — SGK TV3 ──
+const CHINH_TA_G3 = [
+    { q: 'Điền "l" hay "n": ___ội dung?', a: 'n', full: 'nội dung', rule: '"nội" viết với "n"' },
+    { q: 'Điền "r", "d" hay "gi": ___ải thích?', a: 'gi', full: 'giải thích', rule: '"giải" viết với "gi"' },
+    { q: '"Sáng sủa" hay "Xáng xủa"?', a: 'Sáng sủa', opts: ['Sáng sủa', 'Xáng xủa', 'Sáng xủa', 'Xáng sủa'], rule: '"sáng" = s, "sủa" = s' },
+    { q: 'Điền "iêu" hay "iu": ch___?', a: 'iều', full: 'chiều', rule: '"chiều" có vần "iêu" không phải "iu"' },
+    { q: '"Dọn dẹp" hay "Rọn rẹp"?', a: 'Dọn dẹp', opts: ['Dọn dẹp', 'Rọn rẹp', 'Dọn rẹp', 'Giọn dẹp'], rule: '"dọn dẹp" viết với "d"' },
+    { q: 'Điền "ăn" hay "ăng": cây b___ ?', a: 'ăng', full: 'cây băng', rule: 'Phân biệt vần "ăn" và "ăng" qua âm cuối' },
+];
+
+export function genChinhTaG3(): VietnameseProblem {
+    const item = CHINH_TA_G3[rand(0, CHINH_TA_G3.length - 1)];
+    const opts = item.opts || (item.q.includes('"l" hay "n"') ? ['l', 'n'] :
+        item.q.includes('"r"') ? ['r', 'd', 'gi'] :
+        item.q.includes('"iêu"') ? ['iều', 'iu', 'iêu', 'ưu'] : ['ăn', 'ăng']);
+    return {
+        id: genId(), gradeLevel: 3, difficulty: 3,
+        type: 'alphabet', topic: 'Chính tả nâng cao', topicKey: 'chinh_ta_g3',
+        question: item.q, correctAnswer: item.a,
+        options: opts,
+        illustration: '/images/core/pencil_icon.svg',
+        explanation: `Quy tắc: ${item.rule}.`,
+        hints: ['Nhớ phân biệt: l/n, s/x, ch/tr, d/gi/r', `Đáp số: ${item.a}`],
+    };
+}
+
+// ── NEW G3: Viết đoạn văn ngắn — SGK TV3 ──
+const VIET_DOAN_VAN = [
+    { prompt: 'Viết 3-5 câu về con vật em yêu thích.', sample: 'Em rất thích con mèo. Mèo nhà em tên Miu. Nó có bộ lông trắng mượt. Mỗi tối, Miu nằm cuộn tròn bên em. Em yêu Miu lắm.',
+      questions: [
+        { q: 'Bài văn tả con vật cần có phần nào?', a: 'Mở bài, giới thiệu, tả đặc điểm, kết bài', opts: ['Mở bài, giới thiệu, tả đặc điểm, kết bài', 'Chỉ cần tả màu', 'Kể tên con vật', 'Không cần mở bài'] },
+        { q: 'Câu nào là câu mở bài?', a: 'Em rất thích con mèo.', opts: ['Em rất thích con mèo.', 'Nó có bộ lông trắng.', 'Em yêu Miu lắm.', 'Miu nằm cuộn tròn.'] },
+      ] },
+    { prompt: 'Viết 3-5 câu về ngôi trường của em.', sample: 'Trường em rất đẹp. Trước cổng trường có hàng phượng vĩ. Sân trường rộng rãi. Các bạn vui chơi mỗi giờ ra chơi. Em rất yêu trường.',
+      questions: [
+        { q: 'Đoạn văn tả trường nên bắt đầu bằng gì?', a: 'Giới thiệu chung về ngôi trường', opts: ['Giới thiệu chung về ngôi trường', 'Kể tên bạn bè', 'Nói về giờ ra chơi', 'Tả cái cổng'] },
+        { q: 'Câu nào thể hiện tình cảm?', a: 'Em rất yêu trường.', opts: ['Em rất yêu trường.', 'Trường em rất đẹp.', 'Sân trường rộng.', 'Có hàng phượng vĩ.'] },
+      ] },
+];
+
+export function genVietDoanVan(): VietnameseProblem {
+    const item = VIET_DOAN_VAN[rand(0, VIET_DOAN_VAN.length - 1)];
+    const qItem = item.questions[rand(0, item.questions.length - 1)];
+    return {
+        id: genId(), gradeLevel: 3, difficulty: 3,
+        type: 'grammar', topic: 'Viết đoạn văn ngắn', topicKey: 'viet_doan_van',
+        question: `✏️ Đề bài: "${item.prompt}"\n\nĐoạn văn mẫu:\n"${item.sample}"\n\n${qItem.q}`,
+        correctAnswer: qItem.a,
+        options: qItem.opts,
+        illustration: '/images/core/pencil_icon.svg',
+        explanation: `Đáp án: ${qItem.a}.`,
+        hints: ['Cấu trúc: Mở bài → Thân bài → Kết bài', `Đáp số: ${qItem.a}`],
+    };
+}
+
+// ── NEW G4: Biện pháp tu từ — SGK TV4 ──
+const BIEN_PHAP_TU_TU = [
+    { q: '"Mặt trời như quả cầu lửa" sử dụng biện pháp gì?', a: 'So sánh', opts: ['So sánh', 'Nhân hóa', 'Ẩn dụ', 'Điệp ngữ'], e: 'Dùng từ "như" để so sánh mặt trời với quả cầu lửa.' },
+    { q: '"Dòng sông uốn mình qua cánh đồng" sử dụng biện pháp gì?', a: 'Nhân hóa', opts: ['Nhân hóa', 'So sánh', 'Ẩn dụ', 'Hoán dụ'], e: 'Dùng từ "uốn mình" (hành động người) cho dòng sông → nhân hóa.' },
+    { q: '"Bàn tay ta làm nên tất cả" — "bàn tay" thay cho gì?', a: 'Con người / sức lao động', opts: ['Con người / sức lao động', 'Bàn tay thật', 'Đôi chân', 'Công cụ'], e: 'Hoán dụ: dùng "bàn tay" để chỉ con người và sức lao động.' },
+    { q: '"Những ngôi sao thức ngoài kia" — sao có "thức" được không?', a: 'Không, đây là nhân hóa', opts: ['Không, đây là nhân hóa', 'Có, sao thức thật', 'Đây là so sánh', 'Đây là ẩn dụ'], e: 'Sao không thể "thức" → nhân hóa (gán tính người cho vật).' },
+    { q: 'So sánh ngang bằng dùng từ nào?', a: 'như, giống, tựa', opts: ['như, giống, tựa', 'hơn, kém', 'không bằng', 'vượt xa'], e: 'So sánh ngang bằng: A như B, A tựa B, A giống B.' },
+    { q: '"Tre xung phong vào xe tăng" dùng biện pháp gì?', a: 'Nhân hóa', opts: ['Nhân hóa', 'So sánh', 'Liệt kê', 'Điệp ngữ'], e: 'Tre không thể "xung phong" → nhân hóa (gán hành động người cho tre).' },
+];
+
+export function genBienPhapTuTu(): VietnameseProblem {
+    const item = BIEN_PHAP_TU_TU[rand(0, BIEN_PHAP_TU_TU.length - 1)];
+    return {
+        id: genId(), gradeLevel: 4, difficulty: 4,
+        type: 'grammar', topic: 'Biện pháp tu từ', topicKey: 'bien_phap_tu_tu',
+        question: item.q, correctAnswer: item.a,
+        options: item.opts,
+        illustration: '/images/core/pencil_icon.svg',
+        explanation: item.e,
+        hints: ['So sánh: A như B | Nhân hóa: gán tính người cho vật | Hoán dụ: dùng bộ phận chỉ toàn thể', `Đáp số: ${item.a}`],
+    };
+}
+
 // ══════════════════════════════════════════════
 // GRADES 2-3: Vocabulary by Theme
 // ══════════════════════════════════════════════
@@ -653,13 +753,17 @@ export const VIETNAMESE_TOPICS: VnTopicInfo[] = [
     { key: 'phu_am_ghep', name: 'Phụ âm ghép', gradeLevel: 1, generator: genPhuAmGhep, icon: '🔡' },
     { key: 'van_extended', name: 'Vần mở rộng', gradeLevel: 1, generator: genVanExtended, icon: '📋' },
     { key: 'ghep_tu', name: 'Ghép từ', gradeLevel: 1, generator: genGhepTu, icon: '🧩' },
+    { key: 'tap_viet', name: 'Tập viết', gradeLevel: 1, generator: genTapViet, icon: '✒️' },
     { key: 'chinh_ta', name: 'Chính tả', gradeLevel: 2, generator: genChinhTa, icon: '✏️' },
     { key: 'tap_doc', name: 'Tập đọc', gradeLevel: 2, generator: genTapDoc, icon: '📗' },
     { key: 'ke_chuyen', name: 'Kể chuyện theo tranh', gradeLevel: 2, generator: genKeChuyenTheoTranh, icon: '🖼️' },
     { key: 'vocabulary', name: 'Từ vựng chủ đề', gradeLevel: 2, generator: genVocabulary, icon: '📚' },
     { key: 'reading', name: 'Đọc hiểu', gradeLevel: 2, generator: genReadingComprehension, icon: '📖' },
     { key: 'luyen_tu_cau', name: 'Luyện từ & câu', gradeLevel: 3, generator: genLuyenTuCau, icon: '✏️' },
+    { key: 'chinh_ta_g3', name: 'Chính tả nâng cao', gradeLevel: 3, generator: genChinhTaG3, icon: '📝' },
+    { key: 'viet_doan_van', name: 'Viết đoạn văn', gradeLevel: 3, generator: genVietDoanVan, icon: '📄' },
     { key: 'grammar', name: 'Ngữ pháp', gradeLevel: 3, generator: genGrammar, icon: '✍️' },
+    { key: 'bien_phap_tu_tu', name: 'Biện pháp tu từ', gradeLevel: 4, generator: genBienPhapTuTu, icon: '🎭' },
     { key: 'writing_g4', name: 'Tập làm văn', gradeLevel: 4, generator: genWritingG4, icon: '📝' },
     { key: 'writing_g5', name: 'Nghị luận đơn giản', gradeLevel: 5, generator: genWritingG5, icon: '💡' },
 ];

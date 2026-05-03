@@ -925,6 +925,143 @@ export function genSpeedDistanceTime(): MathProblem {
     };
 }
 
+// ── NEW G3: Số La Mã — SGK Toán 3 ──
+export function genRomanNumerals(): MathProblem {
+    const romanMap: [number, string][] = [[10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']];
+    const num = rand(1, 30);
+    let roman = '', n = num;
+    for (const [val, sym] of romanMap) { while (n >= val) { roman += sym; n -= val; } }
+    const templates = [
+        { q: `Số ${num} viết bằng chữ số La Mã là gì?`, a: roman, opts: shuffle([roman, 'X' + roman.slice(-1), roman + 'I', 'V' + roman.slice(0, 1)]), e: `${num} = ${roman}. I=1, V=5, X=10.` },
+        { q: `Chữ số La Mã "${roman}" = bao nhiêu?`, a: String(num), opts: makeOptions(num, 5), e: `${roman} = ${num}.` },
+    ];
+    const t = templates[rand(0, 1)];
+    return {
+        id: genId(), gradeLevel: 3, difficulty: 3,
+        type: 'arithmetic', topic: 'Số La Mã', topicKey: 'roman_numerals',
+        question: t.q, correctAnswer: t.a,
+        options: t.opts,
+        illustration: '/images/math/roman.svg',
+        explanation: t.e, hints: ['I=1, V=5, X=10, IV=4, IX=9', `Đáp số: ${t.a}`],
+    };
+}
+
+// ── NEW G4: Dấu hiệu chia hết — SGK Toán 4 ──
+export function genDivisibilityRules(): MathProblem {
+    const rules = [
+        { div: 2, rule: 'chữ số tận cùng chẵn (0,2,4,6,8)', gen: () => rand(1, 499) * 2 },
+        { div: 5, rule: 'chữ số tận cùng là 0 hoặc 5', gen: () => rand(1, 199) * 5 },
+        { div: 3, rule: 'tổng các chữ số chia hết cho 3', gen: () => rand(1, 333) * 3 },
+        { div: 9, rule: 'tổng các chữ số chia hết cho 9', gen: () => rand(1, 111) * 9 },
+    ];
+    const r = rules[rand(0, rules.length - 1)];
+    const num = r.gen();
+    const wrong = num + rand(1, r.div - 1);
+    const templates = [
+        { q: `Số nào chia hết cho ${r.div}?`, a: String(num), opts: shuffle([String(num), String(wrong), String(wrong + 1), String(num + 1)]), e: `${num} chia hết cho ${r.div}. Dấu hiệu: ${r.rule}.` },
+        { q: `Dấu hiệu nào cho biết số chia hết cho ${r.div}?`, a: r.rule, opts: shuffle([r.rule, 'chữ số tận cùng là 1', 'tổng = 7', 'chữ số đầu chẵn']), e: `Số chia hết cho ${r.div} khi: ${r.rule}.` },
+    ];
+    const t = templates[rand(0, 1)];
+    return {
+        id: genId(), gradeLevel: 4, difficulty: 4,
+        type: 'arithmetic', topic: 'Dấu hiệu chia hết', topicKey: 'divisibility_rules',
+        question: t.q, correctAnswer: t.a,
+        options: t.opts,
+        illustration: '/images/math/division.svg',
+        explanation: t.e, hints: ['Chia hết cho 2: tận cùng chẵn', 'Chia hết cho 3: tổng chữ số ÷3', `Đáp số: ${t.a}`],
+    };
+}
+
+// ── NEW G4: Nhân chia phân số — SGK Toán 4 Chương 4 ──
+export function genFractionMultDiv(): MathProblem {
+    const isMult = rand(0, 1) === 0;
+    const a = rand(1, 5), b = rand(2, 8), c = rand(1, 5), d = rand(2, 8);
+    if (isMult) {
+        const rn = a * c, rd = b * d;
+        return {
+            id: genId(), gradeLevel: 4, difficulty: 4,
+            type: 'fraction', topic: 'Nhân chia phân số', topicKey: 'fraction_mult_div',
+            question: `${a}/${b} × ${c}/${d} = ?`,
+            correctAnswer: `${rn}/${rd}`,
+            options: shuffle([`${rn}/${rd}`, `${a + c}/${b + d}`, `${rn}/${rd + 1}`, `${a * d}/${b * c}`]),
+            illustration: '/images/math/fractions.svg',
+            explanation: `${a}/${b} × ${c}/${d} = (${a}×${c})/(${b}×${d}) = ${rn}/${rd}.`,
+            hints: ['Nhân PS: tử×tử, mẫu×mẫu', `Đáp số: ${rn}/${rd}`],
+        };
+    } else {
+        const rn = a * d, rd = b * c;
+        return {
+            id: genId(), gradeLevel: 4, difficulty: 4,
+            type: 'fraction', topic: 'Nhân chia phân số', topicKey: 'fraction_mult_div',
+            question: `${a}/${b} ÷ ${c}/${d} = ?`,
+            correctAnswer: `${rn}/${rd}`,
+            options: shuffle([`${rn}/${rd}`, `${a * c}/${b * d}`, `${rn + 1}/${rd}`, `${a}/${b * c}`]),
+            illustration: '/images/math/fractions.svg',
+            explanation: `${a}/${b} ÷ ${c}/${d} = ${a}/${b} × ${d}/${c} = ${rn}/${rd}.`,
+            hints: ['Chia PS: nhân với PS đảo', `Đáp số: ${rn}/${rd}`],
+        };
+    }
+}
+
+// ── NEW G4-5: Hình bình hành, thoi, thang — SGK Toán 4 & 5 ──
+export function genParallelogramShapes(): MathProblem {
+    const shapes = [
+        () => { const a = rand(3, 12), h = rand(2, 8); return { q: `Hình bình hành có đáy ${a} cm, chiều cao ${h} cm. Tính diện tích.`, a: `${a * h} cm²`, e: `S = đáy × cao = ${a} × ${h} = ${a * h} cm².`, name: 'bình hành' }; },
+        () => { const d1 = rand(4, 12), d2 = rand(3, 10); return { q: `Hình thoi có 2 đường chéo ${d1} cm và ${d2} cm. Tính diện tích.`, a: `${(d1 * d2) / 2} cm²`, e: `S = (d₁ × d₂) / 2 = (${d1} × ${d2}) / 2 = ${(d1 * d2) / 2} cm².`, name: 'thoi' }; },
+        () => { const a = rand(4, 10), b = rand(6, 14), h = rand(3, 8); return { q: `Hình thang có đáy lớn ${b} cm, đáy nhỏ ${a} cm, chiều cao ${h} cm. Tính diện tích.`, a: `${((a + b) * h) / 2} cm²`, e: `S = (a+b)×h/2 = (${a}+${b})×${h}/2 = ${((a + b) * h) / 2} cm².`, name: 'thang' }; },
+    ];
+    const t = shapes[rand(0, 2)]();
+    return {
+        id: genId(), gradeLevel: 4, difficulty: 4,
+        type: 'geometry', topic: 'Hình bình hành/thoi/thang', topicKey: 'parallelogram_shapes',
+        question: t.q, correctAnswer: t.a,
+        options: shuffle([t.a, `${parseFloat(t.a) + rand(2, 8)} cm²`, `${Math.max(1, parseFloat(t.a) - rand(1, 5))} cm²`, `${parseFloat(t.a) * 2} cm²`]),
+        illustration: '/images/core/square.svg',
+        explanation: t.e, hints: [`S hình ${t.name}`, `Đáp số: ${t.a}`],
+    };
+}
+
+// ── NEW G5: Diện tích hình tròn — SGK Toán 5 ──
+export function genCircleArea(): MathProblem {
+    const r = rand(2, 10);
+    const templates: MathTemplateFactory[] = [
+        () => { const area = +(Math.PI * r * r).toFixed(2); return { q: `Hình tròn bán kính ${r} cm. Tính diện tích (π ≈ 3,14).`, a: `${(3.14 * r * r).toFixed(2)} cm²`, e: `S = π × r² = 3,14 × ${r}² = ${(3.14 * r * r).toFixed(2)} cm².` }; },
+        () => { const circumference = +(2 * 3.14 * r).toFixed(2); return { q: `Hình tròn bán kính ${r} cm. Tính chu vi (π ≈ 3,14).`, a: `${circumference} cm`, e: `C = 2 × π × r = 2 × 3,14 × ${r} = ${circumference} cm.` }; },
+        () => { const d = r * 2; return { q: `Đường kính hình tròn = ${d} cm. Bán kính = ?`, a: `${r} cm`, e: `r = d ÷ 2 = ${d} ÷ 2 = ${r} cm.` }; },
+    ];
+    const t = templates[rand(0, 2)]();
+    return {
+        id: genId(), gradeLevel: 5, difficulty: 5,
+        type: 'geometry', topic: 'Hình tròn', topicKey: 'circle_area',
+        question: t.q, correctAnswer: String(t.a),
+        options: shuffle([String(t.a), `${(3.14 * r * r + rand(5, 20)).toFixed(2)} cm²`, `${r * 2} cm`, `${(3.14 * r).toFixed(2)} cm`]),
+        illustration: '/images/core/circle.svg',
+        explanation: t.e, hints: ['S = π × r²', 'C = 2 × π × r', `Đáp số: ${t.a}`],
+    };
+}
+
+// ── NEW G5: Tỉ lệ bản đồ — SGK Toán 5 ──
+export function genMapScale(): MathProblem {
+    const scales = [100, 500, 1000, 5000, 10000];
+    const scale = scales[rand(0, scales.length - 1)];
+    const mapCm = rand(2, 20);
+    const realCm = mapCm * scale;
+    const realM = realCm / 100;
+    const templates = [
+        { q: `Bản đồ tỉ lệ 1:${scale.toLocaleString('vi')}. Đo trên bản đồ = ${mapCm} cm. Thực tế = ?`, a: `${realM} m`, e: `Thực tế = ${mapCm} × ${scale} = ${realCm} cm = ${realM} m.` },
+        { q: `Tỉ lệ 1:${scale.toLocaleString('vi')} nghĩa là gì?`, a: `1 cm trên BĐ = ${scale} cm thực tế`, opts: [`1 cm trên BĐ = ${scale} cm thực tế`, `1 cm = 1 cm`, `1 km = ${scale} km`, `Bản đồ thu nhỏ ${scale / 2} lần`], e: `Tỉ lệ 1:${scale} = 1 cm trên bản đồ ứng với ${scale} cm = ${scale / 100} m thực tế.` },
+    ];
+    const t = templates[rand(0, 1)];
+    return {
+        id: genId(), gradeLevel: 5, difficulty: 5,
+        type: 'measurement', topic: 'Tỉ lệ bản đồ', topicKey: 'map_scale',
+        question: t.q, correctAnswer: t.a,
+        options: t.opts || shuffle([t.a, `${realM + rand(1, 10)} m`, `${mapCm} m`, `${realM * 10} m`]),
+        illustration: '/images/math/map.svg',
+        explanation: t.e, hints: ['Thực tế = Trên BĐ × Tỉ lệ', `Đáp số: ${t.a}`],
+    };
+}
+
 // ══════════════════════════════════════════════
 // GRADE 5: Decimals, percentages, ratio, charts
 // ══════════════════════════════════════════════
@@ -1048,6 +1185,7 @@ export const MATH_TOPICS: TopicInfo[] = [
     { key: 'patterns', name: 'Quy luật dãy số', gradeLevel: 3, generator: genPatterns, icon: '🔄' },
     { key: 'word_g3', name: 'Toán đố lớp 3', gradeLevel: 3, generator: genWordProbG3, icon: '📖' },
     { key: 'division_table', name: 'Bảng chia', gradeLevel: 3, generator: genDivisionTable, icon: '➗' },
+    { key: 'roman_numerals', name: 'Số La Mã', gradeLevel: 3, generator: genRomanNumerals, icon: '🏛️' },
     // Grade 4
     { key: 'fractions', name: 'Phân số', gradeLevel: 4, generator: genFractions, icon: '🥧' },
     { key: 'area', name: 'Diện tích', gradeLevel: 4, generator: genArea, icon: '⬛' },
@@ -1056,6 +1194,9 @@ export const MATH_TOPICS: TopicInfo[] = [
     { key: 'large_numbers', name: 'Số lớn', gradeLevel: 4, generator: genLargeNumbers, icon: '🔟' },
     { key: 'mass', name: 'Khối lượng', gradeLevel: 4, generator: genMass, icon: '⚖️' },
     { key: 'fraction_add_sub', name: 'Cộng trừ phân số', gradeLevel: 4, generator: genFractionAddSub, icon: '🧩' },
+    { key: 'fraction_mult_div', name: 'Nhân chia phân số', gradeLevel: 4, generator: genFractionMultDiv, icon: '✖️' },
+    { key: 'divisibility_rules', name: 'Dấu hiệu chia hết', gradeLevel: 4, generator: genDivisibilityRules, icon: '🔍' },
+    { key: 'parallelogram_shapes', name: 'Hình BH/thoi/thang', gradeLevel: 4, generator: genParallelogramShapes, icon: '⬟' },
     // Grade 5
     { key: 'decimals', name: 'Số thập phân', gradeLevel: 5, generator: genDecimals, icon: '🔸' },
     { key: 'percent', name: 'Phần trăm', gradeLevel: 5, generator: genPercent, icon: '💯' },
@@ -1064,6 +1205,8 @@ export const MATH_TOPICS: TopicInfo[] = [
     { key: 'triangle_area', name: 'DT tam giác', gradeLevel: 5, generator: genTriangleArea, icon: '🔺' },
     { key: 'charts', name: 'Biểu đồ & TK', gradeLevel: 5, generator: genCharts, icon: '📈' },
     { key: 'speed_distance_time', name: 'Vận tốc - Quãng đường', gradeLevel: 5, generator: genSpeedDistanceTime, icon: '🚗' },
+    { key: 'circle_area', name: 'Hình tròn', gradeLevel: 5, generator: genCircleArea, icon: '⭕' },
+    { key: 'map_scale', name: 'Tỉ lệ bản đồ', gradeLevel: 5, generator: genMapScale, icon: '🗺️' },
 ];
 
 /** Generate a set of problems for a given grade and topic */

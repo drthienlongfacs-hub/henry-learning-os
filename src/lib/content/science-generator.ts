@@ -264,6 +264,84 @@ export function genFoodChain(): ScienceProblem {
     };
 }
 
+// ── NEW G1-2: Vệ sinh cá nhân — TNXH ──
+const VE_SINH_QS = [
+    { q: 'Em nên đánh răng mấy lần mỗi ngày?', a: '2 lần (sáng và tối)', opts: ['2 lần (sáng và tối)', '1 lần', 'Không cần', '5 lần'], e: 'Nha khoa khuyến cáo đánh răng ít nhất 2 lần/ngày: sáng và trước khi ngủ.' },
+    { q: 'Trước khi ăn, em nên làm gì?', a: 'Rửa tay bằng xà phòng', opts: ['Rửa tay bằng xà phòng', 'Lau tay vào quần', 'Không cần rửa', 'Rửa bằng nước suối'], e: 'Rửa tay bằng xà phòng diệt vi khuẩn, phòng bệnh tiêu chảy.' },
+    { q: 'Tắm rửa giúp em điều gì?', a: 'Sạch sẽ, phòng bệnh da', opts: ['Sạch sẽ, phòng bệnh da', 'Cao hơn', 'Chạy nhanh hơn', 'Không có tác dụng'], e: 'Tắm rửa sạch sẽ giúp loại bỏ vi khuẩn, phòng các bệnh về da.' },
+    { q: 'Móng tay dài có hại không?', a: 'Có, vi khuẩn tích tụ dưới móng', opts: ['Có, vi khuẩn tích tụ dưới móng', 'Không hại gì', 'Đẹp hơn nên để dài', 'Chỉ hại khi gãy'], e: 'Cắt móng tay ngắn, sạch sẽ để tránh vi khuẩn gây bệnh.' },
+];
+
+export function genVeSinh(): ScienceProblem {
+    const item = VE_SINH_QS[rand(0, VE_SINH_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'health', topic: 'Vệ sinh cá nhân', topicKey: 've_sinh',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Sạch sẽ = khỏe mạnh', `Đáp án: ${item.a}`],
+        illustration: '🧼',
+    };
+}
+
+// ── NEW G3-4: Nước & Không khí — TNXH/Khoa học ──
+const NUOC_KHONGKHI_QS = [
+    { q: 'Nước có mấy thể?', a: '3 thể: rắn, lỏng, khí', opts: ['3 thể: rắn, lỏng, khí', '2 thể', '1 thể', '4 thể'], e: 'Nước tồn tại 3 thể: rắn (đá), lỏng (nước), khí (hơi nước).' },
+    { q: 'Không khí gồm chủ yếu khí gì?', a: 'Nitơ (~78%) và Ôxi (~21%)', opts: ['Nitơ (~78%) và Ôxi (~21%)', 'Chỉ có Ôxi', 'Chỉ có CO₂', 'Hydro và Heli'], e: 'Không khí: 78% N₂, 21% O₂, 1% các khí khác.' },
+    { q: 'Nước sôi ở bao nhiêu độ C?', a: '100°C', opts: ['100°C', '50°C', '0°C', '200°C'], e: 'Ở điều kiện bình thường, nước sôi ở 100°C và đóng băng ở 0°C.' },
+    { q: 'Ô nhiễm không khí do nguyên nhân gì?', a: 'Khói xe, nhà máy, đốt rác', opts: ['Khói xe, nhà máy, đốt rác', 'Trồng cây xanh', 'Mưa', 'Gió'], e: 'Khói xe, nhà máy, đốt rác thải khí CO₂, SO₂ gây ô nhiễm.' },
+    { q: 'Tại sao phải tiết kiệm nước?', a: 'Nước sạch có hạn, cần bảo vệ', opts: ['Nước sạch có hạn, cần bảo vệ', 'Nước vô tận', 'Để tiết kiệm tiền thôi', 'Không cần tiết kiệm'], e: 'Chỉ 3% nước trên Trái Đất là nước ngọt, và chỉ 1% có thể dùng được.' },
+];
+
+export function genNuocKhongKhi(): ScienceProblem {
+    const item = NUOC_KHONGKHI_QS[rand(0, NUOC_KHONGKHI_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 3, difficulty: 3,
+        type: 'matter', topic: 'Nước & Không khí', topicKey: 'nuoc_khong_khi',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Nước: 3 thể (rắn/lỏng/khí)', `Đáp án: ${item.a}`],
+        illustration: '💧',
+    };
+}
+
+// ── NEW G5: Sinh sản thực vật & Động vật — Khoa học L5 ──
+const SINH_SAN_QS = [
+    { q: 'Hoa có vai trò gì trong sinh sản thực vật?', a: 'Chứa cơ quan sinh sản (nhị và nhụy)', opts: ['Chứa cơ quan sinh sản (nhị và nhụy)', 'Chỉ để trang trí', 'Quang hợp', 'Hấp thụ nước'], e: 'Hoa chứa nhị (cơ quan đực) và nhụy (cơ quan cái) — cơ quan sinh sản hữu tính.' },
+    { q: 'Thụ phấn là gì?', a: 'Hạt phấn từ nhị đến nhụy', opts: ['Hạt phấn từ nhị đến nhụy', 'Nước vào rễ', 'Lá hấp thụ ánh sáng', 'Quả chín rụng'], e: 'Thụ phấn = hạt phấn (nhị) → nhụy. Nhờ gió, côn trùng, nước.' },
+    { q: 'Cây khoai lang sinh sản bằng gì?', a: 'Thân/rễ (sinh sản sinh dưỡng)', opts: ['Thân/rễ (sinh sản sinh dưỡng)', 'Hạt', 'Bào tử', 'Phân đôi'], e: 'Khoai lang sinh sản sinh dưỡng bằng thân rễ. Không cần hạt.' },
+    { q: 'Động vật đẻ trứng gọi là gì?', a: 'Động vật noãn sinh', opts: ['Động vật noãn sinh', 'Động vật thai sinh', 'Lưỡng cư', 'Bò sát'], e: 'Noãn sinh = đẻ trứng (gà, cá, rắn). Thai sinh = đẻ con (chó, mèo, người).' },
+    { q: 'Con người thuộc nhóm sinh sản nào?', a: 'Thai sinh (đẻ con)', opts: ['Thai sinh (đẻ con)', 'Noãn sinh', 'Phân đôi', 'Nảy chồi'], e: 'Con người là động vật thai sinh: thai phát triển trong tử cung mẹ.' },
+];
+
+export function genSinhSan(): ScienceProblem {
+    const item = SINH_SAN_QS[rand(0, SINH_SAN_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 5, difficulty: 5,
+        type: 'ecosystem', topic: 'Sinh sản TV & ĐV', topicKey: 'sinh_san',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['TV: nhị+nhụy, thân, rễ | ĐV: noãn sinh/thai sinh', `Đáp án: ${item.a}`],
+        illustration: '🌱',
+    };
+}
+
+// ── NEW G4: Nhiệt & Chất — Khoa học L4 ──
+const NHIET_CHAT_QS = [
+    { q: 'Kim loại dẫn nhiệt tốt hay kém?', a: 'Dẫn nhiệt tốt', opts: ['Dẫn nhiệt tốt', 'Dẫn nhiệt kém', 'Không dẫn nhiệt', 'Tùy loại kim loại'], e: 'Kim loại (đồng, sắt, nhôm) dẫn nhiệt TỐT. Vì vậy nồi nấu bằng kim loại.' },
+    { q: 'Vì sao mặc áo len ấm?', a: 'Len giữ không khí, cách nhiệt tốt', opts: ['Len giữ không khí, cách nhiệt tốt', 'Len tạo nhiệt', 'Len nóng tự nhiên', 'Len hấp thụ ánh sáng'], e: 'Len có nhiều khoảng trống khí. Không khí cách nhiệt tốt → giữ ấm.' },
+    { q: 'Chất nào cách nhiệt tốt?', a: 'Gỗ, nhựa, vải', opts: ['Gỗ, nhựa, vải', 'Sắt, đồng', 'Nhôm, thép', 'Vàng, bạc'], e: 'Gỗ, nhựa, vải cách nhiệt tốt → dùng làm tay cầm nồi, quần áo.' },
+    { q: 'Nhiệt truyền từ vật nào sang vật nào?', a: 'Từ vật nóng hơn sang vật lạnh hơn', opts: ['Từ vật nóng hơn sang vật lạnh hơn', 'Từ vật lạnh sang nóng', 'Ngẫu nhiên', 'Chỉ qua kim loại'], e: 'Nhiệt LUÔN truyền từ vật nóng → vật lạnh cho đến khi cân bằng.' },
+];
+
+export function genNhietChat(): ScienceProblem {
+    const item = NHIET_CHAT_QS[rand(0, NHIET_CHAT_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 4, difficulty: 4,
+        type: 'matter', topic: 'Nhiệt & Chất', topicKey: 'nhiet_chat',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Kim loại dẫn nhiệt tốt, gỗ/nhựa cách nhiệt', `Đáp án: ${item.a}`],
+        illustration: '🌡️',
+    };
+}
+
 // ══════════════════════════════════════════════
 // TOPIC REGISTRY
 // ══════════════════════════════════════════════
@@ -281,12 +359,16 @@ export const SCIENCE_TOPICS: SciTopicInfo[] = [
     { key: 'family_community', name: 'Gia đình & Cộng đồng', gradeLevel: 1, generator: genFamilyCommunity, icon: '👨‍👩‍👧‍👦' },
     { key: 'traffic_safety', name: 'An toàn giao thông', gradeLevel: 1, generator: genTrafficSafety, icon: '🚦' },
     { key: 'safety_home', name: 'An toàn (lửa, điện, nước)', gradeLevel: 1, generator: genSafetyHome, icon: '🔥' },
+    { key: 've_sinh', name: 'Vệ sinh cá nhân', gradeLevel: 1, generator: genVeSinh, icon: '🧼' },
     { key: 'nature', name: 'Thực vật & Động vật', gradeLevel: SCIENCE_TOPIC_GRADE.nature, generator: genNature, icon: '🌿' },
+    { key: 'nuoc_khong_khi', name: 'Nước & Không khí', gradeLevel: 3, generator: genNuocKhongKhi, icon: '💧' },
     { key: 'weather_earth', name: 'Thời tiết & Trái Đất', gradeLevel: SCIENCE_TOPIC_GRADE.weather_earth, generator: genWeatherEarth, icon: '🌍' },
+    { key: 'nhiet_chat', name: 'Nhiệt & Chất', gradeLevel: 4, generator: genNhietChat, icon: '🌡️' },
     { key: 'sound_light', name: 'Âm thanh & Ánh sáng', gradeLevel: 4, generator: genSoundLight, icon: '🔦' },
     { key: 'matter_energy', name: 'Vật chất & Năng lượng', gradeLevel: SCIENCE_TOPIC_GRADE.matter_energy, generator: genMatterEnergy, icon: '⚡' },
     { key: 'ecosystem', name: 'Hệ sinh thái & MT', gradeLevel: SCIENCE_TOPIC_GRADE.ecosystem, generator: genEcosystem, icon: '🌳' },
     { key: 'food_chain', name: 'Chuỗi thức ăn', gradeLevel: 5, generator: genFoodChain, icon: '🔗' },
+    { key: 'sinh_san', name: 'Sinh sản TV & ĐV', gradeLevel: 5, generator: genSinhSan, icon: '🌱' },
 ];
 
 export function generateScienceSet(grade: number, topicKey?: string, count: number = 10): ScienceProblem[] {
