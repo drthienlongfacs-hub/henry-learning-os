@@ -120,6 +120,46 @@ export function genGeography(): HisGeoProblem {
     };
 }
 
+// ── BATCH 10: Địa lý tự nhiên VN (G4) ──
+const DIA_LY_G4_QS = [
+    { q: 'Dãy núi nào là "xương sống" của Bắc Bộ?', a: 'Hoàng Liên Sơn', opts: ['Hoàng Liên Sơn', 'Trường Sơn', 'Bạch Mã', 'Ngọc Linh'], e: 'Dãy Hoàng Liên Sơn ở Tây Bắc, có đỉnh Fansipan cao nhất Đông Dương.' },
+    { q: 'Sông Hồng bắt nguồn từ đâu?', a: 'Trung Quốc (Vân Nam)', opts: ['Trung Quốc (Vân Nam)', 'Lào', 'Campuchia', 'Myanmar'], e: 'Sông Hồng (Hồng Hà) bắt nguồn từ tỉnh Vân Nam, Trung Quốc, dài 1.149 km.' },
+    { q: 'Dãy Trường Sơn chạy theo hướng nào?', a: 'Bắc - Nam', opts: ['Bắc - Nam', 'Đông - Tây', 'Tây Bắc - Đông Nam', 'Bắc - Đông'], e: 'Trường Sơn chạy dọc theo hướng Bắc - Nam, là ranh giới VN và Lào.' },
+    { q: 'Nước ta có mấy vùng khí hậu chính?', a: '2 vùng: miền Bắc 4 mùa, miền Nam 2 mùa', opts: ['2 vùng: miền Bắc 4 mùa, miền Nam 2 mùa', '1 vùng', '3 vùng', '5 vùng'], e: 'Miền Bắc: 4 mùa (xuân, hạ, thu, đông). Miền Nam: 2 mùa (mưa, khô).' },
+    { q: 'Tây Nguyên nổi tiếng trồng cây gì?', a: 'Cà phê, cao su, hồ tiêu', opts: ['Cà phê, cao su, hồ tiêu', 'Lúa nước', 'Mía đường', 'Chè'], e: 'Tây Nguyên là vùng trồng cà phê, cao su, hồ tiêu lớn nhất cả nước.' },
+];
+
+export function genDiaLyG4(): HisGeoProblem {
+    const item = DIA_LY_G4_QS[rand(0, DIA_LY_G4_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 4, difficulty: 4,
+        type: 'geography', topic: 'Địa lý tự nhiên VN', topicKey: 'dia_ly_g4',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Nhớ bản đồ VN: 3 miền, 3 dải đất', `Đáp án: ${item.a}`],
+        illustration: '/images/core/history.svg',
+    };
+}
+
+// ── BATCH 10: Lịch sử Việt Nam hiện đại (G5) ──
+const HIST_G5_QS = [
+    { q: 'Phong trào Cần Vương chống Pháp do ai phát động?', a: 'Vua Hàm Nghi', opts: ['Vua Hàm Nghi', 'Phan Đình Phùng', 'Phan Bội Châu', 'Nguyễn Trung Trực'], e: 'Năm 1885, vua Hàm Nghi xuống chiếu Cần Vương kêu gọi nhân dân kháng Pháp.' },
+    { q: 'Đảng Cộng sản Việt Nam được thành lập năm nào?', a: '1930', opts: ['1930', '1945', '1954', '1925'], e: 'Ngày 3/2/1930, Đảng Cộng sản Việt Nam được thành lập tại Hương Cảng (Hồng Kông).' },
+    { q: 'Cách mạng tháng Tám thành công vào năm nào?', a: '1945', opts: ['1945', '1954', '1930', '1975'], e: 'Tháng 8/1945, nhân dân cả nước đồng loạt khởi nghĩa giành chính quyền.' },
+    { q: 'Chiến dịch Hồ Chí Minh kết thúc ngày nào?', a: '30/4/1975', opts: ['30/4/1975', '7/5/1954', '2/9/1945', '19/8/1945'], e: 'Chiến dịch HCM kết thúc thắng lợi ngày 30/4/1975, thống nhất đất nước.' },
+    { q: 'Ai là người viết "Nhật ký trong tù"?', a: 'Hồ Chí Minh', opts: ['Hồ Chí Minh', 'Võ Nguyên Giáp', 'Phạm Văn Đồng', 'Nguyễn Trãi'], e: 'Bác Hồ viết Nhật ký trong tù khi bị giam ở Trung Quốc (1942-1943).' },
+];
+
+export function genHistoryG5(): HisGeoProblem {
+    const item = HIST_G5_QS[rand(0, HIST_G5_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 5, difficulty: 5,
+        type: 'history', topic: 'Lịch sử VN hiện đại', topicKey: 'history_g5',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Nhớ các mốc lịch sử quan trọng', `Đáp án: ${item.a}`],
+        illustration: '/images/core/history.svg',
+    };
+}
+
 // ══════════════════════════════════════════════
 // TOPIC REGISTRY
 // ══════════════════════════════════════════════
@@ -134,7 +174,9 @@ export interface HisGeoTopicInfo {
 
 export const HISGEO_TOPICS: HisGeoTopicInfo[] = [
     { key: 'history_g4', name: 'Lịch sử dân tộc', gradeLevel: 4, generator: genHistoryG4, icon: '📜' },
+    { key: 'dia_ly_g4', name: 'Địa lý tự nhiên VN', gradeLevel: 4, generator: genDiaLyG4, icon: '🏔️' },
     { key: 'geography', name: 'Địa lý Việt Nam', gradeLevel: 5, generator: genGeography, icon: '🗺️' },
+    { key: 'history_g5', name: 'Lịch sử VN hiện đại', gradeLevel: 5, generator: genHistoryG5, icon: '🇻🇳' },
 ];
 
 export function generateHisGeoSet(grade: number, topicKey?: string, count: number = 10): HisGeoProblem[] {

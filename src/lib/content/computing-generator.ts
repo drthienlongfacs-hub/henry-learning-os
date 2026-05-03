@@ -106,6 +106,66 @@ export function genLogic(): ComputingProblem {
     };
 }
 
+// ── BATCH 10: Soạn thảo văn bản — SGK Tin học 3 ──
+const WORD_QS = [
+    { q: 'Phần mềm nào dùng để soạn thảo văn bản?', a: 'Microsoft Word', opts: ['Microsoft Word', 'Paint', 'Calculator', 'Media Player'], e: 'Microsoft Word (hoặc LibreOffice Writer) là phần mềm soạn thảo văn bản phổ biến.' },
+    { q: 'Muốn in đậm chữ, dùng phím tắt nào?', a: 'Ctrl + B', opts: ['Ctrl + B', 'Ctrl + I', 'Ctrl + U', 'Ctrl + S'], e: 'Ctrl + B = Bold (in đậm). Ctrl + I = Italic (in nghiêng). Ctrl + U = Underline (gạch chân).' },
+    { q: 'Muốn lưu file đang soạn, dùng phím tắt nào?', a: 'Ctrl + S', opts: ['Ctrl + S', 'Ctrl + P', 'Ctrl + Z', 'Ctrl + N'], e: 'Ctrl + S = Save (lưu). Nên lưu thường xuyên để không mất dữ liệu.' },
+    { q: 'Muốn hoàn tác (undo) thao tác vừa làm, bấm:', a: 'Ctrl + Z', opts: ['Ctrl + Z', 'Ctrl + Y', 'Ctrl + X', 'Ctrl + V'], e: 'Ctrl + Z = Undo (hoàn tác). Ctrl + Y = Redo (làm lại).' },
+    { q: 'Cách nào để chèn hình ảnh vào Word?', a: 'Vào Insert → Picture', opts: ['Vào Insert → Picture', 'Vào File → Open', 'Vào Edit → Paste', 'Vào View → Zoom'], e: 'Tab Insert chứa các lệnh chèn: hình, bảng, biểu đồ, liên kết.' },
+];
+
+export function genWordProcessing(): ComputingProblem {
+    const item = WORD_QS[rand(0, WORD_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 3, difficulty: 3,
+        type: 'hardware', topic: 'Soạn thảo văn bản', topicKey: 'word_processing',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Nhớ các phím tắt cơ bản', `Đáp án: ${item.a}`],
+        illustration: '/images/core/computing.svg',
+    };
+}
+
+// ── BATCH 10: Vẽ trên máy tính (Paint) — SGK Tin học 4 ──
+const PAINT_QS = [
+    { q: 'Phần mềm Paint dùng để làm gì?', a: 'Vẽ hình và tô màu', opts: ['Vẽ hình và tô màu', 'Soạn văn bản', 'Tính toán', 'Nghe nhạc'], e: 'Paint là phần mềm vẽ đơn giản có sẵn trên Windows.' },
+    { q: 'Công cụ nào dùng để tô màu vùng kín trong Paint?', a: 'Fill with color (thùng sơn)', opts: ['Fill with color (thùng sơn)', 'Pencil (bút chì)', 'Eraser (tẩy)', 'Text (chữ)'], e: 'Fill with color (biểu tượng thùng sơn) tô màu toàn bộ vùng kín.' },
+    { q: 'Công cụ Eraser trong Paint dùng để:', a: 'Xóa phần hình đã vẽ', opts: ['Xóa phần hình đã vẽ', 'Vẽ đường thẳng', 'Tô màu', 'Phóng to hình'], e: 'Eraser (tẩy) dùng để xóa phần hình không mong muốn.' },
+    { q: 'Muốn vẽ hình tròn hoàn hảo trong Paint, giữ phím gì khi vẽ?', a: 'Shift', opts: ['Shift', 'Ctrl', 'Alt', 'Enter'], e: 'Giữ Shift khi dùng Ellipse tool sẽ vẽ được hình tròn (không bị méo).' },
+    { q: 'Làm cách nào để lưu file Paint dưới dạng ảnh?', a: 'File → Save As → chọn định dạng (PNG, JPG)', opts: ['File → Save As → chọn định dạng (PNG, JPG)', 'Edit → Copy', 'View → Zoom', 'Tools → Color picker'], e: 'Save As cho phép chọn định dạng ảnh: PNG (chất lượng cao), JPG (nhỏ gọn).' },
+];
+
+export function genPaintDrawing(): ComputingProblem {
+    const item = PAINT_QS[rand(0, PAINT_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 4, difficulty: 4,
+        type: 'hardware', topic: 'Vẽ trên máy tính', topicKey: 'paint_drawing',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Mở Paint ra thử', `Đáp án: ${item.a}`],
+        illustration: '/images/core/computing.svg',
+    };
+}
+
+// ── BATCH 10: Lập trình Scratch cơ bản — SGK Tin học 5 ──
+const SCRATCH_QS = [
+    { q: 'Trong Scratch, nhân vật được gọi là gì?', a: 'Sprite', opts: ['Sprite', 'Block', 'Stage', 'Script'], e: 'Sprite là nhân vật trong Scratch. Mặc định là chú mèo Scratch Cat.' },
+    { q: 'Khối "move 10 steps" làm nhân vật di chuyển thế nào?', a: 'Tiến 10 bước', opts: ['Tiến 10 bước', 'Lùi 10 bước', 'Quay 10 độ', 'Nhảy lên'], e: 'Move 10 steps = di chuyển sprite 10 bước theo hướng hiện tại.' },
+    { q: 'Khối "repeat 5" có nghĩa là:', a: 'Lặp lại 5 lần', opts: ['Lặp lại 5 lần', 'Chờ 5 giây', 'Di chuyển 5 bước', 'Xóa 5 sprite'], e: 'Repeat = lặp. Repeat 5 lặp lại các khối bên trong đúng 5 lần.' },
+    { q: 'Sân khấu (Stage) trong Scratch có kích thước bao nhiêu?', a: '480 × 360 pixels', opts: ['480 × 360 pixels', '100 × 100', '1920 × 1080', '640 × 480'], e: 'Stage Scratch = 480 × 360 pixel, tâm tại (0, 0).' },
+    { q: 'Khối nào thuộc nhóm "Events" (Sự kiện)?', a: 'When green flag clicked', opts: ['When green flag clicked', 'Move 10 steps', 'Say hello', 'Change color'], e: '"When green flag clicked" khởi chạy chương trình khi nhấn cờ xanh.' },
+];
+
+export function genScratchBasic(): ComputingProblem {
+    const item = SCRATCH_QS[rand(0, SCRATCH_QS.length - 1)];
+    return {
+        id: genId(), gradeLevel: 5, difficulty: 5,
+        type: 'logic', topic: 'Lập trình Scratch', topicKey: 'scratch_basic',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Mở Scratch online: scratch.mit.edu', `Đáp án: ${item.a}`],
+        illustration: '/images/core/computing.svg',
+    };
+}
+
 // ══════════════════════════════════════════════
 // TOPIC REGISTRY
 // ══════════════════════════════════════════════
@@ -120,8 +180,11 @@ export interface CompTopicInfo {
 
 export const COMPUTING_TOPICS: CompTopicInfo[] = [
     { key: 'hardware', name: 'Phần cứng Căn bản', gradeLevel: 3, generator: genHardware, icon: '💻' },
+    { key: 'word_processing', name: 'Soạn thảo văn bản', gradeLevel: 3, generator: genWordProcessing, icon: '📝' },
     { key: 'cyber_safety', name: 'An toàn mạng', gradeLevel: 4, generator: genCyberSafety, icon: '🛡️' },
+    { key: 'paint_drawing', name: 'Vẽ trên máy tính', gradeLevel: 4, generator: genPaintDrawing, icon: '🎨' },
     { key: 'comp_logic', name: 'Tư duy máy tính', gradeLevel: 5, generator: genLogic, icon: '🧠' },
+    { key: 'scratch_basic', name: 'Lập trình Scratch', gradeLevel: 5, generator: genScratchBasic, icon: '🐱' },
 ];
 
 export function generateComputingSet(grade: number, topicKey?: string, count: number = 10): ComputingProblem[] {

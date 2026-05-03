@@ -133,6 +133,96 @@ export function genArtAppreciation(): ArtProblem {
     };
 }
 
+// ── BATCH 10: Hát thiếu nhi — SGK Âm nhạc 1 ──
+const HAT_THIEU_NHI = [
+    { q: 'Bài "Lý cây xanh" là dân ca miền nào?', a: 'Nam Bộ', opts: ['Nam Bộ', 'Bắc Bộ', 'Trung Bộ', 'Tây Nguyên'], e: '"Lý cây xanh" là bài dân ca Nam Bộ quen thuộc với trẻ em.' },
+    { q: 'Bài "Cháu yêu bà" do nhạc sĩ nào sáng tác?', a: 'Xuân Giao', opts: ['Xuân Giao', 'Phong Nhã', 'Văn Cao', 'Trịnh Công Sơn'], e: 'Nhạc sĩ Xuân Giao sáng tác "Cháu yêu bà" — bài hát thiếu nhi rất nổi tiếng.' },
+    { q: 'Khi hát, em nên:', a: 'Hít thở sâu, mở miệng rõ ràng', opts: ['Hít thở sâu, mở miệng rõ ràng', 'Hát thật to, la hét', 'Ngậm miệng', 'Nuốt nước bọt liên tục'], e: 'Hít sâu giúp đủ hơi, mở miệng giúp phát âm rõ ràng.' },
+    { q: '"Ai yêu Bác Hồ Chí Minh hơn thiếu niên nhi đồng" là bài hát gì?', a: 'Ai yêu Bác Hồ Chí Minh hơn thiếu niên nhi đồng', opts: ['Ai yêu Bác Hồ Chí Minh hơn thiếu niên nhi đồng', 'Đội ca', 'Quốc ca', 'Em yêu trường em'], e: 'Bài hát của nhạc sĩ Phong Nhã, rất phổ biến trong các hoạt động Đội.' },
+];
+
+export function genHatThieuNhi(): ArtProblem {
+    const item = HAT_THIEU_NHI[rand(0, HAT_THIEU_NHI.length - 1)];
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'audio', topic: 'Hát thiếu nhi', topicKey: 'hat_thieu_nhi',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Nhớ lại bài hát em thường hát ở trường', `Đáp án: ${item.a}`],
+    };
+}
+
+// ── BATCH 10: Vẽ theo mẫu — SGK Mĩ thuật 2 ──
+const VE_THEO_MAU = [
+    { q: 'Khi vẽ theo mẫu, bước đầu tiên cần làm là:', a: 'Quan sát mẫu vật thật kỹ', opts: ['Quan sát mẫu vật thật kỹ', 'Tô màu ngay', 'Vẽ chi tiết nhỏ', 'Xóa hết giấy'], e: 'Bước 1: quan sát → phác hình → vẽ chi tiết → tô màu.' },
+    { q: 'Khi phác hình quả cam, ta dùng hình gì?', a: 'Hình tròn', opts: ['Hình tròn', 'Hình vuông', 'Hình chữ nhật', 'Hình tam giác'], e: 'Quả cam có dạng tròn, nên ta phác bằng hình tròn trước.' },
+    { q: 'Để vẽ đẹp hơn, nên dùng bút chì loại nào phác hình?', a: 'Bút chì mềm (2B)', opts: ['Bút chì mềm (2B)', 'Bút bi', 'Bút dạ', 'Bút xóa'], e: 'Bút chì 2B mềm, dễ tẩy khi phác hình, không in đậm.' },
+    { q: 'Khi vẽ lọ hoa, phần nào thường cao nhất?', a: 'Bông hoa', opts: ['Bông hoa', 'Thân lọ', 'Đáy lọ', 'Tay cầm'], e: 'Bông hoa nhô lên cao nhất, sau đó là cành lá, rồi lọ.' },
+];
+
+export function genVeTheoMau(): ArtProblem {
+    const item = VE_THEO_MAU[rand(0, VE_THEO_MAU.length - 1)];
+    return {
+        id: genId(), gradeLevel: 2, difficulty: 2,
+        type: 'visual', topic: 'Vẽ theo mẫu', topicKey: 've_theo_mau',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Quan sát trước, vẽ sau', `Đáp án: ${item.a}`],
+    };
+}
+
+// ── BATCH 10: Thủ công cắt dán — SGK Mĩ thuật 3 ──
+const THU_CONG = [
+    { q: 'Khi cắt giấy, tay nào giữ giấy, tay nào cầm kéo?', a: 'Tay trái giữ giấy, tay phải cầm kéo (với người thuận tay phải)', opts: ['Tay trái giữ giấy, tay phải cầm kéo (với người thuận tay phải)', 'Hai tay cùng cắt', 'Không cần giữ giấy', 'Dùng dao thay kéo'], e: 'An toàn: giữ giấy chắc bằng 1 tay, tay thuận cầm kéo cắt theo đường vẽ.' },
+    { q: 'Để gấp máy bay giấy, bước đầu tiên thường là:', a: 'Gấp đôi tờ giấy theo chiều dọc', opts: ['Gấp đôi tờ giấy theo chiều dọc', 'Cắt giấy thành hình tròn', 'Tô màu', 'Dán keo'], e: 'Máy bay giấy bắt đầu bằng gấp đôi để tạo đường trục đối xứng.' },
+    { q: 'Keo dán tốt nhất cho thủ công trẻ em là loại nào?', a: 'Keo dán hồ (keo sữa)', opts: ['Keo dán hồ (keo sữa)', 'Keo 502', 'Keo dán gỗ', 'Băng keo 2 mặt'], e: 'Keo hồ/keo sữa an toàn, dễ rửa tay, không độc hại cho trẻ em.' },
+    { q: 'Khi dán tranh, nên bôi keo ở đâu?', a: 'Mặt sau của hình cần dán', opts: ['Mặt sau của hình cần dán', 'Mặt trước', 'Trên bàn', 'Trên tay'], e: 'Bôi keo mặt sau, lật úp dán lên giấy nền để không lem.' },
+];
+
+export function genThuCong(): ArtProblem {
+    const item = THU_CONG[rand(0, THU_CONG.length - 1)];
+    return {
+        id: genId(), gradeLevel: 3, difficulty: 3,
+        type: 'visual', topic: 'Thủ công cắt dán', topicKey: 'thu_cong',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Nhớ quy tắc an toàn khi dùng kéo', `Đáp án: ${item.a}`],
+    };
+}
+
+// ── BATCH 10: Trang trí họa tiết — SGK Mĩ thuật 4 ──
+const TRANG_TRI = [
+    { q: 'Họa tiết là gì?', a: 'Hình vẽ lặp lại dùng để trang trí', opts: ['Hình vẽ lặp lại dùng để trang trí', 'Một bức tranh lớn', 'Một loại bút', 'Tên họa sĩ'], e: 'Họa tiết là các hình cơ bản (hoa, lá, hình học) được lặp lại theo quy luật để trang trí.' },
+    { q: 'Trang trí đường diềm thường sắp xếp theo nguyên tắc:', a: 'Xen kẽ và lặp lại (nhắc lại)', opts: ['Xen kẽ và lặp lại (nhắc lại)', 'Ngẫu nhiên', 'Chỉ dùng 1 hình', 'Không theo quy luật'], e: 'Đường diềm = họa tiết lặp lại đều đặn theo 1 hàng, xen kẽ hoặc đối xứng.' },
+    { q: 'Khi trang trí hình vuông, điểm nào thường là trung tâm?', a: 'Giao điểm 2 đường chéo', opts: ['Giao điểm 2 đường chéo', 'Góc trên trái', 'Cạnh dưới', 'Ngoài hình vuông'], e: 'Trung tâm hình vuông = giao 2 đường chéo. Họa tiết chính đặt ở trung tâm.' },
+    { q: 'Đối xứng trong trang trí là:', a: 'Hai bên giống nhau qua trục', opts: ['Hai bên giống nhau qua trục', 'Hai bên khác nhau', 'Không có quy luật', 'Chỉ dùng 1 màu'], e: 'Đối xứng: 2 nửa giống nhau qua 1 trục (như mặt bướm, hoa).' },
+];
+
+export function genTrangTriHoaTiet(): ArtProblem {
+    const item = TRANG_TRI[rand(0, TRANG_TRI.length - 1)];
+    return {
+        id: genId(), gradeLevel: 4, difficulty: 4,
+        type: 'visual', topic: 'Trang trí họa tiết', topicKey: 'trang_tri_hoa_tiet',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Nghĩ về hoa văn trên áo, gạch hoa', `Đáp án: ${item.a}`],
+    };
+}
+
+// ── BATCH 10: Sáng tác theo chủ đề — SGK Mĩ thuật 5 ──
+const SANG_TAC = [
+    { q: 'Bước đầu tiên khi sáng tác tranh theo chủ đề là:', a: 'Chọn chủ đề và lên ý tưởng', opts: ['Chọn chủ đề và lên ý tưởng', 'Tô màu ngay', 'Copy tranh mẫu', 'Dùng thước kẻ'], e: 'Sáng tạo bắt đầu từ ý tưởng: chọn chủ đề → phác thảo → hoàn thiện.' },
+    { q: 'Bố cục chính phụ trong tranh nghĩa là:', a: 'Nhân vật/vật chính lớn hơn, ở trung tâm', opts: ['Nhân vật/vật chính lớn hơn, ở trung tâm', 'Tất cả bằng nhau', 'Không cần sắp xếp', 'Chỉ vẽ 1 vật'], e: 'Bố cục chính phụ: vật chính to, ở giữa; vật phụ nhỏ, xung quanh → tranh có trọng tâm.' },
+    { q: 'Khi vẽ tranh đề tài "Trường em", em nên vẽ gì?', a: 'Trường học, sân trường, bạn bè, hoạt động', opts: ['Trường học, sân trường, bạn bè, hoạt động', 'Biển và cá', 'Rừng rậm', 'Xe ô tô'], e: 'Đề tài "Trường em" cần có hình ảnh trường, học sinh, hoạt động sân trường.' },
+    { q: 'Màu nền trong tranh sáng tác nên:', a: 'Hài hòa, tương phản với nhân vật chính', opts: ['Hài hòa, tương phản với nhân vật chính', 'Giống hệt nhân vật', 'Luôn là trắng', 'Luôn là đen'], e: 'Nền tương phản giúp nhân vật nổi bật. VD: nhân vật sáng → nền tối và ngược lại.' },
+];
+
+export function genSangTacChuDe(): ArtProblem {
+    const item = SANG_TAC[rand(0, SANG_TAC.length - 1)];
+    return {
+        id: genId(), gradeLevel: 5, difficulty: 5,
+        type: 'visual', topic: 'Sáng tác theo chủ đề', topicKey: 'sang_tac_chu_de',
+        question: item.q, correctAnswer: item.a, options: item.opts,
+        explanation: item.e, hints: ['Sáng tạo = ý tưởng + kỹ năng + cảm xúc', `Đáp án: ${item.a}`],
+    };
+}
+
 // ══════════════════════════════════════════════
 // TOPIC REGISTRY
 // ══════════════════════════════════════════════
@@ -147,10 +237,15 @@ export interface ArtTopicInfo {
 
 export const ART_TOPICS: ArtTopicInfo[] = [
     { key: 'basic_colors', name: 'Màu sắc cơ bản', gradeLevel: 1, generator: genBasicColors, icon: '🎨' },
+    { key: 'hat_thieu_nhi', name: 'Hát thiếu nhi', gradeLevel: 1, generator: genHatThieuNhi, icon: '🎤' },
     { key: 'music_rhythm', name: 'Nhịp điệu cơ bản', gradeLevel: 2, generator: genMusicRhythm, icon: '🎵' },
+    { key: 've_theo_mau', name: 'Vẽ theo mẫu', gradeLevel: 2, generator: genVeTheoMau, icon: '🖌️' },
     { key: 'shapes_drawing', name: 'Đường nét và hình khối', gradeLevel: 3, generator: genShapesDrawing, icon: '✏️' },
+    { key: 'thu_cong', name: 'Thủ công cắt dán', gradeLevel: 3, generator: genThuCong, icon: '✂️' },
     { key: 'music_instruments', name: 'Nhạc cụ Việt Nam', gradeLevel: 4, generator: genMusicalInstruments, icon: '🪕' },
+    { key: 'trang_tri_hoa_tiet', name: 'Trang trí họa tiết', gradeLevel: 4, generator: genTrangTriHoaTiet, icon: '🌺' },
     { key: 'art_appreciation', name: 'Cảm thụ nghệ thuật', gradeLevel: 5, generator: genArtAppreciation, icon: '🖼️' },
+    { key: 'sang_tac_chu_de', name: 'Sáng tác theo chủ đề', gradeLevel: 5, generator: genSangTacChuDe, icon: '🎭' },
 ];
 
 export function generateArtSet(grade: number, topicKey?: string, count: number = 10): ArtProblem[] {
