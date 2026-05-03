@@ -182,6 +182,164 @@ export function genChinhTa(): VietnameseProblem {
     };
 }
 
+// ── NEW G1: Phụ âm ghép — SGK Cánh Diều Tập 1 ──
+const PHU_AM_GHEP = [
+    { ghep: 'ch', words: ['chó', 'chào', 'chạy', 'chim'], sound: 'chờ' },
+    { ghep: 'kh', words: ['kho', 'khóc', 'khỏe', 'khăn'], sound: 'khờ' },
+    { ghep: 'ph', words: ['phở', 'phố', 'phim', 'phía'], sound: 'phờ' },
+    { ghep: 'nh', words: ['nhà', 'nhỏ', 'nhớ', 'nhảy'], sound: 'nhờ' },
+    { ghep: 'gh', words: ['ghế', 'ghi', 'ghẹ', 'ghép'], sound: 'gờ (ghép)' },
+    { ghep: 'ng', words: ['ngà', 'ngô', 'ngủ', 'ngon'], sound: 'ngờ' },
+    { ghep: 'ngh', words: ['nghỉ', 'nghề', 'nghé', 'nghiêng'], sound: 'ngờ (trước i,e,ê)' },
+    { ghep: 'tr', words: ['trời', 'trường', 'trẻ', 'trâu'], sound: 'trờ' },
+    { ghep: 'qu', words: ['quả', 'quê', 'quân', 'quán'], sound: 'quờ' },
+    { ghep: 'gi', words: ['già', 'giỏi', 'giày', 'gió'], sound: 'giờ' },
+    { ghep: 'th', words: ['thầy', 'thỏ', 'thuyền', 'thương'], sound: 'thờ' },
+];
+
+export function genPhuAmGhep(): VietnameseProblem {
+    const item = PHU_AM_GHEP[rand(0, PHU_AM_GHEP.length - 1)];
+    const word = item.words[rand(0, item.words.length - 1)];
+    const others = shuffle(PHU_AM_GHEP.filter(x => x.ghep !== item.ghep)).slice(0, 3);
+    const templates = [
+        { q: `Từ "${word}" bắt đầu bằng phụ âm ghép nào?`, a: item.ghep, opts: shuffle([item.ghep, ...others.map(x => x.ghep)]), e: `"${word}" bắt đầu bằng "${item.ghep}" (${item.sound}).` },
+        { q: `Phụ âm ghép "${item.ghep}" đọc là gì?`, a: item.sound, opts: shuffle([item.sound, ...others.map(x => x.sound)]), e: `"${item.ghep}" đọc là "${item.sound}".` },
+        { q: `Tìm từ bắt đầu bằng "${item.ghep}":`, a: word, opts: shuffle([word, ...others.map(x => x.words[0])]), e: `Các từ bắt đầu bằng "${item.ghep}": ${item.words.join(', ')}.` },
+    ];
+    const t = templates[rand(0, templates.length - 1)];
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'alphabet', topic: 'Phụ âm ghép', topicKey: 'phu_am_ghep',
+        question: t.q, correctAnswer: t.a,
+        options: t.opts,
+        illustration: '/images/core/letters_vn.svg',
+        explanation: t.e, hints: ['Phụ âm ghép = 2-3 chữ cái ghép lại thành 1 âm', `Đáp số: ${t.a}`],
+    };
+}
+
+// ── NEW G1: Vần mở rộng — SGK Cánh Diều Tập 2 ──
+const VANS_EXTENDED = [
+    // Vần có âm cuối -n/-m
+    { van: 'ân', words: ['cân', 'dân', 'lân', 'tân'] },
+    { van: 'ôn', words: ['bôn', 'côn', 'hôn', 'tôn'] },
+    { van: 'ơn', words: ['bơn', 'đơn', 'hơn', 'mơn'] },
+    { van: 'un', words: ['bun', 'cun', 'lun', 'tun'] },
+    { van: 'om', words: ['bom', 'com', 'dom', 'hom'] },
+    { van: 'ôm', words: ['bôm', 'côm', 'đôm', 'ôm'] },
+    { van: 'êm', words: ['bêm', 'đêm', 'hêm', 'kêm'] },
+    { van: 'im', words: ['bim', 'dim', 'kim', 'tim'] },
+    // Vần có âm cuối -t/-c
+    { van: 'ot', words: ['bot', 'cot', 'got', 'hot'] },
+    { van: 'ăt', words: ['bắt', 'cắt', 'hắt', 'mắt'] },
+    { van: 'ât', words: ['bật', 'hất', 'lật', 'mật'] },
+    { van: 'ut', words: ['but', 'cut', 'hut', 'tut'] },
+    { van: 'ac', words: ['bác', 'các', 'hạc', 'tạc'] },
+    { van: 'uc', words: ['bục', 'cục', 'đục', 'lục'] },
+    { van: 'ôc', words: ['bốc', 'cốc', 'đốc', 'tốc'] },
+    // Vần có âm cuối -ng/-nh
+    { van: 'ang', words: ['bàng', 'đàng', 'hàng', 'nàng'] },
+    { van: 'ông', words: ['bông', 'công', 'đông', 'sông'] },
+    { van: 'ăng', words: ['băng', 'hăng', 'măng', 'năng'] },
+    { van: 'ung', words: ['bung', 'dung', 'lung', 'sung'] },
+    { van: 'anh', words: ['bạnh', 'đạnh', 'hạnh', 'nhanh'] },
+    { van: 'inh', words: ['bình', 'đình', 'kính', 'tình'] },
+    { van: 'ênh', words: ['bệnh', 'đệnh', 'hềnh', 'kênh'] },
+    // Vần ghép phức tạp
+    { van: 'ươn', words: ['cươn', 'hươn', 'lươn', 'vươn'] },
+    { van: 'iêu', words: ['biểu', 'chiều', 'diều', 'hiểu'] },
+    { van: 'uôi', words: ['chuối', 'đuổi', 'muối', 'tuổi'] },
+    { van: 'ươi', words: ['bưởi', 'cười', 'mười', 'tười'] },
+    { van: 'uôn', words: ['buồn', 'cuốn', 'muốn', 'luôn'] },
+    { van: 'iên', words: ['biên', 'chiến', 'diện', 'kiến'] },
+    { van: 'ươc', words: ['bước', 'được', 'mước', 'nước'] },
+    { van: 'ach', words: ['bạch', 'cách', 'hạch', 'mạch'] },
+];
+
+export function genVanExtended(): VietnameseProblem {
+    const allVans = [...VANS, ...VANS_EXTENDED];
+    const v = VANS_EXTENDED[rand(0, VANS_EXTENDED.length - 1)];
+    const word = v.words[rand(0, v.words.length - 1)];
+    const otherVans = shuffle(allVans.filter(x => x.van !== v.van)).slice(0, 3);
+    const templates = [
+        { q: `Từ "${word}" có vần gì?`, a: v.van, opts: shuffle([v.van, ...otherVans.map(x => x.van)]), e: `"${word}" có vần "${v.van}".` },
+        { q: `Tìm từ cùng vần "${v.van}":`, a: v.words[0], opts: shuffle([v.words[0], ...otherVans.map(x => x.words[0])]), e: `Các từ vần "${v.van}": ${v.words.join(', ')}.` },
+        { q: `Phân biệt: "${v.van}" thuộc nhóm vần nào?`, a: v.van.endsWith('ng') || v.van.endsWith('nh') ? 'Vần có âm cuối -ng/-nh' : v.van.endsWith('n') || v.van.endsWith('m') ? 'Vần có âm cuối -n/-m' : 'Vần có âm cuối -t/-c', opts: ['Vần có âm cuối -n/-m', 'Vần có âm cuối -t/-c', 'Vần có âm cuối -ng/-nh', 'Vần đơn'], e: `Vần "${v.van}" thuộc nhóm vần có âm cuối phù hợp.` },
+    ];
+    const t = templates[rand(0, templates.length - 1)];
+    return {
+        id: genId(), gradeLevel: 1, difficulty: 1,
+        type: 'alphabet', topic: 'Vần mở rộng', topicKey: 'van_extended',
+        question: t.q, correctAnswer: t.a,
+        options: t.opts,
+        illustration: '/images/core/letters_vn.svg',
+        explanation: t.e, hints: ['Nhớ: vần = phần sau phụ âm đầu', `Đáp số: ${t.a}`],
+    };
+}
+
+// ── NEW G2: Tập đọc đoạn ngắn — SGK Cánh Diều Phần 3 ──
+const TAP_DOC = [
+    { passage: 'Mèo con có bộ lông mượt. Nó thích nằm sưởi nắng. Mỗi sáng, mèo con chạy ra vườn đuổi bướm.',
+      questions: [
+        { q: 'Mèo con thích làm gì?', a: 'Nằm sưởi nắng', opts: ['Nằm sưởi nắng', 'Chơi bóng', 'Leo cây', 'Bơi lội'] },
+        { q: 'Mỗi sáng mèo con làm gì?', a: 'Chạy ra vườn đuổi bướm', opts: ['Chạy ra vườn đuổi bướm', 'Ngủ tiếp', 'Ăn sáng', 'Tắm rửa'] },
+      ] },
+    { passage: 'Bé Lan đi học lớp Một. Sáng nào bé cũng dậy sớm. Mẹ chuẩn bị cặp sách cho bé. Bé Lan rất yêu trường.',
+      questions: [
+        { q: 'Bé Lan học lớp mấy?', a: 'Lớp Một', opts: ['Lớp Một', 'Lớp Hai', 'Lớp Ba', 'Mẫu giáo'] },
+        { q: 'Ai chuẩn bị cặp sách cho bé?', a: 'Mẹ', opts: ['Mẹ', 'Bố', 'Bà', 'Anh'] },
+      ] },
+    { passage: 'Con cá bơi dưới ao. Nước trong xanh. Cá vàng đẹp lắm. Bé thích ngồi nhìn cá bơi.',
+      questions: [
+        { q: 'Con cá bơi ở đâu?', a: 'Dưới ao', opts: ['Dưới ao', 'Trên sông', 'Trong biển', 'Trong bể'] },
+        { q: 'Nước ao thế nào?', a: 'Trong xanh', opts: ['Trong xanh', 'Đục', 'Đỏ', 'Vàng'] },
+      ] },
+    { passage: 'Hoa hồng có nhiều màu: đỏ, vàng, trắng, hồng. Hoa hồng rất thơm. Mẹ trồng hoa hồng trong vườn.',
+      questions: [
+        { q: 'Hoa hồng có mấy màu được kể?', a: '4 màu', opts: ['4 màu', '2 màu', '3 màu', '5 màu'] },
+        { q: 'Ai trồng hoa hồng?', a: 'Mẹ', opts: ['Mẹ', 'Bố', 'Bé', 'Bà'] },
+      ] },
+];
+
+export function genTapDoc(): VietnameseProblem {
+    const item = TAP_DOC[rand(0, TAP_DOC.length - 1)];
+    const qItem = item.questions[rand(0, item.questions.length - 1)];
+    return {
+        id: genId(), gradeLevel: 2, difficulty: 2,
+        type: 'reading', topic: 'Tập đọc', topicKey: 'tap_doc',
+        question: `📖 Đọc đoạn văn:\n"${item.passage}"\n\n${qItem.q}`,
+        correctAnswer: qItem.a,
+        options: qItem.opts,
+        illustration: '/images/core/book_icon.svg',
+        explanation: `Đáp án: ${qItem.a}. Tìm trong đoạn văn.`,
+        hints: ['Đọc kỹ đoạn văn trước khi trả lời', `Đáp số: ${qItem.a}`],
+    };
+}
+
+// ── NEW G3: Luyện từ & câu (Sentence Practice) — SGK L3 ──
+const LUYEN_TU_CAU = [
+    { q: 'Tìm từ trái nghĩa của "to":',       a: 'nhỏ',     opts: ['nhỏ', 'lớn', 'cao', 'rộng'] },
+    { q: 'Tìm từ đồng nghĩa của "đẹp":',     a: 'xinh',    opts: ['xinh', 'xấu', 'to', 'nhỏ'] },
+    { q: 'Đặt dấu câu: "Bạn tên gì___"',      a: '?',       opts: ['?', '.', '!', ','] },
+    { q: 'Từ nào là danh từ: chạy, cái bàn, nhanh, xanh?', a: 'cái bàn', opts: ['cái bàn', 'chạy', 'nhanh', 'xanh'] },
+    { q: 'Từ nào là động từ: đi, nhà, sách, đẹp?',          a: 'đi',      opts: ['đi', 'nhà', 'sách', 'đẹp'] },
+    { q: 'Từ nào là tính từ: ăn, cây, đỏ, bút?',            a: 'đỏ',     opts: ['đỏ', 'ăn', 'cây', 'bút'] },
+    { q: 'Điền từ: "Mặt trời ___ từ phương Đông."',          a: 'mọc',    opts: ['mọc', 'lặn', 'tắt', 'chạy'] },
+    { q: 'Tìm chủ ngữ: "Bé Lan đi học."',                    a: 'Bé Lan', opts: ['Bé Lan', 'đi học', 'đi', 'học'] },
+];
+
+export function genLuyenTuCau(): VietnameseProblem {
+    const item = LUYEN_TU_CAU[rand(0, LUYEN_TU_CAU.length - 1)];
+    return {
+        id: genId(), gradeLevel: 3, difficulty: 3,
+        type: 'grammar', topic: 'Luyện từ & câu', topicKey: 'luyen_tu_cau',
+        question: item.q, correctAnswer: item.a,
+        options: item.opts,
+        illustration: '/images/core/pencil_icon.svg',
+        explanation: `Đáp án: ${item.a}.`,
+        hints: ['Nhớ phân biệt: Danh từ (tên sự vật), Động từ (hành động), Tính từ (đặc điểm)', `Đáp số: ${item.a}`],
+    };
+}
+
 // ══════════════════════════════════════════════
 // GRADES 2-3: Vocabulary by Theme
 // ══════════════════════════════════════════════
@@ -458,10 +616,14 @@ export const VIETNAMESE_TOPICS: VnTopicInfo[] = [
     { key: 'alphabet', name: 'Bảng chữ cái', gradeLevel: 1, generator: genAlphabet, icon: '🔤' },
     { key: 'tones', name: 'Dấu thanh', gradeLevel: 1, generator: genTones, icon: '🎵' },
     { key: 'van', name: 'Vần', gradeLevel: 1, generator: genVan, icon: '🔠' },
+    { key: 'phu_am_ghep', name: 'Phụ âm ghép', gradeLevel: 1, generator: genPhuAmGhep, icon: '🔡' },
+    { key: 'van_extended', name: 'Vần mở rộng', gradeLevel: 1, generator: genVanExtended, icon: '📋' },
     { key: 'ghep_tu', name: 'Ghép từ', gradeLevel: 1, generator: genGhepTu, icon: '🧩' },
     { key: 'chinh_ta', name: 'Chính tả', gradeLevel: 2, generator: genChinhTa, icon: '✏️' },
+    { key: 'tap_doc', name: 'Tập đọc', gradeLevel: 2, generator: genTapDoc, icon: '📗' },
     { key: 'vocabulary', name: 'Từ vựng chủ đề', gradeLevel: 2, generator: genVocabulary, icon: '📚' },
     { key: 'reading', name: 'Đọc hiểu', gradeLevel: 2, generator: genReadingComprehension, icon: '📖' },
+    { key: 'luyen_tu_cau', name: 'Luyện từ & câu', gradeLevel: 3, generator: genLuyenTuCau, icon: '✏️' },
     { key: 'grammar', name: 'Ngữ pháp', gradeLevel: 3, generator: genGrammar, icon: '✍️' },
     { key: 'writing_g4', name: 'Tập làm văn', gradeLevel: 4, generator: genWritingG4, icon: '📝' },
     { key: 'writing_g5', name: 'Nghị luận đơn giản', gradeLevel: 5, generator: genWritingG5, icon: '💡' },
