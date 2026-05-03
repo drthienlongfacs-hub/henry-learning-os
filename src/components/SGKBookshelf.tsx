@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { SGK_CATALOG, SGK_SUBJECTS, type SGKBook } from '@/data/sgk-catalog';
-import { GraduationCap, ExternalLink, BookOpen, Sparkles, Star, Users, Lightbulb, Search, Flame, Clock, Heart, CheckCircle2 } from 'lucide-react';
+import { GraduationCap, ExternalLink, BookOpen, Users, Lightbulb, Search, Flame, Clock, Heart, CheckCircle2 } from 'lucide-react';
 import { trackBookOpen, getStreak, getRecentBooks, toggleFavorite, getFavoriteBookIds, getBookRecord, type DailyStreak } from '@/lib/reading-tracker';
 
 const GRADES = [1, 2, 3, 4, 5];
@@ -534,7 +534,7 @@ export default function SGKBookshelf({ lang }: SGKBookshelfProps) {
                         value={searchQuery}
                         onChange={e => setSearchQuery(e.target.value)}
                         style={{
-                            flex: 1, border: 'none', outline: 'none',
+                            flex: 1, minHeight: 28, border: 'none', outline: 'none',
                             background: 'transparent', fontSize: '0.8rem',
                             color: '#1e293b', fontWeight: 500,
                         }}
@@ -542,7 +542,7 @@ export default function SGKBookshelf({ lang }: SGKBookshelfProps) {
                     {searchQuery && (
                         <button onClick={() => setSearchQuery('')} style={{
                             border: 'none', background: '#e2e8f0', borderRadius: '50%',
-                            width: 22, height: 22, cursor: 'pointer', fontSize: '0.7rem',
+                            width: 28, height: 28, cursor: 'pointer', fontSize: '0.7rem',
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
                             color: '#64748b',
                         }}>✕</button>

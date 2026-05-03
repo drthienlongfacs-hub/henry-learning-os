@@ -171,9 +171,9 @@ export default function ReadingQuiz({lang}:{lang:string}){
       {/* Accent + Speed */}
       <div style={{padding:'0.5rem 1.25rem 0',display:'flex',alignItems:'center',gap:'0.4rem',flexWrap:'wrap'}}>
         <span style={{fontSize:'0.58rem',color:'#64748b',fontWeight:600}}>🔊</span>
-        {ACC.map(a=><button key={a.k} onClick={()=>setAccent(a.k)} style={{padding:'2px 7px',borderRadius:'6px',border:'none',cursor:'pointer',fontSize:'0.55rem',fontWeight:accent===a.k?700:500,background:accent===a.k?'#059669':'#f1f5f9',color:accent===a.k?'#fff':'#475569'}}>{a.f}{a.l}</button>)}
+        {ACC.map(a=><button key={a.k} onClick={()=>setAccent(a.k)} style={{minHeight:28,padding:'5px 9px',borderRadius:'8px',border:'none',cursor:'pointer',fontSize:'0.58rem',fontWeight:accent===a.k?700:500,background:accent===a.k?'#059669':'#f1f5f9',color:accent===a.k?'#fff':'#475569'}}>{a.f}{a.l}</button>)}
         <span style={{color:'#e2e8f0'}}>|</span>
-        {[0.6,0.75,0.85,1.0].map(s=><button key={s} onClick={()=>setSpeed(s)} style={{padding:'2px 5px',borderRadius:'5px',border:'none',cursor:'pointer',fontSize:'0.52rem',fontWeight:speed===s?700:400,background:speed===s?'#4f46e5':'transparent',color:speed===s?'#fff':'#94a3b8'}}>{s}x</button>)}
+        {[0.6,0.75,0.85,1.0].map(s=><button key={s} onClick={()=>setSpeed(s)} style={{minWidth:34,minHeight:28,padding:'5px 7px',borderRadius:'7px',border:'none',cursor:'pointer',fontSize:'0.56rem',fontWeight:speed===s?700:400,background:speed===s?'#4f46e5':'transparent',color:speed===s?'#fff':'#94a3b8'}}>{s}x</button>)}
       </div>
 
       {/* Tabs */}

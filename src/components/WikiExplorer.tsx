@@ -230,7 +230,7 @@ export default function WikiExplorer({ lang }: { lang: string }) {
             onChange={e => { setQuery(e.target.value); setSelectedEntry(null); setSelectedCat(null); }}
             placeholder={vi ? 'Tìm kiếm: phonics, grammar, spaced repetition...' : 'Search: phonics, grammar, spaced repetition...'}
             style={{
-              width: '100%', padding: '8px 12px 8px 30px', borderRadius: '10px',
+              width: '100%', minHeight: 34, boxSizing: 'border-box', padding: '8px 12px 8px 30px', borderRadius: '10px',
               border: '1px solid #e2e8f0', fontSize: '0.75rem', outline: 'none',
               background: '#f8fafc',
             }}
@@ -241,14 +241,14 @@ export default function WikiExplorer({ lang }: { lang: string }) {
         {!selectedEntry && (
           <div style={{ display: 'flex', gap: '0.25rem', flexWrap: 'wrap', marginBottom: '0.5rem' }}>
             <button onClick={() => { setSelectedCat(null); setQuery(''); }} style={{
-              padding: '3px 8px', borderRadius: '6px', border: 'none', cursor: 'pointer',
+              minHeight: 28, padding: '5px 10px', borderRadius: '7px', border: 'none', cursor: 'pointer',
               fontSize: '0.58rem', fontWeight: !selectedCat ? 700 : 500,
               background: !selectedCat ? '#0f766e' : '#f1f5f9',
               color: !selectedCat ? '#fff' : '#64748b',
             }}>{vi ? 'Tất cả' : 'All'}</button>
             {WIKI_CATEGORIES.map(c => (
               <button key={c.key} onClick={() => { setSelectedCat(c.key); setQuery(''); setSelectedEntry(null); }} style={{
-                padding: '3px 8px', borderRadius: '6px', border: 'none', cursor: 'pointer',
+                minHeight: 28, padding: '5px 10px', borderRadius: '7px', border: 'none', cursor: 'pointer',
                 fontSize: '0.58rem', fontWeight: selectedCat === c.key ? 700 : 500,
                 background: selectedCat === c.key ? c.color : '#f8fafc',
                 color: selectedCat === c.key ? '#fff' : '#64748b',
