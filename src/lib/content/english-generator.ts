@@ -390,24 +390,61 @@ export function genSentenceEn(): EnglishProblem {
 // TOPIC REGISTRY
 // ══════════════════════════════════════════════
 
+import { generateUnitExercises, getUnitRegistry } from './english-unit-generator';
+
 export interface EnTopicInfo {
     key: string;
     name: string;
     gradeLevel: number;
     generator: () => EnglishProblem;
     icon: string;
+    isUnit?: boolean;
+    unitNumber?: number;
 }
 
-export const ENGLISH_TOPICS: EnTopicInfo[] = [
+// ── Core skill-based topics ──
+const CORE_TOPICS: EnTopicInfo[] = [
     { key: 'alphabet_en', name: 'Alphabet & Phonics', gradeLevel: 1, generator: genAlphabetEn, icon: '🔤' },
     { key: 'greetings_en', name: 'Greetings & Phrases', gradeLevel: 2, generator: genGreetingsEn, icon: '👋' },
-    { key: 'vocab_en', name: 'Vocabulary', gradeLevel: 3, generator: genVocabEn, icon: '📚' },
+    { key: 'vocab_en', name: 'Vocabulary Themes', gradeLevel: 3, generator: genVocabEn, icon: '📚' },
     { key: 'grammar_en', name: 'Grammar', gradeLevel: 4, generator: genGrammarEn, icon: '📝' },
     { key: 'reading_en', name: 'Reading', gradeLevel: 4, generator: genReadingEn, icon: '📖' },
     { key: 'sentence_en', name: 'Sentences', gradeLevel: 5, generator: genSentenceEn, icon: '✍️' },
 ];
 
+// ── SGK Unit-based topics (Global Success) ──
+function buildUnitTopics(): EnTopicInfo[] {
+    const units: EnTopicInfo[] = [];
+    for (const grade of [3] as const) {
+        const registry = getUnitRegistry(grade);
+        for (const u of registry) {
+            units.push({
+                key: u.unitId,
+                name: `Unit ${u.unitNumber}: ${u.title}`,
+                gradeLevel: u.grade,
+                isUnit: true,
+                unitNumber: u.unitNumber,
+                icon: '📘',
+                generator: () => {
+                    const exercises = generateUnitExercises(u.grade, u.unitId, 1);
+                    return exercises[0] || genVocabEn();
+                },
+            });
+        }
+    }
+    return units;
+}
+
+export const ENGLISH_TOPICS: EnTopicInfo[] = [
+    ...CORE_TOPICS,
+    ...buildUnitTopics(),
+];
+
 export function generateEnglishSet(grade: number, topicKey?: string, count: number = 10): EnglishProblem[] {
+    // If requesting a specific unit, use unit generator directly
+    if (topicKey?.startsWith('g3_u') || topicKey?.startsWith('g4_u') || topicKey?.startsWith('g5_u')) {
+        return generateUnitExercises(grade, topicKey, count);
+    }
     const topics = ENGLISH_TOPICS.filter(t => t.gradeLevel <= grade && (!topicKey || t.key === topicKey));
     if (topics.length === 0) return [];
     return Array.from({ length: count }, () => {
