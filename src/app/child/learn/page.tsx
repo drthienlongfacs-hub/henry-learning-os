@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowLeft, BookOpen, Calculator, Globe2, FlaskConical, Brain, ChevronRight, RotateCcw, CheckCircle2, XCircle, Lightbulb } from 'lucide-react';
 import { LessonPhase, generateLessonContent, type LessonContent } from '@/components/LessonPhase';
+import { getUniversalLesson, type UniversalLesson } from '@/lib/content/universal-lesson';
 import { MATH_TOPICS, generateMathSet, type MathProblem } from '@/lib/content/math-generator';
 import { VIETNAMESE_TOPICS, generateVietnameseSet, type VietnameseProblem } from '@/lib/content/vietnamese-generator';
 import { ENGLISH_TOPICS, generateEnglishSet, type EnglishProblem } from '@/lib/content/english-generator';
@@ -221,6 +222,7 @@ function LearnPageContent() {
     const urlHandled = useRef(false);
     const [lessonContent, setLessonContent] = useState<LessonContent | null>(null);
     const [showingLesson, setShowingLesson] = useState(false);
+    const [universalLesson, setUniversalLesson] = useState<UniversalLesson | null>(null);
 
     const { addAttempt, addMistake, addReviewSchedule, addAIInteractionLog, childProfile, attempts, mistakes, reviewSchedules } = useAppStore();
     const tx = useCallback((value: string | null | undefined) => translateLearningText(value, lang), [lang]);
@@ -255,6 +257,18 @@ function LearnPageContent() {
         setIndex(0); setSelected(null); setScore(0); setShowHint(false); setHintLevelUsed(0);
         startTime.current = Date.now();
     }, [lessonDepth]);
+
+    // Show lesson before quiz for any topic
+    const startWithLesson = useCallback((subj: Subject, g: number, topicKey: string, topicName: string, topicIcon: string) => {
+        setSelectedTopic(topicKey);
+        const lesson = getUniversalLesson(subj, topicKey, topicName, topicIcon, g);
+        if (lesson) {
+            setUniversalLesson(lesson);
+            setShowingLesson(true);
+        } else {
+            startExercise(subj, g, topicKey);
+        }
+    }, [startExercise]);
 
     useEffect(() => {
         if (urlHandled.current) return;
@@ -747,7 +761,7 @@ function LearnPageContent() {
                                                 font: 'inherit',
                                                 textAlign: 'left',
                                             }}
-                                            onClick={() => { setSelectedTopic(t.key); startExercise(subject, grade, t.key); }}
+                                            onClick={() => { startWithLesson(subject, grade, t.key, t.name, t.icon); }}
                                             onMouseEnter={e => {
                                                 e.currentTarget.style.transform = 'translateX(4px)';
                                                 e.currentTarget.style.borderColor = '#93c5fd';
@@ -825,7 +839,7 @@ function LearnPageContent() {
                                                 font: 'inherit',
                                                 textAlign: 'left',
                                             }}
-                                            onClick={() => { setSelectedTopic(t.key); startExercise(subject, grade, t.key); }}
+                                            onClick={() => { startWithLesson(subject, grade, t.key, t.name, t.icon); }}
                                             onMouseEnter={e => {
                                                 e.currentTarget.style.transform = 'translateX(4px)';
                                                 e.currentTarget.style.borderColor = '#93c5fd';
@@ -888,7 +902,7 @@ function LearnPageContent() {
                                                 transition: 'transform .2s, border-color .2s',
                                                 borderLeft: `4px solid ${statusColor}`,
                                             }}
-                                            onClick={() => { setSelectedTopic(t.key); startExercise(subject, grade, t.key); }}
+                                            onClick={() => { startWithLesson(subject, grade, t.key, t.name, t.icon); }}
                                             onMouseEnter={e => { e.currentTarget.style.transform = 'translateX(4px)'; }}
                                             onMouseLeave={e => { e.currentTarget.style.transform = 'translateX(0)'; }}>
                                             <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
@@ -923,17 +937,60 @@ function LearnPageContent() {
                 )}
 
                 {/* ════ LESSON PHASE (Learn First, Practice After) ════ */}
-                {showingLesson && lessonContent && problems.length === 0 && (
-                    <LessonPhase
-                        lesson={lessonContent}
-                        lang={lang as 'vi' | 'en'}
-                        onStartQuiz={() => {
-                            setShowingLesson(false);
-                            if (subject && selectedTopic) {
-                                startExercise(subject, grade, selectedTopic);
-                            }
-                        }}
-                    />
+                {showingLesson && problems.length === 0 && (lessonContent || universalLesson) && (
+                    <>
+                        {/* International English lessons */}
+                        {lessonContent && (
+                            <LessonPhase
+                                lesson={lessonContent}
+                                lang={lang as 'vi' | 'en'}
+                                onStartQuiz={() => {
+                                    setShowingLesson(false);
+                                    setLessonContent(null);
+                                    if (subject && selectedTopic) startExercise(subject, grade, selectedTopic);
+                                }}
+                            />
+                        )}
+                        {/* Universal lessons (all subjects) */}
+                        {!lessonContent && universalLesson && (
+                            <div>
+                                <div style={{ ...glass.card, marginBottom: 16, background: 'linear-gradient(135deg, rgba(99,102,241,0.12), rgba(168,85,247,0.08))' }}>
+                                    <div style={{ fontSize: 11, fontWeight: 700, color: '#7c3aed', textTransform: 'uppercase', letterSpacing: 1 }}>
+                                        📖 {lang === 'vi' ? 'BÀI HỌC' : 'LESSON'} — {lang === 'vi' ? `Lớp ${universalLesson.grade}` : `Grade ${universalLesson.grade}`}
+                                    </div>
+                                    <div style={{ fontSize: 22, fontWeight: 900, color: '#1e1b4b', marginTop: 4 }}>
+                                        {universalLesson.icon} {universalLesson.title}
+                                    </div>
+                                </div>
+                                {universalLesson.sections.map((sec, si) => (
+                                    <div key={si} style={{ ...glass.card, marginBottom: 12 }}>
+                                        <div style={{ fontSize: 16, fontWeight: 800, color: '#1e1b4b', marginBottom: 12 }}>{sec.title}</div>
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                                            {sec.items.map((item, ii) => (
+                                                <div key={ii} style={{
+                                                    background: sec.type === 'concepts' ? '#eff6ff' : sec.type === 'examples' ? '#fefce8' : '#f0fdf4',
+                                                    borderRadius: 12, padding: '12px 16px', fontSize: 14, lineHeight: 1.7, color: '#1e1b4b',
+                                                    borderLeft: `3px solid ${sec.type === 'concepts' ? '#3b82f6' : sec.type === 'examples' ? '#eab308' : '#22c55e'}`,
+                                                }}>
+                                                    {item}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
+                                <button
+                                    onClick={() => {
+                                        setShowingLesson(false);
+                                        setUniversalLesson(null);
+                                        if (subject && selectedTopic) startExercise(subject, grade, selectedTopic);
+                                    }}
+                                    style={{ width: '100%', padding: '16px 24px', borderRadius: 16, border: 'none', background: 'linear-gradient(135deg, #22c55e, #16a34a)', color: '#fff', fontSize: 16, fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: 4 }}
+                                >
+                                    🎯 {lang === 'vi' ? 'Đã hiểu! Bắt đầu luyện tập' : 'Got it! Start Practice'} <ChevronRight size={20} />
+                                </button>
+                            </div>
+                        )}
+                    </>
                 )}
 
                 {/* ════ EXERCISE IN PROGRESS ════ */}
