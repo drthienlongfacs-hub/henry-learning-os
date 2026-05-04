@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowLeft, BookOpen, Calculator, Globe2, FlaskConical, Brain, ChevronRight, RotateCcw, CheckCircle2, XCircle, Lightbulb } from 'lucide-react';
+import { LessonPhase, generateLessonContent, type LessonContent } from '@/components/LessonPhase';
 import { MATH_TOPICS, generateMathSet, type MathProblem } from '@/lib/content/math-generator';
 import { VIETNAMESE_TOPICS, generateVietnameseSet, type VietnameseProblem } from '@/lib/content/vietnamese-generator';
 import { ENGLISH_TOPICS, generateEnglishSet, type EnglishProblem } from '@/lib/content/english-generator';
@@ -218,6 +219,8 @@ function LearnPageContent() {
     const [lessonDepth, setLessonDepth] = useState<LessonDepth>('deep');
     const startTime = useRef(0);
     const urlHandled = useRef(false);
+    const [lessonContent, setLessonContent] = useState<LessonContent | null>(null);
+    const [showingLesson, setShowingLesson] = useState(false);
 
     const { addAttempt, addMistake, addReviewSchedule, addAIInteractionLog, childProfile, attempts, mistakes, reviewSchedules } = useAppStore();
     const tx = useCallback((value: string | null | undefined) => translateLearningText(value, lang), [lang]);
@@ -251,7 +254,6 @@ function LearnPageContent() {
         startTime.current = Date.now();
     }, [lessonDepth]);
 
-    // ── Auto-start from URL params (e.g. ?subject=english&topic=cam_g1_u01) ──
     useEffect(() => {
         if (urlHandled.current) return;
         const urlSubject = searchParams.get('subject') as Subject | null;
@@ -259,15 +261,30 @@ function LearnPageContent() {
         if (urlSubject && SUBJECTS.some(s => s.key === urlSubject)) {
             urlHandled.current = true;
             const childGrade = (useAppStore.getState().childProfile as { gradeLevel?: number } | null)?.gradeLevel || 1;
-            // Extract grade from topic key if available (e.g. cam_g3_u01 → grade 3)
             const topicGradeMatch = urlTopic?.match(/_g(\d)_/);
             const effectiveGrade = topicGradeMatch ? Number(topicGradeMatch[1]) : childGrade;
             setSubject(urlSubject);
             setGrade(effectiveGrade);
             if (urlTopic) {
                 setSelectedTopic(urlTopic);
-                // Delay to ensure state is set before generating
-                setTimeout(() => startExercise(urlSubject, effectiveGrade, urlTopic), 50);
+                // International units: show lesson first, then quiz
+                const isIntl = /^(cam|us|au|fi|sg|ca)_g\d/.test(urlTopic);
+                if (isIntl) {
+                    // Find unit info from data
+                    import('@/data/english-international').then(mod => {
+                        const allUnits = [...mod.CAMBRIDGE_UNITS, ...mod.US_WONDERS_UNITS, ...mod.AUSTRALIAN_UNITS, ...mod.FINNISH_UNITS, ...mod.SINGAPORE_UNITS, ...mod.CANADIAN_UNITS];
+                        const unit = allUnits.find(u => u.unitId === urlTopic);
+                        if (unit) {
+                            const lesson = generateLessonContent(urlTopic, unit.title, unit.titleVi, unit.grade, unit.framework);
+                            setLessonContent(lesson);
+                            setShowingLesson(true);
+                        } else {
+                            setTimeout(() => startExercise(urlSubject, effectiveGrade, urlTopic), 50);
+                        }
+                    });
+                } else {
+                    setTimeout(() => startExercise(urlSubject, effectiveGrade, urlTopic), 50);
+                }
             }
         }
     }, [searchParams, startExercise]);
@@ -899,6 +916,20 @@ function LearnPageContent() {
                             </div>
                         )}
                     </div>
+                )}
+
+                {/* ════ LESSON PHASE (Learn First, Practice After) ════ */}
+                {showingLesson && lessonContent && problems.length === 0 && (
+                    <LessonPhase
+                        lesson={lessonContent}
+                        lang={lang as 'vi' | 'en'}
+                        onStartQuiz={() => {
+                            setShowingLesson(false);
+                            if (subject && selectedTopic) {
+                                startExercise(subject, grade, selectedTopic);
+                            }
+                        }}
+                    />
                 )}
 
                 {/* ════ EXERCISE IN PROGRESS ════ */}
