@@ -108,6 +108,72 @@ export const GRADE1_UNITS: UnitData[] = [
       { pattern: 'I can ___.', example: 'I can run.', exampleVi: 'Tôi biết chạy.', slots: ['run', 'jump', 'sing', 'dance'] },
     ],
   },
+  { unitId: 'g1_u11', unitNumber: 11, grade: 1, title: 'At the farm', titleVi: 'Ở nông trại', textbook: 'global_success',
+    vocabulary: [
+      { en: 'hen', vi: 'gà mái' }, { en: 'chick', vi: 'gà con' }, { en: 'horse', vi: 'ngựa' },
+      { en: 'sheep', vi: 'cừu' }, { en: 'goat', vi: 'dê' }, { en: 'farmer', vi: 'nông dân' },
+      { en: 'barn', vi: 'chuồng' }, { en: 'field', vi: 'cánh đồng' }, { en: 'tractor', vi: 'máy cày' },
+    ],
+    patterns: [
+      { pattern: 'I see a ___ on the farm.', example: 'I see a horse on the farm.', exampleVi: 'Tôi thấy một con ngựa ở nông trại.', slots: ['horse', 'hen', 'sheep', 'goat'] },
+      { pattern: 'The ___ is big!', example: 'The horse is big!', exampleVi: 'Con ngựa to quá!', slots: ['horse', 'goat', 'tractor', 'barn'] },
+    ],
+  },
+  { unitId: 'g1_u12', unitNumber: 12, grade: 1, title: 'At the birthday party', titleVi: 'Ở tiệc sinh nhật', textbook: 'global_success',
+    vocabulary: [
+      { en: 'birthday', vi: 'sinh nhật' }, { en: 'cake', vi: 'bánh' }, { en: 'candle', vi: 'nến' },
+      { en: 'present', vi: 'quà' }, { en: 'balloon', vi: 'bóng bay' }, { en: 'happy', vi: 'vui' },
+      { en: 'song', vi: 'bài hát' }, { en: 'party', vi: 'tiệc' }, { en: 'friend', vi: 'bạn' },
+    ],
+    patterns: [
+      { pattern: 'Happy birthday, ___!', example: 'Happy birthday, Mai!', exampleVi: 'Chúc mừng sinh nhật, Mai!', slots: ['Mai', 'Tom', 'Henry', 'Lan'] },
+      { pattern: 'I have a ___ for you.', example: 'I have a present for you.', exampleVi: 'Tôi có quà cho bạn.', slots: ['present', 'balloon', 'cake', 'song'] },
+    ],
+  },
+  { unitId: 'g1_u13', unitNumber: 13, grade: 1, title: 'At the grocery store', titleVi: 'Ở cửa hàng tạp hóa', textbook: 'global_success',
+    vocabulary: [
+      { en: 'shop', vi: 'cửa hàng' }, { en: 'buy', vi: 'mua' }, { en: 'cheese', vi: 'phô mai' },
+      { en: 'juice', vi: 'nước ép' }, { en: 'biscuit', vi: 'bánh quy' }, { en: 'candy', vi: 'kẹo' },
+      { en: 'basket', vi: 'giỏ' }, { en: 'money', vi: 'tiền' },
+    ],
+    patterns: [
+      { pattern: 'I want ___, please.', example: 'I want juice, please.', exampleVi: 'Cho tôi nước ép nhé.', slots: ['juice', 'cheese', 'biscuit', 'candy'] },
+      { pattern: 'Can I have ___?', example: 'Can I have a biscuit?', exampleVi: 'Cho tôi bánh quy được không?', slots: ['a biscuit', 'some juice', 'some candy', 'cheese'] },
+    ],
+  },
+  { unitId: 'g1_u14', unitNumber: 14, grade: 1, title: 'At the library', titleVi: 'Ở thư viện', textbook: 'global_success',
+    vocabulary: [
+      { en: 'library', vi: 'thư viện' }, { en: 'story', vi: 'câu chuyện' }, { en: 'picture', vi: 'hình ảnh' },
+      { en: 'read', vi: 'đọc' }, { en: 'quiet', vi: 'yên lặng' }, { en: 'shelf', vi: 'kệ sách' },
+      { en: 'borrow', vi: 'mượn' }, { en: 'return', vi: 'trả' },
+    ],
+    patterns: [
+      { pattern: 'I like to read ___.', example: 'I like to read stories.', exampleVi: 'Tôi thích đọc truyện.', slots: ['stories', 'books', 'pictures'] },
+      { pattern: 'Please be ___.', example: 'Please be quiet.', exampleVi: 'Xin hãy yên lặng.', slots: ['quiet', 'kind', 'nice'] },
+    ],
+  },
+  { unitId: 'g1_u15', unitNumber: 15, grade: 1, title: 'In the music room', titleVi: 'Trong phòng nhạc', textbook: 'global_success',
+    vocabulary: [
+      { en: 'music', vi: 'âm nhạc' }, { en: 'drum', vi: 'trống' }, { en: 'guitar', vi: 'đàn ghi-ta' },
+      { en: 'piano', vi: 'đàn piano' }, { en: 'bell', vi: 'chuông' }, { en: 'listen', vi: 'nghe' },
+      { en: 'loud', vi: 'to' }, { en: 'soft', vi: 'nhẹ' },
+    ],
+    patterns: [
+      { pattern: 'I can play the ___.', example: 'I can play the drum.', exampleVi: 'Tôi biết chơi trống.', slots: ['drum', 'guitar', 'piano', 'bell'] },
+      { pattern: 'The ___ is loud!', example: 'The drum is loud!', exampleVi: 'Trống to quá!', slots: ['drum', 'bell', 'guitar', 'music'] },
+    ],
+  },
+  { unitId: 'g1_u16', unitNumber: 16, grade: 1, title: 'In the art room', titleVi: 'Trong phòng mỹ thuật', textbook: 'global_success',
+    vocabulary: [
+      { en: 'draw', vi: 'vẽ' }, { en: 'paint', vi: 'tô màu' }, { en: 'brush', vi: 'cọ' },
+      { en: 'paper', vi: 'giấy' }, { en: 'colour', vi: 'màu' }, { en: 'cut', vi: 'cắt' },
+      { en: 'glue', vi: 'keo dán' }, { en: 'star', vi: 'ngôi sao' },
+    ],
+    patterns: [
+      { pattern: 'I can draw a ___.', example: 'I can draw a star.', exampleVi: 'Tôi vẽ được ngôi sao.', slots: ['star', 'cat', 'house', 'flower'] },
+      { pattern: 'Let us paint it ___.', example: 'Let us paint it blue.', exampleVi: 'Chúng ta tô màu xanh nào.', slots: ['blue', 'red', 'green', 'yellow'] },
+    ],
+  },
 ];
 
 export const GRADE2_UNITS: UnitData[] = [
@@ -209,6 +275,72 @@ export const GRADE2_UNITS: UnitData[] = [
     ],
     patterns: [
       { pattern: 'Let us ___!', example: 'Let us play games!', exampleVi: 'Chúng ta chơi trò chơi nào!', slots: ['play games', 'swim', 'ride a bike', 'fly a kite'] },
+    ],
+  },
+  { unitId: 'g2_u11', unitNumber: 11, grade: 2, title: 'In the playground', titleVi: 'Ở sân chơi', textbook: 'global_success',
+    vocabulary: [
+      { en: 'seesaw', vi: 'bập bênh' }, { en: 'roundabout', vi: 'vòng xoay' }, { en: 'sandpit', vi: 'hố cát' },
+      { en: 'climbing frame', vi: 'khung leo' }, { en: 'hide', vi: 'trốn' }, { en: 'seek', vi: 'tìm' },
+      { en: 'turn', vi: 'lượt' }, { en: 'catch', vi: 'bắt' }, { en: 'throw', vi: 'ném' },
+    ],
+    patterns: [
+      { pattern: 'Let us play on the ___.', example: 'Let us play on the seesaw.', exampleVi: 'Chúng ta chơi bập bênh nào.', slots: ['seesaw', 'swing', 'slide', 'roundabout'] },
+      { pattern: 'It is my ___ now!', example: 'It is my turn now!', exampleVi: 'Đến lượt tôi rồi!', slots: ['turn'] },
+    ],
+  },
+  { unitId: 'g2_u12', unitNumber: 12, grade: 2, title: 'At the cafe', titleVi: 'Ở quán cà phê', textbook: 'global_success',
+    vocabulary: [
+      { en: 'tea', vi: 'trà' }, { en: 'coffee', vi: 'cà phê' }, { en: 'ice cream', vi: 'kem' },
+      { en: 'sandwich', vi: 'bánh mì kẹp' }, { en: 'cookie', vi: 'bánh quy' }, { en: 'please', vi: 'làm ơn' },
+      { en: 'thank you', vi: 'cảm ơn' }, { en: 'menu', vi: 'thực đơn' },
+    ],
+    patterns: [
+      { pattern: 'Can I have ___, please?', example: 'Can I have ice cream, please?', exampleVi: 'Cho tôi kem, làm ơn?', slots: ['ice cream', 'tea', 'a cookie', 'a sandwich'] },
+      { pattern: 'Here you are. ___!', example: 'Here you are. Thank you!', exampleVi: 'Của bạn đây. Cảm ơn!', slots: ['Thank you'] },
+    ],
+  },
+  { unitId: 'g2_u13', unitNumber: 13, grade: 2, title: 'At the math class', titleVi: 'Ở lớp toán', textbook: 'global_success',
+    vocabulary: [
+      { en: 'add', vi: 'cộng' }, { en: 'count', vi: 'đếm' }, { en: 'number', vi: 'số' },
+      { en: 'more', vi: 'nhiều hơn' }, { en: 'less', vi: 'ít hơn' }, { en: 'equal', vi: 'bằng' },
+      { en: 'shape', vi: 'hình' }, { en: 'circle', vi: 'hình tròn' }, { en: 'square', vi: 'hình vuông' },
+    ],
+    patterns: [
+      { pattern: 'How many ___?', example: 'How many apples?', exampleVi: 'Bao nhiêu quả táo?', slots: ['apples', 'books', 'pens', 'stars'] },
+      { pattern: '___ plus ___ is ___.', example: 'Two plus three is five.', exampleVi: 'Hai cộng ba bằng năm.', slots: ['Two', 'three', 'five'] },
+    ],
+  },
+  { unitId: 'g2_u14', unitNumber: 14, grade: 2, title: 'At home', titleVi: 'Ở nhà', textbook: 'global_success',
+    vocabulary: [
+      { en: 'table', vi: 'bàn' }, { en: 'sofa', vi: 'ghế sofa' }, { en: 'lamp', vi: 'đèn' },
+      { en: 'clock', vi: 'đồng hồ' }, { en: 'mirror', vi: 'gương' }, { en: 'tidy', vi: 'gọn gàng' },
+      { en: 'clean', vi: 'sạch' }, { en: 'messy', vi: 'bừa bộn' },
+    ],
+    patterns: [
+      { pattern: 'The ___ is on the table.', example: 'The lamp is on the table.', exampleVi: 'Đèn ở trên bàn.', slots: ['lamp', 'clock', 'book', 'cup'] },
+      { pattern: 'My room is ___.', example: 'My room is tidy.', exampleVi: 'Phòng tôi gọn gàng.', slots: ['tidy', 'clean', 'messy'] },
+    ],
+  },
+  { unitId: 'g2_u15', unitNumber: 15, grade: 2, title: 'In the clothes shop', titleVi: 'Ở cửa hàng quần áo', textbook: 'global_success',
+    vocabulary: [
+      { en: 'T-shirt', vi: 'áo phông' }, { en: 'shorts', vi: 'quần đùi' }, { en: 'sandals', vi: 'dép' },
+      { en: 'scarf', vi: 'khăn quàng' }, { en: 'try on', vi: 'thử' }, { en: 'fit', vi: 'vừa' },
+      { en: 'too big', vi: 'quá to' }, { en: 'too small', vi: 'quá nhỏ' },
+    ],
+    patterns: [
+      { pattern: 'Can I try on this ___?', example: 'Can I try on this T-shirt?', exampleVi: 'Tôi thử áo phông này được không?', slots: ['T-shirt', 'dress', 'hat', 'scarf'] },
+      { pattern: 'It is ___.', example: 'It is too big.', exampleVi: 'Nó quá to.', slots: ['too big', 'too small', 'nice'] },
+    ],
+  },
+  { unitId: 'g2_u16', unitNumber: 16, grade: 2, title: 'At the campsite', titleVi: 'Ở khu cắm trại', textbook: 'global_success',
+    vocabulary: [
+      { en: 'tent', vi: 'lều' }, { en: 'campfire', vi: 'lửa trại' }, { en: 'map', vi: 'bản đồ' },
+      { en: 'torch', vi: 'đèn pin' }, { en: 'star', vi: 'ngôi sao' }, { en: 'night', vi: 'đêm' },
+      { en: 'morning', vi: 'buổi sáng' }, { en: 'adventure', vi: 'cuộc phiêu lưu' },
+    ],
+    patterns: [
+      { pattern: 'I can see the ___.', example: 'I can see the stars.', exampleVi: 'Tôi thấy những ngôi sao.', slots: ['stars', 'campfire', 'tent', 'map'] },
+      { pattern: 'It is ___ time!', example: 'It is adventure time!', exampleVi: 'Giờ phiêu lưu rồi!', slots: ['adventure', 'morning', 'night'] },
     ],
   },
 ];

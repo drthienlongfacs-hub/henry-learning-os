@@ -82,6 +82,58 @@ export const PHONICS_LEVELS: PhonicsLevel[] = [
     sightWords: ['first', 'water', 'after', 'other', 'over', 'under', 'never', 'before', 'every', 'work'],
     decodableWords: ['car', 'her', 'bird', 'corn', 'turn', 'star', 'fern', 'girl', 'born', 'hurt', 'farm', 'term', 'skirt', 'fork', 'burn'],
   },
+  // ── Grade 3: Multisyllabic Words, Prefixes ──
+  {
+    levelId: 'ph_g3_01', grade: 3, title: 'Multisyllabic Words', titleVi: 'Từ nhiều âm tiết',
+    framework: 'cambridge',
+    letters: [],
+    sightWords: ['another', 'because', 'different', 'important', 'wonderful', 'together', 'remember', 'beautiful'],
+    decodableWords: ['butterfly', 'elephant', 'umbrella', 'waterfall', 'hospital', 'telephone', 'adventure', 'dinosaur', 'hamburger', 'kangaroo'],
+  },
+  {
+    levelId: 'ph_g3_02', grade: 3, title: 'Prefixes (un-, re-, pre-)', titleVi: 'Tiền tố (un-, re-, pre-)',
+    framework: 'common_core',
+    letters: [],
+    sightWords: ['undo', 'redo', 'preview', 'unhappy', 'rewrite', 'preschool', 'untie', 'reread'],
+    decodableWords: ['unhappy', 'unkind', 'unlock', 'unsafe', 'replay', 'rewrite', 'rebuild', 'preview', 'prepaid', 'preschool'],
+  },
+  {
+    levelId: 'ph_g3_03', grade: 3, title: 'Suffixes (-ly, -ful, -less)', titleVi: 'Hậu tố (-ly, -ful, -less)',
+    framework: 'australian',
+    letters: [],
+    sightWords: ['quickly', 'carefully', 'hopeless', 'wonderful', 'beautiful', 'thankful', 'helpless', 'slowly'],
+    decodableWords: ['quickly', 'slowly', 'kindly', 'helpful', 'thankful', 'wonderful', 'hopeless', 'careless', 'fearless', 'cheerful'],
+  },
+  // ── Grade 4: Silent Letters, Homophones ──
+  {
+    levelId: 'ph_g4_01', grade: 4, title: 'Silent Letters', titleVi: 'Chữ câm',
+    framework: 'cambridge',
+    letters: [],
+    sightWords: ['know', 'write', 'island', 'listen', 'castle', 'honest', 'answer', 'doubt'],
+    decodableWords: ['knight', 'knife', 'knock', 'wreck', 'wrist', 'climb', 'comb', 'lamb', 'thumb', 'island'],
+  },
+  {
+    levelId: 'ph_g4_02', grade: 4, title: 'Homophones', titleVi: 'Từ đồng âm',
+    framework: 'common_core',
+    letters: [],
+    sightWords: ['there', 'their', 'they\'re', 'to', 'too', 'two', 'your', 'you\'re'],
+    decodableWords: ['there', 'their', 'right', 'write', 'sea', 'see', 'flour', 'flower', 'hear', 'here', 'no', 'know', 'sun', 'son'],
+  },
+  // ── Grade 5: Greek/Latin Roots, Advanced Phonics ──
+  {
+    levelId: 'ph_g5_01', grade: 5, title: 'Word Roots (Greek & Latin)', titleVi: 'Gốc từ (Hy Lạp & La-tinh)',
+    framework: 'cambridge',
+    letters: [],
+    sightWords: ['telephone', 'microscope', 'photograph', 'biography', 'autograph', 'geography', 'bicycle', 'submarine'],
+    decodableWords: ['telephone', 'television', 'microscope', 'biology', 'autobiography', 'photograph', 'submarine', 'bicycle', 'transport', 'export'],
+  },
+  {
+    levelId: 'ph_g5_02', grade: 5, title: 'Stress & Intonation', titleVi: 'Trọng âm & Ngữ điệu',
+    framework: 'australian',
+    letters: [],
+    sightWords: ['present', 'record', 'object', 'desert', 'produce', 'project', 'contest', 'permit'],
+    decodableWords: ['present', 'record', 'permit', 'desert', 'object', 'produce', 'project', 'contest', 'rebel', 'protest'],
+  },
 ];
 
 // ── Grammar Progression (Cross-curriculum) ──
@@ -171,6 +223,78 @@ export const GRAMMAR_TOPICS: GrammarTopic[] = [
         examplesVi: ['Con nên ăn rau.', 'Tôi biết bơi.', 'Bạn phải dừng lại.', 'Bạn giúp được không?'] },
     ],
   },
+  {
+    topicId: 'gr_g3_03', grade: 3, title: 'Prepositions of Place', titleVi: 'Giới từ chỉ vị trí',
+    framework: 'cambridge',
+    rules: [
+      { rule: 'in, on, under, next to, between, behind, in front of', ruleVi: 'trong, trên, dưới, bên cạnh, giữa, đằng sau, đằng trước',
+        examples: ['The cat is on the table.', 'The ball is under the bed.', 'The tree is next to the house.'],
+        examplesVi: ['Con mèo ở trên bàn.', 'Quả bóng ở dưới giường.', 'Cái cây ở bên cạnh nhà.'] },
+    ],
+  },
+  {
+    topicId: 'gr_g3_04', grade: 3, title: 'Personal Pronouns', titleVi: 'Đại từ nhân xưng',
+    framework: 'common_core',
+    rules: [
+      { rule: 'I, you, he, she, it, we, they → me, you, him, her, it, us, them', ruleVi: 'Chủ ngữ → Tân ngữ',
+        examples: ['She likes him.', 'They gave us a gift.', 'I can see them.'],
+        examplesVi: ['Cô ấy thích anh ấy.', 'Họ tặng chúng tôi một món quà.', 'Tôi có thể thấy họ.'] },
+    ],
+  },
+  {
+    topicId: 'gr_g4_03', grade: 4, title: 'Conjunctions', titleVi: 'Liên từ',
+    framework: 'australian',
+    rules: [
+      { rule: 'and, but, or, so, because', ruleVi: 'và, nhưng, hoặc, vì vậy, bởi vì',
+        examples: ['I like cats and dogs.', 'She is tired but happy.', 'He stayed home because it rained.'],
+        examplesVi: ['Tôi thích mèo và chó.', 'Cô ấy mệt nhưng vui.', 'Anh ấy ở nhà vì trời mưa.'] },
+    ],
+  },
+  {
+    topicId: 'gr_g4_04', grade: 4, title: 'Adverbs of Frequency', titleVi: 'Trạng từ chỉ tần suất',
+    framework: 'cambridge',
+    rules: [
+      { rule: 'always, usually, often, sometimes, rarely, never', ruleVi: 'luôn luôn, thường, hay, đôi khi, hiếm khi, không bao giờ',
+        examples: ['I always brush my teeth.', 'She sometimes reads before bed.', 'They never eat fast food.'],
+        examplesVi: ['Tôi luôn đánh răng.', 'Cô ấy đôi khi đọc sách trước khi ngủ.', 'Họ không bao giờ ăn đồ ăn nhanh.'] },
+    ],
+  },
+  {
+    topicId: 'gr_g4_05', grade: 4, title: 'Possessives', titleVi: 'Sở hữu cách',
+    framework: 'common_core',
+    rules: [
+      { rule: 'my/your/his/her + noun; noun\'s', ruleVi: 'tính từ sở hữu + danh từ; danh từ + \'s',
+        examples: ['This is my book.', 'Tom\'s dog is big.', 'Her shoes are new.'],
+        examplesVi: ['Đây là sách của tôi.', 'Chó của Tom to.', 'Giày của cô ấy mới.'] },
+    ],
+  },
+  {
+    topicId: 'gr_g5_04', grade: 5, title: 'Question Words', titleVi: 'Từ để hỏi',
+    framework: 'cambridge',
+    rules: [
+      { rule: 'What, Where, When, Who, Why, How, How many, How much', ruleVi: 'Cái gì, Ở đâu, Khi nào, Ai, Tại sao, Như thế nào, Bao nhiêu',
+        examples: ['What is your name?', 'Where do you live?', 'How many books do you have?'],
+        examplesVi: ['Bạn tên gì?', 'Bạn sống ở đâu?', 'Bạn có bao nhiêu sách?'] },
+    ],
+  },
+  {
+    topicId: 'gr_g5_05', grade: 5, title: 'Conditionals (If)', titleVi: 'Câu điều kiện (Nếu)',
+    framework: 'australian',
+    rules: [
+      { rule: 'If + present, will + verb', ruleVi: 'Nếu + hiện tại, sẽ + động từ',
+        examples: ['If it rains, I will stay home.', 'If you study, you will pass.', 'If we hurry, we will catch the bus.'],
+        examplesVi: ['Nếu trời mưa, tôi sẽ ở nhà.', 'Nếu bạn học, bạn sẽ đậu.', 'Nếu chúng ta nhanh, chúng ta sẽ kịp xe buýt.'] },
+    ],
+  },
+  {
+    topicId: 'gr_g5_06', grade: 5, title: 'Passive Voice (Basic)', titleVi: 'Câu bị động (Cơ bản)',
+    framework: 'cambridge',
+    rules: [
+      { rule: 'Subject + is/are + past participle', ruleVi: 'Chủ ngữ + is/are + quá khứ phân từ',
+        examples: ['The cake is made by Mum.', 'Books are read by children.', 'The door is opened.'],
+        examplesVi: ['Bánh được mẹ làm.', 'Sách được trẻ em đọc.', 'Cửa được mở.'] },
+    ],
+  },
 ];
 
 // ── Reading Comprehension Passages ──
@@ -234,6 +358,82 @@ export const READING_PASSAGES: ReadingPassage[] = [
       { q: 'What should you never share online?', qVi: 'Bạn không bao giờ nên chia sẻ gì trên mạng?', options: ['Personal information', 'Your favourite colour', 'Your hobbies', 'Your pet name'], correct: 'Personal information' },
       { q: 'What should you do if someone makes you uncomfortable?', qVi: 'Nên làm gì nếu có người làm bạn khó chịu?', options: ['Tell an adult', 'Ignore it', 'Reply angrily', 'Share with friends'], correct: 'Tell an adult' },
       { q: 'Is everything online true?', qVi: 'Mọi thứ trên mạng đều đúng không?', options: ['No, check facts', 'Yes, always', 'Only videos', 'Only photos'], correct: 'No, check facts' },
+    ],
+  },
+  {
+    passageId: 'rd_g1_02', grade: 1, title: 'My Dog Spot', titleVi: 'Chó Spot của tôi',
+    framework: 'common_core', wordCount: 35,
+    text: 'I have a dog. His name is Spot. Spot is brown and small. He can run fast. Spot likes to play with a ball. I love Spot!',
+    questions: [
+      { q: 'What is the dog\'s name?', qVi: 'Con chó tên gì?', options: ['Spot', 'Max', 'Buddy', 'Rex'], correct: 'Spot' },
+      { q: 'What does Spot like to play with?', qVi: 'Spot thích chơi với gì?', options: ['A ball', 'A stick', 'A bone', 'A toy'], correct: 'A ball' },
+    ],
+  },
+  {
+    passageId: 'rd_g2_02', grade: 2, title: 'The Rainy Day', titleVi: 'Ngày mưa',
+    framework: 'australian', wordCount: 70,
+    text: 'It is raining today. Anna cannot go outside. She looks out the window. She sees a rainbow! It has many colours — red, orange, yellow, green, blue, and purple. Anna draws the rainbow on paper. She shows it to her mother. Her mother smiles and says, "Beautiful!" Anna is happy now.',
+    questions: [
+      { q: 'Why can Anna not go outside?', qVi: 'Tại sao Anna không ra ngoài được?', options: ['It is raining', 'It is dark', 'She is sick', 'She is tired'], correct: 'It is raining' },
+      { q: 'What does Anna draw?', qVi: 'Anna vẽ gì?', options: ['A rainbow', 'A flower', 'A cat', 'A house'], correct: 'A rainbow' },
+      { q: 'How does Anna feel at the end?', qVi: 'Anna cảm thấy thế nào cuối cùng?', options: ['Happy', 'Sad', 'Angry', 'Scared'], correct: 'Happy' },
+    ],
+  },
+  {
+    passageId: 'rd_g3_02', grade: 3, title: 'The Brave Little Ant', titleVi: 'Chú kiến dũng cảm',
+    framework: 'common_core', wordCount: 95,
+    text: 'A little ant lived near a big river. One day, a dove saw the ant fall into the water. The dove quickly dropped a leaf. The ant climbed on the leaf and was safe. A few days later, a hunter came. He wanted to catch the dove with a net. The ant saw this and bit the hunter on his foot. The hunter dropped the net. The dove flew away safely. The ant and the dove became best friends.',
+    questions: [
+      { q: 'Who saved the ant first?', qVi: 'Ai cứu kiến đầu tiên?', options: ['The dove', 'The hunter', 'A fish', 'Another ant'], correct: 'The dove' },
+      { q: 'How did the ant save the dove?', qVi: 'Kiến cứu chim bồ câu bằng cách nào?', options: ['Bit the hunter', 'Called for help', 'Threw a stone', 'Built a wall'], correct: 'Bit the hunter' },
+    ],
+  },
+  {
+    passageId: 'rd_g3_03', grade: 3, title: 'My Favourite Sport', titleVi: 'Môn thể thao yêu thích',
+    framework: 'australian', wordCount: 85,
+    text: 'My favourite sport is swimming. I go to the pool every Saturday with my dad. First, I do warm-up exercises. Then I swim four laps. My coach says I am getting faster each week. I like swimming because it is fun and keeps me healthy. My best friend Minh also swims with me. After swimming, we always drink orange juice. I want to be in a race one day!',
+    questions: [
+      { q: 'When does the child go swimming?', qVi: 'Bạn nhỏ đi bơi khi nào?', options: ['Every Saturday', 'Every Monday', 'Every day', 'Every Sunday'], correct: 'Every Saturday' },
+      { q: 'What do they drink after swimming?', qVi: 'Họ uống gì sau khi bơi?', options: ['Orange juice', 'Water', 'Milk', 'Tea'], correct: 'Orange juice' },
+    ],
+  },
+  {
+    passageId: 'rd_g4_02', grade: 4, title: 'The Solar System', titleVi: 'Hệ mặt trời',
+    framework: 'cambridge', wordCount: 120,
+    text: 'Our solar system has eight planets that orbit the Sun. The four planets closest to the Sun — Mercury, Venus, Earth, and Mars — are called rocky planets. They have solid surfaces. The four outer planets — Jupiter, Saturn, Uranus, and Neptune — are called gas giants. They are much bigger than the rocky planets. Earth is the only planet known to have life. It has water, air, and the right temperature for living things. The Moon orbits Earth and affects our tides. Scientists continue to explore space to learn more about our amazing solar system.',
+    questions: [
+      { q: 'How many planets are in our solar system?', qVi: 'Hệ mặt trời có bao nhiêu hành tinh?', options: ['Eight', 'Nine', 'Seven', 'Ten'], correct: 'Eight' },
+      { q: 'Which planet has life?', qVi: 'Hành tinh nào có sự sống?', options: ['Earth', 'Mars', 'Venus', 'Jupiter'], correct: 'Earth' },
+      { q: 'What are Jupiter and Saturn called?', qVi: 'Jupiter và Saturn được gọi là gì?', options: ['Gas giants', 'Rocky planets', 'Ice worlds', 'Star systems'], correct: 'Gas giants' },
+    ],
+  },
+  {
+    passageId: 'rd_g4_03', grade: 4, title: 'Vietnamese Festivals', titleVi: 'Lễ hội Việt Nam',
+    framework: 'common_core', wordCount: 115,
+    text: 'Vietnam has many wonderful festivals. The most important is Tet, the Lunar New Year. During Tet, families clean their houses, cook special food, and visit relatives. Children receive lucky money in red envelopes. Another famous festival is the Mid-Autumn Festival. Children carry colourful lanterns and eat mooncakes. There are also lion dances and drum performances in the streets. The Hung Kings Festival honours the founders of Vietnam. People visit temples and remember their ancestors. These festivals bring families together and keep Vietnamese traditions alive for future generations.',
+    questions: [
+      { q: 'What is the most important festival?', qVi: 'Lễ hội quan trọng nhất là gì?', options: ['Tet', 'Mid-Autumn', 'Christmas', 'New Year'], correct: 'Tet' },
+      { q: 'What do children carry during Mid-Autumn?', qVi: 'Trẻ em mang gì trong Trung thu?', options: ['Lanterns', 'Flowers', 'Books', 'Kites'], correct: 'Lanterns' },
+    ],
+  },
+  {
+    passageId: 'rd_g5_02', grade: 5, title: 'Protecting the Environment', titleVi: 'Bảo vệ môi trường',
+    framework: 'australian', wordCount: 140,
+    text: 'Climate change is one of the biggest challenges facing our planet. As temperatures rise, ice caps melt and sea levels go up. This can cause flooding in coastal areas. Deforestation also contributes to climate change because trees absorb carbon dioxide from the air. There are many things we can do to help. We can reduce, reuse, and recycle waste. Using public transport or riding a bicycle instead of driving a car reduces pollution. Planting trees helps clean the air. Saving energy by turning off lights and unplugging devices also makes a difference. Every small action counts. If we all work together, we can protect our beautiful planet for future generations.',
+    questions: [
+      { q: 'What happens when ice caps melt?', qVi: 'Điều gì xảy ra khi băng tan?', options: ['Sea levels rise', 'It gets colder', 'Trees grow', 'Rain stops'], correct: 'Sea levels rise' },
+      { q: 'What do trees absorb?', qVi: 'Cây hấp thụ gì?', options: ['Carbon dioxide', 'Oxygen', 'Water', 'Sunlight'], correct: 'Carbon dioxide' },
+      { q: 'What are the 3 Rs?', qVi: '3R là gì?', options: ['Reduce, Reuse, Recycle', 'Read, Run, Rest', 'Rice, Rain, River', 'Red, Round, Right'], correct: 'Reduce, Reuse, Recycle' },
+    ],
+  },
+  {
+    passageId: 'rd_g5_03', grade: 5, title: 'Famous Scientists', titleVi: 'Các nhà khoa học nổi tiếng',
+    framework: 'cambridge', wordCount: 130,
+    text: 'Throughout history, scientists have made incredible discoveries. Marie Curie discovered radium and was the first woman to win a Nobel Prize. Albert Einstein changed our understanding of space and time with his theory of relativity. Isaac Newton explained gravity after watching an apple fall from a tree. In more recent times, Stephen Hawking studied black holes despite having a serious illness. Vietnamese scientist Ngo Bao Chau won the Fields Medal in mathematics. These scientists teach us that curiosity, hard work, and never giving up can lead to great achievements. Who knows — maybe one day you will make an important discovery too!',
+    questions: [
+      { q: 'Who discovered radium?', qVi: 'Ai phát hiện ra radium?', options: ['Marie Curie', 'Einstein', 'Newton', 'Hawking'], correct: 'Marie Curie' },
+      { q: 'What did Newton explain?', qVi: 'Newton giải thích điều gì?', options: ['Gravity', 'Light', 'Sound', 'Electricity'], correct: 'Gravity' },
+      { q: 'What medal did Ngo Bao Chau win?', qVi: 'Ngô Bảo Châu đoạt huy chương gì?', options: ['Fields Medal', 'Nobel Prize', 'Gold Medal', 'Silver Medal'], correct: 'Fields Medal' },
     ],
   },
 ];
