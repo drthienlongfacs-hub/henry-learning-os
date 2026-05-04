@@ -235,7 +235,18 @@ function LearnPageContent() {
         else if (subj === 'computing') p = generateComputingSet(g, topicKey, count);
         else if (subj === 'ethics') p = generateEthicsSet(g, topicKey, count);
         else if (subj === 'art') p = generateArtSet(g, topicKey, count);
-        setProblems(isPrimaryCurriculumSubject(subj) ? attachCurriculumAuditSet(subj, p) : []);
+        // Safely attach curriculum audit — skip for international topics without mapping
+        if (isPrimaryCurriculumSubject(subj)) {
+            try {
+                setProblems(attachCurriculumAuditSet(subj, p));
+            } catch {
+                // International topics (cam_, us_, au_ etc.) don't have curriculum map entries
+                // Fall through gracefully with raw generated problems
+                setProblems(p as Problem[]);
+            }
+        } else {
+            setProblems(p as Problem[]);
+        }
         setIndex(0); setSelected(null); setScore(0); setShowHint(false); setHintLevelUsed(0);
         startTime.current = Date.now();
     }, [lessonDepth]);
