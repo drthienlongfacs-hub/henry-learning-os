@@ -67,18 +67,20 @@ const SUBJECT_LESSONS: Record<string, Record<string, { concepts: string[]; examp
   },
 };
 
-export function getUniversalLesson(subject: string, topicKey: string, topicName: string, icon: string, grade: number): UniversalLesson | null {
+export function getUniversalLesson(subject: string, topicKey: string, topicName: string, icon: string, grade: number): UniversalLesson {
   const subjectData = SUBJECT_LESSONS[subject];
-  if (!subjectData) return null;
-  const lesson = subjectData[topicKey];
-  if (!lesson) {
-    // Try partial match
+  if (subjectData) {
+    const lesson = subjectData[topicKey];
+    if (lesson) return buildLesson(subject, topicName, icon, grade, lesson);
     const partialKey = Object.keys(subjectData).find(k => topicKey.includes(k));
-    if (!partialKey) return null;
-    const partial = subjectData[partialKey];
-    return buildLesson(subject, topicName, icon, grade, partial);
+    if (partialKey) return buildLesson(subject, topicName, icon, grade, subjectData[partialKey]);
   }
-  return buildLesson(subject, topicName, icon, grade, lesson);
+  // Auto-generate from topic name — ensures 100% coverage
+  return buildLesson(subject, topicName, icon, grade, {
+    concepts: [`Chủ đề: ${topicName}`, `Lớp ${grade} — Hãy đọc kỹ trước khi làm bài`, `Ghi nhớ các từ khóa quan trọng trong bài`],
+    examples: [`Ví dụ sẽ xuất hiện trong phần luyện tập`, `Hãy đọc câu hỏi thật kỹ trước khi chọn đáp án`],
+    tips: [`Đọc bài 2 lần trước khi trả lời`, `Nếu không chắc, dùng phép loại trừ`],
+  });
 }
 
 function buildLesson(subject: string, topicName: string, icon: string, grade: number, data: { concepts: string[]; examples: string[]; tips: string[] }): UniversalLesson {
