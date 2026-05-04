@@ -250,6 +250,8 @@ function LearnPageContent() {
         } else {
             setProblems(p as Problem[]);
         }
+        setShowingLesson(false);
+        setLessonContent(null);
         setIndex(0); setSelected(null); setScore(0); setShowHint(false); setHintLevelUsed(0);
         startTime.current = Date.now();
     }, [lessonDepth]);
@@ -281,7 +283,7 @@ function LearnPageContent() {
                         } else {
                             setTimeout(() => startExercise(urlSubject, effectiveGrade, urlTopic), 50);
                         }
-                    });
+                    }).catch(() => setTimeout(() => startExercise(urlSubject, effectiveGrade, urlTopic), 50));
                 } else {
                     setTimeout(() => startExercise(urlSubject, effectiveGrade, urlTopic), 50);
                 }
@@ -480,6 +482,8 @@ function LearnPageContent() {
         ? summarizeSubjectPlan(SUBJECT_ENRICHMENT_KEY[subject], topics.map(t => t.key), attempts)
         : null;
 
+    const isFocusedTopicMode = Boolean(selectedTopic) || showingLesson || problems.length > 0;
+
     // ── RENDER ──
     return (
         <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #e0e7ff 0%, #f0e6ff 50%, #fce7f3 100%)', padding: '20px 16px' }}>
@@ -590,7 +594,7 @@ function LearnPageContent() {
                 )}
 
                 {/* ════ GRADE + TOPIC SELECTION ════ */}
-                {subject && problems.length === 0 && (
+                {subject && problems.length === 0 && !isFocusedTopicMode && (
                     <div>
                         {activeSubjectPack && (
                             <div style={{ ...glass.card, marginBottom: 16, display: 'flex', gap: 14, alignItems: 'center', background: 'rgba(255,255,255,0.62)' }}>

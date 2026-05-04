@@ -279,6 +279,35 @@ test('Child learning engine starts a real science lesson from the topic card', a
     expect(badLocalResponses).toEqual([]);
 });
 
+test('International curriculum unit opens focused lesson without falling back to topic selector', async ({ page }) => {
+    const badLocalResponses: string[] = [];
+    const pageErrors: string[] = [];
+    page.on('response', (response) => {
+        if (response.url().startsWith(baseUrl) && response.status() >= 400) {
+            badLocalResponses.push(`${response.status()} ${response.url()}`);
+        }
+    });
+    page.on('pageerror', (error) => pageErrors.push(error.message));
+
+    await page.goto(`${baseUrl}${UI_SMOKE_BASE_PATH}/child/international/`, { waitUntil: 'domcontentloaded' });
+    await page.waitForLoadState('networkidle', { timeout: 5_000 }).catch(() => undefined);
+    await page.getByRole('button', { name: /United Kingdom/i }).click();
+
+    const unitLink = page.getByRole('link', { name: /Unit 1: Playing with friends/i }).first();
+    await expect(unitLink).toHaveAttribute('href', `${UI_SMOKE_BASE_PATH}/child/learn/?subject=english&topic=cam_g1_u01`);
+    await unitLink.click();
+    await page.waitForLoadState('networkidle', { timeout: 5_000 }).catch(() => undefined);
+
+    await expect(page).toHaveURL(new RegExp(`${UI_SMOKE_BASE_PATH}/child/learn/\\?subject=english&topic=cam_g1_u01$`));
+    await expect(page.locator('body')).toContainText('BÀI HỌC');
+    await expect(page.locator('body')).toContainText('Playing with friends');
+    await expect(page.locator('body')).toContainText('Từ vựng chính');
+    await expect(page.locator('body')).not.toContainText('Chọn chủ đề để bắt đầu câu hỏi đầu tiên.');
+    await expect(page.locator('body')).not.toContainText('Luyện tập hỗn hợp lớp 1');
+    expect(pageErrors).toEqual([]);
+    expect(badLocalResponses).toEqual([]);
+});
+
 test('Child learning engine switches core surface and topic cards to English', async ({ page }) => {
     await page.addInitScript(() => {
         localStorage.setItem('henry-lang', JSON.stringify({
