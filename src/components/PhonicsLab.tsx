@@ -1,7 +1,7 @@
 'use client';
-import React, { useState, useCallback } from 'react';
-import { Volume2, CheckCircle, RotateCcw, Mic, ChevronRight } from 'lucide-react';
-import { speak, type Accent } from '@/lib/voiceEngine';
+import React, { useState, useCallback, useEffect } from 'react';
+import { Volume2, CheckCircle, RotateCcw, Star, Mic, ChevronRight } from 'lucide-react';
+import { speak, preloadVocabulary, type Accent } from '@/lib/voiceEngine';
 
 const PHONICS_LESSONS = [
   {
@@ -69,6 +69,12 @@ export default function PhonicsLab({ lang }: { lang: string }) {
   const vi = lang === 'vi';
   const lesson = PHONICS_LESSONS[lessonIdx];
   const pair = lesson.pairs[pairIdx];
+
+  // Pre-generate Kokoro audio for current lesson's words
+  useEffect(() => {
+    const allWords = lesson.pairs.flatMap(p => [p.example, ...p.words]);
+    preloadVocabulary(allWords, accent);
+  }, [lesson, accent]);
 
   const markPracticed = useCallback((word: string) => {
     setPracticed(prev => new Set(prev).add(word));
