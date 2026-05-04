@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Globe2, BookOpen, Pencil, Headphones, BookA, MapPin, ChevronRight, Star, Lightbulb } from 'lucide-react';
+import { ArrowLeft, Globe2, BookOpen, Pencil, Headphones, BookA, MapPin, ChevronRight, Star, Lightbulb, BookCheck } from 'lucide-react';
 import { useAppStore } from '@/stores/app-store';
 import {
   PHONICS_LEVELS, GRAMMAR_TOPICS, READING_PASSAGES, SIGHT_WORDS,
@@ -90,7 +90,8 @@ function getCountryTopics(framework: string, grade: number) {
 export default function InternationalPage() {
   const [selectedCountry, setSelectedCountry] = useState<CountryId | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const grade = (useAppStore.getState().childProfile as { gradeLevel?: number } | null)?.gradeLevel || 3;
+  const childGrade = (useAppStore.getState().childProfile as { gradeLevel?: number } | null)?.gradeLevel || 1;
+  const grade = 5; // Show ALL grades G1-G5 for curriculum browsing
 
   const country = COUNTRIES.find(c => c.id === selectedCountry);
   const topics = country ? getCountryTopics(country.framework, grade) : [];
@@ -123,7 +124,7 @@ export default function InternationalPage() {
         {!selectedCountry && (
           <>
             <h2 style={{ color: '#e2e8f0', fontSize: 18, fontWeight: 600, marginBottom: 16 }}>
-              🗺️ Chọn giáo trình quốc gia
+              🗺️ Chọn giáo trình quốc gia — Lớp 1 đến 5
             </h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16 }}>
               {COUNTRIES.map(c => {
@@ -250,7 +251,7 @@ export default function InternationalPage() {
             </div>
 
             {/* Topics list grouped by grade */}
-            {[1, 2, 3, 4, 5].filter(g => g <= grade && filteredTopics.some(t => t.grade === g)).map(g => (
+            {[1, 2, 3, 4, 5].filter(g => filteredTopics.some(t => t.grade === g)).map(g => (
               <div key={g} style={{ marginBottom: 24 }}>
                 <h3 style={{ color: '#94a3b8', fontSize: 14, fontWeight: 600, marginBottom: 8, textTransform: 'uppercase', letterSpacing: 1 }}>
                   Grade {g} — Lớp {g}
@@ -259,16 +260,13 @@ export default function InternationalPage() {
                   {filteredTopics.filter(t => t.grade === g).map(topic => {
                     const catInfo = CATEGORIES.find(c => c.key === topic.category);
                     return (
-                      <Link
+                      <div
                         key={topic.key}
-                        href={`/child/learn?subject=english&topic=${topic.key}`}
                         style={{
                           background: 'rgba(255,255,255,0.05)', borderRadius: 12, padding: '14px 16px',
-                          display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none',
-                          border: '1px solid rgba(255,255,255,0.08)', transition: 'background 0.2s',
+                          display: 'flex', alignItems: 'center', gap: 12,
+                          border: '1px solid rgba(255,255,255,0.08)',
                         }}
-                        onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; }}
-                        onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; }}
                       >
                         <span style={{ fontSize: 24, width: 36, textAlign: 'center' }}>{catInfo?.icon}</span>
                         <div style={{ flex: 1 }}>
@@ -281,8 +279,8 @@ export default function InternationalPage() {
                         }}>
                           {catInfo?.name}
                         </span>
-                        <ChevronRight size={16} color="#475569" />
-                      </Link>
+                        <BookCheck size={16} color="#475569" />
+                      </div>
                     );
                   })}
                 </div>
