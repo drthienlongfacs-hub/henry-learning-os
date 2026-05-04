@@ -2,12 +2,21 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Globe2, BookOpen, Pencil, Headphones, BookA, MapPin, ChevronRight, Star } from 'lucide-react';
+import { ArrowLeft, Globe2, BookOpen, Pencil, Headphones, BookA, MapPin, ChevronRight, Star, Lightbulb } from 'lucide-react';
 import { useAppStore } from '@/stores/app-store';
 import {
   PHONICS_LEVELS, GRAMMAR_TOPICS, READING_PASSAGES, SIGHT_WORDS,
   WRITING_TOPICS, LISTENING_SPEAKING_TOPICS, VOCAB_THEMES, COUNTRY_CONTENT,
+  CAMBRIDGE_UNITS, US_WONDERS_UNITS, AUSTRALIAN_UNITS, FINNISH_UNITS,
+  SINGAPORE_UNITS, CANADIAN_UNITS, LEARNING_TIPS,
+  type CountryUnit, type LearningTips,
 } from '@/data/english-international';
+
+const UNIT_MAP: Record<string, CountryUnit[]> = {
+  cambridge: CAMBRIDGE_UNITS, common_core: US_WONDERS_UNITS, australian: AUSTRALIAN_UNITS,
+  finnish: FINNISH_UNITS, singapore: SINGAPORE_UNITS, canadian: CANADIAN_UNITS,
+};
+const getTips = (fw: string) => LEARNING_TIPS.find(t => t.framework === fw);
 
 // ── Country definitions ──
 const COUNTRIES = [
@@ -41,6 +50,7 @@ type CountryId = typeof COUNTRIES[number]['id'];
 
 // Category definitions
 const CATEGORIES = [
+  { key: 'textbook', icon: '📕', name: 'Textbook Units', nameVi: 'Bài SGK' },
   { key: 'phonics', icon: '🔤', name: 'Phonics', nameVi: 'Ngữ âm' },
   { key: 'grammar', icon: '📝', name: 'Grammar', nameVi: 'Ngữ pháp' },
   { key: 'reading', icon: '📖', name: 'Reading', nameVi: 'Đọc hiểu' },
@@ -52,7 +62,12 @@ const CATEGORIES = [
 ] as const;
 
 function getCountryTopics(framework: string, grade: number) {
-  const topics: { key: string; name: string; nameVi: string; category: string; grade: number }[] = [];
+  const topics: { key: string; name: string; nameVi: string; category: string; grade: number; unitNum?: number }[] = [];
+
+  // Country textbook units
+  const units = UNIT_MAP[framework] || [];
+  units.filter(u => u.grade <= grade).forEach(u =>
+    topics.push({ key: u.unitId, name: `Unit ${u.unitNumber}: ${u.title}`, nameVi: u.titleVi, category: 'textbook', grade: u.grade, unitNum: u.unitNumber }));
 
   PHONICS_LEVELS.filter(l => l.framework === framework && l.grade <= grade).forEach(l =>
     topics.push({ key: l.levelId, name: l.title, nameVi: l.titleVi, category: 'phonics', grade: l.grade }));
@@ -153,11 +168,11 @@ export default function InternationalPage() {
                   <div style={{ color: '#94a3b8', fontSize: 12 }}>Quốc gia</div>
                 </div>
                 <div>
-                  <div style={{ color: '#34d399', fontSize: 28, fontWeight: 700 }}>221</div>
+                  <div style={{ color: '#34d399', fontSize: 28, fontWeight: 700 }}>426</div>
                   <div style={{ color: '#94a3b8', fontSize: 12 }}>Bài học</div>
                 </div>
                 <div>
-                  <div style={{ color: '#fbbf24', fontSize: 28, fontWeight: 700 }}>8</div>
+                  <div style={{ color: '#fbbf24', fontSize: 28, fontWeight: 700 }}>9</div>
                   <div style={{ color: '#94a3b8', fontSize: 12 }}>Kỹ năng</div>
                 </div>
                 <div>
@@ -179,6 +194,20 @@ export default function InternationalPage() {
             >
               <ArrowLeft size={16} /> Quay lại danh sách quốc gia
             </button>
+
+            {/* Learning Tips */}
+            {(() => { const tips = getTips(country.framework); return tips ? (
+              <div style={{ background: 'rgba(251,191,36,0.1)', borderRadius: 12, padding: '16px 20px', marginBottom: 16, border: '1px solid rgba(251,191,36,0.2)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
+                  <Lightbulb size={18} color="#fbbf24" />
+                  <span style={{ color: '#fbbf24', fontSize: 14, fontWeight: 600 }}>💡 Mẹo học hiệu quả</span>
+                </div>
+                <p style={{ color: '#e2e8f0', fontSize: 13, margin: '0 0 6px', lineHeight: 1.5 }}>📌 {tips.general}</p>
+                <p style={{ color: '#94a3b8', fontSize: 12, margin: '0 0 4px' }}>🔤 Phonics: {tips.phonics}</p>
+                <p style={{ color: '#94a3b8', fontSize: 12, margin: '0 0 4px' }}>✍️ Writing: {tips.writing}</p>
+                <p style={{ color: '#94a3b8', fontSize: 12, margin: 0 }}>📖 Reading: {tips.reading}</p>
+              </div>
+            ) : null; })()}
 
             <div style={{ background: country.gradient, borderRadius: 16, padding: '24px 20px', marginBottom: 20 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
