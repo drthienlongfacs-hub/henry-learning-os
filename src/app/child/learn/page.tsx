@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowLeft, BookOpen, Calculator, Globe2, FlaskConical, Brain, ChevronRight, RotateCcw, CheckCircle2, XCircle, Lightbulb } from 'lucide-react';
 import { MATH_TOPICS, generateMathSet, type MathProblem } from '@/lib/content/math-generator';
 import { VIETNAMESE_TOPICS, generateVietnameseSet, type VietnameseProblem } from '@/lib/content/vietnamese-generator';
@@ -202,8 +202,9 @@ function ParentOnlyDetails({
     );
 }
 
-export default function LearnPage() {
+function LearnPageContent() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const { lang } = useTranslation();
     const [subject, setSubject] = useState<Subject | null>(null);
     const [grade, setGrade] = useState(1);
@@ -216,6 +217,7 @@ export default function LearnPage() {
     const [hintLevelUsed, setHintLevelUsed] = useState(0);
     const [lessonDepth, setLessonDepth] = useState<LessonDepth>('deep');
     const startTime = useRef(0);
+    const urlHandled = useRef(false);
 
     const { addAttempt, addMistake, addReviewSchedule, addAIInteractionLog, childProfile, attempts, mistakes, reviewSchedules } = useAppStore();
     const tx = useCallback((value: string | null | undefined) => translateLearningText(value, lang), [lang]);
@@ -237,6 +239,27 @@ export default function LearnPage() {
         setIndex(0); setSelected(null); setScore(0); setShowHint(false); setHintLevelUsed(0);
         startTime.current = Date.now();
     }, [lessonDepth]);
+
+    // ── Auto-start from URL params (e.g. ?subject=english&topic=cam_g1_u01) ──
+    useEffect(() => {
+        if (urlHandled.current) return;
+        const urlSubject = searchParams.get('subject') as Subject | null;
+        const urlTopic = searchParams.get('topic');
+        if (urlSubject && SUBJECTS.some(s => s.key === urlSubject)) {
+            urlHandled.current = true;
+            const childGrade = (useAppStore.getState().childProfile as { gradeLevel?: number } | null)?.gradeLevel || 1;
+            // Extract grade from topic key if available (e.g. cam_g3_u01 → grade 3)
+            const topicGradeMatch = urlTopic?.match(/_g(\d)_/);
+            const effectiveGrade = topicGradeMatch ? Number(topicGradeMatch[1]) : childGrade;
+            setSubject(urlSubject);
+            setGrade(effectiveGrade);
+            if (urlTopic) {
+                setSelectedTopic(urlTopic);
+                // Delay to ensure state is set before generating
+                setTimeout(() => startExercise(urlSubject, effectiveGrade, urlTopic), 50);
+            }
+        }
+    }, [searchParams, startExercise]);
 
     // Record analytics
     const handleAnswer = useCallback((answer: string) => {
@@ -1073,5 +1096,13 @@ export default function LearnPage() {
                 )}
             </div>
         </div>
+    );
+}
+
+export default function LearnPage() {
+    return (
+        <Suspense fallback={<div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, #e0e7ff, #f0e6ff)' }}><p>Loading...</p></div>}>
+            <LearnPageContent />
+        </Suspense>
     );
 }
