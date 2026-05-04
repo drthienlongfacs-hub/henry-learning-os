@@ -307,6 +307,7 @@ export default function ChildDashboard() {
                         { href: '/child/library', icon: '📚', name: 'Thư viện', desc: 'Sách', color: '#7c3aed' },
                         { href: '/child/discover', icon: '🔍', name: 'Khám phá', desc: 'Tìm sách', color: '#06b6d4' },
                         { href: '/child/international', icon: '🌍', name: 'Quốc tế', desc: '6 nước', color: '#3b82f6' },
+                        { href: '/child/future', icon: '🚀', name: 'Tương lai', desc: '5 trục', color: '#8b5cf6' },
                         { href: '/child/elite', icon: '⭐', name: 'Tinh hoa', desc: 'Nâng cao', color: '#f59e0b' },
                     ].map(item => (
                         <Link key={item.href} href={item.href} style={{ textDecoration: 'none', flex: 1 }}>
