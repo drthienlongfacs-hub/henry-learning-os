@@ -148,6 +148,48 @@ export interface GrammarTopic {
 }
 
 export const GRAMMAR_TOPICS: GrammarTopic[] = [
+  // ── Grade 1: Basic Sentence Patterns ──
+  {
+    topicId: 'gr_g1_01', grade: 1, title: 'Verb To Be (am/is/are)', titleVi: 'Động từ To Be',
+    framework: 'common_core',
+    rules: [
+      { rule: 'I am, He/She/It is, You/We/They are', ruleVi: 'I am, He/She/It is, You/We/They are',
+        examples: ['I am a boy.', 'She is my friend.', 'They are happy.', 'It is a cat.'],
+        examplesVi: ['Tôi là con trai.', 'Cô ấy là bạn tôi.', 'Họ vui.', 'Đó là con mèo.'] },
+      { rule: 'Use "not" for negatives: is not, am not, are not', ruleVi: 'Dùng "not" cho phủ định',
+        examples: ['I am not sad.', 'It is not big.', 'They are not here.'],
+        examplesVi: ['Tôi không buồn.', 'Nó không to.', 'Họ không ở đây.'] },
+    ],
+  },
+  {
+    topicId: 'gr_g1_02', grade: 1, title: 'This & That', titleVi: 'This và That',
+    framework: 'cambridge',
+    rules: [
+      { rule: 'This = near, That = far', ruleVi: 'This = gần, That = xa',
+        examples: ['This is a pen.', 'That is a tree.', 'This is my bag.', 'That is your house.'],
+        examplesVi: ['Đây là cây bút.', 'Kia là cái cây.', 'Đây là cặp của tôi.', 'Kia là nhà bạn.'] },
+    ],
+  },
+  // ── Grade 2: Expanding Patterns ──
+  {
+    topicId: 'gr_g2_01', grade: 2, title: 'Can & Cannot', titleVi: 'Can và Cannot',
+    framework: 'australian',
+    rules: [
+      { rule: 'Use "can" for ability, "cannot/can\'t" for inability', ruleVi: 'Dùng "can" cho khả năng, "cannot" cho không thể',
+        examples: ['I can swim.', 'She can sing.', 'He cannot fly.', 'They can run fast.'],
+        examplesVi: ['Tôi biết bơi.', 'Cô ấy biết hát.', 'Anh ấy không bay được.', 'Họ chạy nhanh được.'] },
+    ],
+  },
+  {
+    topicId: 'gr_g2_02', grade: 2, title: 'There is / There are', titleVi: 'There is / There are',
+    framework: 'common_core',
+    rules: [
+      { rule: 'There is + singular, There are + plural', ruleVi: 'There is + số ít, There are + số nhiều',
+        examples: ['There is a book on the desk.', 'There are two cats.', 'There is one apple.'],
+        examplesVi: ['Có một quyển sách trên bàn.', 'Có hai con mèo.', 'Có một quả táo.'] },
+    ],
+  },
+  // ── Grade 3: Foundation ──
   {
     topicId: 'gr_g3_01', grade: 3, title: 'Nouns & Articles', titleVi: 'Danh từ & Mạo từ',
     framework: 'cambridge',
@@ -377,6 +419,43 @@ export const READING_PASSAGES: ReadingPassage[] = [
       { q: 'Why can Anna not go outside?', qVi: 'Tại sao Anna không ra ngoài được?', options: ['It is raining', 'It is dark', 'She is sick', 'She is tired'], correct: 'It is raining' },
       { q: 'What does Anna draw?', qVi: 'Anna vẽ gì?', options: ['A rainbow', 'A flower', 'A cat', 'A house'], correct: 'A rainbow' },
       { q: 'How does Anna feel at the end?', qVi: 'Anna cảm thấy thế nào cuối cùng?', options: ['Happy', 'Sad', 'Angry', 'Scared'], correct: 'Happy' },
+    ],
+  },
+  {
+    passageId: 'rd_g1_03', grade: 1, title: 'At the Park', titleVi: 'Ở công viên',
+    framework: 'australian', wordCount: 30,
+    text: 'I go to the park. I see a tree. I see a bird. The bird is red. I play on the swing. I am happy!',
+    questions: [
+      { q: 'What does the child see?', qVi: 'Bạn nhỏ thấy gì?', options: ['A tree and a bird', 'A dog', 'A car', 'A fish'], correct: 'A tree and a bird' },
+      { q: 'What colour is the bird?', qVi: 'Con chim màu gì?', options: ['Red', 'Blue', 'Green', 'Yellow'], correct: 'Red' },
+    ],
+  },
+  {
+    passageId: 'rd_g1_04', grade: 1, title: 'My Family', titleVi: 'Gia đình tôi',
+    framework: 'cambridge', wordCount: 35,
+    text: 'This is my family. I have a mum and a dad. I have one sister. Her name is Lan. We have a cat. The cat is white. I love my family.',
+    questions: [
+      { q: 'How many sisters does the child have?', qVi: 'Bạn nhỏ có mấy chị/em gái?', options: ['One', 'Two', 'Three', 'None'], correct: 'One' },
+      { q: 'What pet do they have?', qVi: 'Họ nuôi con gì?', options: ['A cat', 'A dog', 'A bird', 'A fish'], correct: 'A cat' },
+    ],
+  },
+  {
+    passageId: 'rd_g2_03', grade: 2, title: 'Going to School', titleVi: 'Đi học',
+    framework: 'cambridge', wordCount: 60,
+    text: 'Every morning, I wake up at six. I brush my teeth and eat breakfast. Then I put on my uniform. My mum takes me to school by motorbike. At school, I learn English, Maths, and Vietnamese. My favourite subject is English. After school, I play with my friends.',
+    questions: [
+      { q: 'What time does the child wake up?', qVi: 'Bạn nhỏ thức dậy lúc mấy giờ?', options: ['Six', 'Seven', 'Five', 'Eight'], correct: 'Six' },
+      { q: 'What is the favourite subject?', qVi: 'Môn học yêu thích là gì?', options: ['English', 'Maths', 'Vietnamese', 'Science'], correct: 'English' },
+    ],
+  },
+  {
+    passageId: 'rd_g2_04', grade: 2, title: 'My Pet Dog', titleVi: 'Chó cưng của tôi',
+    framework: 'common_core', wordCount: 55,
+    text: 'I have a pet dog. His name is Lucky. Lucky is brown and white. He has big brown eyes. Lucky can run very fast. He likes to play catch with me. I give him food and water every day. Lucky is my best friend.',
+    questions: [
+      { q: 'What is the dog\'s name?', qVi: 'Con chó tên gì?', options: ['Lucky', 'Buddy', 'Max', 'Rex'], correct: 'Lucky' },
+      { q: 'What colour is Lucky?', qVi: 'Lucky màu gì?', options: ['Brown and white', 'Black', 'Yellow', 'Grey'], correct: 'Brown and white' },
+      { q: 'What does Lucky like to do?', qVi: 'Lucky thích làm gì?', options: ['Play catch', 'Sleep', 'Swim', 'Read'], correct: 'Play catch' },
     ],
   },
   {
