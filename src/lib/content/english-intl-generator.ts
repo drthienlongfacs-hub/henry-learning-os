@@ -298,13 +298,28 @@ export interface IntlTopicInfo {
   gradeLevel: number;
   icon: string;
   framework: string;
-  category: 'phonics' | 'grammar' | 'reading' | 'sight_words';
+  category: 'phonics' | 'grammar' | 'reading' | 'sight_words' | 'writing' | 'listening' | 'vocabulary' | 'culture';
 }
+
+// Import new data types
+import {
+  WRITING_TOPICS, LISTENING_SPEAKING_TOPICS, VOCAB_THEMES, COUNTRY_CONTENT,
+  EXTENDED_FRAMEWORKS,
+} from '@/data/english-international';
+
+const getFlag = (fw: string) => {
+  const flags: Record<string, string> = {
+    cambridge: '🇬🇧', common_core: '🇺🇸', australian: '🇦🇺',
+    finnish: '🇫🇮', singapore: '🇸🇬', canadian: '🇨🇦',
+    jolly_phonics: '🔤',
+  };
+  return flags[fw] || '🌍';
+};
 
 export function getInternationalTopics(grade: number): IntlTopicInfo[] {
   const topics: IntlTopicInfo[] = [];
 
-  // Phonics (Grade 1-2)
+  // Phonics (Grade 1-5)
   PHONICS_LEVELS.filter(l => l.grade <= grade).forEach(l => {
     topics.push({
       key: l.levelId, name: `${l.title}`, gradeLevel: l.grade,
@@ -312,7 +327,7 @@ export function getInternationalTopics(grade: number): IntlTopicInfo[] {
     });
   });
 
-  // Grammar (Grade 3-5)
+  // Grammar (Grade 1-5)
   GRAMMAR_TOPICS.filter(t => t.grade <= grade).forEach(t => {
     topics.push({
       key: t.topicId, name: t.title, gradeLevel: t.grade,
@@ -335,6 +350,38 @@ export function getInternationalTopics(grade: number): IntlTopicInfo[] {
       icon: '⚡', framework: 'common_core', category: 'sight_words',
     });
   }
+
+  // Writing (G1-G5)
+  WRITING_TOPICS.filter(w => w.grade <= grade).forEach(w => {
+    topics.push({
+      key: w.topicId, name: `${getFlag(w.framework)} ${w.title}`, gradeLevel: w.grade,
+      icon: '✍️', framework: w.framework, category: 'writing',
+    });
+  });
+
+  // Listening & Speaking (G1-G5)
+  LISTENING_SPEAKING_TOPICS.filter(l => l.grade <= grade).forEach(l => {
+    topics.push({
+      key: l.topicId, name: `${getFlag(l.framework)} ${l.title}`, gradeLevel: l.grade,
+      icon: '🎧', framework: l.framework, category: 'listening',
+    });
+  });
+
+  // Vocabulary Themes (G1-G5)
+  VOCAB_THEMES.filter(v => v.grade <= grade).forEach(v => {
+    topics.push({
+      key: v.themeId, name: `${getFlag(v.framework)} ${v.title}`, gradeLevel: v.grade,
+      icon: '📚', framework: v.framework, category: 'vocabulary',
+    });
+  });
+
+  // Country-Specific Content (G3-G5)
+  COUNTRY_CONTENT.filter(c => c.grade <= grade).forEach(c => {
+    topics.push({
+      key: c.contentId, name: `${getFlag(c.framework)} ${c.title}`, gradeLevel: c.grade,
+      icon: '🌍', framework: c.framework, category: 'culture',
+    });
+  });
 
   return topics;
 }

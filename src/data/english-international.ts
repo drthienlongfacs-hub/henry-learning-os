@@ -535,3 +535,87 @@ export const FRAMEWORK_INFO: Record<string, { name: string; flag: string; color:
   australian: { name: 'Australian Curriculum', flag: '🇦🇺', color: '#047857' },
   global_success: { name: 'Global Success (VN)', flag: '🇻🇳', color: '#f59e0b' },
 };
+
+// ── Extended Framework Info (6 countries) ──
+export const EXTENDED_FRAMEWORKS = {
+  finnish: { name: 'Finnish National Core Curriculum', flag: '🇫🇮', country: 'Finland', color: '#003580' },
+  singapore: { name: 'Singapore STELLAR Programme', flag: '🇸🇬', country: 'Singapore', color: '#EF3340' },
+  canadian: { name: 'Canadian Common Framework', flag: '🇨🇦', country: 'Canada', color: '#FF0000' },
+} as const;
+
+// ── Writing Skills (CCSS W.1-5 + Cambridge + Finnish + Singapore) ──
+export interface WritingTopic { topicId: string; grade: number; title: string; titleVi: string; framework: string; }
+export const WRITING_TOPICS: WritingTopic[] = [
+  { topicId: 'wr_g1_01', grade: 1, title: 'Simple Sentences', titleVi: 'Viết câu đơn giản', framework: 'common_core' },
+  { topicId: 'wr_g1_02', grade: 1, title: 'Labels & Lists', titleVi: 'Nhãn và danh sách', framework: 'cambridge' },
+  { topicId: 'wr_g2_01', grade: 2, title: 'Short Descriptions', titleVi: 'Viết mô tả ngắn', framework: 'common_core' },
+  { topicId: 'wr_g2_02', grade: 2, title: 'Opinion Writing', titleVi: 'Viết ý kiến', framework: 'australian' },
+  { topicId: 'wr_g3_01', grade: 3, title: 'Narrative Writing', titleVi: 'Viết kể chuyện', framework: 'cambridge' },
+  { topicId: 'wr_g3_02', grade: 3, title: 'Letter Writing', titleVi: 'Viết thư', framework: 'common_core' },
+  { topicId: 'wr_g3_03', grade: 3, title: 'Instructions Writing', titleVi: 'Viết hướng dẫn', framework: 'finnish' },
+  { topicId: 'wr_g4_01', grade: 4, title: 'Informative Writing', titleVi: 'Viết thông tin', framework: 'common_core' },
+  { topicId: 'wr_g4_02', grade: 4, title: 'Diary Entry', titleVi: 'Viết nhật ký', framework: 'cambridge' },
+  { topicId: 'wr_g4_03', grade: 4, title: 'Book Review', titleVi: 'Viết bình sách', framework: 'singapore' },
+  { topicId: 'wr_g5_01', grade: 5, title: 'Persuasive Writing', titleVi: 'Viết thuyết phục', framework: 'australian' },
+  { topicId: 'wr_g5_02', grade: 5, title: 'Report Writing', titleVi: 'Viết báo cáo', framework: 'cambridge' },
+  { topicId: 'wr_g5_03', grade: 5, title: 'Creative Poetry', titleVi: 'Viết thơ sáng tạo', framework: 'common_core' },
+  { topicId: 'wr_g5_04', grade: 5, title: 'Email & Digital Writing', titleVi: 'Viết email', framework: 'singapore' },
+];
+
+// ── Listening & Speaking (Cambridge SL + CCSS SL + Finnish + Singapore) ──
+export interface ListeningSpeakingTopic { topicId: string; grade: number; title: string; titleVi: string; framework: string; }
+export const LISTENING_SPEAKING_TOPICS: ListeningSpeakingTopic[] = [
+  { topicId: 'ls_g1_01', grade: 1, title: 'Follow Instructions', titleVi: 'Nghe làm theo', framework: 'cambridge' },
+  { topicId: 'ls_g1_02', grade: 1, title: 'Songs & Rhymes', titleVi: 'Bài hát và vần', framework: 'finnish' },
+  { topicId: 'ls_g2_01', grade: 2, title: 'Listen & Identify', titleVi: 'Nghe nhận biết', framework: 'common_core' },
+  { topicId: 'ls_g2_02', grade: 2, title: 'Show & Tell', titleVi: 'Kể và trình bày', framework: 'singapore' },
+  { topicId: 'ls_g3_01', grade: 3, title: 'Dialogue Practice', titleVi: 'Luyện hội thoại', framework: 'australian' },
+  { topicId: 'ls_g3_02', grade: 3, title: 'Role Play', titleVi: 'Đóng vai', framework: 'finnish' },
+  { topicId: 'ls_g4_01', grade: 4, title: 'Listen & Retell', titleVi: 'Nghe kể lại', framework: 'cambridge' },
+  { topicId: 'ls_g4_02', grade: 4, title: 'Group Discussion', titleVi: 'Thảo luận nhóm', framework: 'canadian' },
+  { topicId: 'ls_g5_01', grade: 5, title: 'Presentation Skills', titleVi: 'Kỹ năng thuyết trình', framework: 'common_core' },
+  { topicId: 'ls_g5_02', grade: 5, title: 'Debate Basics', titleVi: 'Tranh luận cơ bản', framework: 'singapore' },
+];
+
+// ── Vocabulary Themes (6 countries) ──
+export interface VocabTheme { themeId: string; grade: number; title: string; titleVi: string; framework: string; words: string[]; wordsVi: string[]; }
+export const VOCAB_THEMES: VocabTheme[] = [
+  { themeId: 'vt_g1_01', grade: 1, title: 'Classroom Objects', titleVi: 'Đồ dùng lớp học', framework: 'cambridge', words: ['book', 'pen', 'pencil', 'ruler', 'eraser', 'bag', 'desk', 'chair', 'board', 'crayon'], wordsVi: ['sách', 'bút', 'bút chì', 'thước', 'tẩy', 'cặp', 'bàn', 'ghế', 'bảng', 'bút sáp'] },
+  { themeId: 'vt_g1_02', grade: 1, title: 'Toys & Games', titleVi: 'Đồ chơi', framework: 'australian', words: ['ball', 'doll', 'car', 'kite', 'puzzle', 'teddy bear', 'blocks', 'jump rope', 'balloon', 'robot'], wordsVi: ['bóng', 'búp bê', 'xe hơi', 'diều', 'xếp hình', 'gấu bông', 'khối xếp', 'nhảy dây', 'bóng bay', 'người máy'] },
+  { themeId: 'vt_g1_03', grade: 1, title: 'Feelings', titleVi: 'Cảm xúc', framework: 'finnish', words: ['happy', 'sad', 'angry', 'scared', 'tired', 'hungry', 'thirsty', 'excited', 'surprised', 'brave'], wordsVi: ['vui', 'buồn', 'giận', 'sợ', 'mệt', 'đói', 'khát', 'phấn khích', 'ngạc nhiên', 'dũng cảm'] },
+  { themeId: 'vt_g2_01', grade: 2, title: 'Clothes', titleVi: 'Quần áo', framework: 'cambridge', words: ['shirt', 'trousers', 'dress', 'shoes', 'hat', 'socks', 'jacket', 'scarf', 'skirt', 'boots'], wordsVi: ['áo', 'quần', 'váy', 'giày', 'mũ', 'tất', 'áo khoác', 'khăn', 'chân váy', 'ủng'] },
+  { themeId: 'vt_g2_02', grade: 2, title: 'Transport', titleVi: 'Phương tiện', framework: 'common_core', words: ['car', 'bus', 'bicycle', 'train', 'plane', 'boat', 'motorbike', 'taxi', 'helicopter', 'ship'], wordsVi: ['xe hơi', 'xe buýt', 'xe đạp', 'tàu hỏa', 'máy bay', 'thuyền', 'xe máy', 'taxi', 'trực thăng', 'tàu'] },
+  { themeId: 'vt_g2_03', grade: 2, title: 'Nature & Seasons', titleVi: 'Thiên nhiên', framework: 'finnish', words: ['spring', 'summer', 'autumn', 'winter', 'snow', 'rain', 'leaf', 'flower', 'sunshine', 'frost'], wordsVi: ['xuân', 'hè', 'thu', 'đông', 'tuyết', 'mưa', 'lá', 'hoa', 'nắng', 'sương giá'] },
+  { themeId: 'vt_g3_01', grade: 3, title: 'Jobs & Occupations', titleVi: 'Nghề nghiệp', framework: 'cambridge', words: ['doctor', 'teacher', 'farmer', 'pilot', 'police officer', 'nurse', 'firefighter', 'chef', 'artist', 'engineer'], wordsVi: ['bác sĩ', 'giáo viên', 'nông dân', 'phi công', 'cảnh sát', 'y tá', 'lính cứu hỏa', 'đầu bếp', 'họa sĩ', 'kỹ sư'] },
+  { themeId: 'vt_g3_02', grade: 3, title: 'Places in Town', titleVi: 'Địa điểm', framework: 'australian', words: ['hospital', 'school', 'park', 'library', 'market', 'cinema', 'museum', 'bank', 'post office', 'restaurant'], wordsVi: ['bệnh viện', 'trường', 'công viên', 'thư viện', 'chợ', 'rạp phim', 'bảo tàng', 'ngân hàng', 'bưu điện', 'nhà hàng'] },
+  { themeId: 'vt_g3_03', grade: 3, title: 'Musical Instruments', titleVi: 'Nhạc cụ', framework: 'finnish', words: ['piano', 'guitar', 'drum', 'flute', 'violin', 'trumpet', 'recorder', 'bell', 'tambourine', 'xylophone'], wordsVi: ['đàn piano', 'đàn ghi-ta', 'trống', 'sáo', 'vĩ cầm', 'kèn trumpet', 'sáo dọc', 'chuông', 'trống lắc', 'đàn phím gỗ'] },
+  { themeId: 'vt_g4_01', grade: 4, title: 'Sports & Hobbies', titleVi: 'Thể thao & Sở thích', framework: 'common_core', words: ['swimming', 'football', 'basketball', 'badminton', 'cycling', 'painting', 'reading', 'cooking', 'singing', 'dancing'], wordsVi: ['bơi', 'bóng đá', 'bóng rổ', 'cầu lông', 'đạp xe', 'vẽ', 'đọc', 'nấu ăn', 'hát', 'nhảy'] },
+  { themeId: 'vt_g4_02', grade: 4, title: 'Health & Body', titleVi: 'Sức khỏe', framework: 'cambridge', words: ['headache', 'stomachache', 'fever', 'cough', 'medicine', 'exercise', 'healthy', 'vitamin', 'rest', 'hospital'], wordsVi: ['nhức đầu', 'đau bụng', 'sốt', 'ho', 'thuốc', 'tập thể dục', 'khỏe mạnh', 'vitamin', 'nghỉ ngơi', 'bệnh viện'] },
+  { themeId: 'vt_g4_03', grade: 4, title: 'Countries & Cultures', titleVi: 'Quốc gia & Văn hóa', framework: 'singapore', words: ['Vietnam', 'Singapore', 'Japan', 'America', 'England', 'Australia', 'France', 'China', 'India', 'Korea'], wordsVi: ['Việt Nam', 'Singapore', 'Nhật Bản', 'Mỹ', 'Anh', 'Úc', 'Pháp', 'Trung Quốc', 'Ấn Độ', 'Hàn Quốc'] },
+  { themeId: 'vt_g5_01', grade: 5, title: 'Environment', titleVi: 'Môi trường', framework: 'australian', words: ['pollution', 'recycle', 'forest', 'ocean', 'endangered', 'climate', 'renewable', 'conservation', 'ecosystem', 'habitat'], wordsVi: ['ô nhiễm', 'tái chế', 'rừng', 'đại dương', 'có nguy cơ', 'khí hậu', 'tái tạo', 'bảo tồn', 'hệ sinh thái', 'môi trường sống'] },
+  { themeId: 'vt_g5_02', grade: 5, title: 'Technology', titleVi: 'Công nghệ', framework: 'common_core', words: ['computer', 'internet', 'keyboard', 'screen', 'email', 'website', 'download', 'password', 'tablet', 'software'], wordsVi: ['máy tính', 'internet', 'bàn phím', 'màn hình', 'email', 'trang web', 'tải về', 'mật khẩu', 'máy tính bảng', 'phần mềm'] },
+  { themeId: 'vt_g5_03', grade: 5, title: 'Space & Science', titleVi: 'Không gian & Khoa học', framework: 'canadian', words: ['planet', 'star', 'moon', 'astronaut', 'gravity', 'telescope', 'rocket', 'orbit', 'solar system', 'satellite'], wordsVi: ['hành tinh', 'ngôi sao', 'mặt trăng', 'phi hành gia', 'trọng lực', 'kính viễn vọng', 'tên lửa', 'quỹ đạo', 'hệ mặt trời', 'vệ tinh'] },
+];
+
+// ── Country-Specific Cultural Content (UK/US/AU/FI/SG/CA) ──
+export interface CountryContent { contentId: string; grade: number; title: string; titleVi: string; framework: string; }
+export const COUNTRY_CONTENT: CountryContent[] = [
+  { contentId: 'cc_uk_01', grade: 3, title: 'British School Life', titleVi: 'Cuộc sống trường học ở Anh', framework: 'cambridge' },
+  { contentId: 'cc_uk_02', grade: 4, title: 'UK Traditions', titleVi: 'Truyền thống nước Anh', framework: 'cambridge' },
+  { contentId: 'cc_uk_03', grade: 5, title: 'British Literature', titleVi: 'Văn học Anh', framework: 'cambridge' },
+  { contentId: 'cc_us_01', grade: 3, title: 'American Holidays', titleVi: 'Ngày lễ Mỹ', framework: 'common_core' },
+  { contentId: 'cc_us_02', grade: 4, title: 'US Geography', titleVi: 'Địa lý nước Mỹ', framework: 'common_core' },
+  { contentId: 'cc_us_03', grade: 5, title: 'American Heroes', titleVi: 'Anh hùng Mỹ', framework: 'common_core' },
+  { contentId: 'cc_au_01', grade: 3, title: 'Australian Animals', titleVi: 'Động vật Úc', framework: 'australian' },
+  { contentId: 'cc_au_02', grade: 4, title: 'Aboriginal Culture', titleVi: 'Văn hóa Thổ dân Úc', framework: 'australian' },
+  { contentId: 'cc_au_03', grade: 5, title: 'Australian Environment', titleVi: 'Môi trường Úc', framework: 'australian' },
+  { contentId: 'cc_fi_01', grade: 3, title: 'Finnish Nature', titleVi: 'Thiên nhiên Phần Lan', framework: 'finnish' },
+  { contentId: 'cc_fi_02', grade: 4, title: 'Scandinavian Seasons', titleVi: 'Mùa ở Bắc Âu', framework: 'finnish' },
+  { contentId: 'cc_fi_03', grade: 5, title: 'Finnish Innovation', titleVi: 'Sáng tạo Phần Lan', framework: 'finnish' },
+  { contentId: 'cc_sg_01', grade: 3, title: 'Singapore Festivals', titleVi: 'Lễ hội Singapore', framework: 'singapore' },
+  { contentId: 'cc_sg_02', grade: 4, title: 'Multicultural Singapore', titleVi: 'Đa văn hóa Singapore', framework: 'singapore' },
+  { contentId: 'cc_sg_03', grade: 5, title: 'ASEAN Connections', titleVi: 'Kết nối ASEAN', framework: 'singapore' },
+  { contentId: 'cc_ca_01', grade: 3, title: 'Canadian Wildlife', titleVi: 'Động vật hoang dã Canada', framework: 'canadian' },
+  { contentId: 'cc_ca_02', grade: 4, title: 'Canadian Seasons', titleVi: 'Mùa ở Canada', framework: 'canadian' },
+  { contentId: 'cc_ca_03', grade: 5, title: 'French-English Canada', titleVi: 'Song ngữ Pháp-Anh', framework: 'canadian' },
+];
