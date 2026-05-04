@@ -63,7 +63,7 @@ describe('voice engine latency guard', () => {
 
     it('starts uncached long-passage playback through Web Speech after the 15ms cancel gap', async () => {
         const speech = installSpeechSynthesisMock();
-        const { speakLongPassage } = await import('@/lib/voiceEngine');
+        const { speakLongPassage, getEngineStatus } = await import('@/lib/voiceEngine');
 
         speakLongPassage('Life is like a box of chocolates. You never know what you will get.', 'en-US', 0.88);
 
@@ -79,6 +79,9 @@ describe('voice engine latency guard', () => {
         expect(utterance.pitch).toBe(1);
         expect(utterance.rate).toBeGreaterThanOrEqual(0.7);
         expect(utterance.rate).toBeLessThanOrEqual(1.2);
+
+        vi.advanceTimersByTime(300);
+        expect(getEngineStatus().loading).toBe(false);
     });
 
     it('uses the same instant path for word and sentence clicks', async () => {

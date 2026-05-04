@@ -6,8 +6,9 @@ Kokoro improves voice naturalness, but using Kokoro generation directly inside a
 
 1. Word, sentence, vocab and button interactions use Web Speech API immediately.
 2. Full-passage reading uses cached Kokoro neural audio only when the passage has already been rendered.
-3. If Kokoro audio is not cached, the app starts Web Speech after the 15 ms cancel gap and renders Kokoro in the background for the next replay.
-4. Pitch manipulation remains disabled (`pitch = 1`) because it can add audible distortion on OS voices.
+3. If Kokoro audio is not cached, the app starts Web Speech after the 15 ms cancel gap.
+4. Automatic Kokoro preload is disabled by default. Live audit showed background model activity can keep `/child/reading/` busy and can make real devices feel slow even when the click handler itself is fast.
+5. Pitch manipulation remains disabled (`pitch = 1`) because it can add audible distortion on OS voices.
 
 ## Source Benchmark
 
@@ -25,15 +26,15 @@ Changed surfaces:
 
 - `src/lib/voiceEngine.ts`
   - Adds in-memory neural audio cache.
-  - Adds background neural preloading.
+  - Keeps Kokoro as explicit opt-in/cache-only; automatic preload is guarded by `localStorage["henry.voice.neuralAutoPreload"] === "1"`.
   - Makes uncached `speakLongPassage()` start Web Speech immediately instead of awaiting Kokoro.
   - Keeps all word/sentence clicks on the instant Web Speech path.
 - `src/components/ReadingQuiz.tsx`
   - Full passage now calls `speakLongPassage()`.
-  - Current passage preloads Kokoro in the background after initial UI settles.
+  - Removes automatic Kokoro preload from the reading route.
 - `src/components/ReadToMe.tsx`
   - Uses `speakLongPassage()` so the first click remains instant.
-  - Preloads neural speech in the background after the UI has settled.
+  - Removes automatic Kokoro preload from the shared reader control.
 - `src/components/PhonicsLab.tsx`, `src/components/VocabReview.tsx`
   - Increases accent button touch targets on `/child/reading/` so the voice route passes the UI smoke accessibility gate on desktop and mobile.
 - `__tests__/voice-engine.test.ts`
@@ -52,6 +53,6 @@ Changed surfaces:
 
 ## Claim Boundary
 
-Allowed claim: Henry now uses a fast-first hybrid voice engine: instant Web Speech for response latency, cached Kokoro for natural replay when available.
+Allowed claim: Henry now uses an instant-first voice engine: Web Speech is the default interaction path, while Kokoro neural speech is opt-in/cache-only so model loading cannot silently slow the child reading route.
 
 Blocked claim: Henry has proven voice quality equal to Google Cloud, Azure Neural, ElevenLabs, or real human narration. That would require controlled listening tests, latency traces on target devices, and preferably MOS/A-B evidence.

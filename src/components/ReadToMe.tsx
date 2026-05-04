@@ -1,4 +1,4 @@
-import { preloadNeuralSpeech, speakLongPassage, stopSpeech, pauseSpeech, resumeSpeech, type Accent } from '@/lib/voiceEngine';
+import { speakLongPassage, stopSpeech, pauseSpeech, resumeSpeech, type Accent } from '@/lib/voiceEngine';
 
 // ========================================
 // Text-to-Speech Reader — "Read to Me" feature
@@ -38,14 +38,6 @@ export function ReadToMe({ text, lang = 'en', label }: ReadToMeProps) {
             setPaused(false);
         });
     }, [text, accent, rate, stop]);
-
-    useEffect(() => {
-        if (text.trim().length < 40) return undefined;
-        const timer = window.setTimeout(() => {
-            void preloadNeuralSpeech(text, accent, rate);
-        }, 3500);
-        return () => window.clearTimeout(timer);
-    }, [text, accent, rate]);
 
     const togglePause = () => {
         if (paused) {

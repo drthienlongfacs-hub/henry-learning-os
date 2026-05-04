@@ -2,8 +2,9 @@
  * voiceEngine.ts - Fast-first hybrid voice engine for Henry Learning OS.
  *
  * Rule: no user click waits for Kokoro generation. Web Speech starts after the
- * browser-required 15 ms cancel gap; Kokoro renders in the background and is
- * used only when cached audio is ready.
+ * browser-required 15 ms cancel gap. Kokoro remains available for explicit
+ * opt-in/cache use, but automatic neural preload is disabled by default because
+ * model downloads can keep the live route busy and make real devices feel slow.
  */
 
 import type { KokoroTTS as KokoroTTSInstance } from 'kokoro-js';
@@ -23,6 +24,7 @@ const KOKORO_VOICES = {
 
 const MAX_TTS_CHUNK_CHARS = 240;
 const MAX_NEURAL_CACHE_ITEMS = 12;
+const NEURAL_AUTO_PRELOAD_FLAG = 'henry.voice.neuralAutoPreload';
 
 let kokoroInstance: KokoroTTSInstance | null = null;
 let kokoroReady = false;
@@ -164,6 +166,15 @@ function getNeuralCacheKey(text: string, accent: Accent, rate: number): string {
   return `${accent}:${clampRate(rate).toFixed(2)}:${text.trim().replace(/\s+/g, ' ')}`;
 }
 
+function shouldAutoPreloadNeural(): boolean {
+  if (typeof window === 'undefined') return false;
+  try {
+    return window.localStorage.getItem(NEURAL_AUTO_PRELOAD_FLAG) === '1';
+  } catch {
+    return false;
+  }
+}
+
 export function hasCachedNeuralSpeech(text: string, accent: Accent, rate = 0.92): boolean {
   return neuralAudioCache.has(getNeuralCacheKey(text, accent, rate));
 }
@@ -298,6 +309,7 @@ export function preloadNeuralSpeech(text: string, accent: Accent, rate = 0.92): 
 
 function scheduleNeuralPreload(text: string, accent: Accent, rate: number): void {
   if (typeof window === 'undefined' || text.trim().length < 40) return;
+  if (!shouldAutoPreloadNeural()) return;
   window.setTimeout(() => {
     void preloadNeuralSpeech(text, accent, rate);
   }, 250);
@@ -469,12 +481,12 @@ export function getVoiceDebugInfo(accent: Accent): string {
   if (kokoroReady) return `${speechLayer} · Kokoro cache-ready`;
   if (kokoroLoadingPromise) return `${speechLayer} · Kokoro warming in background`;
   if (kokoroFailed) return `${speechLayer} · Kokoro unavailable`;
-  return `${speechLayer} · instant Web Speech first`;
+  return `${speechLayer} · instant Web Speech first · neural optional`;
 }
 
 export function getEngineStatus() {
   return {
-    engine: kokoroReady ? 'Fast-first hybrid: Web Speech + cached Kokoro Neural' : 'Fast-first Web Speech; Kokoro preloads in background',
+    engine: kokoroReady ? 'Fast-first hybrid: Web Speech + cached Kokoro Neural' : 'Instant Web Speech default; Kokoro neural is opt-in/cache only',
     ready: true,
     loading: Boolean(kokoroLoadingPromise),
   };
