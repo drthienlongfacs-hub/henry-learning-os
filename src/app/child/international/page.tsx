@@ -260,13 +260,16 @@ export default function InternationalPage() {
                   {filteredTopics.filter(t => t.grade === g).map(topic => {
                     const catInfo = CATEGORIES.find(c => c.key === topic.category);
                     return (
-                      <div
+                      <Link
                         key={topic.key}
+                        href={`/child/learn?subject=english&topic=${topic.key}`}
                         style={{
                           background: 'rgba(255,255,255,0.05)', borderRadius: 12, padding: '14px 16px',
-                          display: 'flex', alignItems: 'center', gap: 12,
-                          border: '1px solid rgba(255,255,255,0.08)',
+                          display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none',
+                          border: '1px solid rgba(255,255,255,0.08)', transition: 'all 0.2s',
                         }}
+                        onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.borderColor = 'rgba(96,165,250,0.3)'; }}
+                        onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; }}
                       >
                         <span style={{ fontSize: 24, width: 36, textAlign: 'center' }}>{catInfo?.icon}</span>
                         <div style={{ flex: 1 }}>
@@ -274,13 +277,13 @@ export default function InternationalPage() {
                           <div style={{ color: '#64748b', fontSize: 12 }}>{topic.nameVi}</div>
                         </div>
                         <span style={{
-                          background: 'rgba(96,165,250,0.15)', color: '#60a5fa',
+                          background: 'rgba(34,197,94,0.15)', color: '#4ade80',
                           fontSize: 11, padding: '3px 10px', borderRadius: 12, fontWeight: 500,
                         }}>
-                          {catInfo?.name}
+                          ▶ Luyện tập
                         </span>
-                        <BookCheck size={16} color="#475569" />
-                      </div>
+                        <ChevronRight size={16} color="#4ade80" />
+                      </Link>
                     );
                   })}
                 </div>

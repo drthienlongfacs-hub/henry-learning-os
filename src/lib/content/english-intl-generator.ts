@@ -288,7 +288,164 @@ export function generateInternationalTopicExercises(topicKey: string, count: num
     const grade = Number(topicKey.replace('sw_g', ''));
     return Number.isFinite(grade) ? Array.from({ length: count }, () => genSightWordChallenge(Math.min(Math.max(grade, 1), 5))) : [];
   }
+  // ── Country textbook unit exercises (cam_, us_, au_, fi_, sg_, ca_) ──
+  if (/^(cam|us|au|fi|sg|ca)_g\d/.test(topicKey)) {
+    return generateCountryUnitExercises(topicKey, count);
+  }
+  // Writing/Listening/Vocab topic exercises
+  if (topicKey.startsWith('wr_') || topicKey.startsWith('ls_') || topicKey.startsWith('vt_') || topicKey.startsWith('cc_')) {
+    return generateSkillTopicExercises(topicKey, count);
+  }
   return [];
+}
+
+// ── Country Unit Exercise Generator ──
+import {
+  CAMBRIDGE_UNITS, US_WONDERS_UNITS, AUSTRALIAN_UNITS, FINNISH_UNITS,
+  SINGAPORE_UNITS, CANADIAN_UNITS, type CountryUnit,
+} from '@/data/english-international';
+
+const ALL_COUNTRY_UNITS = [
+  ...CAMBRIDGE_UNITS, ...US_WONDERS_UNITS, ...AUSTRALIAN_UNITS,
+  ...FINNISH_UNITS, ...SINGAPORE_UNITS, ...CANADIAN_UNITS,
+];
+
+function generateCountryUnitExercises(topicKey: string, count: number): EnglishProblem[] {
+  const unit = ALL_COUNTRY_UNITS.find(u => u.unitId === topicKey);
+  if (!unit) return [];
+
+  const UNIT_EXERCISE_GENS = [
+    genUnitVocabMatch, genUnitTitleTranslation, genUnitSkillIdentify,
+    genUnitSentenceBuild, genUnitTopicQuestion,
+  ];
+
+  return Array.from({ length: count }, () => pick(UNIT_EXERCISE_GENS)(unit));
+}
+
+function genUnitVocabMatch(unit: CountryUnit): EnglishProblem {
+  const vocab = unit.keyVocab || extractVocabFromTitle(unit.title);
+  const target = pick(vocab);
+  const allVocab = ALL_COUNTRY_UNITS
+    .filter(u => u.grade === unit.grade && u.unitId !== unit.unitId)
+    .flatMap(u => u.keyVocab || extractVocabFromTitle(u.title));
+  const wrongs = shuffle(allVocab.filter(w => w !== target)).slice(0, 3);
+  return {
+    id: genId(), gradeLevel: unit.grade, difficulty: unit.grade,
+    type: 'vocabulary' as any,
+    topic: `Unit ${unit.unitNumber}: ${unit.title}`,
+    topicKey: unit.unitId,
+    question: `📚 Which word belongs to the topic "${unit.title}"?`,
+    correctAnswer: target,
+    options: ensureCorrectInOptions(target, [target, ...wrongs]),
+    explanation: `"${target}" is a key word in Unit ${unit.unitNumber}: ${unit.title} (${unit.titleVi}).`,
+    hints: [`This unit is about: ${unit.titleVi}`, `Think about: ${unit.title}`],
+  };
+}
+
+function genUnitTitleTranslation(unit: CountryUnit): EnglishProblem {
+  const others = ALL_COUNTRY_UNITS
+    .filter(u => u.grade === unit.grade && u.unitId !== unit.unitId)
+    .map(u => u.titleVi);
+  const wrongs = shuffle(others).slice(0, 3);
+  return {
+    id: genId(), gradeLevel: unit.grade, difficulty: unit.grade,
+    type: 'vocabulary' as any,
+    topic: `Unit ${unit.unitNumber}: ${unit.title}`,
+    topicKey: unit.unitId,
+    question: `🌍 "${unit.title}" means:`,
+    correctAnswer: unit.titleVi,
+    options: ensureCorrectInOptions(unit.titleVi, [unit.titleVi, ...wrongs]),
+    explanation: `"${unit.title}" = "${unit.titleVi}"`,
+    hints: [`Think about: ${unit.title}`, `It's Unit ${unit.unitNumber}`],
+  };
+}
+
+function genUnitSkillIdentify(unit: CountryUnit): EnglishProblem {
+  const skills = unit.skills || ['Reading', 'Writing', 'Speaking', 'Listening'];
+  const skill = pick(skills);
+  const allSkills = ['Reading', 'Writing', 'Speaking', 'Listening', 'Phonics', 'Grammar', 'Vocabulary', 'Culture'];
+  const wrongs = shuffle(allSkills.filter(s => s !== skill)).slice(0, 3);
+  return {
+    id: genId(), gradeLevel: unit.grade, difficulty: unit.grade,
+    type: 'grammar' as any,
+    topic: `Unit ${unit.unitNumber}: ${unit.title}`,
+    topicKey: unit.unitId,
+    question: `🎯 Unit "${unit.title}" focuses on which skill?`,
+    correctAnswer: skill,
+    options: ensureCorrectInOptions(skill, [skill, ...wrongs]),
+    explanation: `This unit practices: ${skills.join(', ')}`,
+    hints: [`Think about what you do in "${unit.title}"`],
+  };
+}
+
+function genUnitSentenceBuild(unit: CountryUnit): EnglishProblem {
+  const patterns = unit.sentencePatterns || getSentencePatternsForGrade(unit.grade);
+  const pattern = pick(patterns);
+  const others = ALL_COUNTRY_UNITS
+    .filter(u => u.unitId !== unit.unitId)
+    .flatMap(u => u.sentencePatterns || getSentencePatternsForGrade(u.grade));
+  const wrongs = shuffle(others.filter(p => p !== pattern)).slice(0, 3);
+  return {
+    id: genId(), gradeLevel: unit.grade, difficulty: unit.grade,
+    type: 'grammar' as any,
+    topic: `Unit ${unit.unitNumber}: ${unit.title}`,
+    topicKey: unit.unitId,
+    question: `✍️ Which sentence pattern fits "${unit.title}"?`,
+    correctAnswer: pattern,
+    options: ensureCorrectInOptions(pattern, [pattern, ...wrongs]),
+    explanation: `Pattern: "${pattern}" — used in Unit ${unit.unitNumber}: ${unit.title}`,
+    hints: [`Topic: ${unit.titleVi}`],
+  };
+}
+
+function genUnitTopicQuestion(unit: CountryUnit): EnglishProblem {
+  const correct = unit.title;
+  const others = ALL_COUNTRY_UNITS
+    .filter(u => u.grade === unit.grade && u.unitId !== unit.unitId)
+    .map(u => u.title);
+  const wrongs = shuffle(others).slice(0, 3);
+  return {
+    id: genId(), gradeLevel: unit.grade, difficulty: unit.grade,
+    type: 'reading' as any,
+    topic: `Unit ${unit.unitNumber}: ${unit.title}`,
+    topicKey: unit.unitId,
+    question: `📖 Which unit topic matches: "${unit.titleVi}"?`,
+    correctAnswer: correct,
+    options: ensureCorrectInOptions(correct, [correct, ...wrongs]),
+    explanation: `"${unit.titleVi}" = "${unit.title}" (Unit ${unit.unitNumber})`,
+    hints: [`Think about the English translation`],
+  };
+}
+
+// Skill topic exercises (writing, listening, vocab, culture)
+function generateSkillTopicExercises(topicKey: string, count: number): EnglishProblem[] {
+  // Find matching topic from data
+  const wt = WRITING_TOPICS.find(w => w.topicId === topicKey);
+  if (wt) return Array.from({ length: count }, () => ({
+    id: genId(), gradeLevel: wt.grade, difficulty: wt.grade, type: 'grammar' as any,
+    topic: wt.title, topicKey: wt.topicId,
+    question: `✍️ Writing: ${wt.title}\n${wt.titleVi}\n\nWhich is the best approach?`,
+    correctAnswer: 'Plan before writing',
+    options: shuffle(['Plan before writing', 'Write without thinking', 'Copy from a book', 'Skip the topic']),
+    explanation: `Good writing starts with planning! ${wt.titleVi}`,
+    hints: [`Think about: ${wt.title}`],
+  }));
+  return [];
+}
+
+function extractVocabFromTitle(title: string): string[] {
+  return title.toLowerCase().split(/[\s,&]+/).filter(w => w.length > 2 && !['and', 'the', 'for', 'with'].includes(w));
+}
+
+function getSentencePatternsForGrade(grade: number): string[] {
+  const patterns: Record<number, string[]> = {
+    1: ['I like ___', 'This is a ___', 'I can see ___', 'My name is ___'],
+    2: ['I have a ___', 'She is ___', 'They are ___', 'We can ___'],
+    3: ['I want to ___', 'He likes to ___', 'We should ___', 'Can you ___?'],
+    4: ['I think that ___', 'She believes ___', 'They decided to ___', 'We need to ___'],
+    5: ['Although ___, we ___', 'If I were ___, I would ___', 'Not only ___ but also ___', 'In my opinion, ___'],
+  };
+  return patterns[grade] || patterns[1];
 }
 
 // ── Topic info for UI registration ──

@@ -628,6 +628,9 @@ export const COUNTRY_CONTENT: CountryContent[] = [
 export interface CountryUnit {
   unitId: string; grade: number; unitNumber: number;
   title: string; titleVi: string; framework: string;
+  keyVocab?: string[];
+  skills?: string[];
+  sentencePatterns?: string[];
 }
 
 export interface LearningTips {

@@ -669,6 +669,14 @@ export function generateEnglishSet(grade: number, topicKey?: string, count: numb
     if (topicKey?.startsWith('ph_') || topicKey?.startsWith('gr_') || topicKey?.startsWith('rd_') || topicKey?.startsWith('sw_')) {
         return generateInternationalTopicExercises(topicKey, count);
     }
+    // Country textbook units (Cambridge, Wonders, Australian, Finnish, Singapore, Canadian)
+    if (topicKey && /^(cam|us|au|fi|sg|ca)_g\d/.test(topicKey)) {
+        return generateInternationalTopicExercises(topicKey, count);
+    }
+    // Writing/Listening/Vocab/Culture skill topics
+    if (topicKey?.startsWith('wr_') || topicKey?.startsWith('ls_') || topicKey?.startsWith('vt_') || topicKey?.startsWith('cc_')) {
+        return generateInternationalTopicExercises(topicKey, count);
+    }
     const topics = ENGLISH_TOPICS.filter(t => t.gradeLevel <= grade && (!topicKey || t.key === topicKey));
     if (topics.length === 0) return [];
     return Array.from({ length: count }, () => {
