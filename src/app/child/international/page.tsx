@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { ArrowLeft, Globe2, BookOpen, Pencil, Headphones, BookA, MapPin, ChevronRight, Star, Lightbulb, BookCheck } from 'lucide-react';
 import { useAppStore } from '@/stores/app-store';
 import {
@@ -87,11 +88,20 @@ function getCountryTopics(framework: string, grade: number) {
   return topics;
 }
 
-export default function InternationalPage() {
+function InternationalPageContent() {
+  const searchParams = useSearchParams();
   const [selectedCountry, setSelectedCountry] = useState<CountryId | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const childGrade = (useAppStore.getState().childProfile as { gradeLevel?: number } | null)?.gradeLevel || 1;
   const grade = 5; // Show ALL grades G1-G5 for curriculum browsing
+
+  // Restore country selection from URL param (e.g. ?country=uk)
+  useEffect(() => {
+    const urlCountry = searchParams.get('country') as CountryId | null;
+    if (urlCountry && COUNTRIES.some(c => c.id === urlCountry)) {
+      setSelectedCountry(urlCountry);
+    }
+  }, [searchParams]);
 
   const country = COUNTRIES.find(c => c.id === selectedCountry);
   const topics = country ? getCountryTopics(country.framework, grade) : [];
@@ -300,5 +310,13 @@ export default function InternationalPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function InternationalPage() {
+  return (
+    <Suspense fallback={<div style={{ minHeight: '100vh', background: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8' }}>Loading...</div>}>
+      <InternationalPageContent />
+    </Suspense>
   );
 }

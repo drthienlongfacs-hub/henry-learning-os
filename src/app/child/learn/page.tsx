@@ -509,25 +509,34 @@ function LearnPageContent() {
                         // Helper: detect international topics by prefix
                         const isIntlTopic = (key: string | null) =>
                             key != null && /^(cam|us|au|fi|sg|ca)_/.test(key);
+                        // Map topic prefix → country ID for back navigation
+                        const getIntlCountry = (key: string | null): string => {
+                            if (!key) return '';
+                            const prefix = key.match(/^(cam|us|au|fi|sg|ca)_/)?.[1];
+                            const map: Record<string, string> = { cam: 'uk', us: 'us', au: 'au', fi: 'fi', sg: 'sg', ca: 'ca' };
+                            return map[prefix ?? ''] ?? '';
+                        };
+                        const backToIntl = () => {
+                            const country = getIntlCountry(selectedTopic);
+                            router.push(`/child/international${country ? `?country=${country}` : ''}`);
+                        };
 
                         // ── UX-centric back navigation ──
                         // Priority: innermost state → outermost state
                         if (problems.length > 0 && index < problems.length) {
                             // In quiz → stop quiz
                             if (isIntlTopic(selectedTopic)) {
-                                // International quiz → return to international curriculum browser
-                                router.push('/child/international');
+                                backToIntl();
                             } else {
                                 // Domestic quiz → return to topic list
                                 setProblems([]); setSelectedTopic(null);
                                 setShowingLesson(false); setLessonContent(null); setUniversalLesson(null);
-                                // Clean URL params
                                 window.history.replaceState(null, '', window.location.pathname);
                             }
                         } else if (showingLesson) {
                             // In lesson phase → back to where user came from
                             if (isIntlTopic(selectedTopic)) {
-                                router.push('/child/international');
+                                backToIntl();
                             } else {
                                 setShowingLesson(false); setLessonContent(null); setUniversalLesson(null);
                                 setSelectedTopic(null);
@@ -536,7 +545,7 @@ function LearnPageContent() {
                         } else if (problems.length > 0 && index >= problems.length) {
                             // Completed quiz → back
                             if (isIntlTopic(selectedTopic)) {
-                                router.push('/child/international');
+                                backToIntl();
                             } else {
                                 setProblems([]); setSelectedTopic(null);
                                 window.history.replaceState(null, '', window.location.pathname);
@@ -548,7 +557,7 @@ function LearnPageContent() {
                         } else if (selectedTopic) {
                             // Selected topic but not in lesson/quiz → go back
                             if (isIntlTopic(selectedTopic)) {
-                                router.push('/child/international');
+                                backToIntl();
                             } else {
                                 setSelectedTopic(null);
                                 window.history.replaceState(null, '', window.location.pathname);
