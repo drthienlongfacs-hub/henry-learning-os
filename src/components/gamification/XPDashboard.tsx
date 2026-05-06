@@ -5,7 +5,7 @@
  * Ported from LinguaKids XP Engine
  */
 import React, { useState, useEffect } from 'react';
-import { getXPData, getAllBadges, getLevelProgress, type Badge } from '@/lib/xpEngine';
+import { getXPData, getAllBadges, type Badge } from '@/lib/xpEngine';
 import { Flame, Star, Trophy, Zap, ChevronDown, ChevronUp } from 'lucide-react';
 
 export default function XPDashboard({ lang = 'vi' }: { lang?: string }) {
@@ -15,7 +15,9 @@ export default function XPDashboard({ lang = 'vi' }: { lang?: string }) {
   const [showBadges, setShowBadges] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setData(getXPData());
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setBadges(getAllBadges());
   }, []);
 

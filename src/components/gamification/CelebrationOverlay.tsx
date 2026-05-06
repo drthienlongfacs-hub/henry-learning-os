@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/purity */
 'use client';
 /**
  * CelebrationOverlay.tsx — Confetti + Star burst animation

@@ -331,7 +331,7 @@ function genUnitVocabMatch(unit: CountryUnit): EnglishProblem {
   const wrongs = shuffle(allVocab.filter(w => w !== target)).slice(0, 3);
   return {
     id: genId(), gradeLevel: unit.grade, difficulty: unit.grade,
-    type: 'vocabulary' as any,
+    type: 'vocabulary',
     topic: `Unit ${unit.unitNumber}: ${unit.title}`,
     topicKey: unit.unitId,
     question: `📚 Which word belongs to the topic "${unit.title}"?`,
@@ -349,7 +349,7 @@ function genUnitTitleTranslation(unit: CountryUnit): EnglishProblem {
   const wrongs = shuffle(others).slice(0, 3);
   return {
     id: genId(), gradeLevel: unit.grade, difficulty: unit.grade,
-    type: 'vocabulary' as any,
+    type: 'vocabulary',
     topic: `Unit ${unit.unitNumber}: ${unit.title}`,
     topicKey: unit.unitId,
     question: `🌍 "${unit.title}" means:`,
@@ -367,7 +367,7 @@ function genUnitSkillIdentify(unit: CountryUnit): EnglishProblem {
   const wrongs = shuffle(allSkills.filter(s => s !== skill)).slice(0, 3);
   return {
     id: genId(), gradeLevel: unit.grade, difficulty: unit.grade,
-    type: 'grammar' as any,
+    type: 'grammar',
     topic: `Unit ${unit.unitNumber}: ${unit.title}`,
     topicKey: unit.unitId,
     question: `🎯 Unit "${unit.title}" focuses on which skill?`,
@@ -387,7 +387,7 @@ function genUnitSentenceBuild(unit: CountryUnit): EnglishProblem {
   const wrongs = shuffle(others.filter(p => p !== pattern)).slice(0, 3);
   return {
     id: genId(), gradeLevel: unit.grade, difficulty: unit.grade,
-    type: 'grammar' as any,
+    type: 'grammar',
     topic: `Unit ${unit.unitNumber}: ${unit.title}`,
     topicKey: unit.unitId,
     question: `✍️ Which sentence pattern fits "${unit.title}"?`,
@@ -406,7 +406,7 @@ function genUnitTopicQuestion(unit: CountryUnit): EnglishProblem {
   const wrongs = shuffle(others).slice(0, 3);
   return {
     id: genId(), gradeLevel: unit.grade, difficulty: unit.grade,
-    type: 'reading' as any,
+    type: 'reading',
     topic: `Unit ${unit.unitNumber}: ${unit.title}`,
     topicKey: unit.unitId,
     question: `📖 Which unit topic matches: "${unit.titleVi}"?`,
@@ -422,7 +422,7 @@ function generateSkillTopicExercises(topicKey: string, count: number): EnglishPr
   // Find matching topic from data
   const wt = WRITING_TOPICS.find(w => w.topicId === topicKey);
   if (wt) return Array.from({ length: count }, () => ({
-    id: genId(), gradeLevel: wt.grade, difficulty: wt.grade, type: 'grammar' as any,
+    id: genId(), gradeLevel: wt.grade, difficulty: wt.grade, type: 'grammar',
     topic: wt.title, topicKey: wt.topicId,
     question: `✍️ Writing: ${wt.title}\n${wt.titleVi}\n\nWhich is the best approach?`,
     correctAnswer: 'Plan before writing',
@@ -461,7 +461,6 @@ export interface IntlTopicInfo {
 // Import new data types
 import {
   WRITING_TOPICS, LISTENING_SPEAKING_TOPICS, VOCAB_THEMES, COUNTRY_CONTENT,
-  EXTENDED_FRAMEWORKS,
 } from '@/data/english-international';
 
 const getFlag = (fw: string) => {
