@@ -219,10 +219,11 @@ function buildFallbackLesson(title: string, titleVi: string, grade: number, fram
   };
 }
 
+import { getAuthenticReading } from '@/data/intl-curriculum-passages';
+
 // ══════════════════════════════════════════════════════════════════
 // INTERNATIONAL LESSON BUILDER — receives data as parameters
 // Called from learn/page.tsx where data is already loaded via import()
-// This eliminates the broken require() that caused all units to show "Tom and Lily"
 // ══════════════════════════════════════════════════════════════════
 
 interface IntlDataArrays {
@@ -255,11 +256,9 @@ export function buildIntlLessonFromData(
     return buildFallbackLesson(title, titleVi, grade, framework);
   }
 
-  // ── GENERATE UNIQUE READING from unit title + vocab ──
-  const w = vocab.words;
-  const wv = vocab.wordsVi;
-  const reading = generateUniqueReading(hash, title, w, grade);
-  const readingVi = generateUniqueReadingVi(hash, titleVi, wv, grade);
+  // ── GET AUTHENTIC READING PASSAGE ──
+  // Use exact texts mapped to unitId (e.g., Cambridge G1 Learner's Book texts)
+  const authenticReading = getAuthenticReading(unitId, title, titleVi, vocab.words, vocab.wordsVi);
 
   // Build speaking sentences from grammar rules
   const speakingSentences = grammar.rules.flatMap(r => r.examples.slice(0, 2));
@@ -270,12 +269,12 @@ export function buildIntlLessonFromData(
     sections: [
       {
         type: 'vocabulary', title: `📚 Vocabulary: ${vocab.title}`, titleVi: `📚 Từ vựng: ${vocab.titleVi}`,
-        content: w.map((en, i) => `${en} — ${wv[i] ?? en}`),
+        content: vocab.words.map((en, i) => `${en} — ${vocab.wordsVi[i] ?? en}`),
       },
       {
         type: 'reading', title: `📖 ${title}`, titleVi: `📖 ${titleVi}`,
-        content: [reading],
-        contentVi: [readingVi],
+        content: [authenticReading.text],
+        contentVi: [authenticReading.textVi],
       },
       {
         type: 'grammar', title: `📝 ${grammar.title}`, titleVi: `📝 ${grammar.titleVi}`,
@@ -301,45 +300,7 @@ export function buildIntlLessonFromData(
 // ── 12 unique reading templates — filled with unit title + vocab words ──
 // Each unit's title is unique → each generated passage is unique
 
-function generateUniqueReading(hash: number, title: string, words: string[], grade: number): string {
-  const w = (i: number) => words[i % words.length] || 'word';
-  const t = title;
-  const templates = [
-    () => `Today we are learning about "${t}". Look around you! Can you see a ${w(0)}? What about a ${w(1)}? In this lesson, we will learn words like "${w(2)}", "${w(3)}", and "${w(4)}". Try to use them in a sentence. For example: "I can see a ${w(0)}." Great job! Keep learning!`,
-    () => `Welcome to "${t}"! This is going to be fun. First, let us learn some new words. A ${w(0)} is something you can find at home or at school. A ${w(1)} is also very useful. Do you know what a ${w(2)} is? Ask your teacher or look it up! Now, try to spell "${w(3)}" and "${w(4)}". Well done!`,
-    () => `"${t}" — what an interesting topic! Let me tell you a short story. One day, a child found a ${w(0)} and a ${w(1)} in the classroom. "Look!" the child said. "I also have a ${w(2)}!" The teacher smiled and said, "You know many words! Can you say ${w(3)} and ${w(4)} too?" The child nodded happily.`,
-    () => `Let us explore "${t}" together! In English, we have many useful words. "${w(0)}" — can you say it? Good! "${w(1)}" — try again! Excellent! Now let us make sentences: "The ${w(0)} is on the ${w(2)}." "I like my ${w(3)}." "Where is the ${w(4)}?" Practice these sentences with a friend!`,
-    () => `Do you like "${t}"? I do! Here are some words to learn: ${w(0)}, ${w(1)}, ${w(2)}, ${w(3)}, and ${w(4)}. Let us put them in sentences. "I have a ${w(0)}." "She has a ${w(1)}." "We need a ${w(2)}." "They found a ${w(3)}." "Look at the ${w(4)}!" How many can you remember?`,
-    () => `"${t}" is our topic today. Every good reader learns new words. Your new words are: ${w(0)}, ${w(1)}, ${w(2)}. Can you write them down? Now try these harder words: ${w(3)}, ${w(4)}. Read them aloud three times each. The more you practice, the better you get!`,
-    () => `Story time! This story is about "${t}". Once, there was a student who loved to learn. The student picked up a ${w(0)} and said, "This is my favorite!" Then the student saw a ${w(1)} and a ${w(2)}. "I want to learn all the words!" said the student. And so, the student also learned ${w(3)} and ${w(4)}. The end!`,
-    () => `Let us play a word game about "${t}"! I say a word, you repeat it. Ready? "${w(0)}" — your turn! "${w(1)}" — great! "${w(2)}" — wonderful! Now, can you use "${w(3)}" in a sentence? How about "${w(4)}"? You are becoming a word champion!`,
-    () => `Reading about "${t}" is exciting! Look at these words carefully: ${w(0)}, ${w(1)}, ${w(2)}, ${w(3)}, ${w(4)}. Each word has its own meaning and sound. Try to find these words in books, on signs, or in conversations. The best way to learn English is to notice words everywhere around you!`,
-    () => `Imagine you are a teacher! Your lesson today is "${t}". You need to teach your friends these words: ${w(0)}, ${w(1)}, ${w(2)}, ${w(3)}, and ${w(4)}. How would you explain them? Draw a picture for each word. Then write one sentence using each word. Teaching others is the best way to learn!`,
-    () => `Welcome, young reader! Today's adventure is "${t}". On this adventure, you will discover five special words. The first word is "${w(0)}" — it starts with the letter "${w(0)[0]?.toUpperCase()}". The second word is "${w(1)}". Then comes "${w(2)}", "${w(3)}", and "${w(4)}". Can you put them in alphabetical order?`,
-    () => `"${t}" — Let us begin! Close your eyes and imagine: you are in a place with a ${w(0)} and a ${w(1)}. You can also see a ${w(2)} nearby. Someone hands you a ${w(3)} and says, "Here is a ${w(4)} too!" Open your eyes. Can you remember all five words? Say them aloud!`,
-  ];
-  return templates[hash % templates.length]();
-}
-
-function generateUniqueReadingVi(hash: number, titleVi: string, wordsVi: string[], grade: number): string {
-  const w = (i: number) => wordsVi[i % wordsVi.length] || 'từ';
-  const t = titleVi;
-  const templates = [
-    () => `Hôm nay chúng ta học về "${t}". Hãy nhìn xung quanh! Bạn có thấy ${w(0)} không? Còn ${w(1)} thì sao? Trong bài này, chúng ta sẽ học các từ như "${w(2)}", "${w(3)}", và "${w(4)}". Hãy thử đặt câu với chúng nhé!`,
-    () => `Chào mừng đến với "${t}"! Bài này sẽ rất vui. Đầu tiên, hãy học một số từ mới. "${w(0)}" là thứ bạn có thể tìm thấy ở nhà hoặc trường. "${w(1)}" cũng rất hữu ích. Bạn có biết "${w(2)}" là gì không? Hãy thử đánh vần "${w(3)}" và "${w(4)}" nhé!`,
-    () => `"${t}" — chủ đề thú vị! Một ngày nọ, một bạn nhỏ tìm thấy ${w(0)} và ${w(1)} trong lớp. "Nhìn kìa!" bạn nhỏ nói. "Mình còn có ${w(2)} nữa!" Cô giáo mỉm cười: "Bạn biết nhiều từ lắm! Bạn có thể nói ${w(3)} và ${w(4)} không?"`,
-    () => `Hãy cùng khám phá "${t}"! Trong tiếng Anh, có nhiều từ hữu ích. "${w(0)}" — bạn nói được không? Tốt! "${w(1)}" — thử lần nữa! Giỏi lắm! Bây giờ hãy đặt câu: "The ${w(0)} is on the ${w(2)}." Luyện tập với bạn bè nhé!`,
-    () => `Bạn có thích "${t}" không? Đây là các từ cần học: ${w(0)}, ${w(1)}, ${w(2)}, ${w(3)}, và ${w(4)}. Hãy đặt câu với chúng. Bạn nhớ được bao nhiêu từ?`,
-    () => `"${t}" là chủ đề hôm nay. Những từ mới của bạn là: ${w(0)}, ${w(1)}, ${w(2)}. Bạn có thể viết chúng ra không? Bây giờ thử những từ khó hơn: ${w(3)}, ${w(4)}. Đọc to ba lần mỗi từ nhé!`,
-    () => `Giờ kể chuyện! Câu chuyện về "${t}". Có một bạn học sinh rất thích học. Bạn ấy cầm ${w(0)} và nói: "Đây là thứ yêu thích của mình!" Rồi bạn ấy thấy ${w(1)} và ${w(2)}. Bạn ấy cũng học thêm ${w(3)} và ${w(4)}. Hết!`,
-    () => `Hãy chơi trò chơi từ vựng về "${t}"! Mình nói một từ, bạn nhắc lại. Sẵn sàng chưa? "${w(0)}" — đến lượt bạn! "${w(1)}" — tuyệt vời! "${w(2)}" — hay lắm! Bạn có thể đặt câu với "${w(3)}" không? Còn "${w(4)}" thì sao?`,
-    () => `Đọc về "${t}" thật thú vị! Hãy nhìn kỹ các từ này: ${w(0)}, ${w(1)}, ${w(2)}, ${w(3)}, ${w(4)}. Mỗi từ có nghĩa và âm thanh riêng. Hãy tìm những từ này trong sách, trên biển hiệu, hoặc trong các cuộc trò chuyện nhé!`,
-    () => `Tưởng tượng bạn là giáo viên! Bài học hôm nay là "${t}". Bạn cần dạy bạn bè các từ: ${w(0)}, ${w(1)}, ${w(2)}, ${w(3)}, và ${w(4)}. Bạn sẽ giải thích thế nào? Hãy vẽ một bức tranh cho mỗi từ nhé!`,
-    () => `Chào bạn nhỏ! Cuộc phiêu lưu hôm nay là "${t}". Bạn sẽ khám phá năm từ đặc biệt. Từ đầu tiên là "${w(0)}". Từ thứ hai là "${w(1)}". Tiếp theo là "${w(2)}", "${w(3)}", và "${w(4)}". Bạn có thể sắp xếp chúng theo thứ tự bảng chữ cái không?`,
-    () => `"${t}" — Bắt đầu nào! Nhắm mắt và tưởng tượng: bạn ở một nơi có ${w(0)} và ${w(1)}. Bạn cũng thấy ${w(2)} gần đó. Ai đó đưa bạn ${w(3)} và nói: "Đây là ${w(4)} nữa!" Mở mắt ra. Bạn nhớ được tất cả năm từ không?`,
-  ];
-  return templates[hash % templates.length]();
-}
+// generateUniqueReading functions removed in favor of getAuthenticReading
 
 const LEARNING_TIPS = [
   '🎯 Read aloud 3 times: whisper → normal → loud. Point to each word as you read!',
