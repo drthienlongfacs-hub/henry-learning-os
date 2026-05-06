@@ -196,6 +196,7 @@ async function setCachedAudio(key: string, data: ArrayBuffer): Promise<void> {
 // ================================================================
 // KOKORO NEURAL TTS — lazy-loaded, background generation
 // ================================================================
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let kokoroInstance: any = null;
 let kokoroReady = false;
 let kokoroLoading = false;
@@ -209,6 +210,7 @@ async function ensureKokoroLoaded(): Promise<boolean> {
     const { KokoroTTS } = await import('kokoro-js');
     kokoroInstance = await KokoroTTS.from_pretrained(
       'onnx-community/Kokoro-82M-v1.0-ONNX',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       { dtype: 'q8', device: 'wasm' as any }
     );
     kokoroReady = true;
