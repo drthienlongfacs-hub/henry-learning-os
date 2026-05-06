@@ -506,23 +506,53 @@ function LearnPageContent() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
                     <Link href="#" onClick={(e) => {
                         e.preventDefault();
+                        // Helper: detect international topics by prefix
+                        const isIntlTopic = (key: string | null) =>
+                            key != null && /^(cam|us|au|fi|sg|ca)_/.test(key);
+
+                        // ── UX-centric back navigation ──
+                        // Priority: innermost state → outermost state
                         if (problems.length > 0 && index < problems.length) {
-                            // In quiz → stop quiz, go back to topic list
-                            setProblems([]); setSelectedTopic(null);
-                            setShowingLesson(false); setLessonContent(null); setUniversalLesson(null);
+                            // In quiz → stop quiz
+                            if (isIntlTopic(selectedTopic)) {
+                                // International quiz → return to international curriculum browser
+                                router.push('/child/international');
+                            } else {
+                                // Domestic quiz → return to topic list
+                                setProblems([]); setSelectedTopic(null);
+                                setShowingLesson(false); setLessonContent(null); setUniversalLesson(null);
+                                // Clean URL params
+                                window.history.replaceState(null, '', window.location.pathname);
+                            }
                         } else if (showingLesson) {
-                            // In lesson phase → go back to topic list
-                            setShowingLesson(false); setLessonContent(null); setUniversalLesson(null);
-                            setSelectedTopic(null);
+                            // In lesson phase → back to where user came from
+                            if (isIntlTopic(selectedTopic)) {
+                                router.push('/child/international');
+                            } else {
+                                setShowingLesson(false); setLessonContent(null); setUniversalLesson(null);
+                                setSelectedTopic(null);
+                                window.history.replaceState(null, '', window.location.pathname);
+                            }
                         } else if (problems.length > 0 && index >= problems.length) {
-                            // Completed quiz → go back to topic list
-                            setProblems([]); setSelectedTopic(null);
+                            // Completed quiz → back
+                            if (isIntlTopic(selectedTopic)) {
+                                router.push('/child/international');
+                            } else {
+                                setProblems([]); setSelectedTopic(null);
+                                window.history.replaceState(null, '', window.location.pathname);
+                            }
                         } else if (subject && !selectedTopic) {
                             // In topic list → go back to subject selector
                             setSubject(null);
+                            window.history.replaceState(null, '', window.location.pathname);
                         } else if (selectedTopic) {
-                            // Selected topic but not in lesson/quiz → go back to topic list
-                            setSelectedTopic(null);
+                            // Selected topic but not in lesson/quiz → go back
+                            if (isIntlTopic(selectedTopic)) {
+                                router.push('/child/international');
+                            } else {
+                                setSelectedTopic(null);
+                                window.history.replaceState(null, '', window.location.pathname);
+                            }
                         } else {
                             router.push('/child');
                         }
