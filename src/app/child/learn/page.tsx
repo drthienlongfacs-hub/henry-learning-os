@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowLeft, BookOpen, Calculator, Globe2, FlaskConical, Brain, ChevronRight, RotateCcw, CheckCircle2, XCircle, Lightbulb } from 'lucide-react';
-import { LessonPhase, generateLessonContent, type LessonContent } from '@/components/LessonPhase';
+import { LessonPhase, generateLessonContent, buildIntlLessonFromData, type LessonContent } from '@/components/LessonPhase';
 import { getUniversalLesson, type UniversalLesson } from '@/lib/content/universal-lesson';
 import { MATH_TOPICS, generateMathSet, type MathProblem } from '@/lib/content/math-generator';
 import { VIETNAMESE_TOPICS, generateVietnameseSet, type VietnameseProblem } from '@/lib/content/vietnamese-generator';
@@ -253,7 +253,8 @@ function LearnPageContent() {
             setProblems(p as Problem[]);
         }
         setShowingLesson(false);
-        setLessonContent(null);
+        // Do NOT clear lesson state here so we can navigate back to it:
+        // setLessonContent(null);
         setIndex(0); setSelected(null); setScore(0); setShowHint(false); setHintLevelUsed(0);
         startTime.current = Date.now();
     }, [lessonDepth]);
@@ -291,7 +292,15 @@ function LearnPageContent() {
                         const allUnits = [...mod.CAMBRIDGE_UNITS, ...mod.US_WONDERS_UNITS, ...mod.AUSTRALIAN_UNITS, ...mod.FINNISH_UNITS, ...mod.SINGAPORE_UNITS, ...mod.CANADIAN_UNITS];
                         const unit = allUnits.find(u => u.unitId === urlTopic);
                         if (unit) {
-                            const lesson = generateLessonContent(urlTopic, unit.title, unit.titleVi, unit.grade, unit.framework);
+                            // Use buildIntlLessonFromData with ACTUAL data — no broken require()
+                            const lesson = buildIntlLessonFromData(
+                                urlTopic, unit.title, unit.titleVi, unit.grade, unit.framework,
+                                {
+                                    readingPassages: mod.READING_PASSAGES,
+                                    vocabThemes: mod.VOCAB_THEMES,
+                                    grammarTopics: mod.GRAMMAR_TOPICS,
+                                }
+                            );
                             setLessonContent(lesson);
                             setShowingLesson(true);
                         } else {
@@ -524,14 +533,17 @@ function LearnPageContent() {
                         // ── UX-centric back navigation ──
                         // Priority: innermost state → outermost state
                         if (problems.length > 0 && index < problems.length) {
-                            // In quiz → stop quiz
-                            if (isIntlTopic(selectedTopic)) {
-                                backToIntl();
+                            // In quiz → return to lesson phase if it exists, otherwise topic list
+                            setProblems([]);
+                            if (lessonContent || universalLesson) {
+                                setShowingLesson(true);
                             } else {
-                                // Domestic quiz → return to topic list
-                                setProblems([]); setSelectedTopic(null);
-                                setShowingLesson(false); setLessonContent(null); setUniversalLesson(null);
-                                window.history.replaceState(null, '', window.location.pathname);
+                                if (isIntlTopic(selectedTopic)) {
+                                    backToIntl();
+                                } else {
+                                    setSelectedTopic(null);
+                                    window.history.replaceState(null, '', window.location.pathname);
+                                }
                             }
                         } else if (showingLesson) {
                             // In lesson phase → back to where user came from
@@ -543,12 +555,17 @@ function LearnPageContent() {
                                 window.history.replaceState(null, '', window.location.pathname);
                             }
                         } else if (problems.length > 0 && index >= problems.length) {
-                            // Completed quiz → back
-                            if (isIntlTopic(selectedTopic)) {
-                                backToIntl();
+                            // Completed quiz → return to lesson phase if it exists, otherwise topic list
+                            setProblems([]);
+                            if (lessonContent || universalLesson) {
+                                setShowingLesson(true);
                             } else {
-                                setProblems([]); setSelectedTopic(null);
-                                window.history.replaceState(null, '', window.location.pathname);
+                                if (isIntlTopic(selectedTopic)) {
+                                    backToIntl();
+                                } else {
+                                    setSelectedTopic(null);
+                                    window.history.replaceState(null, '', window.location.pathname);
+                                }
                             }
                         } else if (subject && !selectedTopic) {
                             // In topic list → go back to subject selector
@@ -998,7 +1015,7 @@ function LearnPageContent() {
                                 lang={lang as 'vi' | 'en'}
                                 onStartQuiz={() => {
                                     setShowingLesson(false);
-                                    setLessonContent(null);
+                                    // Keep lessonContent so back button can return to lesson
                                     if (subject && selectedTopic) startExercise(subject, grade, selectedTopic);
                                 }}
                             />

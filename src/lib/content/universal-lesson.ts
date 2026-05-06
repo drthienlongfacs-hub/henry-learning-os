@@ -2542,22 +2542,207 @@ export function getUniversalLesson(
       });
     }
   }
-  // Auto-generate from topic name — ensures 100% coverage
-  return buildLesson(subject, topicName, icon, grade, {
-    concepts: [
+  // Auto-generate dynamic lesson content for any remaining topics — ensures 100% coverage
+  return buildDynamicLesson(subject, topicName, icon, grade);
+}
+
+function buildDynamicLesson(subject: string, topicName: string, icon: string, grade: number): UniversalLesson {
+  let concepts: string[] = [];
+  let examples: string[] = [];
+  let tips: string[] = [];
+
+  const lowerTopic = topicName.toLowerCase();
+
+  // --- MATH ---
+  if (subject === 'math') {
+    if (lowerTopic.includes('cộng') || lowerTopic.includes('trừ') || lowerTopic.includes('nhân') || lowerTopic.includes('chia')) {
+      concepts = [
+        `Phép tính "${topicName}" đòi hỏi sự cẩn thận ở từng bước.`,
+        `Nhớ đặt tính thẳng cột (hàng đơn vị theo hàng đơn vị, hàng chục theo hàng chục).`,
+        `Tính từ phải sang trái (bắt đầu từ hàng đơn vị).`
+      ];
+      examples = [
+        `Khi thực hiện phép tính, hãy làm nháp trước để tránh sai sót.`,
+        `Có thể dùng phép tính ngược lại để thử lại kết quả.`
+      ];
+      tips = [
+        `Nhớ mang số dư sang hàng tiếp theo nếu có (phép tính có nhớ).`,
+        `Kiểm tra lại một lần nữa trước khi điền đáp án.`
+      ];
+    } else if (lowerTopic.includes('hình') || lowerTopic.includes('chu vi') || lowerTopic.includes('diện tích')) {
+      concepts = [
+        `Hình học không gian và phẳng: ${topicName}.`,
+        `Nắm vững công thức tính chu vi và diện tích của các hình cơ bản.`,
+        `Chú ý đơn vị đo độ dài (cm, m) và diện tích (cm², m²).`
+      ];
+      examples = [
+        `Quan sát hình dạng thực tế của đồ vật xung quanh bạn giống hình gì.`,
+        `Khi tính toán, nhớ ghi đơn vị ở kết quả.`
+      ];
+      tips = [
+        `Vẽ hình ra nháp sẽ giúp bạn nhìn rõ bài toán hơn.`,
+        `Học thuộc lòng công thức thường xuyên để không bị quên.`
+      ];
+    } else {
+      concepts = [
+        `Toán học tư duy: ${topicName}.`,
+        `Đọc kỹ đề bài để xác định xem bài toán yêu cầu tìm gì.`,
+        `Xác định các số liệu đã cho và mối quan hệ giữa chúng.`
+      ];
+      examples = [
+        `Tóm tắt bài toán bằng sơ đồ hoặc lời văn ngắn gọn trước khi giải.`,
+        `Phân tích từng bước: Phép tính thứ nhất làm gì, phép tính thứ hai làm gì.`
+      ];
+      tips = [
+        `Đừng vội vàng, đọc đề ít nhất 2 lần.`,
+        `Nếu số quá lớn, hãy thử suy luận với số nhỏ trước để tìm quy luật.`
+      ];
+    }
+  } 
+  // --- VIETNAMESE ---
+  else if (subject === 'vietnamese') {
+    if (lowerTopic.includes('từ') || lowerTopic.includes('câu')) {
+      concepts = [
+        `Luyện từ và câu: ${topicName}.`,
+        `Xác định đúng loại từ (danh từ, động từ, tính từ).`,
+        `Cấu trúc câu luôn cần có đủ chủ ngữ và vị ngữ.`
+      ];
+      examples = [
+        `Phân tích câu: "Con chim hót" -> "Con chim" là chủ ngữ, "hót" là vị ngữ.`,
+        `Sử dụng từ láy, từ ghép để làm câu văn hay và biểu cảm hơn.`
+      ];
+      tips = [
+        `Nghĩ về những hình ảnh quen thuộc trong đời sống để đặt câu.`,
+        `Sử dụng dấu phẩy để ngắt ý và dấu chấm khi kết thúc câu.`
+      ];
+    } else if (lowerTopic.includes('tập làm văn') || lowerTopic.includes('kể chuyện') || lowerTopic.includes('miêu tả')) {
+      concepts = [
+        `Kỹ năng viết: ${topicName}.`,
+        `Một bài văn/đoạn văn hoàn chỉnh cần có 3 phần: Mở bài, Thân bài, Kết bài.`,
+        `Sử dụng các từ ngữ miêu tả sinh động để thu hút người đọc.`
+      ];
+      examples = [
+        `Mở bài: Giới thiệu người, vật hoặc sự việc định tả.`,
+        `Kết bài: Nêu tình cảm, suy nghĩ của em.`
+      ];
+      tips = [
+        `Lập dàn ý chi tiết ra giấy nháp trước khi viết.`,
+        `Sử dụng nhiều giác quan (mắt nhìn, tai nghe) để miêu tả chân thực.`
+      ];
+    } else {
+      concepts = [
+        `Tiếng Việt: ${topicName}.`,
+        `Rèn luyện kỹ năng đọc hiểu và cảm thụ văn học.`,
+        `Hiểu đúng nghĩa của từ trong ngữ cảnh cụ thể.`
+      ];
+      examples = [
+        `Tập đọc: Chú ý ngắt nghỉ hơi đúng chỗ ở các dấu phẩy, dấu chấm.`,
+        `Trả lời câu hỏi: Tìm thông tin trực tiếp trong bài đọc.`
+      ];
+      tips = [
+        `Hãy đọc bài thành tiếng nhiều lần để trôi chảy và biểu cảm hơn.`,
+        `Gạch dưới các từ khó hiểu và tra từ điển hoặc hỏi thầy cô.`
+      ];
+    }
+  }
+  // --- SCIENCE ---
+  else if (subject === 'science') {
+    concepts = [
+      `Khám phá Khoa học: ${topicName}.`,
+      `Khoa học giúp chúng ta giải thích các hiện tượng tự nhiên xung quanh.`,
+      `Luôn quan sát và đặt câu hỏi "Tại sao?".`
+    ];
+    examples = [
+      `Tìm hiểu nguyên nhân và kết quả của hiện tượng liên quan đến ${topicName}.`,
+      `Liên hệ kiến thức đã học với đời sống thực tế quanh em.`
+    ];
+    tips = [
+      `Cùng làm các thí nghiệm nhỏ (có người lớn giám sát) để hiểu rõ bản chất.`,
+      `Khám phá thế giới tự nhiên bằng các tài liệu bổ ích.`
+    ];
+  }
+  // --- HISGEO ---
+  else if (subject === 'hisgeo') {
+    concepts = [
+      `Lịch sử & Địa lý: ${topicName}.`,
+      `Lịch sử: Ghi nhớ các mốc thời gian, nhân vật và sự kiện quan trọng.`,
+      `Địa lý: Hiểu về địa hình, khí hậu và đặc điểm con người ở các vùng miền.`
+    ];
+    examples = [
+      `Khi học Lịch sử, hãy đặt mình vào thời đại đó để hiểu bối cảnh.`,
+      `Khi học Địa lý, hãy chỉ đúng vị trí trên bản đồ.`
+    ];
+    tips = [
+      `Sử dụng sơ đồ tư duy (Mindmap) để ghi nhớ chuỗi sự kiện dễ dàng hơn.`,
+      `Vẽ lược đồ hoặc xem bản đồ nhiều lần để nhớ vị trí.`
+    ];
+  }
+  // --- ETHICS / ĐẠO ĐỨC ---
+  else if (subject === 'ethics') {
+    concepts = [
+      `Đạo đức: ${topicName}.`,
+      `Bài học về cách ứng xử, tình yêu thương và sự tôn trọng trong xã hội.`,
+      `Phân biệt rõ ràng hành vi đúng và hành vi sai.`
+    ];
+    examples = [
+      `Khi gặp tình huống thực tế, em sẽ làm gì để thể hiện bài học ${topicName}?`,
+      `Ghi nhớ lời dạy của thầy cô và cha mẹ trong ứng xử hàng ngày.`
+    ];
+    tips = [
+      `Hãy luôn đặt mình vào vị trí của người khác để thông cảm và thấu hiểu.`,
+      `Áp dụng bài học đạo đức vào cuộc sống hàng ngày từ những việc nhỏ nhất.`
+    ];
+  }
+  // --- COMPUTING ---
+  else if (subject === 'computing') {
+    concepts = [
+      `Tin học: ${topicName}.`,
+      `Hiểu về các thiết bị máy tính và nguyên lý hoạt động của phần mềm.`,
+      `An toàn trên mạng internet luôn là ưu tiên hàng đầu.`
+    ];
+    examples = [
+      `Thực hành các thao tác trực tiếp trên máy tính để ghi nhớ.`,
+      `Sử dụng chuột và bàn phím đúng tư thế.`
+    ];
+    tips = [
+      `Học đi đôi với hành: Thử nghiệm ngay trên thiết bị của bạn.`,
+      `Không bao giờ chia sẻ thông tin cá nhân trên môi trường mạng.`
+    ];
+  }
+  // --- ART ---
+  else if (subject === 'art') {
+    concepts = [
+      `Mỹ thuật & Nghệ thuật: ${topicName}.`,
+      `Nghệ thuật là sự sáng tạo không giới hạn của bản thân.`,
+      `Màu sắc, đường nét và hình khối là ngôn ngữ của Mỹ thuật.`
+    ];
+    examples = [
+      `Cảm nhận vẻ đẹp của thế giới xung quanh qua lăng kính nghệ thuật.`,
+      `Phối hợp các màu sắc để tạo ra tác phẩm hài hòa.`
+    ];
+    tips = [
+      `Đừng sợ vẽ sai, hãy tự do thể hiện theo cảm nhận của bạn.`,
+      `Thử nghiệm với nhiều chất liệu khác nhau như màu sáp, màu nước.`
+    ];
+  }
+  // --- DEFAULT FALLBACK ---
+  else {
+    concepts = [
       `Chủ đề: ${topicName}`,
-      `Lớp ${grade} — Hãy đọc kỹ trước khi làm bài`,
-      `Ghi nhớ các từ khóa quan trọng trong bài`,
-    ],
-    examples: [
-      `Ví dụ sẽ xuất hiện trong phần luyện tập`,
-      `Hãy đọc câu hỏi thật kỹ trước khi chọn đáp án`,
-    ],
-    tips: [
-      `Đọc bài 2 lần trước khi trả lời`,
-      `Nếu không chắc, dùng phép loại trừ`,
-    ],
-  });
+      `Lớp ${grade} — Những kiến thức trọng tâm cần nắm vững.`,
+      `Hãy đọc thật kỹ câu hỏi và các dữ kiện trước khi làm bài.`
+    ];
+    examples = [
+      `Ví dụ và bài tập thực hành sẽ giúp em củng cố lý thuyết.`,
+      `Học thuộc và áp dụng các quy tắc cơ bản trong bài.`
+    ];
+    tips = [
+      `Luyện tập mỗi ngày để ghi nhớ lâu hơn.`,
+      `Nếu làm sai, hãy bình tĩnh xem lại lý thuyết và làm lại lần nữa.`
+    ];
+  }
+
+  return buildLesson(subject, topicName, icon, grade, { concepts, examples, tips });
 }
 
 function buildLesson(

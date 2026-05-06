@@ -76,30 +76,77 @@ function loadUnitCache(): Record<string, CachedUnit> {
 function buildReadingFromUnit(unit: CachedUnit): { reading: string; readingVi: string } {
   const v = unit.vocabulary;
   const p = unit.patterns;
+  
+  if (v.length < 3) return { reading: `Let's learn about ${unit.title}.`, readingVi: `Hãy cùng học về ${unit.titleVi}.` };
+  
+  // Use a simple hash of unit's title to pick a template deterministically
+  const hash = unit.title.length + (v[0]?.en.length || 0);
+  const templateIdx = hash % 4;
+  
   const en: string[] = [];
   const vi: string[] = [];
-
-  // Opening — introduce the topic
-  if (v.length >= 3) {
-    en.push(`Today we will learn about ${v[0].en}, ${v[1].en}, and ${v[2].en}.`);
-    vi.push(`Hôm nay chúng ta sẽ học về ${v[0].vi}, ${v[1].vi}, và ${v[2].vi}.`);
+  
+  if (templateIdx === 0) {
+    en.push(`Today is a great day to learn about ${unit.title}.`);
+    vi.push(`Hôm nay là một ngày tuyệt vời để học về ${unit.titleVi}.`);
+    en.push(`We can see many things like ${v[0].en} and ${v[1].en}.`);
+    vi.push(`Chúng ta có thể thấy nhiều thứ như ${v[0].vi} và ${v[1].vi}.`);
+    if (p.length > 0) {
+      en.push(p[0].example);
+      vi.push(p[0].exampleVi);
+    }
+    if (v[2]) {
+      en.push(`Do you know the word "${v[2].en}"?`);
+      vi.push(`Bạn có biết từ "${v[2].vi}" không?`);
+    }
+    en.push(`Let's practice these words together!`);
+    vi.push(`Hãy cùng nhau thực hành những từ này nhé!`);
+  } else if (templateIdx === 1) {
+    en.push(`Welcome to the lesson on ${unit.title}.`);
+    vi.push(`Chào mừng đến với bài học về ${unit.titleVi}.`);
+    if (p.length > 0) {
+      en.push(p[0].example);
+      vi.push(p[0].exampleVi);
+    }
+    en.push(`Look at the ${v[0].en}. It is next to the ${v[1].en}.`);
+    vi.push(`Nhìn vào ${v[0].vi}. Nó ở cạnh ${v[1].vi}.`);
+    if (v[2]) {
+      en.push(`Can you find the ${v[2].en}?`);
+      vi.push(`Bạn có thể tìm thấy ${v[2].vi} không?`);
+    }
+    en.push(`Learning English is fun!`);
+    vi.push(`Học tiếng Anh thật là vui!`);
+  } else if (templateIdx === 2) {
+    en.push(`Let's talk about ${unit.title}.`);
+    vi.push(`Hãy cùng nói về ${unit.titleVi}.`);
+    en.push(`My favorite word is ${v[0].en}. What about you?`);
+    vi.push(`Từ yêu thích của tôi là ${v[0].vi}. Còn bạn thì sao?`);
+    if (p.length > 0) {
+      en.push(p[0].example);
+      vi.push(p[0].exampleVi);
+    }
+    if (v[1] && v[2]) {
+      en.push(`We also have ${v[1].en} and ${v[2].en}.`);
+      vi.push(`Chúng ta cũng có ${v[1].vi} và ${v[2].vi}.`);
+    }
+    en.push(`Read them aloud to remember!`);
+    vi.push(`Hãy đọc to lên để ghi nhớ nhé!`);
+  } else {
+    en.push(`Here is a short story about ${unit.title}.`);
+    vi.push(`Đây là một câu chuyện ngắn về ${unit.titleVi}.`);
+    if (p.length > 0) {
+      en.push(p[0].example);
+      vi.push(p[0].exampleVi);
+    }
+    en.push(`The ${v[0].en} and the ${v[1].en} are here.`);
+    vi.push(`${v[0].vi} và ${v[1].vi} đang ở đây.`);
+    if (p.length > 1) {
+      en.push(p[1].example);
+      vi.push(p[1].exampleVi);
+    }
+    en.push(`Good job! Keep practicing.`);
+    vi.push(`Làm tốt lắm! Hãy tiếp tục luyện tập.`);
   }
-
-  // Use each pattern's example sentence (unique per unit!)
-  for (const pat of p.slice(0, 3)) {
-    en.push(pat.example);
-    vi.push(pat.exampleVi);
-  }
-
-  // Vocabulary in context
-  for (const word of v.slice(3, 6)) {
-    en.push(`Can you say "${word.en}"? It means "${word.vi}" in Vietnamese.`);
-    vi.push(`Bạn nói được "${word.en}" không? Nó nghĩa là "${word.vi}".`);
-  }
-
-  // Closing
-  en.push(`Great job! Now you know words about "${unit.title}".`);
-  vi.push(`Giỏi lắm! Bây giờ bạn biết các từ về "${unit.title}".`);
 
   return { reading: en.join(' '), readingVi: vi.join(' ') };
 }
@@ -108,7 +155,7 @@ export function generateLessonContent(unitId: string, title: string, titleVi: st
   const cache = loadUnitCache();
   const unit = cache[unitId];
 
-  // ── PRIMARY PATH: Data-driven unique content per unit ──
+  // ── PRIMARY PATH: Data-driven unique content per domestic unit ──
   if (unit && unit.vocabulary.length > 0) {
     const { reading, readingVi } = buildReadingFromUnit(unit);
     const grammarNote = unit.patterns.length > 0
@@ -148,7 +195,11 @@ export function generateLessonContent(unitId: string, title: string, titleVi: st
     };
   }
 
-  // ── FALLBACK: generic theme (only for non-unit international topics) ──
+  // ── FALLBACK for units not in cache (shouldn't happen for domestic, intl uses buildIntlLessonFromData) ──
+  return buildFallbackLesson(title, titleVi, grade, framework);
+}
+
+function buildFallbackLesson(title: string, titleVi: string, grade: number, framework: string): LessonContent {
   const theme = FALLBACK_THEME;
   return {
     unitTitle: title, unitTitleVi: titleVi, grade, framework,
@@ -167,6 +218,154 @@ export function generateLessonContent(unitId: string, title: string, titleVi: st
     ],
   };
 }
+
+// ══════════════════════════════════════════════════════════════════
+// INTERNATIONAL LESSON BUILDER — receives data as parameters
+// Called from learn/page.tsx where data is already loaded via import()
+// This eliminates the broken require() that caused all units to show "Tom and Lily"
+// ══════════════════════════════════════════════════════════════════
+
+interface IntlDataArrays {
+  readingPassages: { passageId: string; grade: number; title: string; titleVi: string; text: string;
+    questions: { q: string; qVi: string; options: string[]; correct: string }[] }[];
+  vocabThemes: { themeId: string; grade: number; title: string; titleVi: string;
+    words: string[]; wordsVi: string[] }[];
+  grammarTopics: { topicId: string; grade: number; title: string; titleVi: string;
+    rules: { rule: string; ruleVi: string; examples: string[]; examplesVi: string[] }[] }[];
+}
+
+export function buildIntlLessonFromData(
+  unitId: string, title: string, titleVi: string, grade: number, framework: string,
+  data: IntlDataArrays,
+): LessonContent {
+  // Better hash with prime multiplication for good distribution
+  const hash = unitId.split('').reduce((acc, ch, i) => ((acc * 31) ^ ch.charCodeAt(0)) >>> 0, 0);
+
+  // Select vocab & grammar — use different seed for each to decorrelate
+  const gradeVocabs = data.vocabThemes.filter(v => v.grade === grade);
+  const gradeGrammars = data.grammarTopics.filter(g => g.grade === grade);
+  const vocabs = gradeVocabs.length > 0 ? gradeVocabs : data.vocabThemes;
+  const grammars = gradeGrammars.length > 0 ? gradeGrammars : data.grammarTopics;
+  const vocabHash = unitId.split('').reduce((acc, ch) => ((acc * 37) ^ ch.charCodeAt(0)) >>> 0, 7);
+  const grammarHash = unitId.split('').reduce((acc, ch) => ((acc * 41) ^ ch.charCodeAt(0)) >>> 0, 13);
+  const vocab = vocabs[vocabHash % vocabs.length];
+  const grammar = grammars[grammarHash % grammars.length];
+
+  if (!vocab || !grammar) {
+    return buildFallbackLesson(title, titleVi, grade, framework);
+  }
+
+  // ── GENERATE UNIQUE READING from unit title + vocab ──
+  const w = vocab.words;
+  const wv = vocab.wordsVi;
+  const reading = generateUniqueReading(hash, title, w, grade);
+  const readingVi = generateUniqueReadingVi(hash, titleVi, wv, grade);
+
+  // Build speaking sentences from grammar rules
+  const speakingSentences = grammar.rules.flatMap(r => r.examples.slice(0, 2));
+  const speakingSentencesVi = grammar.rules.flatMap(r => r.examplesVi.slice(0, 2));
+
+  return {
+    unitTitle: title, unitTitleVi: titleVi, grade, framework,
+    sections: [
+      {
+        type: 'vocabulary', title: `📚 Vocabulary: ${vocab.title}`, titleVi: `📚 Từ vựng: ${vocab.titleVi}`,
+        content: w.map((en, i) => `${en} — ${wv[i] ?? en}`),
+      },
+      {
+        type: 'reading', title: `📖 ${title}`, titleVi: `📖 ${titleVi}`,
+        content: [reading],
+        contentVi: [readingVi],
+      },
+      {
+        type: 'grammar', title: `📝 ${grammar.title}`, titleVi: `📝 ${grammar.titleVi}`,
+        content: grammar.rules.map(r => r.rule),
+        contentVi: grammar.rules.map(r => r.ruleVi),
+        example: grammar.rules[0]?.examples?.[0],
+        exampleVi: grammar.rules[0]?.examplesVi?.[0],
+      },
+      {
+        type: 'speaking', title: '🗣️ Practice Sentences', titleVi: '🗣️ Câu luyện tập',
+        content: speakingSentences.length > 0 ? speakingSentences : [`Practice: I like ${title.toLowerCase()}.`],
+        contentVi: speakingSentencesVi.length > 0 ? speakingSentencesVi : [`Luyện tập: Tôi thích ${titleVi.toLowerCase()}.`],
+      },
+      {
+        type: 'tip', title: '💡 Learning Tip', titleVi: '💡 Mẹo học',
+        content: [LEARNING_TIPS[hash % LEARNING_TIPS.length]],
+        contentVi: [LEARNING_TIPS_VI[hash % LEARNING_TIPS_VI.length]],
+      },
+    ],
+  };
+}
+
+// ── 12 unique reading templates — filled with unit title + vocab words ──
+// Each unit's title is unique → each generated passage is unique
+
+function generateUniqueReading(hash: number, title: string, words: string[], grade: number): string {
+  const w = (i: number) => words[i % words.length] || 'word';
+  const t = title;
+  const templates = [
+    () => `Today we are learning about "${t}". Look around you! Can you see a ${w(0)}? What about a ${w(1)}? In this lesson, we will learn words like "${w(2)}", "${w(3)}", and "${w(4)}". Try to use them in a sentence. For example: "I can see a ${w(0)}." Great job! Keep learning!`,
+    () => `Welcome to "${t}"! This is going to be fun. First, let us learn some new words. A ${w(0)} is something you can find at home or at school. A ${w(1)} is also very useful. Do you know what a ${w(2)} is? Ask your teacher or look it up! Now, try to spell "${w(3)}" and "${w(4)}". Well done!`,
+    () => `"${t}" — what an interesting topic! Let me tell you a short story. One day, a child found a ${w(0)} and a ${w(1)} in the classroom. "Look!" the child said. "I also have a ${w(2)}!" The teacher smiled and said, "You know many words! Can you say ${w(3)} and ${w(4)} too?" The child nodded happily.`,
+    () => `Let us explore "${t}" together! In English, we have many useful words. "${w(0)}" — can you say it? Good! "${w(1)}" — try again! Excellent! Now let us make sentences: "The ${w(0)} is on the ${w(2)}." "I like my ${w(3)}." "Where is the ${w(4)}?" Practice these sentences with a friend!`,
+    () => `Do you like "${t}"? I do! Here are some words to learn: ${w(0)}, ${w(1)}, ${w(2)}, ${w(3)}, and ${w(4)}. Let us put them in sentences. "I have a ${w(0)}." "She has a ${w(1)}." "We need a ${w(2)}." "They found a ${w(3)}." "Look at the ${w(4)}!" How many can you remember?`,
+    () => `"${t}" is our topic today. Every good reader learns new words. Your new words are: ${w(0)}, ${w(1)}, ${w(2)}. Can you write them down? Now try these harder words: ${w(3)}, ${w(4)}. Read them aloud three times each. The more you practice, the better you get!`,
+    () => `Story time! This story is about "${t}". Once, there was a student who loved to learn. The student picked up a ${w(0)} and said, "This is my favorite!" Then the student saw a ${w(1)} and a ${w(2)}. "I want to learn all the words!" said the student. And so, the student also learned ${w(3)} and ${w(4)}. The end!`,
+    () => `Let us play a word game about "${t}"! I say a word, you repeat it. Ready? "${w(0)}" — your turn! "${w(1)}" — great! "${w(2)}" — wonderful! Now, can you use "${w(3)}" in a sentence? How about "${w(4)}"? You are becoming a word champion!`,
+    () => `Reading about "${t}" is exciting! Look at these words carefully: ${w(0)}, ${w(1)}, ${w(2)}, ${w(3)}, ${w(4)}. Each word has its own meaning and sound. Try to find these words in books, on signs, or in conversations. The best way to learn English is to notice words everywhere around you!`,
+    () => `Imagine you are a teacher! Your lesson today is "${t}". You need to teach your friends these words: ${w(0)}, ${w(1)}, ${w(2)}, ${w(3)}, and ${w(4)}. How would you explain them? Draw a picture for each word. Then write one sentence using each word. Teaching others is the best way to learn!`,
+    () => `Welcome, young reader! Today's adventure is "${t}". On this adventure, you will discover five special words. The first word is "${w(0)}" — it starts with the letter "${w(0)[0]?.toUpperCase()}". The second word is "${w(1)}". Then comes "${w(2)}", "${w(3)}", and "${w(4)}". Can you put them in alphabetical order?`,
+    () => `"${t}" — Let us begin! Close your eyes and imagine: you are in a place with a ${w(0)} and a ${w(1)}. You can also see a ${w(2)} nearby. Someone hands you a ${w(3)} and says, "Here is a ${w(4)} too!" Open your eyes. Can you remember all five words? Say them aloud!`,
+  ];
+  return templates[hash % templates.length]();
+}
+
+function generateUniqueReadingVi(hash: number, titleVi: string, wordsVi: string[], grade: number): string {
+  const w = (i: number) => wordsVi[i % wordsVi.length] || 'từ';
+  const t = titleVi;
+  const templates = [
+    () => `Hôm nay chúng ta học về "${t}". Hãy nhìn xung quanh! Bạn có thấy ${w(0)} không? Còn ${w(1)} thì sao? Trong bài này, chúng ta sẽ học các từ như "${w(2)}", "${w(3)}", và "${w(4)}". Hãy thử đặt câu với chúng nhé!`,
+    () => `Chào mừng đến với "${t}"! Bài này sẽ rất vui. Đầu tiên, hãy học một số từ mới. "${w(0)}" là thứ bạn có thể tìm thấy ở nhà hoặc trường. "${w(1)}" cũng rất hữu ích. Bạn có biết "${w(2)}" là gì không? Hãy thử đánh vần "${w(3)}" và "${w(4)}" nhé!`,
+    () => `"${t}" — chủ đề thú vị! Một ngày nọ, một bạn nhỏ tìm thấy ${w(0)} và ${w(1)} trong lớp. "Nhìn kìa!" bạn nhỏ nói. "Mình còn có ${w(2)} nữa!" Cô giáo mỉm cười: "Bạn biết nhiều từ lắm! Bạn có thể nói ${w(3)} và ${w(4)} không?"`,
+    () => `Hãy cùng khám phá "${t}"! Trong tiếng Anh, có nhiều từ hữu ích. "${w(0)}" — bạn nói được không? Tốt! "${w(1)}" — thử lần nữa! Giỏi lắm! Bây giờ hãy đặt câu: "The ${w(0)} is on the ${w(2)}." Luyện tập với bạn bè nhé!`,
+    () => `Bạn có thích "${t}" không? Đây là các từ cần học: ${w(0)}, ${w(1)}, ${w(2)}, ${w(3)}, và ${w(4)}. Hãy đặt câu với chúng. Bạn nhớ được bao nhiêu từ?`,
+    () => `"${t}" là chủ đề hôm nay. Những từ mới của bạn là: ${w(0)}, ${w(1)}, ${w(2)}. Bạn có thể viết chúng ra không? Bây giờ thử những từ khó hơn: ${w(3)}, ${w(4)}. Đọc to ba lần mỗi từ nhé!`,
+    () => `Giờ kể chuyện! Câu chuyện về "${t}". Có một bạn học sinh rất thích học. Bạn ấy cầm ${w(0)} và nói: "Đây là thứ yêu thích của mình!" Rồi bạn ấy thấy ${w(1)} và ${w(2)}. Bạn ấy cũng học thêm ${w(3)} và ${w(4)}. Hết!`,
+    () => `Hãy chơi trò chơi từ vựng về "${t}"! Mình nói một từ, bạn nhắc lại. Sẵn sàng chưa? "${w(0)}" — đến lượt bạn! "${w(1)}" — tuyệt vời! "${w(2)}" — hay lắm! Bạn có thể đặt câu với "${w(3)}" không? Còn "${w(4)}" thì sao?`,
+    () => `Đọc về "${t}" thật thú vị! Hãy nhìn kỹ các từ này: ${w(0)}, ${w(1)}, ${w(2)}, ${w(3)}, ${w(4)}. Mỗi từ có nghĩa và âm thanh riêng. Hãy tìm những từ này trong sách, trên biển hiệu, hoặc trong các cuộc trò chuyện nhé!`,
+    () => `Tưởng tượng bạn là giáo viên! Bài học hôm nay là "${t}". Bạn cần dạy bạn bè các từ: ${w(0)}, ${w(1)}, ${w(2)}, ${w(3)}, và ${w(4)}. Bạn sẽ giải thích thế nào? Hãy vẽ một bức tranh cho mỗi từ nhé!`,
+    () => `Chào bạn nhỏ! Cuộc phiêu lưu hôm nay là "${t}". Bạn sẽ khám phá năm từ đặc biệt. Từ đầu tiên là "${w(0)}". Từ thứ hai là "${w(1)}". Tiếp theo là "${w(2)}", "${w(3)}", và "${w(4)}". Bạn có thể sắp xếp chúng theo thứ tự bảng chữ cái không?`,
+    () => `"${t}" — Bắt đầu nào! Nhắm mắt và tưởng tượng: bạn ở một nơi có ${w(0)} và ${w(1)}. Bạn cũng thấy ${w(2)} gần đó. Ai đó đưa bạn ${w(3)} và nói: "Đây là ${w(4)} nữa!" Mở mắt ra. Bạn nhớ được tất cả năm từ không?`,
+  ];
+  return templates[hash % templates.length]();
+}
+
+const LEARNING_TIPS = [
+  '🎯 Read aloud 3 times: whisper → normal → loud. Point to each word as you read!',
+  '🎯 Draw a picture for each new word. Visual learners remember 2x better!',
+  '🎯 Make flashcards: English on one side, Vietnamese on the other. Quiz yourself daily!',
+  '🎯 Try to use one new word in a real conversation today. Practice makes perfect!',
+  '🎯 Write each word 5 times in your notebook. Your hand remembers what your brain forgets!',
+  '🎯 Teach someone else what you learned. Teaching is the best way to remember!',
+  '🎯 Listen to English songs or watch cartoons in English. Your ears will learn too!',
+  '🎯 Before bed, say all the new words you learned today. Sleep helps your brain remember!',
+  '🎯 Group similar words together. Learning in categories is easier than random words!',
+  '🎯 Challenge yourself: close the book and write down as many words as you can remember!',
+];
+
+const LEARNING_TIPS_VI = [
+  '🎯 Đọc to 3 lần: thì thầm → bình thường → to. Chỉ vào từng từ khi đọc!',
+  '🎯 Vẽ một bức tranh cho mỗi từ mới. Người học bằng hình ảnh nhớ tốt gấp 2 lần!',
+  '🎯 Làm thẻ nhớ: tiếng Anh một mặt, tiếng Việt một mặt. Tự kiểm tra mỗi ngày!',
+  '🎯 Hãy dùng một từ mới trong cuộc trò chuyện thực tế hôm nay. Luyện tập tạo nên hoàn hảo!',
+  '🎯 Viết mỗi từ 5 lần vào vở. Tay bạn sẽ nhớ những gì não quên!',
+  '🎯 Dạy người khác những gì bạn đã học. Dạy là cách tốt nhất để nhớ!',
+  '🎯 Nghe bài hát hoặc xem phim hoạt hình tiếng Anh. Tai bạn cũng sẽ học theo!',
+  '🎯 Trước khi ngủ, hãy nói tất cả các từ mới hôm nay. Giấc ngủ giúp não nhớ lâu!',
+  '🎯 Nhóm các từ giống nhau lại. Học theo nhóm dễ hơn học từ lẻ!',
+  '🎯 Thử thách: gấp sách lại và viết ra càng nhiều từ bạn nhớ càng tốt!',
+];
 
 
 // ── Lesson Phase UI Component ──
