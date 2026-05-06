@@ -1,6 +1,37 @@
 // Universal Lesson Content Generator — all 8 subjects
 // Template-based: generates lesson from topic metadata
+// English units: data-driven from english-units-g*.ts (92 units, G1-G5)
 
+import { GRADE1_UNITS, GRADE2_UNITS } from '@/data/english-units-g1g2';
+import { GRADE3_UNITS } from '@/data/english-units-g3';
+import { GRADE4_UNITS } from '@/data/english-units-g4';
+import { GRADE5_UNITS } from '@/data/english-units-g5';
+
+// ── Cached English unit lookup (lazy-initialized, O(1) per lookup) ──
+interface _EnglishUnitEntry {
+  vocabulary: { en: string; vi: string }[];
+  patterns: { pattern: string; example: string; exampleVi: string }[];
+}
+let _englishUnitMap: Map<string, _EnglishUnitEntry> | null = null;
+
+function _getEnglishUnit(unitId: string): _EnglishUnitEntry | undefined {
+  if (!_englishUnitMap) {
+    _englishUnitMap = new Map();
+    const allUnits = [
+      ...GRADE1_UNITS, ...GRADE2_UNITS,
+      ...GRADE3_UNITS, ...GRADE4_UNITS, ...GRADE5_UNITS,
+    ];
+    for (const u of allUnits) {
+      if (u.vocabulary?.length > 0) {
+        _englishUnitMap.set(u.unitId, {
+          vocabulary: u.vocabulary,
+          patterns: u.patterns ?? [],
+        });
+      }
+    }
+  }
+  return _englishUnitMap.get(unitId);
+}
 export interface UniversalLesson {
   title: string;
   titleVi: string;
@@ -2488,6 +2519,28 @@ export function getUniversalLesson(
         grade,
         subjectData[partialKey],
       );
+  }
+  // For English units (g1_u01 → g5_u20), load ACTUAL unit vocabulary & patterns
+  if (subject === 'english' && /^g\d_u\d{2}$/.test(topicKey)) {
+    const unit = _getEnglishUnit(topicKey);
+    if (unit) {
+      const vocab = unit.vocabulary;
+      const patterns = unit.patterns;
+      return buildLesson(subject, topicName, icon, grade, {
+        concepts: [
+          `📚 Từ vựng: ${vocab.slice(0, 5).map(v => `${v.en} (${v.vi})`).join(', ')}`,
+          ...(vocab.length > 5 ? [`📚 Thêm: ${vocab.slice(5).map(v => `${v.en} (${v.vi})`).join(', ')}`] : []),
+          ...(patterns.length > 0 ? [`📝 Mẫu câu: "${patterns[0].pattern}"`] : []),
+        ],
+        examples: patterns.length > 0
+          ? patterns.map(p => `${p.example} — ${p.exampleVi}`)
+          : [`Practice with the vocabulary words above`],
+        tips: [
+          `🎯 Luyện nói mỗi từ 3 lần: ${vocab[0]?.en ?? ''}, ${vocab[1]?.en ?? ''}, ${vocab[2]?.en ?? ''}`,
+          `🔊 Đọc to các mẫu câu và thay đổi từ trong chỗ trống`,
+        ],
+      });
+    }
   }
   // Auto-generate from topic name — ensures 100% coverage
   return buildLesson(subject, topicName, icon, grade, {

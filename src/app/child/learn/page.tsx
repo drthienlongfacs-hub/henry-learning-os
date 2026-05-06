@@ -504,12 +504,25 @@ function LearnPageContent() {
             <div style={{ maxWidth: 680, margin: '0 auto' }}>
                 {/* Header */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
-                    <Link href={problems.length > 0 ? '#' : '/child'} onClick={(e) => {
+                    <Link href="#" onClick={(e) => {
                         e.preventDefault();
                         if (problems.length > 0 && index < problems.length) {
+                            // In quiz → stop quiz, go back to topic list
+                            setProblems([]); setSelectedTopic(null);
+                            setShowingLesson(false); setLessonContent(null); setUniversalLesson(null);
+                        } else if (showingLesson) {
+                            // In lesson phase → go back to topic list
+                            setShowingLesson(false); setLessonContent(null); setUniversalLesson(null);
+                            setSelectedTopic(null);
+                        } else if (problems.length > 0 && index >= problems.length) {
+                            // Completed quiz → go back to topic list
                             setProblems([]); setSelectedTopic(null);
                         } else if (subject && !selectedTopic) {
+                            // In topic list → go back to subject selector
                             setSubject(null);
+                        } else if (selectedTopic) {
+                            // Selected topic but not in lesson/quiz → go back to topic list
+                            setSelectedTopic(null);
                         } else {
                             router.push('/child');
                         }

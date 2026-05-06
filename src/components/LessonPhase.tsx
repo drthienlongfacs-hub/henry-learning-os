@@ -22,87 +22,152 @@ interface LessonSection {
   exampleVi?: string;
 }
 
-// Grade-appropriate vocabulary and content per unit theme
-const THEME_CONTENT: Record<string, { vocab: [string, string][]; sentences: [string, string][]; reading: string; readingVi: string; grammar: string; grammarVi: string; tip: string; tipVi: string }> = {
-  // Cambridge Grade 1
-  'playing': {
-    vocab: [['friend', 'bạn'], ['play', 'chơi'], ['together', 'cùng nhau'], ['share', 'chia sẻ'], ['happy', 'vui vẻ'], ['game', 'trò chơi'], ['turn', 'lượt'], ['fun', 'vui']],
-    sentences: [['I play with my friend.', 'Tôi chơi với bạn.'], ['We share our toys.', 'Chúng tôi chia sẻ đồ chơi.'], ['It is my turn now.', 'Bây giờ đến lượt tôi.'], ['Let us play together!', 'Chúng ta hãy chơi cùng nhau!']],
-    reading: 'Tom and Lily are friends. They play in the park every day. Tom likes to run. Lily likes to jump. They share a ball. "Let us play together!" says Tom. "Yes! That is fun!" says Lily. They are happy.',
-    readingVi: 'Tom và Lily là bạn. Họ chơi trong công viên mỗi ngày. Tom thích chạy. Lily thích nhảy. Họ chia sẻ một quả bóng. "Chúng ta hãy chơi cùng nhau!" Tom nói. "Vâng! Thật vui!" Lily nói. Họ rất vui.',
-    grammar: 'Simple sentences: Subject + Verb. Example: "I play." "We share." "They run."',
-    grammarVi: 'Câu đơn giản: Chủ ngữ + Động từ. Ví dụ: "I play." "We share." "They run."',
-    tip: '🎯 Read aloud 3 times: whisper → normal → loud. Point to each word as you read!',
-    tipVi: '🎯 Đọc to 3 lần: thì thầm → bình thường → to. Chỉ vào từng từ khi đọc!',
-  },
-  'finding': {
-    vocab: [['find', 'tìm'], ['make', 'làm'], ['create', 'tạo'], ['discover', 'khám phá'], ['build', 'xây'], ['color', 'màu sắc'], ['shape', 'hình dạng'], ['new', 'mới']],
-    sentences: [['I can find a red ball.', 'Tôi tìm được quả bóng đỏ.'], ['Let us make something new!', 'Hãy làm gì đó mới!'], ['She discovers a bug.', 'Cô ấy khám phá ra một con bọ.'], ['We build a tower.', 'Chúng tôi xây một tòa tháp.']],
-    reading: 'Look around you. What can you find? A leaf? A stone? A feather? Pick it up and look closely. What color is it? What shape is it? Now you can make something! Use leaves to make a picture. Use stones to build a tower. Finding and making is fun!',
-    readingVi: 'Hãy nhìn xung quanh. Bạn tìm thấy gì? Một chiếc lá? Một viên đá? Một chiếc lông? Nhặt nó lên và nhìn kỹ. Nó màu gì? Hình gì? Giờ bạn có thể làm gì đó! Dùng lá để làm tranh. Dùng đá để xây tháp. Tìm kiếm và sáng tạo thật vui!',
-    grammar: 'Questions: "What can you find?" "What color is it?" — Start with What/Where/Who/How.',
-    grammarVi: 'Câu hỏi: "What can you find?" "What color is it?" — Bắt đầu bằng What/Where/Who/How.',
-    tip: '🔍 After reading, find 3 objects around you and describe them in English!',
-    tipVi: '🔍 Sau khi đọc, tìm 3 vật xung quanh và mô tả bằng tiếng Anh!',
-  },
-  'rhyme': {
-    vocab: [['rhyme', 'vần'], ['poem', 'bài thơ'], ['sing', 'hát'], ['word', 'từ'], ['sound', 'âm thanh'], ['cat', 'mèo'], ['hat', 'mũ'], ['bat', 'dơi/gậy']],
-    sentences: [['Cat and hat rhyme!', 'Cat và hat có vần!'], ['I like this poem.', 'Tôi thích bài thơ này.'], ['Can you sing this song?', 'Bạn hát bài này được không?'], ['These words sound the same.', 'Những từ này nghe giống nhau.']],
-    reading: 'I have a cat, it wears a hat.\nIt sat on a mat, imagine that!\nThe cat is fat, but oh so sweet.\nIt taps its paws — tap, tap, beat!\n\nCan you find the rhyming words? Cat, hat, mat, fat — they all end with "-at"!',
-    readingVi: 'Tôi có một con mèo, nó đội mũ.\nNó ngồi trên tấm thảm, tưởng tượng đi!\nCon mèo béo, nhưng ôi thật dễ thương.\nNó vỗ chân — tap, tap, nhịp!\n\nBạn tìm được từ vần không? Cat, hat, mat, fat — đều kết thúc bằng "-at"!',
-    grammar: 'Rhyming words end with the same sound: cat-hat-mat, run-fun-sun, day-play-say.',
-    grammarVi: 'Từ vần kết thúc bằng cùng âm: cat-hat-mat, run-fun-sun, day-play-say.',
-    tip: '🎵 Clap your hands when you hear rhyming words! Make up your own rhymes too.',
-    tipVi: '🎵 Vỗ tay khi nghe từ vần! Tự nghĩ ra vần của riêng mình nữa nhé.',
-  },
+// FALLBACK theme — only used when unit data is not available
+const FALLBACK_THEME = {
+  vocab: [['friend', 'bạn'], ['play', 'chơi'], ['together', 'cùng nhau'], ['share', 'chia sẻ'], ['happy', 'vui vẻ'], ['game', 'trò chơi'], ['turn', 'lượt'], ['fun', 'vui']] as [string, string][],
+  sentences: [['I play with my friend.', 'Tôi chơi với bạn.'], ['We share our toys.', 'Chúng tôi chia sẻ đồ chơi.'], ['It is my turn now.', 'Bây giờ đến lượt tôi.'], ['Let us play together!', 'Chúng ta hãy chơi cùng nhau!']] as [string, string][],
+  reading: 'Tom and Lily are friends. They play in the park every day. Tom likes to run. Lily likes to jump. They share a ball. "Let us play together!" says Tom. "Yes! That is fun!" says Lily. They are happy.',
+  readingVi: 'Tom và Lily là bạn. Họ chơi trong công viên mỗi ngày. Tom thích chạy. Lily thích nhảy. Họ chia sẻ một quả bóng. "Chúng ta hãy chơi cùng nhau!" Tom nói. "Vâng! Thật vui!" Lily nói. Họ rất vui.',
+  grammar: 'Simple sentences: Subject + Verb. Example: "I play." "We share." "They run."',
+  grammarVi: 'Câu đơn giản: Chủ ngữ + Động từ. Ví dụ: "I play." "We share." "They run."',
+  tip: '🎯 Read aloud 3 times: whisper → normal → loud. Point to each word as you read!',
+  tipVi: '🎯 Đọc to 3 lần: thì thầm → bình thường → to. Chỉ vào từng từ khi đọc!',
 };
 
-// Map unit titles to theme keys
-function getThemeKey(title: string): string {
-  const lower = title.toLowerCase();
-  if (lower.includes('play') || lower.includes('friend')) return 'playing';
-  if (lower.includes('find') || lower.includes('mak')) return 'finding';
-  if (lower.includes('rhyme') || lower.includes('poem')) return 'rhyme';
-  // Default: generate from title
-  return 'playing';
+// ── Unit data registry for data-driven lesson content ──
+// Pre-loaded from english-units-g*.ts to generate UNIQUE content per unit
+interface UnitVocab { en: string; vi: string; }
+interface UnitPattern { pattern: string; example: string; exampleVi: string; slots: string[]; }
+interface CachedUnit { vocabulary: UnitVocab[]; patterns: UnitPattern[]; title: string; titleVi: string; grade: number; }
+
+let _unitCache: Record<string, CachedUnit> | null = null;
+
+function loadUnitCache(): Record<string, CachedUnit> {
+  if (_unitCache) return _unitCache;
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const g1g2 = require('@/data/english-units-g1g2');
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const g3 = require('@/data/english-units-g3');
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const g4 = require('@/data/english-units-g4');
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const g5 = require('@/data/english-units-g5');
+    const all = [
+      ...(g1g2.GRADE1_UNITS || []),
+      ...(g1g2.GRADE2_UNITS || []),
+      ...(g3.GRADE3_UNITS || []),
+      ...(g4.GRADE4_UNITS || []),
+      ...(g5.GRADE5_UNITS || []),
+    ];
+    const map: Record<string, CachedUnit> = {};
+    for (const u of all) {
+      map[u.unitId] = { vocabulary: u.vocabulary, patterns: u.patterns, title: u.title, titleVi: u.titleVi, grade: u.grade };
+    }
+    _unitCache = map;
+    return map;
+  } catch {
+    _unitCache = {};
+    return {};
+  }
+}
+
+// Build a unique reading passage from the unit's OWN vocabulary and patterns
+function buildReadingFromUnit(unit: CachedUnit): { reading: string; readingVi: string } {
+  const v = unit.vocabulary;
+  const p = unit.patterns;
+  const en: string[] = [];
+  const vi: string[] = [];
+
+  // Opening — introduce the topic
+  if (v.length >= 3) {
+    en.push(`Today we will learn about ${v[0].en}, ${v[1].en}, and ${v[2].en}.`);
+    vi.push(`Hôm nay chúng ta sẽ học về ${v[0].vi}, ${v[1].vi}, và ${v[2].vi}.`);
+  }
+
+  // Use each pattern's example sentence (unique per unit!)
+  for (const pat of p.slice(0, 3)) {
+    en.push(pat.example);
+    vi.push(pat.exampleVi);
+  }
+
+  // Vocabulary in context
+  for (const word of v.slice(3, 6)) {
+    en.push(`Can you say "${word.en}"? It means "${word.vi}" in Vietnamese.`);
+    vi.push(`Bạn nói được "${word.en}" không? Nó nghĩa là "${word.vi}".`);
+  }
+
+  // Closing
+  en.push(`Great job! Now you know words about "${unit.title}".`);
+  vi.push(`Giỏi lắm! Bây giờ bạn biết các từ về "${unit.title}".`);
+
+  return { reading: en.join(' '), readingVi: vi.join(' ') };
 }
 
 export function generateLessonContent(unitId: string, title: string, titleVi: string, grade: number, framework: string): LessonContent {
-  const themeKey = getThemeKey(title);
-  const theme = THEME_CONTENT[themeKey] || THEME_CONTENT['playing'];
+  const cache = loadUnitCache();
+  const unit = cache[unitId];
 
+  // ── PRIMARY PATH: Data-driven unique content per unit ──
+  if (unit && unit.vocabulary.length > 0) {
+    const { reading, readingVi } = buildReadingFromUnit(unit);
+    const grammarNote = unit.patterns.length > 0
+      ? `Pattern: "${unit.patterns[0].example}" — ${unit.patterns[0].exampleVi}`
+      : `Learn new words about: ${title}`;
+
+    return {
+      unitTitle: title, unitTitleVi: titleVi, grade, framework,
+      sections: [
+        {
+          type: 'vocabulary', title: '📚 Key Vocabulary', titleVi: '📚 Từ vựng chính',
+          content: unit.vocabulary.map(v => `${v.en} — ${v.vi}`),
+        },
+        {
+          type: 'reading', title: '📖 Reading Passage', titleVi: '📖 Bài đọc',
+          content: [reading],
+          contentVi: [readingVi],
+        },
+        {
+          type: 'grammar', title: '📝 Grammar Focus', titleVi: '📝 Ngữ pháp trọng tâm',
+          content: [unit.patterns.map(p => `"${p.pattern}"`).join(' | ')],
+          contentVi: [grammarNote],
+          example: unit.patterns[0]?.example,
+          exampleVi: unit.patterns[0]?.exampleVi,
+        },
+        {
+          type: 'speaking', title: '🗣️ Practice Sentences', titleVi: '🗣️ Câu luyện tập',
+          content: unit.patterns.map(p => p.example),
+          contentVi: unit.patterns.map(p => p.exampleVi),
+        },
+        {
+          type: 'tip', title: '💡 Learning Tip', titleVi: '💡 Mẹo học',
+          content: [`🎯 Practice saying each word 3 times. Point to objects around you and say their English name!`],
+          contentVi: [`🎯 Luyện nói mỗi từ 3 lần. Chỉ vào đồ vật xung quanh và nói tên tiếng Anh của chúng!`],
+        },
+      ],
+    };
+  }
+
+  // ── FALLBACK: generic theme (only for non-unit international topics) ──
+  const theme = FALLBACK_THEME;
   return {
     unitTitle: title, unitTitleVi: titleVi, grade, framework,
     sections: [
-      {
-        type: 'vocabulary', title: '📚 Key Vocabulary', titleVi: '📚 Từ vựng chính',
-        content: theme.vocab.map(([en, vi]) => `${en} — ${vi}`),
-      },
-      {
-        type: 'reading', title: '📖 Reading Passage', titleVi: '📖 Bài đọc',
-        content: [theme.reading],
-        contentVi: [theme.readingVi],
-      },
-      {
-        type: 'grammar', title: '📝 Grammar Focus', titleVi: '📝 Ngữ pháp trọng tâm',
-        content: [theme.grammar],
-        contentVi: [theme.grammarVi],
-        example: theme.sentences[0]?.[0],
-        exampleVi: theme.sentences[0]?.[1],
-      },
-      {
-        type: 'speaking', title: '🗣️ Practice Sentences', titleVi: '🗣️ Câu luyện tập',
-        content: theme.sentences.map(([en]) => en),
-        contentVi: theme.sentences.map(([, vi]) => vi),
-      },
-      {
-        type: 'tip', title: '💡 Learning Tip', titleVi: '💡 Mẹo học',
-        content: [theme.tip],
-        contentVi: [theme.tipVi],
-      },
+      { type: 'vocabulary', title: '📚 Key Vocabulary', titleVi: '📚 Từ vựng chính',
+        content: theme.vocab.map(([en, vi]) => `${en} — ${vi}`), },
+      { type: 'reading', title: '📖 Reading Passage', titleVi: '📖 Bài đọc',
+        content: [theme.reading], contentVi: [theme.readingVi], },
+      { type: 'grammar', title: '📝 Grammar Focus', titleVi: '📝 Ngữ pháp trọng tâm',
+        content: [theme.grammar], contentVi: [theme.grammarVi],
+        example: theme.sentences[0]?.[0], exampleVi: theme.sentences[0]?.[1], },
+      { type: 'speaking', title: '🗣️ Practice Sentences', titleVi: '🗣️ Câu luyện tập',
+        content: theme.sentences.map(([en]) => en), contentVi: theme.sentences.map(([, vi]) => vi), },
+      { type: 'tip', title: '💡 Learning Tip', titleVi: '💡 Mẹo học',
+        content: [theme.tip], contentVi: [theme.tipVi], },
     ],
   };
 }
+
 
 // ── Lesson Phase UI Component ──
 interface LessonPhaseProps {
