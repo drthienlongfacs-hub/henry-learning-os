@@ -117,7 +117,21 @@ function InternationalPageContent() {
     <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #0f172a 0%, #1e293b 100%)' }}>
       {/* Header */}
       <div style={{ padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12, borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-        <Link href="/child" style={{ color: '#94a3b8', display: 'flex' }}><ArrowLeft size={24} /></Link>
+        <button
+          onClick={() => {
+            if (selectedCountry) {
+              // Viewing country topics → go back to country selector
+              setSelectedCountry(null);
+              setSelectedCategory(null);
+              // Clean URL param so browser back also works correctly
+              window.history.replaceState(null, '', window.location.pathname);
+            } else {
+              // On country selector → go back to child menu
+              window.location.href = `${process.env.NODE_ENV === 'production' ? '/henry-learning-os' : ''}/child`;
+            }
+          }}
+          style={{ color: '#94a3b8', display: 'flex', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+        ><ArrowLeft size={24} /></button>
         <Globe2 size={28} color="#60a5fa" />
         <div>
           <h1 style={{ color: '#fff', fontSize: 20, fontWeight: 700, margin: 0 }}>
