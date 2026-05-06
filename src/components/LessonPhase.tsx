@@ -219,7 +219,7 @@ function buildFallbackLesson(title: string, titleVi: string, grade: number, fram
   };
 }
 
-import { getAuthenticReading } from '@/data/intl-curriculum-passages';
+import { getAuthenticReading, UNIT_VOCAB_OVERRIDES } from '@/data/intl-curriculum-passages';
 
 // ══════════════════════════════════════════════════════════════════
 // INTERNATIONAL LESSON BUILDER — receives data as parameters
@@ -241,6 +241,9 @@ export function buildIntlLessonFromData(
 ): LessonContent {
   // Better hash with prime multiplication for good distribution
   const hash = unitId.split('').reduce((acc, ch, i) => ((acc * 31) ^ ch.charCodeAt(0)) >>> 0, 0);
+
+  // ── Check for unit-specific vocab override (theme-matched) ──
+  const vocabOverride = UNIT_VOCAB_OVERRIDES[unitId];
 
   // Select vocab & grammar — use different seed for each to decorrelate
   const gradeVocabs = data.vocabThemes.filter(v => v.grade === grade);
@@ -264,12 +267,18 @@ export function buildIntlLessonFromData(
   const speakingSentences = grammar.rules.flatMap(r => r.examples.slice(0, 2));
   const speakingSentencesVi = grammar.rules.flatMap(r => r.examplesVi.slice(0, 2));
 
+  // ── Use unit-specific vocab if available, otherwise fallback to hash-selected ──
+  const displayVocabTitle = vocabOverride ? vocabOverride.title : vocab.title;
+  const displayVocabTitleVi = vocabOverride ? vocabOverride.titleVi : vocab.titleVi;
+  const displayWords = vocabOverride ? vocabOverride.words : vocab.words;
+  const displayWordsVi = vocabOverride ? vocabOverride.wordsVi : vocab.wordsVi;
+
   return {
     unitTitle: title, unitTitleVi: titleVi, grade, framework,
     sections: [
       {
-        type: 'vocabulary', title: `📚 Vocabulary: ${vocab.title}`, titleVi: `📚 Từ vựng: ${vocab.titleVi}`,
-        content: vocab.words.map((en, i) => `${en} — ${vocab.wordsVi[i] ?? en}`),
+        type: 'vocabulary', title: `📚 Vocabulary: ${displayVocabTitle}`, titleVi: `📚 Từ vựng: ${displayVocabTitleVi}`,
+        content: displayWords.map((en, i) => `${en} — ${displayWordsVi[i] ?? en}`),
       },
       {
         type: 'reading', title: `📖 ${title}`, titleVi: `📖 ${titleVi}`,

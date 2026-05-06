@@ -8,6 +8,57 @@ export interface AuthenticReading {
   textVi: string;
 }
 
+/**
+ * Unit-specific vocabulary — each unit gets vocab matching its theme
+ * instead of random hash-selected vocab themes.
+ */
+export interface UnitVocabOverride {
+  title: string;
+  titleVi: string;
+  words: string[];
+  wordsVi: string[];
+}
+
+export const UNIT_VOCAB_OVERRIDES: Record<string, UnitVocabOverride> = {
+  // ── CAMBRIDGE G1 ──
+  'cam_g1_u01': { title: 'Friends & Playground', titleVi: 'Bạn bè & Sân chơi', words: ['friend', 'playground', 'swing', 'ball', 'run', 'jump', 'share', 'please', 'thank you', 'fun'], wordsVi: ['bạn', 'sân chơi', 'xích đu', 'bóng', 'chạy', 'nhảy', 'chia sẻ', 'làm ơn', 'cảm ơn', 'vui'] },
+  'cam_g1_u02': { title: 'Making Things', titleVi: 'Làm đồ vật', words: ['paper', 'fold', 'triangle', 'hat', 'square', 'instructions', 'first', 'next', 'then', 'finally'], wordsVi: ['giấy', 'gấp', 'tam giác', 'mũ', 'hình vuông', 'hướng dẫn', 'đầu tiên', 'tiếp theo', 'sau đó', 'cuối cùng'] },
+  'cam_g1_u03': { title: 'Rhyme Words', titleVi: 'Từ có vần', words: ['dock', 'clock', 'mouse', 'rhyme', 'cat', 'hat', 'star', 'car', 'sound', 'words'], wordsVi: ['bến', 'đồng hồ', 'chuột', 'vần', 'mèo', 'mũ', 'ngôi sao', 'xe', 'âm thanh', 'từ'] },
+  'cam_g1_u04': { title: 'Traditional Tales', titleVi: 'Truyện cổ tích', words: ['turnip', 'pull', 'enormous', 'old man', 'old woman', 'boy', 'soup', 'together', 'finally', 'pop'], wordsVi: ['củ cải', 'kéo', 'khổng lồ', 'ông lão', 'bà lão', 'cậu bé', 'súp', 'cùng nhau', 'cuối cùng', 'bụp'] },
+  'cam_g1_u05': { title: 'Animals & Information', titleVi: 'Động vật & Thông tin', words: ['elephant', 'mouse', 'bird', 'fish', 'trunk', 'tail', 'fly', 'swim', 'big', 'small'], wordsVi: ['voi', 'chuột', 'chim', 'cá', 'vòi', 'đuôi', 'bay', 'bơi', 'to', 'nhỏ'] },
+  'cam_g1_u06': { title: 'Nursery Rhymes', titleVi: 'Đồng dao', words: ['Jack', 'Jill', 'hill', 'pail', 'water', 'crown', 'tumble', 'rhythm', 'song', 'nursery'], wordsVi: ['Jack', 'Jill', 'đồi', 'thùng', 'nước', 'vương miện', 'lăn cù', 'nhịp điệu', 'bài hát', 'đồng dao'] },
+  'cam_g1_u07': { title: 'Imagination Stories', titleVi: 'Truyện tưởng tượng', words: ['rabbit', 'jacket', 'bear', 'tea', 'imagine', 'make-believe', 'polite', 'brave', 'story', 'real'], wordsVi: ['thỏ', 'áo khoác', 'gấu', 'trà', 'tưởng tượng', 'giả tưởng', 'lịch sự', 'dũng cảm', 'câu chuyện', 'thật'] },
+  'cam_g1_u08': { title: 'Personal Recounts', titleVi: 'Kể chuyện bản thân', words: ['yesterday', 'zoo', 'giraffe', 'monkey', 'brother', 'family', 'happy', 'laughed', 'visited', 'true'], wordsVi: ['hôm qua', 'sở thú', 'hươu cao cổ', 'khỉ', 'anh/em trai', 'gia đình', 'vui', 'cười', 'đến thăm', 'thật'] },
+  'cam_g1_u09': { title: 'Weather Poems', titleVi: 'Thơ về thời tiết', words: ['rain', 'sun', 'wind', 'poem', 'theme', 'weather', 'roof', 'bright', 'blow', 'write'], wordsVi: ['mưa', 'mặt trời', 'gió', 'bài thơ', 'chủ đề', 'thời tiết', 'mái nhà', 'sáng', 'thổi', 'viết'] },
+  // ── CAMBRIDGE G2 ──
+  'cam_g2_u01': { title: 'Families', titleVi: 'Gia đình', words: ['family', 'mother', 'father', 'sister', 'brother', 'grandparent', 'home', 'love', 'care', 'together'], wordsVi: ['gia đình', 'mẹ', 'cha', 'chị/em gái', 'anh/em trai', 'ông bà', 'nhà', 'yêu', 'chăm sóc', 'cùng nhau'] },
+  'cam_g2_u02': { title: 'Badges & Labels', titleVi: 'Huy hiệu & Nhãn', words: ['badge', 'label', 'sign', 'name', 'purpose', 'design', 'shape', 'colour', 'display', 'instruction'], wordsVi: ['huy hiệu', 'nhãn', 'biển hiệu', 'tên', 'mục đích', 'thiết kế', 'hình dạng', 'màu sắc', 'trưng bày', 'hướng dẫn'] },
+  'cam_g2_u03': { title: 'Sounds Around', titleVi: 'Âm thanh xung quanh', words: ['sound', 'loud', 'quiet', 'listen', 'hear', 'whisper', 'shout', 'music', 'noise', 'silence'], wordsVi: ['âm thanh', 'to', 'nhỏ', 'lắng nghe', 'nghe', 'thì thầm', 'hét', 'nhạc', 'tiếng ồn', 'yên lặng'] },
+  'cam_g2_u04': { title: 'Long Ago', titleVi: 'Ngày xưa', words: ['castle', 'knight', 'king', 'queen', 'dragon', 'ancient', 'history', 'battle', 'armour', 'treasure'], wordsVi: ['lâu đài', 'hiệp sĩ', 'vua', 'hoàng hậu', 'rồng', 'cổ đại', 'lịch sử', 'trận chiến', 'áo giáp', 'kho báu'] },
+  'cam_g2_u05': { title: 'Computers & Robots', titleVi: 'Máy tính & Robot', words: ['computer', 'robot', 'screen', 'keyboard', 'mouse', 'program', 'code', 'button', 'machine', 'future'], wordsVi: ['máy tính', 'người máy', 'màn hình', 'bàn phím', 'chuột', 'chương trình', 'mã', 'nút', 'máy móc', 'tương lai'] },
+  'cam_g2_u06': { title: 'Journeys', titleVi: 'Hành trình', words: ['journey', 'travel', 'map', 'road', 'destination', 'vehicle', 'adventure', 'explore', 'compass', 'distance'], wordsVi: ['hành trình', 'du lịch', 'bản đồ', 'con đường', 'điểm đến', 'phương tiện', 'phiêu lưu', 'khám phá', 'la bàn', 'khoảng cách'] },
+  'cam_g2_u07': { title: 'Famous Authors', titleVi: 'Tác giả nổi tiếng', words: ['author', 'story', 'character', 'illustrate', 'chapter', 'title', 'fiction', 'imagine', 'publish', 'library'], wordsVi: ['tác giả', 'câu chuyện', 'nhân vật', 'minh họa', 'chương', 'tiêu đề', 'hư cấu', 'tưởng tượng', 'xuất bản', 'thư viện'] },
+  'cam_g2_u08': { title: 'Sea Life', titleVi: 'Sinh vật biển', words: ['ocean', 'fish', 'whale', 'shark', 'coral', 'seaweed', 'turtle', 'starfish', 'dolphin', 'wave'], wordsVi: ['đại dương', 'cá', 'cá voi', 'cá mập', 'san hô', 'rong biển', 'rùa', 'sao biển', 'cá heo', 'sóng'] },
+  'cam_g2_u09': { title: 'Creatures', titleVi: 'Sinh vật', words: ['insect', 'spider', 'butterfly', 'beetle', 'ant', 'caterpillar', 'wings', 'legs', 'crawl', 'habitat'], wordsVi: ['côn trùng', 'nhện', 'bướm', 'bọ cánh cứng', 'kiến', 'sâu bướm', 'cánh', 'chân', 'bò', 'môi trường sống'] },
+  // ── CAMBRIDGE G3 ──
+  'cam_g3_u01': { title: 'Daily Routines', titleVi: 'Thói quen hàng ngày', words: ['wake up', 'breakfast', 'brush teeth', 'school', 'homework', 'lunch', 'dinner', 'bedtime', 'routine', 'everyday'], wordsVi: ['thức dậy', 'ăn sáng', 'đánh răng', 'trường', 'bài tập', 'ăn trưa', 'ăn tối', 'giờ ngủ', 'thói quen', 'hàng ngày'] },
+  'cam_g3_u02': { title: 'Party Planning', titleVi: 'Kế hoạch tiệc', words: ['party', 'invitation', 'balloon', 'cake', 'celebrate', 'decorate', 'candle', 'present', 'streamer', 'guest'], wordsVi: ['tiệc', 'thiệp mời', 'bóng bay', 'bánh', 'ăn mừng', 'trang trí', 'nến', 'quà', 'ruy băng', 'khách'] },
+  'cam_g3_u03': { title: 'Senses & Art', titleVi: 'Giác quan & Nghệ thuật', words: ['see', 'hear', 'feel', 'smell', 'taste', 'music', 'painting', 'sculpture', 'texture', 'enjoy'], wordsVi: ['nhìn', 'nghe', 'cảm nhận', 'ngửi', 'nếm', 'nhạc', 'tranh', 'tượng', 'kết cấu', 'thưởng thức'] },
+  'cam_g3_u04': { title: 'Volcanoes & Fire', titleVi: 'Núi lửa & Lửa', words: ['volcano', 'lava', 'eruption', 'fire', 'heat', 'smoke', 'ash', 'molten', 'destroy', 'ancient'], wordsVi: ['núi lửa', 'dung nham', 'phun trào', 'lửa', 'nhiệt', 'khói', 'tro', 'nóng chảy', 'phá hủy', 'cổ đại'] },
+  'cam_g3_u05': { title: 'Writing Letters', titleVi: 'Viết thư', words: ['letter', 'envelope', 'stamp', 'address', 'dear', 'sincerely', 'postcard', 'reply', 'mailbox', 'message'], wordsVi: ['thư', 'phong bì', 'tem', 'địa chỉ', 'thân mến', 'trân trọng', 'bưu thiếp', 'trả lời', 'hòm thư', 'tin nhắn'] },
+  'cam_g3_u06': { title: 'World Poems', titleVi: 'Thơ thế giới', words: ['poem', 'verse', 'rhyme', 'rhythm', 'stanza', 'haiku', 'limerick', 'poet', 'imagery', 'feelings'], wordsVi: ['bài thơ', 'vần', 'vần điệu', 'nhịp', 'khổ thơ', 'thơ haiku', 'thơ limerick', 'nhà thơ', 'hình ảnh', 'cảm xúc'] },
+  'cam_g3_u07': { title: 'Fantasy Creatures', titleVi: 'Sinh vật huyền thoại', words: ['dragon', 'pirate', 'treasure', 'sword', 'castle', 'cave', 'adventure', 'map', 'quest', 'brave'], wordsVi: ['rồng', 'cướp biển', 'kho báu', 'kiếm', 'lâu đài', 'hang động', 'phiêu lưu', 'bản đồ', 'hành trình', 'dũng cảm'] },
+  'cam_g3_u08': { title: 'Our Wonderful World', titleVi: 'Thế giới kỳ diệu', words: ['mountain', 'river', 'forest', 'desert', 'ocean', 'waterfall', 'island', 'reef', 'glacier', 'rainbow'], wordsVi: ['núi', 'sông', 'rừng', 'sa mạc', 'đại dương', 'thác nước', 'hòn đảo', 'rạn san hô', 'sông băng', 'cầu vồng'] },
+  'cam_g3_u09': { title: 'Comedy & Jokes', titleVi: 'Hài hước', words: ['joke', 'laugh', 'funny', 'punchline', 'comedy', 'riddle', 'humour', 'clown', 'giggle', 'amuse'], wordsVi: ['trò đùa', 'cười', 'buồn cười', 'câu kết', 'hài', 'câu đố', 'hài hước', 'chú hề', 'cười khúc khích', 'vui vẻ'] },
+  // ── US G1 ──
+  'us_g1_u01': { title: 'Getting to Know Us', titleVi: 'Làm quen', words: ['classroom', 'friend', 'teacher', 'learn', 'read', 'draw', 'rules', 'share', 'recess', 'school'], wordsVi: ['lớp học', 'bạn', 'cô giáo', 'học', 'đọc', 'vẽ', 'quy tắc', 'chia sẻ', 'giờ ra chơi', 'trường'] },
+  'us_g1_u02': { title: 'Our Community', titleVi: 'Cộng đồng', words: ['family', 'parent', 'brother', 'sister', 'grandparent', 'meal', 'park', 'help', 'care', 'love'], wordsVi: ['gia đình', 'cha mẹ', 'anh/em trai', 'chị/em gái', 'ông bà', 'bữa ăn', 'công viên', 'giúp đỡ', 'chăm sóc', 'yêu thương'] },
+  'us_g1_u03': { title: 'Changes Over Time', titleVi: 'Thay đổi theo thời gian', words: ['community', 'library', 'fire station', 'market', 'firefighter', 'help', 'town', 'together', 'neighbor', 'safe'], wordsVi: ['cộng đồng', 'thư viện', 'trạm cứu hỏa', 'chợ', 'lính cứu hỏa', 'giúp đỡ', 'thị trấn', 'cùng nhau', 'hàng xóm', 'an toàn'] },
+  'us_g1_u04': { title: 'Animals Everywhere', titleVi: 'Động vật khắp nơi', words: ['animal', 'fish', 'bird', 'bear', 'forest', 'water', 'nest', 'gills', 'cheetah', 'fast'], wordsVi: ['động vật', 'cá', 'chim', 'gấu', 'rừng', 'nước', 'tổ', 'mang', 'báo đốm', 'nhanh'] },
+  'us_g1_u05': { title: 'Figure It Out', titleVi: 'Khám phá', words: ['explore', 'museum', 'hike', 'leaf', 'bug', 'map', 'river', 'mountain', 'discover', 'question'], wordsVi: ['khám phá', 'bảo tàng', 'đi bộ', 'lá', 'bọ', 'bản đồ', 'sông', 'núi', 'phát hiện', 'câu hỏi'] },
+  'us_g1_u06': { title: 'Together We Can', titleVi: 'Cùng nhau có thể', words: ['baby', 'grow', 'change', 'seed', 'plant', 'butterfly', 'season', 'summer', 'winter', 'time'], wordsVi: ['em bé', 'lớn lên', 'thay đổi', 'hạt', 'cây', 'bướm', 'mùa', 'hè', 'đông', 'thời gian'] },
+};
+
 export const AUTHENTIC_PASSAGES: Record<string, AuthenticReading> = {
   // ── CAMBRIDGE GRADE 1 ──
   'cam_g1_u01': {
