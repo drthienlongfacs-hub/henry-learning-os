@@ -15,8 +15,8 @@ export const AUTHENTIC_PASSAGES: Record<string, AuthenticReading> = {
     textVi: "Xin chào! Tên tôi là Anna. Tôi đang chơi ở sân chơi cùng bạn bè. Ben đang chơi xích đu. Maria đang chơi với một quả bóng. Chúng tôi thích chạy và nhảy. Chơi với bạn bè rất vui! Chúng tôi chia sẻ đồ chơi và nói 'làm ơn' và 'cảm ơn'. Bạn chơi với ai ở trường?"
   },
   'cam_g1_u02': {
-    text: "Look at the animals! An elephant is very big. It has a long trunk and big ears. A mouse is small. It has a long tail. A bird can fly in the sky. A fish can swim in the water. What is your favourite animal? Where does it live?",
-    textVi: "Hãy nhìn những con vật này! Con voi thì rất to. Nó có cái vòi dài và đôi tai lớn. Con chuột thì nhỏ. Nó có cái đuôi dài. Con chim có thể bay trên trời. Con cá có thể bơi dưới nước. Con vật yêu thích của bạn là gì? Nó sống ở đâu?"
+    text: "Today we are finding out how to make a paper hat! First, take a piece of square paper. Next, fold it in half to make a triangle. Then, fold the corners up. Finally, put the hat on your head. You made a great paper hat! Making things is fun when we follow instructions.",
+    textVi: "Hôm nay chúng ta sẽ tìm hiểu cách làm một chiếc mũ giấy! Đầu tiên, lấy một mảnh giấy hình vuông. Tiếp theo, gấp đôi lại thành hình tam giác. Sau đó, gấp các góc lên. Cuối cùng, đội mũ lên đầu. Bạn đã làm được một chiếc mũ giấy tuyệt vời! Làm đồ vật rất vui khi chúng ta làm theo hướng dẫn."
   },
   'cam_g1_u03': {
     text: "Hickory dickory dock, the mouse ran up the clock! The clock struck one, the mouse ran down, hickory dickory dock. Rhymes are words that sound the same at the end. Can you hear the rhyme in 'dock' and 'clock'? Let's find more words that rhyme, like 'cat' and 'hat', or 'star' and 'car'.",
@@ -27,50 +27,62 @@ export const AUTHENTIC_PASSAGES: Record<string, AuthenticReading> = {
     textVi: "Ngày xửa ngày xưa, có một củ cải khổng lồ. Ông lão kéo và kéo, nhưng không thể nhổ nó lên. Ông gọi bà lão. Họ cùng kéo và kéo, nhưng nó vẫn không lên. Họ gọi cậu bé. Họ cùng kéo và kéo! Cuối cùng, BỤP! Củ cải đã được nhổ lên. Tất cả đều có món súp củ cải cho bữa tối."
   },
   'cam_g1_u05': {
-    text: "Let's learn our sounds. 'S' is for sun, 's-s-sun'. 'A' is for apple, 'a-a-apple'. 'T' is for tap, 't-t-tap'. 'P' is for pan, 'p-p-pan'. 'I' is for ink, 'i-i-ink'. 'N' is for net, 'n-n-net'. When we put sounds together, we can make words! Can you sound out the word 's-i-t'? It makes 'sit'.",
-    textVi: "Cùng học các âm nhé. 'S' cho sun (mặt trời), 's-s-sun'. 'A' cho apple (quả táo), 'a-a-apple'. 'T' cho tap (vòi nước), 't-t-tap'. 'P' cho pan (cái chảo), 'p-p-pan'. 'I' cho ink (mực), 'i-i-ink'. 'N' cho net (cái lưới), 'n-n-net'. Khi ghép các âm lại, ta có thể tạo thành từ! Bạn có thể phát âm từ 's-i-t' không? Nó tạo thành 'sit' (ngồi)."
+    text: "We can read to find out information. Look at the animals! An elephant is very big. It has a long trunk and big ears. A mouse is small. It has a long tail. A bird can fly in the sky. A fish can swim in the water. What is your favourite animal? Where does it live?",
+    textVi: "Chúng ta có thể đọc để tìm kiếm thông tin. Hãy nhìn những con vật này! Con voi thì rất to. Nó có cái vòi dài và đôi tai lớn. Con chuột thì nhỏ. Nó có cái đuôi dài. Con chim có thể bay trên trời. Con cá có thể bơi dưới nước. Con vật yêu thích của bạn là gì? Nó sống ở đâu?"
   },
   'cam_g1_u06': {
-    text: "Let's explore nature! Step outside and look at the trees. Trees have brown trunks and green leaves. In autumn, the leaves turn red and yellow and fall to the ground. Look closely at the grass. You might see a small bug or an ant. Nature is everywhere, from the sky above to the dirt below our feet.",
-    textVi: "Hãy cùng khám phá thiên nhiên! Bước ra ngoài và nhìn những cái cây. Cây có thân màu nâu và lá màu xanh. Vào mùa thu, lá chuyển sang màu đỏ, vàng và rụng xuống đất. Nhìn kỹ vào bãi cỏ. Bạn có thể thấy một con bọ nhỏ hoặc một con kiến. Thiên nhiên có ở khắp mọi nơi, từ bầu trời trên cao đến lớp đất dưới chân chúng ta."
+    text: "It is rhyme time again! Jack and Jill went up the hill to fetch a pail of water. Jack fell down and broke his crown, and Jill came tumbling after. Nursery rhymes have a rhythm, like a little song. Do 'hill' and 'Jill' sound the same? Yes, they rhyme!",
+    textVi: "Lại đến giờ học vần điệu rồi! Jack và Jill lên đồi lấy một thùng nước. Jack ngã xuống và vỡ vương miện, và Jill lăn cù theo sau. Các bài đồng dao có nhịp điệu, giống như một bài hát nhỏ. 'Hill' và 'Jill' nghe có giống nhau không? Có, chúng vần với nhau!"
   },
   'cam_g1_u07': {
-    text: "We can read to find out information. Books tell us facts. A fact is something that is true. If you want to know how a plant grows, you can read a book about plants. You will find out that plants need water, sunlight, and soil to grow. What do you want to find out about today?",
-    textVi: "Chúng ta có thể đọc để tìm kiếm thông tin. Sách cho chúng ta biết các sự thật. Sự thật là điều có thật. Nếu bạn muốn biết làm thế nào một cái cây lớn lên, bạn có thể đọc một cuốn sách về cây cối. Bạn sẽ biết được rằng cây cần nước, ánh sáng mặt trời và đất để lớn lên. Hôm nay bạn muốn tìm hiểu về điều gì?"
+    text: "Let's read a make-believe story. In this story, the animals can talk! The brave little rabbit wore a red jacket and walked on two legs. He met a polite bear who was drinking tea. Make-believe stories are from our imagination. They are not real, but they are very fun to read.",
+    textVi: "Hãy cùng đọc một câu chuyện tưởng tượng. Trong câu chuyện này, các con vật có thể nói chuyện! Chú thỏ nhỏ dũng cảm mặc chiếc áo khoác đỏ và đi bằng hai chân. Cậu gặp một chú gấu lịch sự đang uống trà. Những câu chuyện tưởng tượng đến từ trí tưởng tượng của chúng ta. Chúng không có thật, nhưng đọc rất vui."
   },
   'cam_g1_u08': {
-    text: "We all have stories to share. Yesterday, I went to the zoo with my family. I saw a tall giraffe eating leaves. My little brother laughed at the funny monkeys. It was a happy day. When we share stories, we tell people what happened to us, how we felt, and who was there. What is a story you can share?",
-    textVi: "Tất cả chúng ta đều có những câu chuyện để chia sẻ. Hôm qua, tôi đã đi sở thú với gia đình. Tôi thấy một con hươu cao cổ đang ăn lá. Em trai tôi cười đùa với những chú khỉ ngộ nghĩnh. Đó là một ngày vui vẻ. Khi chia sẻ câu chuyện, chúng ta kể cho mọi người biết chuyện gì đã xảy ra, chúng ta cảm thấy thế nào và có ai ở đó. Bạn có câu chuyện nào để chia sẻ không?"
+    text: "We all have stories about things that happened to us. Yesterday, I went to the zoo with my family. I saw a tall giraffe eating leaves. My little brother laughed at the funny monkeys. It was a happy day. When we write about things that happened, we tell people our own true story.",
+    textVi: "Tất cả chúng ta đều có những câu chuyện về những điều đã xảy ra với mình. Hôm qua, tôi đã đi sở thú với gia đình. Tôi thấy một con hươu cao cổ đang ăn lá. Em trai tôi cười đùa với những chú khỉ ngộ nghĩnh. Đó là một ngày vui vẻ. Khi viết về những điều đã xảy ra, chúng ta kể cho mọi người nghe câu chuyện có thật của chính mình."
   },
   'cam_g1_u09': {
-    text: "Patterns are things that repeat. Look at a zebra. It has a pattern of black and white stripes: black, white, black, white. We also have patterns in our days. On Monday, Tuesday, Wednesday, Thursday, and Friday, we go to school. On Saturday and Sunday, we stay at home. This is the pattern of our week.",
-    textVi: "Mẫu hình là những thứ lặp đi lặp lại. Hãy nhìn một con ngựa vằn. Nó có một mẫu hình gồm các sọc đen và trắng: đen, trắng, đen, trắng. Chúng ta cũng có những mẫu hình trong các ngày của mình. Vào Thứ Hai, Thứ Ba, Thứ Tư, Thứ Năm và Thứ Sáu, chúng ta đi học. Vào Thứ Bảy và Chủ Nhật, chúng ta ở nhà. Đây là mẫu hình của tuần chúng ta."
+    text: "Poems can be about a theme, like 'The Weather'. Rain falls pitter-patter on the roof. The sun shines bright and hot. The wind blows whoosh through the trees. A theme is the main idea of the poems. What is your favourite weather? Can you write a short poem about the rain?",
+    textVi: "Thơ có thể viết về một chủ đề, ví dụ như 'Thời tiết'. Mưa rơi tí tách trên mái nhà. Mặt trời chiếu sáng và nóng bức. Gió thổi vù vù qua những tán cây. Chủ đề là ý chính của các bài thơ. Thời tiết yêu thích của bạn là gì? Bạn có thể viết một bài thơ ngắn về mưa không?"
   },
 
   // ── CAMBRIDGE GRADE 2 ──
   'cam_g2_u01': {
-    text: "People all over the world tell stories. Some stories are very old. In India, there is a story about a clever monkey and a crocodile. In Africa, there is a story about Anansi the spider. Stories teach us lessons and make us think. Even though people live in different countries, we all love listening to a good story.",
-    textVi: "Mọi người trên khắp thế giới đều kể chuyện. Một số câu chuyện rất cổ xưa. Ở Ấn Độ, có câu chuyện về chú khỉ thông minh và con cá sấu. Ở Châu Phi, có câu chuyện về nhện Anansi. Những câu chuyện dạy cho chúng ta những bài học và làm chúng ta phải suy nghĩ. Mặc dù con người sống ở những quốc gia khác nhau, nhưng tất cả chúng ta đều thích nghe một câu chuyện hay."
+    text: "People all over the world tell stories we know well. Think about Cinderella, Little Red Riding Hood, or The Three Little Pigs. These stories usually have good characters and bad characters. In the end, the good characters usually win. They often start with 'Once upon a time' and end with 'They lived happily ever after.'",
+    textVi: "Mọi người trên khắp thế giới đều kể những câu chuyện quen thuộc. Hãy nghĩ về Cô bé Lọ Lem, Cô bé quàng khăn đỏ, hoặc Ba chú heo con. Những câu chuyện này thường có nhân vật tốt và nhân vật xấu. Cuối cùng, các nhân vật tốt thường chiến thắng. Chúng thường bắt đầu bằng 'Ngày xửa ngày xưa' và kết thúc bằng 'Họ sống hạnh phúc mãi mãi về sau.'"
   },
   'cam_g2_u02': {
-    text: "A poem is a special way of writing. Poems often have rhyming words at the end of the lines. Sometimes poems are funny, and sometimes they are beautiful. 'The gentle wind blows, over the green meadows.' When you read a poem aloud, it can sound like music. Try writing a short poem about your favourite animal!",
-    textVi: "Thơ là một cách viết đặc biệt. Các bài thơ thường có các từ có vần ở cuối các dòng. Đôi khi những bài thơ rất hài hước, và đôi khi chúng rất đẹp. 'Cơn gió nhẹ thổi qua, trên những đồng cỏ xanh.' Khi bạn đọc to một bài thơ, nó có thể nghe như âm nhạc. Hãy thử viết một bài thơ ngắn về con vật yêu thích của bạn!"
+    text: "How do you write instructions? Instructions tell us how to do something step by step. Let's make a fruit salad! First, wash the fruit. Next, ask an adult to help you cut the apples, bananas, and grapes. Then, put all the fruit in a big bowl. Finally, mix it together and enjoy!",
+    textVi: "Làm thế nào để bạn viết hướng dẫn? Hướng dẫn cho chúng ta biết cách làm một việc gì đó từng bước một. Cùng làm salad trái cây nhé! Đầu tiên, rửa trái cây. Tiếp theo, nhờ người lớn giúp bạn cắt táo, chuối và nho. Sau đó, cho tất cả trái cây vào một cái bát lớn. Cuối cùng, trộn đều lên và thưởng thức!"
   },
   'cam_g2_u03': {
-    text: "An information text tells us true facts about a topic. It often has headings, pictures, and labels. For example, an information text about penguins will tell you that they live in cold places and that they cannot fly, but they are excellent swimmers. When you read an information text, you learn something new about the real world.",
-    textVi: "Văn bản thông tin cho chúng ta biết những sự thật về một chủ đề. Nó thường có các tiêu đề, hình ảnh và nhãn dán. Ví dụ, một văn bản thông tin về chim cánh cụt sẽ cho bạn biết rằng chúng sống ở những nơi lạnh giá và chúng không thể bay, nhưng chúng bơi rất giỏi. Khi bạn đọc một văn bản thông tin, bạn học được điều gì đó mới mẻ về thế giới thực."
+    text: "Poems and rhymes can be about different places. 'Down by the station, early in the morning. See the little pufferbellies all in a row.' We can write rhymes about the park, the beach, or the bustling city. When you describe a place in a rhyme, you help the reader see and hear what it is like.",
+    textVi: "Thơ và vần điệu có thể nói về những địa điểm khác nhau. 'Dưới nhà ga, vào buổi sáng sớm. Nhìn những chiếc xe lửa nhỏ xếp thành hàng.' Chúng ta có thể viết vần điệu về công viên, bãi biển hoặc thành phố nhộn nhịp. Khi bạn miêu tả một địa điểm bằng vần điệu, bạn giúp người đọc nhìn thấy và nghe thấy nơi đó như thế nào."
   },
   'cam_g2_u04': {
-    text: "Traditional tales are stories that have been told for many, many years. Think about Cinderella, Little Red Riding Hood, or The Three Little Pigs. These stories usually have good characters and bad characters. In the end, the good characters usually win. They often start with 'Once upon a time' and end with 'They lived happily ever after.'",
-    textVi: "Truyện cổ tích truyền thống là những câu chuyện đã được kể trong rất nhiều năm. Hãy nghĩ về Cô bé Lọ Lem, Cô bé quàng khăn đỏ, hoặc Ba chú heo con. Những câu chuyện này thường có nhân vật tốt và nhân vật xấu. Cuối cùng, các nhân vật tốt thường chiến thắng. Chúng thường bắt đầu bằng 'Ngày xửa ngày xưa' và kết thúc bằng 'Họ sống hạnh phúc mãi mãi về sau.'"
+    text: "Tales from around the world show us different cultures. In India, there is a story about a clever monkey and a crocodile. In Africa, there is a tale about Anansi the spider. Tales teach us lessons and make us think. Even though people live in different countries, we all love listening to a good tale.",
+    textVi: "Những câu chuyện từ khắp nơi trên thế giới cho chúng ta thấy những nền văn hóa khác nhau. Ở Ấn Độ, có câu chuyện về chú khỉ thông minh và con cá sấu. Ở Châu Phi, có câu chuyện về nhện Anansi. Những câu chuyện dạy cho chúng ta những bài học và làm chúng ta phải suy nghĩ. Mặc dù con người sống ở những quốc gia khác nhau, nhưng tất cả chúng ta đều thích nghe một câu chuyện hay."
   },
   'cam_g2_u05': {
-    text: "Fantasy stories take us to magical worlds. In a fantasy story, animals might talk, children might fly, and dragons might guard treasures. Anything is possible! You might read about a magic tree that takes kids to different lands, or a talking lion who is the king of a magical forest. Fantasy lets our imagination soar.",
-    textVi: "Những câu chuyện kỳ ảo đưa chúng ta đến những thế giới phép thuật. Trong một câu chuyện kỳ ảo, động vật có thể nói chuyện, trẻ em có thể bay, và những con rồng có thể canh giữ kho báu. Bất cứ điều gì cũng có thể xảy ra! Bạn có thể đọc về một cái cây ma thuật đưa lũ trẻ đến những vùng đất khác nhau, hoặc một con sư tử biết nói là vua của một khu rừng phép thuật. Câu chuyện kỳ ảo để cho trí tưởng tượng của chúng ta bay cao."
+    text: "What is my house made of? Houses are built using different materials. Some houses are made of red bricks, so they are very strong. Some houses are made of wood, and some have roofs made of tiles or straw. Windows are made of glass so we can see outside. Different materials have different jobs.",
+    textVi: "Ngôi nhà của tôi được làm bằng gì? Những ngôi nhà được xây dựng bằng nhiều vật liệu khác nhau. Một số ngôi nhà được làm bằng gạch đỏ nên rất chắc chắn. Một số ngôi nhà làm bằng gỗ, và một số có mái lợp ngói hoặc rơm. Cửa sổ làm bằng kính để chúng ta có thể nhìn ra ngoài. Các vật liệu khác nhau có công dụng khác nhau."
   },
   'cam_g2_u06': {
-    text: "How do you make a fruit salad? First, wash the fruit. Next, ask an adult to help you cut the apples, bananas, and grapes. Then, put all the fruit in a big bowl. Finally, mix it together and enjoy! This is called a recipe. A recipe is a set of instructions that tells you how to make something to eat.",
-    textVi: "Làm thế nào để bạn làm món salad trái cây? Đầu tiên, rửa trái cây. Tiếp theo, nhờ người lớn giúp bạn cắt táo, chuối và nho. Sau đó, cho tất cả trái cây vào một cái bát lớn. Cuối cùng, trộn đều lên và thưởng thức! Đây được gọi là một công thức nấu ăn. Công thức nấu ăn là một bộ hướng dẫn chỉ cho bạn cách làm ra một thứ gì đó để ăn."
+    text: "An information text tells us true facts about a topic. It often has headings, pictures, and labels. For example, an information text about penguins will tell you that they live in cold places and that they cannot fly, but they are excellent swimmers. When you read an information text, you learn facts.",
+    textVi: "Văn bản thông tin cho chúng ta biết những sự thật về một chủ đề. Nó thường có các tiêu đề, hình ảnh và nhãn dán. Ví dụ, một văn bản thông tin về chim cánh cụt sẽ cho bạn biết rằng chúng sống ở những nơi lạnh giá và chúng không thể bay, nhưng chúng bơi rất giỏi. Khi bạn đọc một văn bản thông tin, bạn học được các sự thật."
+  },
+  'cam_g2_u07': {
+    text: "Plays and poems are fun to read out loud. A play has characters, and you read what they say. It is like acting in a theatre! 'Bear: Hello, Rabbit! Rabbit: Good morning, Bear.' A poem uses beautiful words to paint a picture in your mind. Both plays and poems are great for sharing with an audience.",
+    textVi: "Kịch và thơ rất thú vị khi đọc to. Một vở kịch có các nhân vật, và bạn đọc những gì họ nói. Nó giống như diễn xuất trong rạp hát! 'Gấu: Chào Thỏ! Thỏ: Chào buổi sáng, Gấu.' Một bài thơ sử dụng những từ ngữ đẹp đẽ để vẽ nên một bức tranh trong tâm trí bạn. Cả kịch và thơ đều rất tuyệt để chia sẻ với khán giả."
+  },
+  'cam_g2_u08': {
+    text: "Some stories have a hidden message or lesson. The story of The Boy Who Cried Wolf teaches us that if we lie, people won't believe us when we tell the truth. The story of The Tortoise and the Hare teaches us that slow and steady wins the race. What lesson have you learned from a story?",
+    textVi: "Một số câu chuyện có thông điệp hoặc bài học ẩn giấu. Câu chuyện Cậu bé chăn cừu dạy chúng ta rằng nếu chúng ta nói dối, mọi người sẽ không tin chúng ta khi chúng ta nói thật. Câu chuyện Rùa và Thỏ dạy chúng ta rằng chậm mà chắc sẽ giành chiến thắng trong cuộc đua. Bạn đã học được bài học gì từ một câu chuyện?"
+  },
+  'cam_g2_u09': {
+    text: "Words, words, words! There are so many words to explore. Some words are long, like 'hippopotamus', and some are short, like 'cat'. Some words describe things, like 'shiny' or 'fluffy'. We use words to write poems, tell stories, and give instructions. The more words you know, the better you can express yourself!",
+    textVi: "Từ ngữ, từ ngữ, từ ngữ! Có rất nhiều từ để khám phá. Một số từ dài, như 'hippopotamus' (hà mã), và một số từ ngắn, như 'cat' (mèo). Một số từ miêu tả sự vật, như 'shiny' (sáng bóng) hoặc 'fluffy' (mềm mại). Chúng ta dùng từ ngữ để viết thơ, kể chuyện và đưa ra hướng dẫn. Càng biết nhiều từ, bạn càng có thể diễn đạt tốt hơn!"
   },
 
   // ── US WONDERS GRADE 1 ──
