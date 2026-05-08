@@ -219,7 +219,7 @@ function buildFallbackLesson(title: string, titleVi: string, grade: number, fram
   };
 }
 
-import { getAuthenticReading, UNIT_VOCAB_OVERRIDES } from '@/data/intl-curriculum-passages';
+import { getAuthenticReading, getUnitSections, UNIT_VOCAB_OVERRIDES, type AuthenticSection } from '@/data/intl-curriculum-passages';
 
 // ══════════════════════════════════════════════════════════════════
 // INTERNATIONAL LESSON BUILDER — receives data as parameters
@@ -259,8 +259,9 @@ export function buildIntlLessonFromData(
     return buildFallbackLesson(title, titleVi, grade, framework);
   }
 
-  // ── GET AUTHENTIC READING PASSAGE ──
-  // Use exact texts mapped to unitId (e.g., Cambridge G1 Learner's Book texts)
+  // ── GET AUTHENTIC READING PASSAGE(S) ──
+  // Use multi-section data when available (full textbook fidelity)
+  const unitSections = getUnitSections(unitId, title, titleVi, vocab.words, vocab.wordsVi);
   const authenticReading = getAuthenticReading(unitId, title, titleVi, vocab.words, vocab.wordsVi);
 
   // Build speaking sentences from grammar rules
@@ -273,6 +274,23 @@ export function buildIntlLessonFromData(
   const displayWords = vocabOverride ? vocabOverride.words : vocab.words;
   const displayWordsVi = vocabOverride ? vocabOverride.wordsVi : vocab.wordsVi;
 
+  // Build reading sections — use multi-section for full textbook fidelity
+  const readingSections: LessonSection[] = unitSections.length > 1
+    ? unitSections.map((sec: AuthenticSection) => ({
+        type: 'reading' as const,
+        title: `📖 ${sec.sectionTitle}`,
+        titleVi: `📖 ${sec.sectionTitleVi}`,
+        content: [sec.text],
+        contentVi: [sec.textVi],
+      }))
+    : [{
+        type: 'reading' as const,
+        title: `📖 ${title}`,
+        titleVi: `📖 ${titleVi}`,
+        content: [authenticReading.text],
+        contentVi: [authenticReading.textVi],
+      }];
+
   return {
     unitTitle: title, unitTitleVi: titleVi, grade, framework,
     sections: [
@@ -280,11 +298,7 @@ export function buildIntlLessonFromData(
         type: 'vocabulary', title: `📚 Vocabulary: ${displayVocabTitle}`, titleVi: `📚 Từ vựng: ${displayVocabTitleVi}`,
         content: displayWords.map((en, i) => `${en} — ${displayWordsVi[i] ?? en}`),
       },
-      {
-        type: 'reading', title: `📖 ${title}`, titleVi: `📖 ${titleVi}`,
-        content: [authenticReading.text],
-        contentVi: [authenticReading.textVi],
-      },
+      ...readingSections,
       {
         type: 'grammar', title: `📝 ${grammar.title}`, titleVi: `📝 ${grammar.titleVi}`,
         content: grammar.rules.map(r => r.rule),

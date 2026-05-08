@@ -81,7 +81,7 @@ describe('voice engine latency guard', () => {
         expect(utterance.rate).toBeLessThanOrEqual(1.2);
 
         vi.advanceTimersByTime(300);
-        expect(getEngineStatus().loading).toBe(false);
+        expect(getEngineStatus().neuralLoading).toBe(false);
     });
 
     it('uses the same instant path for word and sentence clicks', async () => {

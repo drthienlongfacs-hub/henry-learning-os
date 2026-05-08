@@ -675,15 +675,15 @@ export const CAMBRIDGE_UNITS: CountryUnit[] = [
   { unitId: 'cam_g4_u07', grade: 4, unitNumber: 7, title: 'What would you do?', titleVi: 'Bạn sẽ làm gì?', framework: 'cambridge' },
   { unitId: 'cam_g4_u08', grade: 4, unitNumber: 8, title: 'Food for thought', titleVi: 'Suy ngẫm', framework: 'cambridge' },
   { unitId: 'cam_g4_u09', grade: 4, unitNumber: 9, title: 'Poems to see and hear', titleVi: 'Thơ để nghe và thấy', framework: 'cambridge' },
-  { unitId: 'cam_g5_u01', grade: 5, unitNumber: 1, title: 'There is a lesson', titleVi: 'Bài học cuộc sống', framework: 'cambridge' },
+  { unitId: 'cam_g5_u01', grade: 5, unitNumber: 1, title: "There's a lesson in that", titleVi: 'Có bài học trong đó', framework: 'cambridge' },
   { unitId: 'cam_g5_u02', grade: 5, unitNumber: 2, title: 'Exploring space', titleVi: 'Khám phá không gian', framework: 'cambridge' },
-  { unitId: 'cam_g5_u03', grade: 5, unitNumber: 3, title: 'Mythical stories', titleVi: 'Truyện thần thoại', framework: 'cambridge' },
-  { unitId: 'cam_g5_u04', grade: 5, unitNumber: 4, title: 'Plays', titleVi: 'Kịch', framework: 'cambridge' },
-  { unitId: 'cam_g5_u05', grade: 5, unitNumber: 5, title: 'Information texts', titleVi: 'Văn bản thông tin', framework: 'cambridge' },
-  { unitId: 'cam_g5_u06', grade: 5, unitNumber: 6, title: 'Poetry', titleVi: 'Thơ', framework: 'cambridge' },
-  { unitId: 'cam_g5_u07', grade: 5, unitNumber: 7, title: 'Persuasive writing', titleVi: 'Viết thuyết phục', framework: 'cambridge' },
-  { unitId: 'cam_g5_u08', grade: 5, unitNumber: 8, title: 'Biographies', titleVi: 'Tiểu sử', framework: 'cambridge' },
-  { unitId: 'cam_g5_u09', grade: 5, unitNumber: 9, title: 'Letters and journals', titleVi: 'Thư và nhật ký', framework: 'cambridge' },
+  { unitId: 'cam_g5_u03', grade: 5, unitNumber: 3, title: 'Reflections', titleVi: 'Suy ngẫm', framework: 'cambridge' },
+  { unitId: 'cam_g5_u04', grade: 5, unitNumber: 4, title: 'Myths and legends forever', titleVi: 'Thần thoại và truyền thuyết mãi mãi', framework: 'cambridge' },
+  { unitId: 'cam_g5_u05', grade: 5, unitNumber: 5, title: 'Tell me how…', titleVi: 'Hãy nói cho tôi cách…', framework: 'cambridge' },
+  { unitId: 'cam_g5_u06', grade: 5, unitNumber: 6, title: 'A different type of story', titleVi: 'Một kiểu truyện khác', framework: 'cambridge' },
+  { unitId: 'cam_g5_u07', grade: 5, unitNumber: 7, title: 'A box of delights', titleVi: 'Hộp niềm vui', framework: 'cambridge' },
+  { unitId: 'cam_g5_u08', grade: 5, unitNumber: 8, title: 'Share your views', titleVi: 'Chia sẻ quan điểm', framework: 'cambridge' },
+  { unitId: 'cam_g5_u09', grade: 5, unitNumber: 9, title: "Let's perform", titleVi: 'Cùng biểu diễn', framework: 'cambridge' },
 ];
 
 export const US_WONDERS_UNITS: CountryUnit[] = [
