@@ -9,6 +9,1171 @@ export interface AuthenticReading {
 }
 
 /**
+ * Multi-section authentic content — matches original textbook structure
+ * Each unit in Cambridge/Wonders has 6-7 sections (lessons), not just 1 passage.
+ */
+export interface AuthenticSection {
+  sectionTitle: string;
+  sectionTitleVi: string;
+  text: string;
+  textVi: string;
+  type: 'poem' | 'story' | 'activity' | 'information' | 'review' | 'reading' | 'grammar' | 'tip';
+}
+
+export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G1 U03: Rhyme time — 7 sections from Learner's Book
+  // ══════════════════════════════════════════════════════════════
+  'cam_g1_u03': [
+    {
+      sectionTitle: '3.1 Rhyme time',
+      sectionTitleVi: '3.1 Thời gian vần điệu',
+      type: 'poem',
+      text: "Hickory dickory dock,\nThe mouse ran up the clock.\nThe clock struck one,\nThe mouse ran down,\nHickory dickory dock.\n\nRhymes are words that sound the same at the end. Listen: 'dock' and 'clock' — they rhyme! Can you hear it? The sounds '-ock' are the same. Let's find more rhyming words:\n• cat — hat — mat — sat — bat\n• star — car — far — jar\n• rock — sock — lock — knock\n\nSay each pair aloud. Can you clap the rhythm?",
+      textVi: "Hickory dickory dock,\nChú chuột chạy lên đồng hồ.\nĐồng hồ điểm một giờ,\nChú chuột chạy xuống,\nHickory dickory dock.\n\nVần là những từ có âm cuối giống nhau. Nghe nào: 'dock' và 'clock' — chúng vần với nhau! Bạn nghe thấy không? Âm '-ock' giống nhau. Hãy tìm thêm từ có vần:\n• cat — hat — mat — sat — bat\n• star — car — far — jar\n• rock — sock — lock — knock\n\nĐọc to từng cặp từ. Bạn có thể vỗ tay theo nhịp không?"
+    },
+    {
+      sectionTitle: '3.2 Number rhyme time',
+      sectionTitleVi: '3.2 Vần điệu với số',
+      type: 'poem',
+      text: "One, two, buckle my shoe.\nThree, four, knock at the door.\nFive, six, pick up sticks.\nSeven, eight, lay them straight.\nNine, ten, a big fat hen!\n\nNumber rhymes help us count and learn new words at the same time. Can you find the rhyming pairs?\n• two — shoe\n• four — door\n• six — sticks\n• eight — straight\n• ten — hen\n\nNow try counting backwards! Ten, nine, eight, seven, six, five, four, three, two, one — BLAST OFF!",
+      textVi: "Một, hai, cài khuy giày.\nBa, bốn, gõ cửa nhà.\nNăm, sáu, nhặt que nào.\nBảy, tám, xếp thẳng hàng.\nChín, mười, gà mập tròn!\n\nCác bài vần số giúp chúng ta vừa đếm vừa học từ mới cùng lúc. Bạn có tìm được các cặp vần không?\n• two — shoe (hai — giày)\n• four — door (bốn — cửa)\n• six — sticks (sáu — que)\n• eight — straight (tám — thẳng)\n• ten — hen (mười — gà mái)\n\nBây giờ hãy đếm ngược! Mười, chín, tám, bảy, sáu, năm, bốn, ba, hai, một — PHÓNG!"
+    },
+    {
+      sectionTitle: '3.3 Funny rhymes',
+      sectionTitleVi: '3.3 Vần điệu vui nhộn',
+      type: 'poem',
+      text: "Hey diddle diddle,\nThe cat and the fiddle,\nThe cow jumped over the moon.\nThe little dog laughed to see such fun,\nAnd the dish ran away with the spoon!\n\nThis is a funny rhyme because silly things happen! Can a cow really jump over the moon? Can a dish run? No! That is what makes it funny.\n\nFunny rhymes use imagination. The rhyming words are:\n• diddle — fiddle\n• moon — spoon\n• fun — run\n\nCan you make up a funny rhyme? Try: \"The frog sat on a ___\" (log!)",
+      textVi: "Hey diddle diddle,\nCon mèo và cây đàn,\nCon bò nhảy qua mặt trăng.\nChú chó con cười khi thấy trò vui,\nVà cái đĩa chạy đi cùng cái muỗng!\n\nĐây là một bài vần vui nhộn vì những điều ngớ ngẩn xảy ra! Con bò có thể nhảy qua mặt trăng thật không? Cái đĩa có thể chạy không? Không! Đó là điều làm nó buồn cười.\n\nCác bài vần vui dùng trí tưởng tượng. Các từ vần là:\n• diddle — fiddle\n• moon — spoon\n• fun — run\n\nBạn có thể tự nghĩ ra một bài vần vui không? Thử nào: \"The frog sat on a ___\" (log — khúc gỗ!)"
+    },
+    {
+      sectionTitle: '3.4 Silly rhymes',
+      sectionTitleVi: '3.4 Vần điệu ngớ ngẩn',
+      type: 'poem',
+      text: "I saw a purple cow,\nI never saw one before.\nI never hope to see one,\nBut I can tell you furthermore —\nI'd rather see than be one!\n\nSilly rhymes play with words in a nonsense way. They make us laugh because they are so strange! A purple cow? That is very silly!\n\nLet's play a silly rhyme game. I say a word, you find a rhyming word:\n• jelly → belly\n• wiggly → jiggly\n• funny → bunny\n• crazy → lazy\n\nNow make a silly sentence: \"I saw a wiggly jiggly jelly on the belly of a bunny!\"",
+      textVi: "Tôi thấy một con bò tím,\nTôi chưa bao giờ thấy trước đây.\nTôi không hy vọng thấy,\nNhưng tôi có thể nói thêm —\nTôi thà thấy nó hơn là làm nó!\n\nCác bài vần ngớ ngẩn chơi với từ theo cách vô nghĩa. Chúng khiến ta cười vì quá kỳ lạ! Một con bò tím? Thật là ngớ ngẩn!\n\nHãy chơi trò vần ngớ ngẩn. Tôi nói một từ, bạn tìm từ vần:\n• jelly → belly (thạch → bụng)\n• wiggly → jiggly (lắc lư → rung rinh)\n• funny → bunny (buồn cười → thỏ)\n• crazy → lazy (điên → lười)\n\nBây giờ hãy đặt một câu ngớ ngẩn: \"Tôi thấy một miếng thạch rung rinh lắc lư trên bụng của một chú thỏ!\""
+    },
+    {
+      sectionTitle: '3.5 A rhyme that tells a story',
+      sectionTitleVi: '3.5 Bài vần kể chuyện',
+      type: 'story',
+      text: "Fire! Fire! said Mrs McGuire.\nWhere? Where? said Mrs Hare.\nDown town! said Mrs Brown.\nTurn the corner! said Mrs Warner.\nHere it is! said Mrs Fizz.\nPut it out! said Mrs Pout.\nI can't! said Mrs Rant.\nCall the fire brigade! said Mrs Jade.\nGet the hose! said Mrs Rose.\nToo late! said Mrs Fate.\n\nThis rhyme tells a story — a fire breaks out and people try to help! Each line has a new character and a rhyme. Notice:\n• McGuire — Fire\n• Hare — Where\n• Brown — town\n• Warner — corner\n\nA narrative rhyme uses rhyme to tell a story from beginning to end.",
+      textVi: "Cháy! Cháy! bà McGuire nói.\nỞ đâu? Ở đâu? bà Hare hỏi.\nDưới phố! bà Brown nói.\nRẽ góc! bà Warner nói.\nĐây rồi! bà Fizz nói.\nDập đi! bà Pout nói.\nTôi không thể! bà Rant nói.\nGọi đội cứu hỏa! bà Jade nói.\nLấy vòi nước! bà Rose nói.\nMuộn rồi! bà Fate nói.\n\nBài vần này kể một câu chuyện — có hỏa hoạn và mọi người cố giúp đỡ! Mỗi dòng có một nhân vật mới và một vần. Chú ý:\n• McGuire — Fire (Lửa)\n• Hare — Where (Ở đâu)\n• Brown — town (phố)\n• Warner — corner (góc)\n\nBài vần kể chuyện dùng vần điệu để kể một câu chuyện từ đầu đến cuối."
+    },
+    {
+      sectionTitle: '3.6 Changing a rhyme',
+      sectionTitleVi: '3.6 Thay đổi bài vần',
+      type: 'activity',
+      text: "Now it is YOUR turn to be a poet! Let's change a rhyme we know.\n\nOriginal:\nHickory dickory dock, the mouse ran up the clock.\n\nLet's change it:\nHickory dickory dare, the mouse ran up the stair!\nHickory dickory dop, the mouse ran to the shop!\nHickory dickory doon, the mouse flew to the moon!\n\nSteps to change a rhyme:\n1. Pick a rhyme you know well.\n2. Choose the last word of a line.\n3. Think of a new word that rhymes.\n4. Change the line to match!\n\nTry changing \"Jack and Jill went up the hill\" — what rhymes with 'hill'? Bill? Grill? Chill?",
+      textVi: "Bây giờ đến LƯỢT BẠN làm nhà thơ! Hãy thay đổi một bài vần mà ta biết.\n\nBản gốc:\nHickory dickory dock, chú chuột chạy lên đồng hồ.\n\nHãy thay đổi:\nHickory dickory dare, chú chuột chạy lên cầu thang!\nHickory dickory dop, chú chuột chạy đến cửa hàng!\nHickory dickory doon, chú chuột bay lên mặt trăng!\n\nCác bước thay đổi bài vần:\n1. Chọn một bài vần bạn biết rõ.\n2. Chọn từ cuối cùng của một dòng.\n3. Nghĩ ra một từ mới có vần với nó.\n4. Thay đổi dòng cho phù hợp!\n\nThử thay đổi \"Jack and Jill went up the hill\" — từ gì vần với 'hill'? Bill? Grill? Chill?"
+    },
+    {
+      sectionTitle: '3.7 Unit 3 Review',
+      sectionTitleVi: '3.7 Ôn tập Bài 3',
+      type: 'review',
+      text: "Well done! You have learned all about rhymes in Unit 3!\n\nLet's review what we know:\n✓ Rhyming words sound the same at the end (dock/clock, cat/hat)\n✓ Number rhymes help us count (one/shoe, four/door)\n✓ Funny rhymes use imagination (the cow jumped over the moon!)\n✓ Silly rhymes are nonsense words that make us laugh\n✓ Narrative rhymes tell a story (Fire! Fire!)\n✓ We can change rhymes to create new ones\n\nRhyme Families we learned:\n-ock: dock, clock, rock, sock, lock, knock\n-at: cat, hat, mat, sat, bat, rat\n-ar: star, car, far, jar, bar\n-oe: shoe, two, blue\n-oor: four, door, floor\n\nKeep practising! Read a rhyme every day!",
+      textVi: "Giỏi lắm! Bạn đã học xong tất cả về vần điệu trong Bài 3!\n\nHãy ôn lại những gì chúng ta biết:\n✓ Từ vần có âm cuối giống nhau (dock/clock, cat/hat)\n✓ Vần số giúp ta đếm (one/shoe, four/door)\n✓ Vần vui dùng trí tưởng tượng (con bò nhảy qua mặt trăng!)\n✓ Vần ngớ ngẩn là những từ vô nghĩa làm ta cười\n✓ Vần kể chuyện kể một câu chuyện (Cháy! Cháy!)\n✓ Chúng ta có thể thay đổi vần để tạo vần mới\n\nCác họ vần đã học:\n-ock: dock, clock, rock, sock, lock, knock\n-at: cat, hat, mat, sat, bat, rat\n-ar: star, car, far, jar, bar\n-oe: shoe, two, blue\n-oor: four, door, floor\n\nHãy tiếp tục luyện tập! Đọc một bài vần mỗi ngày!"
+    },
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G1 U01: Friends & Playground
+  // ══════════════════════════════════════════════════════════════
+  'cam_g1_u01': [
+    {
+      sectionTitle: "1.1 Playing together",
+      sectionTitleVi: "1.1 Cùng chơi với nhau",
+      type: "reading",
+      text: "Look at the children in the playground. What are they doing? Some children are running. Some children are jumping. Two children are on the swing. They are playing together. Playing together is fun. We can share our toys. We can take turns. It is good to share and take turns.",
+      textVi: "Hãy nhìn những đứa trẻ ở sân chơi. Họ đang làm gì? Một vài đứa trẻ đang chạy. Một vài đứa trẻ đang nhảy. Hai đứa trẻ đang chơi xích đu. Họ đang chơi cùng nhau. Chơi cùng nhau rất vui. Chúng ta có thể chia sẻ đồ chơi. Chúng ta có thể thay phiên nhau. Chia sẻ và thay phiên nhau là điều tốt."
+    },
+    {
+      sectionTitle: "1.2 Making friends",
+      sectionTitleVi: "1.2 Kết bạn",
+      type: "information",
+      text: "How do you make a new friend? You can say, 'Hello, my name is...' You can ask, 'What is your name?' You can say, 'Do you want to play?' Smiling is a good way to make friends. Being kind is a good way to make friends. We use polite words. We say 'please' and 'thank you'.",
+      textVi: "Làm thế nào để kết bạn mới? Bạn có thể nói, 'Xin chào, tên mình là...' Bạn có thể hỏi, 'Tên bạn là gì?' Bạn có thể nói, 'Bạn có muốn chơi không?' Mỉm cười là một cách tốt để kết bạn. Tử tế là một cách tốt để kết bạn. Chúng ta sử dụng từ ngữ lịch sự. Chúng ta nói 'làm ơn' và 'cảm ơn'."
+    },
+    {
+      sectionTitle: "1.3 Let's play",
+      sectionTitleVi: "1.3 Hãy cùng chơi",
+      type: "reading",
+      text: "Let's play a game. Let's play tag. I am 'it'. Run, run, run! I can catch you. Now you are 'it'. Let's play hide and seek. I will close my eyes and count to ten. One, two, three... ten! Ready or not, here I come! Where are you hiding? I found you!",
+      textVi: "Hãy chơi một trò chơi. Hãy chơi trò đuổi bắt. Mình làm người bắt (it). Chạy, chạy, chạy! Mình có thể bắt được bạn. Bây giờ bạn làm người bắt. Hãy chơi trò trốn tìm. Mình sẽ nhắm mắt lại và đếm đến mười. Một, hai, ba... mười! Sẵn sàng hay chưa, mình đến đây! Bạn đang trốn ở đâu? Mình tìm thấy bạn rồi!"
+    },
+    {
+      sectionTitle: "1.4 Action words",
+      sectionTitleVi: "1.4 Từ chỉ hành động",
+      type: "grammar",
+      text: "Action words tell us what we are doing. Run, jump, hop, skip, walk. We can run fast. We can jump high. We can hop on one leg. We can skip with a rope. We can walk slowly. What actions can you do? I can clap my hands. I can stomp my feet.",
+      textVi: "Từ chỉ hành động cho chúng ta biết chúng ta đang làm gì. Chạy, nhảy, nhảy lò cò, nhảy dây, đi bộ. Chúng ta có thể chạy nhanh. Chúng ta có thể nhảy cao. Chúng ta có thể nhảy lò cò trên một chân. Chúng ta có thể nhảy với dây. Chúng ta có thể đi bộ chậm. Bạn có thể làm những hành động gì? Mình có thể vỗ tay. Mình có thể giậm chân."
+    },
+    {
+      sectionTitle: "1.5 Our playground",
+      sectionTitleVi: "1.5 Sân chơi của chúng ta",
+      type: "information",
+      text: "Our playground has many things. We have a slide. We slide down. We have a see-saw. We go up and down. We have a climbing frame. We climb up high. We have a sandbox. We build sandcastles. The playground is a busy place. We must be careful. We must not push.",
+      textVi: "Sân chơi của chúng ta có rất nhiều thứ. Chúng ta có cầu trượt. Chúng ta trượt xuống. Chúng ta có bập bênh. Chúng ta đi lên và đi xuống. Chúng ta có khung leo trèo. Chúng ta trèo lên cao. Chúng ta có hộp cát. Chúng ta xây lâu đài cát. Sân chơi là một nơi nhộn nhịp. Chúng ta phải cẩn thận. Chúng ta không được xô đẩy."
+    },
+    {
+      sectionTitle: "1.6 Unit 1 Review",
+      sectionTitleVi: "1.6 Ôn tập Bài 1",
+      type: "tip",
+      text: "Well done! You have finished Unit 1 all about friends and the playground.\n\nLet's review what we learned:\n✓ We learned words about playing: run, jump, swing, ball.\n✓ We learned how to be a good friend: share, take turns, be kind.\n✓ We learned polite words: please, thank you.\n✓ We learned action words (verbs).\n✓ We talked about things in the playground.\n\nKeep practicing! Be a good friend every day!",
+      textVi: "Giỏi lắm! Bạn đã học xong Bài 1 về bạn bè và sân chơi.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta học từ về vui chơi: chạy, nhảy, xích đu, bóng.\n✓ Chúng ta học cách làm một người bạn tốt: chia sẻ, thay phiên, tử tế.\n✓ Chúng ta học từ lịch sự: làm ơn, cảm ơn.\n✓ Chúng ta học từ chỉ hành động (động từ).\n✓ Chúng ta đã nói về các đồ vật ở sân chơi.\n\nHãy tiếp tục luyện tập! Hãy là một người bạn tốt mỗi ngày!"
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G1 U02: Making Things
+  // ══════════════════════════════════════════════════════════════
+  'cam_g1_u02': [
+    {
+      sectionTitle: "2.1 Making things from paper",
+      sectionTitleVi: "2.1 Làm đồ vật từ giấy",
+      type: "reading",
+      text: "We can make many things from paper. We can make a paper hat. We can make a paper boat. We can make a paper aeroplane. What do we need? We need paper. We need scissors. We need glue. We need colors. Let's make something fun together. Making things is creative.",
+      textVi: "Chúng ta có thể làm nhiều đồ vật từ giấy. Chúng ta có thể làm một chiếc mũ giấy. Chúng ta có thể làm một chiếc thuyền giấy. Chúng ta có thể làm một chiếc máy bay giấy. Chúng ta cần những gì? Chúng ta cần giấy. Chúng ta cần kéo. Chúng ta cần hồ dán. Chúng ta cần màu. Hãy cùng nhau làm một cái gì đó vui nhộn. Việc làm đồ vật rất sáng tạo."
+    },
+    {
+      sectionTitle: "2.2 Following instructions",
+      sectionTitleVi: "2.2 Làm theo hướng dẫn",
+      type: "information",
+      text: "To make something, we follow instructions. Instructions tell us what to do step by step. We use order words. First, get a piece of paper. Next, fold the paper in half. Then, fold the corners. Finally, open it out. Now you have a hat! Following instructions is important.",
+      textVi: "Để làm một cái gì đó, chúng ta làm theo hướng dẫn. Hướng dẫn cho chúng ta biết phải làm gì từng bước một. Chúng ta sử dụng từ chỉ thứ tự. Đầu tiên, lấy một tờ giấy. Tiếp theo, gấp đôi tờ giấy lại. Sau đó, gấp các góc. Cuối cùng, mở nó ra. Bây giờ bạn đã có một chiếc mũ! Việc làm theo hướng dẫn rất quan trọng."
+    },
+    {
+      sectionTitle: "2.3 Shapes around us",
+      sectionTitleVi: "2.3 Các hình dạng quanh ta",
+      type: "grammar",
+      text: "When we make things, we see shapes. A piece of paper is a rectangle. When we fold it, we can make a square. We can make a triangle. A circle is round. A star has points. Look around the room. What shapes can you see? The door is a rectangle. The clock is a circle.",
+      textVi: "Khi chúng ta làm đồ vật, chúng ta nhìn thấy các hình dạng. Một tờ giấy là một hình chữ nhật. Khi chúng ta gấp nó, chúng ta có thể tạo ra một hình vuông. Chúng ta có thể tạo ra một hình tam giác. Một hình tròn thì tròn. Một ngôi sao có các điểm nhọn. Hãy nhìn quanh phòng. Bạn có thể thấy những hình dạng gì? Cửa ra vào là một hình chữ nhật. Đồng hồ là một hình tròn."
+    },
+    {
+      sectionTitle: "2.4 The Paper Boat Story",
+      sectionTitleVi: "2.4 Câu chuyện chiếc thuyền giấy",
+      type: "reading",
+      text: "A boy made a paper boat. He painted it red and blue. He took it to the river. He put the boat in the water. The boat floated. It sailed away. Goodbye, little boat! The boy was happy. He watched his boat sail far away. Where is the boat going?",
+      textVi: "Một cậu bé làm một chiếc thuyền giấy. Cậu ấy tô nó màu đỏ và xanh lam. Cậu ấy mang nó ra sông. Cậu ấy đặt thuyền xuống nước. Chiếc thuyền nổi. Nó chèo đi. Tạm biệt, chiếc thuyền nhỏ! Cậu bé rất vui. Cậu ấy nhìn chiếc thuyền của mình trôi ra xa. Chiếc thuyền đang đi đâu?"
+    },
+    {
+      sectionTitle: "2.5 Writing a list",
+      sectionTitleVi: "2.5 Viết một danh sách",
+      type: "information",
+      text: "We can write a list of things we need. A list helps us remember. What do we need to make a card? 1. Paper. 2. Crayons. 3. Stickers. 4. A pencil. We write the items one below the other. We can put numbers next to the items. Let's write a shopping list.",
+      textVi: "Chúng ta có thể viết một danh sách những thứ chúng ta cần. Một danh sách giúp chúng ta nhớ. Chúng ta cần gì để làm một tấm thiệp? 1. Giấy. 2. Bút màu sáp. 3. Hình dán. 4. Một cây bút chì. Chúng ta viết các mục cái này dưới cái kia. Chúng ta có thể đặt số bên cạnh các mục. Hãy viết một danh sách mua sắm."
+    },
+    {
+      sectionTitle: "2.6 Unit 2 Review",
+      sectionTitleVi: "2.6 Ôn tập Bài 2",
+      type: "tip",
+      text: "Great job! You have finished Unit 2 all about making things.\n\nLet's review what we learned:\n✓ We learned words about materials and actions: paper, fold, cut, glue.\n✓ We learned about shapes: square, triangle, rectangle, circle.\n✓ We learned order words: first, next, then, finally.\n✓ We read instructions on how to make things.\n✓ We learned how to write a list.\n\nKeep practicing! Try making something new today!",
+      textVi: "Làm tốt lắm! Bạn đã học xong Bài 2 về làm đồ vật.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta học từ về vật liệu và hành động: giấy, gấp, cắt, hồ dán.\n✓ Chúng ta học về hình dạng: hình vuông, hình tam giác, hình chữ nhật, hình tròn.\n✓ Chúng ta học từ chỉ thứ tự: đầu tiên, tiếp theo, sau đó, cuối cùng.\n✓ Chúng ta đọc hướng dẫn cách làm đồ vật.\n✓ Chúng ta đã học cách viết một danh sách.\n\nHãy tiếp tục luyện tập! Thử làm một thứ gì đó mới hôm nay!"
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G1 U04: Traditional Tales
+  // ══════════════════════════════════════════════════════════════
+  'cam_g1_u04': [
+    {
+      sectionTitle: "4.1 The Enormous Turnip",
+      sectionTitleVi: "4.1 Củ cải khổng lồ",
+      type: "reading",
+      text: "Once upon a time, an old man planted a turnip. The turnip grew and grew. It was enormous! The old man pulled and pulled, but he could not pull it up. He called the old woman. They pulled and pulled, but they could not pull it up. They called a boy. They pulled and pulled. Pop! The enormous turnip came out.",
+      textVi: "Ngày xửa ngày xưa, có một ông lão trồng một củ cải. Củ cải lớn dần, lớn dần. Nó trở nên khổng lồ! Ông lão kéo mãi, kéo mãi nhưng không thể nhổ nó lên. Ông gọi bà lão. Họ cùng nhau kéo mãi, kéo mãi nhưng không thể nhổ nó lên. Họ gọi một cậu bé. Họ cùng nhau kéo. Bụp! Củ cải khổng lồ đã được nhổ lên."
+    },
+    {
+      sectionTitle: "4.2 Characters in the story",
+      sectionTitleVi: "4.2 Các nhân vật trong truyện",
+      type: "information",
+      text: "Stories have characters. Characters are the people or animals in a story. In The Enormous Turnip, the characters are the old man, the old woman, and the boy. The characters worked together. They helped each other. Who is your favorite character? I like the old man because he planted the turnip.",
+      textVi: "Những câu chuyện có các nhân vật. Nhân vật là con người hoặc động vật trong một câu chuyện. Trong truyện Củ cải khổng lồ, các nhân vật là ông lão, bà lão và cậu bé. Các nhân vật đã làm việc cùng nhau. Họ đã giúp đỡ lẫn nhau. Nhân vật yêu thích của bạn là ai? Mình thích ông lão vì ông đã trồng củ cải."
+    },
+    {
+      sectionTitle: "4.3 Story settings",
+      sectionTitleVi: "4.3 Bối cảnh câu chuyện",
+      type: "grammar",
+      text: "A setting is where a story takes place. A story can happen in a garden, in a forest, or in a castle. The Enormous Turnip takes place in a garden. The old man planted the turnip in the soil. Where does your favorite story take place? My favorite story takes place in a magical forest.",
+      textVi: "Bối cảnh là nơi câu chuyện diễn ra. Một câu chuyện có thể xảy ra trong một khu vườn, trong một khu rừng, hoặc trong một lâu đài. Củ cải khổng lồ diễn ra trong một khu vườn. Ông lão đã trồng củ cải trong đất. Câu chuyện yêu thích của bạn diễn ra ở đâu? Câu chuyện yêu thích của mình diễn ra trong một khu rừng phép thuật."
+    },
+    {
+      sectionTitle: "4.4 Retelling the story",
+      sectionTitleVi: "4.4 Kể lại câu chuyện",
+      type: "reading",
+      text: "We can retell a story using our own words. First, the old man planted a turnip. Next, the turnip became enormous. Then, the old man and the old woman tried to pull it up. Finally, they called a boy, and they pulled it up together. They made a big pot of turnip soup.",
+      textVi: "Chúng ta có thể kể lại một câu chuyện bằng lời của mình. Đầu tiên, ông lão trồng một củ cải. Tiếp theo, củ cải trở nên khổng lồ. Sau đó, ông lão và bà lão đã cố gắng nhổ nó lên. Cuối cùng, họ gọi một cậu bé, và họ cùng nhau nhổ nó lên. Họ đã nấu một nồi súp củ cải lớn."
+    },
+    {
+      sectionTitle: "4.5 Teamwork",
+      sectionTitleVi: "4.5 Làm việc nhóm",
+      type: "information",
+      text: "The story is about teamwork. The old man could not do it alone. The old woman could not do it alone. They needed help. When we work together, we can do hard things. We can be strong together. Teamwork makes the dream work. Who helps you when things are hard?",
+      textVi: "Câu chuyện nói về tinh thần làm việc nhóm. Ông lão không thể làm điều đó một mình. Bà lão không thể làm điều đó một mình. Họ cần sự giúp đỡ. Khi chúng ta làm việc cùng nhau, chúng ta có thể làm được những việc khó khăn. Chúng ta có thể mạnh mẽ cùng nhau. Làm việc nhóm tạo nên thành công. Ai giúp đỡ bạn khi mọi việc trở nên khó khăn?"
+    },
+    {
+      sectionTitle: "4.6 Unit 4 Review",
+      sectionTitleVi: "4.6 Ôn tập Bài 4",
+      type: "tip",
+      text: "Fantastic! You have finished Unit 4 all about traditional tales.\n\nLet's review what we learned:\n✓ We learned about story characters: old man, old woman, boy.\n✓ We learned about the setting of a story.\n✓ We practiced retelling a story with First, Next, Then, Finally.\n✓ We learned that teamwork is important.\n\nKeep reading stories! Try to find the characters and the setting in every story you read.",
+      textVi: "Tuyệt vời! Bạn đã học xong Bài 4 về những câu chuyện cổ tích.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta học về các nhân vật trong truyện: ông lão, bà lão, cậu bé.\n✓ Chúng ta học về bối cảnh của một câu chuyện.\n✓ Chúng ta thực hành kể lại một câu chuyện với Đầu tiên, Tiếp theo, Sau đó, Cuối cùng.\n✓ Chúng ta học được rằng làm việc nhóm rất quan trọng.\n\nHãy tiếp tục đọc truyện! Cố gắng tìm ra các nhân vật và bối cảnh trong mỗi câu chuyện bạn đọc."
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G1 U05: Animals & Information
+  // ══════════════════════════════════════════════════════════════
+  'cam_g1_u05': [
+    {
+      sectionTitle: "5.1 Animal facts",
+      sectionTitleVi: "5.1 Sự thật về động vật",
+      type: "reading",
+      text: "An elephant is a big animal. It has a long trunk. It has big ears. A mouse is a small animal. It has a long tail. It has small ears. Elephants cannot jump. Mice can run very fast. Birds can fly in the sky. Fish can swim in the water. Every animal is different.",
+      textVi: "Voi là một loài động vật lớn. Nó có một cái vòi dài. Nó có đôi tai to. Chuột là một loài động vật nhỏ. Nó có một cái đuôi dài. Nó có đôi tai nhỏ. Voi không thể nhảy. Chuột có thể chạy rất nhanh. Chim có thể bay trên bầu trời. Cá có thể bơi dưới nước. Mỗi loài động vật đều khác nhau."
+    },
+    {
+      sectionTitle: "5.2 Body parts of animals",
+      sectionTitleVi: "5.2 Các bộ phận cơ thể của động vật",
+      type: "information",
+      text: "Animals have different body parts. Birds have wings to fly. Fish have fins to swim. Elephants have trunks to drink water. Monkeys have long tails to swing on trees. Cats have sharp claws. What body parts do dogs have? Dogs have four legs and a tail.",
+      textVi: "Động vật có các bộ phận cơ thể khác nhau. Chim có cánh để bay. Cá có vây để bơi. Voi có vòi để uống nước. Khỉ có đuôi dài để đu trên cây. Mèo có móng vuốt sắc nhọn. Chó có những bộ phận cơ thể nào? Chó có bốn chân và một cái đuôi."
+    },
+    {
+      sectionTitle: "5.3 Describing animals",
+      sectionTitleVi: "5.3 Miêu tả động vật",
+      type: "grammar",
+      text: "We use describing words to talk about animals. Big, small, long, short, fast, slow. A giraffe is tall. A turtle is slow. A cheetah is fast. The snake is long. The bug is small. How would you describe a lion? A lion is big and strong.",
+      textVi: "Chúng ta sử dụng các từ miêu tả để nói về động vật. To, nhỏ, dài, ngắn, nhanh, chậm. Hươu cao cổ thì cao. Rùa thì chậm. Báo đốm thì nhanh. Con rắn thì dài. Con bọ thì nhỏ. Bạn sẽ miêu tả một con sư tử như thế nào? Một con sư tử thì to và khỏe."
+    },
+    {
+      sectionTitle: "5.4 Where do they live?",
+      sectionTitleVi: "5.4 Chúng sống ở đâu?",
+      type: "reading",
+      text: "Different animals live in different places. Camels live in the desert. It is hot and dry. Penguins live in the ice. It is very cold. Monkeys live in the jungle. There are many trees. Frogs live near the pond. Where do you live? I live in a house.",
+      textVi: "Các loài động vật khác nhau sống ở những nơi khác nhau. Lạc đà sống ở sa mạc. Ở đó nóng và khô. Chim cánh cụt sống trên băng. Ở đó rất lạnh. Khỉ sống trong rừng rậm. Có rất nhiều cây cối. Ếch sống gần ao. Bạn sống ở đâu? Mình sống trong một ngôi nhà."
+    },
+    {
+      sectionTitle: "5.5 Writing an information text",
+      sectionTitleVi: "5.5 Viết một đoạn văn thông tin",
+      type: "information",
+      text: "An information text tells us true facts. To write about an animal, we can write: 1. Its name. 2. What it looks like. 3. Where it lives. 4. What it eats. For example: This is a tiger. It is orange with black stripes. It lives in the jungle. It eats meat.",
+      textVi: "Một đoạn văn thông tin cho chúng ta biết những sự thật. Để viết về một loài động vật, chúng ta có thể viết: 1. Tên của nó. 2. Trông nó như thế nào. 3. Nó sống ở đâu. 4. Nó ăn gì. Ví dụ: Đây là một con hổ. Nó có màu cam với những sọc đen. Nó sống trong rừng rậm. Nó ăn thịt."
+    },
+    {
+      sectionTitle: "5.6 Unit 5 Review",
+      sectionTitleVi: "5.6 Ôn tập Bài 5",
+      type: "tip",
+      text: "Excellent! You have finished Unit 5 all about animals and information.\n\nLet's review what we learned:\n✓ We learned animal names: elephant, mouse, bird, fish.\n✓ We learned about animal body parts: trunk, tail, wings.\n✓ We used describing words: big, small, fast, slow.\n✓ We learned where different animals live.\n✓ We practiced writing true facts about animals.\n\nKeep exploring! You can learn more facts from books about animals.",
+      textVi: "Tuyệt vời! Bạn đã học xong Bài 5 về động vật và thông tin.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta học tên các loài động vật: voi, chuột, chim, cá.\n✓ Chúng ta học về các bộ phận cơ thể động vật: vòi, đuôi, cánh.\n✓ Chúng ta sử dụng các từ miêu tả: to, nhỏ, nhanh, chậm.\n✓ Chúng ta học nơi sống của các loài động vật khác nhau.\n✓ Chúng ta thực hành viết các sự thật về động vật.\n\nHãy tiếp tục khám phá! Bạn có thể tìm hiểu thêm nhiều sự thật từ sách về động vật."
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G1 U06: Nursery Rhymes
+  // ══════════════════════════════════════════════════════════════
+  'cam_g1_u06': [
+    {
+      sectionTitle: "6.1 Jack and Jill",
+      sectionTitleVi: "6.1 Jack và Jill",
+      type: "reading",
+      text: "Jack and Jill went up the hill, to fetch a pail of water. Jack fell down and broke his crown, and Jill came tumbling after. Up Jack got, and home did trot, as fast as he could caper. To old Dame Dob, who patched his nob, with vinegar and brown paper.",
+      textVi: "Jack và Jill đi lên đồi, để xách một thùng nước. Jack ngã xuống và vỡ đầu, và Jill lộn nhào theo sau. Jack đứng dậy, và chạy nước kiệu về nhà, nhanh nhất có thể. Đến gặp bà lão Dob, người đã đắp đầu cho cậu, bằng giấm và giấy nâu."
+    },
+    {
+      sectionTitle: "6.2 Rhythm and rhyme",
+      sectionTitleVi: "6.2 Nhịp điệu và vần",
+      type: "information",
+      text: "Nursery rhymes have rhythm. Rhythm is like the beat of a drum. We can clap our hands to the rhythm. Clap, clap, clap. Rhymes also have words that sound the same at the end. Hill and Jill rhyme. Down and crown rhyme. Can you clap the rhythm of a rhyme?",
+      textVi: "Các bài đồng dao có nhịp điệu. Nhịp điệu giống như nhịp trống. Chúng ta có thể vỗ tay theo nhịp điệu. Vỗ, vỗ, vỗ. Các bài đồng dao cũng có những từ phát âm giống nhau ở phần cuối. Hill và Jill có vần với nhau. Down và crown có vần với nhau. Bạn có thể vỗ tay theo nhịp điệu của một bài đồng dao không?"
+    },
+    {
+      sectionTitle: "6.3 Old words",
+      sectionTitleVi: "6.3 Từ ngữ cổ",
+      type: "grammar",
+      text: "Some nursery rhymes use old words. A 'pail' is an old word for a bucket. A 'crown' can mean a hat, but here it means the top of Jack's head. 'Tumbling' means falling down. 'To fetch' means to go and get something. We learn new words from old rhymes.",
+      textVi: "Một số bài đồng dao sử dụng từ ngữ cổ. 'Pail' (thùng) là một từ cổ chỉ một cái xô. 'Crown' (vương miện) có thể có nghĩa là một cái mũ, nhưng ở đây nó có nghĩa là đỉnh đầu của Jack. 'Tumbling' (lộn nhào) có nghĩa là ngã xuống. 'To fetch' (lấy) có nghĩa là đi và lấy một cái gì đó. Chúng ta học từ mới từ những bài đồng dao cổ."
+    },
+    {
+      sectionTitle: "6.4 Hickory Dickory Dock",
+      sectionTitleVi: "6.4 Hickory Dickory Dock",
+      type: "reading",
+      text: "Hickory, dickory, dock. The mouse ran up the clock. The clock struck one, the mouse ran down. Hickory, dickory, dock. This rhyme is about a mouse. The mouse ran up a tall clock. When the clock made a loud sound, the mouse was scared and ran down.",
+      textVi: "Hickory, dickory, dock. Con chuột chạy lên chiếc đồng hồ. Đồng hồ điểm một giờ, con chuột chạy xuống. Hickory, dickory, dock. Bài đồng dao này nói về một con chuột. Con chuột chạy lên một chiếc đồng hồ cao. Khi đồng hồ phát ra âm thanh lớn, con chuột sợ hãi và chạy xuống."
+    },
+    {
+      sectionTitle: "6.5 Singing together",
+      sectionTitleVi: "6.5 Cùng nhau hát",
+      type: "information",
+      text: "Many nursery rhymes are also songs. We can sing them together. Singing is fun! Twinkle Twinkle Little Star is a famous song. Baa Baa Black Sheep is a fun song. We can use actions when we sing. We can twinkle our fingers. We can point to a sheep. Let's sing a song now!",
+      textVi: "Nhiều bài đồng dao cũng là bài hát. Chúng ta có thể cùng nhau hát. Hát rất vui! Twinkle Twinkle Little Star (Ngôi sao nhỏ lấp lánh) là một bài hát nổi tiếng. Baa Baa Black Sheep (Cừu đen kêu ba ba) là một bài hát vui nhộn. Chúngtrong ta có thể kết hợp động tác khi hát. Chúng ta có thể làm động tác lấp lánh bằng các ngón tay. Chúng ta có thể chỉ vào một con cừu. Bây giờ hãy cùng hát một bài hát nhé!"
+    },
+    {
+      sectionTitle: "6.6 Unit 6 Review",
+      sectionTitleVi: "6.6 Ôn tập Bài 6",
+      type: "tip",
+      text: "Wonderful! You have finished Unit 6 all about nursery rhymes.\n\nLet's review what we learned:\n✓ We read the rhyme of Jack and Jill.\n✓ We learned about rhythm (the beat) and rhyme (matching sounds).\n✓ We learned some old words like 'pail' and 'crown'.\n✓ We read about the mouse and the clock.\n✓ We talked about singing rhymes as songs.\n\nKeep singing! Try to learn a new nursery rhyme this week.",
+      textVi: "Tuyệt vời! Bạn đã học xong Bài 6 về các bài đồng dao.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta đã đọc bài đồng dao về Jack và Jill.\n✓ Chúng ta học về nhịp điệu (nhịp đập) và vần điệu (âm thanh tương tự).\n✓ Chúng ta học một số từ cổ như 'pail' và 'crown'.\n✓ Chúng ta đã đọc về con chuột và chiếc đồng hồ.\n✓ Chúng ta đã nói về việc hát các bài đồng dao như những bài hát.\n\nHãy tiếp tục hát! Cố gắng học một bài đồng dao mới trong tuần này."
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G1 U07: Imagination Stories
+  // ══════════════════════════════════════════════════════════════
+  'cam_g1_u07': [
+    {
+      sectionTitle: "7.1 A bear in the house",
+      sectionTitleVi: "7.1 Một chú gấu trong nhà",
+      type: "reading",
+      text: "Imagine there is a bear in your house. He is wearing a blue jacket. He is very polite. He says, 'Hello, can I have some tea?' You make him some tea and give him a biscuit. The bear sits on the sofa. He drinks his tea and eats his biscuit. He says, 'Thank you very much.' Then he goes away.",
+      textVi: "Hãy tưởng tượng có một chú gấu trong nhà bạn. Chú đang mặc một chiếc áo khoác màu xanh dương. Chú rất lịch sự. Chú nói, 'Xin chào, tôi có thể uống một chút trà không?' Bạn pha cho chú một ít trà và cho chú một cái bánh quy. Chú gấu ngồi trên ghế sô pha. Chú uống trà và ăn bánh quy. Chú nói, 'Cảm ơn bạn rất nhiều.' Sau đó chú rời đi."
+    },
+    {
+      sectionTitle: "7.2 Real or Make-believe?",
+      sectionTitleVi: "7.2 Có thật hay giả tưởng?",
+      type: "information",
+      text: "Is the bear story real or make-believe? It is make-believe. Bears do not wear jackets. Bears do not drink tea. Make-believe stories come from our imagination. Real stories tell us what actually happened. I went to the park yesterday. That is real. I flew to the moon on a dragon. That is make-believe.",
+      textVi: "Câu chuyện về chú gấu là có thật hay giả tưởng? Nó là giả tưởng. Những chú gấu không mặc áo khoác. Những chú gấu không uống trà. Những câu chuyện giả tưởng đến từ trí tưởng tượng của chúng ta. Những câu chuyện có thật kể cho chúng ta nghe những gì thực sự đã xảy ra. Hôm qua tôi đã đi công viên. Đó là sự thật. Tôi bay lên mặt trăng trên một con rồng. Đó là giả tưởng."
+    },
+    {
+      sectionTitle: "7.3 Using 'can' and 'cannot'",
+      sectionTitleVi: "7.3 Sử dụng 'can' và 'cannot'",
+      type: "grammar",
+      text: "We use 'can' for things that are possible. We use 'cannot' for things that are not possible. A bird can fly. A dog cannot fly. In make-believe stories, animals can do things they cannot do in real life. In the story, the bear can talk. Real bears cannot talk. What can you do?",
+      textVi: "Chúng ta sử dụng 'can' (có thể) cho những điều có thể xảy ra. Chúng ta sử dụng 'cannot' (không thể) cho những điều không thể xảy ra. Chim có thể bay. Chó không thể bay. Trong những câu chuyện giả tưởng, động vật có thể làm những điều chúng không thể làm trong đời thực. Trong truyện, chú gấu có thể nói chuyện. Những chú gấu thật không thể nói chuyện. Bạn có thể làm gì?"
+    },
+    {
+      sectionTitle: "7.4 My imagination",
+      sectionTitleVi: "7.4 Trí tưởng tượng của tôi",
+      type: "reading",
+      text: "When I close my eyes, I can imagine anything. I can imagine I am a brave knight. I can imagine I am a pirate on a ship. I can imagine I have a pet dinosaur. My imagination is a wonderful place. I can go anywhere. I can do anything. What do you imagine?",
+      textVi: "Khi nhắm mắt lại, tôi có thể tưởng tượng ra bất cứ điều gì. Tôi có thể tưởng tượng mình là một hiệp sĩ dũng cảm. Tôi có thể tưởng tượng mình là một tên cướp biển trên tàu. Tôi có thể tưởng tượng mình có một con khủng long cưng. Trí tưởng tượng của tôi là một nơi tuyệt vời. Tôi có thể đi bất cứ đâu. Tôi có thể làm bất cứ điều gì. Bạn tưởng tượng điều gì?"
+    },
+    {
+      sectionTitle: "7.5 Writing a make-believe story",
+      sectionTitleVi: "7.5 Viết một câu chuyện giả tưởng",
+      type: "information",
+      text: "Let's write a make-believe story. First, choose a character. Let's choose a rabbit. Next, give the character something special. Our rabbit has magical boots. Then, tell what happens. The rabbit jumps over a mountain. Finally, give it a happy ending. The rabbit finds a field of golden carrots.",
+      textVi: "Hãy cùng viết một câu chuyện giả tưởng. Đầu tiên, chọn một nhân vật. Hãy chọn một con thỏ. Tiếp theo, cung cấp cho nhân vật một cái gì đó đặc biệt. Con thỏ của chúng ta có đôi ủng phép thuật. Sau đó, kể những gì xảy ra. Con thỏ nhảy qua một ngọn núi. Cuối cùng, tạo cho nó một kết thúc có hậu. Con thỏ tìm thấy một cánh đồng cà rốt vàng."
+    },
+    {
+      sectionTitle: "7.6 Unit 7 Review",
+      sectionTitleVi: "7.6 Ôn tập Bài 7",
+      type: "tip",
+      text: "Awesome! You have finished Unit 7 all about imagination stories.\n\nLet's review what we learned:\n✓ We learned the difference between 'real' and 'make-believe'.\n✓ We practiced using 'can' and 'cannot'.\n✓ We read a make-believe story about a polite bear.\n✓ We used our imagination to create new ideas.\n✓ We learned how to plan a make-believe story.\n\nKeep imagining! Write your own make-believe story and share it with a friend.",
+      textVi: "Tuyệt vời! Bạn đã học xong Bài 7 về những câu chuyện tưởng tượng.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta đã học sự khác biệt giữa 'có thật' và 'giả tưởng'.\n✓ Chúng ta thực hành sử dụng 'can' và 'cannot'.\n✓ Chúng ta đã đọc một câu chuyện giả tưởng về một chú gấu lịch sự.\n✓ Chúng ta đã sử dụng trí tưởng tượng của mình để tạo ra những ý tưởng mới.\n✓ Chúng ta học cách lên kế hoạch cho một câu chuyện giả tưởng.\n\nHãy tiếp tục tưởng tượng! Hãy viết câu chuyện giả tưởng của riêng bạn và chia sẻ nó với một người bạn."
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G1 U08: Personal Recounts
+  // ══════════════════════════════════════════════════════════════
+  'cam_g1_u08': [
+    {
+      sectionTitle: "8.1 A trip to the zoo",
+      sectionTitleVi: "8.1 Một chuyến đi đến sở thú",
+      type: "reading",
+      text: "Yesterday, I went to the zoo with my family. First, we saw the tall giraffes. They were eating leaves from the trees. Next, we went to see the monkeys. The monkeys were very funny. They jumped and swung on the ropes. My brother laughed a lot. We had a great day at the zoo.",
+      textVi: "Hôm qua, tôi đã đi sở thú với gia đình. Đầu tiên, chúng tôi nhìn thấy những con hươu cao cổ cao lêu nghêu. Chúng đang ăn lá trên cây. Tiếp theo, chúng tôi đi xem khỉ. Bầy khỉ rất vui nhộn. Chúng nhảy và đu trên dây. Em trai tôi cười rất nhiều. Chúng tôi đã có một ngày tuyệt vời ở sở thú."
+    },
+    {
+      sectionTitle: "8.2 What is a recount?",
+      sectionTitleVi: "8.2 Recount (kể lại) là gì?",
+      type: "information",
+      text: "A recount is telling a true story about something that happened to you. We write recounts about events in the past. We use words like 'yesterday', 'last week', or 'on Sunday'. A recount needs to be in order. We tell what happened first, next, and last.",
+      textVi: "Kể lại (recount) là kể một câu chuyện có thật về một điều gì đó đã xảy ra với bạn. Chúng ta viết các bài kể lại về các sự kiện trong quá khứ. Chúng ta sử dụng các từ như 'hôm qua', 'tuần trước' hoặc 'vào Chủ nhật'. Một bài kể lại cần phải theo thứ tự. Chúng ta kể những gì đã xảy ra đầu tiên, tiếp theo và cuối cùng."
+    },
+    {
+      sectionTitle: "8.3 Talking about the past",
+      sectionTitleVi: "8.3 Nói về quá khứ",
+      type: "grammar",
+      text: "When we write a recount, we use verbs in the past tense. Many past tense verbs end in '-ed'. Today I walk. Yesterday I walked. Today I play. Yesterday I played. Today I visit. Yesterday I visited. Some verbs are different. Today I go. Yesterday I went.",
+      textVi: "Khi chúng ta viết một bài kể lại, chúng ta sử dụng động từ ở thì quá khứ. Nhiều động từ thì quá khứ kết thúc bằng '-ed'. Hôm nay tôi đi bộ (walk). Hôm qua tôi đã đi bộ (walked). Hôm nay tôi chơi (play). Hôm qua tôi đã chơi (played). Hôm nay tôi đến thăm (visit). Hôm qua tôi đã đến thăm (visited). Một số động từ thì khác. Hôm nay tôi đi (go). Hôm qua tôi đã đi (went)."
+    },
+    {
+      sectionTitle: "8.4 My weekend",
+      sectionTitleVi: "8.4 Cuối tuần của tôi",
+      type: "reading",
+      text: "On Saturday, I helped my dad in the garden. We planted some flowers. It was hard work, but it was fun. On Sunday, I visited my grandmother. She baked a delicious cake. We drank tea and ate the cake. I was very happy. It was a good weekend.",
+      textVi: "Vào thứ Bảy, tôi đã giúp bố trong khu vườn. Chúng tôi trồng một số bông hoa. Đó là một công việc vất vả, nhưng rất vui. Vào Chủ nhật, tôi đi thăm bà. Bà nướng một cái bánh rất ngon. Chúng tôi uống trà và ăn bánh. Tôi rất hạnh phúc. Đó là một ngày cuối tuần tuyệt vời."
+    },
+    {
+      sectionTitle: "8.5 Feelings in recounts",
+      sectionTitleVi: "8.5 Cảm xúc trong bài kể lại",
+      type: "information",
+      text: "At the end of a recount, we often write about how we felt. Did you feel happy, sad, excited, or tired? In the zoo recount, the writer felt it was a 'great day'. In the weekend recount, the writer felt 'very happy'. Adding feelings makes your story better.",
+      textVi: "Vào cuối bài kể lại, chúng ta thường viết về cảm giác của mình. Bạn có cảm thấy vui, buồn, hào hứng hay mệt mỏi không? Trong bài kể lại về sở thú, người viết cảm thấy đó là một 'ngày tuyệt vời'. Trong bài kể lại cuối tuần, người viết cảm thấy 'rất vui'. Việc thêm cảm xúc làm cho câu chuyện của bạn hay hơn."
+    },
+    {
+      sectionTitle: "8.6 Unit 8 Review",
+      sectionTitleVi: "8.6 Ôn tập Bài 8",
+      type: "tip",
+      text: "Well done! You have finished Unit 8 all about personal recounts.\n\nLet's review what we learned:\n✓ We learned what a recount is (a true story about the past).\n✓ We used words to show time: yesterday, on Saturday.\n✓ We learned about past tense verbs (walked, played, went).\n✓ We wrote events in the right order.\n✓ We added feelings to the end of our stories.\n\nKeep a diary! Write a short recount of your day every evening.",
+      textVi: "Làm tốt lắm! Bạn đã học xong Bài 8 về kể lại chuyện cá nhân.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta đã học kể lại là gì (một câu chuyện có thật về quá khứ).\n✓ Chúng ta sử dụng các từ chỉ thời gian: hôm qua, vào thứ Bảy.\n✓ Chúng ta học về động từ thì quá khứ (walked, played, went).\n✓ Chúng ta viết các sự kiện theo đúng thứ tự.\n✓ Chúng ta thêm cảm xúc vào cuối câu chuyện của mình.\n\nHãy viết nhật ký! Viết một bài kể lại ngắn gọn về ngày của bạn vào mỗi buổi tối."
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G1 U09: Weather Poems
+  // ══════════════════════════════════════════════════════════════
+  'cam_g1_u09': [
+    {
+      sectionTitle: "9.1 Rain on the roof",
+      sectionTitleVi: "9.1 Mưa trên mái nhà",
+      type: "reading",
+      text: "Pitter patter, pitter patter. The rain falls down. It falls on the trees. It falls on the town. Pitter patter, pitter patter. The rain hits the roof. I am warm inside. I am safe and dry. I like the sound of the rain.",
+      textVi: "Lộp bộp, lộp bộp. Mưa rơi xuống. Mưa rơi trên cây cối. Mưa rơi xuống thị trấn. Lộp bộp, lộp bộp. Mưa rơi trên mái nhà. Tôi thấy ấm áp ở bên trong. Tôi an toàn và khô ráo. Tôi thích âm thanh của mưa."
+    },
+    {
+      sectionTitle: "9.2 Poems about weather",
+      sectionTitleVi: "9.2 Thơ về thời tiết",
+      type: "information",
+      text: "Poems use special words. Some words in poems make sounds. 'Pitter patter' sounds like rain. Poems can be about a theme. A theme is the main idea. The theme of this unit is weather. Poems can be about rain, sun, wind, or snow.",
+      textVi: "Thơ sử dụng những từ ngữ đặc biệt. Một số từ trong thơ tạo ra âm thanh. 'Lộp bộp' (pitter patter) nghe giống như tiếng mưa. Những bài thơ có thể nói về một chủ đề. Chủ đề là ý chính. Chủ đề của bài này là thời tiết. Thơ có thể về mưa, mặt trời, gió, hoặc tuyết."
+    },
+    {
+      sectionTitle: "9.3 Describing the weather",
+      sectionTitleVi: "9.3 Miêu tả thời tiết",
+      type: "grammar",
+      text: "How is the weather today? Is it sunny? Is it rainy? Is it windy? We can use adjectives to describe the weather. The sun is bright. The wind is strong. The rain is wet. The snow is cold. What is your favorite weather? I like sunny weather.",
+      textVi: "Hôm nay thời tiết thế nào? Trời có nắng không? Trời có mưa không? Trời có gió không? Chúng ta có thể sử dụng tính từ để miêu tả thời tiết. Mặt trời thì sáng. Gió thì mạnh. Mưa thì ướt. Tuyết thì lạnh. Thời tiết yêu thích của bạn là gì? Mình thích thời tiết nắng."
+    },
+    {
+      sectionTitle: "9.4 The wind blows",
+      sectionTitleVi: "9.4 Gió thổi",
+      type: "reading",
+      text: "Whoosh! The wind blows. It blows the leaves off the trees. It blows my hat away. Catch it! The wind is invisible. We cannot see it, but we can feel it. We can see what it does. It makes the kite fly high in the sky.",
+      textVi: "Vù vù! Gió thổi. Gió thổi những chiếc lá rụng khỏi cây. Nó thổi bay chiếc mũ của tôi. Bắt lấy nó! Gió thì vô hình. Chúng ta không thể nhìn thấy nó, nhưng chúng ta có thể cảm nhận được nó. Chúng ta có thể nhìn thấy những gì nó làm. Nó làm cho cánh diều bay cao trên bầu trời."
+    },
+    {
+      sectionTitle: "9.5 Writing an acrostic poem",
+      sectionTitleVi: "9.5 Viết thơ Akrostic",
+      type: "information",
+      text: "An acrostic poem uses the letters of a word. The letters go down the page. Let's write a poem about SUN.\nS is for Shining so bright.\nU is for Up in the sky.\nN is for Never cold.\nYou can try writing a poem using your own name!",
+      textVi: "Một bài thơ Akrostic (thơ kết hợp chữ cái) sử dụng các chữ cái của một từ. Các chữ cái đi xuống theo trang. Hãy viết một bài thơ về chữ SUN (Mặt trời).\nS là Shining so bright (Chiếu sáng rực rỡ).\nU là Up in the sky (Lên cao trên bầu trời).\nN là Never cold (Không bao giờ lạnh).\nBạn có thể thử viết một bài thơ bằng tên của chính mình!"
+    },
+    {
+      sectionTitle: "9.6 Unit 9 Review",
+      sectionTitleVi: "9.6 Ôn tập Bài 9",
+      type: "tip",
+      text: "Brilliant! You have finished Unit 9 all about weather poems.\n\nLet's review what we learned:\n✓ We read poems about rain and wind.\n✓ We learned that 'theme' means the main idea.\n✓ We used words that sound like noises (pitter patter).\n✓ We used adjectives to describe the weather (bright, wet, cold).\n✓ We learned how to write an acrostic poem.\n\nKeep observing the weather! Look out the window and describe the weather every morning.",
+      textVi: "Tuyệt vời! Bạn đã học xong Bài 9 về những bài thơ thời tiết.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta đọc những bài thơ về mưa và gió.\n✓ Chúng ta đã học được rằng 'chủ đề' có nghĩa là ý chính.\n✓ Chúng ta đã sử dụng những từ có âm thanh giống tiếng ồn (lộp bộp).\n✓ Chúng ta đã sử dụng các tính từ để miêu tả thời tiết (sáng, ướt, lạnh).\n✓ Chúng ta học cách viết một bài thơ Akrostic.\n\nHãy tiếp tục quan sát thời tiết! Nhìn ra cửa sổ và miêu tả thời tiết mỗi buổi sáng."
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G2 U01: Families
+  // ══════════════════════════════════════════════════════════════
+  'cam_g2_u01': [
+    {
+      sectionTitle: "1.1 Meet my family",
+      sectionTitleVi: "1.1 Gặp gỡ gia đình tôi",
+      type: "reading",
+      text: "Hello! My name is Mia. I live with my mother, my father, and my little brother, Leo. We live in a house with a small garden. My grandmother and grandfather live near us. We visit them every Sunday. We eat dinner together. Family is very important to me. I love my family.",
+      textVi: "Xin chào! Tên tôi là Mia. Tôi sống với mẹ, cha và em trai nhỏ của tôi, Leo. Chúng tôi sống trong một ngôi nhà có một khu vườn nhỏ. Bà và ông của tôi sống gần chúng tôi. Chúng tôi đến thăm họ vào mỗi Chủ nhật. Chúng tôi cùng nhau ăn tối. Gia đình rất quan trọng đối với tôi. Tôi yêu gia đình mình."
+    },
+    {
+      sectionTitle: "1.2 Different families",
+      sectionTitleVi: "1.2 Những gia đình khác nhau",
+      type: "information",
+      text: "Families are not all the same. Some families are big, and some families are small. Some children live with their mother and father. Some children live with only their mother or only their father. Some children live with their grandparents. It does not matter who is in your family. What matters is that you care for each other.",
+      textVi: "Các gia đình không giống nhau. Một số gia đình lớn, và một số gia đình nhỏ. Một số trẻ em sống với cả mẹ và cha. Một số trẻ em chỉ sống với mẹ hoặc chỉ sống với cha. Một số trẻ em sống với ông bà. Không quan trọng ai ở trong gia đình của bạn. Điều quan trọng là các bạn quan tâm đến nhau."
+    },
+    {
+      sectionTitle: "1.3 Family trees",
+      sectionTitleVi: "1.3 Cây gia phả",
+      type: "grammar",
+      text: "A family tree is a picture that shows how people in a family are connected. Grandparents are at the top. Parents are in the middle. Children are at the bottom. We use words like 'aunt', 'uncle', and 'cousin' for other family members. An aunt is your mother or father's sister. A cousin is your aunt or uncle's child.",
+      textVi: "Cây gia phả là một bức tranh cho thấy những người trong một gia đình kết nối với nhau như thế nào. Ông bà ở trên cùng. Cha mẹ ở giữa. Trẻ em ở dưới cùng. Chúng ta sử dụng các từ như 'dì/cô' (aunt), 'chú/bác' (uncle) và 'anh chị em họ' (cousin) cho các thành viên khác trong gia đình. Dì/cô là chị hoặc em gái của cha hoặc mẹ bạn. Anh chị em họ là con của dì hoặc chú bạn."
+    },
+    {
+      sectionTitle: "1.4 Helping at home",
+      sectionTitleVi: "1.4 Giúp đỡ việc nhà",
+      type: "reading",
+      text: "In a family, everyone helps. Leo and I help our parents. I set the table for dinner. I put the plates and forks on the table. Leo feeds our dog, Max. After dinner, my father washes the dishes, and my mother dries them. Helping at home makes our family happy.",
+      textVi: "Trong một gia đình, mọi người đều giúp đỡ lẫn nhau. Leo và tôi giúp đỡ cha mẹ. Tôi dọn bàn ăn tối. Tôi đặt đĩa và nĩa lên bàn. Leo cho chú chó Max của chúng tôi ăn. Sau bữa tối, cha tôi rửa bát đĩa và mẹ tôi lau khô chúng. Giúp đỡ việc nhà làm cho gia đình chúng tôi hạnh phúc."
+    },
+    {
+      sectionTitle: "1.5 Unit 1 Review",
+      sectionTitleVi: "1.5 Ôn tập Bài 1",
+      type: "tip",
+      text: "Great job! You have finished Unit 1 all about families.\n\nLet's review what we learned:\n✓ We learned words for family members (mother, father, brother).\n✓ We learned that families can be different sizes.\n✓ We talked about family trees and extended family (aunts, uncles).\n✓ We read about helping each other at home.\n\nTalk to your family today! Ask them to help you draw your own family tree.",
+      textVi: "Làm tốt lắm! Bạn đã hoàn thành Bài 1 về gia đình.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta đã học các từ chỉ thành viên gia đình (mẹ, cha, anh em trai).\n✓ Chúng ta học được rằng các gia đình có thể có quy mô khác nhau.\n✓ Chúng ta đã nói về cây gia phả và đại gia đình (cô dì, chú bác).\n✓ Chúng ta đã đọc về việc giúp đỡ lẫn nhau ở nhà.\n\nHãy nói chuyện với gia đình bạn hôm nay! Nhờ họ giúp bạn vẽ cây gia phả của riêng mình."
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G2 U02: Badges & Labels
+  // ══════════════════════════════════════════════════════════════
+  'cam_g2_u02': [
+    {
+      sectionTitle: "2.1 The museum badge",
+      sectionTitleVi: "2.1 Huy hiệu bảo tàng",
+      type: "reading",
+      text: "Our class went to the museum today. The teacher gave everyone a red badge. The badge had my name on it. It also had the name of our school. The badge showed the museum guard that I was with a school group. I wore the badge on my shirt. It made me feel important.",
+      textVi: "Lớp chúng tôi đã đi bảo tàng hôm nay. Giáo viên đưa cho mỗi người một huy hiệu màu đỏ. Huy hiệu có tên tôi trên đó. Nó cũng có tên trường của chúng tôi. Huy hiệu cho người bảo vệ bảo tàng thấy rằng tôi đi cùng một nhóm trường. Tôi đeo huy hiệu trên áo. Nó làm tôi cảm thấy quan trọng."
+    },
+    {
+      sectionTitle: "2.2 What are labels for?",
+      sectionTitleVi: "2.2 Nhãn dùng để làm gì?",
+      type: "information",
+      text: "Labels give us information. Look around you. You will see labels on many things. A label on a box of cereal tells you what is inside. A label on a shirt tells you the size and how to wash it. Labels can have words or pictures. They help us understand what things are and how to use them.",
+      textVi: "Nhãn cung cấp cho chúng ta thông tin. Hãy nhìn xung quanh bạn. Bạn sẽ thấy nhãn trên nhiều thứ. Nhãn trên hộp ngũ cốc cho bạn biết có gì bên trong. Nhãn trên áo cho bạn biết kích cỡ và cách giặt. Nhãn có thể có chữ hoặc hình ảnh. Chúng giúp chúng ta hiểu các vật dụng là gì và cách sử dụng chúng."
+    },
+    {
+      sectionTitle: "2.3 Reading instructions",
+      sectionTitleVi: "2.3 Đọc hướng dẫn",
+      type: "grammar",
+      text: "Some labels give instructions. Instructions tell us what to do. They use command words. Command words are verbs at the beginning of a sentence. For example: 'Push the door.' 'Wash in cold water.' 'Do not eat.' We follow instructions to stay safe and to do things correctly.",
+      textVi: "Một số nhãn đưa ra hướng dẫn. Hướng dẫn cho chúng ta biết phải làm gì. Chúng sử dụng các từ mệnh lệnh. Từ mệnh lệnh là động từ ở đầu câu. Ví dụ: 'Đẩy cửa.' 'Giặt trong nước lạnh.' 'Không được ăn.' Chúng ta làm theo hướng dẫn để giữ an toàn và làm mọi việc một cách chính xác."
+    },
+    {
+      sectionTitle: "2.4 Designing a poster",
+      sectionTitleVi: "2.4 Thiết kế một tấm áp phích",
+      type: "reading",
+      text: "We made posters in class to label the different areas. I made a poster for the reading corner. I drew a big book. I used bright blue and yellow colors. I wrote 'Reading Corner' in big letters. Now, everyone knows where to go to read quietly. Good design makes a label easy to see and read.",
+      textVi: "Chúng tôi đã làm các tấm áp phích trong lớp để dán nhãn các khu vực khác nhau. Tôi làm một tấm áp phích cho góc đọc sách. Tôi vẽ một cuốn sách lớn. Tôi đã sử dụng màu xanh dương và màu vàng tươi. Tôi viết 'Góc đọc sách' bằng chữ in lớn. Bây giờ, mọi người đều biết nơi để đi đọc sách một cách yên tĩnh. Thiết kế tốt làm cho nhãn dễ nhìn và dễ đọc."
+    },
+    {
+      sectionTitle: "2.5 Unit 2 Review",
+      sectionTitleVi: "2.5 Ôn tập Bài 2",
+      type: "tip",
+      text: "Awesome! You have finished Unit 2 all about badges and labels.\n\nLet's review what we learned:\n✓ We learned that badges can show who we are and where we belong.\n✓ We discovered that labels give us important information about objects.\n✓ We practiced reading instructions and command words (Push, Wash).\n✓ We talked about designing signs with clear words and pictures.\n\nBe a detective! Look around your house today and find three different labels.",
+      textVi: "Tuyệt vời! Bạn đã hoàn thành Bài 2 về huy hiệu và nhãn mác.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta đã học được rằng huy hiệu có thể cho thấy chúng ta là ai và chúng ta thuộc về đâu.\n✓ Chúng ta phát hiện ra rằng nhãn cung cấp cho chúng ta thông tin quan trọng về các đồ vật.\n✓ Chúng ta đã thực hành đọc các hướng dẫn và từ mệnh lệnh (Push, Wash).\n✓ Chúng ta đã nói về việc thiết kế các biển báo với hình ảnh và từ ngữ rõ ràng.\n\nHãy là một thám tử! Nhìn xung quanh nhà của bạn hôm nay và tìm ba nhãn khác nhau."
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G2 U03: Sounds Around
+  // ══════════════════════════════════════════════════════════════
+  'cam_g2_u03': [
+    {
+      sectionTitle: "3.1 The noisy city",
+      sectionTitleVi: "3.1 Thành phố ồn ào",
+      type: "reading",
+      text: "The city is full of sounds. Beep, beep! That is the sound of cars. Vroom! That is a bus. People are talking loudly on the street. A dog is barking. At a construction site, workers are hitting metal. Clang, clang! It is very noisy. I cover my ears. I like the city, but sometimes it is too loud.",
+      textVi: "Thành phố tràn ngập âm thanh. Bíp, bíp! Đó là âm thanh của xe ô tô. Vù vù! Đó là một chiếc xe buýt. Mọi người đang nói chuyện ồn ào trên đường phố. Một con chó đang sủa. Tại một công trường xây dựng, công nhân đang đập kim loại. Keng, keng! Thật là ồn ào. Tôi bịt tai lại. Tôi thích thành phố, nhưng đôi khi nó quá ồn ào."
+    },
+    {
+      sectionTitle: "3.2 Quiet sounds",
+      sectionTitleVi: "3.2 Những âm thanh nhỏ",
+      type: "information",
+      text: "Not all sounds are loud. Some sounds are quiet. When the wind blows gently through the trees, it makes a soft sound. A cat purring is a quiet sound. A whisper is a very quiet way of talking. In a library, we must use quiet voices. Silence is when there is no sound at all.",
+      textVi: "Không phải tất cả âm thanh đều lớn. Một số âm thanh rất nhỏ. Khi gió thổi nhẹ qua những tán cây, nó tạo ra một âm thanh nhẹ nhàng. Một con mèo kêu gừ gừ là một âm thanh nhỏ. Thì thầm là một cách nói chuyện rất nhỏ. Trong thư viện, chúng ta phải nói giọng nhỏ. Im lặng là khi không có âm thanh nào cả."
+    },
+    {
+      sectionTitle: "3.3 Words that make sounds",
+      sectionTitleVi: "3.3 Những từ tạo ra âm thanh",
+      type: "grammar",
+      text: "Some words sound like the thing they describe. This is called onomatopoeia. Think of the word 'buzz'. It sounds like a bee. Think of the word 'splash'. It sounds like jumping into water. Other sound words are 'crash', 'bang', and 'pop'. Using these words makes writing more exciting.",
+      textVi: "Một số từ nghe giống như thứ mà chúng miêu tả. Điều này được gọi là từ tượng thanh. Hãy nghĩ về từ 'buzz' (vo ve). Nghe giống như một con ong. Hãy nghĩ về từ 'splash' (bùm). Nghe giống như nhảy xuống nước. Các từ chỉ âm thanh khác là 'crash' (rầm), 'bang' (đoàng) và 'pop' (bốp). Sử dụng những từ này làm cho bài viết thú vị hơn."
+    },
+    {
+      sectionTitle: "3.4 Music class",
+      sectionTitleVi: "3.4 Lớp học âm nhạc",
+      type: "reading",
+      text: "Today in music class, we played different instruments. I played the drum. I hit it with a stick. Boom, boom! My friend played the triangle. It made a high, ringing sound. Ting! We all played our instruments together. Our teacher said we made a beautiful sound. Music is organized sound.",
+      textVi: "Hôm nay trong lớp học âm nhạc, chúng tôi đã chơi các loại nhạc cụ khác nhau. Tôi đã chơi trống. Tôi đánh nó bằng một cái dùi. Bùm, bùm! Bạn tôi chơi kẻng tam giác. Nó tạo ra một âm thanh cao, vang dội. Keng! Tất cả chúng tôi cùng chơi nhạc cụ của mình. Giáo viên của chúng tôi nói rằng chúng tôi đã tạo ra một âm thanh tuyệt vời. Âm nhạc là âm thanh có tổ chức."
+    },
+    {
+      sectionTitle: "3.5 Unit 3 Review",
+      sectionTitleVi: "3.5 Ôn tập Bài 3",
+      type: "tip",
+      text: "Well done! You have finished Unit 3 all about sounds.\n\nLet's review what we learned:\n✓ We learned about loud sounds (cars, construction) and quiet sounds (whispers).\n✓ We learned that silence means no sound at all.\n✓ We practiced using sound words like 'buzz' and 'crash'.\n✓ We read about making musical sounds with instruments.\n\nClose your eyes and listen. What sounds can you hear right now?",
+      textVi: "Làm tốt lắm! Bạn đã hoàn thành Bài 3 về các âm thanh.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta đã học về những âm thanh lớn (ô tô, công trường xây dựng) và những âm thanh nhỏ (tiếng thì thầm).\n✓ Chúng ta đã học được rằng sự im lặng có nghĩa là không có âm thanh nào cả.\n✓ Chúng ta đã thực hành sử dụng các từ âm thanh như 'buzz' (vo ve) và 'crash' (ầm).\n✓ Chúng ta đã đọc về việc tạo ra âm thanh âm nhạc bằng nhạc cụ.\n\nHãy nhắm mắt lại và lắng nghe. Bạn có thể nghe thấy âm thanh gì ngay bây giờ?"
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G2 U04: Long Ago
+  // ══════════════════════════════════════════════════════════════
+  'cam_g2_u04': [
+    {
+      sectionTitle: "4.1 The old castle",
+      sectionTitleVi: "4.1 Lâu đài cổ",
+      type: "reading",
+      text: "Long ago, there were no tall glass buildings. Kings and queens lived in big stone castles. Castles had thick walls to keep people safe. Knights wore heavy metal armour and rode horses. They did not have cars or airplanes. They used candles for light because there was no electricity. Life was very different.",
+      textVi: "Cách đây rất lâu, không có những tòa nhà cao tầng bằng kính. Các vị vua và hoàng hậu sống trong những lâu đài lớn bằng đá. Lâu đài có những bức tường dày để giữ an toàn cho mọi người. Các hiệp sĩ mặc áo giáp kim loại nặng và cưỡi ngựa. Họ không có ô tô hay máy bay. Họ sử dụng nến để thắp sáng vì không có điện. Cuộc sống lúc đó rất khác biệt."
+    },
+    {
+      sectionTitle: "4.2 Then and now",
+      sectionTitleVi: "4.2 Ngày ấy và bây giờ",
+      type: "information",
+      text: "We can compare the past and the present. In the past, people traveled by horse or by walking. Now, we travel by cars and trains. In the past, people wrote letters with a feather pen. Now, we send emails on a computer. Some things change, but some things stay the same. People still eat, sleep, and play.",
+      textVi: "Chúng ta có thể so sánh quá khứ và hiện tại. Trong quá khứ, mọi người di chuyển bằng ngựa hoặc đi bộ. Bây giờ, chúng ta đi du lịch bằng ô tô và xe lửa. Trong quá khứ, mọi người viết thư bằng bút lông chim. Bây giờ, chúng ta gửi email trên máy tính. Có những thứ thay đổi, nhưng cũng có những thứ vẫn giữ nguyên. Con người vẫn ăn, ngủ và vui chơi."
+    },
+    {
+      sectionTitle: "4.3 Talking about the past",
+      sectionTitleVi: "4.3 Nói về quá khứ",
+      type: "grammar",
+      text: "When we talk about long ago, we use the past tense of 'to be'. We use 'was' for one thing (singular) and 'were' for many things (plural). The castle was big. The knights were brave. The king was old. The horses were fast. Notice how we change 'is' to 'was' and 'are' to 'were'.",
+      textVi: "Khi nói về ngày xưa, chúng ta sử dụng thì quá khứ của động từ 'to be'. Chúng ta sử dụng 'was' cho một vật (số ít) và 'were' cho nhiều vật (số nhiều). Lâu đài thì lớn (was). Các hiệp sĩ thì dũng cảm (were). Nhà vua thì già (was). Những con ngựa thì nhanh nhẹn (were). Chú ý cách chúng ta đổi 'is' thành 'was' và 'are' thành 'were'."
+    },
+    {
+      sectionTitle: "4.4 A message from the king",
+      sectionTitleVi: "4.4 Thông điệp từ nhà vua",
+      type: "reading",
+      text: "The king had a message. He wanted everyone to come to a big feast. A messenger rode his horse to every village. He shouted, 'Hear ye, hear ye! The king invites you to a feast.' The people were very excited. They put on their best clothes and walked to the castle. There was lots of food and music.",
+      textVi: "Nhà vua có một thông điệp. Ngài muốn mọi người đến dự một bữa tiệc lớn. Một người đưa tin đã cưỡi ngựa đến mọi ngôi làng. Anh ta hét lên: 'Nghe đây, nghe đây! Nhà vua mời các bạn đến dự tiệc.' Mọi người đều rất phấn khích. Họ mặc những bộ quần áo đẹp nhất và đi bộ đến lâu đài. Có rất nhiều đồ ăn và âm nhạc."
+    },
+    {
+      sectionTitle: "4.5 Unit 4 Review",
+      sectionTitleVi: "4.5 Ôn tập Bài 4",
+      type: "tip",
+      text: "Excellent! You have finished Unit 4 all about long ago.\n\nLet's review what we learned:\n✓ We learned about life in the past (castles, knights).\n✓ We compared how things were then to how they are now.\n✓ We practiced using 'was' and 'were'.\n✓ We read a story about a king's feast.\n\nImagine living in a castle! What would you do all day?",
+      textVi: "Tuyệt vời! Bạn đã hoàn thành Bài 4 về ngày xưa.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta đã học về cuộc sống trong quá khứ (lâu đài, hiệp sĩ).\n✓ Chúng ta đã so sánh mọi thứ ngày xưa với bây giờ như thế nào.\n✓ Chúng ta đã thực hành sử dụng 'was' và 'were'.\n✓ Chúng ta đã đọc một câu chuyện về bữa tiệc của nhà vua.\n\nHãy tưởng tượng việc sống trong một lâu đài! Bạn sẽ làm gì cả ngày?"
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G2 U05: Computers & Robots
+  // ══════════════════════════════════════════════════════════════
+  'cam_g2_u05': [
+    {
+      sectionTitle: "5.1 The helpful robot",
+      sectionTitleVi: "5.1 Chú robot hữu ích",
+      type: "reading",
+      text: "My family bought a new robot. Its name is Sparky. Sparky has a screen for a face and wheels instead of legs. Sparky is very helpful. It can clean the floor and wash the windows. I can press buttons to give Sparky commands. Sometimes, Sparky gets confused and tries to wash the cat. The cat does not like that!",
+      textVi: "Gia đình tôi đã mua một chú robot mới. Tên của nó là Sparky. Sparky có khuôn mặt là một màn hình và có bánh xe thay vì chân. Sparky rất hữu ích. Nó có thể lau nhà và lau cửa sổ. Tôi có thể nhấn nút để ra lệnh cho Sparky. Đôi khi, Sparky bị nhầm lẫn và cố gắng tắm cho con mèo. Con mèo không thích điều đó chút nào!"
+    },
+    {
+      sectionTitle: "5.2 Parts of a computer",
+      sectionTitleVi: "5.2 Các bộ phận của máy tính",
+      type: "information",
+      text: "A computer has many parts. The screen shows you pictures and words. You use the keyboard to type letters and numbers. You use the mouse to click on things on the screen. Inside the computer, there is a brain that processes information. Computers help us learn, play games, and talk to people far away.",
+      textVi: "Một máy tính có rất nhiều bộ phận. Màn hình hiển thị cho bạn hình ảnh và chữ. Bạn sử dụng bàn phím để gõ chữ cái và số. Bạn sử dụng con chuột để nhấp vào các thứ trên màn hình. Bên trong máy tính, có một bộ não xử lý thông tin. Máy tính giúp chúng ta học tập, chơi trò chơi và nói chuyện với những người ở xa."
+    },
+    {
+      sectionTitle: "5.3 Giving commands",
+      sectionTitleVi: "5.3 Ra lệnh",
+      type: "grammar",
+      text: "Robots and computers only do what we tell them to do. We write instructions using code. When we write code, we use imperative verbs, just like when we write instructions for people. 'Move forward.' 'Turn left.' 'Stop.' Code must be very clear. If the code is wrong, the robot will do the wrong thing.",
+      textVi: "Robot và máy tính chỉ làm những gì chúng ta bảo chúng làm. Chúng ta viết các hướng dẫn bằng mã lệnh (code). Khi viết mã, chúng ta sử dụng động từ mệnh lệnh, giống như khi chúng ta viết hướng dẫn cho con người. 'Tiến lên.' 'Rẽ trái.' 'Dừng lại.' Mã lệnh phải rất rõ ràng. Nếu mã sai, robot sẽ làm sai."
+    },
+    {
+      sectionTitle: "5.4 A robot's day",
+      sectionTitleVi: "5.4 Một ngày của robot",
+      type: "reading",
+      text: "I am a factory robot. I wake up when someone turns on the power. All day long, I lift heavy boxes. I am very strong. I never get tired, and I never need to sleep. But, I do need electricity. When my battery is low, I have to plug myself into the wall to recharge. Then, I am ready to work again.",
+      textVi: "Tôi là một robot nhà máy. Tôi thức dậy khi ai đó bật nguồn. Cả ngày, tôi nâng những chiếc hộp nặng. Tôi rất khỏe. Tôi không bao giờ mệt mỏi và không bao giờ cần ngủ. Nhưng, tôi cần điện. Khi pin yếu, tôi phải cắm mình vào tường để sạc lại. Sau đó, tôi đã sẵn sàng làm việc trở lại."
+    },
+    {
+      sectionTitle: "5.5 Unit 5 Review",
+      sectionTitleVi: "5.5 Ôn tập Bài 5",
+      type: "tip",
+      text: "Great! You have finished Unit 5 all about computers and robots.\n\nLet's review what we learned:\n✓ We read about a robot that cleans the house.\n✓ We learned the names of computer parts (screen, keyboard, mouse).\n✓ We talked about giving commands and writing code.\n✓ We read a story from the point of view of a factory robot.\n\nWhat kind of robot would you like to invent? Draw a picture of it!",
+      textVi: "Tuyệt vời! Bạn đã học xong Bài 5 về máy tính và robot.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta đã đọc về một con robot dọn dẹp nhà cửa.\n✓ Chúng ta đã học tên các bộ phận máy tính (màn hình, bàn phím, chuột).\n✓ Chúng ta đã nói về việc ra lệnh và viết mã.\n✓ Chúng ta đã đọc một câu chuyện dưới góc nhìn của một con robot nhà máy.\n\nBạn muốn phát minh ra loại robot nào? Hãy vẽ một bức tranh về nó!"
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G2 U06: Journeys
+  // ══════════════════════════════════════════════════════════════
+  'cam_g2_u06': [
+    {
+      sectionTitle: "6.1 A trip to the mountains",
+      sectionTitleVi: "6.1 Chuyến đi lên núi",
+      type: "reading",
+      text: "During the holidays, we went on a journey to the mountains. We packed our bags and put them in the car. The drive was very long. We drove on a winding road. We saw tall trees and a river. When we arrived, it was cold. We built a fire and roasted marshmallows. It was a wonderful adventure.",
+      textVi: "Trong kỳ nghỉ, chúng tôi đã có một chuyến đi lên núi. Chúng tôi đóng gói đồ đạc và xếp vào xe. Chuyến đi xe rất dài. Chúng tôi lái xe trên một con đường quanh co. Chúng tôi nhìn thấy những cái cây cao và một con sông. Khi chúng tôi đến nơi, trời rất lạnh. Chúng tôi đã đốt lửa và nướng kẹo dẻo. Đó là một cuộc phiêu lưu tuyệt vời."
+    },
+    {
+      sectionTitle: "6.2 Reading a map",
+      sectionTitleVi: "6.2 Đọc bản đồ",
+      type: "information",
+      text: "A map shows us where things are. It helps us find our way on a journey. A map has symbols. A blue line is a river. A green area is a park. A map also has a compass rose. It shows North, South, East, and West. Before GPS, people always used paper maps so they would not get lost.",
+      textVi: "Bản đồ cho chúng ta thấy các địa điểm ở đâu. Nó giúp chúng ta tìm đường trong một cuộc hành trình. Một bản đồ có các ký hiệu. Một đường màu xanh là một con sông. Khu vực màu xanh lá cây là công viên. Một bản đồ cũng có hoa tiêu. Nó chỉ phương Bắc, Nam, Đông và Tây. Trước khi có GPS, mọi người luôn sử dụng bản đồ giấy để không bị lạc."
+    },
+    {
+      sectionTitle: "6.3 Transport words",
+      sectionTitleVi: "6.3 Từ vựng về phương tiện giao thông",
+      type: "grammar",
+      text: "There are many vehicles we can use for a journey. We can go 'by car', 'by bus', or 'by train'. We can fly 'by plane' or sail 'by boat'. But if we use our feet, we say we go 'on foot', not 'by foot'. I go to school on foot, but my friend goes by bike.",
+      textVi: "Có rất nhiều phương tiện chúng ta có thể sử dụng cho một cuộc hành trình. Chúng ta có thể đi 'bằng ô tô' (by car), 'bằng xe buýt' (by bus) hoặc 'bằng tàu hỏa' (by train). Chúng ta có thể bay 'bằng máy bay' (by plane) hoặc đi thuyền 'bằng tàu' (by boat). Nhưng nếu chúng ta sử dụng đôi chân của mình, chúng ta nói đi 'bộ' (on foot), không phải 'by foot'. Tôi đi bộ đến trường, nhưng bạn tôi đi bằng xe đạp."
+    },
+    {
+      sectionTitle: "6.4 The lost compass",
+      sectionTitleVi: "6.4 Chiếc la bàn bị mất",
+      type: "reading",
+      text: "Tom was exploring the forest. He had a map and a compass. He walked North for an hour. Then, he realized his compass was missing! It fell out of his pocket. Oh no! Tom was lost. He sat on a rock and tried not to cry. Then, he remembered the map. He found a river on the map and followed it back to the road.",
+      textVi: "Tom đang khám phá khu rừng. Cậu ấy có một tấm bản đồ và một chiếc la bàn. Cậu ấy đi về hướng Bắc trong một giờ. Sau đó, cậu ấy nhận ra chiếc la bàn của mình bị mất! Nó rơi khỏi túi của cậu ấy. Ôi không! Tom đã bị lạc. Cậu ấy ngồi trên một tảng đá và cố gắng không khóc. Sau đó, cậu ấy nhớ đến bản đồ. Cậu ấy tìm thấy một con sông trên bản đồ và đi theo nó để trở lại con đường."
+    },
+    {
+      sectionTitle: "6.5 Unit 6 Review",
+      sectionTitleVi: "6.5 Ôn tập Bài 6",
+      type: "tip",
+      text: "Brilliant! You have finished Unit 6 all about journeys.\n\nLet's review what we learned:\n✓ We read about a journey to the mountains.\n✓ We learned how to read a map with symbols and a compass rose.\n✓ We practiced using 'by' with transport (by car, by train, on foot).\n✓ We read an adventure story about getting lost and found.\n\nPlan a journey! Where would you like to go? What vehicle will you use?",
+      textVi: "Tuyệt vời! Bạn đã hoàn thành Bài 6 về những chuyến hành trình.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta đã đọc về một cuộc hành trình lên núi.\n✓ Chúng ta đã học cách đọc bản đồ với các ký hiệu và hoa tiêu.\n✓ Chúng ta đã thực hành sử dụng 'by' với các phương tiện giao thông (by car, by train, on foot).\n✓ Chúng ta đã đọc một câu chuyện phiêu lưu về việc bị lạc và được tìm thấy.\n\nHãy lên kế hoạch cho một cuộc hành trình! Bạn muốn đi đâu? Bạn sẽ sử dụng phương tiện gì?"
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G2 U07: Famous Authors
+  // ══════════════════════════════════════════════════════════════
+  'cam_g2_u07': [
+    {
+      sectionTitle: "7.1 Meeting an author",
+      sectionTitleVi: "7.1 Gặp gỡ một tác giả",
+      type: "reading",
+      text: "Today, a famous author visited our school. Her name is Ms. Green. She writes stories about magical forests. She showed us her new book. She told us that writing a book takes a long time. First, she imagines the characters. Then, she writes many drafts. Finally, an illustrator draws the pictures. I want to be an author too.",
+      textVi: "Hôm nay, một tác giả nổi tiếng đã đến thăm trường chúng tôi. Tên cô ấy là cô Green. Cô ấy viết những câu chuyện về những khu rừng phép thuật. Cô ấy cho chúng tôi xem cuốn sách mới của mình. Cô ấy nói với chúng tôi rằng việc viết một cuốn sách mất rất nhiều thời gian. Đầu tiên, cô ấy tưởng tượng ra các nhân vật. Sau đó, cô ấy viết nhiều bản nháp. Cuối cùng, một họa sĩ minh họa sẽ vẽ các bức tranh. Tôi cũng muốn trở thành một tác giả."
+    },
+    {
+      sectionTitle: "7.2 Parts of a book",
+      sectionTitleVi: "7.2 Các phần của một cuốn sách",
+      type: "information",
+      text: "A book has different parts. The cover protects the book and has the title. The title is the name of the book. The author is the person who wrote the words. The illustrator is the person who drew the pictures. Inside, the book is divided into chapters. A table of contents tells you what page each chapter starts on.",
+      textVi: "Một cuốn sách có nhiều phần khác nhau. Bìa bảo vệ cuốn sách và có chứa tiêu đề. Tiêu đề là tên của cuốn sách. Tác giả là người đã viết ra các từ. Họa sĩ minh họa là người đã vẽ các bức tranh. Bên trong, cuốn sách được chia thành các chương. Mục lục cho bạn biết mỗi chương bắt đầu từ trang nào."
+    },
+    {
+      sectionTitle: "7.3 Describing characters",
+      sectionTitleVi: "7.3 Miêu tả nhân vật",
+      type: "grammar",
+      text: "Authors use adjectives to describe characters. They tell us what characters look like and how they act. 'The old wizard had a long, white beard.' 'The brave girl climbed the tall mountain.' Adjectives make the characters interesting. When you write a story, use lots of adjectives so the reader can imagine the characters clearly.",
+      textVi: "Các tác giả sử dụng tính từ để miêu tả nhân vật. Họ cho chúng ta biết nhân vật trông như thế nào và hành động ra sao. 'Vị phù thủy già có một bộ râu dài màu trắng.' 'Cô gái dũng cảm leo lên ngọn núi cao.' Tính từ làm cho các nhân vật trở nên thú vị. Khi bạn viết một câu chuyện, hãy sử dụng nhiều tính từ để người đọc có thể tưởng tượng các nhân vật một cách rõ ràng."
+    },
+    {
+      sectionTitle: "7.4 The magic library",
+      sectionTitleVi: "7.4 Thư viện phép thuật",
+      type: "reading",
+      text: "Leo found a secret door in the school library. Inside, the books were floating! When he opened a book about pirates, he smelled the ocean. When he opened a book about dragons, he felt warm air. This was a magic library. The stories came alive. Leo sat down and started to read the best story ever.",
+      textVi: "Leo đã tìm thấy một cánh cửa bí mật trong thư viện trường học. Bên trong, những cuốn sách đang lơ lửng! Khi cậu mở một cuốn sách về cướp biển, cậu ngửi thấy mùi đại dương. Khi cậu mở một cuốn sách về rồng, cậu cảm thấy không khí ấm áp. Đây là một thư viện phép thuật. Những câu chuyện trở nên sống động. Leo ngồi xuống và bắt đầu đọc câu chuyện hay nhất từ trước đến nay."
+    },
+    {
+      sectionTitle: "7.5 Unit 7 Review",
+      sectionTitleVi: "7.5 Ôn tập Bài 7",
+      type: "tip",
+      text: "Excellent! You have finished Unit 7 all about famous authors.\n\nLet's review what we learned:\n✓ We learned about authors and illustrators.\n✓ We discovered the parts of a book (cover, title, chapters).\n✓ We practiced using adjectives to describe characters.\n✓ We read a fantasy story about a magic library.\n\nWho is your favorite author? Read one of their books today!",
+      textVi: "Tuyệt vời! Bạn đã hoàn thành Bài 7 về các tác giả nổi tiếng.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta đã học về tác giả và họa sĩ minh họa.\n✓ Chúng ta đã khám phá các phần của một cuốn sách (bìa, tiêu đề, các chương).\n✓ Chúng ta đã thực hành sử dụng tính từ để miêu tả nhân vật.\n✓ Chúng ta đã đọc một câu chuyện giả tưởng về một thư viện phép thuật.\n\nAi là tác giả yêu thích của bạn? Hãy đọc một cuốn sách của họ ngay hôm nay!"
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G2 U08: Sea Life
+  // ══════════════════════════════════════════════════════════════
+  'cam_g2_u08': [
+    {
+      sectionTitle: "8.1 Exploring the ocean",
+      sectionTitleVi: "8.1 Khám phá đại dương",
+      type: "reading",
+      text: "The ocean is very deep and full of life. We took a boat out to see the coral reef. We wore masks and looked under the water. The coral was bright pink and yellow. Small fish swam everywhere. Suddenly, we saw a large sea turtle. It was swimming slowly. The ocean is a beautiful, busy place.",
+      textVi: "Đại dương rất sâu và tràn đầy sự sống. Chúng tôi đi thuyền ra ngoài để ngắm rạn san hô. Chúng tôi đeo mặt nạ và nhìn xuống dưới nước. San hô có màu hồng và vàng tươi. Những con cá nhỏ bơi lội khắp nơi. Đột nhiên, chúng tôi nhìn thấy một con rùa biển lớn. Nó đang bơi từ từ. Đại dương là một nơi tuyệt đẹp, nhộn nhịp."
+    },
+    {
+      sectionTitle: "8.2 Ocean mammals",
+      sectionTitleVi: "8.2 Động vật có vú ở đại dương",
+      type: "information",
+      text: "Did you know that some ocean animals are mammals, not fish? Whales and dolphins are mammals. They do not lay eggs. They have babies. They do not breathe underwater like fish do. They must come to the surface of the water to breathe air. The blue whale is the largest mammal on Earth.",
+      textVi: "Bạn có biết rằng một số động vật đại dương là động vật có vú chứ không phải cá? Cá voi và cá heo là động vật có vú. Chúng không đẻ trứng. Chúng sinh con. Chúng không thở dưới nước như cá. Chúng phải nổi lên mặt nước để hít thở không khí. Cá voi xanh là động vật có vú lớn nhất trên Trái đất."
+    },
+    {
+      sectionTitle: "8.3 Comparing things",
+      sectionTitleVi: "8.3 So sánh các sự vật",
+      type: "grammar",
+      text: "We use comparative adjectives to compare two things. We add '-er' to short words. 'A shark is faster than a turtle.' 'The ocean is deeper than a river.' We use superlative adjectives to compare three or more things. We add '-est' to short words. 'The blue whale is the biggest animal in the ocean.'",
+      textVi: "Chúng ta sử dụng tính từ so sánh hơn để so sánh hai vật. Chúng ta thêm '-er' vào các từ ngắn. 'Một con cá mập thì nhanh hơn một con rùa.' 'Đại dương thì sâu hơn một con sông.' Chúng ta sử dụng tính từ so sánh nhất để so sánh ba vật trở lên. Chúng ta thêm '-est' vào các từ ngắn. 'Cá voi xanh là loài động vật lớn nhất trong đại dương.'"
+    },
+    {
+      sectionTitle: "8.4 The clever octopus",
+      sectionTitleVi: "8.4 Chú bạch tuộc thông minh",
+      type: "reading",
+      text: "The octopus is a very clever animal. It has eight arms and no bones. Because it has no bones, it can hide in very small holes. When an octopus is scared, it shoots out black ink. The ink makes the water dark so the octopus can escape. Some octopuses can even change their color to hide in the sand.",
+      textVi: "Bạch tuộc là một loài động vật rất thông minh. Nó có tám xúc tu và không có xương. Vì không có xương nên nó có thể trốn trong những cái lỗ rất nhỏ. Khi một con bạch tuộc sợ hãi, nó sẽ phun ra mực đen. Mực làm cho nước tối đi để bạch tuộc có thể chạy thoát. Một số loài bạch tuộc thậm chí có thể thay đổi màu sắc để trốn trong cát."
+    },
+    {
+      sectionTitle: "8.5 Unit 8 Review",
+      sectionTitleVi: "8.5 Ôn tập Bài 8",
+      type: "tip",
+      text: "Fantastic! You have finished Unit 8 all about sea life.\n\nLet's review what we learned:\n✓ We learned about the busy life on a coral reef.\n✓ We discovered that whales and dolphins are mammals, not fish.\n✓ We practiced using comparative (faster) and superlative (biggest) adjectives.\n✓ We read about how the clever octopus hides from danger.\n\nProtect the ocean! Remember to never throw plastic into the sea.",
+      textVi: "Tuyệt vời! Bạn đã hoàn thành Bài 8 về các sinh vật biển.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta đã học về cuộc sống nhộn nhịp trên rạn san hô.\n✓ Chúng ta đã phát hiện ra rằng cá voi và cá heo là động vật có vú, không phải cá.\n✓ Chúng ta đã thực hành sử dụng tính từ so sánh hơn (nhanh hơn) và so sánh nhất (lớn nhất).\n✓ Chúng ta đã đọc về cách chú bạch tuộc thông minh trốn tránh nguy hiểm.\n\nHãy bảo vệ đại dương! Hãy nhớ không bao giờ vứt đồ nhựa xuống biển."
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G2 U09: Creatures
+  // ══════════════════════════════════════════════════════════════
+  'cam_g2_u09': [
+    {
+      sectionTitle: "9.1 In the garden",
+      sectionTitleVi: "9.1 Trong khu vườn",
+      type: "reading",
+      text: "If you look closely in the garden, you will see many tiny creatures. A green caterpillar is eating a leaf. A spider is spinning a beautiful web to catch flies. Ants are working hard, carrying food to their home under the ground. A ladybird with red wings and black spots lands on my hand. Gardens are full of insects.",
+      textVi: "Nếu bạn nhìn kỹ trong khu vườn, bạn sẽ thấy nhiều sinh vật nhỏ bé. Một con sâu bướm xanh đang ăn một chiếc lá. Một con nhện đang giăng một mạng nhện tuyệt đẹp để bắt ruồi. Những con kiến đang làm việc chăm chỉ, mang thức ăn về tổ dưới lòng đất. Một con bọ rùa có đôi cánh màu đỏ và những đốm đen đậu trên tay tôi. Những khu vườn đầy ắp côn trùng."
+    },
+    {
+      sectionTitle: "9.2 What is an insect?",
+      sectionTitleVi: "9.2 Côn trùng là gì?",
+      type: "information",
+      text: "How do you know if a creature is an insect? All insects have six legs. They also have a body with three parts: a head, a thorax, and an abdomen. Many insects have wings and can fly. Bees, ants, and butterflies are insects. Is a spider an insect? No, a spider has eight legs. It is not an insect.",
+      textVi: "Làm sao bạn biết một sinh vật có phải là côn trùng hay không? Tất cả các loài côn trùng đều có sáu chân. Chúng cũng có một cơ thể với ba phần: đầu, ngực và bụng. Nhiều loài côn trùng có cánh và có thể bay. Ong, kiến và bướm là côn trùng. Nhện có phải là côn trùng không? Không, nhện có tám chân. Nó không phải là côn trùng."
+    },
+    {
+      sectionTitle: "9.3 Using 'because'",
+      sectionTitleVi: "9.3 Sử dụng 'because' (bởi vì)",
+      type: "grammar",
+      text: "We use the word 'because' to give a reason. It answers the question 'why?'. 'Why is the spider spinning a web?' 'The spider is spinning a web because it wants to catch flies.' 'Why is a spider not an insect?' 'A spider is not an insect because it has eight legs.' Using 'because' makes your sentences longer and more informative.",
+      textVi: "Chúng ta sử dụng từ 'because' (bởi vì) để đưa ra lý do. Nó trả lời cho câu hỏi 'tại sao?'. 'Tại sao con nhện lại giăng mạng nhện?' 'Con nhện giăng mạng nhện vì nó muốn bắt ruồi.' 'Tại sao nhện không phải là côn trùng?' 'Nhện không phải là côn trùng vì nó có tám chân.' Sử dụng 'bởi vì' làm cho câu của bạn dài hơn và nhiều thông tin hơn."
+    },
+    {
+      sectionTitle: "9.4 The butterfly's life",
+      sectionTitleVi: "9.4 Cuộc đời của một con bướm",
+      type: "reading",
+      text: "A butterfly has an amazing life. It starts as a tiny egg on a leaf. A hungry caterpillar hatches from the egg. The caterpillar eats and eats. Then, it changes into a chrysalis. It rests inside for a long time. Finally, the chrysalis opens. A beautiful butterfly comes out and flies into the sky.",
+      textVi: "Một con bướm có một cuộc sống kỳ diệu. Nó bắt đầu như một quả trứng nhỏ xíu trên một chiếc lá. Một con sâu bướm đói bụng nở ra từ quả trứng. Con sâu bướm ăn và ăn. Sau đó, nó biến thành một cái kén. Nó nghỉ ngơi bên trong một thời gian dài. Cuối cùng, cái kén mở ra. Một con bướm xinh đẹp chui ra và bay lên bầu trời."
+    },
+    {
+      sectionTitle: "9.5 Unit 9 Review",
+      sectionTitleVi: "9.5 Ôn tập Bài 9",
+      type: "tip",
+      text: "Brilliant! You have finished Unit 9 all about creatures.\n\nLet's review what we learned:\n✓ We observed tiny creatures in the garden (ants, spiders, ladybirds).\n✓ We learned that insects have six legs and three body parts.\n✓ We practiced using 'because' to explain why things happen.\n✓ We learned about the amazing life cycle of a butterfly.\n\nGo outside and explore! How many different creatures can you find today?",
+      textVi: "Tuyệt vời! Bạn đã hoàn thành Bài 9 về các loài sinh vật.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta đã quan sát những sinh vật nhỏ bé trong vườn (kiến, nhện, bọ rùa).\n✓ Chúng ta đã học được rằng côn trùng có sáu chân và ba phần cơ thể.\n✓ Chúng ta đã thực hành sử dụng 'because' (bởi vì) để giải thích lý do tại sao mọi thứ xảy ra.\n✓ Chúng ta đã học về vòng đời kỳ diệu của một con bướm.\n\nHãy ra ngoài và khám phá! Hôm nay bạn có thể tìm thấy bao nhiêu sinh vật khác nhau?"
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G3 U01: Daily Routines
+  // ══════════════════════════════════════════════════════════════
+  'cam_g3_u01': [
+    {
+      sectionTitle: "1.1 A busy morning",
+      sectionTitleVi: "1.1 Một buổi sáng bận rộn",
+      type: "reading",
+      text: "Every morning, I wake up at seven o'clock. First, I wash my face and brush my teeth. Then, I put on my school uniform. I go downstairs and eat a healthy breakfast. I usually have cereal and milk. After breakfast, I pack my school bag. I make sure I have my books and pencils. Finally, I say goodbye to my parents and walk to school.",
+      textVi: "Mỗi buổi sáng, tôi thức dậy lúc bảy giờ. Đầu tiên, tôi rửa mặt và đánh răng. Sau đó, tôi mặc đồng phục học sinh vào. Tôi đi xuống nhà và ăn một bữa sáng lành mạnh. Tôi thường ăn ngũ cốc và sữa. Sau bữa sáng, tôi sắp xếp cặp sách. Tôi chắc chắn rằng mình đã mang theo sách và bút chì. Cuối cùng, tôi chào tạm biệt cha mẹ và đi bộ đến trường."
+    },
+    {
+      sectionTitle: "1.2 What is a routine?",
+      sectionTitleVi: "1.2 Thói quen là gì?",
+      type: "information",
+      text: "A daily routine is a set of activities you do every day in the same order. Having a routine helps you get ready for the day without forgetting anything. Most children have a morning routine and a bedtime routine. A bedtime routine might include having a bath, reading a story, and going to sleep at the same time.",
+      textVi: "Thói quen hàng ngày là một chuỗi các hoạt động bạn làm mỗi ngày theo cùng một thứ tự. Có một thói quen giúp bạn sẵn sàng cho một ngày mới mà không quên bất cứ điều gì. Hầu hết trẻ em đều có thói quen buổi sáng và thói quen trước khi đi ngủ. Thói quen trước khi đi ngủ có thể bao gồm tắm, đọc truyện và đi ngủ vào cùng một thời điểm."
+    },
+    {
+      sectionTitle: "1.3 Time connectives",
+      sectionTitleVi: "1.3 Từ nối chỉ thời gian",
+      type: "grammar",
+      text: "When we write about a routine, we use time connectives to show the order of events. Words like 'first', 'next', 'then', 'after that', and 'finally' are time connectives. 'First, I wake up. Next, I brush my teeth.' These words make our writing clear and easy to follow.",
+      textVi: "Khi chúng ta viết về một thói quen, chúng ta sử dụng các từ nối chỉ thời gian để hiển thị thứ tự của các sự kiện. Các từ như 'first' (đầu tiên), 'next' (tiếp theo), 'then' (sau đó), 'after that' (sau điều đó) và 'finally' (cuối cùng) là những từ nối chỉ thời gian. 'Đầu tiên, tôi thức dậy. Tiếp theo, tôi đánh răng.' Những từ này làm cho bài viết của chúng ta rõ ràng và dễ theo dõi."
+    },
+    {
+      sectionTitle: "1.4 Evening time",
+      sectionTitleVi: "1.4 Buổi tối",
+      type: "reading",
+      text: "After school, I do my homework. Mathematics is my favorite subject. After that, I play outside with my friends. When the sun goes down, I come inside for dinner. Then, I take a warm shower. I put on my pajamas and get into bed. My mother reads me a story, and I go to sleep.",
+      textVi: "Sau giờ học, tôi làm bài tập về nhà. Toán học là môn học yêu thích của tôi. Sau đó, tôi ra ngoài chơi với bạn bè. Khi mặt trời lặn, tôi vào nhà ăn tối. Sau đó, tôi tắm nước ấm. Tôi mặc đồ ngủ và lên giường. Mẹ tôi đọc cho tôi nghe một câu chuyện, và tôi chìm vào giấc ngủ."
+    },
+    {
+      sectionTitle: "1.5 Unit 1 Review",
+      sectionTitleVi: "1.5 Ôn tập Bài 1",
+      type: "tip",
+      text: "Well done! You have finished Unit 1 all about daily routines.\n\nLet's review what we learned:\n✓ We read about morning and evening routines.\n✓ We understood that a routine is doing things in the same order.\n✓ We practiced using time connectives (first, next, then, finally).\n✓ We talked about the things we do every day.\n\nMake a chart! Write down your morning routine and stick it on your bedroom wall.",
+      textVi: "Làm tốt lắm! Bạn đã hoàn thành Bài 1 về các thói quen hàng ngày.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta đã đọc về các thói quen buổi sáng và buổi tối.\n✓ Chúng ta đã hiểu rằng một thói quen là làm mọi việc theo cùng một thứ tự.\n✓ Chúng ta đã thực hành sử dụng các từ nối chỉ thời gian (đầu tiên, tiếp theo, sau đó, cuối cùng).\n✓ Chúng ta đã nói về những việc chúng ta làm mỗi ngày.\n\nHãy lập một biểu đồ! Viết ra thói quen buổi sáng của bạn và dán nó lên tường phòng ngủ."
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G3 U02: Party Planning
+  // ══════════════════════════════════════════════════════════════
+  'cam_g3_u02': [
+    {
+      sectionTitle: "2.1 The surprise party",
+      sectionTitleVi: "2.1 Bữa tiệc bất ngờ",
+      type: "reading",
+      text: "Today is my sister's birthday. We are planning a surprise party for her. My mother baked a big chocolate cake. My father blew up twenty red balloons. I made a colorful banner that says 'Happy Birthday!'. We invited all her friends. When she came home, we all shouted 'Surprise!'. She was very happy and excited.",
+      textVi: "Hôm nay là sinh nhật của em gái tôi. Chúng tôi đang lên kế hoạch cho một bữa tiệc bất ngờ dành cho em ấy. Mẹ tôi đã nướng một chiếc bánh sô cô la lớn. Bố tôi đã thổi hai mươi quả bóng bay màu đỏ. Tôi đã làm một biểu ngữ đầy màu sắc có dòng chữ 'Chúc mừng sinh nhật!'. Chúng tôi đã mời tất cả bạn bè của cô ấy. Khi cô ấy về nhà, tất cả chúng tôi đã hét lên 'Ngạc nhiên chưa!'. Cô ấy rất vui và phấn khích."
+    },
+    {
+      sectionTitle: "2.2 Writing an invitation",
+      sectionTitleVi: "2.2 Viết một lời mời",
+      type: "information",
+      text: "When you have a party, you send invitations to your guests. An invitation must have important information. It needs to tell the guest 'Who' the party is for. It must say 'When' (the date and time) and 'Where' (the place). It also tells them 'What' kind of party it is, like a pool party or a costume party.",
+      textVi: "Khi bạn tổ chức một bữa tiệc, bạn gửi giấy mời cho khách của mình. Một lời mời phải có thông tin quan trọng. Nó cần cho khách biết bữa tiệc dành cho 'Ai' (Who). Nó phải ghi rõ 'Khi nào' (When - ngày và giờ) và 'Ở đâu' (Where - địa điểm). Nó cũng cho họ biết đó là 'Loại tiệc gì' (What), chẳng hạn như tiệc hồ bơi hay tiệc hóa trang."
+    },
+    {
+      sectionTitle: "2.3 Future plans",
+      sectionTitleVi: "2.3 Kế hoạch tương lai",
+      type: "grammar",
+      text: "When we talk about things we are planning to do, we use 'going to' or 'will'. 'We are going to have a party on Saturday.' 'I will bake a cake.' 'Going to' is used when the plan is already made. 'Will' is often used when we decide something right now.",
+      textVi: "Khi nói về những việc chúng ta định làm, chúng ta sử dụng 'going to' hoặc 'will'. 'Chúng tôi dự định tổ chức một bữa tiệc vào thứ Bảy.' 'Tôi sẽ nướng một cái bánh.' 'Going to' được sử dụng khi kế hoạch đã được lập ra. 'Will' thường được sử dụng khi chúng ta quyết định một điều gì đó ngay lúc này."
+    },
+    {
+      sectionTitle: "2.4 The piñata",
+      sectionTitleVi: "2.4 Trò chơi đập kẹo",
+      type: "reading",
+      text: "At the party, we played many games. The best game was the piñata. The piñata was shaped like a star. It was filled with candies and small toys. We took turns wearing a blindfold and hitting the piñata with a stick. Finally, it broke! Candies fell everywhere. We all scrambled to collect as many as we could.",
+      textVi: "Tại bữa tiệc, chúng tôi đã chơi rất nhiều trò chơi. Trò chơi hay nhất là đập kẹo (piñata). Piñata có hình dạng như một ngôi sao. Nó chứa đầy kẹo và đồ chơi nhỏ. Chúng tôi thay phiên nhau bịt mắt và dùng gậy đánh vào piñata. Cuối cùng, nó đã vỡ! Kẹo rơi khắp nơi. Tất cả chúng tôi đều tranh nhau thu thập càng nhiều càng tốt."
+    },
+    {
+      sectionTitle: "2.5 Unit 2 Review",
+      sectionTitleVi: "2.5 Ôn tập Bài 2",
+      type: "tip",
+      text: "Fantastic! You have finished Unit 2 all about party planning.\n\nLet's review what we learned:\n✓ We read about preparing for a surprise birthday party.\n✓ We learned what information must be on an invitation (Who, When, Where).\n✓ We practiced using 'going to' and 'will' for future plans.\n✓ We read about playing fun party games.\n\nDesign an invitation! Pretend you are having a party and write an invitation for a friend.",
+      textVi: "Tuyệt vời! Bạn đã hoàn thành Bài 2 về việc lên kế hoạch cho bữa tiệc.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta đã đọc về việc chuẩn bị cho một bữa tiệc sinh nhật bất ngờ.\n✓ Chúng ta đã học được những thông tin nào phải có trong lời mời (Ai, Khi nào, Ở đâu).\n✓ Chúng ta đã thực hành sử dụng 'going to' và 'will' cho các kế hoạch tương lai.\n✓ Chúng ta đã đọc về việc chơi các trò chơi tiệc tùng thú vị.\n\nHãy thiết kế một lời mời! Giả vờ như bạn đang tổ chức một bữa tiệc và viết một lời mời cho một người bạn."
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G3 U03: Senses & Art
+  // ══════════════════════════════════════════════════════════════
+  'cam_g3_u03': [
+    {
+      sectionTitle: "3.1 The five senses",
+      sectionTitleVi: "3.1 Năm giác quan",
+      type: "reading",
+      text: "We use our five senses to explore the world. We use our eyes to see colors and shapes. We use our ears to hear music and voices. We use our nose to smell flowers and food. We use our tongue to taste sweet or sour things. We use our skin to feel if something is hot, cold, soft, or rough. Our senses are amazing.",
+      textVi: "Chúng ta sử dụng năm giác quan của mình để khám phá thế giới. Chúng ta sử dụng đôi mắt để nhìn màu sắc và hình dạng. Chúng ta sử dụng đôi tai để nghe âm nhạc và giọng nói. Chúng ta sử dụng mũi để ngửi hoa và thức ăn. Chúng ta sử dụng lưỡi để nếm đồ ngọt hoặc chua. Chúng ta sử dụng làn da của mình để cảm nhận xem một cái gì đó nóng, lạnh, mềm hay thô ráp. Giác quan của chúng ta thật tuyệt vời."
+    },
+    {
+      sectionTitle: "3.2 Experiencing art",
+      sectionTitleVi: "3.2 Trải nghiệm nghệ thuật",
+      type: "information",
+      text: "Artists use our senses to make us feel things. A painter uses bright colors to make us feel happy. A musician plays loud, fast music to make us feel excited. A sculptor makes a statue with a rough texture. When we look at art, listen to music, or read a poem, we use our senses to understand what the artist wants to share.",
+      textVi: "Các nghệ sĩ sử dụng các giác quan của chúng ta để khiến chúng ta cảm nhận được nhiều thứ. Một họa sĩ sử dụng màu sắc tươi sáng để làm cho chúng ta cảm thấy hạnh phúc. Một nhạc sĩ chơi bản nhạc lớn, nhịp độ nhanh để khiến chúng ta cảm thấy phấn khích. Một nhà điêu khắc tạo ra một bức tượng với bề mặt thô ráp. Khi chúng ta xem nghệ thuật, nghe nhạc hoặc đọc một bài thơ, chúng ta sử dụng các giác quan của mình để hiểu những gì nghệ sĩ muốn chia sẻ."
+    },
+    {
+      sectionTitle: "3.3 Adjectives for senses",
+      sectionTitleVi: "3.3 Tính từ chỉ giác quan",
+      type: "grammar",
+      text: "We have special adjectives to describe what we sense. For sight: bright, dark, shiny. For hearing: loud, quiet, noisy. For smell: sweet, fresh, smelly. For taste: sour, salty, delicious. For touch: smooth, rough, soft. Using these words helps the reader imagine exactly what you are describing.",
+      textVi: "Chúng ta có những tính từ đặc biệt để miêu tả những gì chúng ta cảm nhận được. Đối với thị giác: sáng, tối, bóng láng. Đối với thính giác: to, nhỏ, ồn ào. Đối với khứu giác: ngọt ngào, tươi mát, bốc mùi. Đối với vị giác: chua, mặn, ngon. Đối với xúc giác: mịn màng, thô ráp, mềm mại. Sử dụng những từ này giúp người đọc hình dung chính xác những gì bạn đang miêu tả."
+    },
+    {
+      sectionTitle: "3.4 A walk in the forest",
+      sectionTitleVi: "3.4 Đi dạo trong rừng",
+      type: "reading",
+      text: "I walked in the forest today. I saw tall green trees and small blue flowers. I heard the birds singing a sweet song. I smelled the fresh, damp earth. I touched the rough bark of a pine tree. Later, I ate a delicious, sweet apple. My forest walk was wonderful for all my senses.",
+      textVi: "Tôi đã đi dạo trong rừng hôm nay. Tôi nhìn thấy những cây xanh cao lớn và những bông hoa nhỏ màu xanh lam. Tôi nghe thấy bầy chim hót một bài hát ngọt ngào. Tôi ngửi thấy mùi đất ẩm ướt, trong lành. Tôi chạm vào lớp vỏ sần sùi của một cây thông. Sau đó, tôi ăn một quả táo ngon ngọt. Chuyến đi dạo trong rừng của tôi thật tuyệt vời đối với mọi giác quan của tôi."
+    },
+    {
+      sectionTitle: "3.5 Unit 3 Review",
+      sectionTitleVi: "3.5 Ôn tập Bài 3",
+      type: "tip",
+      text: "Great work! You have finished Unit 3 all about the senses and art.\n\nLet's review what we learned:\n✓ We learned about the five senses (sight, hearing, smell, taste, touch).\n✓ We discussed how artists use senses to make us feel emotions.\n✓ We practiced using adjectives to describe what we sense (shiny, salty, rough).\n✓ We read about experiencing the forest using all our senses.\n\nEat a piece of fruit! Describe its color, smell, texture, and taste to a friend.",
+      textVi: "Làm tốt lắm! Bạn đã hoàn thành Bài 3 về các giác quan và nghệ thuật.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta đã học về năm giác quan (thị giác, thính giác, khứu giác, vị giác, xúc giác).\n✓ Chúng ta đã thảo luận về cách các nghệ sĩ sử dụng các giác quan để làm cho chúng ta cảm nhận được cảm xúc.\n✓ Chúng ta đã thực hành sử dụng tính từ để miêu tả những gì chúng ta cảm nhận được (sáng bóng, mặn, thô ráp).\n✓ Chúng ta đã đọc về việc trải nghiệm khu rừng bằng tất cả các giác quan của mình.\n\nHãy ăn một miếng trái cây! Miêu tả màu sắc, mùi, kết cấu và mùi vị của nó cho một người bạn nghe."
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G3 U04: Volcanoes & Fire
+  // ══════════════════════════════════════════════════════════════
+  'cam_g3_u04': [
+    {
+      sectionTitle: "4.1 The angry mountain",
+      sectionTitleVi: "4.1 Ngọn núi giận dữ",
+      type: "reading",
+      text: "A volcano is like a mountain with a hole at the top. Deep inside the Earth, it is very hot. Rock becomes liquid, which is called magma. Sometimes, the magma comes out of the volcano. When it comes out, it is called lava. A volcano erupting is very dangerous. It shoots ash and fire high into the sky.",
+      textVi: "Núi lửa giống như một ngọn núi có một cái lỗ ở trên đỉnh. Sâu bên trong Trái đất, trời rất nóng. Đá biến thành chất lỏng, được gọi là magma. Đôi khi, magma trào ra khỏi núi lửa. Khi trào ra ngoài, nó được gọi là dung nham (lava). Núi lửa phun trào rất nguy hiểm. Nó bắn tro và lửa lên cao tít trên bầu trời."
+    },
+    {
+      sectionTitle: "4.2 Fire safety",
+      sectionTitleVi: "4.2 An toàn phòng cháy",
+      type: "information",
+      text: "Fire is useful, but it can also be dangerous. It keeps us warm and cooks our food. However, we must be careful. Never play with matches or candles. If you see a fire, do not hide. You must go outside immediately and call for help. Tell an adult or call the emergency services.",
+      textVi: "Lửa rất hữu ích, nhưng nó cũng có thể gây nguy hiểm. Nó giữ ấm cho chúng ta và nấu chín thức ăn của chúng ta. Tuy nhiên, chúng ta phải cẩn thận. Không bao giờ chơi với diêm hoặc nến. Nếu bạn thấy có hỏa hoạn, đừng trốn. Bạn phải ra ngoài ngay lập tức và kêu cứu. Hãy nói với người lớn hoặc gọi cho các dịch vụ khẩn cấp."
+    },
+    {
+      sectionTitle: "4.3 Action verbs",
+      sectionTitleVi: "4.3 Động từ chỉ hành động",
+      type: "grammar",
+      text: "Action verbs tell us what someone or something is doing. In the sentence 'The volcano erupts', the word 'erupts' is the action verb. In 'The firefighter runs to the house', the word 'runs' is the action verb. Action verbs make sentences exciting and help us picture the action.",
+      textVi: "Động từ chỉ hành động cho chúng ta biết một người hoặc vật nào đó đang làm gì. Trong câu 'The volcano erupts' (Núi lửa phun trào), từ 'erupts' là động từ chỉ hành động. Trong câu 'The firefighter runs to the house' (Lính cứu hỏa chạy đến nhà), từ 'runs' là động từ chỉ hành động. Các động từ chỉ hành động làm cho câu trở nên thú vị và giúp chúng ta hình dung ra hành động đó."
+    },
+    {
+      sectionTitle: "4.4 Pompeii",
+      sectionTitleVi: "4.4 Thành phố Pompeii",
+      type: "reading",
+      text: "Pompeii was an ancient Roman city. A long time ago, a huge volcano called Mount Vesuvius erupted near the city. Ash covered the whole town very quickly. The ash buried the buildings and the people. For hundreds of years, the city was hidden. Today, archaeologists have dug up Pompeii, and we can see how people lived long ago.",
+      textVi: "Pompeii là một thành phố cổ của La Mã. Từ rất lâu rồi, một ngọn núi lửa khổng lồ có tên là núi Vesuvius đã phun trào gần thành phố. Tro bụi bao phủ toàn bộ thị trấn rất nhanh. Tro đã vùi lấp các tòa nhà và con người. Hàng trăm năm qua, thành phố này đã bị che giấu. Ngày nay, các nhà khảo cổ học đã đào được Pompeii và chúng ta có thể thấy cách con người sống cách đây rất lâu."
+    },
+    {
+      sectionTitle: "4.5 Unit 4 Review",
+      sectionTitleVi: "4.5 Ôn tập Bài 4",
+      type: "tip",
+      text: "Excellent! You have finished Unit 4 all about volcanoes and fire.\n\nLet's review what we learned:\n✓ We learned how a volcano erupts and produces lava.\n✓ We understood important rules for fire safety.\n✓ We practiced identifying action verbs (erupt, run, bury).\n✓ We read the historical story of Pompeii and Mount Vesuvius.\n\nDraw a volcano! Use bright colors like red and orange for the lava.",
+      textVi: "Tuyệt vời! Bạn đã hoàn thành Bài 4 về núi lửa và lửa.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta đã học cách một ngọn núi lửa phun trào và tạo ra dung nham.\n✓ Chúng ta đã hiểu các quy tắc quan trọng về an toàn phòng cháy.\n✓ Chúng ta đã thực hành xác định các động từ chỉ hành động (phun trào, chạy, chôn vùi).\n✓ Chúng ta đã đọc câu chuyện lịch sử về Pompeii và núi Vesuvius.\n\nHãy vẽ một ngọn núi lửa! Sử dụng các màu sắc tươi sáng như đỏ và cam cho dung nham."
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G3 U05: Writing Letters
+  // ══════════════════════════════════════════════════════════════
+  'cam_g3_u05': [
+    {
+      sectionTitle: "5.1 A letter to Grandma",
+      sectionTitleVi: "5.1 Một lá thư gửi bà",
+      type: "reading",
+      text: "Dear Grandma, How are you? I am writing to tell you about my new school. My teacher is very nice, and I have made a new friend named Sam. We play football together during the break. I am learning how to paint in art class. I miss you very much. Please write back soon. Lots of love, Lily.",
+      textVi: "Bà nội thân mến, Bà dạo này thế nào? Cháu viết thư này để kể cho bà nghe về ngôi trường mới của cháu. Cô giáo của cháu rất tốt, và cháu đã kết bạn với một người bạn mới tên là Sam. Chúng cháu cùng nhau chơi bóng đá trong giờ giải lao. Cháu đang học cách vẽ trong lớp học mỹ thuật. Cháu nhớ bà rất nhiều. Bà hãy viết thư lại cho cháu sớm nhé. Yêu bà nhiều, Lily."
+    },
+    {
+      sectionTitle: "5.2 Parts of a letter",
+      sectionTitleVi: "5.2 Các phần của một bức thư",
+      type: "information",
+      text: "A friendly letter has different parts. At the top, we write the date. Then we write a greeting, like 'Dear'. Next is the body of the letter, where we write our message. At the end, we write a closing, like 'Yours sincerely' or 'Love'. Finally, we sign our name at the bottom.",
+      textVi: "Một bức thư thân mật có các phần khác nhau. Ở phần trên cùng, chúng ta viết ngày tháng. Sau đó, chúng ta viết lời chào, như 'Dear' (Thân mến). Tiếp theo là phần thân của bức thư, nơi chúng ta viết thông điệp của mình. Ở cuối thư, chúng ta viết lời kết thúc, chẳng hạn như 'Yours sincerely' (Trân trọng) hoặc 'Love' (Yêu thương). Cuối cùng, chúng ta ký tên ở dưới cùng."
+    },
+    {
+      sectionTitle: "5.3 Asking questions",
+      sectionTitleVi: "5.3 Đặt câu hỏi",
+      type: "grammar",
+      text: "When we write a letter, it is polite to ask the other person questions. We use question words like 'Who', 'What', 'Where', 'When', 'Why', and 'How'. 'How are you?' 'What did you do on the weekend?' Don't forget to put a question mark (?) at the end of the sentence.",
+      textVi: "Khi chúng ta viết một bức thư, thật lịch sự khi đặt câu hỏi cho người kia. Chúng ta sử dụng các từ để hỏi như 'Who' (Ai), 'What' (Cái gì), 'Where' (Ở đâu), 'When' (Khi nào), 'Why' (Tại sao), và 'How' (Như thế nào). 'Bạn có khỏe không?' 'Bạn đã làm gì vào cuối tuần?' Đừng quên đặt một dấu chấm hỏi (?) ở cuối câu."
+    },
+    {
+      sectionTitle: "5.4 The postal service",
+      sectionTitleVi: "5.4 Dịch vụ bưu chính",
+      type: "reading",
+      text: "When you finish writing a letter, you put it in an envelope. You must write the address on the front and stick a stamp on it. Then, you drop it in a postbox. A postman collects the letters. The letters travel by truck or airplane to different cities. Finally, another postman delivers the letter to your friend's house.",
+      textVi: "Khi bạn viết xong một bức thư, bạn đặt nó vào một chiếc phong bì. Bạn phải viết địa chỉ ở mặt trước và dán tem lên đó. Sau đó, bạn thả nó vào hòm thư. Người đưa thư thu thập các bức thư. Các bức thư đi bằng xe tải hoặc máy bay đến các thành phố khác nhau. Cuối cùng, một người đưa thư khác chuyển lá thư đến nhà bạn của bạn."
+    },
+    {
+      sectionTitle: "5.5 Unit 5 Review",
+      sectionTitleVi: "5.5 Ôn tập Bài 5",
+      type: "tip",
+      text: "Brilliant! You have finished Unit 5 all about writing letters.\n\nLet's review what we learned:\n✓ We read a friendly letter to a grandmother.\n✓ We learned the parts of a letter (date, greeting, body, closing, signature).\n✓ We practiced asking questions using words like 'Who', 'What', and 'How'.\n✓ We learned how letters travel through the postal service.\n\nWrite a postcard! Imagine you are on holiday and write a short message to a friend.",
+      textVi: "Tuyệt vời! Bạn đã hoàn thành Bài 5 về việc viết thư.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta đã đọc một bức thư thân mật gửi cho một người bà.\n✓ Chúng ta đã học các phần của một bức thư (ngày tháng, lời chào, phần thân, lời kết, chữ ký).\n✓ Chúng ta đã thực hành đặt câu hỏi bằng cách sử dụng các từ như 'Ai', 'Cái gì' và 'Như thế nào'.\n✓ Chúng ta đã biết cách các lá thư di chuyển qua dịch vụ bưu chính.\n\nHãy viết một tấm bưu thiếp! Hãy tưởng tượng bạn đang trong kỳ nghỉ và viết một tin nhắn ngắn cho một người bạn."
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G3 U06: World Poems
+  // ══════════════════════════════════════════════════════════════
+  'cam_g3_u06': [
+    {
+      sectionTitle: "6.1 Playing with words",
+      sectionTitleVi: "6.1 Chơi chữ",
+      type: "reading",
+      text: "Poems are special because they play with words. Sometimes the words rhyme, which means they sound the same at the end. Like 'cat' and 'hat', or 'play' and 'day'. Poems also have a rhythm, like the beat of a drum. Reading a poem out loud is like singing a song without music. Poems can make us laugh or feel peaceful.",
+      textVi: "Những bài thơ thật đặc biệt vì chúng chơi đùa với ngôn từ. Đôi khi các từ có vần với nhau, nghĩa là chúng có âm giống nhau ở phần cuối. Giống như 'cat' (mèo) và 'hat' (mũ), hoặc 'play' (chơi) và 'day' (ngày). Thơ cũng có nhịp điệu, giống như nhịp trống. Đọc to một bài thơ giống như hát một bài hát mà không có nhạc. Thơ có thể làm cho chúng ta cười hoặc cảm thấy bình yên."
+    },
+    {
+      sectionTitle: "6.2 Types of poems",
+      sectionTitleVi: "6.2 Các thể loại thơ",
+      type: "information",
+      text: "There are many types of poems. A haiku is a short poem from Japan. It does not rhyme. It usually describes nature. A limerick is a funny poem from Ireland. It has five lines and a bouncy rhythm. Acrostic poems use the letters of a word to start each line. Poems can be any shape or size.",
+      textVi: "Có rất nhiều thể loại thơ. Thơ Haiku là một thể thơ ngắn đến từ Nhật Bản. Nó không có vần. Nó thường miêu tả thiên nhiên. Limerick là một bài thơ hài hước đến từ Ireland. Nó có năm dòng và một nhịp điệu nảy. Thơ Acrostic (thơ tạo chữ) sử dụng các chữ cái của một từ để bắt đầu mỗi dòng. Thơ có thể có bất kỳ hình dạng hoặc kích thước nào."
+    },
+    {
+      sectionTitle: "6.3 Rhyming words",
+      sectionTitleVi: "6.3 Những từ có vần điệu",
+      type: "grammar",
+      text: "Finding rhyming words is fun. Words rhyme when the end sounds match. 'Star' rhymes with 'car' and 'far'. 'Blue' rhymes with 'shoe' and 'zoo'. When we write a poem, we often put rhyming words at the end of the lines. This makes the poem sound musical when we read it aloud.",
+      textVi: "Việc tìm kiếm những từ có vần điệu rất thú vị. Các từ có vần điệu khi âm thanh kết thúc khớp nhau. 'Star' (ngôi sao) vần với 'car' (ô tô) và 'far' (xa). 'Blue' (màu xanh) vần với 'shoe' (chiếc giày) và 'zoo' (sở thú). Khi chúng ta viết một bài thơ, chúng ta thường đặt các từ có vần ở cuối các dòng. Điều này làm cho bài thơ nghe có tính nhạc khi chúng ta đọc to lên."
+    },
+    {
+      sectionTitle: "6.4 The wind",
+      sectionTitleVi: "6.4 Gió",
+      type: "reading",
+      text: "Who has seen the wind?\nNeither I nor you.\nBut when the leaves hang trembling,\nThe wind is passing through.\n\nWho has seen the wind?\nNeither you nor I.\nBut when the trees bow down their heads,\nThe wind is passing by.",
+      textVi: "Ai đã từng thấy gió?\nCả tôi và bạn đều không.\nNhưng khi những chiếc lá rung rinh,\nLà gió đang đi qua.\n\nAi đã từng thấy gió?\nCả bạn và tôi đều không.\nNhưng khi những cái cây cúi đầu,\nLà gió đang lướt qua."
+    },
+    {
+      sectionTitle: "6.5 Unit 6 Review",
+      sectionTitleVi: "6.5 Ôn tập Bài 6",
+      type: "tip",
+      text: "Fantastic! You have finished Unit 6 all about world poems.\n\nLet's review what we learned:\n✓ We learned that poems play with words, rhyme, and rhythm.\n✓ We discovered different types of poems like haikus and limericks.\n✓ We practiced finding rhyming words (cat/hat, blue/zoo).\n✓ We read a beautiful classic poem about the wind.\n\nWrite a short poem! Try writing an acrostic poem using your own name.",
+      textVi: "Tuyệt vời! Bạn đã hoàn thành Bài 6 về các bài thơ trên thế giới.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta đã học được rằng những bài thơ đùa giỡn với từ ngữ, vần và nhịp điệu.\n✓ Chúng ta đã khám phá các loại thơ khác nhau như thơ haiku và limerick.\n✓ Chúng ta đã thực hành tìm kiếm các từ có vần (cat/hat, blue/zoo).\n✓ Chúng ta đã đọc một bài thơ cổ điển tuyệt đẹp về gió.\n\nHãy viết một bài thơ ngắn! Hãy thử viết một bài thơ dùng chữ cái đầu tên của chính bạn."
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G3 U07: Fantasy Creatures
+  // ══════════════════════════════════════════════════════════════
+  'cam_g3_u07': [
+    {
+      sectionTitle: "7.1 Myths and legends",
+      sectionTitleVi: "7.1 Thần thoại và truyền thuyết",
+      type: "reading",
+      text: "Many old stories are full of fantasy creatures. Some stories tell of brave knights who fight huge, fire-breathing dragons. Other legends speak of mermaids who live deep in the ocean and sing beautiful songs to sailors. There are also stories about unicorns, which look like white horses with a single horn on their head. These creatures are not real, but they are fun to read about.",
+      textVi: "Nhiều câu chuyện xưa đầy ắp những sinh vật huyền thoại. Một số câu chuyện kể về những hiệp sĩ dũng cảm chiến đấu với những con rồng khổng lồ, phun lửa. Những truyền thuyết khác kể về những nàng tiên cá sống sâu dưới đại dương và hát những bài hát tuyệt hay cho các thủy thủ nghe. Cũng có những câu chuyện về kỳ lân, trông giống như những con ngựa trắng với một chiếc sừng duy nhất trên đầu. Những sinh vật này không có thật, nhưng đọc về chúng rất thú vị."
+    },
+    {
+      sectionTitle: "7.2 Describing fantasy",
+      sectionTitleVi: "7.2 Miêu tả sự giả tưởng",
+      type: "information",
+      text: "When writers invent fantasy creatures, they often combine parts of real animals. For example, a griffin has the head and wings of an eagle, and the body of a lion. A centaur has the upper body of a human and the lower body of a horse. Combining these features makes the creatures look powerful and magical.",
+      textVi: "Khi các nhà văn phát minh ra các sinh vật huyền thoại, họ thường kết hợp các bộ phận của các loài động vật có thật. Ví dụ, một con điểu sư (griffin) có đầu và cánh của đại bàng, và cơ thể của một con sư tử. Nhân mã (centaur) có phần thân trên của con người và phần thân dưới của một con ngựa. Việc kết hợp những đặc điểm này làm cho các sinh vật trông mạnh mẽ và đầy phép thuật."
+    },
+    {
+      sectionTitle: "7.3 Making comparisons",
+      sectionTitleVi: "7.3 Đưa ra sự so sánh",
+      type: "grammar",
+      text: "We use 'as...as' to show that two things are the same in some way. 'The dragon was as big as a mountain.' 'The unicorn was as white as snow.' We use 'not as...as' to show a difference. 'A goblin is not as tall as a giant.' These comparisons help us imagine the creatures better.",
+      textVi: "Chúng ta sử dụng 'as...as' (như...như) để chỉ ra rằng hai thứ giống nhau về mặt nào đó. 'Con rồng to như một ngọn núi.' 'Kỳ lân trắng như tuyết.' Chúng ta sử dụng 'not as...as' (không...như) để chỉ ra sự khác biệt. 'Yêu tinh không cao bằng một người khổng lồ.' Những so sánh này giúp chúng ta hình dung các sinh vật tốt hơn."
+    },
+    {
+      sectionTitle: "7.4 The friendly giant",
+      sectionTitleVi: "7.4 Người khổng lồ thân thiện",
+      type: "reading",
+      text: "Once, there was a giant named Grob. He was as tall as a tree, but he was very gentle. The village people were afraid of him because of his size. One day, a huge rock fell and blocked the river. The village had no water. Grob easily pushed the rock away. From that day on, the people knew that Grob was a kind friend.",
+      textVi: "Ngày xưa, có một người khổng lồ tên là Grob. Anh ta cao như một cái cây, nhưng rất hiền lành. Người dân trong làng sợ anh ta vì kích thước của anh ta. Một ngày nọ, một tảng đá khổng lồ rơi xuống và chặn dòng sông. Ngôi làng không có nước. Grob dễ dàng đẩy tảng đá đi. Kể từ ngày đó, mọi người biết rằng Grob là một người bạn tốt bụng."
+    },
+    {
+      sectionTitle: "7.5 Unit 7 Review",
+      sectionTitleVi: "7.5 Ôn tập Bài 7",
+      type: "tip",
+      text: "Fantastic! You have finished Unit 7 all about fantasy creatures.\n\nLet's review what we learned:\n✓ We read about legendary creatures like dragons, mermaids, and unicorns.\n✓ We discovered how writers invent creatures by combining animal parts.\n✓ We practiced using 'as...as' to make comparisons.\n✓ We read a story about a giant who helped a village.\n\nInvent your own creature! Draw it and write a short paragraph describing it.",
+      textVi: "Tuyệt vời! Bạn đã hoàn thành Bài 7 về các sinh vật huyền thoại.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta đã đọc về các sinh vật huyền thoại như rồng, nàng tiên cá và kỳ lân.\n✓ Chúng ta đã khám phá cách các nhà văn phát minh ra các sinh vật bằng cách kết hợp các bộ phận của động vật.\n✓ Chúng ta đã thực hành sử dụng 'as...as' để đưa ra so sánh.\n✓ Chúng ta đã đọc một câu chuyện về một người khổng lồ giúp đỡ ngôi làng.\n\nHãy phát minh ra sinh vật của riêng bạn! Vẽ nó và viết một đoạn văn ngắn miêu tả nó."
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G3 U08: Our Wonderful World
+  // ══════════════════════════════════════════════════════════════
+  'cam_g3_u08': [
+    {
+      sectionTitle: "8.1 Amazing landscapes",
+      sectionTitleVi: "8.1 Những cảnh quan tuyệt vời",
+      type: "reading",
+      text: "Our planet has many different landscapes. There are high mountains covered in white snow. There are deep, blue oceans full of fish. There are dry deserts where it hardly ever rains. And there are thick, green forests where lots of animals live. Every part of the world is unique and beautiful.",
+      textVi: "Hành tinh của chúng ta có nhiều cảnh quan khác nhau. Có những ngọn núi cao phủ đầy tuyết trắng. Có những đại dương sâu thẳm, xanh biếc đầy ắp cá. Có những sa mạc khô cằn nơi hầu như không bao giờ có mưa. Và có những khu rừng xanh rì, rậm rạp nơi có rất nhiều động vật sinh sống. Mọi nơi trên thế giới đều độc đáo và tuyệt đẹp."
+    },
+    {
+      sectionTitle: "8.2 The water cycle",
+      sectionTitleVi: "8.2 Vòng tuần hoàn của nước",
+      type: "information",
+      text: "Water is always moving. The sun heats the water in the ocean, and it turns into invisible gas called water vapor. This goes up into the sky to make clouds. When the clouds get heavy, the water falls back down as rain or snow. The rain flows into rivers, and the rivers flow back into the ocean. This is the water cycle.",
+      textVi: "Nước luôn luôn chuyển động. Mặt trời làm nóng nước trong đại dương, và nó biến thành khí vô hình gọi là hơi nước. Hơi nước bay lên bầu trời để tạo thành mây. Khi những đám mây trở nên nặng nề, nước rơi trở lại dưới dạng mưa hoặc tuyết. Mưa chảy vào các dòng sông, và các dòng sông chảy ngược ra đại dương. Đây là vòng tuần hoàn của nước."
+    },
+    {
+      sectionTitle: "8.3 Using 'should' and 'shouldn't'",
+      sectionTitleVi: "8.3 Sử dụng 'should' và 'shouldn't'",
+      type: "grammar",
+      text: "We use 'should' and 'shouldn't' to give advice about protecting our world. 'We should recycle our rubbish.' 'We shouldn't waste water.' 'Should' tells us what is a good idea to do. 'Shouldn't' tells us what is a bad idea. We all have a responsibility to care for the Earth.",
+      textVi: "Chúng ta sử dụng 'should' (nên) và 'shouldn't' (không nên) để đưa ra lời khuyên về việc bảo vệ thế giới của chúng ta. 'Chúng ta nên tái chế rác thải của mình.' 'Chúng ta không nên lãng phí nước.' 'Nên' cho chúng ta biết điều gì là một ý kiến hay để làm. 'Không nên' cho chúng ta biết điều gì là một ý kiến tồi. Tất cả chúng ta đều có trách nhiệm chăm sóc Trái đất."
+    },
+    {
+      sectionTitle: "8.4 Saving the turtles",
+      sectionTitleVi: "8.4 Giải cứu rùa biển",
+      type: "reading",
+      text: "Last summer, our class went to the beach to help clean up the rubbish. We picked up plastic bottles and bags. The guide told us that sea turtles often mistake plastic bags for jellyfish and eat them. Eating plastic makes the turtles very sick. By keeping the beach clean, we helped to save the turtles' lives.",
+      textVi: "Mùa hè năm ngoái, lớp chúng tôi đã đến bãi biển để giúp dọn dẹp rác. Chúng tôi đã nhặt chai và túi nhựa. Hướng dẫn viên nói với chúng tôi rằng rùa biển thường nhầm túi nhựa với sứa và ăn chúng. Ăn nhựa khiến những con rùa bị bệnh rất nặng. Bằng cách giữ cho bãi biển sạch sẽ, chúng tôi đã giúp cứu mạng sống của những chú rùa."
+    },
+    {
+      sectionTitle: "8.5 Unit 8 Review",
+      sectionTitleVi: "8.5 Ôn tập Bài 8",
+      type: "tip",
+      text: "Great work! You have finished Unit 8 all about our wonderful world.\n\nLet's review what we learned:\n✓ We learned about different landscapes (mountains, deserts, forests).\n✓ We understood how the water cycle works.\n✓ We practiced using 'should' and 'shouldn't' to give advice.\n✓ We read about the importance of keeping our oceans clean.\n\nThink about one thing you can do every day to help the Earth. Maybe you can turn off the lights when you leave a room!",
+      textVi: "Làm tốt lắm! Bạn đã hoàn thành Bài 8 về thế giới tuyệt vời của chúng ta.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta đã học về các cảnh quan khác nhau (núi, sa mạc, rừng).\n✓ Chúng ta đã hiểu vòng tuần hoàn của nước hoạt động như thế nào.\n✓ Chúng ta đã thực hành sử dụng 'should' (nên) và 'shouldn't' (không nên) để đưa ra lời khuyên.\n✓ Chúng ta đã đọc về tầm quan trọng của việc giữ cho đại dương của chúng ta sạch sẽ.\n\nHãy nghĩ về một việc bạn có thể làm mỗi ngày để giúp đỡ Trái đất. Có thể bạn có thể tắt đèn khi rời khỏi phòng!"
+    }
+  ],
+  // ══════════════════════════════════════════════════════════════
+  // CAMBRIDGE G3 U09: Comedy & Jokes
+  // ══════════════════════════════════════════════════════════════
+  'cam_g3_u09': [
+    {
+      sectionTitle: "9.1 What makes us laugh?",
+      sectionTitleVi: "9.1 Điều gì làm chúng ta cười?",
+      type: "reading",
+      text: "Laughter is very good for us. It makes us feel happy and relaxed. There are many things that make us laugh. We laugh at funny faces, silly clowns, and clever jokes. Sometimes, people do physical comedy, like slipping on a banana peel or dropping a cake. Cartoons are also very funny because impossible things happen in them.",
+      textVi: "Cười rất tốt cho chúng ta. Nó làm cho chúng ta cảm thấy vui vẻ và thư giãn. Có rất nhiều thứ khiến chúng ta cười. Chúng ta cười trước những khuôn mặt buồn cười, những chú hề ngốc nghếch và những câu chuyện cười thông minh. Đôi khi, mọi người làm hài kịch hình thể, như trượt vỏ chuối hoặc làm rơi một chiếc bánh. Phim hoạt hình cũng rất hài hước vì những điều không tưởng xảy ra trong đó."
+    },
+    {
+      sectionTitle: "9.2 How a joke works",
+      sectionTitleVi: "9.2 Một câu chuyện cười hoạt động như thế nào",
+      type: "information",
+      text: "A joke usually has two parts. The first part is the setup. It gives you some information or asks a question. The second part is the punchline. The punchline is the surprising or funny answer. For example: 'Why did the cow cross the road? (Setup) To get to the udder side! (Punchline)'.",
+      textVi: "Một câu chuyện cười thường có hai phần. Phần đầu tiên là phần thiết lập (setup). Nó cung cấp cho bạn một số thông tin hoặc đặt một câu hỏi. Phần thứ hai là điểm nhấn (punchline). Điểm nhấn là câu trả lời bất ngờ hoặc hài hước. Ví dụ: 'Tại sao con bò lại băng qua đường? (Thiết lập) Để sang bờ bên kia! (Điểm nhấn - chơi chữ udder/other)'."
+    },
+    {
+      sectionTitle: "9.3 Direct speech",
+      sectionTitleVi: "9.3 Lời nói trực tiếp",
+      type: "grammar",
+      text: "When we write down exactly what someone says, we use direct speech. We must use speech marks (\"\") around the words. Tom said, \"This joke is very funny!\" The teacher asked, \"Why are you laughing?\" Using direct speech makes stories and jokes more lively and interesting to read.",
+      textVi: "Khi chúng ta viết ra chính xác những gì ai đó nói, chúng ta sử dụng lời nói trực tiếp. Chúng ta phải sử dụng dấu ngoặc kép (\"\") xung quanh các từ. Tom nói: \"Câu chuyện cười này rất hài hước!\" Cô giáo hỏi: \"Tại sao em lại cười?\" Sử dụng lời nói trực tiếp làm cho các câu chuyện và câu chuyện cười trở nên sống động và thú vị hơn khi đọc."
+    },
+    {
+      sectionTitle: "9.4 The silly parrot",
+      sectionTitleVi: "9.4 Chú vẹt ngốc nghếch",
+      type: "reading",
+      text: "A man had a parrot that learned to speak. One day, the man was looking for his glasses. He looked on the table and under the chair. He couldn't find them anywhere. Suddenly, the parrot said, \"Look on your head!\" The man touched his head, and there were his glasses. He laughed and said, \"You are smarter than me!\"",
+      textVi: "Một người đàn ông có một con vẹt học nói. Một ngày nọ, người đàn ông đang tìm kính của mình. Ông tìm trên bàn và dưới ghế. Ông không thể tìm thấy chúng ở đâu cả. Đột nhiên, con vẹt nói: \"Hãy nhìn trên đầu ông kìa!\" Người đàn ông sờ lên đầu, và cặp kính của ông ở đó. Ông cười và nói: \"Mày thông minh hơn tao đấy!\""
+    },
+    {
+      sectionTitle: "9.5 Unit 9 Review",
+      sectionTitleVi: "9.5 Ôn tập Bài 9",
+      type: "tip",
+      text: "Brilliant! You have finished Unit 9 all about comedy and jokes.\n\nLet's review what we learned:\n✓ We discussed the different things that make us laugh.\n✓ We learned that a joke has a setup and a funny punchline.\n✓ We practiced using speech marks (\"\") for direct speech.\n✓ We read a funny story about a clever parrot.\n\nTell a joke! Find a funny joke and tell it to your family to make them smile.",
+      textVi: "Tuyệt vời! Bạn đã hoàn thành Bài 9 về hài kịch và truyện cười.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta đã thảo luận về những điều khác nhau khiến chúng ta cười.\n✓ Chúng ta đã biết rằng một câu chuyện cười có phần thiết lập và một điểm nhấn hài hước.\n✓ Chúng ta đã thực hành sử dụng dấu ngoặc kép (\"\") cho lời nói trực tiếp.\n✓ Chúng ta đã đọc một câu chuyện hài hước về một chú vẹt thông minh.\n\nHãy kể một câu chuyện cười! Hãy tìm một câu chuyện hài hước và kể cho gia đình bạn nghe để làm họ mỉm cười."
+    }
+  ],
+};
+
+/**
  * Unit-specific vocabulary — each unit gets vocab matching its theme
  * instead of random hash-selected vocab themes.
  */
@@ -23,7 +1188,7 @@ export const UNIT_VOCAB_OVERRIDES: Record<string, UnitVocabOverride> = {
   // ── CAMBRIDGE G1 ──
   'cam_g1_u01': { title: 'Friends & Playground', titleVi: 'Bạn bè & Sân chơi', words: ['friend', 'playground', 'swing', 'ball', 'run', 'jump', 'share', 'please', 'thank you', 'fun'], wordsVi: ['bạn', 'sân chơi', 'xích đu', 'bóng', 'chạy', 'nhảy', 'chia sẻ', 'làm ơn', 'cảm ơn', 'vui'] },
   'cam_g1_u02': { title: 'Making Things', titleVi: 'Làm đồ vật', words: ['paper', 'fold', 'triangle', 'hat', 'square', 'instructions', 'first', 'next', 'then', 'finally'], wordsVi: ['giấy', 'gấp', 'tam giác', 'mũ', 'hình vuông', 'hướng dẫn', 'đầu tiên', 'tiếp theo', 'sau đó', 'cuối cùng'] },
-  'cam_g1_u03': { title: 'Rhyme Words', titleVi: 'Từ có vần', words: ['dock', 'clock', 'mouse', 'rhyme', 'cat', 'hat', 'star', 'car', 'sound', 'words'], wordsVi: ['bến', 'đồng hồ', 'chuột', 'vần', 'mèo', 'mũ', 'ngôi sao', 'xe', 'âm thanh', 'từ'] },
+  'cam_g1_u03': { title: 'Rhyme Words', titleVi: 'Từ có vần', words: ['dock', 'clock', 'mouse', 'rhyme', 'cat', 'hat', 'star', 'car', 'buckle', 'shoe', 'door', 'hen', 'fiddle', 'moon', 'spoon', 'fire', 'hose', 'jelly', 'belly', 'poet'], wordsVi: ['bến', 'đồng hồ', 'chuột', 'vần', 'mèo', 'mũ', 'ngôi sao', 'xe', 'khuy', 'giày', 'cửa', 'gà mái', 'đàn', 'mặt trăng', 'muỗng', 'lửa', 'vòi nước', 'thạch', 'bụng', 'nhà thơ'] },
   'cam_g1_u04': { title: 'Traditional Tales', titleVi: 'Truyện cổ tích', words: ['turnip', 'pull', 'enormous', 'old man', 'old woman', 'boy', 'soup', 'together', 'finally', 'pop'], wordsVi: ['củ cải', 'kéo', 'khổng lồ', 'ông lão', 'bà lão', 'cậu bé', 'súp', 'cùng nhau', 'cuối cùng', 'bụp'] },
   'cam_g1_u05': { title: 'Animals & Information', titleVi: 'Động vật & Thông tin', words: ['elephant', 'mouse', 'bird', 'fish', 'trunk', 'tail', 'fly', 'swim', 'big', 'small'], wordsVi: ['voi', 'chuột', 'chim', 'cá', 'vòi', 'đuôi', 'bay', 'bơi', 'to', 'nhỏ'] },
   'cam_g1_u06': { title: 'Nursery Rhymes', titleVi: 'Đồng dao', words: ['Jack', 'Jill', 'hill', 'pail', 'water', 'crown', 'tumble', 'rhythm', 'song', 'nursery'], wordsVi: ['Jack', 'Jill', 'đồi', 'thùng', 'nước', 'vương miện', 'lăn cù', 'nhịp điệu', 'bài hát', 'đồng dao'] },
@@ -907,4 +2072,25 @@ export function getAuthenticReading(unitId: string, title: string, titleVi: stri
   const textVi = `Hôm nay chúng ta sẽ khám phá chủ đề thú vị về "${titleVi}". Trong bài học này, bạn sẽ học các từ quan trọng như ${wv(0)}, ${wv(1)}, và ${wv(2)}. Khi bạn hiểu những từ này, việc đọc và giao tiếp sẽ dễ dàng hơn. Bạn có thể nghĩ ra một câu sử dụng từ ${wv(3)} không? Cùng tìm hiểu thêm về "${titleVi}" nhé!`;
 
   return { text, textVi };
+}
+
+/**
+ * Returns multi-section content for a unit if available.
+ * Falls back to wrapping the single AUTHENTIC_PASSAGES entry as a 1-element array.
+ */
+export function getUnitSections(unitId: string, title: string, titleVi: string, vocabWords: string[], vocabWordsVi: string[]): AuthenticSection[] {
+  // Priority 1: Full multi-section data
+  if (AUTHENTIC_UNIT_SECTIONS[unitId]) {
+    return AUTHENTIC_UNIT_SECTIONS[unitId];
+  }
+
+  // Priority 2: Wrap single passage as a section
+  const single = getAuthenticReading(unitId, title, titleVi, vocabWords, vocabWordsVi);
+  return [{
+    sectionTitle: title,
+    sectionTitleVi: titleVi,
+    text: single.text,
+    textVi: single.textVi,
+    type: 'information' as const,
+  }];
 }
