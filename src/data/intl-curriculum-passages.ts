@@ -32,6 +32,8 @@ export interface AuthenticSection {
     | 'self_check';      // "I can…" self-assessment checklist
   /** Optional icon override for UI rendering */
   icon?: string;
+  /** Authentic curriculum image asset URL */
+  imageUrl?: string;
   /** Cambridge curriculum objective tag, e.g. "1Rw.01" */
   skillRef?: string;
   /** Cambridge Primary English 0058 — multiple learning objective codes */
@@ -172,6 +174,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: '1.1 Khởi động',
       type: 'getting_started',
       skillRefs: ['1SLs.01', '1SLg.04', '1SLr.01'],
+      imageUrl: '/images/english/cam_g1_u01_playground.png',
       text: "Welcome to Unit 1! Let's talk about FRIENDS.\n\n🗣️ Talk with your partner:\n• Who is your best friend?\n• What do you like to play?\n• How do you make a new friend?\n\nLook at the picture. What can you see? Children are playing in the playground. They are having fun TOGETHER. Today we will learn about playing, sharing, and being kind.",
       textVi: "Chào mừng đến Bài 1! Hãy nói về BẠN BÈ.\n\n🗣️ Nói chuyện với bạn:\n• Bạn thân nhất của bạn là ai?\n• Bạn thích chơi gì?\n• Làm thế nào để kết bạn mới?\n\nNhìn bức tranh. Bạn thấy gì? Trẻ em đang chơi ở sân chơi. Họ đang vui vẻ CÙNG NHAU. Hôm nay chúng ta sẽ học về chơi đùa, chia sẻ và tử tế."
     },

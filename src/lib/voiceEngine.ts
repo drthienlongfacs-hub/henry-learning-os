@@ -324,7 +324,8 @@ export function speak(
   text: string,
   accent: Accent,
   rate = 0.92,
-  onEnd?: () => void
+  onEnd?: () => void,
+  onStart?: () => void
 ): void {
   if (typeof window === 'undefined') return;
 
@@ -337,25 +338,30 @@ export function speak(
   getCachedAudio(key).then(cached => {
     if (cached && cached.byteLength > 0) {
       // Cache HIT — play Kokoro audio ONLY (no Web Speech)
+      if (onStart) onStart();
       playCachedAudio(cached, onEnd);
     } else if (kokoroReady) {
       // Kokoro ready but not cached — generate + play live
       generateAndCache(text, accent).then(() => {
         getCachedAudio(key).then(fresh => {
           if (fresh && fresh.byteLength > 0) {
+            if (onStart) onStart();
             playCachedAudio(fresh, onEnd);
           } else {
             // Generation failed — fall back to Web Speech
+            if (onStart) onStart();
             speakWebSpeech(text, accent, rate, onEnd);
           }
         });
       });
     } else {
       // Kokoro not ready — Web Speech fallback ONLY
+      if (onStart) onStart();
       speakWebSpeech(text, accent, rate, onEnd);
     }
   }).catch(() => {
     // IndexedDB failed — Web Speech fallback
+    if (onStart) onStart();
     speakWebSpeech(text, accent, rate, onEnd);
   });
 }

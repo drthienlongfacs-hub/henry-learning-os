@@ -50,6 +50,9 @@ function installSpeechSynthesisMock() {
     return { speak, cancel, pause, resume };
 }
 
+// Helper: flush microtask queue (promises resolve before timers fire)
+const flushPromises = () => vi.advanceTimersByTimeAsync(0);
+
 describe('voice engine latency guard', () => {
     beforeEach(() => {
         vi.resetModules();
@@ -66,6 +69,9 @@ describe('voice engine latency guard', () => {
         const { speakLongPassage, getEngineStatus } = await import('@/lib/voiceEngine');
 
         speakLongPassage('Life is like a box of chocolates. You never know what you will get.', 'en-US', 0.88);
+
+        // speak() is now async internally (IndexedDB cache check) — flush promise queue
+        await flushPromises();
 
         expect(speech.cancel).toHaveBeenCalled();
         expect(speech.speak).not.toHaveBeenCalled();
@@ -89,6 +95,9 @@ describe('voice engine latency guard', () => {
         const { speak } = await import('@/lib/voiceEngine');
 
         speak('museum', 'en-US', 0.75);
+
+        // Flush async cache-check promise before advancing timers
+        await flushPromises();
         vi.advanceTimersByTime(15);
 
         expect(speech.speak).toHaveBeenCalledTimes(1);

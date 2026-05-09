@@ -13,6 +13,8 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
   const [showExplanation, setShowExplanation] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState(0);
   const [spellInput, setSpellInput] = useState('');
+  const [loadingAudioId, setLoadingAudioId] = useState<string | null>(null);
+  const [playingAudioId, setPlayingAudioId] = useState<string | null>(null);
 
   const allQuestions = activeTest?.parts.flatMap(p => p.questions) ?? [];
   const total = allQuestions.length;
@@ -202,10 +204,21 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
 
         {q.audioTranscript && (
           <button 
-            onClick={() => speak(q.audioTranscript!, 'en-GB')}
-            style={{ width: '100%', padding: 12, background: 'linear-gradient(90deg, #667eea, #764ba2)', color: '#fff', border: 'none', borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: 'pointer', marginBottom: 16, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 8 }}
+            disabled={loadingAudioId === q.id}
+            onClick={() => {
+              if (playingAudioId === q.id) return;
+              setLoadingAudioId(q.id);
+              speak(
+                q.audioTranscript!, 
+                'en-GB', 
+                0.92, 
+                () => { setLoadingAudioId(null); setPlayingAudioId(null); }, // onEnd
+                () => { setLoadingAudioId(null); setPlayingAudioId(q.id); }  // onStart
+              );
+            }}
+            style={{ width: '100%', padding: 12, background: playingAudioId === q.id ? '#48bb78' : 'linear-gradient(90deg, #667eea, #764ba2)', color: '#fff', border: 'none', borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: loadingAudioId === q.id ? 'not-allowed' : 'pointer', marginBottom: 16, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 8, opacity: loadingAudioId === q.id ? 0.7 : 1 }}
           >
-            🔊 Nghe đoạn hội thoại (Audio)
+            {loadingAudioId === q.id ? '⏳ Đang tải audio...' : playingAudioId === q.id ? '🔊 Đang phát...' : '🔊 Nghe đoạn hội thoại (Audio)'}
           </button>
         )}
 
