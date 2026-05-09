@@ -23,7 +23,7 @@ export interface PracticeQuestion {
 
 export interface PracticeTest {
   id: string;
-  level: 'starters' | 'movers' | 'flyers';
+  level: 'starters' | 'movers' | 'flyers' | 'ket' | 'pet';
   skill: 'reading_writing' | 'listening';
   skillVi: string;
   totalMinutes: number;
@@ -66,11 +66,11 @@ const STARTERS_RW: PracticeTest = {
     { partNumber: 3, titleEn: 'Spell the Word', titleVi: 'Đánh vần từ',
       instructionVi: 'Nhìn tranh. Sắp xếp các chữ cái thành từ đúng.',
       questions: [
-        { id:'s3_1', partNumber:3, taskTypeVi:'Đánh vần', taskTypeEn:'Spell', prompt:'Sắp xếp: d-o-g', imageEmoji:'🐕', answer:'dog', explanationVi:'d + o + g = dog (con chó). Từ 3 chữ cái, đọc: /dɒɡ/.', strategyVi:'Từ ngắn 3 chữ cái (CVC): dog, cat, sun, hat, bus. Đọc to để nhớ âm.' },
-        { id:'s3_2', partNumber:3, taskTypeVi:'Đánh vần', taskTypeEn:'Spell', prompt:'Sắp xếp: c-a-t', imageEmoji:'🐈', answer:'cat', explanationVi:'c + a + t = cat (con mèo). Đọc: /kæt/.', strategyVi:'Phương pháp: đọc từng chữ cái → ghép lại → đọc to. c-a-t → cat!' },
-        { id:'s3_3', partNumber:3, taskTypeVi:'Đánh vần', taskTypeEn:'Spell', prompt:'Sắp xếp: s-u-n', imageEmoji:'☀️', answer:'sun', explanationVi:'s + u + n = sun (mặt trời). Đọc: /sʌn/. Nhớ: sun ≠ son (con trai).', strategyVi:'Cẩn thận từ đồng âm: sun (mặt trời) ≠ son (con trai). Nhìn tranh để chắc chắn.' },
-        { id:'s3_4', partNumber:3, taskTypeVi:'Đánh vần', taskTypeEn:'Spell', prompt:'Sắp xếp: h-a-t', imageEmoji:'🎩', answer:'hat', explanationVi:'h + a + t = hat (cái nón). Đọc: /hæt/. Cùng nhóm với cat, bat, mat.', strategyVi:'Nhóm vần -at: cat, hat, bat, mat, sat, rat. Học 1 vần = nhớ 6 từ!' },
-        { id:'s3_5', partNumber:3, taskTypeVi:'Đánh vần', taskTypeEn:'Spell', prompt:'Sắp xếp: b-a-l-l', imageEmoji:'⚽', answer:'ball', explanationVi:'b + a + l + l = ball (quả bóng). Chú ý: 2 chữ L. Đọc: /bɔːl/.', strategyVi:'Từ có chữ cái đôi: ball, book, tree, egg. Viết tay nhiều lần để nhớ.' },
+        { id:'s3_1', partNumber:3, taskTypeVi:'Đánh vần', taskTypeEn:'Spell', prompt:'Sắp xếp: g-o-d', imageEmoji:'🐕', answer:'dog', explanationVi:'d + o + g = dog (con chó). Từ 3 chữ cái, đọc: /dɒɡ/.', strategyVi:'Từ ngắn 3 chữ cái (CVC): dog, cat, sun, hat, bus. Đọc to để nhớ âm.' },
+        { id:'s3_2', partNumber:3, taskTypeVi:'Đánh vần', taskTypeEn:'Spell', prompt:'Sắp xếp: t-a-c', imageEmoji:'🐈', answer:'cat', explanationVi:'c + a + t = cat (con mèo). Đọc: /kæt/.', strategyVi:'Phương pháp: đọc từng chữ cái → ghép lại → đọc to. c-a-t → cat!' },
+        { id:'s3_3', partNumber:3, taskTypeVi:'Đánh vần', taskTypeEn:'Spell', prompt:'Sắp xếp: n-u-s', imageEmoji:'☀️', answer:'sun', explanationVi:'s + u + n = sun (mặt trời). Đọc: /sʌn/. Nhớ: sun ≠ son (con trai).', strategyVi:'Cẩn thận từ đồng âm: sun (mặt trời) ≠ son (con trai). Nhìn tranh để chắc chắn.' },
+        { id:'s3_4', partNumber:3, taskTypeVi:'Đánh vần', taskTypeEn:'Spell', prompt:'Sắp xếp: t-h-a', imageEmoji:'🎩', answer:'hat', explanationVi:'h + a + t = hat (cái nón). Đọc: /hæt/. Cùng nhóm với cat, bat, mat.', strategyVi:'Nhóm vần -at: cat, hat, bat, mat, sat, rat. Học 1 vần = nhớ 6 từ!' },
+        { id:'s3_5', partNumber:3, taskTypeVi:'Đánh vần', taskTypeEn:'Spell', prompt:'Sắp xếp: l-l-a-b', imageEmoji:'⚽', answer:'ball', explanationVi:'b + a + l + l = ball (quả bóng). Chú ý: 2 chữ L. Đọc: /bɔːl/.', strategyVi:'Từ có chữ cái đôi: ball, book, tree, egg. Viết tay nhiều lần để nhớ.' },
       ],
     },
     { partNumber: 4, titleEn: 'Choose the Word', titleVi: 'Chọn từ đúng',
@@ -201,11 +201,14 @@ const FLYERS_RW: PracticeTest = {
 import { STARTERS_RW_2, STARTERS_RW_3 } from './practice-tests-starters-2';
 import { MOVERS_RW_2, MOVERS_RW_3 } from './practice-tests-movers-2';
 import { FLYERS_RW_2 } from './practice-tests-flyers-2';
+import { KET_RW_1, PET_RW_1 } from './practice-tests-ket-pet';
 
 export const PRACTICE_TESTS: PracticeTest[] = [
   STARTERS_RW, STARTERS_RW_2, STARTERS_RW_3,
   MOVERS_RW, MOVERS_RW_2, MOVERS_RW_3,
   FLYERS_RW, FLYERS_RW_2,
+  KET_RW_1,
+  PET_RW_1,
 ];
 
 export function getTestByLevel(level: string): PracticeTest | undefined {

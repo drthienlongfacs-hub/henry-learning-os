@@ -43,9 +43,16 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
   const mins = Math.floor(timeLeft / 60);
   const secs = timeLeft % 60;
 
-  const levelMap: Record<number, string> = { 1: 'starters', 2: 'starters', 3: 'movers', 4: 'flyers', 5: 'flyers' };
-  const currentLevel = levelMap[grade] || 'starters';
-  const availableTests = PRACTICE_TESTS.filter(t => t.level === currentLevel);
+  // Show ALL available levels, not just one grade
+  const LEVEL_INFO: { key: string; label: string; cefr: string; color: string }[] = [
+    { key: 'starters', label: '🌟 Starters', cefr: 'Pre A1', color: '#68d391' },
+    { key: 'movers', label: '🚀 Movers', cefr: 'A1', color: '#63b3ed' },
+    { key: 'flyers', label: '🦅 Flyers', cefr: 'A2', color: '#f6ad55' },
+    { key: 'ket', label: '🔑 KET (Key)', cefr: 'A2+', color: '#fc8181' },
+    { key: 'pet', label: '📋 PET (Preliminary)', cefr: 'B1', color: '#b794f4' },
+  ];
+  const [selectedLevel, setSelectedLevel] = useState('starters');
+  const availableTests = PRACTICE_TESTS.filter(t => t.level === selectedLevel);
 
   const card = { background: 'rgba(255,255,255,0.06)', borderRadius: 14, padding: 14, border: '1px solid rgba(255,255,255,0.08)', marginBottom: 10 };
 
@@ -55,9 +62,23 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
       <h2 style={{ textAlign: 'center', fontSize: 20, fontWeight: 800, margin: '0 0 4px', background: 'linear-gradient(90deg,#f9d423,#ff4e50)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
         🎯 Thi thử Cambridge YLE
       </h2>
-      <p style={{ textAlign: 'center', fontSize: 12, color: '#a0aec0', margin: '0 0 16px' }}>
+      <p style={{ textAlign: 'center', fontSize: 12, color: '#a0aec0', margin: '0 0 12px' }}>
         {availableTests.length} đề thi • {availableTests.reduce((s,t) => s + t.parts.flatMap(p=>p.questions).length, 0)} câu — có đáp án chi tiết & chiến lược
       </p>
+
+      {/* Level tabs */}
+      <div style={{ display: 'flex', gap: 4, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 14 }}>
+        {LEVEL_INFO.map(lv => (
+          <button key={lv.key} onClick={() => setSelectedLevel(lv.key)} style={{
+            padding: '5px 10px', borderRadius: 8, border: 'none', cursor: 'pointer', fontSize: 11, fontWeight: selectedLevel === lv.key ? 800 : 500,
+            background: selectedLevel === lv.key ? lv.color : 'rgba(255,255,255,0.08)',
+            color: selectedLevel === lv.key ? '#0f0c29' : '#a0aec0', transition: 'all 0.2s',
+          }}>
+            {lv.label} <span style={{ fontSize: 9, opacity: 0.7 }}>({lv.cefr})</span>
+          </button>
+        ))}
+      </div>
+
       {availableTests.map(t => (
         <div key={t.id} style={{ ...card, cursor: 'pointer' }} onClick={() => startTest(t)}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
