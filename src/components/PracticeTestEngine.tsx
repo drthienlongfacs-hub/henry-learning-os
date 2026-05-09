@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
 import { PRACTICE_TESTS, type PracticeTest, type PracticeQuestion } from '@/data/practice-test-bank';
+import { speak } from '@/lib/voiceEngine';
 
 type TestState = 'menu' | 'testing' | 'review';
 
@@ -198,6 +199,15 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
       <div style={{ ...card, padding: 16 }}>
         {q.imageEmoji && <div style={{ fontSize: 48, textAlign: 'center', marginBottom: 8 }}>{q.imageEmoji}</div>}
         <p style={{ fontSize: 16, fontWeight: 600, margin: '0 0 12px', lineHeight: 1.5 }}>{q.prompt}</p>
+
+        {q.audioTranscript && (
+          <button 
+            onClick={() => speak(q.audioTranscript!, 'en-GB')}
+            style={{ width: '100%', padding: 12, background: 'linear-gradient(90deg, #667eea, #764ba2)', color: '#fff', border: 'none', borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: 'pointer', marginBottom: 16, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 8 }}
+          >
+            🔊 Nghe đoạn hội thoại (Audio)
+          </button>
+        )}
 
         {/* Options or spell input */}
         {isSpellType ? (

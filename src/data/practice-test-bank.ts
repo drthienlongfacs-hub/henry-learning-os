@@ -19,12 +19,14 @@ export interface PracticeQuestion {
   explanationVi: string;
   /** Cách tư duy / chiến lược tiếp cận để tái sử dụng */
   strategyVi: string;
+  /** Script audio cho bài Listening (nếu có) */
+  audioTranscript?: string;
 }
 
 export interface PracticeTest {
   id: string;
   level: 'starters' | 'movers' | 'flyers' | 'ket' | 'pet';
-  skill: 'reading_writing' | 'listening';
+  skill: 'reading_writing' | 'listening' | 'speaking';
   skillVi: string;
   totalMinutes: number;
   parts: PracticeTestPart[];
@@ -202,13 +204,16 @@ import { STARTERS_RW_2, STARTERS_RW_3 } from './practice-tests-starters-2';
 import { MOVERS_RW_2, MOVERS_RW_3 } from './practice-tests-movers-2';
 import { FLYERS_RW_2 } from './practice-tests-flyers-2';
 import { KET_RW_1, PET_RW_1 } from './practice-tests-ket-pet';
+import { KET_LISTENING_1, PET_LISTENING_1 } from './practice-tests-ket-pet-listening';
+import { STARTERS_LISTENING } from './practice-tests-yle-listening';
+import { STARTERS_SPEAKING, KET_SPEAKING, PET_SPEAKING } from './practice-tests-speaking';
 
 export const PRACTICE_TESTS: PracticeTest[] = [
-  STARTERS_RW, STARTERS_RW_2, STARTERS_RW_3,
+  STARTERS_RW, STARTERS_RW_2, STARTERS_RW_3, STARTERS_LISTENING, STARTERS_SPEAKING,
   MOVERS_RW, MOVERS_RW_2, MOVERS_RW_3,
   FLYERS_RW, FLYERS_RW_2,
-  KET_RW_1,
-  PET_RW_1,
+  KET_RW_1, KET_LISTENING_1, KET_SPEAKING,
+  PET_RW_1, PET_LISTENING_1, PET_SPEAKING,
 ];
 
 export function getTestByLevel(level: string): PracticeTest | undefined {
