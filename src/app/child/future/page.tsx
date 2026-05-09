@@ -95,39 +95,144 @@ export default function FutureSkillsPage() {
         </div>
       )}
 
-      {/* Competition Modal */}
+      {/* Competition Modal — Full-Screen Deep Layer */}
       {selectedCompetition && (
-        <div style={{ position: 'fixed', inset: 0, zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.7)', animation: 'fadeIn 0.2s', padding: 20 }}>
-          <div style={{ background: '#1e293b', borderRadius: 24, padding: 32, maxWidth: 600, width: '100%', border: '1px solid rgba(251,191,36,0.3)', animation: 'scaleIn 0.3s', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
-              <h2 style={{ color: '#fbbf24', fontSize: 24, fontWeight: 800, margin: 0, lineHeight: 1.3 }}>🏆 {selectedCompetition.name}</h2>
-              <button onClick={() => setSelectedCompetition(null)} style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: '#e2e8f0', fontSize: 20, width: 36, height: 36, borderRadius: 18, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✕</button>
+        <div style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(0,0,0,0.85)', animation: 'fadeIn 0.2s', overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}>
+          <div style={{ maxWidth: 680, margin: '0 auto', padding: '20px 16px 40px' }}>
+            {/* Sticky Header */}
+            <div style={{ position: 'sticky', top: 0, zIndex: 10, background: 'linear-gradient(180deg,rgba(15,23,42,0.98) 80%,transparent)', padding: '16px 0 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+              <div>
+                <h2 style={{ color: '#fbbf24', fontSize: 26, fontWeight: 800, margin: 0, lineHeight: 1.3 }}>🏆 {selectedCompetition.name}</h2>
+                <div style={{ display: 'flex', gap: 12, marginTop: 8, flexWrap: 'wrap' }}>
+                  <span style={{ background: 'rgba(251,191,36,0.15)', color: '#fde047', padding: '4px 12px', borderRadius: 20, fontSize: 12, fontWeight: 700 }}>Tuổi: {selectedCompetition.age}</span>
+                  <span style={{ background: 'rgba(56,189,248,0.15)', color: '#7dd3fc', padding: '4px 12px', borderRadius: 20, fontSize: 12, fontWeight: 700 }}>{selectedCompetition.value}</span>
+                </div>
+              </div>
+              <button onClick={() => setSelectedCompetition(null)} style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: '#e2e8f0', fontSize: 20, width: 40, height: 40, borderRadius: 20, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, backdropFilter: 'blur(8px)' }}>✕</button>
             </div>
-            
-            <p style={{ color: '#e2e8f0', fontSize: 14, lineHeight: 1.6, margin: '0 0 16px' }}>
-              {selectedCompetition.description}
-            </p>
 
-            <div style={{ background: 'rgba(255,255,255,0.05)', padding: 12, borderRadius: 12, marginBottom: 20 }}>
-              <div style={{ color: '#94a3b8', fontSize: 12, fontWeight: 700, marginBottom: 8 }}>📌 Kỹ năng rèn luyện:</div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+            {/* Section 1: Đây là gì? */}
+            <div style={{ background: 'rgba(255,255,255,0.06)', borderRadius: 20, padding: 20, border: '1px solid rgba(255,255,255,0.08)', marginBottom: 16 }}>
+              <h3 style={{ color: '#f8fafc', fontSize: 16, fontWeight: 800, margin: '0 0 12px', display: 'flex', alignItems: 'center', gap: 8 }}>📋 Đây là gì?</h3>
+              <p style={{ color: '#cbd5e1', fontSize: 14, lineHeight: 1.8, margin: 0 }}>{selectedCompetition.whatItIs || selectedCompetition.description}</p>
+            </div>
+
+            {/* Section 2: Tại sao quan trọng? */}
+            {selectedCompetition.whyItMatters && (
+              <div style={{ background: 'rgba(139,92,246,0.08)', borderRadius: 20, padding: 20, border: '1px solid rgba(139,92,246,0.2)', marginBottom: 16 }}>
+                <h3 style={{ color: '#a78bfa', fontSize: 16, fontWeight: 800, margin: '0 0 12px', display: 'flex', alignItems: 'center', gap: 8 }}>🧠 Tại sao quan trọng? (Evidence-Based)</h3>
+                <p style={{ color: '#cbd5e1', fontSize: 14, lineHeight: 1.8, margin: 0 }}>{selectedCompetition.whyItMatters}</p>
+              </div>
+            )}
+
+            {/* Section 3: Kỹ năng rèn luyện */}
+            <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: 20, padding: 20, border: '1px solid rgba(255,255,255,0.06)', marginBottom: 16 }}>
+              <h3 style={{ color: '#f8fafc', fontSize: 16, fontWeight: 800, margin: '0 0 12px' }}>🎯 Kỹ năng rèn luyện</h3>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                 {selectedCompetition.skills?.map((sk: string) => (
-                  <span key={sk} style={{ background: 'rgba(251,191,36,0.15)', color: '#fde047', padding: '4px 10px', borderRadius: 12, fontSize: 11, fontWeight: 600 }}>{sk}</span>
+                  <span key={sk} style={{ background: 'rgba(251,191,36,0.12)', color: '#fde047', padding: '6px 14px', borderRadius: 20, fontSize: 13, fontWeight: 600, border: '1px solid rgba(251,191,36,0.2)' }}>{sk}</span>
                 ))}
               </div>
             </div>
 
-            <button 
-              onClick={() => {
-                if (selectedCompetition.link) {
-                  window.open(selectedCompetition.link, '_blank', 'noopener,noreferrer');
-                }
-                setSelectedCompetition(null);
-              }} 
-              style={{ background: 'linear-gradient(135deg,#d97706,#fbbf24)', border: 'none', borderRadius: 14, padding: '14px', color: '#fff', fontWeight: 800, cursor: 'pointer', fontSize: 15, width: '100%', boxShadow: '0 4px 12px rgba(251,191,36,0.3)' }}
-            >
-              🚀 {selectedCompetition.action || 'Khám phá ngay'}
-            </button>
+            {/* Section 4: Điều kiện tham gia */}
+            {selectedCompetition.eligibility && (
+              <div style={{ background: 'rgba(34,197,94,0.06)', borderRadius: 20, padding: 20, border: '1px solid rgba(34,197,94,0.15)', marginBottom: 16 }}>
+                <h3 style={{ color: '#86efac', fontSize: 16, fontWeight: 800, margin: '0 0 12px' }}>✅ Điều kiện tham gia</h3>
+                <p style={{ color: '#cbd5e1', fontSize: 14, lineHeight: 1.8, margin: 0 }}>{selectedCompetition.eligibility}</p>
+              </div>
+            )}
+
+            {/* Section 5: Chi phí thực tế */}
+            {selectedCompetition.cost && (
+              <div style={{ background: 'rgba(251,191,36,0.06)', borderRadius: 20, padding: 20, border: '1px solid rgba(251,191,36,0.12)', marginBottom: 16 }}>
+                <h3 style={{ color: '#fbbf24', fontSize: 16, fontWeight: 800, margin: '0 0 12px' }}>💰 Chi phí thực tế</h3>
+                <p style={{ color: '#cbd5e1', fontSize: 14, lineHeight: 1.8, margin: 0 }}>{selectedCompetition.cost}</p>
+              </div>
+            )}
+
+            {/* Section 6: Bối cảnh Việt Nam */}
+            {selectedCompetition.vietnamContext && (
+              <div style={{ background: 'rgba(239,68,68,0.06)', borderRadius: 20, padding: 20, border: '1px solid rgba(239,68,68,0.12)', marginBottom: 16 }}>
+                <h3 style={{ color: '#fca5a5', fontSize: 16, fontWeight: 800, margin: '0 0 12px' }}>🇻🇳 Tại Việt Nam</h3>
+                <p style={{ color: '#cbd5e1', fontSize: 14, lineHeight: 1.8, margin: 0 }}>{selectedCompetition.vietnamContext}</p>
+              </div>
+            )}
+
+            {/* Section 7: Lộ trình chuẩn bị chi tiết */}
+            {selectedCompetition.preparationRoadmap && selectedCompetition.preparationRoadmap.length > 0 && (
+              <div style={{ background: 'rgba(56,189,248,0.06)', borderRadius: 20, padding: 20, border: '1px solid rgba(56,189,248,0.15)', marginBottom: 16 }}>
+                <h3 style={{ color: '#7dd3fc', fontSize: 16, fontWeight: 800, margin: '0 0 16px' }}>🗺️ Lộ trình chuẩn bị chi tiết</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  {selectedCompetition.preparationRoadmap.map((r: { step: string; timeline: string; detail: string }, i: number) => (
+                    <div key={i} style={{ background: 'rgba(0,0,0,0.25)', borderRadius: 16, padding: 16, borderLeft: '4px solid #38bdf8' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 }}>
+                        <span style={{ color: '#f8fafc', fontSize: 14, fontWeight: 700, flex: 1 }}>{r.step}</span>
+                        <span style={{ background: 'rgba(56,189,248,0.15)', color: '#7dd3fc', padding: '2px 10px', borderRadius: 12, fontSize: 11, fontWeight: 700, flexShrink: 0, marginLeft: 8 }}>{r.timeline}</span>
+                      </div>
+                      <p style={{ color: '#94a3b8', fontSize: 13, lineHeight: 1.7, margin: 0 }}>{r.detail}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Section 8: Tiêu chí đánh giá */}
+            {selectedCompetition.evaluationCriteria && selectedCompetition.evaluationCriteria.length > 0 && (
+              <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: 20, padding: 20, border: '1px solid rgba(255,255,255,0.06)', marginBottom: 16 }}>
+                <h3 style={{ color: '#f8fafc', fontSize: 16, fontWeight: 800, margin: '0 0 12px' }}>📊 Tiêu chí đánh giá (Rubric)</h3>
+                {selectedCompetition.evaluationCriteria.map((c: string, i: number) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 8 }}>
+                    <span style={{ color: '#fbbf24', fontSize: 14, flexShrink: 0 }}>•</span>
+                    <p style={{ color: '#cbd5e1', fontSize: 13, lineHeight: 1.6, margin: 0 }}>{c}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Section 9: Câu chuyện thành công */}
+            {selectedCompetition.successStories && (
+              <div style={{ background: 'linear-gradient(135deg,rgba(251,191,36,0.08),rgba(245,158,11,0.05))', borderRadius: 20, padding: 20, border: '1px solid rgba(251,191,36,0.15)', marginBottom: 16 }}>
+                <h3 style={{ color: '#fbbf24', fontSize: 16, fontWeight: 800, margin: '0 0 12px' }}>⭐ Câu chuyện thành công</h3>
+                <p style={{ color: '#cbd5e1', fontSize: 14, lineHeight: 1.8, margin: 0, fontStyle: 'italic' }}>{selectedCompetition.successStories}</p>
+              </div>
+            )}
+
+            {/* Section 10: Benchmark & Số liệu */}
+            {selectedCompetition.benchmarkData && (
+              <div style={{ background: 'rgba(99,102,241,0.06)', borderRadius: 20, padding: 20, border: '1px solid rgba(99,102,241,0.15)', marginBottom: 16 }}>
+                <h3 style={{ color: '#a5b4fc', fontSize: 16, fontWeight: 800, margin: '0 0 12px' }}>📈 Benchmark & Số liệu thực tế</h3>
+                <p style={{ color: '#cbd5e1', fontSize: 14, lineHeight: 1.8, margin: 0 }}>{selectedCompetition.benchmarkData}</p>
+              </div>
+            )}
+
+            {/* Section 11: Ba mẹ cần làm NGAY */}
+            {selectedCompetition.parentActionItems && selectedCompetition.parentActionItems.length > 0 && (
+              <div style={{ background: 'linear-gradient(135deg,rgba(34,197,94,0.1),rgba(16,185,129,0.06))', borderRadius: 20, padding: 20, border: '2px solid rgba(34,197,94,0.25)', marginBottom: 16 }}>
+                <h3 style={{ color: '#86efac', fontSize: 16, fontWeight: 800, margin: '0 0 16px' }}>🎯 Ba mẹ cần làm NGAY</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  {selectedCompetition.parentActionItems.map((item: string, i: number) => (
+                    <div key={i} style={{ background: 'rgba(0,0,0,0.2)', borderRadius: 12, padding: '12px 16px' }}>
+                      <p style={{ color: '#e2e8f0', fontSize: 14, lineHeight: 1.6, margin: 0, fontWeight: 500 }}>{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* CTA Buttons */}
+            <div style={{ display: 'flex', gap: 12, flexDirection: 'column' }}>
+              {selectedCompetition.link && (
+                <a href={selectedCompetition.link} target="_blank" rel="noopener noreferrer"
+                  style={{ background: 'linear-gradient(135deg,#d97706,#fbbf24)', border: 'none', borderRadius: 16, padding: '16px', color: '#fff', fontWeight: 800, cursor: 'pointer', fontSize: 16, width: '100%', boxShadow: '0 4px 12px rgba(251,191,36,0.3)', textAlign: 'center', textDecoration: 'none', display: 'block' }}>
+                  🚀 {selectedCompetition.action || 'Khám phá ngay'} — Truy cập website chính thức
+                </a>
+              )}
+              <button onClick={() => setSelectedCompetition(null)}
+                style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: 16, padding: '14px', color: '#94a3b8', fontWeight: 700, cursor: 'pointer', fontSize: 14, width: '100%' }}>
+                ← Quay lại
+              </button>
+            </div>
           </div>
         </div>
       )}
