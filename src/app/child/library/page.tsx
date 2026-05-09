@@ -15,8 +15,7 @@ import dynamic from 'next/dynamic';
 const PdfReader = dynamic(() => import('@/components/PdfReader').then(mod => mod.PdfReader), { ssr: false });
 import SGKBookshelf from '@/components/SGKBookshelf';
 const FreeStoriesShelf = dynamic(() => import('@/components/FreeStoriesShelf'), { ssr: false });
-const ExamPrepGuide = dynamic(() => import('@/components/ExamPrepGuide'), { ssr: false });
-const PracticeTestEngine = dynamic(() => import('@/components/PracticeTestEngine'), { ssr: false });
+
 const ReadingQuiz = dynamic(() => import('@/components/ReadingQuiz'), { ssr: false });
 const WordLookup = dynamic(() => import('@/components/WordLookup').then(m => m.WordLookup), { ssr: false });
 import Link from 'next/link';
@@ -169,15 +168,30 @@ export default function LibraryPage() {
 
                         <LocalTextbookVault lang={lang} onOpenTextbook={openEmbeddedBook} />
 
-                        {/* ========== EXAM PREP — Cambridge YLE Starters/Movers/Flyers ========== */}
-                        <div style={{ marginBottom: '1rem' }}>
-                            <ExamPrepGuide grade={gradeFilter ?? 1} />
-                        </div>
-
-                        {/* ========== PRACTICE TEST ENGINE — Interactive Exam Simulator ========== */}
-                        <div style={{ marginBottom: '1rem' }}>
-                            <PracticeTestEngine grade={gradeFilter ?? 1} />
-                        </div>
+                        {/* ========== EXAM PREP — Link to dedicated Exams page ========== */}
+                        <Link href="/child/exams" style={{ textDecoration: 'none', display: 'block', marginBottom: '1rem' }}>
+                            <div className="card card-interactive" style={{
+                                background: 'linear-gradient(135deg, rgba(99,102,241,0.06), rgba(168,85,247,0.06))',
+                                border: '1.5px solid rgba(99,102,241,0.12)',
+                                display: 'flex', alignItems: 'center', gap: '0.75rem',
+                            }}>
+                                <div style={{
+                                    width: 44, height: 44, borderRadius: 12,
+                                    background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    fontSize: '1.2rem', flexShrink: 0,
+                                }}>🏆</div>
+                                <div style={{ flex: 1 }}>
+                                    <div style={{ fontWeight: 800, fontSize: '0.9rem', color: 'var(--color-text-primary)' }}>
+                                        Cambridge Exams — Luyện thi
+                                    </div>
+                                    <div style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)' }}>
+                                        Starters → Movers → Flyers → KET → PET
+                                    </div>
+                                </div>
+                                <ChevronRight size={18} color="var(--color-primary)" />
+                            </div>
+                        </Link>
 
                         {/* ========== SGK BOOKSHELF — Bộ SGK Thống Nhất ========== */}
                         <SGKBookshelf lang={lang} />

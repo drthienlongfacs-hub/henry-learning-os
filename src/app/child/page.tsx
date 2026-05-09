@@ -6,11 +6,13 @@ import { useTranslation } from '@/lib/i18n';
 import { LangToggle } from '@/components/LangToggle';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import {
     BookOpen, Brain, Clock, RotateCcw,
     Home, Sparkles, ChevronRight, Play,
     Target, Flame, Trophy, Zap,
 } from 'lucide-react';
+const UniversalSearch = dynamic(() => import('@/components/UniversalSearch'), { ssr: false });
 import { buildWholeChildLearningPlan, getCardBenchmark } from '@/lib/whole-child-learning-plan';
 import XPDashboard from '@/components/gamification/XPDashboard';
 import WordOfDay from '@/components/gamification/WordOfDay';
@@ -93,6 +95,7 @@ export default function ChildDashboard() {
                             </h1>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                            <UniversalSearch />
                             <LangToggle />
                             <div className="progress-ring" style={{ '--progress': `${progressPct}%` } as React.CSSProperties}>
                                 <div className="progress-ring-inner">{progressPct}%</div>
@@ -305,7 +308,7 @@ export default function ChildDashboard() {
                 <div className="animate-fade-in" style={{ display: 'flex', gap: '0.45rem', marginBottom: '1.25rem' }}>
                     {[
                         { href: '/child/library', icon: '📚', name: 'Thư viện', desc: 'Sách', color: '#7c3aed' },
-                        { href: '/child/discover', icon: '🔍', name: 'Khám phá', desc: 'Tìm sách', color: '#06b6d4' },
+                        { href: '/child/exams', icon: '🏆', name: 'Luyện thi', desc: 'Cambridge', color: '#ef4444' },
                         { href: '/child/international', icon: '🌍', name: 'Quốc tế', desc: '6 nước', color: '#3b82f6' },
                         { href: '/child/future', icon: '🚀', name: 'Tương lai', desc: '5 trục', color: '#8b5cf6' },
                         { href: '/child/elite', icon: '⭐', name: 'Tinh hoa', desc: 'Nâng cao', color: '#f59e0b' },
@@ -374,9 +377,9 @@ export default function ChildDashboard() {
             <nav className="bottom-nav">
                 <Link href="/child" className="nav-item active"><Home size={20} /><span>{t('nav_home')}</span></Link>
                 <Link href="/child/learn" className="nav-item"><BookOpen size={20} /><span>Học</span></Link>
+                <Link href="/child/exams" className="nav-item"><Trophy size={20} /><span>Exams</span></Link>
                 <Link href="/child/review" className="nav-item"><RotateCcw size={20} /><span>{t('nav_review')}</span></Link>
                 <Link href="/child/mistakes" className="nav-item"><Brain size={20} /><span>{t('nav_mistakes')}</span></Link>
-                <Link href="/child/elite" className="nav-item"><Sparkles size={20} /><span>{t('nav_elite')}</span></Link>
             </nav>
         </div>
     );
