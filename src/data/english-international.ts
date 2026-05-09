@@ -621,7 +621,9 @@ export const COUNTRY_CONTENT: CountryContent[] = [
 ];
 
 // ══════════════════════════════════════════════════════════════
-// Full Country Curriculum Units — 100% Match Official Textbooks
+// Country curriculum unit index.
+// Completeness is evidence-gated in international-curriculum-coverage.ts; do not claim
+// 100% textbook match unless a unit-level benchmark manifest exists.
 // UK (Cambridge) + US (Wonders) + AU + FI + SG + CA
 // ══════════════════════════════════════════════════════════════
 

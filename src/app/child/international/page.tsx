@@ -1,19 +1,22 @@
-/* eslint-disable react-hooks/purity */
 /* eslint-disable react-hooks/set-state-in-effect */
 'use client';
 
 import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { ArrowLeft, Globe2, BookOpen, Pencil, Headphones, BookA, MapPin, ChevronRight, Star, Lightbulb, BookCheck } from 'lucide-react';
-import { useAppStore } from '@/stores/app-store';
+import { ArrowLeft, Globe2, ChevronRight, Lightbulb } from 'lucide-react';
 import {
-  PHONICS_LEVELS, GRAMMAR_TOPICS, READING_PASSAGES, SIGHT_WORDS,
+  PHONICS_LEVELS, GRAMMAR_TOPICS, READING_PASSAGES,
   WRITING_TOPICS, LISTENING_SPEAKING_TOPICS, VOCAB_THEMES, COUNTRY_CONTENT,
   CAMBRIDGE_UNITS, US_WONDERS_UNITS, AUSTRALIAN_UNITS, FINNISH_UNITS,
   SINGAPORE_UNITS, CANADIAN_UNITS, LEARNING_TIPS,
-  type CountryUnit, type LearningTips,
+  type CountryUnit,
 } from '@/data/english-international';
+import {
+  getFrameworkCoverageSummary,
+  type InternationalFrameworkKey,
+} from '@/data/international-curriculum-coverage';
+import { getFrameworkSourcePlan } from '@/data/international-curriculum-source-registry';
 
 const UNIT_MAP: Record<string, CountryUnit[]> = {
   cambridge: CAMBRIDGE_UNITS, common_core: US_WONDERS_UNITS, australian: AUSTRALIAN_UNITS,
@@ -25,27 +28,27 @@ const getTips = (fw: string) => LEARNING_TIPS.find(t => t.framework === fw);
 const COUNTRIES = [
   { id: 'uk', flag: '🇬🇧', name: 'United Kingdom', nameVi: 'Vương Quốc Anh', framework: 'cambridge',
     color: '#1e3a8a', gradient: 'linear-gradient(135deg, #1e3a8a, #3b82f6)',
-    desc: 'Cambridge Primary English — Chuẩn quốc tế hàng đầu',
+    desc: 'Cambridge Primary English — đang audit theo từng unit',
     skills: ['Reading', 'Writing', 'Speaking & Listening', 'Phonics', 'Grammar'] },
   { id: 'us', flag: '🇺🇸', name: 'United States', nameVi: 'Hoa Kỳ', framework: 'common_core',
     color: '#991b1b', gradient: 'linear-gradient(135deg, #991b1b, #ef4444)',
-    desc: 'Common Core State Standards — ELA K-5',
+    desc: 'Common Core State Standards — ELA K-5, cần manifest từng chuẩn',
     skills: ['Reading Foundations', 'Writing', 'Language', 'Speaking & Listening'] },
   { id: 'au', flag: '🇦🇺', name: 'Australia', nameVi: 'Úc', framework: 'australian',
     color: '#14532d', gradient: 'linear-gradient(135deg, #14532d, #22c55e)',
-    desc: 'Australian Curriculum — English F-6',
+    desc: 'Australian Curriculum — English, cần đối chiếu strand/content description',
     skills: ['Language', 'Literature', 'Literacy', 'Creating Texts'] },
   { id: 'fi', flag: '🇫🇮', name: 'Finland', nameVi: 'Phần Lan', framework: 'finnish',
     color: '#1e40af', gradient: 'linear-gradient(135deg, #1e40af, #60a5fa)',
-    desc: 'Finnish National Core Curriculum — #1 PISA Education',
+    desc: 'Finnish National Core Curriculum — cần audit theo mục tiêu năng lực',
     skills: ['Communication', 'Cultural Awareness', 'Nature-Based Learning'] },
   { id: 'sg', flag: '🇸🇬', name: 'Singapore', nameVi: 'Singapore', framework: 'singapore',
     color: '#9f1239', gradient: 'linear-gradient(135deg, #9f1239, #fb7185)',
-    desc: 'STELLAR Programme — Top ASEAN Education',
+    desc: 'STELLAR Programme — cần manifest theo unit và activity',
     skills: ['Shared Reading', 'Writing Process', 'Oral Communication'] },
   { id: 'ca', flag: '🇨🇦', name: 'Canada', nameVi: 'Canada', framework: 'canadian',
     color: '#7f1d1d', gradient: 'linear-gradient(135deg, #7f1d1d, #f87171)',
-    desc: 'Canadian Common Framework — Bilingual Excellence',
+    desc: 'Canadian curriculum — cần xác định tỉnh bang và strand',
     skills: ['Reading', 'Writing', 'Oral Communication', 'Media Literacy'] },
 ] as const;
 
@@ -94,7 +97,6 @@ function InternationalPageContent() {
   const searchParams = useSearchParams();
   const [selectedCountry, setSelectedCountry] = useState<CountryId | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const childGrade = (useAppStore.getState().childProfile as { gradeLevel?: number } | null)?.gradeLevel || 1;
   const grade = 5; // Show ALL grades G1-G5 for curriculum browsing
 
   // Restore country selection from URL param (e.g. ?country=uk)
@@ -114,6 +116,12 @@ function InternationalPageContent() {
     ...cat,
     count: topics.filter(t => t.category === cat.key).length,
   })).filter(c => c.count > 0);
+  const countryCoverage = country ? getFrameworkCoverageSummary(country.framework as InternationalFrameworkKey) : null;
+  const countrySourcePlan = country ? getFrameworkSourcePlan(country.framework as InternationalFrameworkKey) : null;
+  const allCoverage = COUNTRIES.map(c => getFrameworkCoverageSummary(c.framework as InternationalFrameworkKey));
+  const totalTextbookUnits = allCoverage.reduce((sum, summary) => sum + summary.totalUnits, 0);
+  const totalBenchmarkedUnits = allCoverage.reduce((sum, summary) => sum + summary.benchmarkedUnits, 0);
+  const totalLearningItems = COUNTRIES.reduce((sum, c) => sum + getCountryTopics(c.framework, grade).length, 0);
 
   return (
     <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #0f172a 0%, #1e293b 100%)' }}>
@@ -155,6 +163,7 @@ function InternationalPageContent() {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16 }}>
               {COUNTRIES.map(c => {
                 const cTopics = getCountryTopics(c.framework, grade);
+                const coverage = getFrameworkCoverageSummary(c.framework as InternationalFrameworkKey);
                 return (
                   <button
                     key={c.id}
@@ -177,9 +186,13 @@ function InternationalPageContent() {
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <span style={{ color: 'rgba(255,255,255,0.9)', fontSize: 14, fontWeight: 600 }}>
-                        {cTopics.length} bài học
+                        {cTopics.length} đơn vị nội dung
                       </span>
                       <ChevronRight size={20} color="rgba(255,255,255,0.8)" />
+                    </div>
+                    <div style={{ marginTop: 10, color: '#fff', background: 'rgba(15,23,42,0.22)', borderRadius: 12, padding: '8px 10px', fontSize: 11, lineHeight: 1.45 }}>
+                      <div style={{ fontWeight: 800 }}>{coverage.statusLabelVi}</div>
+                      <div>{coverage.benchmarkedUnits}/{coverage.totalUnits} unit có benchmark nguồn</div>
                     </div>
                     <div style={{ position: 'absolute', top: -20, right: -20, width: 100, height: 100, borderRadius: '50%', background: 'rgba(255,255,255,0.1)' }} />
                   </button>
@@ -195,12 +208,12 @@ function InternationalPageContent() {
                   <div style={{ color: '#94a3b8', fontSize: 12 }}>Quốc gia</div>
                 </div>
                 <div>
-                  <div style={{ color: '#34d399', fontSize: 28, fontWeight: 700 }}>426</div>
-                  <div style={{ color: '#94a3b8', fontSize: 12 }}>Bài học</div>
+                  <div style={{ color: '#34d399', fontSize: 28, fontWeight: 700 }}>{totalLearningItems}</div>
+                  <div style={{ color: '#94a3b8', fontSize: 12 }}>Đơn vị nội dung</div>
                 </div>
                 <div>
-                  <div style={{ color: '#fbbf24', fontSize: 28, fontWeight: 700 }}>9</div>
-                  <div style={{ color: '#94a3b8', fontSize: 12 }}>Kỹ năng</div>
+                  <div style={{ color: '#fbbf24', fontSize: 28, fontWeight: 700 }}>{totalBenchmarkedUnits}/{totalTextbookUnits}</div>
+                  <div style={{ color: '#94a3b8', fontSize: 12 }}>Unit benchmark</div>
                 </div>
                 <div>
                   <div style={{ color: '#fb7185', fontSize: 28, fontWeight: 700 }}>G1-G5</div>
@@ -243,11 +256,28 @@ function InternationalPageContent() {
                   <h2 style={{ color: '#fff', fontSize: 24, fontWeight: 700, margin: 0 }}>{country.name}</h2>
                   <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: 14, margin: '4px 0 0' }}>{country.desc}</p>
                   <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 13, margin: '4px 0 0' }}>
-                    📊 {topics.length} bài học cho lớp {grade} | {categoryCounts.length} danh mục
+                    📊 {topics.length} đơn vị nội dung đến lớp {grade} | {categoryCounts.length} danh mục
                   </p>
                 </div>
               </div>
             </div>
+            {countryCoverage && (
+              <div style={{ background: 'rgba(255,255,255,0.06)', borderRadius: 12, padding: '14px 16px', marginBottom: 16, border: '1px solid rgba(255,255,255,0.12)' }}>
+                <div style={{ color: '#fbbf24', fontSize: 13, fontWeight: 900, marginBottom: 6 }}>Evidence gate</div>
+                <div style={{ color: '#e2e8f0', fontSize: 14, fontWeight: 800 }}>{countryCoverage.statusLabelVi}</div>
+                <div style={{ color: '#94a3b8', fontSize: 12, lineHeight: 1.55, marginTop: 6 }}>
+                  {countryCoverage.statusDetailVi} Đã benchmark: {countryCoverage.benchmarkedUnits}/{countryCoverage.totalUnits} unit.
+                  Multi-section chưa có manifest: {countryCoverage.multiSectionUnverifiedUnits}. Single-passage chưa có manifest: {countryCoverage.singlePassageUnverifiedUnits}.
+                  Thiếu content: {countryCoverage.missingContentUnits}.
+                </div>
+                {countrySourcePlan && (
+                  <div style={{ color: '#cbd5e1', fontSize: 12, lineHeight: 1.55, marginTop: 8 }}>
+                    Nguồn hợp lệ: {countrySourcePlan.benchmarkSources.length} chuẩn chính thức, {countrySourcePlan.textSources.length} nguồn văn bản public-domain/open,
+                    {countrySourcePlan.practiceSources.length} nguồn learning-science. Quy tắc hoàn tất: {countrySourcePlan.completionRule}
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Category filter */}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 20 }}>

@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import { buildIntlLessonFromData } from '@/components/LessonPhase';
 import { getUnitSections } from '@/data/intl-curriculum-passages';
+import { generateInternationalTopicExercises } from '@/lib/content/english-intl-generator';
 
 const intlData = {
     readingPassages: [],
@@ -74,5 +75,22 @@ describe('Cambridge G1 Unit 3 curriculum passages', () => {
         expect(allText).not.toContain('Verb To Be');
         expect(allText).not.toContain('I am a boy.');
         expect(allText).not.toContain('3.12');
+    });
+
+    it('uses a benchmarked Unit 3 question bank instead of generic country-unit prompts', () => {
+        const exercises = generateInternationalTopicExercises('cam_g1_u03', 12);
+        const allText = exercises.map(exercise => `${exercise.question}\n${exercise.explanation}`).join('\n');
+
+        expect(exercises.length).toBeGreaterThanOrEqual(16);
+        expect(allText).toContain('Unit 3.1');
+        expect(allText).toContain('Unit 3.2');
+        expect(allText).toContain('Unit 3.3');
+        expect(allText).toContain('Unit 3.4');
+        expect(allText).toContain('Unit 3.5');
+        expect(allText).toContain('Unit 3.6');
+        expect(allText).toContain('Unit 3 review');
+        expect(allText).toContain('Fire! Fire!');
+        expect(allText).not.toContain('focuses on which skill');
+        expect(allText).not.toContain('This unit practices: Reading, Writing, Speaking, Listening');
     });
 });

@@ -311,6 +311,9 @@ const ALL_COUNTRY_UNITS = [
 ];
 
 function generateCountryUnitExercises(topicKey: string, count: number): EnglishProblem[] {
+  const benchmarked = getBenchmarkedCountryUnitExercises(topicKey, count);
+  if (benchmarked) return benchmarked;
+
   const unit = ALL_COUNTRY_UNITS.find(u => u.unitId === topicKey);
   if (!unit) return [];
 
@@ -320,6 +323,207 @@ function generateCountryUnitExercises(topicKey: string, count: number): EnglishP
   ];
 
   return Array.from({ length: count }, () => pick(UNIT_EXERCISE_GENS)(unit));
+}
+
+type BenchmarkedUnitExercise = Omit<EnglishProblem, 'id' | 'gradeLevel' | 'difficulty' | 'topicKey' | 'topic'>;
+
+const CAM_G1_U03_BENCHMARKED_EXERCISES: BenchmarkedUnitExercise[] = [
+  {
+    type: 'reading',
+    question: '🎯 In Unit 3.1, what are rhyming words?',
+    correctAnswer: 'Words that sound the same at the end',
+    options: [
+      'Words that sound the same at the end',
+      'Words that start with the same capital letter',
+      'Words that mean the same thing',
+      'Words that are always numbers',
+    ],
+    explanation: 'Unit 3.1 explains that rhyming words sound the same at the end, like dock and clock.',
+    hints: ['Listen to the end sound.', 'dock and clock both end with -ock.'],
+  },
+  {
+    type: 'phonics',
+    question: '📖 Which pair rhymes in "Hickory Dickory Dock"?',
+    correctAnswer: 'dock — clock',
+    options: ['dock — clock', 'mouse — clock', 'one — down', 'ran — clock'],
+    explanation: 'Unit 3.1 uses dock and clock as the first clear rhyming pair.',
+    hints: ['Say the words aloud.', 'Both words end with the -ock sound.'],
+  },
+  {
+    type: 'phonics',
+    question: '🔤 Which rhyme family contains dock, clock, rock, sock, lock, and knock?',
+    correctAnswer: '-ock',
+    options: ['-ock', '-at', '-ar', '-oe'],
+    explanation: 'The Unit 3 review lists the -ock family: dock, clock, rock, sock, lock, knock.',
+    hints: ['Look at the ending letters.', 'They all end with ock.'],
+  },
+  {
+    type: 'reading',
+    question: '🔢 In Unit 3.2, which words rhyme in "One, two, buckle my shoe"?',
+    correctAnswer: 'two — shoe',
+    options: ['two — shoe', 'one — shoe', 'buckle — two', 'my — shoe'],
+    explanation: 'Unit 3.2 teaches number rhymes. In this line, two rhymes with shoe.',
+    hints: ['Listen to the last words.', 'two and shoe have the same ending sound.'],
+  },
+  {
+    type: 'reading',
+    question: '🚪 In Unit 3.2, which pair rhymes with "Three, four, knock at the door"?',
+    correctAnswer: 'four — door',
+    options: ['four — door', 'three — door', 'knock — door', 'at — door'],
+    explanation: 'The number rhyme pairs four with door, exactly as shown in Unit 3.2.',
+    hints: ['Say four and door slowly.', 'They share the /or/ ending sound.'],
+  },
+  {
+    type: 'vocabulary',
+    question: '🔢 What do number rhymes help us practise in Unit 3.2?',
+    correctAnswer: 'Counting and rhyming at the same time',
+    options: [
+      'Counting and rhyming at the same time',
+      'Writing long essays',
+      'Learning animal habitats',
+      'Only drawing pictures',
+    ],
+    explanation: 'Unit 3.2 says number rhymes help us count and learn new words at the same time.',
+    hints: ['Think about one, two, three, four...', 'The lesson uses numbers with rhyming words.'],
+  },
+  {
+    type: 'reading',
+    question: '🌙 In Unit 3.3 "Funny rhymes", what silly event happens?',
+    correctAnswer: 'The cow jumped over the moon',
+    options: [
+      'The cow jumped over the moon',
+      'The mouse ran down the clock',
+      'The hen picked up sticks',
+      'The firefighter read a book',
+    ],
+    explanation: 'Unit 3.3 uses Hey Diddle Diddle. It is funny because impossible things happen.',
+    hints: ['Look for the impossible picture in the rhyme.', 'A cow cannot really jump over the moon.'],
+  },
+  {
+    type: 'phonics',
+    question: '🥄 Which rhyming pair is in "Hey Diddle Diddle"?',
+    correctAnswer: 'moon — spoon',
+    options: ['moon — spoon', 'cat — moon', 'dog — dish', 'cow — fun'],
+    explanation: 'Unit 3.3 points out moon and spoon as a rhyming pair.',
+    hints: ['Say both words aloud.', 'They share the same /oon/ ending sound.'],
+  },
+  {
+    type: 'reading',
+    question: '🤪 What makes a rhyme "silly" in Unit 3.4?',
+    correctAnswer: 'It plays with strange or nonsense words to make us laugh',
+    options: [
+      'It plays with strange or nonsense words to make us laugh',
+      'It must be a true story',
+      'It only lists numbers',
+      'It has no sound pattern',
+    ],
+    explanation: 'Unit 3.4 says silly rhymes play with words in a nonsense way and make us laugh.',
+    hints: ['Think about a purple cow.', 'Silly means funny and strange.'],
+  },
+  {
+    type: 'phonics',
+    question: '🍮 In the silly rhyme game, which word rhymes with "jelly"?',
+    correctAnswer: 'belly',
+    options: ['belly', 'clock', 'moon', 'door'],
+    explanation: 'Unit 3.4 gives jelly -> belly as a silly rhyming pair.',
+    hints: ['Listen to the ending sound.', 'jelly and belly end the same way.'],
+  },
+  {
+    type: 'reading',
+    question: '🔥 What happens in Unit 3.5 "Fire! Fire!"?',
+    correctAnswer: 'People see a fire and try to help',
+    options: [
+      'People see a fire and try to help',
+      'A cow jumps over the moon',
+      'A mouse runs up a clock',
+      'A child makes a paper hat',
+    ],
+    explanation: 'Unit 3.5 is a narrative rhyme: a fire breaks out and people try to help.',
+    hints: ['The title is Fire! Fire!', 'The people call for help and get the hose.'],
+  },
+  {
+    type: 'phonics',
+    question: '🔥 Which rhyming pair is named in the "Fire! Fire!" story rhyme?',
+    correctAnswer: 'McGuire — Fire',
+    options: ['McGuire — Fire', 'Hare — town', 'Brown — corner', 'Rose — Jade'],
+    explanation: 'Unit 3.5 asks learners to notice pairs such as McGuire — Fire, Hare — Where, and Brown — town.',
+    hints: ['Look at the character name.', 'McGuire has the same ending sound as Fire.'],
+  },
+  {
+    type: 'reading',
+    question: '📚 Why is "Fire! Fire!" called a narrative rhyme?',
+    correctAnswer: 'It tells a story from beginning to end',
+    options: [
+      'It tells a story from beginning to end',
+      'It only teaches numbers',
+      'It is a list of animals',
+      'It has no characters',
+    ],
+    explanation: 'Unit 3.5 explains that a narrative rhyme uses rhyme to tell a story from beginning to end.',
+    hints: ['Narrative means story.', 'The fire rhyme has events and characters.'],
+  },
+  {
+    type: 'writing',
+    question: '✍️ In Unit 3.6, what is the key step for changing a rhyme?',
+    correctAnswer: 'Choose a last word and replace it with a new rhyming word',
+    options: [
+      'Choose a last word and replace it with a new rhyming word',
+      'Remove all the rhyming words',
+      'Turn every line into a question',
+      'Only copy the original rhyme',
+    ],
+    explanation: 'Unit 3.6 teaches four steps: pick a rhyme, choose the last word, think of a new rhyming word, then change the line.',
+    hints: ['The new word must still rhyme.', 'Change the ending word carefully.'],
+  },
+  {
+    type: 'writing',
+    question: '⛰️ Which word can rhyme with "hill" when changing "Jack and Jill went up the hill"?',
+    correctAnswer: 'Bill',
+    options: ['Bill', 'clock', 'shoe', 'moon'],
+    explanation: 'Unit 3.6 suggests words such as Bill, grill, and chill because they rhyme with hill.',
+    hints: ['Listen to the /ill/ sound.', 'hill and Bill end the same way.'],
+  },
+  {
+    type: 'reading',
+    question: '✅ Which Unit 3 review statement is correct?',
+    correctAnswer: 'Rhyming words sound the same at the end',
+    options: [
+      'Rhyming words sound the same at the end',
+      'Funny rhymes must be true',
+      'Narrative rhymes never have characters',
+      'Changing a rhyme means removing the rhythm',
+    ],
+    explanation: 'The Unit 3 review confirms the core idea: rhyming words sound the same at the end.',
+    hints: ['Think of dock/clock and cat/hat.', 'The end sound matters most.'],
+  },
+];
+
+function cloneBenchmarkedExercise(topicKey: string, unitTitle: string, unitNumber: number, exercise: BenchmarkedUnitExercise, index: number): EnglishProblem {
+  return {
+    id: `${topicKey}-bench-${index + 1}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+    gradeLevel: 1,
+    difficulty: 1,
+    topic: `Unit ${unitNumber}: ${unitTitle}`,
+    topicKey,
+    ...exercise,
+    options: exercise.options ? [...exercise.options] : undefined,
+    hints: [...exercise.hints],
+  };
+}
+
+function getBenchmarkedCountryUnitExercises(topicKey: string, count: number): EnglishProblem[] | null {
+  if (topicKey !== 'cam_g1_u03') return null;
+
+  const unit = ALL_COUNTRY_UNITS.find(u => u.unitId === topicKey);
+  const unitTitle = unit?.title || 'Rhyme time';
+  const unitNumber = unit?.unitNumber || 3;
+  const limit = Math.max(count, CAM_G1_U03_BENCHMARKED_EXERCISES.length);
+  const selected = Array.from({ length: limit }, (_, index) => {
+    const exercise = CAM_G1_U03_BENCHMARKED_EXERCISES[index % CAM_G1_U03_BENCHMARKED_EXERCISES.length];
+    return cloneBenchmarkedExercise(topicKey, unitTitle, unitNumber, exercise, index);
+  });
+
+  return selected;
 }
 
 function genUnitVocabMatch(unit: CountryUnit): EnglishProblem {
