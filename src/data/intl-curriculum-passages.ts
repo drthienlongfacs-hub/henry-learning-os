@@ -32,7 +32,72 @@ export interface AuthenticSection {
   icon?: string;
   /** Cambridge curriculum objective tag, e.g. "1Rw.01" */
   skillRef?: string;
+  /** Cambridge Primary English 0058 — multiple learning objective codes */
+  skillRefs?: string[];
 }
+
+// ══════════════════════════════════════════════════════════════════
+// Cambridge Primary English 0058 — Stage 1 Learning Objectives
+// Source: Cambridge Assessment International Education (public framework)
+// ══════════════════════════════════════════════════════════════════
+//
+// READING — Word Structure (Phonics)
+//   1Rw.01  Know letter names and most common sounds
+//   1Rw.02  Identify digraphs/trigraphs (th, sh, ch, ai, ee, igh)
+//   1Rw.03  Blend adjacent consonants (br, nd)
+//   1Rw.04  Read verbs with -s, -ed, -ing
+//   1Rw.05  Use phonic knowledge to read decodable words
+//   1Rw.06  Sound out elements of unfamiliar words
+//   1Rw.07  Recognise common words on sight
+//
+// READING — Interpretation of Texts
+//   1Ri.01  Read/explore simple stories and poems
+//   1Ri.02  Identify characteristics of simple stories
+//   1Ri.03  Read/explore simple non-fiction texts
+//   1Ri.04  Awareness of non-fiction text purposes
+//   1Ri.05  Explore explicit meanings
+//   1Ri.06  Retell a familiar story verbally
+//   1Ri.07  Identify main characters, talk about events
+//   1Ri.08  Find information from labels, lists, captions
+//   1Ri.09  Explore implicit meanings
+//   1Ri.10  Anticipate what happens next
+//
+// READING — Vocabulary
+//   1Rv.01  Show understanding of words in reading
+//   1Rv.02  Use pictures as cues for unfamiliar words
+//
+// WRITING — Word Structure (Spelling)
+//   1Ww.01  Identify graphemes for each sound
+//   1Ww.02  Identify graphemes for adjacent consonants/digraphs
+//   1Ww.05  Choose plausible graphemes to write words
+//   1Ww.06  Spell familiar/exception words accurately
+//   1Ww.07  Ask for support, use spelling logs
+//
+// WRITING — Sentence/Text Structure
+//   1Ws.01  Develop simple sequence of actions/events
+//   1Ws.02  Use simple organisational features (subheadings, diagrams)
+//
+// SPEAKING & LISTENING — Understanding
+//   1SLs.01  Listen/respond, follow instructions
+//   1SLs.02  Ask simple questions about what is heard/read
+//
+// SPEAKING & LISTENING — Group Work
+//   1SLg.01  Work with others in a group
+//   1SLg.02  Show understanding of others' opinions
+//   1SLg.03  Listen without interrupting
+//   1SLg.04  Take turns, express feelings/ideas
+//
+// SPEAKING & LISTENING — Presentation
+//   1SLp.01  Re-read sentences aloud with fluency
+//   1SLp.02  Recite simple poems with rhythm awareness
+//   1SLp.03  Pause at full stops when reading aloud
+//   1SLp.04  Engage in imaginative play, enact characters
+//   1SLp.05  Make simple personal statement
+//
+// SPEAKING & LISTENING — Reflection
+//   1SLr.01  Talk about own activities
+//   1SLr.02  Suggest how non-verbal communication reflects feelings
+// ══════════════════════════════════════════════════════════════════
 
 export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
   // ══════════════════════════════════════════════════════════════
@@ -139,6 +204,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitle: '1.1 Getting Started',
       sectionTitleVi: '1.1 Khởi động',
       type: 'getting_started',
+      skillRefs: ['1SLs.01', '1SLg.04', '1SLr.01'],
       text: "Welcome to Unit 1! Let's talk about FRIENDS.\n\n🗣️ Talk with your partner:\n• Who is your best friend?\n• What do you like to play?\n• How do you make a new friend?\n\nLook at the picture. What can you see? Children are playing in the playground. They are having fun TOGETHER. Today we will learn about playing, sharing, and being kind.",
       textVi: "Chào mừng đến Bài 1! Hãy nói về BẠN BÈ.\n\n🗣️ Nói chuyện với bạn:\n• Bạn thân nhất của bạn là ai?\n• Bạn thích chơi gì?\n• Làm thế nào để kết bạn mới?\n\nNhìn bức tranh. Bạn thấy gì? Trẻ em đang chơi ở sân chơi. Họ đang vui vẻ CÙNG NHAU. Hôm nay chúng ta sẽ học về chơi đùa, chia sẻ và tử tế."
     },
@@ -146,6 +212,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitle: "1.2 Playing together",
       sectionTitleVi: "1.1 Cùng chơi với nhau",
       type: "reading",
+      skillRefs: ['1Ri.01', '1Ri.05', '1Rv.02', '1Rw.07'],
       text: "Look at the children in the playground. What are they doing? Some children are running. Some children are jumping. Two children are on the swing. They are playing together. Playing together is fun. We can share our toys. We can take turns. It is good to share and take turns.",
       textVi: "Hãy nhìn những đứa trẻ ở sân chơi. Họ đang làm gì? Một vài đứa trẻ đang chạy. Một vài đứa trẻ đang nhảy. Hai đứa trẻ đang chơi xích đu. Họ đang chơi cùng nhau. Chơi cùng nhau rất vui. Chúng ta có thể chia sẻ đồ chơi. Chúng ta có thể thay phiên nhau. Chia sẻ và thay phiên nhau là điều tốt."
     },
@@ -153,6 +220,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitle: "1.2 Making friends",
       sectionTitleVi: "1.2 Kết bạn",
       type: "information",
+      skillRefs: ['1Ri.03', '1Ri.04', '1SLs.01'],
       text: "How do you make a new friend? You can say, 'Hello, my name is...' You can ask, 'What is your name?' You can say, 'Do you want to play?' Smiling is a good way to make friends. Being kind is a good way to make friends. We use polite words. We say 'please' and 'thank you'.",
       textVi: "Làm thế nào để kết bạn mới? Bạn có thể nói, 'Xin chào, tên mình là...' Bạn có thể hỏi, 'Tên bạn là gì?' Bạn có thể nói, 'Bạn có muốn chơi không?' Mỉm cười là một cách tốt để kết bạn. Tử tế là một cách tốt để kết bạn. Chúng ta sử dụng từ ngữ lịch sự. Chúng ta nói 'làm ơn' và 'cảm ơn'."
     },
@@ -160,6 +228,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitle: "1.3 Let's play",
       sectionTitleVi: "1.3 Hãy cùng chơi",
       type: "reading",
+      skillRefs: ['1Ri.01', '1Ri.10', '1SLp.04', '1Rw.05'],
       text: "Let's play a game. Let's play tag. I am 'it'. Run, run, run! I can catch you. Now you are 'it'. Let's play hide and seek. I will close my eyes and count to ten. One, two, three... ten! Ready or not, here I come! Where are you hiding? I found you!",
       textVi: "Hãy chơi một trò chơi. Hãy chơi trò đuổi bắt. Mình làm người bắt (it). Chạy, chạy, chạy! Mình có thể bắt được bạn. Bây giờ bạn làm người bắt. Hãy chơi trò trốn tìm. Mình sẽ nhắm mắt lại và đếm đến mười. Một, hai, ba... mười! Sẵn sàng hay chưa, mình đến đây! Bạn đang trốn ở đâu? Mình tìm thấy bạn rồi!"
     },
@@ -167,6 +236,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitle: "1.4 Action words",
       sectionTitleVi: "1.4 Từ chỉ hành động",
       type: "grammar",
+      skillRefs: ['1Rv.01', '1Rw.04', '1Rw.07'],
       text: "Action words tell us what we are doing. Run, jump, hop, skip, walk. We can run fast. We can jump high. We can hop on one leg. We can skip with a rope. We can walk slowly. What actions can you do? I can clap my hands. I can stomp my feet.",
       textVi: "Từ chỉ hành động cho chúng ta biết chúng ta đang làm gì. Chạy, nhảy, nhảy lò cò, nhảy dây, đi bộ. Chúng ta có thể chạy nhanh. Chúng ta có thể nhảy cao. Chúng ta có thể nhảy lò cò trên một chân. Chúng ta có thể nhảy với dây. Chúng ta có thể đi bộ chậm. Bạn có thể làm những hành động gì? Mình có thể vỗ tay. Mình có thể giậm chân."
     },
@@ -174,6 +244,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitle: '1.6 Word Work: Action words',
       sectionTitleVi: '1.6 Luyện từ: Từ chỉ hành động',
       type: 'word_work',
+      skillRefs: ['1Rv.01', '1Rw.05', '1Rw.07', '1Ww.05'],
       text: "Action words (VERBS) tell us what we DO.\n\n🏃 Body actions: run, jump, hop, skip, walk, clap, stomp\n🤝 Friend actions: share, help, play, smile, talk, listen\n🎮 Game words: catch, throw, hide, seek, slide, swing, climb\n\n✏️ Fill in the action word:\n1. I can ___ very fast. (run)\n2. We ___ on the swing. (swing)\n3. She can ___ on one leg. (hop)\n4. Let's ___ our toys. (share)\n\n🌟 Challenge: Act out a word! Can your partner guess it?",
       textVi: "Từ chỉ hành động (ĐỘNG TỪ) cho ta biết chúng ta LÀM GÌ.\n\n🏃 Hành động cơ thể: chạy, nhảy, nhảy lò cò, nhảy dây, đi bộ, vỗ tay, giậm chân\n🤝 Hành động bạn bè: chia sẻ, giúp đỡ, chơi, mỉm cười, nói chuyện, lắng nghe\n🎮 Từ trò chơi: bắt, ném, trốn, tìm, trượt, đu, trèo\n\n✏️ Điền từ chỉ hành động:\n1. I can ___ very fast. (run — chạy)\n2. We ___ on the swing. (swing — đu)\n3. She can ___ on one leg. (hop — nhảy lò cò)\n4. Let's ___ our toys. (share — chia sẻ)\n\n🌟 Thử thách: Diễn một từ! Bạn có đoán được không?"
     },
@@ -181,6 +252,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitle: '1.7 Comprehension',
       sectionTitleVi: '1.7 Đọc hiểu',
       type: 'comprehension',
+      skillRefs: ['1Ri.05', '1Ri.07', '1Ri.09', '1SLs.02'],
       text: "Let's check what you remember!\n\n❓ Questions:\n1. What do children do in the playground? (run, jump, swing, play)\n2. How do you make a new friend? (say hello, ask their name, smile)\n3. What polite words should we use? (please, thank you)\n4. Name THREE action words. (run, jump, hop, skip, walk...)\n5. Why is it important to take turns?\n\n🤔 Think deeper:\n• What is the BEST thing about having friends?\n• What should you do if someone is playing alone?",
       textVi: "Hãy kiểm tra bạn nhớ được gì!\n\n❓ Câu hỏi:\n1. Trẻ em làm gì ở sân chơi? (chạy, nhảy, đu, chơi)\n2. Làm thế nào để kết bạn mới? (chào, hỏi tên, mỉm cười)\n3. Những từ lịch sự nào chúng ta nên dùng? (làm ơn, cảm ơn)\n4. Kể BA từ chỉ hành động. (chạy, nhảy, nhảy lò cò, nhảy dây, đi bộ...)\n5. Tại sao thay phiên nhau lại quan trọng?\n\n🤔 Suy nghĩ sâu hơn:\n• Điều TỐT NHẤT khi có bạn bè là gì?\n• Bạn nên làm gì nếu thấy ai đó chơi một mình?"
     },
@@ -188,6 +260,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitle: '1.8 Talk About: My favourite game',
       sectionTitleVi: '1.8 Nói về: Trò chơi yêu thích',
       type: 'talk_about',
+      skillRefs: ['1SLg.01', '1SLg.03', '1SLg.04', '1SLp.05'],
       text: "🗣️ Speaking Activity — Tell your partner!\n\n1. What is your favourite game?\n2. How do you play it?\n3. Who do you play it with?\n4. Why do you like it?\n\n📋 Use this sentence pattern:\n'My favourite game is ___. I play it with ___. I like it because ___.\n\n👂 Listening: When your partner talks, listen carefully. Then tell the class what THEIR favourite game is!",
       textVi: "🗣️ Hoạt động Nói — Nói cho bạn nghe!\n\n1. Trò chơi yêu thích của bạn là gì?\n2. Bạn chơi nó như thế nào?\n3. Bạn chơi với ai?\n4. Tại sao bạn thích nó?\n\n📋 Dùng mẫu câu:\n'Trò chơi yêu thích của tôi là ___. Tôi chơi với ___. Tôi thích vì ___.'\n\n👂 Lắng nghe: Khi bạn nói, hãy lắng nghe cẩn thận. Sau đó kể cho cả lớp trò chơi yêu thích của BẠN ẤY!"
     },
@@ -195,6 +268,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitle: '1.9 Writing: About my friend',
       sectionTitleVi: '1.9 Viết: Về bạn của tôi',
       type: 'writing',
+      skillRefs: ['1Ws.01', '1Ww.05', '1Ww.06'],
       text: "✏️ Write about your friend!\n\nStep 1: Think about your friend.\nStep 2: Answer these questions:\n• What is their name?\n• What do they look like?\n• What do you play together?\n• Why are they a good friend?\n\nStep 3: Write 3-4 sentences.\n\nExample:\nMy friend is Lan. She has long hair. We play tag together. She always shares her snacks. She is kind.\n\n🌟 Draw a picture of you and your friend playing!",
       textVi: "✏️ Viết về bạn của bạn!\n\nBước 1: Nghĩ về bạn của bạn.\nBước 2: Trả lời các câu hỏi:\n• Tên bạn ấy là gì?\n• Bạn ấy trông như thế nào?\n• Các bạn chơi gì cùng nhau?\n• Tại sao bạn ấy là người bạn tốt?\n\nBước 3: Viết 3-4 câu.\n\nVí dụ:\nBạn tôi là Lan. Bạn ấy có tóc dài. Chúng tôi chơi đuổi bắt cùng nhau. Bạn ấy luôn chia sẻ đồ ăn vặt. Bạn ấy rất tử tế.\n\n🌟 Vẽ một bức tranh về bạn và bạn ấy đang chơi!"
     },
@@ -202,6 +276,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitle: "1.10 Our playground",
       sectionTitleVi: "1.5 Sân chơi của chúng ta",
       type: "information",
+      skillRefs: ['1Ri.03', '1Ri.08', '1Rv.01'],
       text: "Our playground has many things. We have a slide. We slide down. We have a see-saw. We go up and down. We have a climbing frame. We climb up high. We have a sandbox. We build sandcastles. The playground is a busy place. We must be careful. We must not push.",
       textVi: "Sân chơi của chúng ta có rất nhiều thứ. Chúng ta có cầu trượt. Chúng ta trượt xuống. Chúng ta có bập bênh. Chúng ta đi lên và đi xuống. Chúng ta có khung leo trèo. Chúng ta trèo lên cao. Chúng ta có hộp cát. Chúng ta xây lâu đài cát. Sân chơi là một nơi nhộn nhịp. Chúng ta phải cẩn thận. Chúng ta không được xô đẩy."
     },
@@ -209,6 +284,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitle: '1.11 How did I do?',
       sectionTitleVi: '1.11 Tôi làm được gì?',
       type: 'self_check',
+      skillRefs: ['1SLr.01'],
       text: "Check what you can do!\n\n✅ I can say hello and ask someone's name\n✅ I can name 5 action words (run, jump, hop, skip, walk)\n✅ I can use polite words (please, thank you)\n✅ I can talk about my favourite game\n✅ I can write sentences about my friend\n✅ I know how to share and take turns\n\n⭐ How many did you tick?\n6 = Super friend! 🌟\n4-5 = Great job!\n2-3 = Keep practising!\n1 = Ask for help!",
       textVi: "Kiểm tra bạn làm được gì!\n\n✅ Tôi có thể chào và hỏi tên ai đó\n✅ Tôi biết 5 từ chỉ hành động (chạy, nhảy, nhảy lò cò, nhảy dây, đi bộ)\n✅ Tôi dùng từ lịch sự (làm ơn, cảm ơn)\n✅ Tôi nói được về trò chơi yêu thích\n✅ Tôi viết được câu về bạn của mình\n✅ Tôi biết cách chia sẻ và thay phiên\n\n⭐ Bạn tích được bao nhiêu?\n6 = Siêu bạn bè! 🌟\n4-5 = Giỏi lắm!\n2-3 = Tiếp tục luyện tập!\n1 = Hãy nhờ giúp đỡ!"
     },
@@ -216,6 +292,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitle: "1.12 Unit 1 Review",
       sectionTitleVi: "1.6 Ôn tập Bài 1",
       type: "tip",
+      skillRefs: ['1Ri.06', '1SLr.01'],
       text: "Well done! You have finished Unit 1 all about friends and the playground.\n\nLet's review what we learned:\n✓ We learned words about playing: run, jump, swing, ball.\n✓ We learned how to be a good friend: share, take turns, be kind.\n✓ We learned polite words: please, thank you.\n✓ We learned action words (verbs).\n✓ We talked about things in the playground.\n\nKeep practicing! Be a good friend every day!",
       textVi: "Giỏi lắm! Bạn đã học xong Bài 1 về bạn bè và sân chơi.\n\nHãy ôn lại những gì chúng ta đã học:\n✓ Chúng ta học từ về vui chơi: chạy, nhảy, xích đu, bóng.\n✓ Chúng ta học cách làm một người bạn tốt: chia sẻ, thay phiên, tử tế.\n✓ Chúng ta học từ lịch sự: làm ơn, cảm ơn.\n✓ Chúng ta học từ chỉ hành động (động từ).\n✓ Chúng ta đã nói về các đồ vật ở sân chơi.\n\nHãy tiếp tục luyện tập! Hãy là một người bạn tốt mỗi ngày!"
     }
