@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import { buildIntlLessonFromData } from '@/components/LessonPhase';
 import { getUnitSections } from '@/data/intl-curriculum-passages';
 
