@@ -100,7 +100,7 @@ export default function ExamPrepGuide({ grade = 1 }: { grade?: number }) {
                         <th style={{ textAlign: 'left', padding: '6px 8px', color: '#63b3ed' }}>Skill</th>
                         <th style={{ textAlign: 'left', padding: '6px 8px', color: '#63b3ed' }}>Duration</th>
                         <th style={{ textAlign: 'left', padding: '6px 8px', color: '#63b3ed' }}>Parts</th>
-                        <th style={{ textAlign: 'left', padding: '6px 8px', color: '#63b3ed' }}>Tasks</th>
+                        <th style={{ textAlign: 'left', padding: '6px 8px', color: '#63b3ed' }}>Questions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -108,12 +108,49 @@ export default function ExamPrepGuide({ grade = 1 }: { grade?: number }) {
                         <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                           <td style={{ padding: '6px 8px', fontWeight: 600 }}>{s.skillVi}</td>
                           <td style={{ padding: '6px 8px', color: '#a0aec0' }}>{s.duration}</td>
-                          <td style={{ padding: '6px 8px', color: '#a0aec0' }}>{s.parts}</td>
-                          <td style={{ padding: '6px 8px', color: '#cbd5e0', fontSize: 12 }}>{s.descriptionVi}</td>
+                          <td style={{ padding: '6px 8px', color: '#a0aec0' }}>{s.parts} parts</td>
+                          <td style={{ padding: '6px 8px', color: '#f9d423', fontWeight: 600 }}>{s.questions || '—'}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
+
+                  {/* Detailed per-part breakdown */}
+                  {exam.structure.map((s, si) => (
+                    s.detailedParts && s.detailedParts.length > 0 && (
+                      <div key={si} style={{ marginTop: 16 }}>
+                        <h4 style={{ fontSize: 14, color: '#f9d423', margin: '0 0 8px', borderBottom: '1px solid rgba(249,212,35,0.2)', paddingBottom: 4 }}>
+                          📋 {s.skillVi} — Chi tiết từng phần
+                        </h4>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                          {s.detailedParts.map((dp, dpi) => (
+                            <div key={dpi} style={{
+                              padding: '8px 12px',
+                              background: 'rgba(255,255,255,0.04)',
+                              borderRadius: 10,
+                              borderLeft: `3px solid ${s.skill === 'listening' ? '#63b3ed' : s.skill === 'reading_writing' ? '#68d391' : '#d6bcfa'}`,
+                            }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <span style={{ fontWeight: 700, fontSize: 13 }}>Part {dp.partNumber}: {dp.taskTypeVi}</span>
+                                {dp.questions > 0 && <span style={{ fontSize: 11, color: '#f9d423', background: 'rgba(249,212,35,0.1)', padding: '2px 6px', borderRadius: 4 }}>{dp.questions} câu</span>}
+                              </div>
+                              <p style={{ fontSize: 12, color: '#cbd5e0', margin: '4px 0 0' }}>{dp.descriptionVi}</p>
+                              {dp.exampleTask && (
+                                <p style={{ fontSize: 11, color: '#a0aec0', margin: '3px 0 0', fontStyle: 'italic' }}>
+                                  💬 VD: {dp.exampleTask}
+                                </p>
+                              )}
+                              {dp.tip && (
+                                <p style={{ fontSize: 11, color: '#68d391', margin: '3px 0 0' }}>
+                                  💡 {dp.tip}
+                                </p>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )
+                  ))}
 
                   {/* Tips */}
                   <div style={{ marginTop: 12 }}>
