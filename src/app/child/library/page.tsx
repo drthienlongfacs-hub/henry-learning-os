@@ -15,6 +15,7 @@ import dynamic from 'next/dynamic';
 const PdfReader = dynamic(() => import('@/components/PdfReader').then(mod => mod.PdfReader), { ssr: false });
 import SGKBookshelf from '@/components/SGKBookshelf';
 const FreeStoriesShelf = dynamic(() => import('@/components/FreeStoriesShelf'), { ssr: false });
+const ExamPrepGuide = dynamic(() => import('@/components/ExamPrepGuide'), { ssr: false });
 const ReadingQuiz = dynamic(() => import('@/components/ReadingQuiz'), { ssr: false });
 const WordLookup = dynamic(() => import('@/components/WordLookup').then(m => m.WordLookup), { ssr: false });
 import Link from 'next/link';
@@ -166,6 +167,11 @@ export default function LibraryPage() {
                         </div>
 
                         <LocalTextbookVault lang={lang} onOpenTextbook={openEmbeddedBook} />
+
+                        {/* ========== EXAM PREP — Cambridge YLE Starters/Movers/Flyers ========== */}
+                        <div style={{ marginBottom: '1rem' }}>
+                            <ExamPrepGuide grade={gradeFilter ?? 1} />
+                        </div>
 
                         {/* ========== SGK BOOKSHELF — Bộ SGK Thống Nhất ========== */}
                         <SGKBookshelf lang={lang} />
