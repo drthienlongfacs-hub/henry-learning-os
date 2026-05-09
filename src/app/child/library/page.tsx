@@ -16,6 +16,7 @@ const PdfReader = dynamic(() => import('@/components/PdfReader').then(mod => mod
 import SGKBookshelf from '@/components/SGKBookshelf';
 const FreeStoriesShelf = dynamic(() => import('@/components/FreeStoriesShelf'), { ssr: false });
 const ExamPrepGuide = dynamic(() => import('@/components/ExamPrepGuide'), { ssr: false });
+const PracticeTestEngine = dynamic(() => import('@/components/PracticeTestEngine'), { ssr: false });
 const ReadingQuiz = dynamic(() => import('@/components/ReadingQuiz'), { ssr: false });
 const WordLookup = dynamic(() => import('@/components/WordLookup').then(m => m.WordLookup), { ssr: false });
 import Link from 'next/link';
@@ -171,6 +172,11 @@ export default function LibraryPage() {
                         {/* ========== EXAM PREP — Cambridge YLE Starters/Movers/Flyers ========== */}
                         <div style={{ marginBottom: '1rem' }}>
                             <ExamPrepGuide grade={gradeFilter ?? 1} />
+                        </div>
+
+                        {/* ========== PRACTICE TEST ENGINE — Interactive Exam Simulator ========== */}
+                        <div style={{ marginBottom: '1rem' }}>
+                            <PracticeTestEngine grade={gradeFilter ?? 1} />
                         </div>
 
                         {/* ========== SGK BOOKSHELF — Bộ SGK Thống Nhất ========== */}
