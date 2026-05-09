@@ -1,16 +1,17 @@
 'use client';
 
 import { useState, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import {
-  ArrowLeft, Home, BookOpen, RotateCcw, Brain, Sparkles,
+  ArrowLeft, Home, BookOpen, RotateCcw, Brain,
   Trophy, Target, Clock, ChevronRight, GraduationCap,
-  Star, Zap, Award, Shield,
+  Zap, Award, Shield,
 } from 'lucide-react';
 import { useTranslation } from '@/lib/i18n';
 import { LangToggle } from '@/components/LangToggle';
+import { CAMBRIDGE_EXAM_CLAIM_GUARDRAIL, CAMBRIDGE_EXAM_FRAMEWORK_STATS } from '@/data/cambridge-official-framework';
+import { EXAM_PRACTICE_BANK_STATS } from '@/data/practice-test-bank';
 
 const ExamPrepGuide = dynamic(() => import('@/components/ExamPrepGuide'), { ssr: false });
 const PracticeTestEngine = dynamic(() => import('@/components/PracticeTestEngine'), { ssr: false });
@@ -97,7 +98,6 @@ const EXAM_LEVELS = [
 type ExamView = 'hub' | 'guide' | 'practice';
 
 function ExamsPageContent() {
-  const searchParams = useSearchParams();
   const { t, lang } = useTranslation();
   const [view, setView] = useState<ExamView>('hub');
   const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
@@ -232,9 +232,41 @@ function ExamsPageContent() {
               ))}
             </div>
 
+            {/* Evidence and coverage gate */}
+            <div style={{
+              marginBottom: '1.5rem',
+              padding: '1rem',
+              background: 'rgba(15,23,42,0.72)',
+              border: '1px solid rgba(148,163,184,0.18)',
+              borderRadius: 16,
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.65rem' }}>
+                <Shield size={18} color="#38bdf8" />
+                <h2 style={{ color: '#fff', fontSize: '0.95rem', margin: 0, fontWeight: 900 }}>
+                  Nguồn Cambridge chính thức • 10 bộ đề mỗi cấp
+                </h2>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                {[
+                  { label: 'Level', value: CAMBRIDGE_EXAM_FRAMEWORK_STATS.levelCount },
+                  { label: 'Full sets', value: EXAM_PRACTICE_BANK_STATS.fullPracticeSetCount },
+                  { label: 'Sources', value: CAMBRIDGE_EXAM_FRAMEWORK_STATS.sourceCount },
+                ].map(item => (
+                  <div key={item.label} style={{ background: 'rgba(255,255,255,0.04)', borderRadius: 10, padding: '0.55rem' }}>
+                    <div style={{ color: '#38bdf8', fontSize: '0.95rem', fontWeight: 900 }}>{item.value}</div>
+                    <div style={{ color: '#94a3b8', fontSize: '0.62rem', fontWeight: 700 }}>{item.label}</div>
+                  </div>
+                ))}
+              </div>
+              <p style={{ color: '#cbd5e1', fontSize: '0.72rem', lineHeight: 1.55, margin: 0 }}>
+                Format chính thức đã đối chiếu ngày {CAMBRIDGE_EXAM_FRAMEWORK_STATS.verifiedAt}. Không sao chép đề chính thức:
+                {' '}{CAMBRIDGE_EXAM_CLAIM_GUARDRAIL.allowedClaim}
+              </p>
+            </div>
+
             {/* Level cards */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              {EXAM_LEVELS.map((lv, idx) => (
+              {EXAM_LEVELS.map((lv) => (
                 <div
                   key={lv.id}
                   style={{
@@ -351,8 +383,8 @@ function ExamsPageContent() {
               </div>
               <p style={{ color: '#94a3b8', fontSize: '0.7rem', lineHeight: 1.6, margin: 0 }}>
                 {lang === 'vi'
-                  ? 'Tài liệu luyện thi được biên soạn theo chuẩn Cambridge Assessment English. Bao gồm đề thi mẫu, hướng dẫn chiến lược, và lộ trình ôn tập có căn cứ khoa học giáo dục.'
-                  : 'Practice materials follow Cambridge Assessment English standards. Includes sample tests, strategy guides, and evidence-based study plans.'}
+                  ? 'App dùng nguồn Cambridge để bám cấu trúc thi, số phần và số câu. Đề luyện trong app là nội dung tự biên soạn; link đề mẫu chính thức được mở riêng để học hợp lệ.'
+                  : 'The app uses Cambridge sources for structure, parts, and question counts. In-app practice is original Henry content; official samples are linked separately for authorised study.'}
               </p>
             </div>
           </>

@@ -61,12 +61,15 @@ export default function UniversalSearch() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
-  const [recentIds, setRecentIds] = useState<string[]>([]);
+  const [recentIds, setRecentIds] = useState<string[]>(() => {
+    if (typeof window === 'undefined') return [];
+    try {
+      return JSON.parse(window.localStorage.getItem(RECENT_KEY) || '[]') as string[];
+    } catch {
+      return [];
+    }
+  });
   const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    try { setRecentIds(JSON.parse(localStorage.getItem(RECENT_KEY) || '[]')); } catch { /* */ }
-  }, []);
 
   useEffect(() => {
     if (isOpen) {

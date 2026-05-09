@@ -1,6 +1,6 @@
-// Cambridge YLE Practice Test Question Bank
-// Format matches 100% official Cambridge exam structure
-// Sources: cambridgeenglish.org sample papers, Fun for Starters/Movers/Flyers
+// Cambridge practice question bank.
+// Official Cambridge pages define the structure; bundled Henry items are original
+// family-use practice material and must not be described as official papers.
 
 export type QType = 'match_word_picture' | 'yes_no' | 'spell_word' | 'choose_word' | 'fill_gap' | 'odd_one_out' | 'story_order' | 'conversation_match';
 
@@ -21,15 +21,31 @@ export interface PracticeQuestion {
   strategyVi: string;
   /** Script audio cho bài Listening (nếu có) */
   audioTranscript?: string;
+  /** Self-assessed prompt for writing/speaking tasks. */
+  selfAssessment?: boolean;
+  /** Rubric shown after the learner attempts an open writing/speaking task. */
+  rubricVi?: string[];
+  /** Model answer or response frame for open production tasks. */
+  modelAnswer?: string;
+  /** Accessibility label for generated visual prompt. */
+  visualAlt?: string;
+  /** Copyright/source boundary shown by UI and tests. */
+  sourceBoundary?: string;
 }
 
 export interface PracticeTest {
   id: string;
   level: 'starters' | 'movers' | 'flyers' | 'ket' | 'pet';
-  skill: 'reading_writing' | 'listening' | 'speaking';
+  skill: 'reading_writing' | 'reading' | 'writing' | 'listening' | 'speaking';
   skillVi: string;
   totalMinutes: number;
   parts: PracticeTestPart[];
+  setNo?: number;
+  componentKey?: string;
+  officialExamName?: string;
+  sourceBoundary?: string;
+  officialSampleUrl?: string;
+  isOfficialCambridgeContent?: false;
 }
 
 export interface PracticeTestPart {
@@ -207,14 +223,303 @@ import { KET_RW_1, PET_RW_1 } from './practice-tests-ket-pet';
 import { KET_LISTENING_1, PET_LISTENING_1 } from './practice-tests-ket-pet-listening';
 import { STARTERS_LISTENING } from './practice-tests-yle-listening';
 import { STARTERS_SPEAKING, KET_SPEAKING, PET_SPEAKING } from './practice-tests-speaking';
+import {
+  CAMBRIDGE_EXAM_CLAIM_GUARDRAIL,
+  CAMBRIDGE_EXAM_SPECS,
+  type CambridgeExamLevelId,
+  type CambridgeOfficialComponentSpec,
+  type CambridgeOfficialPartSpec,
+} from './cambridge-official-framework';
+
+const GENERATED_SET_COUNT = 10;
+
+const EXAM_THEMES = [
+  { title: 'Library project', scene: '📚🧒🎒', place: 'school library', person: 'Mia', object: 'library card', activity: 'reading club', answer: 'library', distractors: ['market', 'station'], color: 'blue', time: '3.30' },
+  { title: 'Park picnic', scene: '🧺🌳👧', place: 'city park', person: 'Ben', object: 'water bottle', activity: 'class picnic', answer: 'park', distractors: ['museum', 'hospital'], color: 'green', time: '10.15' },
+  { title: 'Science morning', scene: '🌱🔎📝', place: 'science room', person: 'Noah', object: 'notebook', activity: 'plant experiment', answer: 'plant', distractors: ['ticket', 'menu'], color: 'yellow', time: '9.20' },
+  { title: 'Museum trip', scene: '🏛️🎟️🚌', place: 'history museum', person: 'Emma', object: 'ticket', activity: 'class trip', answer: 'museum', distractors: ['library', 'beach'], color: 'red', time: '8.45' },
+  { title: 'Sports fair', scene: '🏀🏃👟', place: 'sports hall', person: 'Jack', object: 'sports shoes', activity: 'basketball game', answer: 'sports', distractors: ['music', 'cooking'], color: 'orange', time: '4.00' },
+  { title: 'Art workshop', scene: '🎨✏️🖼️', place: 'art room', person: 'Ruby', object: 'coloured pencils', activity: 'poster workshop', answer: 'pencils', distractors: ['gloves', 'keys'], color: 'purple', time: '2.10' },
+  { title: 'Music practice', scene: '🎵🎤📄', place: 'music room', person: 'Lily', object: 'song sheet', activity: 'school concert', answer: 'music', distractors: ['science', 'sport'], color: 'pink', time: '5.05' },
+  { title: 'Weekend market', scene: '🍎🛍️👨', place: 'weekend market', person: 'Henry', object: 'shopping bag', activity: 'buying fruit', answer: 'market', distractors: ['classroom', 'cinema'], color: 'brown', time: '11.30' },
+  { title: 'Beach clean-up', scene: '🏖️♻️🧤', place: 'small beach', person: 'Sofia', object: 'gloves', activity: 'clean-up', answer: 'beach', distractors: ['zoo', 'library'], color: 'white', time: '7.50' },
+  { title: 'Cafe project', scene: '☕🥪📋', place: 'school cafe', person: 'Oliver', object: 'menu', activity: 'charity cafe', answer: 'cafe', distractors: ['farm', 'pool'], color: 'black', time: '1.25' },
+];
+
+const componentMinutes = (duration: string): number => {
+  const match = duration.match(/(\d+)/);
+  return match ? Number(match[1]) : 15;
+};
+
+function buildOfficialFormatPracticeTests(setCount = GENERATED_SET_COUNT): PracticeTest[] {
+  const tests: PracticeTest[] = [];
+
+  (Object.keys(CAMBRIDGE_EXAM_SPECS) as CambridgeExamLevelId[]).forEach((levelId) => {
+    const spec = CAMBRIDGE_EXAM_SPECS[levelId];
+
+    for (let setNo = 1; setNo <= setCount; setNo += 1) {
+      spec.components.forEach((component) => {
+        tests.push({
+          id: `${levelId}_official_format_set_${setNo}_${component.key}`,
+          level: levelId,
+          skill: component.skill,
+          skillVi: `${component.labelVi} — Bộ ${setNo}`,
+          totalMinutes: componentMinutes(component.duration),
+          setNo,
+          componentKey: component.key,
+          officialExamName: spec.officialName,
+          sourceBoundary: spec.sourceBoundary,
+          officialSampleUrl: spec.officialSampleUrl,
+          isOfficialCambridgeContent: false,
+          parts: component.partSpecs.map((part) => ({
+            partNumber: part.partNumber,
+            titleEn: part.titleEn,
+            titleVi: `Part ${part.partNumber}: ${part.titleVi}`,
+            instructionVi: buildInstructionVi(component, part),
+            questions: buildGeneratedQuestions(levelId, setNo, component, part),
+          })),
+        });
+      });
+    }
+  });
+
+  return tests;
+}
+
+function buildInstructionVi(component: CambridgeOfficialComponentSpec, part: CambridgeOfficialPartSpec): string {
+  if (part.mode === 'speaking') {
+    return `Luyện nói theo format ${component.labelVi}: ${part.taskFocusVi}. Bấm xem gợi ý sau khi con đã thử nói.`;
+  }
+
+  if (part.mode === 'writing') {
+    return `Viết câu trả lời theo yêu cầu. Sau đó mở rubric để tự chấm với phụ huynh: ${part.taskFocusVi}.`;
+  }
+
+  if (part.mode === 'gap') {
+    return `Gõ một từ/số/cụm ngắn. Tập trung vào: ${part.taskFocusVi}.`;
+  }
+
+  return `Chọn đáp án đúng. Tập trung vào: ${part.taskFocusVi}.`;
+}
+
+function buildGeneratedQuestions(
+  levelId: CambridgeExamLevelId,
+  setNo: number,
+  component: CambridgeOfficialComponentSpec,
+  part: CambridgeOfficialPartSpec,
+): PracticeQuestion[] {
+  return Array.from({ length: part.questionCount }, (_, index) => {
+    const theme = EXAM_THEMES[(setNo + part.partNumber + index) % EXAM_THEMES.length];
+    const questionNo = index + 1;
+    const id = `${levelId}_${setNo}_${component.key}_p${part.partNumber}_q${questionNo}`;
+    const base = {
+      id,
+      partNumber: part.partNumber,
+      taskTypeVi: part.titleVi,
+      taskTypeEn: part.mode === 'speaking' ? 'Speaking' : part.mode === 'writing' ? 'Writing' : part.titleEn,
+      imageEmoji: theme.scene,
+      visualAlt: `${theme.title}: ${theme.place}, ${theme.person}, ${theme.object}`,
+      explanationVi: '',
+      strategyVi: '',
+      sourceBoundary: CAMBRIDGE_EXAM_CLAIM_GUARDRAIL.blockedClaim,
+    };
+
+    if (part.mode === 'speaking') {
+      return {
+        ...base,
+        prompt: buildSpeakingPrompt(levelId, part, theme),
+        options: [],
+        answer: 'self-assessed',
+        selfAssessment: true,
+        explanationVi: buildSpeakingModelAnswer(part, theme),
+        modelAnswer: buildSpeakingModelAnswer(part, theme),
+        strategyVi: 'Nói chậm, trả lời đúng trọng tâm, thêm một lý do bằng because, và không học thuộc nguyên văn.',
+        rubricVi: [
+          'Trả lời đúng câu hỏi, không lạc đề.',
+          'Dùng câu đầy đủ hoặc cụm rõ nghĩa phù hợp trình độ.',
+          'Phát âm đủ nghe; nếu sai thì tự sửa và nói lại.',
+          'Thêm lý do/ví dụ ngắn khi trình độ yêu cầu.',
+        ],
+      };
+    }
+
+    if (part.mode === 'writing') {
+      return {
+        ...base,
+        prompt: buildWritingPrompt(levelId, part, theme),
+        options: [],
+        answer: 'self-assessed',
+        selfAssessment: true,
+        explanationVi: buildWritingModelAnswer(levelId, part, theme),
+        modelAnswer: buildWritingModelAnswer(levelId, part, theme),
+        strategyVi: 'Trước khi viết: xác định người nhận, mục đích, đủ ý bắt buộc, độ dài, rồi kiểm tra thì động từ và chính tả.',
+        rubricVi: [
+          'Đủ ý theo đề, không bỏ bullet/ghi chú.',
+          'Tổ chức mạch lạc: mở đầu, ý chính, kết thúc.',
+          'Ngữ pháp và chính tả phù hợp cấp độ.',
+          'Dùng từ nối tự nhiên: and, but, because, then, after that.',
+        ],
+      };
+    }
+
+    if (part.mode === 'gap') {
+      const answer = selectGapAnswer(questionNo, theme);
+      return {
+        ...base,
+        prompt: buildGapPrompt(component, part, theme, questionNo),
+        options: [],
+        answer,
+        audioTranscript: component.skill === 'listening' ? buildListeningTranscript(theme, answer, questionNo) : undefined,
+        explanationVi: `Đáp án là "${answer}" vì thông tin then chốt trong ngữ cảnh là ${theme.place}, ${theme.object} hoặc thời gian ${theme.time}.`,
+        strategyVi: 'Với gap-fill, đọc/nghe cả câu trước và sau chỗ trống; dự đoán loại từ rồi mới điền.',
+      };
+    }
+
+    const answer = buildObjectiveAnswer(theme, questionNo);
+    const options = [answer, ...theme.distractors].slice(0, 3);
+    return {
+      ...base,
+      prompt: buildObjectivePrompt(component, part, theme, questionNo),
+      options: rotateOptions(options, questionNo),
+      answer,
+      audioTranscript: component.skill === 'listening' ? buildListeningTranscript(theme, answer, questionNo) : undefined,
+      explanationVi: `Đáp án đúng là "${answer}" vì dữ kiện chính của tình huống là ${theme.person} ở ${theme.place} với hoạt động ${theme.activity}.`,
+      strategyVi: 'Tìm từ khóa trước, loại trừ hai đáp án sai, rồi kiểm tra lại với tranh/ngữ cảnh.',
+    };
+  });
+}
+
+function selectGapAnswer(questionNo: number, theme: typeof EXAM_THEMES[number]): string {
+  const answers = [theme.answer, theme.object.split(' ')[0], theme.time, theme.color, theme.person];
+  return answers[questionNo % answers.length];
+}
+
+function buildObjectiveAnswer(theme: typeof EXAM_THEMES[number], questionNo: number): string {
+  const answers = [theme.answer, theme.activity, theme.place];
+  return answers[questionNo % answers.length];
+}
+
+function rotateOptions(options: string[], questionNo: number): string[] {
+  const offset = questionNo % options.length;
+  return [...options.slice(offset), ...options.slice(0, offset)];
+}
+
+function buildObjectivePrompt(
+  component: CambridgeOfficialComponentSpec,
+  part: CambridgeOfficialPartSpec,
+  theme: typeof EXAM_THEMES[number],
+  questionNo: number,
+): string {
+  if (component.skill === 'listening') {
+    return `Listen and choose the correct answer for ${theme.person}. Question ${questionNo}: where or what is the key information?`;
+  }
+
+  if (part.titleEn.toLowerCase().includes('definition')) {
+    return `Which word best matches this definition: a place or thing connected with ${theme.activity}?`;
+  }
+
+  if (part.titleEn.toLowerCase().includes('conversation')) {
+    return `${theme.person}: Would you like to join the ${theme.activity}?`;
+  }
+
+  return `Read the short text about ${theme.title}. Which answer is correct?`;
+}
+
+function buildGapPrompt(
+  component: CambridgeOfficialComponentSpec,
+  part: CambridgeOfficialPartSpec,
+  theme: typeof EXAM_THEMES[number],
+  questionNo: number,
+): string {
+  if (component.skill === 'listening') {
+    return `Listen and write the missing word or number. ${theme.person}'s note: ${part.taskFocusVi}. Answer ${questionNo}: ____`;
+  }
+
+  if (part.titleEn.toLowerCase().includes('jumbled')) {
+    return `Unscramble this word from ${theme.title}: ${selectGapAnswer(questionNo, theme).split('').reverse().join('-')}`;
+  }
+
+  return `${theme.person} went to the ${theme.place}. The missing word for question ${questionNo} is ____ .`;
+}
+
+function buildListeningTranscript(theme: typeof EXAM_THEMES[number], answer: string, questionNo: number): string {
+  return `Question ${questionNo}. Adult: Hello ${theme.person}. Are you ready for the ${theme.activity}? Child: Yes. Please write ${answer}. The time is ${theme.time}. Adult: Good. The important answer is ${answer}.`;
+}
+
+function buildWritingPrompt(levelId: CambridgeExamLevelId, part: CambridgeOfficialPartSpec, theme: typeof EXAM_THEMES[number]): string {
+  if (levelId === 'ket' && part.partNumber === 7) {
+    return `Look at the picture story ${theme.scene}. Write 35 words or more about ${theme.person}, the ${theme.object}, and what happened at the ${theme.place}.`;
+  }
+
+  if (levelId === 'pet') {
+    return part.partNumber === 1
+      ? `You received an email from a friend about ${theme.activity}. Write about 100 words. Say when you can meet, what to bring, and why you like the plan.`
+      : `Write an article or story of about 100 words: "${theme.title} changed my day".`;
+  }
+
+  return `Write 3-5 simple sentences about the picture ${theme.scene}. Include ${theme.person}, ${theme.place}, and ${theme.object}.`;
+}
+
+function buildWritingModelAnswer(levelId: CambridgeExamLevelId, part: CambridgeOfficialPartSpec, theme: typeof EXAM_THEMES[number]): string {
+  if (levelId === 'pet') {
+    return `Hi Alex, I can join the ${theme.activity} at ${theme.time}. I will bring my ${theme.object} because it will help us. I like this plan because the ${theme.place} is friendly and we can learn together. See you soon, Henry.`;
+  }
+
+  if (levelId === 'ket' && part.partNumber === 7) {
+    return `${theme.person} went to the ${theme.place} with a ${theme.object}. First, the room was busy. Then ${theme.person} found a quiet place. In the end, everyone enjoyed the ${theme.activity}.`;
+  }
+
+  return `${theme.person} is at the ${theme.place}. I can see a ${theme.object}. The ${theme.activity} looks fun because everyone is learning.`;
+}
+
+function buildSpeakingPrompt(levelId: CambridgeExamLevelId, part: CambridgeOfficialPartSpec, theme: typeof EXAM_THEMES[number]): string {
+  if (levelId === 'ket') {
+    return part.partNumber === 1
+      ? `Answer the examiner: Tell me about a ${theme.place} you like. What do you do there?`
+      : `Ask and answer with a partner about planning a ${theme.activity}. Talk about time, place, and what to bring.`;
+  }
+
+  if (levelId === 'pet') {
+    return part.partNumber === 2
+      ? `Describe the picture ${theme.scene} for about one minute. Say who is there, where they are, and what is happening.`
+      : `Discuss this question: Is ${theme.activity} better alone or with friends? Give reasons.`;
+  }
+
+  return `Look at ${theme.scene}. Answer the examiner about ${theme.person}, the ${theme.object}, and the ${theme.place}.`;
+}
+
+function buildSpeakingModelAnswer(part: CambridgeOfficialPartSpec, theme: typeof EXAM_THEMES[number]): string {
+  return `I can see ${theme.person} at the ${theme.place}. ${theme.person} has a ${theme.object}. I think the ${theme.activity} is useful because children can practise English and work with friends.`;
+}
 
 export const PRACTICE_TESTS: PracticeTest[] = [
+  ...buildOfficialFormatPracticeTests(),
   STARTERS_RW, STARTERS_RW_2, STARTERS_RW_3, STARTERS_LISTENING, STARTERS_SPEAKING,
   MOVERS_RW, MOVERS_RW_2, MOVERS_RW_3,
   FLYERS_RW, FLYERS_RW_2,
   KET_RW_1, KET_LISTENING_1, KET_SPEAKING,
   PET_RW_1, PET_LISTENING_1, PET_SPEAKING,
 ];
+
+export const OFFICIAL_FORMAT_PRACTICE_TESTS = PRACTICE_TESTS.filter((test) => test.setNo !== undefined);
+
+export const EXAM_PRACTICE_BANK_STATS = {
+  generatedSetCountPerLevel: GENERATED_SET_COUNT,
+  levelCount: Object.keys(CAMBRIDGE_EXAM_SPECS).length,
+  fullPracticeSetCount: Object.keys(CAMBRIDGE_EXAM_SPECS).length * GENERATED_SET_COUNT,
+  generatedComponentTestCount: OFFICIAL_FORMAT_PRACTICE_TESTS.length,
+  officialContentPolicy: CAMBRIDGE_EXAM_CLAIM_GUARDRAIL.blockedClaim,
+  setCountsByLevel: (Object.keys(CAMBRIDGE_EXAM_SPECS) as CambridgeExamLevelId[]).reduce<Record<CambridgeExamLevelId, number>>((acc, levelId) => {
+    acc[levelId] = new Set(OFFICIAL_FORMAT_PRACTICE_TESTS.filter((test) => test.level === levelId).map((test) => test.setNo)).size;
+    return acc;
+  }, {
+    starters: 0,
+    movers: 0,
+    flyers: 0,
+    ket: 0,
+    pet: 0,
+  }),
+};
 
 export function getTestByLevel(level: string): PracticeTest | undefined {
   return PRACTICE_TESTS.find(t => t.level === level);
@@ -223,4 +528,3 @@ export function getTestByLevel(level: string): PracticeTest | undefined {
 export function getAllTestsByLevel(level: string): PracticeTest[] {
   return PRACTICE_TESTS.filter(t => t.level === level);
 }
-

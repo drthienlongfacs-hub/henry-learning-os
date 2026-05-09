@@ -1,9 +1,27 @@
 'use client';
-import { useState, useEffect, useCallback } from 'react';
-import { PRACTICE_TESTS, type PracticeTest, type PracticeQuestion } from '@/data/practice-test-bank';
+import { useState, useEffect } from 'react';
+import {
+  EXAM_PRACTICE_BANK_STATS,
+  PRACTICE_TESTS,
+  type PracticeQuestion,
+  type PracticeTest,
+} from '@/data/practice-test-bank';
+import { CAMBRIDGE_EXAM_SPECS, type CambridgeExamLevelId } from '@/data/cambridge-official-framework';
 import { speak } from '@/lib/voiceEngine';
 
 type TestState = 'menu' | 'testing' | 'review';
+type PracticeLevel = PracticeTest['level'];
+
+const isSelfAssessmentQuestion = (question: PracticeQuestion) =>
+  question.selfAssessment || question.taskTypeEn === 'Speaking' || question.taskTypeEn === 'Writing';
+
+const levelForGrade = (grade: number): PracticeLevel => {
+  if (grade <= 2) return 'starters';
+  if (grade === 3) return 'movers';
+  if (grade <= 5) return 'flyers';
+  if (grade <= 7) return 'ket';
+  return 'pet';
+};
 
 export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
   const [state, setState] = useState<TestState>('menu');
@@ -15,6 +33,8 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
   const [spellInput, setSpellInput] = useState('');
   const [loadingAudioId, setLoadingAudioId] = useState<string | null>(null);
   const [playingAudioId, setPlayingAudioId] = useState<string | null>(null);
+  const [selectedLevel, setSelectedLevel] = useState<PracticeLevel>(levelForGrade(grade));
+  const [selectedSetNo, setSelectedSetNo] = useState(1);
 
   const allQuestions = activeTest?.parts.flatMap(p => p.questions) ?? [];
   const total = allQuestions.length;
@@ -42,6 +62,7 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
   };
 
   const score = allQuestions.filter(q => {
+    if (isSelfAssessmentQuestion(q)) return Boolean(answers[q.id]);
     const userAns = (answers[q.id] || '').trim().toLowerCase();
     const correctAns = q.answer.trim().toLowerCase();
     return userAns === correctAns;
@@ -58,8 +79,10 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
     { key: 'ket', label: '🔑 KET (Key)', cefr: 'A2+', color: '#fc8181' },
     { key: 'pet', label: '📋 PET (Preliminary)', cefr: 'B1', color: '#b794f4' },
   ];
-  const [selectedLevel, setSelectedLevel] = useState('starters');
-  const availableTests = PRACTICE_TESTS.filter(t => t.level === selectedLevel);
+  const officialFormatTests = PRACTICE_TESTS.filter(t => t.level === selectedLevel && t.setNo !== undefined);
+  const availableSetNumbers = Array.from(new Set(officialFormatTests.map(t => t.setNo ?? 1))).sort((a, b) => a - b);
+  const availableTests = officialFormatTests.filter(t => t.setNo === selectedSetNo);
+  const activeSpec = CAMBRIDGE_EXAM_SPECS[selectedLevel as CambridgeExamLevelId];
 
   const card = { background: 'rgba(255,255,255,0.06)', borderRadius: 14, padding: 14, border: '1px solid rgba(255,255,255,0.08)', marginBottom: 10 };
 
@@ -67,16 +90,21 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
   if (state === 'menu') return (
     <div style={{ background: 'linear-gradient(135deg, #0f0c29, #302b63, #24243e)', borderRadius: 20, padding: 20, color: '#fff', fontFamily: "'Inter',sans-serif" }}>
       <h2 style={{ textAlign: 'center', fontSize: 20, fontWeight: 800, margin: '0 0 4px', background: 'linear-gradient(90deg,#f9d423,#ff4e50)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-        🎯 Thi thử Cambridge YLE
+        🎯 Thi thử Cambridge
       </h2>
       <p style={{ textAlign: 'center', fontSize: 12, color: '#a0aec0', margin: '0 0 12px' }}>
-        {availableTests.length} đề thi • {availableTests.reduce((s,t) => s + t.parts.flatMap(p=>p.questions).length, 0)} câu — có đáp án chi tiết & chiến lược
+        {EXAM_PRACTICE_BANK_STATS.generatedSetCountPerLevel} bộ đề/level • Bộ {selectedSetNo} có {availableTests.length} component • {availableTests.reduce((s,t) => s + t.parts.flatMap(p=>p.questions).length, 0)} câu/prompt
       </p>
+      <div style={{ ...card, background: 'rgba(72,187,120,0.08)', borderColor: 'rgba(72,187,120,0.2)' }}>
+        <p style={{ margin: 0, fontSize: 12, color: '#c6f6d5', lineHeight: 1.55 }}>
+          Nguồn chính thức: cấu trúc, số phần và số câu bám Cambridge English. Nội dung trong app là đề tự luyện gốc của Henry, không sao chép đề chính thức. Muốn làm đề chính thức, mở link Cambridge trong phần hướng dẫn.
+        </p>
+      </div>
 
       {/* Level tabs */}
       <div style={{ display: 'flex', gap: 4, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 14 }}>
         {LEVEL_INFO.map(lv => (
-          <button key={lv.key} onClick={() => setSelectedLevel(lv.key)} style={{
+          <button key={lv.key} onClick={() => { setSelectedLevel(lv.key as PracticeLevel); setSelectedSetNo(1); }} style={{
             padding: '5px 10px', borderRadius: 8, border: 'none', cursor: 'pointer', fontSize: 11, fontWeight: selectedLevel === lv.key ? 800 : 500,
             background: selectedLevel === lv.key ? lv.color : 'rgba(255,255,255,0.08)',
             color: selectedLevel === lv.key ? '#0f0c29' : '#a0aec0', transition: 'all 0.2s',
@@ -85,6 +113,41 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
           </button>
         ))}
       </div>
+
+      {/* Full-set picker */}
+      <div style={{ display: 'flex', gap: 4, overflowX: 'auto', paddingBottom: 6, marginBottom: 12 }}>
+        {availableSetNumbers.map(setNo => (
+          <button key={setNo} onClick={() => setSelectedSetNo(setNo)} style={{
+            minWidth: 44,
+            padding: '6px 9px',
+            borderRadius: 8,
+            border: selectedSetNo === setNo ? '1px solid #f9d423' : '1px solid rgba(255,255,255,0.08)',
+            cursor: 'pointer',
+            fontSize: 11,
+            fontWeight: 800,
+            background: selectedSetNo === setNo ? 'rgba(249,212,35,0.18)' : 'rgba(255,255,255,0.06)',
+            color: selectedSetNo === setNo ? '#f9d423' : '#cbd5e0',
+          }}>
+            Bộ {setNo}
+          </button>
+        ))}
+      </div>
+
+      {activeSpec && (
+        <div style={{ ...card, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
+          <div>
+            <div style={{ fontSize: 10, color: '#a0aec0' }}>Chuẩn</div>
+            <div style={{ fontSize: 12, color: '#fff', fontWeight: 800 }}>{activeSpec.officialName}</div>
+          </div>
+          <div>
+            <div style={{ fontSize: 10, color: '#a0aec0' }}>CEFR</div>
+            <div style={{ fontSize: 12, color: '#fff', fontWeight: 800 }}>{activeSpec.cefr}</div>
+          </div>
+          <a href={activeSpec.officialSampleUrl} target="_blank" rel="noreferrer" style={{ color: '#63b3ed', fontSize: 12, fontWeight: 800, textDecoration: 'none', alignSelf: 'center' }}>
+            Đề mẫu chính thức ↗
+          </a>
+        </div>
+      )}
 
       {availableTests.map(t => (
         <div key={t.id} style={{ ...card, cursor: 'pointer' }} onClick={() => startTest(t)}>
@@ -107,7 +170,7 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
         </div>
       ))}
       <p style={{ fontSize: 10, color: '#a0aec0', textAlign: 'center', marginTop: 8 }}>
-        📊 Đề thi theo chuẩn Cambridge Assessment • Đáp án có giải thích + chiến lược
+        📊 Practice theo format Cambridge • audio TTS tức thì • đáp án/giải thích/rubric • không copy đề chính thức
       </p>
     </div>
   );
@@ -130,9 +193,11 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
           <h4 style={{ fontSize: 13, color: '#63b3ed', margin: '12px 0 6px', borderBottom: '1px solid rgba(99,179,237,0.2)', paddingBottom: 3 }}>
             Part {part.partNumber}: {part.titleVi}
           </h4>
-          {part.questions.map((q, qi) => {
+          {part.questions.map((q) => {
             const userAns = answers[q.id];
-            const correct = (userAns || '').trim().toLowerCase() === q.answer.trim().toLowerCase();
+            const correct = isSelfAssessmentQuestion(q)
+              ? Boolean(userAns)
+              : (userAns || '').trim().toLowerCase() === q.answer.trim().toLowerCase();
             return (
               <div key={q.id} style={{ ...card, borderLeft: `3px solid ${correct ? '#68d391' : '#fc8181'}` }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -142,10 +207,14 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
                   </span>
                   <span style={{ fontSize: 18 }}>{correct ? '✅' : '❌'}</span>
                 </div>
-                <div style={{ fontSize: 12, marginTop: 4 }}>
-                  {!correct && <p style={{ margin: '2px 0', color: '#fc8181' }}>❌ Bạn chọn: {userAns || '(chưa trả lời)'}</p>}
-                  <p style={{ margin: '2px 0', color: '#68d391' }}>✅ Đáp án: {q.answer}</p>
-                </div>
+                {!isSelfAssessmentQuestion(q) ? (
+                  <div style={{ fontSize: 12, marginTop: 4 }}>
+                    {!correct && <p style={{ margin: '2px 0', color: '#fc8181' }}>❌ Bạn chọn: {userAns || '(chưa trả lời)'}</p>}
+                    <p style={{ margin: '2px 0', color: '#68d391' }}>✅ Đáp án: {q.answer}</p>
+                  </div>
+                ) : (
+                  <p style={{ margin: '4px 0 0', color: '#68d391', fontSize: 12 }}>✅ Đã hoàn thành câu tự đánh giá.</p>
+                )}
 
                 {/* Expandable explanation */}
                 <div onClick={() => setShowExplanation(showExplanation === q.id ? null : q.id)}
@@ -155,8 +224,11 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
                 {showExplanation === q.id && (
                   <div style={{ marginTop: 6, padding: '8px 10px', background: 'rgba(255,255,255,0.03)', borderRadius: 8 }}>
                     <p style={{ margin: '0 0 4px', fontSize: 12, color: '#e2e8f0' }}>
-                      📖 <strong>Giải thích:</strong> {q.explanationVi}
+                      📖 <strong>{isSelfAssessmentQuestion(q) ? 'Gợi ý mẫu' : 'Giải thích'}:</strong> {q.modelAnswer || q.explanationVi}
                     </p>
+                    {q.rubricVi?.map((rubric, index) => (
+                      <p key={index} style={{ margin: '2px 0', fontSize: 11, color: '#cbd5e0' }}>• {rubric}</p>
+                    ))}
                     <p style={{ margin: 0, fontSize: 12, color: '#68d391' }}>
                       🧠 <strong>Chiến lược:</strong> {q.strategyVi}
                     </p>
@@ -181,8 +253,7 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
   const isSpellType = q.taskTypeEn === 'Spell';
   // RCA fix: open gap fill questions have options=[] → need text input
   const isOpenGapFill = !isSpellType && (!q.options || q.options.length === 0);
-  // Speaking questions: self-assessment, no "correct" answer to check
-  const isSpeakingType = q.taskTypeEn === 'Speaking';
+  const isSelfAssessmentType = isSelfAssessmentQuestion(q);
 
   return (
     <div style={{ background: 'linear-gradient(135deg, #0f0c29, #302b63, #24243e)', borderRadius: 20, padding: 16, color: '#fff', fontFamily: "'Inter',sans-serif" }}>
@@ -243,7 +314,7 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
         )}
 
         {/* Type 2: Open gap fill (KET/PET — type one word/number) */}
-        {isOpenGapFill && !isSpeakingType && (
+        {isOpenGapFill && !isSelfAssessmentType && (
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
               <span style={{ fontSize: 18 }}>✏️</span>
@@ -279,7 +350,7 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
         )}
 
         {/* Type 3: Speaking (self-assessment — show sample, mark yourself) */}
-        {isSpeakingType && (
+        {isSelfAssessmentType && (
           <div>
             {/* Show/hide sample answer */}
             <button 
@@ -293,14 +364,17 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
                 color: '#fff', fontSize: 14, fontWeight: 600, marginBottom: 8,
               }}
             >
-              {showExplanation === q.id ? '🔽 Ẩn gợi ý' : '💬 Xem gợi ý trả lời mẫu'}
+              {showExplanation === q.id ? '🔽 Ẩn gợi ý' : '💬 Xem rubric & trả lời mẫu'}
             </button>
             {showExplanation === q.id && (
               <div style={{ padding: '12px 14px', background: 'rgba(72,187,120,0.08)', borderRadius: 10, border: '1px solid rgba(72,187,120,0.2)' }}>
                 <p style={{ margin: '0 0 6px', fontSize: 13, color: '#68d391', fontWeight: 600 }}>📝 Gợi ý trả lời:</p>
                 <p style={{ margin: '0 0 8px', fontSize: 13, color: '#e2e8f0', lineHeight: 1.6, fontStyle: 'italic' }}>
-                  &quot;{q.explanationVi?.replace(/^Gợi ý:\s*/, '').replace(/^"/, '').replace(/"$/, '')}&quot;
+                  &quot;{(q.modelAnswer || q.explanationVi)?.replace(/^Gợi ý:\s*/, '').replace(/^"/, '').replace(/"$/, '')}&quot;
                 </p>
+                {q.rubricVi?.map((rubric, index) => (
+                  <p key={index} style={{ margin: '2px 0', fontSize: 11, color: '#cbd5e0' }}>• {rubric}</p>
+                ))}
                 {q.strategyVi && (
                   <p style={{ margin: 0, fontSize: 11, color: '#a0aec0' }}>
                     🧠 <strong>Mẹo:</strong> {q.strategyVi}
@@ -312,7 +386,7 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
         )}
 
         {/* Type 4: MCQ (standard multiple choice with options) */}
-        {!isSpellType && !isOpenGapFill && !isSpeakingType && q.options?.map((opt, i) => {
+        {!isSpellType && !isOpenGapFill && !isSelfAssessmentType && q.options?.map((opt, i) => {
           const selected = answers[q.id] === opt;
           return (
             <button key={i} onClick={() => selectAnswer(q.id, opt)} style={{

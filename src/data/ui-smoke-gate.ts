@@ -4,6 +4,7 @@ export type UiSmokeRouteKey =
     | 'home'
     | 'child-learn'
     | 'child-reading'
+    | 'child-exams'
     | 'child-library'
     | 'parent-dashboard'
     | 'parent-benchmark'
@@ -55,6 +56,13 @@ export const UI_SMOKE_ROUTES: UiSmokeRoute[] = [
         label: 'Child reading voice engine',
         requiredText: ['Luyện Đọc & Phát Âm', 'Đọc toàn bài', 'Real data'],
         minimumBodyTextLength: 1000,
+    },
+    {
+        key: 'child-exams',
+        path: '/child/exams/',
+        label: 'Child Cambridge exam prep',
+        requiredText: ['Nguồn Cambridge chính thức', '10 bộ đề mỗi cấp', 'Không sao chép đề chính thức', 'Format chính thức đã đối chiếu'],
+        minimumBodyTextLength: 1100,
     },
     {
         key: 'child-library',

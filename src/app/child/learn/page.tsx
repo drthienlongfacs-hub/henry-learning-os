@@ -44,6 +44,11 @@ import {
 } from '@/data/learning-benchmark-system';
 import { ENGLISH_CURRICULUM_EVIDENCE } from '@/data/english-curriculum-evidence';
 import {
+    TEXTBOOK_FIDELITY_STATS,
+    TEXTBOOK_REPLACEMENT_POLICY,
+    getSubjectTextbookFidelitySummary,
+} from '@/data/textbook-fidelity';
+import {
     getTopicLearningPlan,
     summarizeSubjectPlan,
     type LearningPathStatus,
@@ -407,6 +412,9 @@ function LearnPageContent() {
     const activeSubjectPack = subject ? getSubjectEnrichment(SUBJECT_ENRICHMENT_KEY[subject]) : null;
     const activeStandards = subject ? getSubjectGoldStandards(SUBJECT_ENRICHMENT_KEY[subject]) : [];
     const activeBenchmarks = subject ? getSubjectBenchmarkPatterns(SUBJECT_ENRICHMENT_KEY[subject]) : [];
+    const activeTextbookSummary = subject
+        ? getSubjectTextbookFidelitySummary(SUBJECT_ENRICHMENT_KEY[subject], grade)
+        : null;
     const currentBlueprint = currentProblem?.topicKey
         ? getTopicLearningBlueprint(currentProblem.topicKey, subject ? SUBJECT_ENRICHMENT_KEY[subject] : undefined)
         : null;
@@ -645,6 +653,35 @@ function LearnPageContent() {
                                 </div>
                             </ParentOnlyDetails>
 
+                            <ParentOnlyDetails label={tx('Phụ huynh xem độ khớp SGK gốc')} style={{ marginBottom: 16 }}>
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 8 }}>
+                                    {[
+                                        [`${TEXTBOOK_FIDELITY_STATS.sgkCatalogRecords}`, 'đầu sách trong catalog'],
+                                        [`${TEXTBOOK_FIDELITY_STATS.gradeSubjectRows}`, 'dòng lớp/môn'],
+                                        [`${TEXTBOOK_FIDELITY_STATS.interactiveTopicCount}`, 'chủ đề tương tác'],
+                                        [`${TEXTBOOK_FIDELITY_STATS.rowsNotInLearnYet}`, 'dòng chưa nằm trong Learn'],
+                                    ].map(([value, label]) => (
+                                        <div key={label} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 12, padding: 10 }}>
+                                            <div style={{ fontSize: 18, fontWeight: 900, color: '#1e1b4b' }}>{value}</div>
+                                            <div style={{ fontSize: 12, color: '#64748b', marginTop: 2 }}>{tx(label)}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div style={{ marginTop: 10, background: '#fff7ed', border: '1px solid #fed7aa', borderRadius: 12, padding: 12 }}>
+                                    <div style={{ fontSize: 12, fontWeight: 900, color: '#9a3412', lineHeight: 1.45 }}>
+                                        {tx('Chưa gọi 100% thay SGK gốc')}
+                                    </div>
+                                    <div style={{ fontSize: 12, color: '#9a3412', lineHeight: 1.5, marginTop: 5 }}>
+                                        {tx(TEXTBOOK_REPLACEMENT_POLICY.publicAssetRule)}
+                                    </div>
+                                    <div style={{ marginTop: 10 }}>
+                                        <Link href="/child/library" style={{ color: '#1d4ed8', fontSize: 12, fontWeight: 900, textDecoration: 'none' }}>
+                                            {tx('Nhúng SGK/PDF có quyền trong Thư viện riêng tư')} →
+                                        </Link>
+                                    </div>
+                                </div>
+                            </ParentOnlyDetails>
+
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16 }}>
                                 {SUBJECTS.map(s => {
                                     const pack = getSubjectEnrichment(SUBJECT_ENRICHMENT_KEY[s.key]);
@@ -697,6 +734,53 @@ function LearnPageContent() {
                                             {tx('Chọn chủ đề để bắt đầu câu hỏi đầu tiên.')}
                                         </div>
                                     </div>
+                            </div>
+                        )}
+
+                        {activeTextbookSummary && activeTextbookSummary.rows.length > 0 && (
+                            <div style={{ ...glass.card, marginBottom: 16, background: 'rgba(255,255,255,0.62)' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', alignItems: 'flex-start' }}>
+                                    <div style={{ minWidth: 0, flex: 1 }}>
+                                        <div style={{ fontSize: 13, fontWeight: 900, color: '#1d4ed8', textTransform: 'uppercase' }}>
+                                            {lang === 'vi' ? `Độ khớp SGK gốc lớp ${grade}` : `Original textbook fidelity Grade ${grade}`}
+                                        </div>
+                                        <div style={{ fontSize: 14, color: '#334155', lineHeight: 1.5, marginTop: 6, fontWeight: 750 }}>
+                                            {tx(activeTextbookSummary.replacementLabel)}
+                                        </div>
+                                    </div>
+                                    <Link href="/child/library" style={{ textDecoration: 'none', flex: '0 0 auto' }}>
+                                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 10px', borderRadius: 999, background: '#eff6ff', color: '#1d4ed8', border: '1px solid #bfdbfe', fontSize: 12, fontWeight: 900 }}>
+                                            {tx('Nhúng SGK có quyền')} <ChevronRight size={14} />
+                                        </span>
+                                    </Link>
+                                </div>
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 8, marginTop: 12 }}>
+                                    {[
+                                        ['Sách/môn', activeTextbookSummary.bookCount],
+                                        ['Chủ đề tương tác', activeTextbookSummary.interactiveTopicCount],
+                                        ['Ảnh/SGK gốc', activeTextbookSummary.privateImportRequired ? 'Cần file riêng tư' : 'Nội dung mở'],
+                                    ].map(([label, value]) => (
+                                        <div key={String(label)} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 12, padding: 10 }}>
+                                            <div style={{ fontSize: 11, color: '#64748b', fontWeight: 900 }}>{tx(String(label))}</div>
+                                            <div style={{ fontSize: 14, color: '#1e1b4b', fontWeight: 900, marginTop: 3 }}>{tx(String(value))}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div style={{ marginTop: 10, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                                    {activeTextbookSummary.rows.map((row) => (
+                                        <div key={`${row.grade}:${row.sgkSubject}`} style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: 12, padding: 10 }}>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', gap: 8, flexWrap: 'wrap' }}>
+                                                <div style={{ fontSize: 13, fontWeight: 900, color: '#1e293b' }}>{tx(row.sgkSubjectLabel)}</div>
+                                                <div style={{ fontSize: 11, color: row.canClaimTextbookReplacement ? '#047857' : '#b45309', fontWeight: 900 }}>
+                                                    {row.canClaimTextbookReplacement ? tx('Đủ gate thay SGK') : tx('Cần SGK/ảnh có quyền')}
+                                                </div>
+                                            </div>
+                                            <div style={{ fontSize: 12, color: '#475569', lineHeight: 1.45, marginTop: 5 }}>
+                                                {tx(row.learnerUpgrade)}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         )}
 

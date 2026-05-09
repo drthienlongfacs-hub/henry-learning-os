@@ -1,5 +1,7 @@
-// English Grade 1-2 — Global Success (CTGDPT 2018)
-// G1: 16 units, G2: 16 units — 100% match official SGK
+// English Grade 1-2 - Global Success companion map (CTGDPT 2018).
+// This is a unit-level interactive companion. It must not be called a
+// 100% textbook reproduction until licensed SGK pages/assets are imported
+// privately and reviewed lesson by lesson.
 import type { UnitData } from './english-units-g3';
 
 export const GRADE1_UNITS: UnitData[] = [
