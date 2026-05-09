@@ -492,7 +492,14 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
   // ══════════════════════════════════════════════════════════════
   'cam_g1_u06': [
     {
-      sectionTitle: "6.1 Jack and Jill",
+      sectionTitle: '6.1 Getting Started',
+      sectionTitleVi: '6.1 Khởi động',
+      type: 'getting_started',
+      text: "Welcome to Unit 6 — Nursery Rhymes!\n\n🗣️ Talk with your partner:\n• Do you know any nursery rhymes or songs?\n• Can you sing one for your partner?\n• What makes nursery rhymes fun?\n\nNursery rhymes are short poems and songs for children. They have RHYTHM (a beat you can clap) and RHYME (words that sound the same). Today we will read famous rhymes, learn old words, and sing together!",
+      textVi: "Chào mừng đến Bài 6 — Đồng dao!\n\n🗣️ Nói chuyện với bạn:\n• Bạn có biết bài đồng dao hoặc bài hát nào không?\n• Bạn có thể hát một bài cho bạn nghe không?\n• Điều gì làm đồng dao vui?\n\nĐồng dao là những bài thơ và bài hát ngắn cho trẻ em. Chúng có NHỊP ĐIỆU (nhịp bạn có thể vỗ tay) và VẦN (từ nghe giống nhau). Hôm nay chúng ta sẽ đọc những bài đồng dao nổi tiếng, học từ cổ và cùng hát!"
+    },
+    {
+      sectionTitle: "6.2 Jack and Jill",
       sectionTitleVi: "6.1 Jack và Jill",
       type: "reading",
       text: "Jack and Jill went up the hill, to fetch a pail of water. Jack fell down and broke his crown, and Jill came tumbling after. Up Jack got, and home did trot, as fast as he could caper. To old Dame Dob, who patched his nob, with vinegar and brown paper.",
@@ -527,7 +534,42 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       textVi: "Nhiều bài đồng dao cũng là bài hát. Chúng ta có thể cùng nhau hát. Hát rất vui! Twinkle Twinkle Little Star (Ngôi sao nhỏ lấp lánh) là một bài hát nổi tiếng. Baa Baa Black Sheep (Cừu đen kêu ba ba) là một bài hát vui nhộn. Chúngtrong ta có thể kết hợp động tác khi hát. Chúng ta có thể làm động tác lấp lánh bằng các ngón tay. Chúng ta có thể chỉ vào một con cừu. Bây giờ hãy cùng hát một bài hát nhé!"
     },
     {
-      sectionTitle: "6.6 Unit 6 Review",
+      sectionTitle: '6.7 Word Work: Old words and rhyming pairs',
+      sectionTitleVi: '6.7 Luyện từ: Từ cổ và cặp vần',
+      type: 'word_work',
+      text: "OLD WORDS in nursery rhymes:\n• pail = bucket (xô)\n• fetch = go and get (đi lấy)\n• crown = top of the head (đỉnh đầu)\n• tumbling = falling down (ngã lộn)\n• nob = head (đầu)\n\nRHYMING PAIRS — words that sound the same at the end:\nJill / hill • down / crown • dock / clock\nstar / are • sheep / sleep\n\n✏️ Find the rhyming word:\n1. Jack and ___ (Jill)\n2. Hickory dickory ___ (dock)\n3. Up above the world so high, like a diamond in the ___ (sky)\n\n🌟 Make your own rhyming pair!",
+      textVi: "TỪ CỔ trong đồng dao:\n• pail = xô (bucket)\n• fetch = đi lấy (go and get)\n• crown = đỉnh đầu (top of the head)\n• tumbling = ngã lộn (falling down)\n• nob = đầu (head)\n\nCẶP VẦN — từ nghe giống nhau ở cuối:\nJill / hill • down / crown • dock / clock\nstar / are • sheep / sleep\n\n✏️ Tìm từ vần:\n1. Jack and ___ (Jill)\n2. Hickory dickory ___ (dock)\n3. Up above the world so high, like a diamond in the ___ (sky)\n\n🌟 Tạo cặp vần của riêng bạn!"
+    },
+    {
+      sectionTitle: '6.8 Comprehension',
+      sectionTitleVi: '6.8 Đọc hiểu',
+      type: 'comprehension',
+      text: "Let's check what you remember!\n\n❓ Questions:\n1. Where did Jack and Jill go? (up the hill)\n2. What did they want to get? (a pail of water)\n3. What happened to Jack? (he fell down)\n4. What animal ran up the clock? (a mouse)\n5. What is a rhyming word for 'dock'? (clock)\n\n🤔 Think deeper:\n• Why do children enjoy nursery rhymes?\n• What is the difference between rhythm and rhyme?",
+      textVi: "Hãy kiểm tra bạn nhớ được gì!\n\n❓ Câu hỏi:\n1. Jack và Jill đi đâu? (lên đồi)\n2. Họ muốn lấy gì? (xô nước)\n3. Chuyện gì xảy ra với Jack? (cậu ấy ngã)\n4. Con vật nào chạy lên đồng hồ? (chuột)\n5. Từ nào vần với 'dock'? (clock)\n\n🤔 Suy nghĩ sâu hơn:\n• Tại sao trẻ em thích đồng dao?\n• Nhịp điệu và vần khác nhau như thế nào?"
+    },
+    {
+      sectionTitle: '6.9 Talk About: My favourite rhyme',
+      sectionTitleVi: '6.9 Nói về: Bài đồng dao yêu thích',
+      type: 'talk_about',
+      text: "🗣️ Speaking Activity — Perform a rhyme!\n\n1. Choose your favourite nursery rhyme.\n2. Say it or sing it to your partner.\n3. Add ACTIONS (clap, wave, point, jump).\n4. Your partner claps the RHYTHM.\n\n🎵 Group Activity: Stand up as a class and perform a rhyme together with actions!\n\n👂 Listening: Can you hear which words RHYME when your partner says their rhyme?",
+      textVi: "🗣️ Hoạt động Nói — Trình diễn bài đồng dao!\n\n1. Chọn bài đồng dao yêu thích.\n2. Đọc hoặc hát cho bạn nghe.\n3. Thêm ĐỘNG TÁC (vỗ tay, vẫy tay, chỉ, nhảy).\n4. Bạn vỗ tay theo NHỊP.\n\n🎵 Hoạt động nhóm: Đứng dậy cả lớp và cùng trình diễn bài đồng dao với động tác!\n\n👂 Lắng nghe: Bạn có nghe được từ nào VẦN khi bạn đọc bài đồng dao không?"
+    },
+    {
+      sectionTitle: '6.10 Writing: Change a rhyme',
+      sectionTitleVi: '6.10 Viết: Thay đổi bài đồng dao',
+      type: 'writing',
+      text: "✏️ Let's change a nursery rhyme!\n\nOriginal rhythm pattern:\n___ and ___ went up the ___,\nTo fetch a pail of ___.\n\nYour version — fill in new words that RHYME:\nTom and ___ went up the ___,\nTo find a ___  of ___.\n\n📝 Example:\nTom and Bill went up the hill,\nTo find a bag of sweets so still.\n\nTips:\n• The last words in each line should rhyme\n• Keep the same beat/rhythm\n• It can be silly and fun!\n\n🌟 Share your rhyme with the class!",
+      textVi: "✏️ Hãy thay đổi bài đồng dao!\n\nMẫu nhịp gốc:\n___ và ___ đi lên ___,\nĐể lấy một ___ của ___.\n\nPhiên bản của bạn — điền từ mới có VẦN:\nTom và ___ đi lên ___,\nĐể tìm một ___ của ___.\n\n📝 Ví dụ:\nTom và Bill đi lên đồi,\nĐể tìm một túi kẹo nằm yên.\n\nMẹo:\n• Từ cuối mỗi dòng phải vần\n• Giữ cùng nhịp điệu\n• Có thể vui và ngố nghếch!\n\n🌟 Chia sẻ bài đồng dao với cả lớp!"
+    },
+    {
+      sectionTitle: '6.11 How did I do?',
+      sectionTitleVi: '6.11 Tôi làm được gì?',
+      type: 'self_check',
+      text: "Check what you can do!\n\n✅ I can say 2 nursery rhymes from memory\n✅ I can clap the rhythm of a rhyme\n✅ I can find rhyming words (hill/Jill, dock/clock)\n✅ I know what old words like 'pail' and 'fetch' mean\n✅ I can change words in a rhyme to make a new one\n✅ I can perform a rhyme with actions\n\n⭐ How many did you tick?\n6 = Rhyme master! 🌟\n4-5 = Great job!\n2-3 = Keep singing!\n1 = Ask for help!",
+      textVi: "Kiểm tra bạn làm được gì!\n\n✅ Tôi đọc thuộc lòng 2 bài đồng dao\n✅ Tôi vỗ tay theo nhịp của bài đồng dao\n✅ Tôi tìm được từ vần (hill/Jill, dock/clock)\n✅ Tôi biết nghĩa của từ cổ như 'pail' và 'fetch'\n✅ Tôi thay được từ trong bài đồng dao để tạo bài mới\n✅ Tôi trình diễn được bài đồng dao với động tác\n\n⭐ Bạn tích được bao nhiêu?\n6 = Bậc thầy đồng dao! 🌟\n4-5 = Giỏi lắm!\n2-3 = Tiếp tục hát!\n1 = Hãy nhờ giúp đỡ!"
+    },
+    {
+      sectionTitle: "6.12 Unit 6 Review",
       sectionTitleVi: "6.6 Ôn tập Bài 6",
       type: "tip",
       text: "Wonderful! You have finished Unit 6 all about nursery rhymes.\n\nLet's review what we learned:\n✓ We read the rhyme of Jack and Jill.\n✓ We learned about rhythm (the beat) and rhyme (matching sounds).\n✓ We learned some old words like 'pail' and 'crown'.\n✓ We read about the mouse and the clock.\n✓ We talked about singing rhymes as songs.\n\nKeep singing! Try to learn a new nursery rhyme this week.",
@@ -539,7 +581,14 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
   // ══════════════════════════════════════════════════════════════
   'cam_g1_u07': [
     {
-      sectionTitle: "7.1 A bear in the house",
+      sectionTitle: '7.1 Getting Started',
+      sectionTitleVi: '7.1 Khởi động',
+      type: 'getting_started',
+      text: "Welcome to Unit 7 — Imagination Stories!\n\n🗣️ Talk with your partner:\n• If you could be any animal, what would you be?\n• Have you ever imagined something magical?\n• Can a bear really drink tea?\n\nImagination means making up things in your mind. Some stories are REAL (true things that happened). Some stories are MAKE-BELIEVE (things we imagine). Today we will explore the wonderful world of make-believe!",
+      textVi: "Chào mừng đến Bài 7 — Truyện tưởng tượng!\n\n🗣️ Nói chuyện với bạn:\n• Nếu có thể là bất kỳ con vật nào, bạn muốn là gì?\n• Bạn đã bao giờ tưởng tượng điều gì kỳ diệu chưa?\n• Gấu có thể thật sự uống trà không?\n\nTưởng tượng nghĩa là nghĩ ra những điều trong đầu. Một số truyện là CÓ THẬT (điều thật sự xảy ra). Một số truyện là GIẢ TƯỞNG (điều chúng ta tưởng tượng). Hôm nay chúng ta sẽ khám phá thế giới tuyệt vời của giả tưởng!"
+    },
+    {
+      sectionTitle: "7.2 A bear in the house",
       sectionTitleVi: "7.1 Một chú gấu trong nhà",
       type: "reading",
       text: "Imagine there is a bear in your house. He is wearing a blue jacket. He is very polite. He says, 'Hello, can I have some tea?' You make him some tea and give him a biscuit. The bear sits on the sofa. He drinks his tea and eats his biscuit. He says, 'Thank you very much.' Then he goes away.",
@@ -574,7 +623,42 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       textVi: "Hãy cùng viết một câu chuyện giả tưởng. Đầu tiên, chọn một nhân vật. Hãy chọn một con thỏ. Tiếp theo, cung cấp cho nhân vật một cái gì đó đặc biệt. Con thỏ của chúng ta có đôi ủng phép thuật. Sau đó, kể những gì xảy ra. Con thỏ nhảy qua một ngọn núi. Cuối cùng, tạo cho nó một kết thúc có hậu. Con thỏ tìm thấy một cánh đồng cà rốt vàng."
     },
     {
-      sectionTitle: "7.6 Unit 7 Review",
+      sectionTitle: '7.7 Word Work: Real vs Make-believe',
+      sectionTitleVi: '7.7 Luyện từ: Có thật và Giả tưởng',
+      type: 'word_work',
+      text: "REAL things that animals can do:\nrun, swim, fly, eat, sleep, climb\n\nMAKE-BELIEVE things animals do in stories:\ntalk, wear clothes, drive cars, cook food, read books, go to school\n\nMODAL VERBS:\ncan = able to do it (I can run)\ncannot / can't = not able (I cannot fly)\n\n✏️ Real or Make-believe?\n1. A fish can swim. (Real)\n2. A cat can cook dinner. (Make-believe)\n3. A bird can fly. (Real)\n4. A rabbit can wear boots. (Make-believe)\n\n🌟 Make up a make-believe sentence!",
+      textVi: "Những điều CÓ THẬT động vật làm được:\nchạy, bơi, bay, ăn, ngủ, trèo\n\nNhững điều GIẢ TƯỞNG trong truyện:\nnói chuyện, mặc quần áo, lái xe, nấu ăn, đọc sách, đi học\n\nĐỘNG TỪ KHIẾM KHUYẾT:\ncan = có thể (I can run — tôi có thể chạy)\ncannot / can't = không thể (I cannot fly — tôi không thể bay)\n\n✏️ Có thật hay Giả tưởng?\n1. Cá có thể bơi. (Có thật)\n2. Mèo có thể nấu bữa tối. (Giả tưởng)\n3. Chim có thể bay. (Có thật)\n4. Thỏ có thể đi ủng. (Giả tưởng)\n\n🌟 Nghĩ ra một câu giả tưởng!"
+    },
+    {
+      sectionTitle: '7.8 Comprehension',
+      sectionTitleVi: '7.8 Đọc hiểu',
+      type: 'comprehension',
+      text: "Let's check what you remember!\n\n❓ Questions:\n1. What was the bear wearing? (a blue jacket)\n2. What did the bear ask for? (some tea)\n3. Is the bear story real or make-believe? (make-believe)\n4. What does 'can' mean? (able to do something)\n5. Give an example of something make-believe. (animals talking, flying to the moon on a dragon, etc.)\n\n🤔 Think deeper:\n• Why do we enjoy make-believe stories?\n• How can you tell if a story is real or make-believe?",
+      textVi: "Hãy kiểm tra bạn nhớ được gì!\n\n❓ Câu hỏi:\n1. Chú gấu mặc gì? (áo khoác xanh)\n2. Chú gấu xin gì? (trà)\n3. Truyện chú gấu có thật hay giả tưởng? (giả tưởng)\n4. 'Can' nghĩa là gì? (có thể làm điều gì đó)\n5. Cho ví dụ về điều giả tưởng. (động vật nói chuyện, bay lên mặt trăng trên rồng...)\n\n🤔 Suy nghĩ sâu hơn:\n• Tại sao chúng ta thích truyện giả tưởng?\n• Làm sao biết truyện có thật hay giả tưởng?"
+    },
+    {
+      sectionTitle: '7.9 Talk About: If I could...',
+      sectionTitleVi: '7.9 Nói về: Nếu tôi có thể...',
+      type: 'talk_about',
+      text: "🗣️ Speaking Activity — Use your imagination!\n\n1. Complete these sentences and share with your partner:\n   • If I could fly, I would go to ___.\n   • If I had a pet dragon, I would ___.\n   • If I were invisible, I would ___.\n2. Listen to your partner's ideas.\n3. Vote: whose idea was the most creative?\n\n🎭 Act it out: Pretend you are an animal having tea with a friend. Use polite language!\n\n👂 Listening: Which answer surprised you the most?",
+      textVi: "🗣️ Hoạt động Nói — Dùng trí tưởng tượng!\n\n1. Hoàn thành câu và chia sẻ với bạn:\n   • Nếu tôi có thể bay, tôi sẽ đi đến ___.\n   • Nếu tôi có rồng cưng, tôi sẽ ___.\n   • Nếu tôi vô hình, tôi sẽ ___.\n2. Lắng nghe ý tưởng của bạn.\n3. Bình chọn: ý tưởng của ai sáng tạo nhất?\n\n🎭 Diễn kịch: Giả vờ bạn là con vật đang uống trà với bạn. Dùng ngôn ngữ lịch sự!\n\n👂 Lắng nghe: Câu trả lời nào làm bạn bất ngờ nhất?"
+    },
+    {
+      sectionTitle: '7.10 Writing: My make-believe story',
+      sectionTitleVi: '7.10 Viết: Truyện giả tưởng của tôi',
+      type: 'writing',
+      text: "✏️ Write your own make-believe story!\n\nPlan:\n1. Character: Choose an animal (cat, dog, penguin...).\n2. Special power: Give it something magical (can fly, can talk, has a magic hat...).\n3. Adventure: What happens? (finds treasure, saves a friend, visits the moon...).\n4. Ending: How does it end? (happily!)\n\n📝 Start your story:\nOnce upon a time, there was a ___ who could ___.\nOne day, ___...\nFinally, ___. The end!\n\n🌟 Draw a picture of your character!",
+      textVi: "✏️ Viết truyện giả tưởng của riêng bạn!\n\nKế hoạch:\n1. Nhân vật: Chọn một con vật (mèo, chó, chim cánh cụt...).\n2. Sức mạnh đặc biệt: Cho nó điều kỳ diệu (biết bay, biết nói, có mũ phép...).\n3. Phiêu lưu: Điều gì xảy ra? (tìm kho báu, cứu bạn, thăm mặt trăng...).\n4. Kết thúc: Kết thúc thế nào? (vui vẻ!)\n\n📝 Bắt đầu truyện:\nNgày xửa ngày xưa, có một ___ biết ___.\nMột ngày, ___...\nCuối cùng, ___. Hết!\n\n🌟 Vẽ tranh nhân vật của bạn!"
+    },
+    {
+      sectionTitle: '7.11 How did I do?',
+      sectionTitleVi: '7.11 Tôi làm được gì?',
+      type: 'self_check',
+      text: "Check what you can do!\n\n✅ I can tell the difference between real and make-believe\n✅ I can use 'can' and 'cannot' correctly\n✅ I can use my imagination to create ideas\n✅ I can tell a make-believe story to my partner\n✅ I can write a short make-believe story\n✅ I can draw a picture for my story\n\n⭐ How many did you tick?\n6 = Imagination champion! 🌟\n4-5 = Great work!\n2-3 = Keep imagining!\n1 = Ask for help!",
+      textVi: "Kiểm tra bạn làm được gì!\n\n✅ Tôi phân biệt được có thật và giả tưởng\n✅ Tôi dùng đúng 'can' và 'cannot'\n✅ Tôi dùng trí tưởng tượng để tạo ý tưởng\n✅ Tôi kể được truyện giả tưởng cho bạn nghe\n✅ Tôi viết được truyện giả tưởng ngắn\n✅ Tôi vẽ được tranh cho truyện\n\n⭐ Bạn tích được bao nhiêu?\n6 = Nhà vô địch tưởng tượng! 🌟\n4-5 = Giỏi lắm!\n2-3 = Tiếp tục tưởng tượng!\n1 = Hãy nhờ giúp đỡ!"
+    },
+    {
+      sectionTitle: "7.12 Unit 7 Review",
       sectionTitleVi: "7.6 Ôn tập Bài 7",
       type: "tip",
       text: "Awesome! You have finished Unit 7 all about imagination stories.\n\nLet's review what we learned:\n✓ We learned the difference between 'real' and 'make-believe'.\n✓ We practiced using 'can' and 'cannot'.\n✓ We read a make-believe story about a polite bear.\n✓ We used our imagination to create new ideas.\n✓ We learned how to plan a make-believe story.\n\nKeep imagining! Write your own make-believe story and share it with a friend.",
@@ -586,7 +670,14 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
   // ══════════════════════════════════════════════════════════════
   'cam_g1_u08': [
     {
-      sectionTitle: "8.1 A trip to the zoo",
+      sectionTitle: '8.1 Getting Started',
+      sectionTitleVi: '8.1 Khởi động',
+      type: 'getting_started',
+      text: "Welcome to Unit 8 — Personal Recounts!\n\n🗣️ Talk with your partner:\n• What did you do last weekend?\n• Where did you go yesterday?\n• What was the BEST day you ever had?\n\nA RECOUNT is when you tell a true story about something that happened to YOU. Today we will learn how to write about our own experiences — in the right order, using past tense words, and adding our feelings!",
+      textVi: "Chào mừng đến Bài 8 — Kể lại chuyện cá nhân!\n\n🗣️ Nói chuyện với bạn:\n• Cuối tuần trước bạn làm gì?\n• Hôm qua bạn đi đâu?\n• Ngày TỐT NHẤT bạn từng có là ngày nào?\n\nKỂ LẠI là khi bạn kể một câu chuyện có thật về điều xảy ra với CHÍNH BẠN. Hôm nay chúng ta sẽ học cách viết về trải nghiệm — theo đúng thứ tự, dùng từ thì quá khứ, và thêm cảm xúc!"
+    },
+    {
+      sectionTitle: "8.2 A trip to the zoo",
       sectionTitleVi: "8.1 Một chuyến đi đến sở thú",
       type: "reading",
       text: "Yesterday, I went to the zoo with my family. First, we saw the tall giraffes. They were eating leaves from the trees. Next, we went to see the monkeys. The monkeys were very funny. They jumped and swung on the ropes. My brother laughed a lot. We had a great day at the zoo.",
@@ -621,7 +712,42 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       textVi: "Vào cuối bài kể lại, chúng ta thường viết về cảm giác của mình. Bạn có cảm thấy vui, buồn, hào hứng hay mệt mỏi không? Trong bài kể lại về sở thú, người viết cảm thấy đó là một 'ngày tuyệt vời'. Trong bài kể lại cuối tuần, người viết cảm thấy 'rất vui'. Việc thêm cảm xúc làm cho câu chuyện của bạn hay hơn."
     },
     {
-      sectionTitle: "8.6 Unit 8 Review",
+      sectionTitle: '8.7 Word Work: Past tense verbs',
+      sectionTitleVi: '8.7 Luyện từ: Động từ thì quá khứ',
+      type: 'word_work',
+      text: "PAST TENSE tells us something ALREADY happened.\n\nRegular verbs — add -ed:\nwalk → walked • play → played • visit → visited • help → helped\njump → jumped • laugh → laughed • plant → planted\n\nIrregular verbs — they change:\ngo → went • see → saw • eat → ate • drink → drank\nrun → ran • swim → swam • have → had • make → made\n\nTIME WORDS: yesterday, last week, on Saturday, this morning\n\n✏️ Change to past tense:\n1. I (walk) to school. → walked\n2. We (go) to the park. → went\n3. She (eat) a sandwich. → ate\n\n🌟 Challenge: Write 3 sentences about what you did yesterday!",
+      textVi: "THÌ QUÁ KHỨ cho biết điều gì ĐÃ xảy ra.\n\nĐộng từ có quy tắc — thêm -ed:\nwalk → walked • play → played • visit → visited • help → helped\njump → jumped • laugh → laughed • plant → planted\n\nĐộng từ bất quy tắc — chúng thay đổi:\ngo → went • see → saw • eat → ate • drink → drank\nrun → ran • swim → swam • have → had • make → made\n\nTỪ CHỈ THỜI GIAN: hôm qua, tuần trước, vào thứ Bảy, sáng nay\n\n✏️ Đổi sang quá khứ:\n1. I (walk) to school. → walked\n2. We (go) to the park. → went\n3. She (eat) a sandwich. → ate\n\n🌟 Thử thách: Viết 3 câu về điều bạn làm hôm qua!"
+    },
+    {
+      sectionTitle: '8.8 Comprehension',
+      sectionTitleVi: '8.8 Đọc hiểu',
+      type: 'comprehension',
+      text: "Let's check what you remember!\n\n❓ Questions:\n1. Where did the writer go with their family? (the zoo)\n2. What were the giraffes doing? (eating leaves)\n3. Why did the brother laugh? (the monkeys were funny)\n4. What did the writer do on Saturday? (helped dad in the garden)\n5. What is the past tense of 'go'? (went)\n\n🤔 Think deeper:\n• Why do we write events in ORDER?\n• Why is it good to add feelings at the end of a recount?",
+      textVi: "Hãy kiểm tra bạn nhớ được gì!\n\n❓ Câu hỏi:\n1. Người viết đi đâu với gia đình? (sở thú)\n2. Hươu cao cổ đang làm gì? (ăn lá)\n3. Tại sao em trai cười? (khỉ rất vui nhộn)\n4. Người viết làm gì vào thứ Bảy? (giúp bố trong vườn)\n5. Quá khứ của 'go' là gì? (went)\n\n🤔 Suy nghĩ sâu hơn:\n• Tại sao chúng ta viết sự kiện THEO THỨ TỰ?\n• Tại sao nên thêm cảm xúc vào cuối bài kể lại?"
+    },
+    {
+      sectionTitle: '8.9 Talk About: My best day',
+      sectionTitleVi: '8.9 Nói về: Ngày tuyệt nhất',
+      type: 'talk_about',
+      text: "🗣️ Speaking Activity — Tell your partner about your best day!\n\n1. Think of a great day you had (birthday, holiday, trip, family day).\n2. Tell your partner using past tense and time order:\n   First, I ___. Next, I ___. Then, I ___. Finally, I ___.\n3. End with how you FELT: I felt ___ because ___.\n\n👂 Listening: Ask your partner TWO questions about their day.\nExample questions: Where did you go? Who was with you? What was the best part?",
+      textVi: "🗣️ Hoạt động Nói — Kể cho bạn về ngày tuyệt nhất!\n\n1. Nghĩ về một ngày tuyệt vời (sinh nhật, nghỉ lễ, chuyến đi, ngày gia đình).\n2. Kể cho bạn dùng thì quá khứ và theo thứ tự:\n   Đầu tiên, tôi ___. Tiếp theo, tôi ___. Sau đó, tôi ___. Cuối cùng, tôi ___.\n3. Kết thúc với cảm xúc: Tôi cảm thấy ___ vì ___.\n\n👂 Lắng nghe: Hỏi bạn HAI câu về ngày của họ.\nCâu hỏi mẫu: Bạn đi đâu? Ai đi cùng? Phần nào hay nhất?"
+    },
+    {
+      sectionTitle: '8.10 Writing: My recount',
+      sectionTitleVi: '8.10 Viết: Bài kể lại của tôi',
+      type: 'writing',
+      text: "✏️ Write a recount about something you did!\n\nPlan:\n📅 When: Last weekend / Yesterday / On my birthday\n📍 Where: At the park / At school / At home\n👥 Who: With my family / With my friend\n\nWrite 4-5 sentences in order:\n1. When and where: On Saturday, I went to ___.\n2. First thing: First, I ___.\n3. Next thing: Next, I ___.\n4. Last thing: Finally, I ___.\n5. Feeling: I felt ___ because ___.\n\n🌟 Remember: use PAST TENSE! (walked, played, went, saw)",
+      textVi: "✏️ Viết bài kể lại về điều bạn đã làm!\n\nKế hoạch:\n📅 Khi nào: Cuối tuần trước / Hôm qua / Ngày sinh nhật\n📍 Ở đâu: Ở công viên / Ở trường / Ở nhà\n👥 Với ai: Với gia đình / Với bạn\n\nViết 4-5 câu theo thứ tự:\n1. Khi nào và ở đâu: Vào thứ Bảy, tôi đã đi đến ___.\n2. Việc đầu tiên: Đầu tiên, tôi ___.\n3. Việc tiếp theo: Tiếp theo, tôi ___.\n4. Việc cuối: Cuối cùng, tôi ___.\n5. Cảm xúc: Tôi cảm thấy ___ vì ___.\n\n🌟 Nhớ: dùng THÌ QUÁ KHỨ! (walked, played, went, saw)"
+    },
+    {
+      sectionTitle: '8.11 How did I do?',
+      sectionTitleVi: '8.11 Tôi làm được gì?',
+      type: 'self_check',
+      text: "Check what you can do!\n\n✅ I know what a recount is (a true story about the past)\n✅ I can use time words (yesterday, last week, on Saturday)\n✅ I can change verbs to past tense (walk→walked, go→went)\n✅ I can tell events in order (first, next, then, finally)\n✅ I can write about how I felt\n✅ I can write a 4-5 sentence recount\n\n⭐ How many did you tick?\n6 = Super writer! 🌟\n4-5 = Great work!\n2-3 = Keep practising!\n1 = Ask for help!",
+      textVi: "Kiểm tra bạn làm được gì!\n\n✅ Tôi biết kể lại là gì (câu chuyện thật về quá khứ)\n✅ Tôi dùng được từ chỉ thời gian (hôm qua, tuần trước, vào thứ Bảy)\n✅ Tôi đổi được động từ sang quá khứ (walk→walked, go→went)\n✅ Tôi kể sự kiện theo thứ tự (đầu tiên, tiếp, sau đó, cuối cùng)\n✅ Tôi viết được cảm xúc\n✅ Tôi viết được bài kể lại 4-5 câu\n\n⭐ Bạn tích được bao nhiêu?\n6 = Siêu nhà văn! 🌟\n4-5 = Giỏi lắm!\n2-3 = Tiếp tục luyện tập!\n1 = Hãy nhờ giúp đỡ!"
+    },
+    {
+      sectionTitle: "8.12 Unit 8 Review",
       sectionTitleVi: "8.6 Ôn tập Bài 8",
       type: "tip",
       text: "Well done! You have finished Unit 8 all about personal recounts.\n\nLet's review what we learned:\n✓ We learned what a recount is (a true story about the past).\n✓ We used words to show time: yesterday, on Saturday.\n✓ We learned about past tense verbs (walked, played, went).\n✓ We wrote events in the right order.\n✓ We added feelings to the end of our stories.\n\nKeep a diary! Write a short recount of your day every evening.",
@@ -633,7 +759,14 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
   // ══════════════════════════════════════════════════════════════
   'cam_g1_u09': [
     {
-      sectionTitle: "9.1 Rain on the roof",
+      sectionTitle: '9.1 Getting Started',
+      sectionTitleVi: '9.1 Khởi động',
+      type: 'getting_started',
+      text: "Welcome to Unit 9 — Weather Poems!\n\n🗣️ Talk with your partner:\n• What is the weather like today?\n• What sounds does rain make?\n• Do you like sunny days or rainy days better?\n\nPoets write about the weather because it is all around us. Weather poems use special SOUND WORDS (onomatopoeia) — words that sound like what they describe. Today we will read poems, learn sound words, and write our own weather poetry!",
+      textVi: "Chào mừng đến Bài 9 — Thơ thời tiết!\n\n🗣️ Nói chuyện với bạn:\n• Hôm nay thời tiết thế nào?\n• Mưa tạo ra âm thanh gì?\n• Bạn thích ngày nắng hay ngày mưa hơn?\n\nNhà thơ viết về thời tiết vì nó ở xung quanh ta. Thơ thời tiết dùng TỪ TƯỢNG THANH — từ nghe giống như điều chúng mô tả. Hôm nay chúng ta sẽ đọc thơ, học từ tượng thanh, và viết thơ thời tiết!"
+    },
+    {
+      sectionTitle: "9.2 Rain on the roof",
       sectionTitleVi: "9.1 Mưa trên mái nhà",
       type: "reading",
       text: "Pitter patter, pitter patter. The rain falls down. It falls on the trees. It falls on the town. Pitter patter, pitter patter. The rain hits the roof. I am warm inside. I am safe and dry. I like the sound of the rain.",
@@ -668,7 +801,42 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       textVi: "Một bài thơ Akrostic (thơ kết hợp chữ cái) sử dụng các chữ cái của một từ. Các chữ cái đi xuống theo trang. Hãy viết một bài thơ về chữ SUN (Mặt trời).\nS là Shining so bright (Chiếu sáng rực rỡ).\nU là Up in the sky (Lên cao trên bầu trời).\nN là Never cold (Không bao giờ lạnh).\nBạn có thể thử viết một bài thơ bằng tên của chính mình!"
     },
     {
-      sectionTitle: "9.6 Unit 9 Review",
+      sectionTitle: '9.7 Word Work: Sound words and weather adjectives',
+      sectionTitleVi: '9.7 Luyện từ: Từ tượng thanh và tính từ thời tiết',
+      type: 'word_work',
+      text: "SOUND WORDS (onomatopoeia) — words that sound like noises:\n🌧️ Rain: pitter patter, drip drop, splash\n💨 Wind: whoosh, howl, whistle\n⚡ Thunder: crash, boom, rumble\n\nWEATHER ADJECTIVES:\n☀️ Sunny: bright, warm, hot, clear\n🌧️ Rainy: wet, damp, grey, drizzly\n💨 Windy: strong, gentle, breezy, gusty\n❄️ Cold: freezing, chilly, icy, frosty\n\n✏️ Match the sound to the weather:\n1. Whoosh! = ___ (wind)\n2. Pitter patter = ___ (rain)\n3. Boom! = ___ (thunder)\n\n🌟 Challenge: Make up your OWN sound word for sunshine!",
+      textVi: "TỪ TƯỢNG THANH — từ nghe giống âm thanh:\n🌧️ Mưa: lộp bộp, tí tách, bắn tung\n💨 Gió: vù vù, rít, huýt\n⚡ Sấm: ầm, bùm, ì ì\n\nTÍNH TỪ THỜI TIẾT:\n☀️ Nắng: sáng, ấm, nóng, quang đãng\n🌧️ Mưa: ướt, ẩm, xám, lất phất\n💨 Gió: mạnh, nhẹ, hiu hiu, giật\n❄️ Lạnh: đóng băng, se lạnh, buốt, giá\n\n✏️ Nối âm thanh với thời tiết:\n1. Vù vù! = ___ (gió)\n2. Lộp bộp = ___ (mưa)\n3. Ầm! = ___ (sấm)\n\n🌟 Thử thách: Nghĩ ra từ tượng thanh cho nắng!"
+    },
+    {
+      sectionTitle: '9.8 Comprehension',
+      sectionTitleVi: '9.8 Đọc hiểu',
+      type: 'comprehension',
+      text: "Let's check what you learned!\n\n❓ Questions:\n1. What sound does rain make in the poem? (pitter patter)\n2. What does the wind blow off the trees? (leaves)\n3. Can we SEE the wind? (no, but we can feel it)\n4. What is a 'theme'? (the main idea of a poem)\n5. What does 'S' stand for in the SUN acrostic? (Shining so bright)\n\n🤔 Think deeper:\n• Why do poets use sound words?\n• What is YOUR favourite kind of weather? Why?",
+      textVi: "Hãy kiểm tra bạn học được gì!\n\n❓ Câu hỏi:\n1. Mưa tạo âm thanh gì trong bài thơ? (lộp bộp)\n2. Gió thổi gì khỏi cây? (lá)\n3. Chúng ta có THẤY gió không? (không, nhưng cảm nhận được)\n4. 'Chủ đề' là gì? (ý chính của bài thơ)\n5. Chữ 'S' đại diện cho gì trong thơ SUN? (Shining so bright)\n\n🤔 Suy nghĩ sâu hơn:\n• Tại sao nhà thơ dùng từ tượng thanh?\n• Thời tiết YÊU THÍCH của bạn là gì? Tại sao?"
+    },
+    {
+      sectionTitle: '9.9 Talk About: Weather report',
+      sectionTitleVi: '9.9 Nói về: Bản tin thời tiết',
+      type: 'talk_about',
+      text: "🗣️ Speaking Activity — Be a weather reporter!\n\n1. Look out the window (or imagine a type of weather).\n2. Give a weather report to your partner:\n   'Good morning! Today the weather is ___. The sky is ___. It feels ___.\n    You should wear ___.\n3. Use at least TWO adjectives!\n\n🎭 Act it out: Stand up and pretend you are on TV giving the weather report!\n\n👂 Listening: Did your partner use good describing words?",
+      textVi: "🗣️ Hoạt động Nói — Làm phát thanh viên thời tiết!\n\n1. Nhìn ra cửa sổ (hoặc tưởng tượng một loại thời tiết).\n2. Đưa bản tin thời tiết cho bạn:\n   'Chào buổi sáng! Hôm nay thời tiết ___. Bầu trời ___. Cảm giác ___.\n    Bạn nên mặc ___.\n3. Dùng ít nhất HAI tính từ!\n\n🎭 Diễn kịch: Đứng lên và giả vờ bạn đang trên TV đưa tin thời tiết!\n\n👂 Lắng nghe: Bạn có dùng từ miêu tả hay không?"
+    },
+    {
+      sectionTitle: '9.10 Writing: My weather poem',
+      sectionTitleVi: '9.10 Viết: Bài thơ thời tiết',
+      type: 'writing',
+      text: "✏️ Write your own weather poem!\n\nOption 1 — Acrostic poem: Pick a weather word (RAIN, WIND, SNOW, STORM) and write a line for each letter.\n\nR — Raindrops falling on my face\nA — All the puddles I can chase\nI — Inside I hear it on the glass\nN — Never stops until storms pass\n\nOption 2 — Sound poem: Use sound words to describe weather.\nDrip, drop, drip, drop,\nRain falls and will not stop!\nSplash goes my boot in a puddle deep,\nPitter patter helps me sleep.\n\n🌟 Read your poem to the class!",
+      textVi: "✏️ Viết bài thơ thời tiết!\n\nCách 1 — Thơ chữ cái đầu: Chọn từ thời tiết (RAIN, WIND, SNOW) và viết một dòng cho mỗi chữ cái.\n\nR — Raindrops falling on my face (Giọt mưa rơi trên mặt)\nA — All the puddles I can chase (Tất cả vũng nước tôi đuổi theo)\nI — Inside I hear it on the glass (Bên trong nghe mưa trên kính)\nN — Never stops until storms pass (Không ngừng đến khi bão qua)\n\nCách 2 — Thơ âm thanh: Dùng từ tượng thanh mô tả thời tiết.\n\n🌟 Đọc bài thơ cho cả lớp nghe!"
+    },
+    {
+      sectionTitle: '9.11 How did I do?',
+      sectionTitleVi: '9.11 Tôi làm được gì?',
+      type: 'self_check',
+      text: "Check what you can do!\n\n✅ I can name sound words (pitter patter, whoosh, crash)\n✅ I can describe the weather using adjectives\n✅ I know what a 'theme' is\n✅ I can give a weather report\n✅ I can write an acrostic poem\n✅ I can write a poem using sound words\n\n⭐ How many did you tick?\n6 = Weather poet! 🌟\n4-5 = Great work!\n2-3 = Keep writing!\n1 = Ask for help!",
+      textVi: "Kiểm tra bạn làm được gì!\n\n✅ Tôi kể được từ tượng thanh (lộp bộp, vù vù, ầm)\n✅ Tôi miêu tả được thời tiết bằng tính từ\n✅ Tôi biết 'chủ đề' là gì\n✅ Tôi đưa được bản tin thời tiết\n✅ Tôi viết được thơ chữ cái đầu\n✅ Tôi viết được thơ dùng từ tượng thanh\n\n⭐ Bạn tích được bao nhiêu?\n6 = Nhà thơ thời tiết! 🌟\n4-5 = Giỏi lắm!\n2-3 = Tiếp tục viết!\n1 = Hãy nhờ giúp đỡ!"
+    },
+    {
+      sectionTitle: "9.12 Unit 9 Review",
       sectionTitleVi: "9.6 Ôn tập Bài 9",
       type: "tip",
       text: "Brilliant! You have finished Unit 9 all about weather poems.\n\nLet's review what we learned:\n✓ We read poems about rain and wind.\n✓ We learned that 'theme' means the main idea.\n✓ We used words that sound like noises (pitter patter).\n✓ We used adjectives to describe the weather (bright, wet, cold).\n✓ We learned how to write an acrostic poem.\n\nKeep observing the weather! Look out the window and describe the weather every morning.",
