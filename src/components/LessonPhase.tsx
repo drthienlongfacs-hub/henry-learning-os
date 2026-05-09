@@ -240,7 +240,7 @@ export function buildIntlLessonFromData(
   data: IntlDataArrays,
 ): LessonContent {
   // Better hash with prime multiplication for good distribution
-  const hash = unitId.split('').reduce((acc, ch, i) => ((acc * 31) ^ ch.charCodeAt(0)) >>> 0, 0);
+  const hash = unitId.split('').reduce((acc, ch) => ((acc * 31) ^ ch.charCodeAt(0)) >>> 0, 0);
 
   // ── Check for unit-specific vocab override (theme-matched) ──
   const vocabOverride = UNIT_VOCAB_OVERRIDES[unitId];
@@ -290,6 +290,19 @@ export function buildIntlLessonFromData(
         content: [authenticReading.text],
         contentVi: [authenticReading.textVi],
       }];
+
+  if (unitSections.length > 1) {
+    return {
+      unitTitle: title, unitTitleVi: titleVi, grade, framework,
+      sections: [
+        {
+          type: 'vocabulary', title: `📚 Vocabulary: ${displayVocabTitle}`, titleVi: `📚 Từ vựng: ${displayVocabTitleVi}`,
+          content: displayWords.map((en, i) => `${en} — ${displayWordsVi[i] ?? en}`),
+        },
+        ...readingSections,
+      ],
+    };
+  }
 
   return {
     unitTitle: title, unitTitleVi: titleVi, grade, framework,

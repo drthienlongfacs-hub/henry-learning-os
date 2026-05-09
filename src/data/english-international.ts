@@ -641,7 +641,7 @@ export interface LearningTips {
 export const CAMBRIDGE_UNITS: CountryUnit[] = [
   { unitId: 'cam_g1_u01', grade: 1, unitNumber: 1, title: 'Playing with friends', titleVi: 'Chơi với bạn', framework: 'cambridge' },
   { unitId: 'cam_g1_u02', grade: 1, unitNumber: 2, title: 'Finding out and making', titleVi: 'Tìm hiểu và sáng tạo', framework: 'cambridge' },
-  { unitId: 'cam_g1_u03', grade: 1, unitNumber: 3, title: 'Nursery-rhyme time', titleVi: 'Thời gian đồng dao', framework: 'cambridge' },
+  { unitId: 'cam_g1_u03', grade: 1, unitNumber: 3, title: 'Rhyme time', titleVi: 'Thời gian vần điệu', framework: 'cambridge' },
   { unitId: 'cam_g1_u04', grade: 1, unitNumber: 4, title: 'Joining-in stories', titleVi: 'Kể chuyện cùng nhau', framework: 'cambridge' },
   { unitId: 'cam_g1_u05', grade: 1, unitNumber: 5, title: 'Reading to find out', titleVi: 'Đọc để tìm hiểu', framework: 'cambridge' },
   { unitId: 'cam_g1_u06', grade: 1, unitNumber: 6, title: 'Rhyme time 2', titleVi: 'Vần điệu 2', framework: 'cambridge' },

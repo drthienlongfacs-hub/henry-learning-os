@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ChevronRight, Lightbulb, Trophy, CheckCircle, Star, Play, BookOpen } from 'lucide-react';
 import { FUTURE_SKILL_AXES, BLUE_OCEAN_PROFILE } from '@/data/future-skills';
@@ -8,6 +8,10 @@ import { ACTIVITY_GAMES, ACTIVITY_SAMPLES } from '@/data/future-skills-games';
 import { SortingGame, SequenceGame, MatchingGame, ProgressRing, SampleGallery, StarRating } from '@/components/future/InteractiveGames';
 
 type View = 'home' | 'axis' | 'activity';
+type SortingGameConfig = Omit<React.ComponentProps<typeof SortingGame>, 'onComplete'>;
+type SequenceGameConfig = Omit<React.ComponentProps<typeof SequenceGame>, 'onComplete'>;
+type MatchingGameConfig = Omit<React.ComponentProps<typeof MatchingGame>, 'onComplete'>;
+
 function getProgress(): Record<string, boolean> {
   if (typeof window === 'undefined') return {};
   try { return JSON.parse(localStorage.getItem('fs_progress') || '{}'); } catch { return {}; }
@@ -27,11 +31,9 @@ export default function FutureSkillsPage() {
   const [score, setScore] = useState(0);
   const [stepIdx, setStepIdx] = useState(0);
   const [showCelebration, setShowCelebration] = useState(false);
-  const [progress, setProgress] = useState<Record<string, boolean>>({});
-  const [grade, setGrade] = useState(1);
+  const [progress, setProgress] = useState<Record<string, boolean>>(() => getProgress());
+  const [grade] = useState(() => getGrade());
   const [gameScore, setGameScore] = useState<number | null>(null);
-
-  useEffect(() => { setProgress(getProgress()); setGrade(getGrade()); }, []);
 
   const axis = FUTURE_SKILL_AXES.find(a => a.id === axisId);
   const content = actKey ? ACTIVITY_CONTENT[actKey] : null;
@@ -204,9 +206,9 @@ export default function FutureSkillsPage() {
           {game && gameScore === null && (
             <>
               <h3 style={{ color: '#e2e8f0', fontSize: 16, fontWeight: 700, margin: '16px 0 10px' }}>🎮 Trò chơi tương tác</h3>
-              {game.type === 'sort' && <SortingGame {...game.config as any} onComplete={(s: number) => setGameScore(s)} />}
-              {game.type === 'sequence' && <SequenceGame {...game.config as any} onComplete={(s: number) => setGameScore(s)} />}
-              {game.type === 'match' && <MatchingGame {...game.config as any} onComplete={(s: number) => setGameScore(s)} />}
+              {game.type === 'sort' && <SortingGame {...game.config as SortingGameConfig} onComplete={(s: number) => setGameScore(s)} />}
+              {game.type === 'sequence' && <SequenceGame {...game.config as SequenceGameConfig} onComplete={(s: number) => setGameScore(s)} />}
+              {game.type === 'match' && <MatchingGame {...game.config as MatchingGameConfig} onComplete={(s: number) => setGameScore(s)} />}
             </>
           )}
           {gameScore !== null && (

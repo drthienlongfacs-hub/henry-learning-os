@@ -101,17 +101,9 @@ export interface AuthenticSection {
 
 export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
   // ══════════════════════════════════════════════════════════════
-  // CAMBRIDGE G1 U03: Nursery-rhyme time
+  // CAMBRIDGE G1 U03: Rhyme time
   // ══════════════════════════════════════════════════════════════
   'cam_g1_u03': [
-    {
-      sectionTitle: '3.1 Getting Started',
-      sectionTitleVi: '3.1 Khởi động',
-      type: 'getting_started',
-      skillRefs: ['1SLs.01', '1SLg.04', '1SLr.01'],
-      text: "Welcome to Rhyme Time! Before we begin, let's talk together.\n\n🗣️ Talk with your partner:\n• Do you know any rhymes or songs? Say one!\n• What makes words sound the same? (cat — hat)\n• Can you clap along to a beat?\n\nToday we will learn about RHYMES — words that sound alike at the end. Listen carefully and join in!",
-      textVi: "Chào mừng đến với Thời gian Vần điệu! Trước khi bắt đầu, hãy cùng nói chuyện.\n\n🗣️ Nói chuyện với bạn:\n• Bạn có biết bài vần hoặc bài hát nào không? Hãy đọc lên!\n• Điều gì làm cho các từ nghe giống nhau? (cat — hat)\n• Bạn có thể vỗ tay theo nhịp không?\n\nHôm nay chúng ta sẽ học về VẦN — các từ có âm cuối giống nhau. Hãy lắng nghe cẩn thận và cùng tham gia!"
-    },
     {
       sectionTitle: '3.1 Rhyme time',
       sectionTitleVi: '3.1 Thời gian vần điệu',
@@ -145,44 +137,12 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       textVi: "Tôi thấy một con bò tím,\nTôi chưa bao giờ thấy trước đây.\nTôi không hy vọng thấy,\nNhưng tôi có thể nói thêm —\nTôi thà thấy nó hơn là làm nó!\n\nCác bài vần ngớ ngẩn chơi với từ theo cách vô nghĩa. Chúng khiến ta cười vì quá kỳ lạ! Một con bò tím? Thật là ngớ ngẩn!\n\nHãy chơi trò vần ngớ ngẩn. Tôi nói một từ, bạn tìm từ vần:\n• jelly → belly (thạch → bụng)\n• wiggly → jiggly (lắc lư → rung rinh)\n• funny → bunny (buồn cười → thỏ)\n• crazy → lazy (điên → lười)\n\nBây giờ hãy đặt một câu ngớ ngẩn: \"Tôi thấy một miếng thạch rung rinh lắc lư trên bụng của một chú thỏ!\""
     },
     {
-      sectionTitle: '3.6 Word Work: Rhyming families',
-      sectionTitleVi: '3.6 Luyện từ: Họ vần',
-      type: 'word_work',
-      skillRefs: ['1Rw.01', '1Rw.02', '1Rw.05', '1Ww.01', '1Ww.05'],
-      text: "Words that share the same ending sound belong to a RHYMING FAMILY.\n\n🔤 The -at family: cat, hat, mat, sat, bat, rat, fat, flat\n🔤 The -ock family: dock, clock, rock, sock, lock, knock, block\n🔤 The -oon family: moon, spoon, soon, noon, balloon\n🔤 The -en family: hen, ten, pen, den, men, when, then\n\n✏️ Practice:\n1. I sat on a ___ (mat / map)\n2. The ___ says tick-tock (clock / cloud)\n3. I can see the ___ at night (moon / mood)\n4. Count to ___ (ten / tan)\n\n🌟 Challenge: Can you think of THREE words in the -ig family? (big, dig, pig, fig, wig...)",
-      textVi: "Các từ có âm cuối giống nhau thuộc cùng một HỌ VẦN.\n\n🔤 Họ -at: cat, hat, mat, sat, bat, rat, fat, flat\n🔤 Họ -ock: dock, clock, rock, sock, lock, knock, block\n🔤 Họ -oon: moon, spoon, soon, noon, balloon\n🔤 Họ -en: hen, ten, pen, den, men, when, then\n\n✏️ Luyện tập:\n1. I sat on a ___ (mat / map) — Tôi ngồi trên ___\n2. The ___ says tick-tock (clock / cloud) — Cái ___ kêu tích tắc\n3. I can see the ___ at night (moon / mood) — Tôi thấy ___ vào ban đêm\n4. Count to ___ (ten / tan) — Đếm đến ___\n\n🌟 Thử thách: Bạn có thể nghĩ ra BA từ thuộc họ -ig không? (big, dig, pig, fig, wig...)"
-    },
-    {
       sectionTitle: '3.5 A rhyme that tells a story',
       sectionTitleVi: '3.5 Bài vần kể chuyện',
       type: 'story',
       skillRefs: ['1Ri.01', '1Ri.02', '1Ri.07', '1SLp.01'],
       text: "Fire! Fire! said Mrs McGuire.\nWhere? Where? said Mrs Hare.\nDown town! said Mrs Brown.\nTurn the corner! said Mrs Warner.\nHere it is! said Mrs Fizz.\nPut it out! said Mrs Pout.\nI can't! said Mrs Rant.\nCall the fire brigade! said Mrs Jade.\nGet the hose! said Mrs Rose.\nToo late! said Mrs Fate.\n\nThis rhyme tells a story — a fire breaks out and people try to help! Each line has a new character and a rhyme. Notice:\n• McGuire — Fire\n• Hare — Where\n• Brown — town\n• Warner — corner\n\nA narrative rhyme uses rhyme to tell a story from beginning to end.",
       textVi: "Cháy! Cháy! bà McGuire nói.\nỞ đâu? Ở đâu? bà Hare hỏi.\nDưới phố! bà Brown nói.\nRẽ góc! bà Warner nói.\nĐây rồi! bà Fizz nói.\nDập đi! bà Pout nói.\nTôi không thể! bà Rant nói.\nGọi đội cứu hỏa! bà Jade nói.\nLấy vòi nước! bà Rose nói.\nMuộn rồi! bà Fate nói.\n\nBài vần này kể một câu chuyện — có hỏa hoạn và mọi người cố giúp đỡ! Mỗi dòng có một nhân vật mới và một vần. Chú ý:\n• McGuire — Fire (Lửa)\n• Hare — Where (Ở đâu)\n• Brown — town (phố)\n• Warner — corner (góc)\n\nBài vần kể chuyện dùng vần điệu để kể một câu chuyện từ đầu đến cuối."
-    },
-    {
-      sectionTitle: '3.8 Comprehension',
-      sectionTitleVi: '3.8 Đọc hiểu',
-      type: 'comprehension',
-      skillRefs: ['1Ri.05', '1Ri.07', '1Ri.09', '1SLs.02'],
-      text: "Let's check how well you understood the rhymes!\n\n❓ Questions:\n1. In 'Hickory Dickory Dock', what did the mouse run up? (a clock)\n2. Which two words rhyme: 'four' and ___? (door)\n3. In the funny rhyme, what jumped over the moon? (the cow)\n4. In 'Fire! Fire!', who said 'Get the hose'? (Mrs Rose)\n5. What makes a rhyme SILLY? (It has nonsense or impossible things)\n\n🤔 Think deeper:\n• Why do rhymes help us remember things?\n• Which was your favourite rhyme? Why?",
-      textVi: "Hãy kiểm tra xem bạn hiểu các bài vần tốt như thế nào!\n\n❓ Câu hỏi:\n1. Trong 'Hickory Dickory Dock', chú chuột chạy lên cái gì? (đồng hồ)\n2. Hai từ nào vần với nhau: 'four' và ___? (door)\n3. Trong bài vần vui, con gì nhảy qua mặt trăng? (con bò)\n4. Trong 'Cháy! Cháy!', ai nói 'Lấy vòi nước'? (bà Rose)\n5. Điều gì làm cho bài vần NGỚ NGẨN? (Có những điều vô nghĩa hoặc không thể)\n\n🤔 Suy nghĩ sâu hơn:\n• Tại sao vần điệu giúp chúng ta nhớ mọi thứ?\n• Bài vần yêu thích của bạn là bài nào? Tại sao?"
-    },
-    {
-      sectionTitle: '3.9 Talk About: Share your rhyme',
-      sectionTitleVi: '3.9 Nói về: Chia sẻ bài vần',
-      type: 'talk_about',
-      skillRefs: ['1SLg.01', '1SLg.04', '1SLp.01', '1SLp.02'],
-      text: "🗣️ Speaking Activity — Work with a partner!\n\n1. Choose your FAVOURITE rhyme from this unit.\n2. Practise saying it aloud — use a clear voice!\n3. Clap or tap the RHYTHM as you say it.\n4. Tell your partner WHY you like it.\n\n🎭 Challenge: Can you ACT OUT a rhyme? Use your hands and face!\n• For 'Hickory Dickory Dock' — pretend to be the mouse!\n• For 'Hey Diddle Diddle' — pretend to be the cow jumping!\n\n👂 Listening: While your partner speaks, listen carefully. Can you hear the rhyming words?",
-      textVi: "🗣️ Hoạt động Nói — Làm việc với bạn!\n\n1. Chọn bài vần YÊU THÍCH của bạn trong bài này.\n2. Luyện đọc to — dùng giọng rõ ràng!\n3. Vỗ tay theo NHỊP khi bạn đọc.\n4. Nói cho bạn nghe TẠI SAO bạn thích nó.\n\n🎭 Thử thách: Bạn có thể DIỄN bài vần không? Dùng tay và biểu cảm khuôn mặt!\n• Cho 'Hickory Dickory Dock' — giả vờ làm chú chuột!\n• Cho 'Hey Diddle Diddle' — giả vờ là con bò nhảy!\n\n👂 Lắng nghe: Khi bạn nói, hãy lắng nghe cẩn thận. Bạn có nghe thấy các từ vần không?"
-    },
-    {
-      sectionTitle: '3.10 Writing: Make your own rhyme',
-      sectionTitleVi: '3.10 Viết: Tạo bài vần riêng',
-      type: 'writing',
-      skillRefs: ['1Ws.01', '1Ww.01', '1Ww.05'],
-      text: "Now it is YOUR turn to be a poet!\n\n✏️ Step 1: Pick a word family: -at, -ock, -oon, or -en\n✏️ Step 2: Write 3 words from that family\n✏️ Step 3: Use them in a short rhyme!\n\nExample with -at:\nI have a cat,\nHe wears a hat,\nHe sat on a mat,\nWhat do you think of that?\n\n📝 Now YOU try! Start with:\nI saw a ___ (pick a -ock word)\nIt sat on a ___ (pick another -ock word)\n\n🌟 Remember:\n• Rhyming words go at the END of the line\n• Keep it short — 4 lines is great!\n• It can be funny or silly!",
-      textVi: "Bây giờ đến LƯỢT BẠN làm nhà thơ!\n\n✏️ Bước 1: Chọn một họ vần: -at, -ock, -oon, hoặc -en\n✏️ Bước 2: Viết 3 từ thuộc họ đó\n✏️ Bước 3: Dùng chúng trong một bài vần ngắn!\n\nVí dụ với -at:\nI have a cat, (Tôi có một con mèo)\nHe wears a hat, (Nó đội một cái mũ)\nHe sat on a mat, (Nó ngồi trên tấm thảm)\nWhat do you think of that? (Bạn nghĩ sao?)\n\n📝 Giờ BẠN thử! Bắt đầu với:\nI saw a ___ (chọn từ thuộc họ -ock)\nIt sat on a ___ (chọn từ -ock khác)\n\n🌟 Nhớ nhé:\n• Từ vần đặt ở CUỐI dòng\n• Viết ngắn thôi — 4 dòng là tuyệt!\n• Có thể vui nhộn hoặc ngớ ngẩn!"
     },
     {
       sectionTitle: '3.6 Changing a rhyme',
@@ -193,15 +153,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       textVi: "Bây giờ đến LƯỢT BẠN làm nhà thơ! Hãy thay đổi một bài vần mà ta biết.\n\nBản gốc:\nHickory dickory dock, chú chuột chạy lên đồng hồ.\n\nHãy thay đổi:\nHickory dickory dare, chú chuột chạy lên cầu thang!\nHickory dickory dop, chú chuột chạy đến cửa hàng!\nHickory dickory doon, chú chuột bay lên mặt trăng!\n\nCác bước thay đổi bài vần:\n1. Chọn một bài vần bạn biết rõ.\n2. Chọn từ cuối cùng của một dòng.\n3. Nghĩ ra một từ mới có vần với nó.\n4. Thay đổi dòng cho phù hợp!\n\nThử thay đổi \"Jack and Jill went up the hill\" — từ gì vần với 'hill'? Bill? Grill? Chill?"
     },
     {
-      sectionTitle: '3.12 How did I do?',
-      sectionTitleVi: '3.12 Tôi làm được gì?',
-      type: 'self_check',
-      skillRefs: ['1SLr.01'],
-      text: "Check what you can do! Read each sentence and think: Can I do this?\n\n✅ I can hear rhyming words (cat/hat, moon/spoon)\n✅ I can say at least 3 rhyming words in a family (-at: cat, hat, mat)\n✅ I can recite a rhyme from memory\n✅ I can clap the rhythm of a rhyme\n✅ I can spot the rhyming words in a new poem\n✅ I can change words in a rhyme to make a new one\n✅ I can write my own short rhyme\n\n⭐ How many did you tick?\n7 = Amazing poet! 🌟\n5-6 = Great work! Keep practising!\n3-4 = Good start! Read more rhymes!\n1-2 = Ask for help and try again!",
-      textVi: "Kiểm tra xem bạn làm được gì! Đọc từng câu và suy nghĩ: Tôi có thể làm điều này không?\n\n✅ Tôi có thể nghe các từ vần (cat/hat, moon/spoon)\n✅ Tôi có thể nói ít nhất 3 từ vần trong một họ (-at: cat, hat, mat)\n✅ Tôi có thể đọc thuộc một bài vần\n✅ Tôi có thể vỗ tay theo nhịp của bài vần\n✅ Tôi có thể tìm từ vần trong bài thơ mới\n✅ Tôi có thể thay đổi từ trong bài vần để tạo bài mới\n✅ Tôi có thể viết bài vần ngắn của riêng mình\n\n⭐ Bạn tích được bao nhiêu?\n7 = Nhà thơ tuyệt vời! 🌟\n5-6 = Giỏi lắm! Tiếp tục luyện tập!\n3-4 = Khởi đầu tốt! Đọc thêm bài vần nhé!\n1-2 = Hãy nhờ giúp đỡ và thử lại!"
-    },
-    {
-      sectionTitle: '3.13 Unit 3 Review',
+      sectionTitle: '3.7 Unit 3 Review',
       sectionTitleVi: '3.7 Ôn tập Bài 3',
       type: 'review',
       skillRefs: ['1Ri.06', '1SLr.01'],

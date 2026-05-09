@@ -262,6 +262,7 @@ test('Child learning engine starts a real science lesson from the topic card', a
     await page.waitForLoadState('networkidle', { timeout: 5_000 }).catch(() => undefined);
     await page.getByText('Khoa học', { exact: true }).first().click();
     await page.getByRole('button', { name: /Cơ thể & Sức khỏe/ }).click();
+    await page.getByRole('button', { name: /Bắt đầu luyện tập/ }).click();
 
     await expect(page.getByText(/\?$/).first()).toBeVisible();
     await expect(page.getByRole('button', { name: /^Gợi ý$/ })).toBeVisible();
@@ -301,7 +302,7 @@ test('International curriculum unit opens focused lesson without falling back to
     await expect(page).toHaveURL(new RegExp(`${UI_SMOKE_BASE_PATH}/child/learn/\\?subject=english&topic=cam_g1_u01$`));
     await expect(page.locator('body')).toContainText('BÀI HỌC');
     await expect(page.locator('body')).toContainText('Playing with friends');
-    await expect(page.locator('body')).toContainText('Từ vựng chính');
+    await expect(page.locator('body')).toContainText('Từ vựng:');
     await expect(page.locator('body')).not.toContainText('Chọn chủ đề để bắt đầu câu hỏi đầu tiên.');
     await expect(page.locator('body')).not.toContainText('Luyện tập hỗn hợp lớp 1');
     expect(pageErrors).toEqual([]);
