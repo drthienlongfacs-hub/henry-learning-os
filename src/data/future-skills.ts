@@ -7,8 +7,8 @@ export interface FutureSkillAxis {
   color: string; gradient: string;
   desc: string; descVi: string;
   ageRange: string;
-  frameworks: { name: string; org: string; year: string }[];
-  developmentalMilestones: { age: string; milestone: string; evidence: string }[];
+  frameworks: { name: string; org: string; year: string; description?: string; evidenceLink?: string }[];
+  developmentalMilestones: { age: string; milestone: string; evidence: string; actionableTip?: string }[];
   activities: { title: string; titleVi: string; grade: number; type: string; competencyLevel: 'Understanding' | 'Applying' | 'Creating' }[];
   competitions: { name: string; age: string; value: string; description: string; skills: string[]; action: string }[];
   tips: string[];
@@ -22,12 +22,12 @@ export const FUTURE_SKILL_AXES: FutureSkillAxis[] = [
     descVi: 'Hiểu AI an toàn, có trách nhiệm và sáng tạo (UNESCO)',
     ageRange: '6-10',
     frameworks: [
-      { name: 'AI Competency Framework for Students', org: 'UNESCO', year: '2024' },
-      { name: 'Future of Jobs Report', org: 'WEF', year: '2025' }
+      { name: 'AI Competency Framework for Students', org: 'UNESCO', year: '2024', description: 'Khung năng lực AI toàn cầu giúp học sinh hiểu cách AI hoạt động, tương tác an toàn và sáng tạo với AI.', evidenceLink: 'https://unesdoc.unesco.org/' },
+      { name: 'Future of Jobs Report', org: 'WEF', year: '2025', description: 'Báo cáo Tương lai Việc làm nhấn mạnh Tư duy Phân tích (Analytical Thinking) là kỹ năng cốt lõi số 1 của thập kỷ tới.', evidenceLink: 'https://www.weforum.org/reports/' }
     ],
     developmentalMilestones: [
-      { age: '6-8', milestone: 'Hiểu khái niệm nhân-quả (cause-and-effect)', evidence: 'Concrete Operational Stage (Piaget) - Bắt đầu tư duy logic với vật thể cụ thể.' },
-      { age: '9-10', milestone: 'Nhận dạng quy luật phức tạp và tạo ra giải pháp (Creating)', evidence: 'Phát triển năng lực "Analytical thinking" (WEF 2025 Core Skills).' }
+      { age: '6-8', milestone: 'Hiểu khái niệm nhân-quả (cause-and-effect)', evidence: 'Concrete Operational Stage (Piaget) - Bắt đầu tư duy logic với vật thể cụ thể.', actionableTip: 'Cho bé chơi xếp khối gỗ hoặc ScratchJr để thấy rõ nguyên nhân - kết quả.' },
+      { age: '9-10', milestone: 'Nhận dạng quy luật phức tạp và tạo ra giải pháp (Creating)', evidence: 'Phát triển năng lực "Analytical thinking" (WEF 2025 Core Skills).', actionableTip: 'Thử thách bé phân tích biểu đồ đơn giản hoặc tự tạo luật chơi board game mới.' }
     ],
     activities: [
       { title: 'Algorithmic Thinking Games', titleVi: 'Trò chơi tư duy thuật toán', grade: 1, type: 'interactive', competencyLevel: 'Understanding' },
@@ -63,12 +63,12 @@ export const FUTURE_SKILL_AXES: FutureSkillAxis[] = [
     descVi: 'Chiến lược Tăng trưởng Xanh VN 2021-2030 + Kỹ năng Xanh UNDP',
     ageRange: '6-10',
     frameworks: [
-      { name: 'Green Skills for Youth', org: 'UNDP', year: '2023' },
-      { name: 'Green Growth Strategy', org: 'Vietnam Gov', year: '2021-2030' }
+      { name: 'Green Skills for Youth', org: 'UNDP', year: '2023', description: 'Khung Kỹ năng Xanh của Liên Hợp Quốc hướng dẫn thế hệ trẻ chuyển đổi tư duy bền vững và hành động sinh thái.', evidenceLink: 'https://www.undp.org/' },
+      { name: 'Green Growth Strategy', org: 'Vietnam Gov', year: '2021-2030', description: 'Chiến lược Quốc gia về Tăng trưởng Xanh, định hướng công dân tương lai thích ứng với biến đổi khí hậu.', evidenceLink: 'https://chinhphu.vn/' }
     ],
     developmentalMilestones: [
-      { age: '6-8', milestone: 'Nhận thức môi trường xung quanh và hành động nhỏ', evidence: 'Phát triển năng lực "Tạo giá trị mới" (Creating New Value - OECD 2030).' },
-      { age: '9-10', milestone: 'Hiểu hệ thống sinh thái và tác động (Systems Thinking)', evidence: 'Năng lực cốt lõi WEF 2025 (Resilience, Flexibility, Agility) trong giải quyết bài toán tài nguyên.' }
+      { age: '6-8', milestone: 'Nhận thức môi trường xung quanh và hành động nhỏ', evidence: 'Phát triển năng lực "Tạo giá trị mới" (Creating New Value - OECD 2030).', actionableTip: 'Giao cho bé nhiệm vụ quản lý công tắc điện hoặc phân loại rác thải nhựa tại nhà.' },
+      { age: '9-10', milestone: 'Hiểu hệ thống sinh thái và tác động (Systems Thinking)', evidence: 'Năng lực cốt lõi WEF 2025 (Resilience, Flexibility, Agility) trong giải quyết bài toán tài nguyên.', actionableTip: 'Cùng bé vẽ sơ đồ vòng đời của một chai nhựa từ lúc mua đến lúc tái chế.' }
     ],
     activities: [
       { title: 'Waste Sorting at Home', titleVi: 'Phân loại rác tại nhà', grade: 1, type: 'project', competencyLevel: 'Applying' },
@@ -100,12 +100,12 @@ export const FUTURE_SKILL_AXES: FutureSkillAxis[] = [
     descVi: 'Nền tảng phương pháp khoa học — Hỏi → Dự đoán → Quan sát → Kết luận',
     ageRange: '6-10',
     frameworks: [
-      { name: 'PISA Scientific Literacy', org: 'OECD', year: '2025' },
-      { name: 'Curiosity & Lifelong Learning', org: 'WEF', year: '2025' }
+      { name: 'PISA Scientific Literacy', org: 'OECD', year: '2025', description: 'Đánh giá năng lực sử dụng kiến thức khoa học để giải thích các hiện tượng, đánh giá và thiết kế nghiên cứu khoa học.', evidenceLink: 'https://www.oecd.org/pisa/' },
+      { name: 'Curiosity & Lifelong Learning', org: 'WEF', year: '2025', description: 'Sự tò mò và học tập suốt đời là động lực chính để thích ứng với thế giới VUCA (Biến động, Bất trắc, Phức tạp, Mơ hồ).', evidenceLink: 'https://www.weforum.org/' }
     ],
     developmentalMilestones: [
-      { age: '6-8', milestone: 'Chuyển từ tư duy cảm tính sang tư duy nhân-quả', evidence: 'Piaget Concrete Operational Stage. Khả năng thiết lập giả thuyết (Predict).' },
-      { age: '9-10', milestone: 'Kiểm chứng độc lập và ghi nhận dữ liệu khách quan', evidence: 'Phát triển "Analytical Thinking" và "Complex Problem-Solving" (WEF).' }
+      { age: '6-8', milestone: 'Chuyển từ tư duy cảm tính sang tư duy nhân-quả', evidence: 'Piaget Concrete Operational Stage. Khả năng thiết lập giả thuyết (Predict).', actionableTip: 'Khi bé hỏi "Tại sao?", hãy hỏi ngược lại: "Con thử đoán xem tại sao?" để kích thích dự đoán.' },
+      { age: '9-10', milestone: 'Kiểm chứng độc lập và ghi nhận dữ liệu khách quan', evidence: 'Phát triển "Analytical Thinking" và "Complex Problem-Solving" (WEF).', actionableTip: 'Hướng dẫn bé dùng thước đo hoặc đồng hồ bấm giờ để kiểm chứng thay vì dùng cảm giác.' }
     ],
     activities: [
       { title: 'Ask a Question', titleVi: 'Đặt câu hỏi khoa học', grade: 1, type: 'thinking', competencyLevel: 'Understanding' },
@@ -136,12 +136,12 @@ export const FUTURE_SKILL_AXES: FutureSkillAxis[] = [
     descVi: 'Tiếng Anh là công cụ làm việc — không chỉ tiếng Anh thi cử',
     ageRange: '6-10',
     frameworks: [
-      { name: 'CEFR Framework', org: 'Council of Europe', year: '2020' },
-      { name: 'Leadership & Social Influence', org: 'WEF', year: '2025' }
+      { name: 'CEFR Framework', org: 'Council of Europe', year: '2020', description: 'Khung tham chiếu ngôn ngữ chung Châu Âu, đánh giá chuẩn xác năng lực sử dụng ngôn ngữ trong giao tiếp thực tế.', evidenceLink: 'https://www.coe.int/en/web/common-european-framework-reference-languages' },
+      { name: 'Leadership & Social Influence', org: 'WEF', year: '2025', description: 'Lãnh đạo và Ảnh hưởng xã hội đòi hỏi khả năng giao tiếp truyền cảm hứng và thuyết phục.', evidenceLink: 'https://www.weforum.org/' }
     ],
     developmentalMilestones: [
-      { age: '6-8', milestone: 'Kể chuyện mạch lạc và mở rộng vốn từ', evidence: 'Giai đoạn phát triển ngôn ngữ tăng tốc; xây dựng sự tự tin (Show & Tell).' },
-      { age: '9-10', milestone: 'Thuyết phục và tranh luận dựa trên lập luận', evidence: 'Phát triển "Creative Thinking" và "Leadership" (WEF).' }
+      { age: '6-8', milestone: 'Kể chuyện mạch lạc và mở rộng vốn từ', evidence: 'Giai đoạn phát triển ngôn ngữ tăng tốc; xây dựng sự tự tin (Show & Tell).', actionableTip: 'Tổ chức các buổi "Show and Tell" tại nhà 5 phút mỗi cuối tuần.' },
+      { age: '9-10', milestone: 'Thuyết phục và tranh luận dựa trên lập luận', evidence: 'Phát triển "Creative Thinking" và "Leadership" (WEF).', actionableTip: 'Khuyến khích bé tự bảo vệ quan điểm (VD: Tại sao nên mua cuốn sách này?) bằng 3 lý do logic.' }
     ],
     activities: [
       { title: 'Show and Tell (EN)', titleVi: 'Kể và Trình bày (tiếng Anh)', grade: 1, type: 'speaking', competencyLevel: 'Applying' },
@@ -172,12 +172,12 @@ export const FUTURE_SKILL_AXES: FutureSkillAxis[] = [
     descVi: 'Năng lực tự chủ (OECD) + Kỹ năng chuyển đổi (UNICEF)',
     ageRange: '6-10',
     frameworks: [
-      { name: 'Learning Compass 2030 (Agency)', org: 'OECD', year: '2030' },
-      { name: 'Transferable Skills Framework', org: 'UNICEF', year: '2019' }
+      { name: 'Learning Compass 2030 (Agency)', org: 'OECD', year: '2030', description: 'Năng lực Tự chủ (Student Agency) - khả năng học sinh tự định hướng cuộc đời và tạo ra tác động tích cực đến xã hội.', evidenceLink: 'https://www.oecd.org/education/2030-project/' },
+      { name: 'Transferable Skills Framework', org: 'UNICEF', year: '2019', description: 'Kỹ năng chuyển đổi bao gồm sự đồng cảm, giải quyết vấn đề và tư duy phản biện - cốt lõi để thành công toàn diện.', evidenceLink: 'https://www.unicef.org/' }
     ],
     developmentalMilestones: [
-      { age: '6-8', milestone: 'Nhận diện cảm xúc (Empathy) và chịu trách nhiệm cá nhân', evidence: 'Trẻ chuyển sang trung tâm xã hội (Social Circle Expansion), hình thành Moral Compass.' },
-      { age: '9-10', milestone: 'Giải quyết mâu thuẫn và tạo tác động cộng đồng', evidence: 'Năng lực "Reconciling Tensions and Dilemmas" (OECD).' }
+      { age: '6-8', milestone: 'Nhận diện cảm xúc (Empathy) và chịu trách nhiệm cá nhân', evidence: 'Trẻ chuyển sang trung tâm xã hội (Social Circle Expansion), hình thành Moral Compass.', actionableTip: 'Gọi tên cảm xúc của con: "Mẹ thấy con đang rất giận dữ vì...", giúp con xây dựng vốn từ vựng cảm xúc.' },
+      { age: '9-10', milestone: 'Giải quyết mâu thuẫn và tạo tác động cộng đồng', evidence: 'Năng lực "Reconciling Tensions and Dilemmas" (OECD).', actionableTip: 'Để con tự giải quyết xung đột với bạn bè thay vì can thiệp ngay lập tức.' }
     ],
     activities: [
       { title: 'Empathy Activities', titleVi: 'Hoạt động đồng cảm', grade: 1, type: 'social', competencyLevel: 'Understanding' },

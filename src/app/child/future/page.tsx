@@ -36,9 +36,37 @@ export default function FutureSkillsPage() {
   const [grade] = useState(() => getGrade());
   const [gameScore, setGameScore] = useState<number | null>(null);
   const [selectedCompetition, setSelectedCompetition] = useState<any>(null);
+  const [selectedFramework, setSelectedFramework] = useState<any>(null);
+  const [selectedMilestone, setSelectedMilestone] = useState<any>(null);
 
   const axis = FUTURE_SKILL_AXES.find(a => a.id === axisId);
-  const content = actKey ? ACTIVITY_CONTENT[actKey] : null;
+  const content = actKey ? (ACTIVITY_CONTENT[actKey] || {
+    activityKey: actKey,
+    intro: 'This is an interactive learning module designed to build future-ready competencies.',
+    introVi: 'Đây là module học tập tương tác giúp phát triển các năng lực cốt lõi cho tương lai.',
+    steps: [
+      { instruction: 'Review the foundational theory and guidelines.', instructionVi: 'Đọc kỹ lý thuyết nền tảng và các hướng dẫn.', emoji: '📖' },
+      { instruction: 'Apply this concept to a real-world scenario.', instructionVi: 'Áp dụng khái niệm này vào một tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your outcome and discuss with your family.', instructionVi: 'Suy ngẫm về kết quả và thảo luận với gia đình.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is this skill important for your future development?',
+        questionVi: 'Vì sao kỹ năng này quan trọng cho sự phát triển tương lai của bạn?',
+        options: ['It helps me memorize facts', 'It builds adaptability and complex problem solving', 'It is only useful for school tests', 'It is not important'],
+        optionsVi: ['Nó giúp tôi học thuộc lòng', 'Nó xây dựng sự thích ứng và giải quyết vấn đề phức tạp', 'Nó chỉ hữu ích cho bài kiểm tra ở trường', 'Nó không quan trọng'],
+        correct: 1,
+        explanation: 'The World Economic Forum identifies adaptability and problem-solving as top skills for 2025 and beyond.',
+        explanationVi: 'Diễn đàn Kinh tế Thế giới (WEF) xác định sự thích ứng và giải quyết vấn đề là kỹ năng hàng đầu cho năm 2025.'
+      }
+    ],
+    challenge: {
+      task: 'Practice this skill for 15 minutes today with a real-world project.',
+      taskVi: 'Thực hành kỹ năng này 15 phút hôm nay với một dự án thực tế.',
+      duration: '15 min'
+    },
+    realWorldLink: 'OECD Learning Compass 2030 / WEF Future of Jobs 2025'
+  }) : null;
   const game = actKey ? ACTIVITY_GAMES[actKey] : undefined;
   const samples = actKey ? ACTIVITY_SAMPLES[actKey] : undefined;
 
@@ -92,6 +120,52 @@ export default function FutureSkillsPage() {
             <button onClick={() => setSelectedCompetition(null)} style={{ background: 'linear-gradient(135deg,#d97706,#fbbf24)', border: 'none', borderRadius: 14, padding: '14px', color: '#fff', fontWeight: 800, cursor: 'pointer', fontSize: 15, width: '100%', boxShadow: '0 4px 12px rgba(251,191,36,0.3)' }}>
               🚀 {selectedCompetition.action || 'Khám phá ngay'}
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* Framework Modal */}
+      {selectedFramework && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.7)', animation: 'fadeIn 0.2s', padding: 20 }}>
+          <div style={{ background: '#1e293b', borderRadius: 24, padding: 24, maxWidth: 400, width: '100%', border: '1px solid rgba(255,255,255,0.2)', animation: 'scaleIn 0.3s' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
+              <h2 style={{ color: '#f8fafc', fontSize: 18, fontWeight: 800, margin: 0, lineHeight: 1.3 }}>
+                <BookOpen size={18} style={{ verticalAlign: 'middle', marginRight: 6 }} color="#94a3b8" />
+                {selectedFramework.org} {selectedFramework.year}
+              </h2>
+              <button onClick={() => setSelectedFramework(null)} style={{ background: 'none', border: 'none', color: '#94a3b8', fontSize: 24, cursor: 'pointer' }}>×</button>
+            </div>
+            <h3 style={{ color: '#cbd5e1', fontSize: 15, fontWeight: 700, margin: '0 0 12px' }}>{selectedFramework.name}</h3>
+            <p style={{ color: '#94a3b8', fontSize: 14, lineHeight: 1.6, margin: '0 0 20px' }}>{selectedFramework.description}</p>
+            {selectedFramework.evidenceLink && (
+              <a href={selectedFramework.evidenceLink} target="_blank" rel="noopener noreferrer" style={{ display: 'block', background: 'rgba(255,255,255,0.05)', textAlign: 'center', padding: '12px', borderRadius: 12, color: '#38bdf8', textDecoration: 'none', fontWeight: 700, fontSize: 14, border: '1px solid rgba(56,189,248,0.2)' }}>
+                🔗 Xem tài liệu gốc
+              </a>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Milestone Modal */}
+      {selectedMilestone && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.7)', animation: 'fadeIn 0.2s', padding: 20 }}>
+          <div style={{ background: '#1e293b', borderRadius: 24, padding: 24, maxWidth: 400, width: '100%', border: '1px solid rgba(56,189,248,0.3)', animation: 'scaleIn 0.3s' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
+              <h2 style={{ color: '#38bdf8', fontSize: 18, fontWeight: 800, margin: 0, lineHeight: 1.3 }}>
+                📍 Tuổi {selectedMilestone.age}: Cột mốc phát triển
+              </h2>
+              <button onClick={() => setSelectedMilestone(null)} style={{ background: 'none', border: 'none', color: '#94a3b8', fontSize: 24, cursor: 'pointer' }}>×</button>
+            </div>
+            <p style={{ color: '#f8fafc', fontSize: 15, fontWeight: 700, margin: '0 0 12px' }}>{selectedMilestone.milestone}</p>
+            <div style={{ background: 'rgba(56,189,248,0.1)', padding: 12, borderRadius: 12, marginBottom: 16 }}>
+              <p style={{ color: '#7dd3fc', fontSize: 13, margin: 0, fontStyle: 'italic', lineHeight: 1.5 }}>🔬 Dữ liệu: {selectedMilestone.evidence}</p>
+            </div>
+            {selectedMilestone.actionableTip && (
+              <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 16 }}>
+                <div style={{ color: '#fbbf24', fontSize: 13, fontWeight: 700, marginBottom: 8 }}>💡 Lời khuyên hành động:</div>
+                <p style={{ color: '#cbd5e1', fontSize: 14, margin: 0, lineHeight: 1.6 }}>{selectedMilestone.actionableTip}</p>
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -191,11 +265,13 @@ export default function FutureSkillsPage() {
           {axis.frameworks && axis.frameworks.length > 0 && (
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 16 }}>
               {axis.frameworks.map((fw, i) => (
-                <div key={i} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', padding: '6px 12px', borderRadius: 20, display: 'flex', alignItems: 'center', gap: 6 }}>
+                <button key={i} onClick={() => setSelectedFramework(fw)} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', padding: '6px 12px', borderRadius: 20, display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer', transition: 'all 0.2s', textAlign: 'left' }}
+                  onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+                  onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.06)'}>
                   <BookOpen size={12} color="#94a3b8" />
                   <span style={{ color: '#cbd5e1', fontSize: 11, fontWeight: 600 }}>{fw.org} {fw.year}:</span>
                   <span style={{ color: '#94a3b8', fontSize: 11 }}>{fw.name}</span>
-                </div>
+                </button>
               ))}
             </div>
           )}
@@ -209,13 +285,15 @@ export default function FutureSkillsPage() {
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                 {axis.developmentalMilestones.map((m, i) => (
-                  <div key={i} style={{ background: 'rgba(0,0,0,0.2)', padding: 12, borderRadius: 12 }}>
+                  <button key={i} onClick={() => setSelectedMilestone(m)} style={{ background: 'rgba(0,0,0,0.2)', padding: '12px 16px', borderRadius: 12, border: '1px solid transparent', cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s' }}
+                    onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(56,189,248,0.3)'}
+                    onMouseLeave={e => e.currentTarget.style.borderColor = 'transparent'}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
                       <span style={{ color: '#fff', fontSize: 13, fontWeight: 700 }}>Tuổi {m.age}</span>
                       <span style={{ color: '#38bdf8', fontSize: 11, fontWeight: 600, textAlign: 'right' }}>{m.milestone}</span>
                     </div>
                     <p style={{ color: '#94a3b8', fontSize: 11, margin: 0, fontStyle: 'italic' }}>🔬 Cơ sở: {m.evidence}</p>
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>
@@ -230,14 +308,14 @@ export default function FutureSkillsPage() {
 
           <h3 style={{ color: '#e2e8f0', fontSize: 15, fontWeight: 700, marginBottom: 10 }}>🎮 Hoạt động tương tác (Lớp {grade})</h3>
           {axis.activities.filter(a => a.grade <= grade).map(act => {
-            const hasContent = !!ACTIVITY_CONTENT[act.title];
+            const hasContent = true; // All activities now have dynamic fallback content
             const hasGame = !!ACTIVITY_GAMES[act.title];
             const isDone = !!progress[act.title];
             const icons: Record<string, string> = { interactive:'🎮', project:'📁', activity:'🎯', quiz:'❓', experiment:'🧪', lesson:'📖', data:'📊', journal:'📓', discussion:'💬', thinking:'🧠', skill:'⭐', method:'🔧', presentation:'🎤', speaking:'🗣️', reading:'📚', writing:'✍️', leadership:'👑', social:'🤝', digital:'🔐', responsibility:'✅', portfolio:'📂' };
             return (
-              <button key={act.title} onClick={() => hasContent ? openActivity(act.title) : null}
-                style={{ ...card, display: 'flex', alignItems: 'center', gap: 14, cursor: hasContent ? 'pointer' : 'default', opacity: hasContent ? 1 : 0.4, width: '100%', textAlign: 'left', transition: 'all 0.2s', borderRadius: 16 }}
-                onMouseEnter={e => hasContent && (e.currentTarget.style.borderColor = axis.color)}
+              <button key={act.title} onClick={() => openActivity(act.title)}
+                style={{ ...card, display: 'flex', alignItems: 'center', gap: 14, cursor: 'pointer', opacity: 1, width: '100%', textAlign: 'left', transition: 'all 0.2s', borderRadius: 16 }}
+                onMouseEnter={e => (e.currentTarget.style.borderColor = axis.color)}
                 onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)')}>
                 <div style={{ width: 48, height: 48, borderRadius: 14, background: `${axis.color}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, flexShrink: 0 }}>
                   {icons[act.type] || '📋'}
