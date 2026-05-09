@@ -113,6 +113,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: '3.1 Thời gian vần điệu',
       type: 'poem',
       skillRefs: ['1Ri.01', '1Rw.01', '1Rw.02', '1SLp.02'],
+      imageUrl: '/images/english/cam_g1_u03_rhymes.png',
       text: "Hickory dickory dock,\nThe mouse ran up the clock.\nThe clock struck one,\nThe mouse ran down,\nHickory dickory dock.\n\nRhymes are words that sound the same at the end. Listen: 'dock' and 'clock' — they rhyme! Can you hear it? The sounds '-ock' are the same. Let's find more rhyming words:\n• cat — hat — mat — sat — bat\n• star — car — far — jar\n• rock — sock — lock — knock\n\nSay each pair aloud. Can you clap the rhythm?",
       textVi: "Hickory dickory dock,\nChú chuột chạy lên đồng hồ.\nĐồng hồ điểm một giờ,\nChú chuột chạy xuống,\nHickory dickory dock.\n\nVần là những từ có âm cuối giống nhau. Nghe nào: 'dock' và 'clock' — chúng vần với nhau! Bạn nghe thấy không? Âm '-ock' giống nhau. Hãy tìm thêm từ có vần:\n• cat — hat — mat — sat — bat\n• star — car — far — jar\n• rock — sock — lock — knock\n\nĐọc to từng cặp từ. Bạn có thể vỗ tay theo nhịp không?"
     },
@@ -276,6 +277,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: '2.1 Khởi động',
       type: 'getting_started',
       skillRefs: ['1SLs.01', '1SLg.04', '1SLr.01'],
+      imageUrl: '/images/english/cam_g1_u02_crafts.png',
       text: "Welcome to Unit 2 — Making Things!\n\n🗣️ Talk with your partner:\n• Have you ever made something? What was it?\n• What do you need to make a paper hat?\n• Do you like cutting, folding, or drawing best?\n\nToday we will learn how to MAKE things — from paper, with glue, and with our hands. We will also learn to follow INSTRUCTIONS step by step.",
       textVi: "Chào mừng đến Bài 2 — Làm đồ vật!\n\n🗣️ Nói chuyện với bạn:\n• Bạn đã bao giờ làm một thứ gì chưa? Đó là gì?\n• Bạn cần gì để làm một chiếc mũ giấy?\n• Bạn thích cắt, gấp, hay vẽ nhất?\n\nHôm nay chúng ta sẽ học cách LÀM đồ vật — từ giấy, với hồ dán, và bằng đôi tay. Chúng ta cũng sẽ học cách làm theo HƯỚNG DẪN từng bước."
     },
@@ -377,6 +379,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: '4.1 Khởi động',
       type: 'getting_started',
       skillRefs: ['1SLs.01', '1SLg.04', '1SLr.01'],
+      imageUrl: '/images/english/cam_g1_u04_stories.png',
       text: "Welcome to Unit 4 — Traditional Tales!\n\n🗣️ Talk with your partner:\n• Do you know any fairy tales or old stories?\n• Who are the characters in your favourite story?\n• Do stories always end happily?\n\nTraditional tales are stories told again and again for many years. They often start with 'Once upon a time...' Today we will read a famous tale and learn about characters, settings, and teamwork.",
       textVi: "Chào mừng đến Bài 4 — Truyện cổ tích!\n\n🗣️ Nói chuyện với bạn:\n• Bạn có biết câu chuyện cổ tích nào không?\n• Nhân vật trong truyện yêu thích của bạn là ai?\n• Truyện có luôn kết thúc vui vẻ không?\n\nTruyện cổ tích là những câu chuyện được kể đi kể lại qua nhiều năm. Chúng thường bắt đầu bằng 'Ngày xửa ngày xưa...' Hôm nay chúng ta sẽ đọc một câu chuyện nổi tiếng và học về nhân vật, bối cảnh, và tinh thần đồng đội."
     },
@@ -478,6 +481,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: '5.1 Khởi động',
       type: 'getting_started',
       skillRefs: ['1SLs.01', '1SLg.04', '1SLr.01'],
+      imageUrl: '/images/english/cam_g1_u05_animals.png',
       text: "Welcome to Unit 5 — Animals!\n\n🗣️ Talk with your partner:\n• What is your favourite animal? Why?\n• Can you name 5 animals?\n• What can animals do that people cannot?\n\nIn this unit we will learn amazing FACTS about animals. We will find out about their bodies, where they live, and what they eat. We will also learn to write INFORMATION texts — writing that tells us true facts.",
       textVi: "Chào mừng đến Bài 5 — Động vật!\n\n🗣️ Nói chuyện với bạn:\n• Động vật yêu thích của bạn là gì? Tại sao?\n• Bạn có thể kể tên 5 loài động vật không?\n• Động vật làm được gì mà con người không thể?\n\nTrong bài này chúng ta sẽ học những SỰ THẬT tuyệt vời về động vật. Chúng ta sẽ tìm hiểu về cơ thể, nơi sống, và thức ăn của chúng. Chúng ta cũng sẽ học viết văn bản THÔNG TIN — bài viết cho ta biết sự thật."
     },
@@ -579,6 +583,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: '6.1 Khởi động',
       type: 'getting_started',
       skillRefs: ['1SLs.01', '1SLg.04', '1SLr.01'],
+      imageUrl: '/images/english/cam_g1_u06_rhymes2.png',
       text: "Welcome to Unit 6 — Nursery Rhymes!\n\n🗣️ Talk with your partner:\n• Do you know any nursery rhymes or songs?\n• Can you sing one for your partner?\n• What makes nursery rhymes fun?\n\nNursery rhymes are short poems and songs for children. They have RHYTHM (a beat you can clap) and RHYME (words that sound the same). Today we will read famous rhymes, learn old words, and sing together!",
       textVi: "Chào mừng đến Bài 6 — Đồng dao!\n\n🗣️ Nói chuyện với bạn:\n• Bạn có biết bài đồng dao hoặc bài hát nào không?\n• Bạn có thể hát một bài cho bạn nghe không?\n• Điều gì làm đồng dao vui?\n\nĐồng dao là những bài thơ và bài hát ngắn cho trẻ em. Chúng có NHỊP ĐIỆU (nhịp bạn có thể vỗ tay) và VẦN (từ nghe giống nhau). Hôm nay chúng ta sẽ đọc những bài đồng dao nổi tiếng, học từ cổ và cùng hát!"
     },
@@ -680,6 +685,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: '7.1 Khởi động',
       type: 'getting_started',
       skillRefs: ['1SLs.01', '1SLg.04', '1SLr.01'],
+      imageUrl: '/images/english/cam_g1_u07_makebelieve.png',
       text: "Welcome to Unit 7 — Imagination Stories!\n\n🗣️ Talk with your partner:\n• If you could be any animal, what would you be?\n• Have you ever imagined something magical?\n• Can a bear really drink tea?\n\nImagination means making up things in your mind. Some stories are REAL (true things that happened). Some stories are MAKE-BELIEVE (things we imagine). Today we will explore the wonderful world of make-believe!",
       textVi: "Chào mừng đến Bài 7 — Truyện tưởng tượng!\n\n🗣️ Nói chuyện với bạn:\n• Nếu có thể là bất kỳ con vật nào, bạn muốn là gì?\n• Bạn đã bao giờ tưởng tượng điều gì kỳ diệu chưa?\n• Gấu có thể thật sự uống trà không?\n\nTưởng tượng nghĩa là nghĩ ra những điều trong đầu. Một số truyện là CÓ THẬT (điều thật sự xảy ra). Một số truyện là GIẢ TƯỞNG (điều chúng ta tưởng tượng). Hôm nay chúng ta sẽ khám phá thế giới tuyệt vời của giả tưởng!"
     },
@@ -781,6 +787,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: '8.1 Khởi động',
       type: 'getting_started',
       skillRefs: ['1SLs.01', '1SLg.04', '1SLr.01'],
+      imageUrl: '/images/english/cam_g1_u08_zoo.png',
       text: "Welcome to Unit 8 — Personal Recounts!\n\n🗣️ Talk with your partner:\n• What did you do last weekend?\n• Where did you go yesterday?\n• What was the BEST day you ever had?\n\nA RECOUNT is when you tell a true story about something that happened to YOU. Today we will learn how to write about our own experiences — in the right order, using past tense words, and adding our feelings!",
       textVi: "Chào mừng đến Bài 8 — Kể lại chuyện cá nhân!\n\n🗣️ Nói chuyện với bạn:\n• Cuối tuần trước bạn làm gì?\n• Hôm qua bạn đi đâu?\n• Ngày TỐT NHẤT bạn từng có là ngày nào?\n\nKỂ LẠI là khi bạn kể một câu chuyện có thật về điều xảy ra với CHÍNH BẠN. Hôm nay chúng ta sẽ học cách viết về trải nghiệm — theo đúng thứ tự, dùng từ thì quá khứ, và thêm cảm xúc!"
     },
@@ -882,6 +889,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: '9.1 Khởi động',
       type: 'getting_started',
       skillRefs: ['1SLs.01', '1SLg.04', '1SLr.01'],
+      imageUrl: '/images/english/cam_g1_u09_weather.png',
       text: "Welcome to Unit 9 — Weather Poems!\n\n🗣️ Talk with your partner:\n• What is the weather like today?\n• What sounds does rain make?\n• Do you like sunny days or rainy days better?\n\nPoets write about the weather because it is all around us. Weather poems use special SOUND WORDS (onomatopoeia) — words that sound like what they describe. Today we will read poems, learn sound words, and write our own weather poetry!",
       textVi: "Chào mừng đến Bài 9 — Thơ thời tiết!\n\n🗣️ Nói chuyện với bạn:\n• Hôm nay thời tiết thế nào?\n• Mưa tạo ra âm thanh gì?\n• Bạn thích ngày nắng hay ngày mưa hơn?\n\nNhà thơ viết về thời tiết vì nó ở xung quanh ta. Thơ thời tiết dùng TỪ TƯỢNG THANH — từ nghe giống như điều chúng mô tả. Hôm nay chúng ta sẽ đọc thơ, học từ tượng thanh, và viết thơ thời tiết!"
     },
