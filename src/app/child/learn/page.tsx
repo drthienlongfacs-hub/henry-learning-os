@@ -268,6 +268,30 @@ function LearnPageContent() {
     // Show lesson before quiz for any topic
     const startWithLesson = useCallback((subj: Subject, g: number, topicKey: string, topicName: string, topicIcon: string) => {
         setSelectedTopic(topicKey);
+        if (subj === 'english' && /^(cam|us|au|fi|sg|ca)_g\d/.test(topicKey)) {
+            setUniversalLesson(null);
+            setLessonContent(null);
+            import('@/data/english-international').then(mod => {
+                const allUnits = [...mod.CAMBRIDGE_UNITS, ...mod.US_WONDERS_UNITS, ...mod.AUSTRALIAN_UNITS, ...mod.FINNISH_UNITS, ...mod.SINGAPORE_UNITS, ...mod.CANADIAN_UNITS];
+                const unit = allUnits.find(u => u.unitId === topicKey);
+                if (!unit) {
+                    startExercise(subj, g, topicKey);
+                    return;
+                }
+                const lesson = buildIntlLessonFromData(
+                    topicKey, unit.title, unit.titleVi, unit.grade, unit.framework,
+                    {
+                        readingPassages: mod.READING_PASSAGES,
+                        vocabThemes: mod.VOCAB_THEMES,
+                        grammarTopics: mod.GRAMMAR_TOPICS,
+                    },
+                );
+                setLessonContent(lesson);
+                setShowingLesson(true);
+            }).catch(() => startExercise(subj, g, topicKey));
+            return;
+        }
+        setLessonContent(null);
         const lesson = getUniversalLesson(subj, topicKey, topicName, topicIcon, g);
         if (lesson) {
             setUniversalLesson(lesson);
@@ -952,12 +976,12 @@ function LearnPageContent() {
                                     );
                                 })}
                                     {/* Skill-based topics section for English */}
-                                    {subject === 'english' && topics.some(t => !('isUnit' in t && t.isUnit)) && (
+                                    {subject === 'english' && topics.some(t => !('isUnit' in t && t.isUnit) && !('isIntl' in t && t.isIntl)) && (
                                         <div style={{ fontSize: 15, fontWeight: 800, color: '#047857', display: 'flex', alignItems: 'center', gap: 8, marginTop: 12 }}>
                                             🎯 Luyện kỹ năng
                                         </div>
                                     )}
-                                    {topics.filter(t => subject !== 'english' || !('isUnit' in t && t.isUnit)).map(t => {
+                                    {topics.filter(t => subject !== 'english' || (!('isUnit' in t && t.isUnit) && !('isIntl' in t && t.isIntl))).map(t => {
                                         const enrich = getTopicEnrichment(t.key, SUBJECT_ENRICHMENT_KEY[subject]);
                                         const plan = getTopicLearningPlan(t.key, SUBJECT_ENRICHMENT_KEY[subject], attempts);
                                     const evidence = buildTopicEvidenceProfile({

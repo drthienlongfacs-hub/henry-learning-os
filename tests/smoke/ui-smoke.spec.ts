@@ -309,6 +309,32 @@ test('International curriculum unit opens focused lesson without falling back to
     expect(badLocalResponses).toEqual([]);
 });
 
+test('Learn topic list opens image-backed Cambridge unit lesson', async ({ page }) => {
+    const badLocalResponses: string[] = [];
+    const pageErrors: string[] = [];
+    page.on('response', (response) => {
+        if (response.url().startsWith(baseUrl) && response.status() >= 400) {
+            badLocalResponses.push(`${response.status()} ${response.url()}`);
+        }
+    });
+    page.on('pageerror', (error) => pageErrors.push(error.message));
+
+    await page.goto(`${baseUrl}${UI_SMOKE_BASE_PATH}/child/learn/`, { waitUntil: 'domcontentloaded' });
+    await page.waitForLoadState('networkidle', { timeout: 5_000 }).catch(() => undefined);
+    await page.locator('text=Vào học').nth(2).click();
+    await page.getByRole('button', { name: /^Lớp 2$/ }).click();
+    await page.getByRole('button', { name: /Unit 1: Stories about things we know/ }).click();
+
+    await expect(page.locator('body')).toContainText('BÀI HỌC');
+    await expect(page.locator('body')).toContainText('Stories about things we know');
+    await expect(page.locator('body')).toContainText('Flashcard');
+    await page.getByRole('button', { name: /Tiếp theo/ }).click();
+    await expect(page.locator('img[src*="cam_g2_u01_familiar"]')).toBeVisible();
+    await expect(page.locator('body')).not.toContainText('Chọn chủ đề để bắt đầu câu hỏi đầu tiên.');
+    expect(pageErrors).toEqual([]);
+    expect(badLocalResponses).toEqual([]);
+});
+
 test('Child learning engine switches core surface and topic cards to English', async ({ page }) => {
     await page.addInitScript(() => {
         localStorage.setItem('henry-lang', JSON.stringify({
