@@ -20,6 +20,7 @@ interface LessonSection {
   contentVi?: string[];
   example?: string;
   exampleVi?: string;
+  imageUrl?: string;
 }
 
 // FALLBACK theme — only used when unit data is not available
@@ -282,6 +283,7 @@ export function buildIntlLessonFromData(
         titleVi: `📖 ${sec.sectionTitleVi}`,
         content: [sec.text],
         contentVi: [sec.textVi],
+        imageUrl: sec.imageUrl,
       }))
     : [{
         type: 'reading' as const,
@@ -454,6 +456,11 @@ export function LessonPhase({ lesson, onStartQuiz, lang = 'vi' }: LessonPhasePro
 
         {section.type === 'reading' && (
           <div>
+            {section.imageUrl && (
+              <div style={{ marginBottom: 16, borderRadius: 14, overflow: 'hidden', border: '1px solid #e2e8f0', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+                <img src={section.imageUrl} alt="Lesson illustration" style={{ width: '100%', height: 'auto', display: 'block' }} />
+              </div>
+            )}
             <div style={{ background: '#fefce8', borderRadius: 14, padding: 20, fontSize: 16, lineHeight: 2, color: '#1e1b4b', whiteSpace: 'pre-line', border: '1px solid #fde68a', marginBottom: 12 }}>
               {section.content[0]}
             </div>

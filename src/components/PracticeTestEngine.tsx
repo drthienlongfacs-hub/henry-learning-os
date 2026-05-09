@@ -41,7 +41,11 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
     setAnswers(prev => ({ ...prev, [qId]: ans }));
   };
 
-  const score = allQuestions.filter(q => answers[q.id] === q.answer).length;
+  const score = allQuestions.filter(q => {
+    const userAns = (answers[q.id] || '').trim().toLowerCase();
+    const correctAns = q.answer.trim().toLowerCase();
+    return userAns === correctAns;
+  }).length;
   const shields = total > 0 ? Math.round((score / total) * 5) : 0;
   const mins = Math.floor(timeLeft / 60);
   const secs = timeLeft % 60;
@@ -128,7 +132,7 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
           </h4>
           {part.questions.map((q, qi) => {
             const userAns = answers[q.id];
-            const correct = userAns === q.answer;
+            const correct = (userAns || '').trim().toLowerCase() === q.answer.trim().toLowerCase();
             return (
               <div key={q.id} style={{ ...card, borderLeft: `3px solid ${correct ? '#68d391' : '#fc8181'}` }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -175,6 +179,10 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
   if (!q) return null;
   const currentPart = activeTest?.parts.find(p => p.questions.includes(q));
   const isSpellType = q.taskTypeEn === 'Spell';
+  // RCA fix: open gap fill questions have options=[] → need text input
+  const isOpenGapFill = !isSpellType && (!q.options || q.options.length === 0);
+  // Speaking questions: self-assessment, no "correct" answer to check
+  const isSpeakingType = q.taskTypeEn === 'Speaking';
 
   return (
     <div style={{ background: 'linear-gradient(135deg, #0f0c29, #302b63, #24243e)', borderRadius: 20, padding: 16, color: '#fff', fontFamily: "'Inter',sans-serif" }}>
@@ -200,7 +208,7 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
       {/* Question */}
       <div style={{ ...card, padding: 16 }}>
         {q.imageEmoji && <div style={{ fontSize: 48, textAlign: 'center', marginBottom: 8 }}>{q.imageEmoji}</div>}
-        <p style={{ fontSize: 16, fontWeight: 600, margin: '0 0 12px', lineHeight: 1.5 }}>{q.prompt}</p>
+        <p style={{ fontSize: 16, fontWeight: 600, margin: '0 0 12px', lineHeight: 1.5, whiteSpace: 'pre-line' }}>{q.prompt}</p>
 
         {q.audioTranscript && (
           <button 
@@ -222,15 +230,89 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
           </button>
         )}
 
-        {/* Options or spell input */}
-        {isSpellType ? (
+        {/* === ANSWER INPUT SECTION === */}
+        {/* Type 1: Spell (Starters — unscramble letters) */}
+        {isSpellType && (
           <div>
             <input type="text" value={spellInput} onChange={e => { setSpellInput(e.target.value); selectAnswer(q.id, e.target.value.toLowerCase().trim()); }}
               placeholder="Gõ từ ở đây..."
-              style={{ width: '100%', padding: '10px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.2)', background: 'rgba(255,255,255,0.06)', color: '#fff', fontSize: 16, outline: 'none', boxSizing: 'border-box' }}
+              autoComplete="off" autoCapitalize="off" spellCheck={false}
+              style={{ width: '100%', padding: '12px 14px', borderRadius: 10, border: '2px solid rgba(102,126,234,0.4)', background: 'rgba(255,255,255,0.08)', color: '#fff', fontSize: 18, outline: 'none', boxSizing: 'border-box', letterSpacing: 2, fontWeight: 600 }}
             />
           </div>
-        ) : q.options?.map((opt, i) => {
+        )}
+
+        {/* Type 2: Open gap fill (KET/PET — type one word/number) */}
+        {isOpenGapFill && !isSpeakingType && (
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+              <span style={{ fontSize: 18 }}>✏️</span>
+              <span style={{ fontSize: 12, color: '#a0aec0' }}>Gõ câu trả lời vào ô bên dưới:</span>
+            </div>
+            <input 
+              type="text" 
+              value={answers[q.id] || ''} 
+              onChange={e => selectAnswer(q.id, e.target.value)}
+              onKeyDown={e => {
+                if (e.key === 'Enter' && answers[q.id] && currentQ < total - 1) {
+                  setCurrentQ(currentQ + 1); setSpellInput('');
+                }
+              }}
+              placeholder="Gõ 1 từ hoặc số..."
+              autoComplete="off" autoCapitalize="off" spellCheck={false}
+              style={{ 
+                width: '100%', padding: '14px 16px', borderRadius: 12, 
+                border: '2px solid rgba(102,126,234,0.5)', 
+                background: 'rgba(102,126,234,0.08)', 
+                color: '#fff', fontSize: 20, fontWeight: 600,
+                outline: 'none', boxSizing: 'border-box',
+                letterSpacing: 1,
+                transition: 'border-color 0.2s',
+              }}
+              onFocus={e => { e.target.style.borderColor = '#667eea'; }}
+              onBlur={e => { e.target.style.borderColor = 'rgba(102,126,234,0.5)'; }}
+            />
+            <p style={{ fontSize: 10, color: '#718096', marginTop: 4, marginBottom: 0 }}>
+              💡 Nhấn Enter để sang câu tiếp theo
+            </p>
+          </div>
+        )}
+
+        {/* Type 3: Speaking (self-assessment — show sample, mark yourself) */}
+        {isSpeakingType && (
+          <div>
+            {/* Show/hide sample answer */}
+            <button 
+              onClick={() => {
+                setShowExplanation(showExplanation === q.id ? null : q.id);
+                if (!answers[q.id]) selectAnswer(q.id, q.answer); // auto-mark as "done"
+              }}
+              style={{ 
+                width: '100%', padding: 12, borderRadius: 10, border: 'none', cursor: 'pointer',
+                background: showExplanation === q.id ? 'rgba(72,187,120,0.2)' : 'linear-gradient(135deg, #48bb78, #38a169)',
+                color: '#fff', fontSize: 14, fontWeight: 600, marginBottom: 8,
+              }}
+            >
+              {showExplanation === q.id ? '🔽 Ẩn gợi ý' : '💬 Xem gợi ý trả lời mẫu'}
+            </button>
+            {showExplanation === q.id && (
+              <div style={{ padding: '12px 14px', background: 'rgba(72,187,120,0.08)', borderRadius: 10, border: '1px solid rgba(72,187,120,0.2)' }}>
+                <p style={{ margin: '0 0 6px', fontSize: 13, color: '#68d391', fontWeight: 600 }}>📝 Gợi ý trả lời:</p>
+                <p style={{ margin: '0 0 8px', fontSize: 13, color: '#e2e8f0', lineHeight: 1.6, fontStyle: 'italic' }}>
+                  &quot;{q.explanationVi?.replace(/^Gợi ý:\s*/, '').replace(/^"/, '').replace(/"$/, '')}&quot;
+                </p>
+                {q.strategyVi && (
+                  <p style={{ margin: 0, fontSize: 11, color: '#a0aec0' }}>
+                    🧠 <strong>Mẹo:</strong> {q.strategyVi}
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Type 4: MCQ (standard multiple choice with options) */}
+        {!isSpellType && !isOpenGapFill && !isSpeakingType && q.options?.map((opt, i) => {
           const selected = answers[q.id] === opt;
           return (
             <button key={i} onClick={() => selectAnswer(q.id, opt)} style={{
