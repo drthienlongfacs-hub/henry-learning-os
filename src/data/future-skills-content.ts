@@ -116,6 +116,22 @@ export const ACTIVITY_CONTENT: Record<string, ActivityContent> = {
     challenge: { task: 'Ask 5 "Why" questions today. Try to find answers for 2 of them using books or asking an adult. Draw the answers!', taskVi: 'Hỏi 5 câu "Tại sao" hôm nay. Tìm câu trả lời cho 2 câu bằng sách hoặc hỏi người lớn. Vẽ câu trả lời!', duration: '30 min' },
     realWorldLink: 'OECD PISA Scientific Literacy Framework',
   },
+  'Predict & Observe': {
+    activityKey: 'Predict & Observe',
+    intro: 'Before doing an experiment, scientists GUESS what will happen. This is called a Prediction!',
+    introVi: 'Trước khi làm thí nghiệm, nhà khoa học ĐOÁN xem điều gì sẽ xảy ra. Đây gọi là Dự đoán!',
+    steps: [
+      { instruction: 'Get a bowl of water and 5 small objects (coin, leaf, key, plastic toy, rock)', instructionVi: 'Lấy một bát nước và 5 vật nhỏ (đồng xu, chiếc lá, chìa khóa, đồ chơi nhựa, cục đá)', emoji: '💧' },
+      { instruction: 'PREDICT: Which things will FLOAT? Which will SINK? Write it down.', instructionVi: 'DỰ ĐOÁN: Vật nào sẽ NỔI? Vật nào sẽ CHÌM? Ghi lại nhé.', emoji: '🤔' },
+      { instruction: 'TEST: Put them in the water one by one.', instructionVi: 'KIỂM TRA: Lần lượt thả từng vật vào nước.', emoji: '🧪' },
+      { instruction: 'OBSERVE: Were your predictions right? It\'s OK if they were wrong!', instructionVi: 'QUAN SÁT: Dự đoán của bạn có đúng không? Không sao nếu đoán sai nhé!', emoji: '👀' },
+    ],
+    quiz: [
+      { question: 'What is a prediction?', questionVi: 'Dự đoán là gì?', options: ['A magic spell', 'A guess about what will happen', 'A type of animal', 'A drawing'], optionsVi: ['Một câu thần chú', 'Một lời đoán về điều sẽ xảy ra', 'Một loài động vật', 'Một bức vẽ'], correct: 1, explanation: 'A prediction is a smart guess based on what you already know!', explanationVi: 'Dự đoán là một suy đoán thông minh dựa trên những gì bạn đã biết!' },
+    ],
+    challenge: { task: 'Predict how many jumps you can do in 1 minute. Write it down. Then set a timer and test it!', taskVi: 'Dự đoán bạn nhảy được bao nhiêu cái trong 1 phút. Ghi lại. Đặt giờ và làm thử xem!', duration: '10 min' },
+    realWorldLink: 'Cambridge Primary Science — Scientific Enquiry',
+  },
   // ═══════ ENGLISH LEADERSHIP — Grade 1 ═══════
   'Show and Tell (EN)': {
     activityKey: 'Show and Tell (EN)',
@@ -133,6 +149,22 @@ export const ACTIVITY_CONTENT: Record<string, ActivityContent> = {
     challenge: { task: 'Record a 30-second video of your Show and Tell in English. Watch it and try again — can you improve?', taskVi: 'Quay video 30 giây Show and Tell bằng tiếng Anh. Xem lại và thử lại — bạn có thể cải thiện không?', duration: '15 min' },
     realWorldLink: 'Cambridge Speaking Assessment Criteria — Pronunciation, Interactive Communication',
   },
+  'Story Retelling': {
+    activityKey: 'Story Retelling',
+    intro: 'Good leaders are great storytellers! Can you tell a story so everyone wants to listen?',
+    introVi: 'Nhà lãnh đạo giỏi là người kể chuyện hay! Bạn có thể kể một câu chuyện khiến ai cũng muốn nghe không?',
+    steps: [
+      { instruction: 'Read a short, fun book (like "The Very Hungry Caterpillar")', instructionVi: 'Đọc một cuốn sách ngắn, vui (ví dụ "Chú sâu háu ăn")', emoji: '📖' },
+      { instruction: 'Draw 3 pictures: the BEGINNING, the MIDDLE, and the END', instructionVi: 'Vẽ 3 bức tranh: phần ĐẦU, phần GIỮA, và phần CUỐI', emoji: '🖼️' },
+      { instruction: 'Use your pictures to tell the story to your parents', instructionVi: 'Dùng tranh của bạn để kể lại câu chuyện cho ba mẹ', emoji: '🗣️' },
+      { instruction: 'Use big words and a loud, clear voice!', instructionVi: 'Dùng từ vựng hay và giọng nói to, rõ ràng!', emoji: '🌟' },
+    ],
+    quiz: [
+      { question: 'What are the 3 parts of a story?', questionVi: '3 phần của một câu chuyện là gì?', options: ['Red, Yellow, Blue', 'Morning, Afternoon, Night', 'Beginning, Middle, End', 'Up, Down, Left'], optionsVi: ['Đỏ, Vàng, Xanh', 'Sáng, Chiều, Tối', 'Mở đầu, Phần giữa, Kết thúc', 'Trên, Dưới, Trái'], correct: 2, explanation: 'Every good story has a beginning to start, a middle where things happen, and an end!', explanationVi: 'Mỗi câu chuyện hay đều có phần mở đầu, phần giữa khi sự việc diễn ra, và phần kết thúc!' },
+    ],
+    challenge: { task: 'Change the ending of your favourite story! Tell the new story to your family.', taskVi: 'Thay đổi phần kết thúc của câu chuyện yêu thích! Kể câu chuyện mới cho gia đình nghe.', duration: '20 min' },
+    realWorldLink: 'CEFR A1 Narrative Skills — Cohesion and Sequencing',
+  },
   // ═══════ SOCIAL IMPACT — Grade 1 ═══════
   'Empathy Activities': {
     activityKey: 'Empathy Activities',
@@ -149,5 +181,21 @@ export const ACTIVITY_CONTENT: Record<string, ActivityContent> = {
     ],
     challenge: { task: 'Do 3 kind things today without being asked. Write them in your Kindness Journal. How did it make you feel?', taskVi: 'Làm 3 điều tốt hôm nay mà không ai nhờ. Viết vào Nhật ký Tốt bụng. Bạn cảm thấy thế nào?', duration: '1 day' },
     realWorldLink: 'UNICEF Transferable Skills — Empathy & Respect',
+  },
+  'Book Donation Drive': {
+    activityKey: 'Book Donation Drive',
+    intro: 'Leaders take action to help the community. Sharing books is a great way to start!',
+    introVi: 'Lãnh đạo hành động để giúp đỡ cộng đồng. Chia sẻ sách là một cách tuyệt vời để bắt đầu!',
+    steps: [
+      { instruction: 'Look at your bookshelf — find 3 books you have read and loved', instructionVi: 'Nhìn giá sách của bạn — tìm 3 cuốn bạn đã đọc và rất thích', emoji: '📚' },
+      { instruction: 'Check if they are clean and in good condition', instructionVi: 'Kiểm tra xem sách có sạch sẽ và còn mới không', emoji: '✨' },
+      { instruction: 'Make a nice "Donation Box" using a cardboard box and crayons', instructionVi: 'Làm một "Hộp quyên góp" thật đẹp bằng thùng carton và bút sáp màu', emoji: '📦' },
+      { instruction: 'With your parents, take the box to a school or library to donate!', instructionVi: 'Cùng ba mẹ mang hộp sách đến trường hoặc thư viện để tặng nhé!', emoji: '🏫' },
+    ],
+    quiz: [
+      { question: 'Why is donating books a good thing?', questionVi: 'Vì sao tặng sách là một việc tốt?', options: ['To make your room messy', 'To share knowledge and joy with others', 'To get money', 'To throw them away'], optionsVi: ['Để phòng bề bộn', 'Để chia sẻ niềm vui và kiến thức với người khác', 'Để lấy tiền', 'Để vứt chúng đi'], correct: 1, explanation: 'Sharing books helps other children learn and discover new things!', explanationVi: 'Chia sẻ sách giúp các bạn nhỏ khác học hỏi và khám phá nhiều điều mới!' },
+    ],
+    challenge: { task: 'Write a small "friendly note" and put it inside one of the books before donating it!', taskVi: 'Viết một "lời nhắn dễ thương" nhỏ và kẹp vào trong một cuốn sách trước khi tặng nhé!', duration: '15 min' },
+    realWorldLink: 'OECD Learning Compass — Student Agency & Co-agency',
   },
 };
