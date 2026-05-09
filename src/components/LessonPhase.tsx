@@ -3,6 +3,10 @@
 import { useState } from 'react';
 import { BookOpen, Lightbulb, Volume2, ChevronRight, Star, Brain, Pencil } from 'lucide-react';
 
+/** Prefix basePath for GitHub Pages subdirectory deployment */
+const withBasePath = (src: string) =>
+    src.startsWith('/') ? `${process.env.NODE_ENV === 'production' ? '/henry-learning-os' : ''}${src}` : src;
+
 // ── Lesson content generator for international units ──
 export interface LessonContent {
   unitTitle: string;
@@ -458,7 +462,7 @@ export function LessonPhase({ lesson, onStartQuiz, lang = 'vi' }: LessonPhasePro
           <div>
             {section.imageUrl && (
               <div style={{ marginBottom: 16, borderRadius: 14, overflow: 'hidden', border: '1px solid #e2e8f0', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
-                <img src={section.imageUrl} alt="Lesson illustration" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <img src={withBasePath(section.imageUrl)} alt="Lesson illustration" style={{ width: '100%', height: 'auto', display: 'block' }} />
               </div>
             )}
             <div style={{ background: '#fefce8', borderRadius: 14, padding: 20, fontSize: 16, lineHeight: 2, color: '#1e1b4b', whiteSpace: 'pre-line', border: '1px solid #fde68a', marginBottom: 12 }}>
