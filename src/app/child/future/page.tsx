@@ -98,10 +98,10 @@ export default function FutureSkillsPage() {
       {/* Competition Modal */}
       {selectedCompetition && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.7)', animation: 'fadeIn 0.2s', padding: 20 }}>
-          <div style={{ background: '#1e293b', borderRadius: 24, padding: 24, maxWidth: 400, width: '100%', border: '1px solid rgba(251,191,36,0.3)', animation: 'scaleIn 0.3s' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
-              <h2 style={{ color: '#fbbf24', fontSize: 20, fontWeight: 800, margin: 0, lineHeight: 1.3 }}>🏆 {selectedCompetition.name}</h2>
-              <button onClick={() => setSelectedCompetition(null)} style={{ background: 'none', border: 'none', color: '#94a3b8', fontSize: 24, cursor: 'pointer' }}>×</button>
+          <div style={{ background: '#1e293b', borderRadius: 24, padding: 32, maxWidth: 600, width: '100%', border: '1px solid rgba(251,191,36,0.3)', animation: 'scaleIn 0.3s', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
+              <h2 style={{ color: '#fbbf24', fontSize: 24, fontWeight: 800, margin: 0, lineHeight: 1.3 }}>🏆 {selectedCompetition.name}</h2>
+              <button onClick={() => setSelectedCompetition(null)} style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: '#e2e8f0', fontSize: 20, width: 36, height: 36, borderRadius: 18, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✕</button>
             </div>
             
             <p style={{ color: '#e2e8f0', fontSize: 14, lineHeight: 1.6, margin: '0 0 16px' }}>
@@ -117,7 +117,15 @@ export default function FutureSkillsPage() {
               </div>
             </div>
 
-            <button onClick={() => setSelectedCompetition(null)} style={{ background: 'linear-gradient(135deg,#d97706,#fbbf24)', border: 'none', borderRadius: 14, padding: '14px', color: '#fff', fontWeight: 800, cursor: 'pointer', fontSize: 15, width: '100%', boxShadow: '0 4px 12px rgba(251,191,36,0.3)' }}>
+            <button 
+              onClick={() => {
+                if (selectedCompetition.link) {
+                  window.open(selectedCompetition.link, '_blank', 'noopener,noreferrer');
+                }
+                setSelectedCompetition(null);
+              }} 
+              style={{ background: 'linear-gradient(135deg,#d97706,#fbbf24)', border: 'none', borderRadius: 14, padding: '14px', color: '#fff', fontWeight: 800, cursor: 'pointer', fontSize: 15, width: '100%', boxShadow: '0 4px 12px rgba(251,191,36,0.3)' }}
+            >
               🚀 {selectedCompetition.action || 'Khám phá ngay'}
             </button>
           </div>
@@ -127,15 +135,15 @@ export default function FutureSkillsPage() {
       {/* Framework Modal */}
       {selectedFramework && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.7)', animation: 'fadeIn 0.2s', padding: 20 }}>
-          <div style={{ background: '#1e293b', borderRadius: 24, padding: 24, maxWidth: 400, width: '100%', border: '1px solid rgba(255,255,255,0.2)', animation: 'scaleIn 0.3s' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
-              <h2 style={{ color: '#f8fafc', fontSize: 18, fontWeight: 800, margin: 0, lineHeight: 1.3 }}>
-                <BookOpen size={18} style={{ verticalAlign: 'middle', marginRight: 6 }} color="#94a3b8" />
+          <div style={{ background: '#1e293b', borderRadius: 24, padding: 32, maxWidth: 600, width: '100%', border: '1px solid rgba(255,255,255,0.2)', animation: 'scaleIn 0.3s', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
+              <h2 style={{ color: '#f8fafc', fontSize: 22, fontWeight: 800, margin: 0, lineHeight: 1.3 }}>
+                <BookOpen size={22} style={{ verticalAlign: 'middle', marginRight: 8 }} color="#94a3b8" />
                 {selectedFramework.org} {selectedFramework.year}
               </h2>
-              <button onClick={() => setSelectedFramework(null)} style={{ background: 'none', border: 'none', color: '#94a3b8', fontSize: 24, cursor: 'pointer' }}>×</button>
+              <button onClick={() => setSelectedFramework(null)} style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: '#e2e8f0', fontSize: 20, width: 36, height: 36, borderRadius: 18, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✕</button>
             </div>
-            <h3 style={{ color: '#cbd5e1', fontSize: 15, fontWeight: 700, margin: '0 0 12px' }}>{selectedFramework.name}</h3>
+            <h3 style={{ color: '#cbd5e1', fontSize: 18, fontWeight: 700, margin: '0 0 16px' }}>{selectedFramework.name}</h3>
             <p style={{ color: '#94a3b8', fontSize: 14, lineHeight: 1.6, margin: '0 0 20px' }}>{selectedFramework.description}</p>
             {selectedFramework.evidenceLink && (
               <a href={selectedFramework.evidenceLink} target="_blank" rel="noopener noreferrer" style={{ display: 'block', background: 'rgba(255,255,255,0.05)', textAlign: 'center', padding: '12px', borderRadius: 12, color: '#38bdf8', textDecoration: 'none', fontWeight: 700, fontSize: 14, border: '1px solid rgba(56,189,248,0.2)' }}>
@@ -149,14 +157,14 @@ export default function FutureSkillsPage() {
       {/* Milestone Modal */}
       {selectedMilestone && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.7)', animation: 'fadeIn 0.2s', padding: 20 }}>
-          <div style={{ background: '#1e293b', borderRadius: 24, padding: 24, maxWidth: 400, width: '100%', border: '1px solid rgba(56,189,248,0.3)', animation: 'scaleIn 0.3s' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
-              <h2 style={{ color: '#38bdf8', fontSize: 18, fontWeight: 800, margin: 0, lineHeight: 1.3 }}>
-                📍 Tuổi {selectedMilestone.age}: Cột mốc phát triển
+          <div style={{ background: '#1e293b', borderRadius: 24, padding: 32, maxWidth: 600, width: '100%', border: '1px solid rgba(56,189,248,0.3)', animation: 'scaleIn 0.3s', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
+              <h2 style={{ color: '#38bdf8', fontSize: 22, fontWeight: 800, margin: 0, lineHeight: 1.3 }}>
+                🌱 Tuổi {selectedMilestone.age}
               </h2>
-              <button onClick={() => setSelectedMilestone(null)} style={{ background: 'none', border: 'none', color: '#94a3b8', fontSize: 24, cursor: 'pointer' }}>×</button>
+              <button onClick={() => setSelectedMilestone(null)} style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: '#e2e8f0', fontSize: 20, width: 36, height: 36, borderRadius: 18, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✕</button>
             </div>
-            <p style={{ color: '#f8fafc', fontSize: 15, fontWeight: 700, margin: '0 0 12px' }}>{selectedMilestone.milestone}</p>
+            <h3 style={{ color: '#f8fafc', fontSize: 18, fontWeight: 700, margin: '0 0 16px' }}>{selectedMilestone.milestone}</h3>
             <div style={{ background: 'rgba(56,189,248,0.1)', padding: 12, borderRadius: 12, marginBottom: 16 }}>
               <p style={{ color: '#7dd3fc', fontSize: 13, margin: 0, fontStyle: 'italic', lineHeight: 1.5 }}>🔬 Dữ liệu: {selectedMilestone.evidence}</p>
             </div>

@@ -230,4 +230,1166 @@ export const ACTIVITY_CONTENT: Record<string, ActivityContent> = {
     challenge: { task: 'Talk to your parents: If an AI makes a mistake that causes a problem, who is responsible? The AI, or the person who made it?', taskVi: 'Nói chuyện với ba mẹ: Nếu AI mắc lỗi gây ra vấn đề, ai chịu trách nhiệm? AI hay người tạo ra nó?', duration: '30 min' },
     realWorldLink: 'UNESCO Recommendation on the Ethics of AI (2021)',
   },
+
+  'Pattern Recognition': {
+    activityKey: 'Pattern Recognition',
+    intro: 'Engage with Pattern Recognition to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Pattern Recognition để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Pattern Recognition important for the future?',
+        questionVi: 'Tại sao Pattern Recognition lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Pattern Recognition with your family.',
+      taskVi: 'Dành 15 phút thực hành Pattern Recognition cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Simple Charts & Tables': {
+    activityKey: 'Simple Charts & Tables',
+    intro: 'Engage with Simple Charts & Tables to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Simple Charts & Tables để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Simple Charts & Tables important for the future?',
+        questionVi: 'Tại sao Simple Charts & Tables lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Simple Charts & Tables with your family.',
+      taskVi: 'Dành 15 phút thực hành Simple Charts & Tables cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Human vs Machine Quiz': {
+    activityKey: 'Human vs Machine Quiz',
+    intro: 'Engage with Human vs Machine Quiz to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Human vs Machine Quiz để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Human vs Machine Quiz important for the future?',
+        questionVi: 'Tại sao Human vs Machine Quiz lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Human vs Machine Quiz with your family.',
+      taskVi: 'Dành 15 phút thực hành Human vs Machine Quiz cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Scratch Animations': {
+    activityKey: 'Scratch Animations',
+    intro: 'Engage with Scratch Animations to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Scratch Animations để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Scratch Animations important for the future?',
+        questionVi: 'Tại sao Scratch Animations lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Scratch Animations with your family.',
+      taskVi: 'Dành 15 phút thực hành Scratch Animations cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Robot Commands Maze': {
+    activityKey: 'Robot Commands Maze',
+    intro: 'Engage with Robot Commands Maze to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Robot Commands Maze để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Robot Commands Maze important for the future?',
+        questionVi: 'Tại sao Robot Commands Maze lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Robot Commands Maze with your family.',
+      taskVi: 'Dành 15 phút thực hành Robot Commands Maze cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Digital Safety Rules': {
+    activityKey: 'Digital Safety Rules',
+    intro: 'Engage with Digital Safety Rules to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Digital Safety Rules để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Digital Safety Rules important for the future?',
+        questionVi: 'Tại sao Digital Safety Rules lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Digital Safety Rules with your family.',
+      taskVi: 'Dành 15 phút thực hành Digital Safety Rules cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'AI Image Recognition': {
+    activityKey: 'AI Image Recognition',
+    intro: 'Engage with AI Image Recognition to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia AI Image Recognition để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is AI Image Recognition important for the future?',
+        questionVi: 'Tại sao AI Image Recognition lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing AI Image Recognition with your family.',
+      taskVi: 'Dành 15 phút thực hành AI Image Recognition cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Data Collection Project': {
+    activityKey: 'Data Collection Project',
+    intro: 'Engage with Data Collection Project to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Data Collection Project để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Data Collection Project important for the future?',
+        questionVi: 'Tại sao Data Collection Project lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Data Collection Project with your family.',
+      taskVi: 'Dành 15 phút thực hành Data Collection Project cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Chatbot Design Basics': {
+    activityKey: 'Chatbot Design Basics',
+    intro: 'Engage with Chatbot Design Basics to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Chatbot Design Basics để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Chatbot Design Basics important for the future?',
+        questionVi: 'Tại sao Chatbot Design Basics lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Chatbot Design Basics with your family.',
+      taskVi: 'Dành 15 phút thực hành Chatbot Design Basics cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Mini Machine Learning': {
+    activityKey: 'Mini Machine Learning',
+    intro: 'Engage with Mini Machine Learning to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Mini Machine Learning để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Mini Machine Learning important for the future?',
+        questionVi: 'Tại sao Mini Machine Learning lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Mini Machine Learning with your family.',
+      taskVi: 'Dành 15 phút thực hành Mini Machine Learning cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Water Saving Tracker': {
+    activityKey: 'Water Saving Tracker',
+    intro: 'Engage with Water Saving Tracker to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Water Saving Tracker để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Water Saving Tracker important for the future?',
+        questionVi: 'Tại sao Water Saving Tracker lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Water Saving Tracker with your family.',
+      taskVi: 'Dành 15 phút thực hành Water Saving Tracker cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Simple Water Filter': {
+    activityKey: 'Simple Water Filter',
+    intro: 'Engage with Simple Water Filter to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Simple Water Filter để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Simple Water Filter important for the future?',
+        questionVi: 'Tại sao Simple Water Filter lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Simple Water Filter with your family.',
+      taskVi: 'Dành 15 phút thực hành Simple Water Filter cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Plastic Waste Counter': {
+    activityKey: 'Plastic Waste Counter',
+    intro: 'Engage with Plastic Waste Counter to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Plastic Waste Counter để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Plastic Waste Counter important for the future?',
+        questionVi: 'Tại sao Plastic Waste Counter lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Plastic Waste Counter with your family.',
+      taskVi: 'Dành 15 phút thực hành Plastic Waste Counter cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Energy Use Monitor': {
+    activityKey: 'Energy Use Monitor',
+    intro: 'Engage with Energy Use Monitor to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Energy Use Monitor để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Energy Use Monitor important for the future?',
+        questionVi: 'Tại sao Energy Use Monitor lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Energy Use Monitor with your family.',
+      taskVi: 'Dành 15 phút thực hành Energy Use Monitor cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Mini Compost Project': {
+    activityKey: 'Mini Compost Project',
+    intro: 'Engage with Mini Compost Project to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Mini Compost Project để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Mini Compost Project important for the future?',
+        questionVi: 'Tại sao Mini Compost Project lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Mini Compost Project with your family.',
+      taskVi: 'Dành 15 phút thực hành Mini Compost Project cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Safe Walk to School Map': {
+    activityKey: 'Safe Walk to School Map',
+    intro: 'Engage with Safe Walk to School Map to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Safe Walk to School Map để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Safe Walk to School Map important for the future?',
+        questionVi: 'Tại sao Safe Walk to School Map lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Safe Walk to School Map with your family.',
+      taskVi: 'Dành 15 phút thực hành Safe Walk to School Map cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Solar Energy Basics': {
+    activityKey: 'Solar Energy Basics',
+    intro: 'Engage with Solar Energy Basics to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Solar Energy Basics để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Solar Energy Basics important for the future?',
+        questionVi: 'Tại sao Solar Energy Basics lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Solar Energy Basics with your family.',
+      taskVi: 'Dành 15 phút thực hành Solar Energy Basics cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Climate Change Poster': {
+    activityKey: 'Climate Change Poster',
+    intro: 'Engage with Climate Change Poster to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Climate Change Poster để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Climate Change Poster important for the future?',
+        questionVi: 'Tại sao Climate Change Poster lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Climate Change Poster with your family.',
+      taskVi: 'Dành 15 phút thực hành Climate Change Poster cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Green City Design': {
+    activityKey: 'Green City Design',
+    intro: 'Engage with Green City Design to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Green City Design để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Green City Design important for the future?',
+        questionVi: 'Tại sao Green City Design lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Green City Design with your family.',
+      taskVi: 'Dành 15 phút thực hành Green City Design cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Simple Data Recording': {
+    activityKey: 'Simple Data Recording',
+    intro: 'Engage with Simple Data Recording to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Simple Data Recording để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Simple Data Recording important for the future?',
+        questionVi: 'Tại sao Simple Data Recording lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Simple Data Recording with your family.',
+      taskVi: 'Dành 15 phút thực hành Simple Data Recording cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Draw a Bar Chart': {
+    activityKey: 'Draw a Bar Chart',
+    intro: 'Engage with Draw a Bar Chart to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Draw a Bar Chart để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Draw a Bar Chart important for the future?',
+        questionVi: 'Tại sao Draw a Bar Chart lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Draw a Bar Chart with your family.',
+      taskVi: 'Dành 15 phút thực hành Draw a Bar Chart cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Monthly Science Question': {
+    activityKey: 'Monthly Science Question',
+    intro: 'Engage with Monthly Science Question to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Monthly Science Question để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Monthly Science Question important for the future?',
+        questionVi: 'Tại sao Monthly Science Question lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Monthly Science Question with your family.',
+      taskVi: 'Dành 15 phút thực hành Monthly Science Question cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Fair Test Design': {
+    activityKey: 'Fair Test Design',
+    intro: 'Engage with Fair Test Design to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Fair Test Design để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Fair Test Design important for the future?',
+        questionVi: 'Tại sao Fair Test Design lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Fair Test Design with your family.',
+      taskVi: 'Dành 15 phút thực hành Fair Test Design cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Science Journal in English': {
+    activityKey: 'Science Journal in English',
+    intro: 'Engage with Science Journal in English to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Science Journal in English để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Science Journal in English important for the future?',
+        questionVi: 'Tại sao Science Journal in English lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Science Journal in English with your family.',
+      taskVi: 'Dành 15 phút thực hành Science Journal in English cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Mini Research Poster': {
+    activityKey: 'Mini Research Poster',
+    intro: 'Engage with Mini Research Poster to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Mini Research Poster để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Mini Research Poster important for the future?',
+        questionVi: 'Tại sao Mini Research Poster lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Mini Research Poster with your family.',
+      taskVi: 'Dành 15 phút thực hành Mini Research Poster cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Present Findings (EN)': {
+    activityKey: 'Present Findings (EN)',
+    intro: 'Engage with Present Findings (EN) to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Present Findings (EN) để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Present Findings (EN) important for the future?',
+        questionVi: 'Tại sao Present Findings (EN) lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Present Findings (EN) with your family.',
+      taskVi: 'Dành 15 phút thực hành Present Findings (EN) cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'ViSEF Pathway Intro': {
+    activityKey: 'ViSEF Pathway Intro',
+    intro: 'Engage with ViSEF Pathway Intro to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia ViSEF Pathway Intro để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is ViSEF Pathway Intro important for the future?',
+        questionVi: 'Tại sao ViSEF Pathway Intro lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing ViSEF Pathway Intro with your family.',
+      taskVi: 'Dành 15 phút thực hành ViSEF Pathway Intro cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Reading Log (50 books/year)': {
+    activityKey: 'Reading Log (50 books/year)',
+    intro: 'Engage with Reading Log (50 books/year) to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Reading Log (50 books/year) để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Reading Log (50 books/year) important for the future?',
+        questionVi: 'Tại sao Reading Log (50 books/year) lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Reading Log (50 books/year) with your family.',
+      taskVi: 'Dành 15 phút thực hành Reading Log (50 books/year) cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Video Storytelling Monthly': {
+    activityKey: 'Video Storytelling Monthly',
+    intro: 'Engage with Video Storytelling Monthly to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Video Storytelling Monthly để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Video Storytelling Monthly important for the future?',
+        questionVi: 'Tại sao Video Storytelling Monthly lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Video Storytelling Monthly with your family.',
+      taskVi: 'Dành 15 phút thực hành Video Storytelling Monthly cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Science Presentation (EN)': {
+    activityKey: 'Science Presentation (EN)',
+    intro: 'Engage with Science Presentation (EN) to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Science Presentation (EN) để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Science Presentation (EN) important for the future?',
+        questionVi: 'Tại sao Science Presentation (EN) lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Science Presentation (EN) with your family.',
+      taskVi: 'Dành 15 phút thực hành Science Presentation (EN) cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Book Review Writing': {
+    activityKey: 'Book Review Writing',
+    intro: 'Engage with Book Review Writing to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Book Review Writing để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Book Review Writing important for the future?',
+        questionVi: 'Tại sao Book Review Writing lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Book Review Writing with your family.',
+      taskVi: 'Dành 15 phút thực hành Book Review Writing cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Project Pitch (EN)': {
+    activityKey: 'Project Pitch (EN)',
+    intro: 'Engage with Project Pitch (EN) to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Project Pitch (EN) để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Project Pitch (EN) important for the future?',
+        questionVi: 'Tại sao Project Pitch (EN) lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Project Pitch (EN) with your family.',
+      taskVi: 'Dành 15 phút thực hành Project Pitch (EN) cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Persuasive Essay': {
+    activityKey: 'Persuasive Essay',
+    intro: 'Engage with Persuasive Essay to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Persuasive Essay để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Persuasive Essay important for the future?',
+        questionVi: 'Tại sao Persuasive Essay lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Persuasive Essay with your family.',
+      taskVi: 'Dành 15 phút thực hành Persuasive Essay cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Team Leadership Role': {
+    activityKey: 'Team Leadership Role',
+    intro: 'Engage with Team Leadership Role to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Team Leadership Role để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Team Leadership Role important for the future?',
+        questionVi: 'Tại sao Team Leadership Role lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Team Leadership Role with your family.',
+      taskVi: 'Dành 15 phút thực hành Team Leadership Role cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Team Captain Role': {
+    activityKey: 'Team Captain Role',
+    intro: 'Engage with Team Captain Role to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Team Captain Role để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Team Captain Role important for the future?',
+        questionVi: 'Tại sao Team Captain Role lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Team Captain Role with your family.',
+      taskVi: 'Dành 15 phút thực hành Team Captain Role cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Reading Schedule Self-Management': {
+    activityKey: 'Reading Schedule Self-Management',
+    intro: 'Engage with Reading Schedule Self-Management to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Reading Schedule Self-Management để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Reading Schedule Self-Management important for the future?',
+        questionVi: 'Tại sao Reading Schedule Self-Management lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Reading Schedule Self-Management with your family.',
+      taskVi: 'Dành 15 phút thực hành Reading Schedule Self-Management cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Present to Family': {
+    activityKey: 'Present to Family',
+    intro: 'Engage with Present to Family to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Present to Family để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Present to Family important for the future?',
+        questionVi: 'Tại sao Present to Family lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Present to Family with your family.',
+      taskVi: 'Dành 15 phút thực hành Present to Family cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Fact-Check Challenge': {
+    activityKey: 'Fact-Check Challenge',
+    intro: 'Engage with Fact-Check Challenge to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Fact-Check Challenge để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Fact-Check Challenge important for the future?',
+        questionVi: 'Tại sao Fact-Check Challenge lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Fact-Check Challenge with your family.',
+      taskVi: 'Dành 15 phút thực hành Fact-Check Challenge cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Community Helper Interview': {
+    activityKey: 'Community Helper Interview',
+    intro: 'Engage with Community Helper Interview to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Community Helper Interview để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Community Helper Interview important for the future?',
+        questionVi: 'Tại sao Community Helper Interview lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Community Helper Interview with your family.',
+      taskVi: 'Dành 15 phút thực hành Community Helper Interview cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Kindness Journal': {
+    activityKey: 'Kindness Journal',
+    intro: 'Engage with Kindness Journal to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Kindness Journal để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Kindness Journal important for the future?',
+        questionVi: 'Tại sao Kindness Journal lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Kindness Journal with your family.',
+      taskVi: 'Dành 15 phút thực hành Kindness Journal cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Mini Social Project': {
+    activityKey: 'Mini Social Project',
+    intro: 'Engage with Mini Social Project to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Mini Social Project để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Mini Social Project important for the future?',
+        questionVi: 'Tại sao Mini Social Project lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Mini Social Project with your family.',
+      taskVi: 'Dành 15 phút thực hành Mini Social Project cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Portfolio Building': {
+    activityKey: 'Portfolio Building',
+    intro: 'Engage with Portfolio Building to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Portfolio Building để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Portfolio Building important for the future?',
+        questionVi: 'Tại sao Portfolio Building lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Portfolio Building with your family.',
+      taskVi: 'Dành 15 phút thực hành Portfolio Building cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
+  'Young AI + Green Problem Solver': {
+    activityKey: 'Young AI + Green Problem Solver',
+    intro: 'Engage with Young AI + Green Problem Solver to build essential Future Skills for tomorrow.',
+    introVi: 'Tham gia Young AI + Green Problem Solver để rèn luyện những Kỹ năng Tương lai thiết yếu cho ngày mai.',
+    steps: [
+      { instruction: 'Understand the core concepts of this activity.', instructionVi: 'Hiểu các khái niệm cốt lõi của hoạt động này.', emoji: '🧠' },
+      { instruction: 'Apply what you learn in a real-world scenario.', instructionVi: 'Áp dụng những gì bạn học vào tình huống thực tế.', emoji: '🌍' },
+      { instruction: 'Reflect on your problem-solving process.', instructionVi: 'Suy ngẫm về quá trình giải quyết vấn đề của bạn.', emoji: '🤔' },
+    ],
+    quiz: [
+      {
+        question: 'Why is Young AI + Green Problem Solver important for the future?',
+        questionVi: 'Tại sao Young AI + Green Problem Solver lại quan trọng cho tương lai?',
+        options: ['It is a fundamental OECD Learning Compass skill', 'It is not important', 'It is only for exams', 'It is just a game'],
+        optionsVi: ['Đó là một kỹ năng cơ bản theo OECD Learning Compass', 'Nó không quan trọng', 'Nó chỉ dùng để thi', 'Đó chỉ là trò chơi'],
+        correct: 0,
+        explanation: 'According to WEF and OECD, this skill is critical for adapting to future challenges.',
+        explanationVi: 'Theo WEF và OECD, kỹ năng này rất quan trọng để thích ứng với các thách thức trong tương lai.'
+      }
+    ],
+    challenge: {
+      task: 'Spend 15 minutes practicing Young AI + Green Problem Solver with your family.',
+      taskVi: 'Dành 15 phút thực hành Young AI + Green Problem Solver cùng gia đình.',
+      duration: '15 min'
+    },
+    realWorldLink: 'WEF Future of Jobs Report 2025'
+  },
 };

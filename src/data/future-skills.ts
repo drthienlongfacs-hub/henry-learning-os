@@ -10,7 +10,7 @@ export interface FutureSkillAxis {
   frameworks: { name: string; org: string; year: string; description?: string; evidenceLink?: string }[];
   developmentalMilestones: { age: string; milestone: string; evidence: string; actionableTip?: string }[];
   activities: { title: string; titleVi: string; grade: number; type: string; competencyLevel: 'Understanding' | 'Applying' | 'Creating' }[];
-  competitions: { name: string; age: string; value: string; description: string; skills: string[]; action: string }[];
+  competitions: { name: string; age: string; value: string; description: string; skills: string[]; action: string; link?: string }[];
   tips: string[];
 }
 
@@ -46,9 +46,9 @@ export const FUTURE_SKILL_AXES: FutureSkillAxis[] = [
       { title: 'Mini Machine Learning', titleVi: 'Máy học mini — Teachable Machine', grade: 5, type: 'experiment', competencyLevel: 'Creating' },
     ],
     competitions: [
-      { name: 'FIRST LEGO League Explore', age: '6-10', value: 'Teamwork + Design + Coding', description: 'Giải đấu Robotics quốc tế tập trung vào các chủ đề khoa học thực tế. Bé sẽ làm việc nhóm để thiết kế và lập trình mô hình LEGO mô phỏng giải pháp.', skills: ['Làm việc nhóm', 'Tư duy thuật toán', 'Thuyết trình'], action: 'Xem dự án mẫu FLL' },
-      { name: 'WRO Future Innovators', age: '8-12', value: 'Robotics + Problem Solving', description: 'World Robot Olympiad - Hạng mục sáng tạo. Yêu cầu thiết kế robot giải quyết một vấn đề xã hội hoặc môi trường. Đây là sân chơi lý tưởng để ứng dụng AI và lập trình phần cứng.', skills: ['Lập trình Robot', 'Thiết kế hệ thống', 'Tư duy phản biện'], action: 'Tìm hiểu luật WRO' },
-      { name: 'Scratch Day Challenge', age: '7-12', value: 'Creativity + Coding', description: 'Ngày hội lập trình Scratch toàn cầu. Các bé có thể tham gia bằng cách tạo ra các trò chơi hoặc phim hoạt hình ngắn chia sẻ thông điệp ý nghĩa.', skills: ['Sáng tạo nghệ thuật', 'Lập trình khối', 'Tư duy Logic'], action: 'Bắt đầu dự án Scratch' },
+      { name: 'FIRST LEGO League Explore', age: '6-10', value: 'Teamwork + Design + Coding', description: 'Giải đấu Robotics quốc tế tập trung vào các chủ đề khoa học thực tế. Bé sẽ làm việc nhóm để thiết kế và lập trình mô hình LEGO mô phỏng giải pháp.', skills: ['Làm việc nhóm', 'Tư duy thuật toán', 'Thuyết trình'], action: 'Xem dự án mẫu FLL', link: 'https://www.firstlegoleague.org/' },
+      { name: 'WRO Future Innovators', age: '8-12', value: 'Robotics + Problem Solving', description: 'World Robot Olympiad - Hạng mục sáng tạo. Yêu cầu thiết kế robot giải quyết một vấn đề xã hội hoặc môi trường. Đây là sân chơi lý tưởng để ứng dụng AI và lập trình phần cứng.', skills: ['Lập trình Robot', 'Thiết kế hệ thống', 'Tư duy phản biện'], action: 'Tìm hiểu luật WRO', link: 'https://wro-association.org/' },
+      { name: 'Scratch Day Challenge', age: '7-12', value: 'Creativity + Coding', description: 'Ngày hội lập trình Scratch toàn cầu. Các bé có thể tham gia bằng cách tạo ra các trò chơi hoặc phim hoạt hình ngắn chia sẻ thông điệp ý nghĩa.', skills: ['Sáng tạo nghệ thuật', 'Lập trình khối', 'Tư duy Logic'], action: 'Bắt đầu dự án Scratch', link: 'https://day.scratch.mit.edu/' },
     ],
     tips: [
       'Căn cứ khoa học: Bắt đầu với ScratchJr (6+) giúp cụ thể hóa tư duy logic (Piaget Concrete Operational).',
@@ -84,8 +84,8 @@ export const FUTURE_SKILL_AXES: FutureSkillAxis[] = [
       { title: 'Green City Design', titleVi: 'Thiết kế thành phố xanh', grade: 5, type: 'project', competencyLevel: 'Creating' },
     ],
     competitions: [
-      { name: 'Science Fair — Green Projects', age: '7-12', value: 'Research + Presentation', description: 'Ngày hội Khoa học trường học với chủ đề Môi trường. Nơi bé có thể giới thiệu các dự án nhỏ như lọc nước, tái chế, và đo lường rác thải.', skills: ['Phương pháp khoa học', 'Giao tiếp tiếng Anh', 'Ý thức sinh thái'], action: 'Làm thí nghiệm nháp' },
-      { name: 'UNESCO Green Citizen', age: '8+', value: 'Environmental Stewardship', description: 'Chương trình Công dân Xanh toàn cầu. Ghi nhận các sáng kiến bảo vệ môi trường, dù là nhỏ nhất ở cấp độ gia đình và cộng đồng.', skills: ['Lãnh đạo', 'Sáng kiến', 'Hiểu biết hệ thống sinh thái'], action: 'Đăng ký dự án xanh' },
+      { name: 'Science Fair — Green Projects', age: '7-12', value: 'Research + Presentation', description: 'Ngày hội Khoa học trường học với chủ đề Môi trường. Nơi bé có thể giới thiệu các dự án nhỏ như lọc nước, tái chế, và đo lường rác thải.', skills: ['Phương pháp khoa học', 'Giao tiếp tiếng Anh', 'Ý thức sinh thái'], action: 'Làm thí nghiệm nháp', link: 'https://www.sciencebuddies.org/science-fair-projects/science-projects/environmental-science' },
+      { name: 'UNESCO Green Citizen', age: '8+', value: 'Environmental Stewardship', description: 'Chương trình Công dân Xanh toàn cầu. Ghi nhận các sáng kiến bảo vệ môi trường, dù là nhỏ nhất ở cấp độ gia đình và cộng đồng.', skills: ['Lãnh đạo', 'Sáng kiến', 'Hiểu biết hệ thống sinh thái'], action: 'Đăng ký dự án xanh', link: 'https://www.unescogreencitizens.org/' },
     ],
     tips: [
       'OECD Learning Compass: Dự án thực tế (Project-Based Learning) phát triển năng lực "Creating New Value".',
@@ -120,8 +120,8 @@ export const FUTURE_SKILL_AXES: FutureSkillAxis[] = [
       { title: 'ViSEF Pathway Intro', titleVi: 'Giới thiệu con đường ViSEF', grade: 5, type: 'info', competencyLevel: 'Understanding' },
     ],
     competitions: [
-      { name: 'School Science Fair', age: '7+', value: 'Question → Data → Conclusion', description: 'Triển lãm khoa học cấp trường, nơi học sinh học cách đặt câu hỏi, thực hiện quan sát và dùng biểu đồ để chứng minh giả thuyết của mình.', skills: ['Đặt câu hỏi khoa học', 'Phân tích dữ liệu', 'Báo cáo độc lập'], action: 'Tạo biểu đồ dữ liệu' },
-      { name: 'ViSEF/ISEF Pathway', age: '14+', value: 'Start building foundation NOW', description: 'Hội thi Khoa học Kỹ thuật Quốc gia & Quốc tế. Để tham gia vào cấp 3, bé cần bắt đầu làm quen với Phương pháp Nghiên cứu Khoa học (Scientific Method) ngay từ bây giờ.', skills: ['Viết báo cáo khoa học', 'Nghiên cứu định lượng', 'Tư duy phản biện cấp cao'], action: 'Khám phá lộ trình ISEF' },
+      { name: 'School Science Fair', age: '7+', value: 'Question → Data → Conclusion', description: 'Triển lãm khoa học cấp trường, nơi học sinh học cách đặt câu hỏi, thực hiện quan sát và dùng biểu đồ để chứng minh giả thuyết của mình.', skills: ['Đặt câu hỏi khoa học', 'Phân tích dữ liệu', 'Báo cáo độc lập'], action: 'Tạo biểu đồ dữ liệu', link: 'https://www.googlesciencefair.com/' },
+      { name: 'ViSEF/ISEF Pathway', age: '14+', value: 'Start building foundation NOW', description: 'Hội thi Khoa học Kỹ thuật Quốc gia & Quốc tế. Để tham gia vào cấp 3, bé cần bắt đầu làm quen với Phương pháp Nghiên cứu Khoa học (Scientific Method) ngay từ bây giờ.', skills: ['Viết báo cáo khoa học', 'Nghiên cứu định lượng', 'Tư duy phản biện cấp cao'], action: 'Khám phá lộ trình ISEF', link: 'https://www.societyforscience.org/isef/' },
     ],
     tips: [
       'WEF 2025: Khuyến khích con hỏi "Tại sao?" (Curiosity) thay vì chỉ cho sẵn đáp án.',
@@ -156,8 +156,8 @@ export const FUTURE_SKILL_AXES: FutureSkillAxis[] = [
       { title: 'Team Leadership Role', titleVi: 'Vai trò trưởng nhóm', grade: 5, type: 'leadership', competencyLevel: 'Applying' },
     ],
     competitions: [
-      { name: 'Cambridge YLE Starters→Movers→Flyers', age: '7-12', value: 'Standardized benchmark', description: 'Hệ thống đánh giá năng lực tiếng Anh quốc tế của Cambridge. Giúp đo lường khách quan kỹ năng Nghe-Nói-Đọc-Viết theo chuẩn CEFR.', skills: ['Từ vựng & Ngữ pháp', 'Giao tiếp thực tế', 'Tự tin làm bài thi'], action: 'Thi thử Cambridge' },
-      { name: 'Storytelling/Public Speaking', age: '7+', value: 'Communication + Confidence', description: 'Các cuộc thi hùng biện và kể chuyện tiếng Anh. Không chỉ là ngôn ngữ, đây là nơi rèn luyện bản lĩnh sân khấu và nghệ thuật kể chuyện.', skills: ['Nghệ thuật kể chuyện', 'Ngôn ngữ hình thể', 'Phát âm chuẩn'], action: 'Luyện tập Speaking' },
+      { name: 'Cambridge YLE Starters→Movers→Flyers', age: '7-12', value: 'Standardized benchmark', description: 'Hệ thống đánh giá năng lực tiếng Anh quốc tế của Cambridge. Giúp đo lường khách quan kỹ năng Nghe-Nói-Đọc-Viết theo chuẩn CEFR.', skills: ['Từ vựng & Ngữ pháp', 'Giao tiếp thực tế', 'Tự tự làm bài thi'], action: 'Thi thử Cambridge', link: 'https://www.cambridgeenglish.org/exams-and-tests/young-learners/' },
+      { name: 'Storytelling/Public Speaking', age: '7+', value: 'Communication + Confidence', description: 'Các cuộc thi hùng biện và kể chuyện tiếng Anh. Không chỉ là ngôn ngữ, đây là nơi rèn luyện bản lĩnh sân khấu và nghệ thuật kể chuyện.', skills: ['Nghệ thuật kể chuyện', 'Ngôn ngữ hình thể', 'Phát âm chuẩn'], action: 'Luyện tập Speaking', link: 'https://www.ted.com/participate/ted-ed-student-talks' },
     ],
     tips: [
       'CEFR A1/A2: Đánh giá qua khả năng tương tác (Interactive Communication) thay vì chỉ ngữ pháp.',
@@ -192,8 +192,8 @@ export const FUTURE_SKILL_AXES: FutureSkillAxis[] = [
       { title: 'Portfolio Building', titleVi: 'Xây dựng portfolio cá nhân', grade: 5, type: 'portfolio', competencyLevel: 'Applying' },
     ],
     competitions: [
-      { name: 'School Community Service', age: '6+', value: 'Character + Impact evidence', description: 'Các dự án phục vụ cộng đồng tại trường học. Nền tảng xây dựng hồ sơ năng lực (Portfolio) thể hiện sự đồng cảm và trách nhiệm.', skills: ['Sự đồng cảm', 'Hoạt động nhóm', 'Tổ chức sự kiện'], action: 'Tìm dự án thiện nguyện' },
-      { name: 'Student Council', age: '8+', value: 'Agency + Responsibility', description: 'Hội đồng học sinh. Cơ hội để bé thực hành quyền tự chủ (Student Agency theo chuẩn OECD) và đại diện cho tiếng nói của tập thể.', skills: ['Ra quyết định', 'Thuyết phục', 'Trách nhiệm cá nhân'], action: 'Ứng cử Hội đồng' },
+      { name: 'School Community Service', age: '6+', value: 'Character + Impact evidence', description: 'Các dự án phục vụ cộng đồng tại trường học. Nền tảng xây dựng hồ sơ năng lực (Portfolio) thể hiện sự đồng cảm và trách nhiệm.', skills: ['Sự đồng cảm', 'Hoạt động nhóm', 'Tổ chức sự kiện'], action: 'Tìm dự án thiện nguyện', link: 'https://www.unicef.org/take-action' },
+      { name: 'Student Council', age: '8+', value: 'Agency + Responsibility', description: 'Hội đồng học sinh. Cơ hội để bé thực hành quyền tự chủ (Student Agency theo chuẩn OECD) và đại diện cho tiếng nói của tập thể.', skills: ['Ra quyết định', 'Thuyết phục', 'Trách nhiệm cá nhân'], action: 'Ứng cử Hội đồng', link: 'https://www.nasc.us/' },
     ],
     tips: [
       'OECD Co-Agency: Ba mẹ đồng hành (co-agency) để giúp trẻ tự đưa ra quyết định (Student Agency).',
