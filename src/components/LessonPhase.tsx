@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { BookOpen, Lightbulb, Volume2, ChevronRight, Star, Brain, Pencil } from 'lucide-react';
+import { InteractiveVocabGame } from './InteractiveVocabGame';
 
 /** Prefix basePath for GitHub Pages subdirectory deployment */
 const withBasePath = (src: string) =>
@@ -443,18 +444,35 @@ export function LessonPhase({ lesson, onStartQuiz, lang = 'vi' }: LessonPhasePro
           </div>
         </div>
 
+        {/* Universal section image — renders for ANY section type */}
+        {section.imageUrl && section.type !== 'reading' && (
+          <div style={{ marginBottom: 16, borderRadius: 14, overflow: 'hidden', border: '1px solid #e2e8f0', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+            <img src={withBasePath(section.imageUrl)} alt="Lesson illustration" style={{ width: '100%', height: 'auto', display: 'block' }} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+          </div>
+        )}
+
         {/* Content rendering */}
         {section.type === 'vocabulary' && (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8 }}>
-            {section.content.map((item, i) => {
-              const [en, vi] = item.split(' — ');
-              return (
-                <div key={i} style={{ background: '#f8fafc', borderRadius: 12, padding: '12px 14px', border: '1px solid #e2e8f0' }}>
-                  <div style={{ fontSize: 16, fontWeight: 700, color: '#1e1b4b' }}>{en}</div>
-                  <div style={{ fontSize: 13, color: '#6366f1', marginTop: 2 }}>{vi}</div>
-                </div>
-              );
-            })}
+          <div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8, marginBottom: 16 }}>
+              {section.content.map((item, i) => {
+                const [en, vi] = item.split(' — ');
+                return (
+                  <div key={i} style={{ background: '#f8fafc', borderRadius: 12, padding: '12px 14px', border: '1px solid #e2e8f0' }}>
+                    <div style={{ fontSize: 16, fontWeight: 700, color: '#1e1b4b' }}>{en}</div>
+                    <div style={{ fontSize: 13, color: '#6366f1', marginTop: 2 }}>{vi}</div>
+                  </div>
+                );
+              })}
+            </div>
+            {/* Interactive Vocab Game */}
+            <InteractiveVocabGame
+              words={section.content.map(item => {
+                const parts = item.split(' — ');
+                return { en: parts[0]?.trim() || '', vi: parts[1]?.trim() || '' };
+              })}
+              unitTitle={isVi ? lesson.unitTitleVi : lesson.unitTitle}
+            />
           </div>
         )}
 
