@@ -725,7 +725,7 @@ export interface IntlTopicInfo {
   gradeLevel: number;
   icon: string;
   framework: string;
-  category: 'phonics' | 'grammar' | 'reading' | 'sight_words' | 'writing' | 'listening' | 'vocabulary' | 'culture';
+  category: 'unit' | 'phonics' | 'grammar' | 'reading' | 'sight_words' | 'writing' | 'listening' | 'vocabulary' | 'culture';
 }
 
 // Import new data types
@@ -744,6 +744,20 @@ const getFlag = (fw: string) => {
 
 export function getInternationalTopics(grade: number): IntlTopicInfo[] {
   const topics: IntlTopicInfo[] = [];
+
+  // Country textbook unit lanes. These are the image/manifest-backed lessons
+  // used by LessonPhase, so they must be visible from /child/learn, not only
+  // reachable through direct ?subject=english&topic=... URLs.
+  ALL_COUNTRY_UNITS.filter(u => u.grade === grade).forEach(u => {
+    topics.push({
+      key: u.unitId,
+      name: `${getFlag(u.framework)} Unit ${u.unitNumber}: ${u.title}`,
+      gradeLevel: u.grade,
+      icon: '📘',
+      framework: u.framework,
+      category: 'unit',
+    });
+  });
 
   // Phonics (Grade 1-5)
   PHONICS_LEVELS.filter(l => l.grade <= grade).forEach(l => {

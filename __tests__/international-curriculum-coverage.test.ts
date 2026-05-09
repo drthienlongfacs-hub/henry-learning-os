@@ -13,6 +13,7 @@ import {
 } from '@/data/international-curriculum-source-registry';
 import { CAMBRIDGE_UNITS } from '@/data/english-international';
 import { getAllInternationalUnits, getGeneratedUnitManifest } from '@/data/international-unit-manifests';
+import { ENGLISH_TOPICS } from '@/lib/content/english-generator';
 
 describe('international curriculum coverage evidence gate', () => {
   it('requires every country unit to have source manifest coverage before 100% is displayed', () => {
@@ -64,5 +65,24 @@ describe('international curriculum coverage evidence gate', () => {
     expect(manifests.every(manifest => manifest && manifest.assessmentItems.length >= 16)).toBe(true);
     expect(manifests.every(manifest => manifest && manifest.sourceIds.length >= 3)).toBe(true);
     expect(manifests.every(manifest => manifest && manifest.completionEvidence.includes('retrieval-spaced-transfer-learning-routine'))).toBe(true);
+  });
+
+  it('surfaces manifest-backed country units directly in the Learn route topic list', () => {
+    const cambridgeG2Unit = ENGLISH_TOPICS.find(topic => topic.key === 'cam_g2_u01');
+    const cambridgeG5Unit = ENGLISH_TOPICS.find(topic => topic.key === 'cam_g5_u09');
+
+    expect(cambridgeG2Unit).toMatchObject({
+      gradeLevel: 2,
+      isIntl: true,
+      framework: 'cambridge',
+      category: 'unit',
+    });
+    expect(cambridgeG2Unit?.name).toContain('Stories about things we know');
+    expect(cambridgeG5Unit).toMatchObject({
+      gradeLevel: 5,
+      isIntl: true,
+      framework: 'cambridge',
+      category: 'unit',
+    });
   });
 });
