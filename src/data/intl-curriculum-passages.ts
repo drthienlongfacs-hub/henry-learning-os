@@ -314,7 +314,14 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
   // ══════════════════════════════════════════════════════════════
   'cam_g1_u04': [
     {
-      sectionTitle: "4.1 The Enormous Turnip",
+      sectionTitle: '4.1 Getting Started',
+      sectionTitleVi: '4.1 Khởi động',
+      type: 'getting_started',
+      text: "Welcome to Unit 4 — Traditional Tales!\n\n🗣️ Talk with your partner:\n• Do you know any fairy tales or old stories?\n• Who are the characters in your favourite story?\n• Do stories always end happily?\n\nTraditional tales are stories told again and again for many years. They often start with 'Once upon a time...' Today we will read a famous tale and learn about characters, settings, and teamwork.",
+      textVi: "Chào mừng đến Bài 4 — Truyện cổ tích!\n\n🗣️ Nói chuyện với bạn:\n• Bạn có biết câu chuyện cổ tích nào không?\n• Nhân vật trong truyện yêu thích của bạn là ai?\n• Truyện có luôn kết thúc vui vẻ không?\n\nTruyện cổ tích là những câu chuyện được kể đi kể lại qua nhiều năm. Chúng thường bắt đầu bằng 'Ngày xửa ngày xưa...' Hôm nay chúng ta sẽ đọc một câu chuyện nổi tiếng và học về nhân vật, bối cảnh, và tinh thần đồng đội."
+    },
+    {
+      sectionTitle: "4.2 The Enormous Turnip",
       sectionTitleVi: "4.1 Củ cải khổng lồ",
       type: "reading",
       text: "Once upon a time, an old man planted a turnip. The turnip grew and grew. It was enormous! The old man pulled and pulled, but he could not pull it up. He called the old woman. They pulled and pulled, but they could not pull it up. They called a boy. They pulled and pulled. Pop! The enormous turnip came out.",
@@ -349,7 +356,42 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       textVi: "Câu chuyện nói về tinh thần làm việc nhóm. Ông lão không thể làm điều đó một mình. Bà lão không thể làm điều đó một mình. Họ cần sự giúp đỡ. Khi chúng ta làm việc cùng nhau, chúng ta có thể làm được những việc khó khăn. Chúng ta có thể mạnh mẽ cùng nhau. Làm việc nhóm tạo nên thành công. Ai giúp đỡ bạn khi mọi việc trở nên khó khăn?"
     },
     {
-      sectionTitle: "4.6 Unit 4 Review",
+      sectionTitle: '4.7 Word Work: Story language',
+      sectionTitleVi: '4.7 Luyện từ: Ngôn ngữ kể chuyện',
+      type: 'word_work',
+      text: "Stories use special words and phrases:\n\n📖 STORY OPENERS: Once upon a time... / Long, long ago... / One day...\n📖 STORY ENDINGS: ...and they lived happily ever after. / The end.\n📖 CHARACTER WORDS: old, young, kind, brave, clever, silly\n📖 ACTION WORDS: pulled, pushed, called, helped, grew, planted\n\n✏️ Match the word to the meaning:\n1. enormous = very ___ (big)\n2. pulled = moved something ___ you (towards)\n3. planted = put a seed in the ___ (ground)\n\n🌟 Challenge: Tell a story using 'Once upon a time' and 'The end'!",
+      textVi: "Truyện dùng những từ và cụm từ đặc biệt:\n\n📖 MỞ ĐẦU: Ngày xửa ngày xưa... / Từ rất lâu rồi... / Một ngày nọ...\n📖 KẾT THÚC: ...và họ sống hạnh phúc mãi mãi. / Hết.\n📖 TỪ NHÂN VẬT: già, trẻ, tốt bụng, dũng cảm, thông minh, ngốc nghếch\n📖 TỪ HÀNH ĐỘNG: kéo, đẩy, gọi, giúp, lớn lên, trồng\n\n✏️ Nối từ với nghĩa:\n1. enormous = rất ___ (lớn)\n2. pulled = kéo cái gì đó ___ phía mình (về)\n3. planted = đặt hạt vào ___ (đất)\n\n🌟 Thử thách: Kể chuyện dùng 'Ngày xửa ngày xưa' và 'Hết'!"
+    },
+    {
+      sectionTitle: '4.8 Comprehension',
+      sectionTitleVi: '4.8 Đọc hiểu',
+      type: 'comprehension',
+      text: "Let's check what you remember!\n\n❓ Questions:\n1. Who planted the turnip? (the old man)\n2. Why couldn't the old man pull it up alone? (it was too big)\n3. Who helped him? (the old woman, then the boy)\n4. Where does the story take place? (in a garden)\n5. What is the lesson of this story? (teamwork — working together)\n\n🤔 Think deeper:\n• Could the old man have done it alone? Why not?\n• What other stories do you know about working together?",
+      textVi: "Hãy kiểm tra bạn nhớ được gì!\n\n❓ Câu hỏi:\n1. Ai trồng củ cải? (ông lão)\n2. Tại sao ông lão không thể tự nhổ? (nó quá to)\n3. Ai giúp ông? (bà lão, rồi cậu bé)\n4. Câu chuyện diễn ra ở đâu? (trong vườn)\n5. Bài học của câu chuyện là gì? (đồng đội — làm việc cùng nhau)\n\n🤔 Suy nghĩ sâu hơn:\n• Ông lão có thể tự làm một mình không? Tại sao?\n• Bạn biết câu chuyện nào khác về làm việc cùng nhau?"
+    },
+    {
+      sectionTitle: '4.9 Talk About: My favourite tale',
+      sectionTitleVi: '4.9 Nói về: Truyện yêu thích',
+      type: 'talk_about',
+      text: "🗣️ Speaking Activity — Retell a story!\n\n1. Pick a traditional tale you know well.\n2. Tell your partner the story using these words:\n   First, ... Next, ... Then, ... Finally, ...\n3. Use a different VOICE for each character!\n4. Your partner listens, then asks one question.\n\n🎭 Act it out! Can you and your partner act out The Enormous Turnip? One person pulls, the next joins in!\n\n👂 Listening: Who told the best story? Vote as a class!",
+      textVi: "🗣️ Hoạt động Nói — Kể lại câu chuyện!\n\n1. Chọn một truyện cổ bạn biết rõ.\n2. Kể cho bạn nghe dùng các từ:\n   Đầu tiên, ... Tiếp theo, ... Sau đó, ... Cuối cùng, ...\n3. Dùng GIỌNG khác nhau cho mỗi nhân vật!\n4. Bạn lắng nghe, rồi hỏi một câu hỏi.\n\n🎭 Diễn kịch! Bạn và bạn có thể diễn Củ cải khổng lồ không? Một người kéo, người tiếp theo nối vào!\n\n👂 Lắng nghe: Ai kể chuyện hay nhất? Bình chọn cả lớp!"
+    },
+    {
+      sectionTitle: '4.10 Writing: My own tale',
+      sectionTitleVi: '4.10 Viết: Truyện của tôi',
+      type: 'writing',
+      text: "✏️ Write your own traditional tale!\n\nUse this plan:\n1. Start: Once upon a time, there was a ___. (character)\n2. Setting: He/She lived in a ___. (place)\n3. Problem: One day, ___ happened.\n4. Help: He/She asked ___ for help.\n5. Ending: Finally, they ___ together. The end!\n\n📝 Example:\nOnce upon a time, there was a little cat. She lived in a cosy house. One day, she lost her ball. She asked the dog for help. Finally, they found it together. The end!\n\n🌟 Draw a picture for your story!",
+      textVi: "✏️ Viết truyện cổ tích của riêng bạn!\n\nDùng kế hoạch này:\n1. Mở đầu: Ngày xửa ngày xưa, có một ___. (nhân vật)\n2. Bối cảnh: Anh/Cô ấy sống ở ___. (nơi chốn)\n3. Vấn đề: Một ngày, ___ xảy ra.\n4. Giúp đỡ: Anh/Cô ấy nhờ ___ giúp.\n5. Kết thúc: Cuối cùng, họ ___ cùng nhau. Hết!\n\n📝 Ví dụ:\nNgày xửa ngày xưa, có một chú mèo nhỏ. Cô ấy sống trong một ngôi nhà ấm cúng. Một ngày, cô ấy mất quả bóng. Cô ấy nhờ chú chó giúp. Cuối cùng, họ tìm thấy nó cùng nhau. Hết!\n\n🌟 Vẽ tranh cho câu chuyện của bạn!"
+    },
+    {
+      sectionTitle: '4.11 How did I do?',
+      sectionTitleVi: '4.11 Tôi làm được gì?',
+      type: 'self_check',
+      text: "Check what you can do!\n\n✅ I can name the characters in a story\n✅ I can describe where a story takes place (setting)\n✅ I can retell a story using First, Next, Then, Finally\n✅ I know what 'Once upon a time' means\n✅ I can write a short story with a beginning, middle, and end\n✅ I understand why teamwork is important\n\n⭐ How many did you tick?\n6 = Super storyteller! 🌟\n4-5 = Great work!\n2-3 = Keep reading stories!\n1 = Ask for help!",
+      textVi: "Kiểm tra bạn làm được gì!\n\n✅ Tôi gọi được tên các nhân vật trong truyện\n✅ Tôi mô tả được nơi câu chuyện diễn ra (bối cảnh)\n✅ Tôi kể lại được truyện dùng Đầu tiên, Tiếp theo, Sau đó, Cuối cùng\n✅ Tôi biết 'Ngày xửa ngày xưa' nghĩa là gì\n✅ Tôi viết được truyện ngắn có mở đầu, giữa và kết thúc\n✅ Tôi hiểu tại sao làm việc nhóm quan trọng\n\n⭐ Bạn tích được bao nhiêu?\n6 = Siêu kể chuyện! 🌟\n4-5 = Giỏi lắm!\n2-3 = Đọc thêm truyện nhé!\n1 = Hãy nhờ giúp đỡ!"
+    },
+    {
+      sectionTitle: "4.12 Unit 4 Review",
       sectionTitleVi: "4.6 Ôn tập Bài 4",
       type: "tip",
       text: "Fantastic! You have finished Unit 4 all about traditional tales.\n\nLet's review what we learned:\n✓ We learned about story characters: old man, old woman, boy.\n✓ We learned about the setting of a story.\n✓ We practiced retelling a story with First, Next, Then, Finally.\n✓ We learned that teamwork is important.\n\nKeep reading stories! Try to find the characters and the setting in every story you read.",
@@ -361,7 +403,14 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
   // ══════════════════════════════════════════════════════════════
   'cam_g1_u05': [
     {
-      sectionTitle: "5.1 Animal facts",
+      sectionTitle: '5.1 Getting Started',
+      sectionTitleVi: '5.1 Khởi động',
+      type: 'getting_started',
+      text: "Welcome to Unit 5 — Animals!\n\n🗣️ Talk with your partner:\n• What is your favourite animal? Why?\n• Can you name 5 animals?\n• What can animals do that people cannot?\n\nIn this unit we will learn amazing FACTS about animals. We will find out about their bodies, where they live, and what they eat. We will also learn to write INFORMATION texts — writing that tells us true facts.",
+      textVi: "Chào mừng đến Bài 5 — Động vật!\n\n🗣️ Nói chuyện với bạn:\n• Động vật yêu thích của bạn là gì? Tại sao?\n• Bạn có thể kể tên 5 loài động vật không?\n• Động vật làm được gì mà con người không thể?\n\nTrong bài này chúng ta sẽ học những SỰ THẬT tuyệt vời về động vật. Chúng ta sẽ tìm hiểu về cơ thể, nơi sống, và thức ăn của chúng. Chúng ta cũng sẽ học viết văn bản THÔNG TIN — bài viết cho ta biết sự thật."
+    },
+    {
+      sectionTitle: "5.2 Animal facts",
       sectionTitleVi: "5.1 Sự thật về động vật",
       type: "reading",
       text: "An elephant is a big animal. It has a long trunk. It has big ears. A mouse is a small animal. It has a long tail. It has small ears. Elephants cannot jump. Mice can run very fast. Birds can fly in the sky. Fish can swim in the water. Every animal is different.",
@@ -396,7 +445,42 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       textVi: "Một đoạn văn thông tin cho chúng ta biết những sự thật. Để viết về một loài động vật, chúng ta có thể viết: 1. Tên của nó. 2. Trông nó như thế nào. 3. Nó sống ở đâu. 4. Nó ăn gì. Ví dụ: Đây là một con hổ. Nó có màu cam với những sọc đen. Nó sống trong rừng rậm. Nó ăn thịt."
     },
     {
-      sectionTitle: "5.6 Unit 5 Review",
+      sectionTitle: '5.7 Word Work: Describing words',
+      sectionTitleVi: '5.7 Luyện từ: Từ miêu tả',
+      type: 'word_work',
+      text: "ADJECTIVES are describing words. They tell us about size, colour, speed, and more.\n\n🐾 SIZE: big, small, tiny, enormous, tall, short\n🎨 COLOUR: brown, grey, orange, black, white, spotted, striped\n🏃 SPEED: fast, slow, quick\n🔊 SOUND: loud, quiet, noisy\n\n✏️ Describe these animals:\n1. A tiger is ___ with ___ stripes. (orange, black)\n2. A mouse is ___ and ___. (small, quick)\n3. An elephant is ___ and ___. (big, grey)\n\n🌟 Challenge: Use TWO adjectives to describe YOUR favourite animal!",
+      textVi: "TÍNH TỪ là từ miêu tả. Chúng cho biết về kích thước, màu sắc, tốc độ...\n\n🐾 KÍCH THƯỚC: to, nhỏ, tí hon, khổng lồ, cao, thấp\n🎨 MÀU SẮC: nâu, xám, cam, đen, trắng, đốm, sọc\n🏃 TỐC ĐỘ: nhanh, chậm, mau lẹ\n🔊 ÂM THANH: to, nhỏ, ồn ào\n\n✏️ Miêu tả các con vật này:\n1. Con hổ có màu ___ với sọc ___. (cam, đen)\n2. Con chuột thì ___ và ___. (nhỏ, nhanh)\n3. Con voi thì ___ và ___. (to, xám)\n\n🌟 Thử thách: Dùng HAI tính từ để miêu tả con vật YÊU THÍCH của bạn!"
+    },
+    {
+      sectionTitle: '5.8 Comprehension',
+      sectionTitleVi: '5.8 Đọc hiểu',
+      type: 'comprehension',
+      text: "Let's check what you learned!\n\n❓ Questions:\n1. Name an animal that can fly. (bird)\n2. What body part does an elephant use to drink? (trunk)\n3. Where do penguins live? (on the ice / cold places)\n4. Is a cheetah fast or slow? (fast)\n5. What four things do we write in an information text about an animal? (name, looks, habitat, food)\n\n🤔 Think deeper:\n• Why do different animals live in different places?\n• How is writing facts different from writing a story?",
+      textVi: "Hãy kiểm tra bạn học được gì!\n\n❓ Câu hỏi:\n1. Kể tên một con vật biết bay. (chim)\n2. Voi dùng bộ phận nào để uống nước? (vòi)\n3. Chim cánh cụt sống ở đâu? (trên băng / nơi lạnh)\n4. Báo đốm nhanh hay chậm? (nhanh)\n5. Bốn điều gì ta viết trong văn bản thông tin về động vật? (tên, hình dáng, nơi sống, thức ăn)\n\n🤔 Suy nghĩ sâu hơn:\n• Tại sao các loài vật khác nhau sống ở nơi khác nhau?\n• Viết sự thật khác gì so với viết truyện?"
+    },
+    {
+      sectionTitle: '5.9 Talk About: Animal quiz',
+      sectionTitleVi: '5.9 Nói về: Đố vui động vật',
+      type: 'talk_about',
+      text: "🗣️ Speaking Activity — Animal Guessing Game!\n\n1. Think of an animal. Do NOT say its name.\n2. Give 3 clues to your partner:\n   • It is ___ (size/colour)\n   • It lives in ___ (habitat)\n   • It can ___ (action)\n3. Your partner guesses the animal!\n\n🎯 Example:\nIt is big and grey. It lives in Africa. It has a long trunk. What is it? (Elephant!)\n\n👂 Listening: Listen carefully to the clues before guessing.",
+      textVi: "🗣️ Hoạt động Nói — Trò đoán động vật!\n\n1. Nghĩ về một con vật. KHÔNG nói tên nó.\n2. Cho bạn 3 gợi ý:\n   • Nó ___ (kích thước/màu sắc)\n   • Nó sống ở ___ (nơi sống)\n   • Nó có thể ___ (hành động)\n3. Bạn đoán con vật!\n\n🎯 Ví dụ:\nNó to và xám. Nó sống ở Châu Phi. Nó có vòi dài. Đó là gì? (Voi!)\n\n👂 Lắng nghe: Nghe kỹ gợi ý trước khi đoán."
+    },
+    {
+      sectionTitle: '5.10 Writing: My animal fact file',
+      sectionTitleVi: '5.10 Viết: Hồ sơ động vật',
+      type: 'writing',
+      text: "✏️ Write a fact file about an animal!\n\nChoose an animal and write:\n🏷️ Name: ___\n👀 What it looks like: It is ___ and ___.\n🏠 Where it lives: It lives in ___.\n🍽️ What it eats: It eats ___.\n⭐ Special fact: It can ___.\n\n📝 Example — Cat:\n🏷️ Name: Cat\n👀 It is small and fluffy.\n🏠 It lives in houses with people.\n🍽️ It eats fish and cat food.\n⭐ It can climb trees and see in the dark.\n\n🌟 Draw a picture of your animal!",
+      textVi: "✏️ Viết hồ sơ thông tin về một con vật!\n\nChọn một con vật và viết:\n🏷️ Tên: ___\n👀 Trông như thế nào: Nó ___ và ___.\n🏠 Sống ở đâu: Nó sống ở ___.\n🍽️ Ăn gì: Nó ăn ___.\n⭐ Sự thật đặc biệt: Nó có thể ___.\n\n📝 Ví dụ — Mèo:\n🏷️ Tên: Mèo\n👀 Nó nhỏ và mềm mại.\n🏠 Nó sống trong nhà với người.\n🍽️ Nó ăn cá và thức ăn cho mèo.\n⭐ Nó có thể leo cây và nhìn trong bóng tối.\n\n🌟 Vẽ tranh con vật của bạn!"
+    },
+    {
+      sectionTitle: '5.11 How did I do?',
+      sectionTitleVi: '5.11 Tôi làm được gì?',
+      type: 'self_check',
+      text: "Check what you can do!\n\n✅ I can name 10 animals and their body parts\n✅ I can use describing words (big, small, fast, slow)\n✅ I can say where different animals live\n✅ I can play the animal guessing game\n✅ I can write an animal fact file\n✅ I know the difference between a fact and a story\n\n⭐ How many did you tick?\n6 = Animal expert! 🌟\n4-5 = Great work!\n2-3 = Keep learning!\n1 = Ask for help!",
+      textVi: "Kiểm tra bạn làm được gì!\n\n✅ Tôi kể được 10 loài vật và bộ phận cơ thể\n✅ Tôi dùng được từ miêu tả (to, nhỏ, nhanh, chậm)\n✅ Tôi nói được nơi sống của các loài vật\n✅ Tôi chơi được trò đoán động vật\n✅ Tôi viết được hồ sơ thông tin động vật\n✅ Tôi biết sự khác nhau giữa sự thật và truyện\n\n⭐ Bạn tích được bao nhiêu?\n6 = Chuyên gia động vật! 🌟\n4-5 = Giỏi lắm!\n2-3 = Tiếp tục học!\n1 = Hãy nhờ giúp đỡ!"
+    },
+    {
+      sectionTitle: "5.12 Unit 5 Review",
       sectionTitleVi: "5.6 Ôn tập Bài 5",
       type: "tip",
       text: "Excellent! You have finished Unit 5 all about animals and information.\n\nLet's review what we learned:\n✓ We learned animal names: elephant, mouse, bird, fish.\n✓ We learned about animal body parts: trunk, tail, wings.\n✓ We used describing words: big, small, fast, slow.\n✓ We learned where different animals live.\n✓ We practiced writing true facts about animals.\n\nKeep exploring! You can learn more facts from books about animals.",
