@@ -136,7 +136,14 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
   // ══════════════════════════════════════════════════════════════
   'cam_g1_u01': [
     {
-      sectionTitle: "1.1 Playing together",
+      sectionTitle: '1.1 Getting Started',
+      sectionTitleVi: '1.1 Khởi động',
+      type: 'getting_started',
+      text: "Welcome to Unit 1! Let's talk about FRIENDS.\n\n🗣️ Talk with your partner:\n• Who is your best friend?\n• What do you like to play?\n• How do you make a new friend?\n\nLook at the picture. What can you see? Children are playing in the playground. They are having fun TOGETHER. Today we will learn about playing, sharing, and being kind.",
+      textVi: "Chào mừng đến Bài 1! Hãy nói về BẠN BÈ.\n\n🗣️ Nói chuyện với bạn:\n• Bạn thân nhất của bạn là ai?\n• Bạn thích chơi gì?\n• Làm thế nào để kết bạn mới?\n\nNhìn bức tranh. Bạn thấy gì? Trẻ em đang chơi ở sân chơi. Họ đang vui vẻ CÙNG NHAU. Hôm nay chúng ta sẽ học về chơi đùa, chia sẻ và tử tế."
+    },
+    {
+      sectionTitle: "1.2 Playing together",
       sectionTitleVi: "1.1 Cùng chơi với nhau",
       type: "reading",
       text: "Look at the children in the playground. What are they doing? Some children are running. Some children are jumping. Two children are on the swing. They are playing together. Playing together is fun. We can share our toys. We can take turns. It is good to share and take turns.",
@@ -164,14 +171,49 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       textVi: "Từ chỉ hành động cho chúng ta biết chúng ta đang làm gì. Chạy, nhảy, nhảy lò cò, nhảy dây, đi bộ. Chúng ta có thể chạy nhanh. Chúng ta có thể nhảy cao. Chúng ta có thể nhảy lò cò trên một chân. Chúng ta có thể nhảy với dây. Chúng ta có thể đi bộ chậm. Bạn có thể làm những hành động gì? Mình có thể vỗ tay. Mình có thể giậm chân."
     },
     {
-      sectionTitle: "1.5 Our playground",
+      sectionTitle: '1.6 Word Work: Action words',
+      sectionTitleVi: '1.6 Luyện từ: Từ chỉ hành động',
+      type: 'word_work',
+      text: "Action words (VERBS) tell us what we DO.\n\n🏃 Body actions: run, jump, hop, skip, walk, clap, stomp\n🤝 Friend actions: share, help, play, smile, talk, listen\n🎮 Game words: catch, throw, hide, seek, slide, swing, climb\n\n✏️ Fill in the action word:\n1. I can ___ very fast. (run)\n2. We ___ on the swing. (swing)\n3. She can ___ on one leg. (hop)\n4. Let's ___ our toys. (share)\n\n🌟 Challenge: Act out a word! Can your partner guess it?",
+      textVi: "Từ chỉ hành động (ĐỘNG TỪ) cho ta biết chúng ta LÀM GÌ.\n\n🏃 Hành động cơ thể: chạy, nhảy, nhảy lò cò, nhảy dây, đi bộ, vỗ tay, giậm chân\n🤝 Hành động bạn bè: chia sẻ, giúp đỡ, chơi, mỉm cười, nói chuyện, lắng nghe\n🎮 Từ trò chơi: bắt, ném, trốn, tìm, trượt, đu, trèo\n\n✏️ Điền từ chỉ hành động:\n1. I can ___ very fast. (run — chạy)\n2. We ___ on the swing. (swing — đu)\n3. She can ___ on one leg. (hop — nhảy lò cò)\n4. Let's ___ our toys. (share — chia sẻ)\n\n🌟 Thử thách: Diễn một từ! Bạn có đoán được không?"
+    },
+    {
+      sectionTitle: '1.7 Comprehension',
+      sectionTitleVi: '1.7 Đọc hiểu',
+      type: 'comprehension',
+      text: "Let's check what you remember!\n\n❓ Questions:\n1. What do children do in the playground? (run, jump, swing, play)\n2. How do you make a new friend? (say hello, ask their name, smile)\n3. What polite words should we use? (please, thank you)\n4. Name THREE action words. (run, jump, hop, skip, walk...)\n5. Why is it important to take turns?\n\n🤔 Think deeper:\n• What is the BEST thing about having friends?\n• What should you do if someone is playing alone?",
+      textVi: "Hãy kiểm tra bạn nhớ được gì!\n\n❓ Câu hỏi:\n1. Trẻ em làm gì ở sân chơi? (chạy, nhảy, đu, chơi)\n2. Làm thế nào để kết bạn mới? (chào, hỏi tên, mỉm cười)\n3. Những từ lịch sự nào chúng ta nên dùng? (làm ơn, cảm ơn)\n4. Kể BA từ chỉ hành động. (chạy, nhảy, nhảy lò cò, nhảy dây, đi bộ...)\n5. Tại sao thay phiên nhau lại quan trọng?\n\n🤔 Suy nghĩ sâu hơn:\n• Điều TỐT NHẤT khi có bạn bè là gì?\n• Bạn nên làm gì nếu thấy ai đó chơi một mình?"
+    },
+    {
+      sectionTitle: '1.8 Talk About: My favourite game',
+      sectionTitleVi: '1.8 Nói về: Trò chơi yêu thích',
+      type: 'talk_about',
+      text: "🗣️ Speaking Activity — Tell your partner!\n\n1. What is your favourite game?\n2. How do you play it?\n3. Who do you play it with?\n4. Why do you like it?\n\n📋 Use this sentence pattern:\n'My favourite game is ___. I play it with ___. I like it because ___.\n\n👂 Listening: When your partner talks, listen carefully. Then tell the class what THEIR favourite game is!",
+      textVi: "🗣️ Hoạt động Nói — Nói cho bạn nghe!\n\n1. Trò chơi yêu thích của bạn là gì?\n2. Bạn chơi nó như thế nào?\n3. Bạn chơi với ai?\n4. Tại sao bạn thích nó?\n\n📋 Dùng mẫu câu:\n'Trò chơi yêu thích của tôi là ___. Tôi chơi với ___. Tôi thích vì ___.'\n\n👂 Lắng nghe: Khi bạn nói, hãy lắng nghe cẩn thận. Sau đó kể cho cả lớp trò chơi yêu thích của BẠN ẤY!"
+    },
+    {
+      sectionTitle: '1.9 Writing: About my friend',
+      sectionTitleVi: '1.9 Viết: Về bạn của tôi',
+      type: 'writing',
+      text: "✏️ Write about your friend!\n\nStep 1: Think about your friend.\nStep 2: Answer these questions:\n• What is their name?\n• What do they look like?\n• What do you play together?\n• Why are they a good friend?\n\nStep 3: Write 3-4 sentences.\n\nExample:\nMy friend is Lan. She has long hair. We play tag together. She always shares her snacks. She is kind.\n\n🌟 Draw a picture of you and your friend playing!",
+      textVi: "✏️ Viết về bạn của bạn!\n\nBước 1: Nghĩ về bạn của bạn.\nBước 2: Trả lời các câu hỏi:\n• Tên bạn ấy là gì?\n• Bạn ấy trông như thế nào?\n• Các bạn chơi gì cùng nhau?\n• Tại sao bạn ấy là người bạn tốt?\n\nBước 3: Viết 3-4 câu.\n\nVí dụ:\nBạn tôi là Lan. Bạn ấy có tóc dài. Chúng tôi chơi đuổi bắt cùng nhau. Bạn ấy luôn chia sẻ đồ ăn vặt. Bạn ấy rất tử tế.\n\n🌟 Vẽ một bức tranh về bạn và bạn ấy đang chơi!"
+    },
+    {
+      sectionTitle: "1.10 Our playground",
       sectionTitleVi: "1.5 Sân chơi của chúng ta",
       type: "information",
       text: "Our playground has many things. We have a slide. We slide down. We have a see-saw. We go up and down. We have a climbing frame. We climb up high. We have a sandbox. We build sandcastles. The playground is a busy place. We must be careful. We must not push.",
       textVi: "Sân chơi của chúng ta có rất nhiều thứ. Chúng ta có cầu trượt. Chúng ta trượt xuống. Chúng ta có bập bênh. Chúng ta đi lên và đi xuống. Chúng ta có khung leo trèo. Chúng ta trèo lên cao. Chúng ta có hộp cát. Chúng ta xây lâu đài cát. Sân chơi là một nơi nhộn nhịp. Chúng ta phải cẩn thận. Chúng ta không được xô đẩy."
     },
     {
-      sectionTitle: "1.6 Unit 1 Review",
+      sectionTitle: '1.11 How did I do?',
+      sectionTitleVi: '1.11 Tôi làm được gì?',
+      type: 'self_check',
+      text: "Check what you can do!\n\n✅ I can say hello and ask someone's name\n✅ I can name 5 action words (run, jump, hop, skip, walk)\n✅ I can use polite words (please, thank you)\n✅ I can talk about my favourite game\n✅ I can write sentences about my friend\n✅ I know how to share and take turns\n\n⭐ How many did you tick?\n6 = Super friend! 🌟\n4-5 = Great job!\n2-3 = Keep practising!\n1 = Ask for help!",
+      textVi: "Kiểm tra bạn làm được gì!\n\n✅ Tôi có thể chào và hỏi tên ai đó\n✅ Tôi biết 5 từ chỉ hành động (chạy, nhảy, nhảy lò cò, nhảy dây, đi bộ)\n✅ Tôi dùng từ lịch sự (làm ơn, cảm ơn)\n✅ Tôi nói được về trò chơi yêu thích\n✅ Tôi viết được câu về bạn của mình\n✅ Tôi biết cách chia sẻ và thay phiên\n\n⭐ Bạn tích được bao nhiêu?\n6 = Siêu bạn bè! 🌟\n4-5 = Giỏi lắm!\n2-3 = Tiếp tục luyện tập!\n1 = Hãy nhờ giúp đỡ!"
+    },
+    {
+      sectionTitle: "1.12 Unit 1 Review",
       sectionTitleVi: "1.6 Ôn tập Bài 1",
       type: "tip",
       text: "Well done! You have finished Unit 1 all about friends and the playground.\n\nLet's review what we learned:\n✓ We learned words about playing: run, jump, swing, ball.\n✓ We learned how to be a good friend: share, take turns, be kind.\n✓ We learned polite words: please, thank you.\n✓ We learned action words (verbs).\n✓ We talked about things in the playground.\n\nKeep practicing! Be a good friend every day!",
@@ -182,6 +224,13 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
   // CAMBRIDGE G1 U02: Making Things
   // ══════════════════════════════════════════════════════════════
   'cam_g1_u02': [
+    {
+      sectionTitle: '2.1 Getting Started',
+      sectionTitleVi: '2.1 Khởi động',
+      type: 'getting_started',
+      text: "Welcome to Unit 2 — Making Things!\n\n🗣️ Talk with your partner:\n• Have you ever made something? What was it?\n• What do you need to make a paper hat?\n• Do you like cutting, folding, or drawing best?\n\nToday we will learn how to MAKE things — from paper, with glue, and with our hands. We will also learn to follow INSTRUCTIONS step by step.",
+      textVi: "Chào mừng đến Bài 2 — Làm đồ vật!\n\n🗣️ Nói chuyện với bạn:\n• Bạn đã bao giờ làm một thứ gì chưa? Đó là gì?\n• Bạn cần gì để làm một chiếc mũ giấy?\n• Bạn thích cắt, gấp, hay vẽ nhất?\n\nHôm nay chúng ta sẽ học cách LÀM đồ vật — từ giấy, với hồ dán, và bằng đôi tay. Chúng ta cũng sẽ học cách làm theo HƯỚNG DẪN từng bước."
+    },
     {
       sectionTitle: "2.1 Making things from paper",
       sectionTitleVi: "2.1 Làm đồ vật từ giấy",
@@ -216,6 +265,41 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       type: "information",
       text: "We can write a list of things we need. A list helps us remember. What do we need to make a card? 1. Paper. 2. Crayons. 3. Stickers. 4. A pencil. We write the items one below the other. We can put numbers next to the items. Let's write a shopping list.",
       textVi: "Chúng ta có thể viết một danh sách những thứ chúng ta cần. Một danh sách giúp chúng ta nhớ. Chúng ta cần gì để làm một tấm thiệp? 1. Giấy. 2. Bút màu sáp. 3. Hình dán. 4. Một cây bút chì. Chúng ta viết các mục cái này dưới cái kia. Chúng ta có thể đặt số bên cạnh các mục. Hãy viết một danh sách mua sắm."
+    },
+    {
+      sectionTitle: '2.6 Word Work: Order words and materials',
+      sectionTitleVi: '2.6 Luyện từ: Từ chỉ thứ tự và vật liệu',
+      type: 'word_work',
+      text: "ORDER WORDS tell us the steps to follow:\nfirst — next — then — after that — finally\n\nMATERIALS — things we use to make stuff:\npaper, card, scissors, glue, tape, string, paint, crayons, stickers\n\nSHAPES we see when making things:\nsquare, rectangle, triangle, circle, star, diamond\n\n✏️ Put in order:\n___, fold the paper. (First)\n___, cut the shape. (Next)\n___, glue the edges. (Then)\n___, decorate it! (Finally)\n\n🌟 Challenge: Can you spell S-C-I-S-S-O-R-S?",
+      textVi: "TỪ CHỈ THỨ TỰ cho ta biết các bước phải làm:\nđầu tiên — tiếp theo — sau đó — sau đó nữa — cuối cùng\n\nVẬT LIỆU — những thứ chúng ta dùng:\ngiấy, bìa cứng, kéo, hồ dán, băng dính, dây, sơn, bút màu, hình dán\n\nHÌNH DẠNG ta thấy khi làm đồ:\nvuông, chữ nhật, tam giác, tròn, sao, kim cương\n\n✏️ Sắp xếp thứ tự:\n___, gấp giấy. (Đầu tiên)\n___, cắt hình. (Tiếp theo)\n___, dán các cạnh. (Sau đó)\n___, trang trí! (Cuối cùng)\n\n🌟 Thử thách: Bạn có thể đánh vần S-C-I-S-S-O-R-S không?"
+    },
+    {
+      sectionTitle: '2.7 Comprehension',
+      sectionTitleVi: '2.7 Đọc hiểu',
+      type: 'comprehension',
+      text: "Let's check what you learned!\n\n❓ Questions:\n1. Name THREE things you can make from paper. (hat, boat, aeroplane)\n2. What are the four order words? (first, next, then, finally)\n3. What shape is a piece of paper? (rectangle)\n4. In the story, what colour was the paper boat? (red and blue)\n5. Why do we write a list? (to help us remember)\n\n🤔 Think deeper:\n• Why is it important to follow instructions IN ORDER?\n• What would happen if you glued before you cut?",
+      textVi: "Hãy kiểm tra bạn học được gì!\n\n❓ Câu hỏi:\n1. Kể BA thứ có thể làm từ giấy. (mũ, thuyền, máy bay)\n2. Bốn từ chỉ thứ tự là gì? (đầu tiên, tiếp theo, sau đó, cuối cùng)\n3. Tờ giấy có hình gì? (chữ nhật)\n4. Trong câu chuyện, chiếc thuyền giấy màu gì? (đỏ và xanh)\n5. Tại sao chúng ta viết danh sách? (để giúp nhớ)\n\n🤔 Suy nghĩ sâu hơn:\n• Tại sao làm theo hướng dẫn THEO THỨ TỰ lại quan trọng?\n• Điều gì xảy ra nếu dán trước khi cắt?"
+    },
+    {
+      sectionTitle: '2.8 Talk About: What I made',
+      sectionTitleVi: '2.8 Nói về: Thứ tôi đã làm',
+      type: 'talk_about',
+      text: "🗣️ Speaking Activity — Show and Tell!\n\n1. Think of something you have made (at school or home).\n2. Tell your partner:\n   • What did you make?\n   • What did you use? (paper, glue, paint...)\n   • How did you make it? Use order words!\n3. Show your work if you have it.\n\n👂 Listening: Ask your partner ONE question about what they made.",
+      textVi: "🗣️ Hoạt động Nói — Trình bày và Kể!\n\n1. Nghĩ về thứ gì đó bạn đã làm (ở trường hoặc ở nhà).\n2. Kể cho bạn nghe:\n   • Bạn đã làm gì?\n   • Bạn dùng gì? (giấy, hồ dán, sơn...)\n   • Bạn làm như thế nào? Dùng từ chỉ thứ tự!\n3. Cho bạn xem nếu có.\n\n👂 Lắng nghe: Hỏi bạn MỘT câu về thứ họ đã làm."
+    },
+    {
+      sectionTitle: '2.9 Writing: Instructions',
+      sectionTitleVi: '2.9 Viết: Hướng dẫn',
+      type: 'writing',
+      text: "✏️ Write instructions to make a paper fan!\n\nYou will need: paper, crayons\n\nSteps:\n1. First, get a piece of paper.\n2. Next, colour both sides with crayons.\n3. Then, fold the paper back and forth like a zigzag.\n4. Finally, hold one end and fan yourself!\n\n📝 Now YOUR turn! Write instructions to make something YOU like. Use:\nFirst, ___\nNext, ___\nThen, ___\nFinally, ___\n\n🌟 Remember: number your steps!",
+      textVi: "✏️ Viết hướng dẫn làm quạt giấy!\n\nBạn cần: giấy, bút màu\n\nCác bước:\n1. Đầu tiên, lấy một tờ giấy.\n2. Tiếp theo, tô màu cả hai mặt.\n3. Sau đó, gấp giấy qua lại như hình chữ chi.\n4. Cuối cùng, cầm một đầu và quạt!\n\n📝 Giờ đến LƯỢT BẠN! Viết hướng dẫn làm thứ BẠN thích. Dùng:\nĐầu tiên, ___\nTiếp theo, ___\nSau đó, ___\nCuối cùng, ___\n\n🌟 Nhớ: đánh số các bước!"
+    },
+    {
+      sectionTitle: '2.10 How did I do?',
+      sectionTitleVi: '2.10 Tôi làm được gì?',
+      type: 'self_check',
+      text: "Check what you can do!\n\n✅ I can name materials: paper, scissors, glue, tape\n✅ I can use order words: first, next, then, finally\n✅ I can name shapes: square, triangle, circle, rectangle\n✅ I can follow instructions step by step\n✅ I can write my own instructions\n✅ I can write a list of things I need\n\n⭐ How many did you tick?\n6 = Super maker! 🌟\n4-5 = Great work!\n2-3 = Keep trying!\n1 = Ask for help!",
+      textVi: "Kiểm tra bạn làm được gì!\n\n✅ Tôi kể được tên vật liệu: giấy, kéo, hồ dán, băng dính\n✅ Tôi dùng được từ chỉ thứ tự: đầu tiên, tiếp theo, sau đó, cuối cùng\n✅ Tôi gọi được tên hình: vuông, tam giác, tròn, chữ nhật\n✅ Tôi làm theo hướng dẫn từng bước\n✅ Tôi viết được hướng dẫn của riêng mình\n✅ Tôi viết được danh sách những thứ cần\n\n⭐ Bạn tích được bao nhiêu?\n6 = Siêu thợ thủ công! 🌟\n4-5 = Giỏi lắm!\n2-3 = Cố lên!\n1 = Hãy nhờ giúp đỡ!"
     },
     {
       sectionTitle: "2.6 Unit 2 Review",
