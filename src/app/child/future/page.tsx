@@ -2,7 +2,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ChevronRight, Lightbulb, Trophy, Target, Rocket, CheckCircle, Star, Play, BookOpen } from 'lucide-react';
-import { useAppStore } from '@/stores/app-store';
 import { FUTURE_SKILL_AXES, BLUE_OCEAN_PROFILE } from '@/data/future-skills';
 import { ACTIVITY_CONTENT } from '@/data/future-skills-content';
 
@@ -17,6 +16,14 @@ function markDone(key: string) {
   const p = getProgress(); p[key] = true;
   localStorage.setItem('fs_progress', JSON.stringify(p));
 }
+function getGrade(): number {
+  if (typeof window === 'undefined') return 1;
+  try {
+    const stored = localStorage.getItem('app-store');
+    if (stored) { const s = JSON.parse(stored); return s?.state?.childProfile?.gradeLevel || 1; }
+  } catch { /* ignore */ }
+  return 1;
+}
 
 export default function FutureSkillsPage() {
   const [view, setView] = useState<View>('home');
@@ -28,9 +35,9 @@ export default function FutureSkillsPage() {
   const [stepIdx, setStepIdx] = useState(0);
   const [showCelebration, setShowCelebration] = useState(false);
   const [progress, setProgress] = useState<Record<string, boolean>>({});
-  const grade = (useAppStore.getState().childProfile as { gradeLevel?: number } | null)?.gradeLevel || 1;
+  const [grade, setGrade] = useState(1);
 
-  useEffect(() => { setProgress(getProgress()); }, []);
+  useEffect(() => { setProgress(getProgress()); setGrade(getGrade()); }, []);
 
   const axis = FUTURE_SKILL_AXES.find(a => a.id === axisId);
   const content = actKey ? ACTIVITY_CONTENT[actKey] : null;
