@@ -252,6 +252,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: "1.5 Sân chơi của chúng ta",
       type: "information",
       skillRefs: ['1Ri.03', '1Ri.08', '1Rv.01'],
+      imageUrl: '/images/english/cam_g1_u01_playground_equipment.png',
       text: "Our playground has many things. We have a slide. We slide down. We have a see-saw. We go up and down. We have a climbing frame. We climb up high. We have a sandbox. We build sandcastles. The playground is a busy place. We must be careful. We must not push.",
       textVi: "Sân chơi của chúng ta có rất nhiều thứ. Chúng ta có cầu trượt. Chúng ta trượt xuống. Chúng ta có bập bênh. Chúng ta đi lên và đi xuống. Chúng ta có khung leo trèo. Chúng ta trèo lên cao. Chúng ta có hộp cát. Chúng ta xây lâu đài cát. Sân chơi là một nơi nhộn nhịp. Chúng ta phải cẩn thận. Chúng ta không được xô đẩy."
     },
