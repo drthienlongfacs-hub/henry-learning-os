@@ -35,6 +35,7 @@ export default function FutureSkillsPage() {
   const [progress, setProgress] = useState<Record<string, boolean>>(() => getProgress());
   const [grade] = useState(() => getGrade());
   const [gameScore, setGameScore] = useState<number | null>(null);
+  const [selectedCompetition, setSelectedCompetition] = useState<any>(null);
 
   const axis = FUTURE_SKILL_AXES.find(a => a.id === axisId);
   const content = actKey ? ACTIVITY_CONTENT[actKey] : null;
@@ -62,6 +63,35 @@ export default function FutureSkillsPage() {
             <StarRating earned={3} total={3} />
             <h2 style={{ color: '#fbbf24', fontSize: 28, margin: '12px 0 4px' }}>Tuyệt vời!</h2>
             <p style={{ color: '#e2e8f0', fontSize: 16 }}>Bạn đã hoàn thành xuất sắc!</p>
+          </div>
+        </div>
+      )}
+
+      {/* Competition Modal */}
+      {selectedCompetition && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.7)', animation: 'fadeIn 0.2s', padding: 20 }}>
+          <div style={{ background: '#1e293b', borderRadius: 24, padding: 24, maxWidth: 400, width: '100%', border: '1px solid rgba(251,191,36,0.3)', animation: 'scaleIn 0.3s' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
+              <h2 style={{ color: '#fbbf24', fontSize: 20, fontWeight: 800, margin: 0, lineHeight: 1.3 }}>🏆 {selectedCompetition.name}</h2>
+              <button onClick={() => setSelectedCompetition(null)} style={{ background: 'none', border: 'none', color: '#94a3b8', fontSize: 24, cursor: 'pointer' }}>×</button>
+            </div>
+            
+            <p style={{ color: '#e2e8f0', fontSize: 14, lineHeight: 1.6, margin: '0 0 16px' }}>
+              {selectedCompetition.description}
+            </p>
+
+            <div style={{ background: 'rgba(255,255,255,0.05)', padding: 12, borderRadius: 12, marginBottom: 20 }}>
+              <div style={{ color: '#94a3b8', fontSize: 12, fontWeight: 700, marginBottom: 8 }}>📌 Kỹ năng rèn luyện:</div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                {selectedCompetition.skills?.map((sk: string) => (
+                  <span key={sk} style={{ background: 'rgba(251,191,36,0.15)', color: '#fde047', padding: '4px 10px', borderRadius: 12, fontSize: 11, fontWeight: 600 }}>{sk}</span>
+                ))}
+              </div>
+            </div>
+
+            <button onClick={() => setSelectedCompetition(null)} style={{ background: 'linear-gradient(135deg,#d97706,#fbbf24)', border: 'none', borderRadius: 14, padding: '14px', color: '#fff', fontWeight: 800, cursor: 'pointer', fontSize: 15, width: '100%', boxShadow: '0 4px 12px rgba(251,191,36,0.3)' }}>
+              🚀 {selectedCompetition.action || 'Khám phá ngay'}
+            </button>
           </div>
         </div>
       )}
@@ -235,10 +265,13 @@ export default function FutureSkillsPage() {
 
           <h3 style={{ color: '#e2e8f0', fontSize: 15, fontWeight: 700, margin: '20px 0 10px' }}><Trophy size={16} color="#fbbf24" style={{ verticalAlign: 'middle', marginRight: 6 }} />Sân chơi đáng đầu tư</h3>
           {axis.competitions.map(c => (
-            <div key={c.name} style={{ ...card, background: 'rgba(251,191,36,0.05)', border: '1px solid rgba(251,191,36,0.12)' }}>
-              <div style={{ color: '#fbbf24', fontSize: 14, fontWeight: 700 }}>🏆 {c.name}</div>
-              <div style={{ color: '#94a3b8', fontSize: 12, marginTop: 2 }}>Tuổi: {c.age} | {c.value}</div>
-            </div>
+            <button key={c.name} onClick={() => setSelectedCompetition(c)} style={{ ...card, background: 'rgba(251,191,36,0.05)', border: '1px solid rgba(251,191,36,0.12)', width: '100%', textAlign: 'left', cursor: 'pointer', transition: 'all 0.2s', padding: 16 }}
+              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.background = 'rgba(251,191,36,0.1)'; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.background = 'rgba(251,191,36,0.05)'; }}
+            >
+              <div style={{ color: '#fbbf24', fontSize: 15, fontWeight: 800 }}>🏆 {c.name}</div>
+              <div style={{ color: '#94a3b8', fontSize: 13, marginTop: 4 }}>Tuổi: {c.age} | {c.value}</div>
+            </button>
           ))}
         </>)}
 
