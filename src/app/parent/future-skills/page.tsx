@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import { FUTURE_SKILL_AXES } from '@/data/future-skills';
 import Link from 'next/link';
-import { ArrowLeft, Target, Shield, BookOpen, Lightbulb, Zap, CheckCircle, TrendingUp, Cpu } from 'lucide-react';
+import { ArrowLeft, Target, Shield, BookOpen, Lightbulb, Zap, CheckCircle, TrendingUp, Cpu, Sparkles, BrainCircuit } from 'lucide-react';
+import { useMemo } from 'react';
 
 export default function FutureSkillsDashboard() {
   const [progress, setProgress] = useState<Record<string, boolean>>({});
@@ -60,6 +61,44 @@ export default function FutureSkillsDashboard() {
 
   const overallProgress = totalActivities > 0 ? Math.round((completedActivities / totalActivities) * 100) : 0;
 
+  const aiInsights = useMemo(() => {
+    if (totalActivities === 0 || completedActivities === 0) return null;
+    const insights: string[] = [];
+    
+    // 1. Phân tích tiến độ
+    if (overallProgress < 30) {
+      insights.push(`Bé đang ở giai đoạn khởi động (${overallProgress}%). Các hoạt động hiện tại giúp bé xây dựng nền tảng Nhận thức (Understanding) vững chắc theo chuẩn UNESCO.`);
+    } else if (overallProgress < 70) {
+      insights.push(`Bé có tiến độ học tập rất tốt (${overallProgress}%). Hệ thống ghi nhận sự phát triển đều ở các kỹ năng nền tảng thế kỷ 21.`);
+    } else {
+      insights.push(`Xuất sắc! Bé đã hoàn thành phần lớn lộ trình (${overallProgress}%). Bé đã hoàn toàn sẵn sàng cho các thử thách phức tạp hơn ở cấp độ Sáng tạo (Creating).`);
+    }
+
+    // 2. Phân tích cấp độ nhận thức (Bloom's Taxonomy)
+    const totalBloom = competencyStats.Understanding.completed + competencyStats.Applying.completed + competencyStats.Creating.completed;
+    if (totalBloom > 0) {
+      if (competencyStats.Creating.completed === 0 && competencyStats.Understanding.completed > 0) {
+        insights.push("Dữ liệu cho thấy bé nắm bắt tốt khái niệm nhưng chưa có nhiều hoạt động Sáng tạo (Creating). Khuyến nghị ba mẹ cùng bé làm thêm các dự án (Project) hoặc thuyết trình.");
+      } else if (competencyStats.Creating.completed > 0) {
+        insights.push("Điểm sáng: Bé đã tham gia vào các hoạt động Sáng tạo (Creating). Theo OECD Learning Compass 2030, đây là năng lực cốt lõi giúp bé tạo ra giá trị mới (Creating New Value).");
+      }
+    }
+
+    // 3. Phân tích trục kỹ năng mạnh
+    const sortedAxes = [...axisStats].sort((a, b) => b.progressPct - a.progressPct);
+    const strongest = sortedAxes[0];
+    if (strongest && strongest.progressPct > 0) {
+      insights.push(`Trục kỹ năng nổi trội nhất hiện tại: "${strongest.nameVi}" (${strongest.progressPct}%).`);
+    }
+
+    // 4. Phát hiện đặc biệt (Critical Thinking & Debate)
+    if (progress['Mini Debate'] || progress['AI Ethics Discussion']) {
+      insights.push("Dấu ấn Thực chứng (Evidence-based): Bé đã tiếp cận bài tập Tư duy phản biện (Debate/Ethics). Theo WEF 2025, tư duy phân tích (Analytical Thinking) là kỹ năng top đầu giúp bé lập luận bằng logic thay vì học thuộc lòng.");
+    }
+
+    return insights;
+  }, [progress, overallProgress, competencyStats, axisStats, totalActivities, completedActivities]);
+
   return (
     <div style={{ minHeight: '100dvh', background: '#f8fafc', fontFamily: 'system-ui, sans-serif' }}>
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '24px 16px', paddingBottom: 100 }}>
@@ -98,6 +137,36 @@ export default function FutureSkillsDashboard() {
             <div style={{ width: `${overallProgress}%`, height: '100%', background: 'linear-gradient(90deg, #818cf8, #c084fc)', transition: 'width 1s ease-out' }} />
           </div>
         </div>
+
+        {/* AI Insight Card */}
+        {aiInsights && (
+          <div style={{ background: 'linear-gradient(135deg, #fdf4ff, #f3e8ff)', borderRadius: 24, padding: 24, marginBottom: 24, border: '1px solid #e9d5ff', boxShadow: '0 10px 25px rgba(168,85,247,0.1)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
+              <div style={{ background: 'linear-gradient(135deg, #a855f7, #d946ef)', padding: 8, borderRadius: 12 }}>
+                <BrainCircuit size={20} color="#fff" />
+              </div>
+              <h2 style={{ fontSize: 18, fontWeight: 800, color: '#701a75', margin: 0, display: 'flex', alignItems: 'center', gap: 6 }}>
+                AI Insights
+                <Sparkles size={16} color="#d946ef" />
+              </h2>
+              <span style={{ background: '#fbcfe8', color: '#be185d', padding: '2px 8px', borderRadius: 12, fontSize: 10, fontWeight: 800, marginLeft: 'auto' }}>
+                DATA-DRIVEN
+              </span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {aiInsights.map((insight, idx) => (
+                <div key={idx} style={{ display: 'flex', gap: 12, alignItems: 'flex-start', background: 'rgba(255,255,255,0.6)', padding: 16, borderRadius: 16 }}>
+                  <div style={{ marginTop: 2 }}>
+                    <Lightbulb size={18} color="#a855f7" />
+                  </div>
+                  <p style={{ color: '#4a044e', fontSize: 14, lineHeight: 1.6, margin: 0, fontWeight: 500 }}>
+                    {insight}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Competency Levels Breakdown */}
         <div style={{ background: '#fff', borderRadius: 24, padding: 24, marginBottom: 24, border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
