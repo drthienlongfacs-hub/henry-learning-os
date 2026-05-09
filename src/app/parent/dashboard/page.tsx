@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useAppStore } from '@/stores/app-store';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Settings, Calendar, Shield, TrendingUp, AlertTriangle, Target, Heart, Star, BarChart3, ClipboardCheck, ClipboardList, GitBranch } from 'lucide-react';
+import { Settings, Calendar, Shield, TrendingUp, AlertTriangle, Target, Heart, Star, BarChart3, ClipboardCheck, ClipboardList, GitBranch, Zap } from 'lucide-react';
 import { buildWeeklyPdcaPlan } from '@/lib/evidence/weekly-pdca';
 
 export default function ParentDashboard() {
@@ -245,6 +245,15 @@ export default function ParentDashboard() {
 
                 {/* Quick Links */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    <Link href="/parent/future-skills" style={{ textDecoration: 'none' }}>
+                        <div className="card card-interactive" style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem', borderLeft: '4px solid #818cf8', background: 'linear-gradient(to right, #e0e7ff, #fff)' }}>
+                            <Zap size={20} color="#6366f1" />
+                            <div>
+                                <span style={{ fontWeight: 800, color: '#3730a3', display: 'block' }}>Future Skills Dashboard</span>
+                                <span style={{ fontSize: '0.8rem', color: '#4f46e5' }}>Phân tích năng lực thế kỷ 21 (AI, Green...)</span>
+                            </div>
+                        </div>
+                    </Link>
                     <Link href="/parent/weekly-review" style={{ textDecoration: 'none' }}>
                         <div className="card card-interactive" style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem' }}>
                             <Calendar size={20} color="var(--color-primary)" />

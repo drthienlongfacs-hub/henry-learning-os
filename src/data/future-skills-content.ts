@@ -24,7 +24,7 @@ export const ACTIVITY_CONTENT: Record<string, ActivityContent> = {
       { instruction: 'Draw your algorithm as pictures!', instructionVi: 'Vẽ thuật toán của bạn thành tranh!', emoji: '🎨' },
     ],
     quiz: [
-      { question: 'What is an algorithm?', questionVi: 'Thuật toán là gì?', options: ['A type of robot', 'Steps to solve a problem', 'A computer game', 'A math formula'], optionsVi: ['Một loại robot', 'Các bước để giải quyết vấn đề', 'Một trò chơi máy tính', 'Một công thức toán'], correct: 1, explanation: 'An algorithm is a sequence of steps to complete a task or solve a problem.', explanationVi: 'Thuật toán là một chuỗi các bước để hoàn thành một nhiệm vụ hoặc giải quyết một vấn đề.' },
+      { question: 'How is an algorithm like a recipe for a cake?', questionVi: 'Thuật toán giống công thức làm bánh như thế nào?', options: ['It needs an oven', 'It is a set of step-by-step instructions to get a result', 'It is sweet', 'It has ingredients'], optionsVi: ['Nó cần lò nướng', 'Đó là tập hợp các bước hướng dẫn để có kết quả', 'Nó ngọt', 'Nó có nguyên liệu'], correct: 1, explanation: 'Both an algorithm and a recipe are step-by-step instructions to complete a task successfully!', explanationVi: 'Cả thuật toán và công thức đều là các bước hướng dẫn để hoàn thành một nhiệm vụ thành công!' },
       { question: 'Which is the correct order to make a sandwich?', questionVi: 'Thứ tự nào đúng để làm bánh sandwich?', options: ['Eat → Put filling → Get bread', 'Get bread → Put filling → Close → Eat', 'Close → Get bread → Eat', 'Put filling → Close → Get bread'], optionsVi: ['Ăn → Cho nhân → Lấy bánh', 'Lấy bánh → Cho nhân → Gập lại → Ăn', 'Gập lại → Lấy bánh → Ăn', 'Cho nhân → Gập lại → Lấy bánh'], correct: 1, explanation: 'Steps must be in the right order for the algorithm to work!', explanationVi: 'Các bước phải đúng thứ tự để thuật toán hoạt động!' },
     ],
     challenge: { task: 'Create an algorithm for getting ready for school — draw it with pictures and share with your family!', taskVi: 'Tạo thuật toán chuẩn bị đi học — vẽ bằng tranh và chia sẻ với gia đình!', duration: '20 min' },
@@ -42,7 +42,7 @@ export const ACTIVITY_CONTENT: Record<string, ActivityContent> = {
       { instruction: 'Press the green flag to RUN your code!', instructionVi: 'Nhấn cờ xanh để CHẠY code!', emoji: '🟢' },
     ],
     quiz: [
-      { question: 'What does the green flag do in ScratchJr?', questionVi: 'Cờ xanh làm gì trong ScratchJr?', options: ['Deletes everything', 'Starts the program', 'Stops the program', 'Saves your work'], optionsVi: ['Xóa hết', 'Bắt đầu chương trình', 'Dừng chương trình', 'Lưu bài'], correct: 1, explanation: 'The green flag is like pressing "Play" — it runs all your code blocks!', explanationVi: 'Cờ xanh giống như nhấn "Play" — nó chạy tất cả khối code của bạn!' },
+      { question: 'If you want the cat to say "Hello" before it jumps, which block order is correct?', questionVi: 'Nếu muốn mèo nói "Hello" trước khi nhảy, thứ tự khối nào đúng?', options: ['Jump then Say', 'Say then Jump', 'Only Jump', 'Green flag only'], optionsVi: ['Nhảy rồi Nói', 'Nói rồi Nhảy', 'Chỉ Nhảy', 'Chỉ Cờ xanh'], correct: 1, explanation: 'The computer reads blocks in order. So the "Say" block must come before the "Jump" block!', explanationVi: 'Máy tính đọc các khối theo thứ tự. Vì vậy khối "Nói" phải đứng trước khối "Nhảy"!' },
     ],
     challenge: { task: 'Make a 3-scene story: a cat walks to a house, says "Hello!", then jumps. Record a video explaining your code in English!', taskVi: 'Làm truyện 3 cảnh: mèo đi đến nhà, nói "Hello!", rồi nhảy. Quay video giải thích code bằng tiếng Anh!', duration: '30 min' },
     realWorldLink: 'MIT Media Lab — Lifelong Kindergarten Group',
@@ -59,7 +59,7 @@ export const ACTIVITY_CONTENT: Record<string, ActivityContent> = {
     ],
     quiz: [
       { question: 'If you sort animals by number of legs, which group has a spider?', questionVi: 'Nếu phân loại theo số chân, nhện thuộc nhóm nào?', options: ['2 legs', '4 legs', '6 legs', '8 legs'], optionsVi: ['2 chân', '4 chân', '6 chân', '8 chân'], correct: 3, explanation: 'Spiders are arachnids with 8 legs — they are NOT insects (which have 6)!', explanationVi: 'Nhện thuộc lớp hình nhện có 8 chân — KHÔNG phải côn trùng (6 chân)!' },
-      { question: 'Why do scientists classify things?', questionVi: 'Tại sao nhà khoa học phân loại?', options: ['For fun', 'To find patterns', 'Because teachers say so', 'To make it hard'], optionsVi: ['Cho vui', 'Để tìm quy luật', 'Vì thầy cô bảo', 'Để làm khó'], correct: 1, explanation: 'Classification helps us see patterns and understand the world better!', explanationVi: 'Phân loại giúp ta nhìn thấy quy luật và hiểu thế giới tốt hơn!' },
+      { question: 'If you have 100 random LEGO blocks, what is the best first step to build a red car?', questionVi: 'Nếu bạn có 100 khối LEGO lộn xộn, bước đầu tiên tốt nhất để xếp một chiếc xe màu đỏ là gì?', options: ['Close your eyes and pick', 'Sort all the RED blocks into one pile', 'Throw them on the floor', 'Sort by size only'], optionsVi: ['Nhắm mắt và chọn đại', 'Phân loại tất cả các khối MÀU ĐỎ thành một đống', 'Vứt chúng xuống sàn', 'Chỉ phân loại theo kích thước'], correct: 1, explanation: 'Sorting by the feature you need (color) makes your task much easier and faster!', explanationVi: 'Phân loại theo đặc điểm bạn cần (màu sắc) giúp nhiệm vụ của bạn dễ dàng và nhanh chóng hơn nhiều!' },
     ],
     challenge: { task: 'Sort your family\'s shoes by 3 different criteria. Draw 3 charts. Which way of sorting is most useful? Why?', taskVi: 'Phân giày dép gia đình theo 3 tiêu chí khác nhau. Vẽ 3 biểu đồ. Cách nào hữu ích nhất? Tại sao?', duration: '25 min' },
     realWorldLink: 'OECD Learning Compass 2030 — Creating New Value',
@@ -77,7 +77,7 @@ export const ACTIVITY_CONTENT: Record<string, ActivityContent> = {
     ],
     quiz: [
       { question: 'Where does a banana peel go?', questionVi: 'Vỏ chuối thuộc nhóm nào?', options: ['Recycle', 'Compost', 'Trash', 'None'], optionsVi: ['Tái chế', 'Ủ phân', 'Rác thường', 'Không thuộc nhóm nào'], correct: 1, explanation: 'Banana peels are organic waste — they can decompose and become compost!', explanationVi: 'Vỏ chuối là rác hữu cơ — có thể phân hủy và thành phân bón!' },
-      { question: 'Can a plastic bottle be recycled?', questionVi: 'Chai nhựa có tái chế được không?', options: ['No, never', 'Yes, always', 'Only if clean and empty', 'Only glass can be recycled'], optionsVi: ['Không bao giờ', 'Luôn được', 'Chỉ khi sạch và rỗng', 'Chỉ thủy tinh mới tái chế được'], correct: 2, explanation: 'Clean, empty plastic bottles can be recycled — rinse them first!', explanationVi: 'Chai nhựa sạch, rỗng có thể tái chế — rửa sạch trước nhé!' },
+      { question: 'You have a dirty plastic bottle with old milk inside. What must you do before putting it in the Recycle bin?', questionVi: 'Bạn có một chai nhựa bẩn còn sữa cũ bên trong. Bạn phải làm gì trước khi bỏ vào thùng Tái chế?', options: ['Throw it in Trash instead', 'Wash it clean and empty it first', 'Put it in Compost', 'Hide it'], optionsVi: ['Cứ vứt vào Thùng rác thường', 'Rửa sạch và làm rỗng nó trước', 'Bỏ vào thùng Ủ phân', 'Giấu nó đi'], correct: 1, explanation: 'Items must be clean to be recycled! Dirty items can ruin a whole batch of recycling.', explanationVi: 'Đồ vật phải sạch thì mới tái chế được! Đồ bẩn có thể làm hỏng cả một mẻ tái chế.' },
     ],
     challenge: { task: 'Track your family waste for 7 days. Make a weekly chart. Can you REDUCE the trash group by 50%?', taskVi: 'Theo dõi rác gia đình 7 ngày. Làm biểu đồ tuần. Bạn có thể GIẢM nhóm rác 50% không?', duration: '7 days' },
     realWorldLink: 'VN Green Growth Strategy 2021-2030, UNDP Green Skills Framework',
@@ -94,7 +94,7 @@ export const ACTIVITY_CONTENT: Record<string, ActivityContent> = {
       { instruction: 'After 3 weeks, make a growth chart!', instructionVi: 'Sau 3 tuần, làm biểu đồ tăng trưởng!', emoji: '📈' },
     ],
     quiz: [
-      { question: 'What do plants need to grow?', questionVi: 'Cây cần gì để lớn?', options: ['Only water', 'Water + light + soil', 'Only sunlight', 'Only soil'], optionsVi: ['Chỉ nước', 'Nước + ánh sáng + đất', 'Chỉ ánh sáng', 'Chỉ đất'], correct: 1, explanation: 'Plants need water, sunlight, and nutrients from soil to grow!', explanationVi: 'Cây cần nước, ánh sáng mặt trời, và chất dinh dưỡng từ đất để lớn!' },
+      { question: 'You plant two seeds. Seed A is by the sunny window. Seed B is in a dark closet. After a week, what will happen?', questionVi: 'Bạn trồng hai hạt. Hạt A ở bậu cửa sổ đầy nắng. Hạt B ở trong tủ tối. Sau một tuần, điều gì sẽ xảy ra?', options: ['Both grow the same', 'Seed A grows tall and green, Seed B is pale and weak', 'Seed B grows faster', 'They both die'], optionsVi: ['Cả hai lớn như nhau', 'Hạt A cao và xanh, Hạt B nhợt nhạt và yếu', 'Hạt B lớn nhanh hơn', 'Cả hai đều chết'], correct: 1, explanation: 'Plants need sunlight to make food. Without light, Seed B cannot grow strong!', explanationVi: 'Cây cần ánh sáng mặt trời để tạo thức ăn. Không có ánh sáng, Hạt B không thể lớn khỏe!' },
     ],
     challenge: { task: 'Grow TWO plants — one in sunlight, one in a dark closet. After 2 weeks, compare. Write what you discovered!', taskVi: 'Trồng HAI cây — một ngoài nắng, một trong tủ tối. Sau 2 tuần, so sánh. Viết ra phát hiện!', duration: '2 weeks' },
     realWorldLink: 'Cambridge Primary Science Stage 1 — Plants and Growth',
@@ -127,7 +127,7 @@ export const ACTIVITY_CONTENT: Record<string, ActivityContent> = {
       { instruction: 'OBSERVE: Were your predictions right? It\'s OK if they were wrong!', instructionVi: 'QUAN SÁT: Dự đoán của bạn có đúng không? Không sao nếu đoán sai nhé!', emoji: '👀' },
     ],
     quiz: [
-      { question: 'What is a prediction?', questionVi: 'Dự đoán là gì?', options: ['A magic spell', 'A guess about what will happen', 'A type of animal', 'A drawing'], optionsVi: ['Một câu thần chú', 'Một lời đoán về điều sẽ xảy ra', 'Một loài động vật', 'Một bức vẽ'], correct: 1, explanation: 'A prediction is a smart guess based on what you already know!', explanationVi: 'Dự đoán là một suy đoán thông minh dựa trên những gì bạn đã biết!' },
+      { question: 'You drop a heavy rock and a light feather over the water. You guess the rock will sink. What are you doing?', questionVi: 'Bạn thả một hòn đá nặng và một chiếc lông nhẹ trên mặt nước. Bạn đoán hòn đá sẽ chìm. Bạn đang làm gì?', options: ['Making a magic spell', 'Making a prediction based on what you know', 'Making a mistake', 'Drawing'], optionsVi: ['Làm phép thuật', 'Đưa ra một dự đoán (prediction) dựa trên những gì bạn biết', 'Mắc lỗi', 'Đang vẽ'], correct: 1, explanation: 'Using your past experience to guess what will happen in an experiment is called making a prediction!', explanationVi: 'Sử dụng kinh nghiệm quá khứ để đoán xem điều gì sẽ xảy ra trong thí nghiệm được gọi là dự đoán!' },
     ],
     challenge: { task: 'Predict how many jumps you can do in 1 minute. Write it down. Then set a timer and test it!', taskVi: 'Dự đoán bạn nhảy được bao nhiêu cái trong 1 phút. Ghi lại. Đặt giờ và làm thử xem!', duration: '10 min' },
     realWorldLink: 'Cambridge Primary Science — Scientific Enquiry',
@@ -144,7 +144,7 @@ export const ACTIVITY_CONTENT: Record<string, ActivityContent> = {
       { instruction: 'Present to your family — stand up, speak clearly, make eye contact!', instructionVi: 'Trình bày trước gia đình — đứng dậy, nói rõ ràng, nhìn vào mắt!', emoji: '👪' },
     ],
     quiz: [
-      { question: 'What makes a good presentation?', questionVi: 'Điều gì tạo nên bài trình bày tốt?', options: ['Speaking very fast', 'Looking at the floor', 'Speaking clearly and making eye contact', 'Reading from paper only'], optionsVi: ['Nói rất nhanh', 'Nhìn xuống sàn', 'Nói rõ ràng và nhìn vào mắt', 'Chỉ đọc từ giấy'], correct: 2, explanation: 'Good presenters speak clearly, slowly, and connect with their audience through eye contact!', explanationVi: 'Người trình bày giỏi nói rõ, chậm, và kết nối với khán giả qua ánh mắt!' },
+      { question: 'During your Show & Tell, your friend in the back row says they cannot hear you. What is the best logic to fix this?', questionVi: 'Trong buổi Show & Tell, bạn ở hàng cuối nói không nghe thấy bạn. Cách giải quyết logic nhất là gì?', options: ['Talk much faster', 'Hide behind the desk', 'Stand up tall, face them, and project your voice louder', 'Stop talking immediately'], optionsVi: ['Nói nhanh hơn nhiều', 'Trốn sau bàn', 'Đứng thẳng, hướng về phía họ và nói to hơn', 'Ngừng nói ngay lập tức'], correct: 2, explanation: 'Good communication means making sure your audience can hear and understand you. Body posture helps volume!', explanationVi: 'Giao tiếp tốt nghĩa là đảm bảo khán giả có thể nghe và hiểu bạn. Tư thế cơ thể giúp tăng âm lượng!' },
     ],
     challenge: { task: 'Record a 30-second video of your Show and Tell in English. Watch it and try again — can you improve?', taskVi: 'Quay video 30 giây Show and Tell bằng tiếng Anh. Xem lại và thử lại — bạn có thể cải thiện không?', duration: '15 min' },
     realWorldLink: 'Cambridge Speaking Assessment Criteria — Pronunciation, Interactive Communication',
@@ -160,7 +160,7 @@ export const ACTIVITY_CONTENT: Record<string, ActivityContent> = {
       { instruction: 'Use big words and a loud, clear voice!', instructionVi: 'Dùng từ vựng hay và giọng nói to, rõ ràng!', emoji: '🌟' },
     ],
     quiz: [
-      { question: 'What are the 3 parts of a story?', questionVi: '3 phần của một câu chuyện là gì?', options: ['Red, Yellow, Blue', 'Morning, Afternoon, Night', 'Beginning, Middle, End', 'Up, Down, Left'], optionsVi: ['Đỏ, Vàng, Xanh', 'Sáng, Chiều, Tối', 'Mở đầu, Phần giữa, Kết thúc', 'Trên, Dưới, Trái'], correct: 2, explanation: 'Every good story has a beginning to start, a middle where things happen, and an end!', explanationVi: 'Mỗi câu chuyện hay đều có phần mở đầu, phần giữa khi sự việc diễn ra, và phần kết thúc!' },
+      { question: 'If you tell a story about a hero, but you skip the "middle" part where they face a challenge, what happens?', questionVi: 'Nếu bạn kể chuyện về một anh hùng, nhưng bỏ qua phần "giữa" khi họ đối mặt thử thách, chuyện gì xảy ra?', options: ['The story is much better', 'The story makes no sense because the problem and action are missing', 'The story becomes a song', 'Nothing changes at all'], optionsVi: ['Truyện hay hơn nhiều', 'Truyện vô lý vì thiếu đi vấn đề và hành động giải quyết', 'Truyện trở thành bài hát', 'Không có gì thay đổi cả'], correct: 1, explanation: 'The "middle" is the most important part! It holds the problem, the action, and the excitement.', explanationVi: 'Phần "giữa" là quan trọng nhất! Nó chứa đựng vấn đề, hành động và sự kịch tính.' },
     ],
     challenge: { task: 'Change the ending of your favourite story! Tell the new story to your family.', taskVi: 'Thay đổi phần kết thúc của câu chuyện yêu thích! Kể câu chuyện mới cho gia đình nghe.', duration: '20 min' },
     realWorldLink: 'CEFR A1 Narrative Skills — Cohesion and Sequencing',
@@ -197,5 +197,37 @@ export const ACTIVITY_CONTENT: Record<string, ActivityContent> = {
     ],
     challenge: { task: 'Write a small "friendly note" and put it inside one of the books before donating it!', taskVi: 'Viết một "lời nhắn dễ thương" nhỏ và kẹp vào trong một cuốn sách trước khi tặng nhé!', duration: '15 min' },
     realWorldLink: 'OECD Learning Compass — Student Agency & Co-agency',
+  },
+  'Mini Debate': {
+    activityKey: 'Mini Debate',
+    intro: 'A debate is when people share different opinions using facts and logic. It is not an argument, it is a smart discussion!',
+    introVi: 'Tranh luận là khi mọi người chia sẻ ý kiến khác nhau bằng thực tế và logic. Đó không phải cãi vã, mà là một cuộc thảo luận thông minh!',
+    steps: [
+      { instruction: 'Listen carefully to the topic', instructionVi: 'Lắng nghe kỹ chủ đề', emoji: '👂' },
+      { instruction: 'Think: Do you agree or disagree? Why?', instructionVi: 'Suy nghĩ: Bạn đồng ý hay không đồng ý? Tại sao?', emoji: '🤔' },
+      { instruction: 'Find facts to support your idea', instructionVi: 'Tìm sự thật (facts) để hỗ trợ ý tưởng của bạn', emoji: '🔍' },
+      { instruction: 'Speak clearly and respect the other person', instructionVi: 'Nói rõ ràng và tôn trọng người khác', emoji: '🗣️' },
+    ],
+    quiz: [
+      { question: 'If someone disagrees with you in a debate, what should you do?', questionVi: 'Nếu ai đó không đồng ý với bạn trong một cuộc tranh luận, bạn nên làm gì?', options: ['Shout at them', 'Listen to their reasons and politely share yours', 'Walk away', 'Cry'], optionsVi: ['Hét vào mặt họ', 'Lắng nghe lý do của họ và lịch sự chia sẻ lý do của mình', 'Bỏ đi', 'Khóc'], correct: 1, explanation: 'Good debaters listen to others and use logic, not anger, to make their point!', explanationVi: 'Người tranh luận giỏi lắng nghe người khác và dùng logic, không phải sự tức giận, để đưa ra quan điểm!' },
+    ],
+    challenge: { task: 'Debate with your parents: "Should kids eat dessert before dinner?" Prepare 2 strong reasons!', taskVi: 'Tranh luận với ba mẹ: "Trẻ con có nên ăn tráng miệng trước bữa tối không?" Chuẩn bị 2 lý do thuyết phục!', duration: '20 min' },
+    realWorldLink: 'World Schools Debating Championships Format',
+  },
+  'AI Ethics Discussion': {
+    activityKey: 'AI Ethics Discussion',
+    intro: 'AI is very smart, but it does not know what is right or wrong. Humans must teach AI to be fair and kind!',
+    introVi: 'AI rất thông minh, nhưng nó không biết điều gì là đúng hay sai. Con người phải dạy AI cách công bằng và tử tế!',
+    steps: [
+      { instruction: 'Think about a situation where someone uses AI', instructionVi: 'Nghĩ về một tình huống ai đó dùng AI', emoji: '🤖' },
+      { instruction: 'Ask: Is this fair to everyone?', instructionVi: 'Hỏi: Điều này có công bằng với mọi người không?', emoji: '⚖️' },
+      { instruction: 'Ask: Could this hurt someone\'s feelings?', instructionVi: 'Hỏi: Điều này có thể làm tổn thương ai không?', emoji: '❤️' },
+      { instruction: 'Discuss: How can we use AI responsibly?', instructionVi: 'Thảo luận: Làm sao để dùng AI có trách nhiệm?', emoji: '🌍' },
+    ],
+    quiz: [
+      { question: 'If you ask an AI to write a mean story about your friend, what is the most ethical choice?', questionVi: 'Nếu bạn nhờ AI viết một câu chuyện xấu về bạn của mình, lựa chọn đạo đức nhất là gì?', options: ['Do it, because AI wrote it, not you', 'Do not do it, because it is still hurtful and wrong', 'Share it with everyone', 'Tell the AI it did a good job'], optionsVi: ['Làm đi, vì AI viết chứ không phải bạn', 'Không làm thế, vì nó vẫn gây tổn thương và sai trái', 'Chia sẻ cho mọi người', 'Khen AI làm tốt lắm'], correct: 1, explanation: 'You are responsible for how you use AI. Using it to hurt others is never ethical!', explanationVi: 'Bạn chịu trách nhiệm về cách bạn dùng AI. Dùng nó để làm tổn thương người khác không bao giờ là đạo đức!' },
+    ],
+    challenge: { task: 'Talk to your parents: If an AI makes a mistake that causes a problem, who is responsible? The AI, or the person who made it?', taskVi: 'Nói chuyện với ba mẹ: Nếu AI mắc lỗi gây ra vấn đề, ai chịu trách nhiệm? AI hay người tạo ra nó?', duration: '30 min' },
+    realWorldLink: 'UNESCO Recommendation on the Ethics of AI (2021)',
   },
 };

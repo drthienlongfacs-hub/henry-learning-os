@@ -5,12 +5,13 @@ import { ArrowLeft, ChevronRight, Lightbulb, Trophy, CheckCircle, Star, Play, Bo
 import { FUTURE_SKILL_AXES, BLUE_OCEAN_PROFILE } from '@/data/future-skills';
 import { ACTIVITY_CONTENT } from '@/data/future-skills-content';
 import { ACTIVITY_GAMES, ACTIVITY_SAMPLES } from '@/data/future-skills-games';
-import { SortingGame, SequenceGame, MatchingGame, ProgressRing, SampleGallery, StarRating } from '@/components/future/InteractiveGames';
+import { SortingGame, SequenceGame, MatchingGame, DebateGame, ProgressRing, SampleGallery, StarRating } from '@/components/future/InteractiveGames';
 
 type View = 'home' | 'axis' | 'activity';
 type SortingGameConfig = Omit<React.ComponentProps<typeof SortingGame>, 'onComplete'>;
 type SequenceGameConfig = Omit<React.ComponentProps<typeof SequenceGame>, 'onComplete'>;
 type MatchingGameConfig = Omit<React.ComponentProps<typeof MatchingGame>, 'onComplete'>;
+type DebateGameConfig = Omit<React.ComponentProps<typeof DebateGame>, 'onComplete'>;
 
 function getProgress(): Record<string, boolean> {
   if (typeof window === 'undefined') return {};
@@ -98,10 +99,18 @@ export default function FutureSkillsPage() {
           </div>
 
           {/* Blue Ocean */}
-          <div style={{ background: 'linear-gradient(135deg,#1e1b4b,#312e81)', borderRadius: 20, padding: 20, marginBottom: 20, border: '1px solid rgba(129,140,248,0.3)' }}>
-            <h3 style={{ color: '#fff', fontSize: 17, fontWeight: 800, margin: '0 0 6px' }}>🌊 {BLUE_OCEAN_PROFILE.titleVi}</h3>
+          <div style={{ background: 'linear-gradient(135deg,#1e1b4b,#312e81)', borderRadius: 20, padding: 20, marginBottom: 20, border: '1px solid rgba(129,140,248,0.3)', boxShadow: '0 10px 25px rgba(0,0,0,0.2)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+              <h3 style={{ color: '#fff', fontSize: 17, fontWeight: 800, margin: '0 0 6px' }}>🌊 {BLUE_OCEAN_PROFILE.titleVi}</h3>
+              <span style={{ background: 'rgba(129,140,248,0.2)', color: '#a5b4fc', fontSize: 10, padding: '2px 8px', borderRadius: 10, fontWeight: 700 }}>EVIDENCE-BASED</span>
+            </div>
             <p style={{ color: '#a5b4fc', fontSize: 13, margin: '0 0 8px', lineHeight: 1.6 }}>💎 {BLUE_OCEAN_PROFILE.formula}</p>
-            <p style={{ color: '#818cf8', fontSize: 11, margin: 0, fontStyle: 'italic' }}>→ {BLUE_OCEAN_PROFILE.advantage}</p>
+            <div style={{ background: 'rgba(0,0,0,0.2)', padding: 10, borderRadius: 12, marginTop: 10 }}>
+              <p style={{ color: '#818cf8', fontSize: 11, margin: 0, fontStyle: 'italic', display: 'flex', alignItems: 'center', gap: 6 }}>
+                <CheckCircle size={14} color="#818cf8" style={{ flexShrink: 0 }} />
+                <span>{BLUE_OCEAN_PROFILE.advantage}</span>
+              </p>
+            </div>
           </div>
 
           {/* 5 Axes with visual cards */}
@@ -148,9 +157,43 @@ export default function FutureSkillsPage() {
             </div>
           </div>
 
+          {/* Evidence Frameworks Badges */}
+          {axis.frameworks && axis.frameworks.length > 0 && (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 16 }}>
+              {axis.frameworks.map((fw, i) => (
+                <div key={i} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', padding: '6px 12px', borderRadius: 20, display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <BookOpen size={12} color="#94a3b8" />
+                  <span style={{ color: '#cbd5e1', fontSize: 11, fontWeight: 600 }}>{fw.org} {fw.year}:</span>
+                  <span style={{ color: '#94a3b8', fontSize: 11 }}>{fw.name}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Developmental Milestones */}
+          {axis.developmentalMilestones && axis.developmentalMilestones.length > 0 && (
+            <div style={{ ...card, background: 'rgba(14,165,233,0.05)', border: '1px solid rgba(14,165,233,0.15)', marginBottom: 16 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+                <CheckCircle size={16} color="#38bdf8" />
+                <span style={{ color: '#38bdf8', fontSize: 13, fontWeight: 700 }}>Cột mốc Phát triển Thực chứng (Milestones)</span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                {axis.developmentalMilestones.map((m, i) => (
+                  <div key={i} style={{ background: 'rgba(0,0,0,0.2)', padding: 12, borderRadius: 12 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+                      <span style={{ color: '#fff', fontSize: 13, fontWeight: 700 }}>Tuổi {m.age}</span>
+                      <span style={{ color: '#38bdf8', fontSize: 11, fontWeight: 600, textAlign: 'right' }}>{m.milestone}</span>
+                    </div>
+                    <p style={{ color: '#94a3b8', fontSize: 11, margin: 0, fontStyle: 'italic' }}>🔬 Cơ sở: {m.evidence}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div style={{ ...card, background: 'rgba(251,191,36,0.06)', border: '1px solid rgba(251,191,36,0.15)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-              <Lightbulb size={16} color="#fbbf24" /><span style={{ color: '#fbbf24', fontSize: 13, fontWeight: 700 }}>Mẹo cho ba mẹ</span>
+              <Lightbulb size={16} color="#fbbf24" /><span style={{ color: '#fbbf24', fontSize: 13, fontWeight: 700 }}>Chỉ dẫn Dữ liệu cho Ba mẹ</span>
             </div>
             {axis.tips.map((tip, i) => <p key={i} style={{ color: '#e2e8f0', fontSize: 12, margin: '0 0 6px', lineHeight: 1.6 }}>💡 {tip}</p>)}
           </div>
@@ -171,9 +214,18 @@ export default function FutureSkillsPage() {
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ color: '#e2e8f0', fontSize: 14, fontWeight: 700 }}>{act.titleVi}</div>
-                  <div style={{ color: '#64748b', fontSize: 11, marginTop: 2 }}>
-                    {act.title}
-                    {hasGame && <span style={{ background: 'rgba(139,92,246,0.2)', color: '#a78bfa', padding: '1px 6px', borderRadius: 6, marginLeft: 6, fontSize: 10, fontWeight: 700 }}>🎮 Game</span>}
+                  <div style={{ color: '#64748b', fontSize: 11, marginTop: 4, display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+                    <span>{act.title}</span>
+                    {act.competencyLevel && (
+                      <span style={{ 
+                        background: act.competencyLevel === 'Understanding' ? 'rgba(56,189,248,0.15)' : act.competencyLevel === 'Applying' ? 'rgba(250,204,21,0.15)' : 'rgba(244,63,94,0.15)',
+                        color: act.competencyLevel === 'Understanding' ? '#7dd3fc' : act.competencyLevel === 'Applying' ? '#fde047' : '#fda4af',
+                        padding: '2px 8px', borderRadius: 10, fontSize: 9, fontWeight: 700, border: '1px solid rgba(255,255,255,0.05)'
+                      }}>
+                        {act.competencyLevel === 'Understanding' ? '🧠 Nhận thức' : act.competencyLevel === 'Applying' ? '🛠️ Ứng dụng' : '🚀 Sáng tạo'}
+                      </span>
+                    )}
+                    {hasGame && <span style={{ background: 'rgba(139,92,246,0.2)', color: '#a78bfa', padding: '2px 6px', borderRadius: 6, fontSize: 9, fontWeight: 700 }}>🎮 Game</span>}
                   </div>
                 </div>
                 {isDone ? <CheckCircle size={22} color="#22c55e" /> : hasContent ? <Play size={20} color={axis.color} /> : <span style={{ color: '#475569', fontSize: 10 }}>Sắp có</span>}
@@ -209,6 +261,7 @@ export default function FutureSkillsPage() {
               {game.type === 'sort' && <SortingGame {...game.config as SortingGameConfig} onComplete={(s: number) => setGameScore(s)} />}
               {game.type === 'sequence' && <SequenceGame {...game.config as SequenceGameConfig} onComplete={(s: number) => setGameScore(s)} />}
               {game.type === 'match' && <MatchingGame {...game.config as MatchingGameConfig} onComplete={(s: number) => setGameScore(s)} />}
+              {game.type === 'debate' && <DebateGame {...game.config as DebateGameConfig} onComplete={(s: number) => setGameScore(s)} />}
             </>
           )}
           {gameScore !== null && (

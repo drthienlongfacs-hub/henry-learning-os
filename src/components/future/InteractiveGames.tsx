@@ -286,3 +286,91 @@ export function StarRating({ earned, total }: { earned: number; total: number })
     </div>
   );
 }
+
+// ═══ DEBATE / EVIDENCE GAME — Critical Thinking for Ages 8-10 ═══
+export interface EvidenceItem { id: string; text: string; type: 'support' | 'oppose' | 'irrelevant' }
+export interface DebateGameProps { topic: string; claim: string; items: EvidenceItem[]; title: string; onComplete: (score: number) => void }
+
+export function DebateGame({ topic, claim, items, title, onComplete }: DebateGameProps) {
+  const [remaining, setRemaining] = useState(items);
+  const [classified, setClassified] = useState<{ id: string; text: string; type: string; correct: boolean }[]>([]);
+  const [feedback, setFeedback] = useState<{ correct: boolean; message: string } | null>(null);
+  const [score, setScore] = useState(0);
+
+  const handleClassify = (selectedType: 'support' | 'oppose' | 'irrelevant') => {
+    const item = remaining[0];
+    if (!item) return;
+    
+    const correct = item.type === selectedType;
+    setFeedback({ 
+      correct, 
+      message: correct ? 'Phân tích chính xác! 🎯' : 'Chưa đúng, hãy đọc kỹ lại nhé! 🧐' 
+    });
+    
+    if (correct) {
+      setScore(s => s + 1);
+    }
+    
+    setTimeout(() => {
+      setClassified(prev => [...prev, { ...item, type: selectedType, correct }]);
+      setRemaining(r => r.slice(1));
+      setFeedback(null);
+      if (remaining.length === 1) {
+        onComplete(correct ? score + 1 : score);
+      }
+    }, 1200);
+  };
+
+  const item = remaining[0];
+  const done = remaining.length === 0;
+
+  return (
+    <div style={{ background: 'linear-gradient(135deg,#0f172a,#1e293b)', borderRadius: 20, padding: 24, marginBottom: 16, border: '1px solid #334155' }}>
+      <h3 style={{ color: '#f8fafc', fontSize: 18, fontWeight: 800, margin: '0 0 8px', textAlign: 'center' }}>⚖️ {title}</h3>
+      <div style={{ background: 'rgba(56,189,248,0.1)', padding: '12px 16px', borderRadius: 12, marginBottom: 16, border: '1px solid rgba(56,189,248,0.2)' }}>
+        <div style={{ color: '#38bdf8', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', marginBottom: 4 }}>Chủ đề: {topic}</div>
+        <div style={{ color: '#f1f5f9', fontSize: 15, fontWeight: 600 }}>Tuyên bố: "{claim}"</div>
+      </div>
+
+      {/* Progress */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16, fontSize: 12, color: '#94a3b8', fontWeight: 600 }}>
+        <span>Đã phân tích: {classified.length}/{items.length}</span>
+        <span>Điểm: {score}</span>
+      </div>
+
+      {!done && item && (
+        <div style={{ animation: 'fadeIn 0.3s' }}>
+          {/* Current Evidence */}
+          <div style={{
+            background: feedback ? (feedback.correct ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)') : '#1e293b',
+            borderRadius: 16, padding: 20, textAlign: 'center', marginBottom: 16,
+            border: feedback ? (feedback.correct ? '2px solid #22c55e' : '2px solid #ef4444') : '2px solid #475569',
+            minHeight: 120, display: 'flex', flexDirection: 'column', justifyContent: 'center'
+          }}>
+            <span style={{ color: '#e2e8f0', fontSize: 16, lineHeight: 1.5, fontWeight: 500 }}>"{item.text}"</span>
+            {feedback && (
+              <div style={{ color: feedback.correct ? '#4ade80' : '#f87171', fontSize: 14, marginTop: 12, fontWeight: 700 }}>
+                {feedback.message}
+              </div>
+            )}
+          </div>
+
+          {/* Action Buttons */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
+            <button disabled={!!feedback} onClick={() => handleClassify('support')} style={{ background: 'rgba(34,197,94,0.2)', border: '2px solid #22c55e', color: '#86efac', borderRadius: 12, padding: '12px 8px', fontWeight: 700, cursor: feedback ? 'default' : 'pointer', opacity: feedback ? 0.5 : 1 }}>👍 Ủng hộ</button>
+            <button disabled={!!feedback} onClick={() => handleClassify('irrelevant')} style={{ background: 'rgba(148,163,184,0.2)', border: '2px solid #94a3b8', color: '#cbd5e1', borderRadius: 12, padding: '12px 8px', fontWeight: 700, cursor: feedback ? 'default' : 'pointer', opacity: feedback ? 0.5 : 1 }}>🤷 Không liên quan</button>
+            <button disabled={!!feedback} onClick={() => handleClassify('oppose')} style={{ background: 'rgba(239,68,68,0.2)', border: '2px solid #ef4444', color: '#fca5a5', borderRadius: 12, padding: '12px 8px', fontWeight: 700, cursor: feedback ? 'default' : 'pointer', opacity: feedback ? 0.5 : 1 }}>👎 Phản đối</button>
+          </div>
+        </div>
+      )}
+
+      {done && (
+        <div style={{ textAlign: 'center', padding: 20, animation: 'scaleIn 0.4s' }}>
+          <div style={{ fontSize: 64, marginBottom: 12 }}>{score === items.length ? '🏆' : '👏'}</div>
+          <p style={{ color: '#38bdf8', fontSize: 20, fontWeight: 800, margin: '0 0 8px' }}>Hoàn thành phân tích!</p>
+          <p style={{ color: '#cbd5e1', fontSize: 14 }}>Bạn đã đánh giá đúng {score}/{items.length} lập luận.</p>
+        </div>
+      )}
+    </div>
+  );
+}

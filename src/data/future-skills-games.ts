@@ -2,7 +2,7 @@
 // Each activity gets a mini-game matching its learning objective
 
 export const ACTIVITY_GAMES: Record<string, {
-  type: 'sort' | 'sequence' | 'match';
+  type: 'sort' | 'sequence' | 'match' | 'debate';
   config: Record<string, unknown>;
 }> = {
   'Algorithmic Thinking Games': {
@@ -115,6 +115,37 @@ export const ACTIVITY_GAMES: Record<string, {
         { text: 'Thêm 2 câu mô tả', emoji: '✌️' },
         { text: 'Đứng dậy, nói rõ ràng', emoji: '🧍' },
         { text: 'Nhìn vào mắt khán giả', emoji: '👀' },
+      ],
+    },
+  },
+  'Mini Debate': {
+    type: 'debate',
+    config: {
+      title: 'Phân tích Lập luận',
+      topic: 'Học sinh có nên dùng máy tính bảng ở trường?',
+      claim: 'Máy tính bảng giúp học tập tốt hơn',
+      items: [
+        { id: '1', text: 'Có nhiều ứng dụng học tập sinh động và trực quan.', type: 'support' },
+        { id: '2', text: 'Dễ bị phân tâm bởi các trò chơi và mạng xã hội.', type: 'oppose' },
+        { id: '3', text: 'Tìm kiếm thông tin nhanh chóng, cập nhật kiến thức mới liên tục.', type: 'support' },
+        { id: '4', text: 'Nhìn màn hình quá lâu có thể làm giảm thị lực.', type: 'oppose' },
+        { id: '5', text: 'Có thể thay thế sách giấy nặng nề trong balo.', type: 'support' },
+        { id: '6', text: 'Hôm qua nhà trường mới sơn lại bức tường ở hành lang.', type: 'irrelevant' },
+      ],
+    },
+  },
+  'AI Ethics Discussion': {
+    type: 'debate',
+    config: {
+      title: 'Đạo đức Trí tuệ Nhân tạo',
+      topic: 'Dùng AI để làm bài tập',
+      claim: 'Chỉ nên dùng AI như người hướng dẫn, không phải người làm hộ',
+      items: [
+        { id: '1', text: 'Nếu AI làm hết bài, học sinh sẽ không tự phát triển tư duy.', type: 'support' },
+        { id: '2', text: 'AI có thể giải bài siêu nhanh trong vài giây.', type: 'oppose' },
+        { id: '3', text: 'AI tạo ra những bức tranh phong cảnh rất đẹp.', type: 'irrelevant' },
+        { id: '4', text: 'Dùng AI để hỏi cách giải một bài toán khó thì giống như hỏi thầy cô.', type: 'support' },
+        { id: '5', text: 'Copy-paste kết quả của AI là không trung thực trong học thuật.', type: 'support' },
       ],
     },
   },
