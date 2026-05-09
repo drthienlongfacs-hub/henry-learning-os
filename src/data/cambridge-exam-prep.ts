@@ -382,3 +382,190 @@ export const EXAM_PATHWAY = {
   4: { current: 'yle_flyers', preparing: 'A2 Flyers', next: 'A2 Key (KET)' },
   5: { current: 'yle_flyers', preparing: 'A2 Flyers → A2 Key', next: 'B1 Preliminary (PET)' },
 } as const;
+
+// ══════════════════════════════════════════════════════════════════
+// COMMUNITY WISDOM — Synthesized from parents, teachers, forums
+// Sources: Facebook groups, YouTube channels, Cambridge.org, VN edu blogs
+// ══════════════════════════════════════════════════════════════════
+
+export interface StudyPlan {
+  id: string;
+  level: 'starters' | 'movers' | 'flyers';
+  titleVi: string;
+  totalWeeks: number;
+  hoursNeeded: number;
+  phases: StudyPhase[];
+}
+
+export interface StudyPhase {
+  weekRange: string;
+  titleVi: string;
+  focus: string[];
+  dailyMinutes: number;
+  activitiesVi: string[];
+}
+
+export interface RecommendedBook {
+  title: string;
+  publisher: string;
+  levels: string[];
+  bestFor: string;
+  bestForVi: string;
+  rating: number;
+  free: boolean;
+  url?: string;
+}
+
+export interface YouTubeChannel {
+  name: string;
+  url: string;
+  subscribers?: string;
+  bestForVi: string;
+  contentType: string;
+  free: boolean;
+}
+
+export interface AppRecommendation {
+  name: string;
+  platform: string;
+  free: boolean;
+  bestForVi: string;
+  url?: string;
+}
+
+export interface ParentGuideTip {
+  id: string;
+  categoryVi: string;
+  icon: string;
+  titleVi: string;
+  descriptionVi: string;
+  evidence?: string;
+  level: 'all' | 'starters' | 'movers' | 'flyers';
+}
+
+export interface SmartLearningPath {
+  id: string;
+  titleVi: string;
+  descriptionVi: string;
+  steps: { stepVi: string; toolVi: string; durationVi: string }[];
+  evidenceVi: string;
+}
+
+// ── STUDY PLANS ──
+export const STUDY_PLANS: StudyPlan[] = [
+  {
+    id: 'sp_starters', level: 'starters',
+    titleVi: 'Lộ trình ôn Starters — 8 tuần (tổng ~100 giờ)',
+    totalWeeks: 8, hoursNeeded: 100,
+    phases: [
+      { weekRange: 'Tuần 1-2', titleVi: 'Nền tảng từ vựng', focus: ['vocabulary', 'phonics'], dailyMinutes: 20, activitiesVi: ['Flashcards 10 từ/ngày theo chủ đề (Animals, Colours, Family)', 'Nghe bài hát tiếng Anh (Super Simple Songs)', 'TPR — diễn từ bằng hành động'] },
+      { weekRange: 'Tuần 3-4', titleVi: 'Kỹ năng Nghe + Đọc', focus: ['listening', 'reading'], dailyMinutes: 25, activitiesVi: ['Nghe audio Cambridge chính thức (mỗi bài 2 lần)', 'Đọc truyện Oxford Reading Tree Level 1-3', 'Luyện Yes/No với tranh'] },
+      { weekRange: 'Tuần 5-6', titleVi: 'Kỹ năng Viết + Nói', focus: ['writing', 'speaking'], dailyMinutes: 25, activitiesVi: ['Tập đánh vần 5 từ/ngày (viết tay)', 'Miêu tả tranh bằng câu đơn giản', 'Chơi trò hỏi-đáp với phụ huynh'] },
+      { weekRange: 'Tuần 7-8', titleVi: 'Luyện đề + Ôn tổng', focus: ['practice_test', 'review'], dailyMinutes: 30, activitiesVi: ['Làm 1 đề mẫu chính thức/tuần', 'Xem lại lỗi sai — ghi vào sổ', 'Mô phỏng phần Speaking với phụ huynh'] },
+    ],
+  },
+  {
+    id: 'sp_movers', level: 'movers',
+    titleVi: 'Lộ trình ôn Movers — 10 tuần (tổng ~175 giờ)',
+    totalWeeks: 10, hoursNeeded: 175,
+    phases: [
+      { weekRange: 'Tuần 1-3', titleVi: 'Mở rộng từ vựng + Ngữ pháp', focus: ['vocabulary', 'grammar'], dailyMinutes: 25, activitiesVi: ['Học 15 từ/ngày theo chủ đề mới (Weather, Transport, Health)', 'Ngữ pháp: thì hiện tại đơn, tiếp diễn, quá khứ đơn', 'Đọc truyện Storyfun for Movers'] },
+      { weekRange: 'Tuần 4-6', titleVi: 'Luyện 4 kỹ năng chuyên sâu', focus: ['listening', 'reading', 'writing', 'speaking'], dailyMinutes: 30, activitiesVi: ['Nghe: phân biệt tên, số, ngày trong tuần', 'Đọc: hiểu đoạn văn ngắn, trả lời câu hỏi', 'Viết: hoàn thành câu 1-3 từ', 'Nói: tìm khác biệt giữa 2 tranh'] },
+      { weekRange: 'Tuần 7-8', titleVi: 'Luyện dạng bài thi', focus: ['exam_format'], dailyMinutes: 30, activitiesVi: ['Làm từng phần riêng (Part 1-5 Listening, Part 1-6 R&W)', 'Học 30 động từ bất quy tắc hàng đầu', 'Luyện kể truyện theo 4 tranh (Speaking Part 2)'] },
+      { weekRange: 'Tuần 9-10', titleVi: 'Luyện đề + Tự tin', focus: ['practice_test', 'confidence'], dailyMinutes: 35, activitiesVi: ['Làm 2 đề mẫu chính thức', 'Bấm giờ như thi thật', 'Mô phỏng Speaking test hoàn chỉnh'] },
+    ],
+  },
+  {
+    id: 'sp_flyers', level: 'flyers',
+    titleVi: 'Lộ trình ôn Flyers — 12 tuần (tổng ~250 giờ)',
+    totalWeeks: 12, hoursNeeded: 250,
+    phases: [
+      { weekRange: 'Tuần 1-3', titleVi: 'Nâng vốn từ + Ngữ pháp nâng cao', focus: ['vocabulary', 'grammar'], dailyMinutes: 30, activitiesVi: ['20 từ/ngày + word families', 'Ngữ pháp: thì tương lai, so sánh, câu điều kiện loại 1', 'Đọc sách thiếu nhi bằng tiếng Anh (10 phút/ngày)'] },
+      { weekRange: 'Tuần 4-6', titleVi: 'Đọc hiểu + Viết truyện', focus: ['reading', 'writing'], dailyMinutes: 35, activitiesVi: ['Đọc đoạn văn dài, trả lời câu hỏi 1-4 từ', 'Viết truyện ngắn theo 3 tranh (dùng từ nối)', 'Điền từ tự do (không có danh sách)'] },
+      { weekRange: 'Tuần 7-9', titleVi: 'Nghe nâng cao + Nói mở rộng', focus: ['listening', 'speaking'], dailyMinutes: 35, activitiesVi: ['Nghe hội thoại phức tạp, ghi chú thông tin', 'Nói: trao đổi thông tin, kể truyện mạch lạc', 'Trả lời câu hỏi cá nhân mở rộng với "because"'] },
+      { weekRange: 'Tuần 10-12', titleVi: 'Luyện đề toàn diện', focus: ['practice_test', 'time_management'], dailyMinutes: 40, activitiesVi: ['Làm 3 đề mẫu đầy đủ', 'Quản lý thời gian: ~5 phút/phần R&W', 'Ôn lỗi sai, strengthen điểm yếu'] },
+    ],
+  },
+];
+
+// ── RECOMMENDED BOOKS ──
+export const RECOMMENDED_BOOKS: RecommendedBook[] = [
+  { title: 'Fun for Starters/Movers/Flyers (4th Ed)', publisher: 'Cambridge', levels: ['starters','movers','flyers'], bestFor: 'Balanced exam prep + skill building', bestForVi: 'Ôn thi cân bằng + phát triển kỹ năng', rating: 5, free: false },
+  { title: 'Storyfun for Starters/Movers/Flyers', publisher: 'Cambridge', levels: ['starters','movers','flyers'], bestFor: 'Story-based learning', bestForVi: 'Học qua truyện — thú vị, nhớ lâu', rating: 5, free: false },
+  { title: "Kid's Box (Updated 2nd Ed)", publisher: 'Cambridge', levels: ['starters','movers','flyers'], bestFor: 'Full-year English course + exam prep', bestForVi: 'Giáo trình toàn diện cả năm + luyện thi', rating: 4, free: false },
+  { title: 'Get Ready for Starters/Movers/Flyers', publisher: 'Oxford', levels: ['starters','movers','flyers'], bestFor: 'Grammar + vocab practice', bestForVi: 'Luyện ngữ pháp + từ vựng chuyên sâu', rating: 4, free: false },
+  { title: 'Authentic Practice Tests', publisher: 'Cambridge', levels: ['starters','movers','flyers'], bestFor: 'Final exam rehearsal', bestForVi: 'Luyện đề thi thật — bước cuối cùng', rating: 5, free: false },
+  { title: 'Starters/Movers/Flyers Word List Picture Book', publisher: 'Cambridge', levels: ['starters','movers','flyers'], bestFor: 'Visual vocabulary', bestForVi: 'Học từ vựng qua hình ảnh (MIỄN PHÍ)', rating: 5, free: true, url: 'https://www.cambridgeenglish.org/exams-and-tests/starters/preparation/' },
+  { title: 'Oxford Reading Tree', publisher: 'Oxford', levels: ['starters','movers'], bestFor: 'Graded readers for fluency', bestForVi: 'Sách đọc theo trình độ — xây dựng trôi chảy', rating: 5, free: false },
+];
+
+// ── YOUTUBE CHANNELS ──
+export const YOUTUBE_CHANNELS: YouTubeChannel[] = [
+  { name: 'Cambridge English', url: 'https://www.youtube.com/c/CambridgeEnglishTV', subscribers: '1M+', bestForVi: 'Video thi mẫu chính thức, tips từ Cambridge', contentType: 'official', free: true },
+  { name: 'British Council LearnEnglish Kids', url: 'https://www.youtube.com/user/BritishCouncilLEKids', subscribers: '2M+', bestForVi: 'Bài hát, truyện, ngữ pháp cho trẻ em', contentType: 'learning', free: true },
+  { name: 'Super Simple Songs', url: 'https://www.youtube.com/c/SuperSimpleSongs', subscribers: '40M+', bestForVi: 'Bài hát tiếng Anh — học từ vựng qua giai điệu', contentType: 'songs', free: true },
+  { name: 'English Singsing', url: 'https://www.youtube.com/c/EnglishSingsing', subscribers: '5M+', bestForVi: 'Hội thoại, từ vựng theo chủ đề cho trẻ 5-10', contentType: 'vocabulary', free: true },
+  { name: 'BBC Learning English', url: 'https://www.youtube.com/user/bbclearningenglish', subscribers: '10M+', bestForVi: 'Ngữ pháp, từ vựng nâng cao (Movers/Flyers)', contentType: 'grammar', free: true },
+  { name: 'Jack Hartmann Kids Music', url: 'https://www.youtube.com/c/JackHartmann', subscribers: '5M+', bestForVi: 'Phonics, đếm số, TPR qua nhạc và vận động', contentType: 'phonics', free: true },
+];
+
+// ── APPS ──
+export const RECOMMENDED_APPS: AppRecommendation[] = [
+  { name: 'Word Fun World', platform: 'iOS/Android', free: true, bestForVi: 'Từ vựng Cambridge chính thức — game đua thời gian' },
+  { name: 'Monkey Puzzles', platform: 'iOS/Android', free: true, bestForVi: 'Mini-games đọc + từ vựng theo cấp YLE' },
+  { name: 'Lingokids', platform: 'iOS/Android', free: false, bestForVi: 'Học tiếng Anh toàn diện qua trò chơi (3-8 tuổi)' },
+  { name: 'Khan Academy Kids', platform: 'iOS/Android', free: true, bestForVi: 'Đọc, phonics, toán — chương trình Mỹ miễn phí 100%' },
+  { name: 'Duolingo ABC', platform: 'iOS/Android', free: true, bestForVi: 'Phonics + đọc cơ bản cho trẻ mới bắt đầu' },
+  { name: 'Epic! Kids Books', platform: 'iOS/Android', free: false, bestForVi: 'Thư viện 40,000+ sách thiếu nhi tiếng Anh' },
+];
+
+// ── PARENT GUIDE — Evidence-based tips ──
+export const PARENT_GUIDE: ParentGuideTip[] = [
+  { id: 'pg1', categoryVi: 'Tâm lý', icon: '💚', titleVi: 'Không đặt nặng áp lực', descriptionVi: 'Cambridge YLE không có đậu/rớt. Hãy coi đây là trải nghiệm tích cực. Bé đạt 5 shields = xuất sắc, 3 shields = tốt, 1 shield = đang tiến bộ. Tất cả đều nhận chứng chỉ.', evidence: 'Cambridge Assessment: test anxiety reduces performance 15-20%', level: 'all' },
+  { id: 'pg2', categoryVi: 'Phương pháp', icon: '⏰', titleVi: '15 phút/ngày > 2 giờ/tuần', descriptionVi: 'Não trẻ em ghi nhớ tốt nhất qua lặp lại cách quãng. 15 phút mỗi ngày hiệu quả GẤP 3 LẦN so với 2 giờ cuối tuần. Chia nhỏ: 5 phút từ vựng + 5 phút nghe + 5 phút đọc.', evidence: 'Ebbinghaus forgetting curve: 80% information lost within 24h without review', level: 'all' },
+  { id: 'pg3', categoryVi: 'Nghe', icon: '🎧', titleVi: 'Bật tiếng Anh nền mỗi ngày', descriptionVi: 'Bật nhạc/podcast/cartoon tiếng Anh khi bé chơi, ăn cơm. Không cần tập trung 100% — tai sẽ quen với nhịp điệu, ngữ điệu tiếng Anh một cách tự nhiên.', evidence: 'Input hypothesis (Krashen): comprehensible input builds subconscious language acquisition', level: 'starters' },
+  { id: 'pg4', categoryVi: 'Nói', icon: '🗣️', titleVi: 'Đừng sửa lỗi liên tục', descriptionVi: 'Khi bé nói sai, ĐỪNG ngắt lời sửa ngay. Thay vào đó, lặp lại câu đúng một cách tự nhiên. Bé nói "I goed school" → bạn nói "Oh, you WENT to school! Nice!"', evidence: 'Recast technique: 40+ studies show implicit correction more effective than explicit for children', level: 'all' },
+  { id: 'pg5', categoryVi: 'Đọc', icon: '📖', titleVi: 'Đọc cùng con mỗi tối', descriptionVi: 'Ba mẹ đọc CHO con → đọc CÙNG con → con đọc MỘT MÌNH. Chỉ vào từ khi đọc. Hỏi "Con thấy gì trong tranh?" sau mỗi trang. 15 phút/tối là đủ.', evidence: 'National Literacy Trust: children read to daily are 13x more likely to read above expected level', level: 'all' },
+  { id: 'pg6', categoryVi: 'Viết', icon: '✏️', titleVi: 'Viết tay mỗi ngày — 5 từ', descriptionVi: 'Cho bé viết 5 từ mới vào sổ mỗi ngày. VIẾT TAY, không đánh máy. Vẽ tranh bên cạnh từ. Não ghi nhớ tốt hơn 40% khi viết tay so với đánh máy.', evidence: 'Mueller & Oppenheimer (2014): handwriting enhances conceptual learning and retention', level: 'all' },
+  { id: 'pg7', categoryVi: 'Thi Speaking', icon: '🎭', titleVi: 'Mô phỏng thi Nói tại nhà', descriptionVi: 'Ngồi đối diện con. Nói "Hello! What is your name?" rồi hỏi tiếp. Xem video thi mẫu trên Cambridge YouTube. Bé quen thì thi sẽ tự tin. Luyện 2 lần/tuần, mỗi lần 5 phút.', level: 'all' },
+  { id: 'pg8', categoryVi: 'Lỗi phổ biến', icon: '⚠️', titleVi: 'Top 5 lỗi phụ huynh VN thường mắc', descriptionVi: '1) Nhồi nhét — hiệu quả ngược. 2) Chỉ học ngữ pháp — bỏ quên Nghe+Nói. 3) So sánh con với bạn. 4) Bắt học thuộc câu trả lời Speaking. 5) Không cho con làm đề mẫu.', evidence: 'Synthesized from Vietnamese parent forums, teacher blogs (2023-2025)', level: 'all' },
+];
+
+// ── SMART LEARNING PATHS ──
+export const SMART_PATHS: SmartLearningPath[] = [
+  {
+    id: 'slp1', titleVi: '🧠 Học từ vựng thông minh (không nhồi nhét)',
+    descriptionVi: 'Phương pháp được hàng triệu phụ huynh áp dụng thành công',
+    steps: [
+      { stepVi: 'Gặp từ mới trong ngữ cảnh (truyện, video)', toolVi: 'Storyfun, Oxford Reading Tree', durationVi: '5 phút' },
+      { stepVi: 'Dùng flashcard có HÌNH — không dịch sang tiếng Việt', toolVi: 'Cambridge Word List Picture Book', durationVi: '3 phút' },
+      { stepVi: 'Diễn từ bằng hành động (TPR)', toolVi: 'Chơi tại nhà', durationVi: '2 phút' },
+      { stepVi: 'Viết từ ra giấy + vẽ tranh', toolVi: 'Sổ từ vựng cá nhân', durationVi: '3 phút' },
+      { stepVi: 'Ôn lại sau 1 ngày → 3 ngày → 7 ngày', toolVi: 'Leitner Box / Spaced Repetition', durationVi: '2 phút' },
+    ],
+    evidenceVi: 'Ebbinghaus (1885) + Asher TPR (1969) + Mueller handwriting study (2014)',
+  },
+  {
+    id: 'slp2', titleVi: '🎧 Luyện Nghe hiệu quả (từ 0 đến 5 shields)',
+    descriptionVi: 'Lộ trình 4 bước từ nghe thụ động → nghe chủ động',
+    steps: [
+      { stepVi: 'Nghe nền: bật nhạc/cartoon tiếng Anh khi chơi', toolVi: 'Super Simple Songs, Peppa Pig', durationVi: '30 phút/ngày' },
+      { stepVi: 'Nghe + lặp lại: pause → bé nói theo', toolVi: 'Cambridge audio files', durationVi: '10 phút' },
+      { stepVi: 'Nghe + trả lời: hỏi "Who? What? Where?"', toolVi: 'Fun for Starters/Movers audio', durationVi: '10 phút' },
+      { stepVi: 'Nghe đề thi: làm Part 1-4/5 có bấm giờ', toolVi: 'Authentic Practice Tests', durationVi: '20 phút' },
+    ],
+    evidenceVi: 'Krashen Input Hypothesis (1982) + Cambridge Assessment listening progression framework',
+  },
+  {
+    id: 'slp3', titleVi: '🗣️ Tự tin Nói (cho bé nhút nhát)',
+    descriptionVi: 'Từ im lặng → trả lời 1 từ → nói câu đầy đủ',
+    steps: [
+      { stepVi: 'Bước 1: Chỉ vào đồ vật, hỏi "What is this?"', toolVi: 'Flashcards, đồ vật trong nhà', durationVi: '3 phút' },
+      { stepVi: 'Bước 2: Hỏi Yes/No → "Do you like apples?"', toolVi: 'Trò chơi hỏi-đáp', durationVi: '3 phút' },
+      { stepVi: 'Bước 3: Miêu tả tranh → "I can see a dog"', toolVi: 'Cambridge Speaking pictures', durationVi: '5 phút' },
+      { stepVi: 'Bước 4: Kể chuyện → "First..., then..., finally..."', toolVi: 'Picture story cards', durationVi: '5 phút' },
+    ],
+    evidenceVi: 'Vygotsky Zone of Proximal Development (1978) + scaffolded speaking progression',
+  },
+];
+
