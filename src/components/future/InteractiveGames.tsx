@@ -1,5 +1,5 @@
 'use client';
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 
 // ═══ SORTING GAME — Drag items into correct bins (Khan Academy Kids pattern) ═══
 interface SortItem { id: string; label: string; emoji: string; category: string }
@@ -329,7 +329,7 @@ export function DebateGame({ topic, claim, items, title, onComplete }: DebateGam
       <h3 style={{ color: '#f8fafc', fontSize: 18, fontWeight: 800, margin: '0 0 8px', textAlign: 'center' }}>⚖️ {title}</h3>
       <div style={{ background: 'rgba(56,189,248,0.1)', padding: '12px 16px', borderRadius: 12, marginBottom: 16, border: '1px solid rgba(56,189,248,0.2)' }}>
         <div style={{ color: '#38bdf8', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', marginBottom: 4 }}>Chủ đề: {topic}</div>
-        <div style={{ color: '#f1f5f9', fontSize: 15, fontWeight: 600 }}>Tuyên bố: "{claim}"</div>
+        <div style={{ color: '#f1f5f9', fontSize: 15, fontWeight: 600 }}>Tuyên bố: &quot;{claim}&quot;</div>
       </div>
 
       {/* Progress */}
@@ -347,7 +347,7 @@ export function DebateGame({ topic, claim, items, title, onComplete }: DebateGam
             border: feedback ? (feedback.correct ? '2px solid #22c55e' : '2px solid #ef4444') : '2px solid #475569',
             minHeight: 120, display: 'flex', flexDirection: 'column', justifyContent: 'center'
           }}>
-            <span style={{ color: '#e2e8f0', fontSize: 16, lineHeight: 1.5, fontWeight: 500 }}>"{item.text}"</span>
+            <span style={{ color: '#e2e8f0', fontSize: 16, lineHeight: 1.5, fontWeight: 500 }}>&quot;{item.text}&quot;</span>
             {feedback && (
               <div style={{ color: feedback.correct ? '#4ade80' : '#f87171', fontSize: 14, marginTop: 12, fontWeight: 700 }}>
                 {feedback.message}

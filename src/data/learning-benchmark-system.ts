@@ -4,6 +4,14 @@ import { GRADE3_UNITS, type UnitData } from './english-units-g3';
 import { GRADE4_UNITS } from './english-units-g4';
 import { GRADE5_UNITS } from './english-units-g5';
 import { GRAMMAR_TOPICS, PHONICS_LEVELS, READING_PASSAGES, SIGHT_WORDS } from './english-international';
+import { MATH_TOPICS } from '../lib/content/math-generator';
+import { VIETNAMESE_TOPICS } from '../lib/content/vietnamese-generator';
+import { ENGLISH_TOPICS } from '../lib/content/english-generator';
+import { SCIENCE_TOPICS } from '../lib/content/science-generator';
+import { HISGEO_TOPICS } from '../lib/content/history-geo-generator';
+import { COMPUTING_TOPICS } from '../lib/content/computing-generator';
+import { ETHICS_TOPICS } from '../lib/content/ethics-generator';
+import { ART_TOPICS } from '../lib/content/art-generator';
 
 export type LessonDepth = 'focused' | 'deep' | 'challenge';
 
@@ -299,7 +307,7 @@ function buildEnglishInternationalBlueprints(): Record<string, TopicLearningBlue
     return Object.fromEntries([...phonics, ...grammar, ...reading, ...sightWords]);
 }
 
-export const TOPIC_LEARNING_BLUEPRINTS: Record<string, TopicLearningBlueprint> = {
+const EXPLICIT_TOPIC_LEARNING_BLUEPRINTS: Record<string, TopicLearningBlueprint> = {
     add_sub_10: blueprint('add_sub_10', 'math', 'Số trong 10 có cấu trúc, không chỉ là chuỗi để đếm.', 'Tập nhìn quan hệ phần - tổng rồi mới tính.', 'Tự tạo 3 phép tính có cùng tổng 10 và giải thích vì sao liên quan nhau.', ['Tính đúng trong 10', 'Nêu phép ngược để kiểm tra', 'Không cần đếm lại từ đầu']),
     add_sub_20: blueprint('add_sub_20', 'math', 'Qua 10 là chiến lược tách số, không phải mẹo nhớ đáp án.', 'Ưu tiên làm tròn 10 rồi xử lý phần còn lại.', 'Giải thích hai cách tính 8 + 7: qua 10 và đổi thứ tự.', ['Tách số để đủ 10', 'Tính nhẩm qua 10', 'Nói được phần còn lại']),
     number_bonds: blueprint('number_bonds', 'math', 'Một tổng có nhiều cách tách thành hai phần.', 'Nhìn sơ đồ phần - tổng như một hệ thống nhỏ.', 'Vẽ một sơ đồ tách số 12 theo 4 cách và nhận xét quy luật.', ['Nhận ra tổng và phần', 'Tự tìm phần thiếu', 'Dùng tách số để tính nhẩm']),
@@ -386,6 +394,58 @@ export const TOPIC_LEARNING_BLUEPRINTS: Record<string, TopicLearningBlueprint> =
     music_instruments: blueprint('music_instruments', 'art', 'Nhạc cụ tạo âm thanh bằng dây, hơi, gõ hoặc rung theo cách khác nhau.', 'Tập nghe và phân loại nhạc cụ bằng cách tạo âm thanh, không chỉ nhớ tên.', 'Chọn 3 nhạc cụ Việt Nam, phân loại dây/hơi/gõ và mô tả âm sắc của một nhạc cụ.', ['Nhận biết nhạc cụ Việt Nam', 'Phân loại theo cách phát âm', 'Không nhầm nhạc cụ truyền thống và phương Tây']),
     art_appreciation: blueprint('art_appreciation', 'art', 'Cảm thụ nghệ thuật là quan sát, cảm nhận và nêu lý do cho cảm nhận.', 'Tập nói về tác phẩm bằng bằng chứng: màu, bố cục, giai điệu, nhịp và cảm xúc.', 'Chọn một bức tranh hoặc bài hát, nêu 3 chi tiết làm con thích hoặc chưa thích.', ['Nêu cảm nhận có lý do', 'Dẫn chứng bằng màu/âm thanh/bố cục', 'Tôn trọng nhiều cách cảm thụ khác nhau']),
 };
+
+type ActiveLearningTopic = {
+    key: string;
+    name: string;
+    gradeLevel: number;
+};
+
+const ACTIVE_LEARNING_TOPIC_SETS: { subject: Exclude<LearningSubjectKey, 'elite'>; topics: ActiveLearningTopic[] }[] = [
+    { subject: 'math', topics: MATH_TOPICS },
+    { subject: 'vietnamese', topics: VIETNAMESE_TOPICS },
+    { subject: 'english', topics: ENGLISH_TOPICS },
+    { subject: 'science', topics: SCIENCE_TOPICS },
+    { subject: 'hisgeo', topics: HISGEO_TOPICS },
+    { subject: 'computing', topics: COMPUTING_TOPICS },
+    { subject: 'ethics', topics: ETHICS_TOPICS },
+    { subject: 'art', topics: ART_TOPICS },
+];
+
+const SUBJECT_LEARNING_FRAME: Record<Exclude<LearningSubjectKey, 'elite'>, string> = {
+    math: 'nhìn cấu trúc, mô hình hóa, giải thích và kiểm tra bằng cách khác',
+    vietnamese: 'đọc kỹ ngữ liệu, dùng từ/câu rõ nghĩa và trả lời bằng bằng chứng',
+    english: 'nghe, nói, đọc, viết trong tình huống nhỏ, có lặp lại và chuyển giao',
+    science: 'quan sát hiện tượng, dự đoán, dùng bằng chứng và kết luận an toàn',
+    hisgeo: 'đặt sự kiện hoặc địa điểm vào bản đồ, dòng thời gian và bối cảnh đời sống',
+    computing: 'thiết kế từng bước, thử, sửa lỗi và nêu quy tắc an toàn số',
+    ethics: 'nhận diện tình huống, cảm xúc, hệ quả và chọn hành động có trách nhiệm',
+    art: 'quan sát, cảm nhận, thể hiện và tự nói được lý do lựa chọn nghệ thuật',
+};
+
+function buildGeneratedTopicBlueprint(topic: ActiveLearningTopic, subject: Exclude<LearningSubjectKey, 'elite'>): TopicLearningBlueprint {
+    return blueprint(
+        topic.key,
+        subject,
+        `${topic.name} là một chủ đề lớp ${topic.gradeLevel} cần được học bằng mục tiêu rõ, ví dụ thật và bằng chứng thành thạo, không chỉ bằng ghi nhớ đáp án.`,
+        `Người học vững chủ đề này biết ${SUBJECT_LEARNING_FRAME[subject]}, sau đó tự kiểm tra bằng một ví dụ mới.`,
+        `Tự tạo một nhiệm vụ nhỏ về "${topic.name}", làm thử, giải thích một bằng chứng hoặc một bước làm, rồi đổi dữ kiện để kiểm tra chuyển giao.`,
+        ['Làm đúng nhiệm vụ cốt lõi', 'Giải thích được vì sao', 'Nhận ra một lỗi dễ gặp', 'Áp dụng sang ví dụ mới'],
+    );
+}
+
+function buildCompleteTopicLearningBlueprints(): Record<string, TopicLearningBlueprint> {
+    return Object.fromEntries(
+        ACTIVE_LEARNING_TOPIC_SETS.flatMap(({ subject, topics }) =>
+            topics.map((topic) => [
+                topic.key,
+                EXPLICIT_TOPIC_LEARNING_BLUEPRINTS[topic.key] ?? buildGeneratedTopicBlueprint(topic, subject),
+            ] as const),
+        ),
+    );
+}
+
+export const TOPIC_LEARNING_BLUEPRINTS: Record<string, TopicLearningBlueprint> = buildCompleteTopicLearningBlueprints();
 
 const DEFAULT_TOPIC_BLUEPRINT = blueprint(
     'default',

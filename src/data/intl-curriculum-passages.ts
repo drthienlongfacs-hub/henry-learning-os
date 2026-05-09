@@ -3,6 +3,8 @@
 // Mapped to specific Unit IDs for high-fidelity content delivery
 // ══════════════════════════════════════════════════════════════════
 
+import { getGeneratedUnitSections } from './international-unit-manifests';
+
 export interface AuthenticReading {
   text: string;
   textVi: string;
@@ -2857,12 +2859,25 @@ export function getAuthenticReading(unitId: string, title: string, titleVi: stri
  * Falls back to wrapping the single AUTHENTIC_PASSAGES entry as a 1-element array.
  */
 export function getUnitSections(unitId: string, title: string, titleVi: string, vocabWords: string[], vocabWordsVi: string[]): AuthenticSection[] {
-  // Priority 1: Full multi-section data
+  // Priority 1: Full multi-section data, supplemented to the 7-part manifest floor when older entries are short.
   if (AUTHENTIC_UNIT_SECTIONS[unitId]) {
-    return AUTHENTIC_UNIT_SECTIONS[unitId];
+    const existingSections = AUTHENTIC_UNIT_SECTIONS[unitId];
+    if (existingSections.length >= 7) return existingSections;
+
+    const generatedSections = getGeneratedUnitSections(unitId);
+    return [
+      ...existingSections,
+      ...generatedSections.slice(existingSections.length),
+    ];
   }
 
-  // Priority 2: Wrap single passage as a section
+  // Priority 2: Generated source-manifest lesson for every international country unit.
+  const generatedSections = getGeneratedUnitSections(unitId);
+  if (generatedSections.length > 0) {
+    return generatedSections;
+  }
+
+  // Priority 3: Wrap single passage as a section
   const single = getAuthenticReading(unitId, title, titleVi, vocabWords, vocabWordsVi);
   return [{
     sectionTitle: title,

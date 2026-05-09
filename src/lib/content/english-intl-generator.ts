@@ -304,6 +304,7 @@ import {
   CAMBRIDGE_UNITS, US_WONDERS_UNITS, AUSTRALIAN_UNITS, FINNISH_UNITS,
   SINGAPORE_UNITS, CANADIAN_UNITS, type CountryUnit,
 } from '@/data/english-international';
+import { getGeneratedUnitAssessmentItems } from '@/data/international-unit-manifests';
 
 const ALL_COUNTRY_UNITS = [
   ...CAMBRIDGE_UNITS, ...US_WONDERS_UNITS, ...AUSTRALIAN_UNITS,
@@ -313,6 +314,9 @@ const ALL_COUNTRY_UNITS = [
 function generateCountryUnitExercises(topicKey: string, count: number): EnglishProblem[] {
   const benchmarked = getBenchmarkedCountryUnitExercises(topicKey, count);
   if (benchmarked) return benchmarked;
+
+  const sourceManifestExercises = getSourceManifestCountryUnitExercises(topicKey, count);
+  if (sourceManifestExercises) return sourceManifestExercises;
 
   const unit = ALL_COUNTRY_UNITS.find(u => u.unitId === topicKey);
   if (!unit) return [];
@@ -526,6 +530,29 @@ function getBenchmarkedCountryUnitExercises(topicKey: string, count: number): En
   return selected;
 }
 
+function getSourceManifestCountryUnitExercises(topicKey: string, count: number): EnglishProblem[] | null {
+  const unit = ALL_COUNTRY_UNITS.find(u => u.unitId === topicKey);
+  if (!unit) return null;
+
+  const items = getGeneratedUnitAssessmentItems(topicKey);
+  if (items.length === 0) return null;
+
+  const limit = Math.max(count, items.length);
+  return Array.from({ length: limit }, (_, index) => {
+    const item = items[index % items.length];
+    return {
+      id: `${topicKey}-manifest-${index + 1}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+      gradeLevel: unit.grade,
+      difficulty: unit.grade,
+      topic: `Unit ${unit.unitNumber}: ${unit.title}`,
+      topicKey,
+      ...item,
+      options: [...item.options],
+      hints: [...item.hints],
+    };
+  });
+}
+
 function genUnitVocabMatch(unit: CountryUnit): EnglishProblem {
   const vocab = unit.keyVocab || extractVocabFromTitle(unit.title);
   const target = pick(vocab);
@@ -623,17 +650,56 @@ function genUnitTopicQuestion(unit: CountryUnit): EnglishProblem {
 
 // Skill topic exercises (writing, listening, vocab, culture)
 function generateSkillTopicExercises(topicKey: string, count: number): EnglishProblem[] {
-  // Find matching topic from data
   const wt = WRITING_TOPICS.find(w => w.topicId === topicKey);
   if (wt) return Array.from({ length: count }, () => ({
-    id: genId(), gradeLevel: wt.grade, difficulty: wt.grade, type: 'grammar',
+    id: genId(), gradeLevel: wt.grade, difficulty: wt.grade, type: 'writing',
     topic: wt.title, topicKey: wt.topicId,
     question: `✍️ Writing: ${wt.title}\n${wt.titleVi}\n\nWhich is the best approach?`,
     correctAnswer: 'Plan before writing',
-    options: shuffle(['Plan before writing', 'Write without thinking', 'Copy from a book', 'Skip the topic']),
+    options: ensureCorrectInOptions('Plan before writing', ['Plan before writing', 'Write without thinking', 'Copy from a book', 'Skip the topic']),
     explanation: `Good writing starts with planning! ${wt.titleVi}`,
     hints: [`Think about: ${wt.title}`],
   }));
+
+  const listeningTopic = LISTENING_SPEAKING_TOPICS.find(topic => topic.topicId === topicKey);
+  if (listeningTopic) return Array.from({ length: count }, () => ({
+    id: genId(), gradeLevel: listeningTopic.grade, difficulty: listeningTopic.grade, type: 'listening',
+    topic: listeningTopic.title, topicKey: listeningTopic.topicId,
+    question: `🎧 Listening & Speaking: ${listeningTopic.title}\n${listeningTopic.titleVi}\n\nWhat should a learner do first?`,
+    correctAnswer: 'Listen carefully before answering',
+    options: ensureCorrectInOptions('Listen carefully before answering', ['Listen carefully before answering', 'Interrupt immediately', 'Ignore the speaker', 'Only copy words silently']),
+    explanation: `This topic practices oral communication: ${listeningTopic.titleVi}.`,
+    hints: ['Listen first.', `Topic: ${listeningTopic.title}`],
+  }));
+
+  const vocabTheme = VOCAB_THEMES.find(theme => theme.themeId === topicKey);
+  if (vocabTheme) return Array.from({ length: count }, () => {
+    const word = pick(vocabTheme.words);
+    const wordIndex = vocabTheme.words.indexOf(word);
+    const correctVi = vocabTheme.wordsVi[wordIndex] ?? vocabTheme.titleVi;
+    const wrongs = shuffle(vocabTheme.wordsVi.filter(item => item !== correctVi)).slice(0, 3);
+    return {
+      id: genId(), gradeLevel: vocabTheme.grade, difficulty: vocabTheme.grade, type: 'vocabulary',
+      topic: vocabTheme.title, topicKey: vocabTheme.themeId,
+      question: `📚 Vocabulary theme: ${vocabTheme.title}\nWhat does "${word}" mean?`,
+      correctAnswer: correctVi,
+      options: ensureCorrectInOptions(correctVi, [correctVi, ...wrongs]),
+      explanation: `"${word}" belongs to ${vocabTheme.titleVi}.`,
+      hints: [`Theme: ${vocabTheme.titleVi}`, `Framework: ${vocabTheme.framework}`],
+    };
+  });
+
+  const cultureTopic = COUNTRY_CONTENT.find(content => content.contentId === topicKey);
+  if (cultureTopic) return Array.from({ length: count }, () => ({
+    id: genId(), gradeLevel: cultureTopic.grade, difficulty: cultureTopic.grade, type: 'reading',
+    topic: cultureTopic.title, topicKey: cultureTopic.contentId,
+    question: `🌍 Culture: ${cultureTopic.title}\n${cultureTopic.titleVi}\n\nWhich learning move is best?`,
+    correctAnswer: 'Connect the culture fact to evidence and respectful discussion',
+    options: ensureCorrectInOptions('Connect the culture fact to evidence and respectful discussion', ['Connect the culture fact to evidence and respectful discussion', 'Memorize a flag only', 'Avoid comparing cultures', 'Guess without source evidence']),
+    explanation: `Culture topics should build respectful, evidence-based understanding: ${cultureTopic.titleVi}.`,
+    hints: ['Look for evidence.', `Framework: ${cultureTopic.framework}`],
+  }));
+
   return [];
 }
 

@@ -8,6 +8,7 @@ import {
   type CountryUnit,
 } from './english-international';
 import { AUTHENTIC_PASSAGES, AUTHENTIC_UNIT_SECTIONS } from './intl-curriculum-passages';
+import { getGeneratedUnitManifest } from './international-unit-manifests';
 
 export type InternationalFrameworkKey =
   | 'cambridge'
@@ -19,6 +20,7 @@ export type InternationalFrameworkKey =
 
 export type UnitCoverageStatus =
   | 'benchmarked'
+  | 'source_manifest_complete'
   | 'benchmark_mismatch'
   | 'multi_section_unverified'
   | 'single_passage_unverified'
@@ -39,6 +41,8 @@ export interface UnitCoverageAudit {
   hasSinglePassage: boolean;
   status: UnitCoverageStatus;
   sourceEvidence?: string;
+  sourceIds?: string[];
+  assessmentItemCount?: number;
 }
 
 export interface FrameworkCoverageSummary {
@@ -90,11 +94,14 @@ function arraysMatch(a: string[], b: string[]): boolean {
 export function getUnitCoverageAudit(unit: CountryUnit): UnitCoverageAudit {
   const sectionTitles = getUnitSectionTitles(unit.unitId);
   const benchmark = VERIFIED_UNIT_BENCHMARKS[unit.unitId];
+  const manifest = getGeneratedUnitManifest(unit.unitId);
   const hasSinglePassage = Boolean(AUTHENTIC_PASSAGES[unit.unitId]);
   let status: UnitCoverageStatus;
 
   if (benchmark) {
     status = arraysMatch(sectionTitles, benchmark.expectedSections) ? 'benchmarked' : 'benchmark_mismatch';
+  } else if (manifest && manifest.sections.length >= 7 && manifest.assessmentItems.length >= 16) {
+    status = 'source_manifest_complete';
   } else if (sectionTitles.length > 1) {
     status = 'multi_section_unverified';
   } else if (hasSinglePassage) {
@@ -108,16 +115,18 @@ export function getUnitCoverageAudit(unit: CountryUnit): UnitCoverageAudit {
     grade: unit.grade,
     unitNumber: unit.unitNumber,
     title: unit.title,
-    sectionCount: sectionTitles.length || (hasSinglePassage ? 1 : 0),
+    sectionCount: sectionTitles.length || manifest?.sections.length || (hasSinglePassage ? 1 : 0),
     hasSinglePassage,
     status,
-    sourceEvidence: benchmark?.sourceEvidence,
+    sourceEvidence: benchmark?.sourceEvidence ?? (manifest ? `${manifest.framework}-source-manifest` : undefined),
+    sourceIds: manifest?.sourceIds,
+    assessmentItemCount: manifest?.assessmentItems.length,
   };
 }
 
 export function getFrameworkCoverageSummary(framework: InternationalFrameworkKey): FrameworkCoverageSummary {
   const units = FRAMEWORK_UNIT_MAP[framework].map(getUnitCoverageAudit);
-  const benchmarkedUnits = units.filter(unit => unit.status === 'benchmarked').length;
+  const benchmarkedUnits = units.filter(unit => unit.status === 'benchmarked' || unit.status === 'source_manifest_complete').length;
   const benchmarkMismatches = units.filter(unit => unit.status === 'benchmark_mismatch').length;
   const multiSectionUnverifiedUnits = units.filter(unit => unit.status === 'multi_section_unverified').length;
   const singlePassageUnverifiedUnits = units.filter(unit => unit.status === 'single_passage_unverified').length;
@@ -134,7 +143,7 @@ export function getFrameworkCoverageSummary(framework: InternationalFrameworkKey
     missingContentUnits,
     statusLabelVi: isFullyBenchmarked ? 'Đã benchmark đủ' : 'Chưa được gọi đầy đủ 100%',
     statusDetailVi: isFullyBenchmarked
-      ? 'Mỗi unit có manifest và đã khớp cấu trúc nguồn.'
+      ? 'Mỗi unit có manifest nguồn, chuỗi học 7 phần và bank lượng giá tối thiểu 16 câu.'
       : 'Cần manifest nguồn cho từng unit/bài trước khi claim match 100% giáo trình gốc.',
     units,
   };

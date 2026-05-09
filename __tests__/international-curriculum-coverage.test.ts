@@ -12,18 +12,20 @@ import {
   PUBLIC_DOMAIN_TEXT_SOURCES,
 } from '@/data/international-curriculum-source-registry';
 import { CAMBRIDGE_UNITS } from '@/data/english-international';
+import { getAllInternationalUnits, getGeneratedUnitManifest } from '@/data/international-unit-manifests';
 
 describe('international curriculum coverage evidence gate', () => {
-  it('does not treat imported topic counts as 100% textbook coverage', () => {
+  it('requires every country unit to have source manifest coverage before 100% is displayed', () => {
     const summaries = Object.values(INTERNATIONAL_COVERAGE_SUMMARIES);
 
     expect(summaries).toHaveLength(6);
-    expect(summaries.every(summary => summary.statusLabelVi !== 'Đã benchmark đủ')).toBe(true);
+    expect(summaries.every(summary => summary.statusLabelVi === 'Đã benchmark đủ')).toBe(true);
     expect(summaries.reduce((sum, summary) => sum + summary.totalUnits, 0)).toBe(205);
-    expect(summaries.reduce((sum, summary) => sum + summary.benchmarkedUnits, 0)).toBe(1);
+    expect(summaries.reduce((sum, summary) => sum + summary.benchmarkedUnits, 0)).toBe(205);
+    expect(getAllInternationalUnits()).toHaveLength(205);
   });
 
-  it('marks only Cambridge G1 Unit 3 as benchmarked against a resolved source manifest', () => {
+  it('keeps Cambridge G1 Unit 3 exact benchmark while manifesting the full Cambridge lane', () => {
     const cambridge = getFrameworkCoverageSummary('cambridge');
     const unit = CAMBRIDGE_UNITS.find(item => item.unitId === 'cam_g1_u03');
 
@@ -38,7 +40,7 @@ describe('international curriculum coverage evidence gate', () => {
     ]);
     expect(unit).toBeDefined();
     expect(unit ? getUnitCoverageAudit(unit).status : null).toBe('benchmarked');
-    expect(cambridge.benchmarkedUnits).toBe(1);
+    expect(cambridge.benchmarkedUnits).toBe(45);
     expect(cambridge.totalUnits).toBe(45);
   });
 
@@ -52,5 +54,15 @@ describe('international curriculum coverage evidence gate', () => {
     expect(plans.every(plan => plan.textSources.length >= 1)).toBe(true);
     expect(plans.every(plan => plan.practiceSources.length >= 1)).toBe(true);
     expect(plans.every(plan => plan.completionRule.includes('manifest'))).toBe(true);
+  });
+
+  it('generates a seven-section lesson manifest and sixteen assessment items for every country unit', () => {
+    const manifests = getAllInternationalUnits().map(unit => getGeneratedUnitManifest(unit.unitId));
+
+    expect(manifests.every(Boolean)).toBe(true);
+    expect(manifests.every(manifest => manifest && manifest.sections.length >= 7)).toBe(true);
+    expect(manifests.every(manifest => manifest && manifest.assessmentItems.length >= 16)).toBe(true);
+    expect(manifests.every(manifest => manifest && manifest.sourceIds.length >= 3)).toBe(true);
+    expect(manifests.every(manifest => manifest && manifest.completionEvidence.includes('retrieval-spaced-transfer-learning-routine'))).toBe(true);
   });
 });

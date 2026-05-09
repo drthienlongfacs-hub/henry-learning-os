@@ -1,26 +1,21 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FUTURE_SKILL_AXES } from '@/data/future-skills';
 import Link from 'next/link';
-import { ArrowLeft, Target, Shield, BookOpen, Lightbulb, Zap, CheckCircle, TrendingUp, Cpu, Sparkles, BrainCircuit } from 'lucide-react';
-import { useMemo } from 'react';
+import { ArrowLeft, Target, Lightbulb, CheckCircle, TrendingUp, Cpu, Sparkles, BrainCircuit } from 'lucide-react';
+
+function getStoredFutureSkillsProgress(): Record<string, boolean> {
+  if (typeof window === 'undefined') return {};
+  try {
+    return JSON.parse(localStorage.getItem('fs_progress') || '{}');
+  } catch {
+    return {};
+  }
+}
 
 export default function FutureSkillsDashboard() {
-  const [progress, setProgress] = useState<Record<string, boolean>>({});
-  const [hasHydrated, setHasHydrated] = useState(false);
-
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem('fs_progress');
-      if (stored) {
-        setProgress(JSON.parse(stored));
-      }
-    } catch {}
-    setHasHydrated(true);
-  }, []);
-
-  if (!hasHydrated) return null;
+  const [progress] = useState<Record<string, boolean>>(() => getStoredFutureSkillsProgress());
 
   // Calculate stats
   let totalActivities = 0;
@@ -61,7 +56,7 @@ export default function FutureSkillsDashboard() {
 
   const overallProgress = totalActivities > 0 ? Math.round((completedActivities / totalActivities) * 100) : 0;
 
-  const aiInsights = useMemo(() => {
+  const aiInsights = (() => {
     if (totalActivities === 0 || completedActivities === 0) return null;
     const insights: string[] = [];
     
@@ -97,7 +92,7 @@ export default function FutureSkillsDashboard() {
     }
 
     return insights;
-  }, [progress, overallProgress, competencyStats, axisStats, totalActivities, completedActivities]);
+  })();
 
   return (
     <div style={{ minHeight: '100dvh', background: '#f8fafc', fontFamily: 'system-ui, sans-serif' }}>
@@ -172,7 +167,7 @@ export default function FutureSkillsDashboard() {
         <div style={{ background: '#fff', borderRadius: 24, padding: 24, marginBottom: 24, border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 20 }}>
             <Target size={20} color="#0f172a" />
-            <h2 style={{ fontSize: 17, fontWeight: 800, color: '#0f172a', margin: 0 }}>Cấp độ Nhận thức (Bloom's Taxonomy)</h2>
+            <h2 style={{ fontSize: 17, fontWeight: 800, color: '#0f172a', margin: 0 }}>Cấp độ Nhận thức (Bloom&apos;s Taxonomy)</h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
             <div style={{ background: '#f0f9ff', padding: 16, borderRadius: 16, border: '1px solid #bae6fd', textAlign: 'center' }}>
@@ -230,7 +225,7 @@ export default function FutureSkillsDashboard() {
                     <span style={{ fontSize: 12, fontWeight: 700, color: '#0f172a' }}>Cột mốc đạt được:</span>
                   </div>
                   <p style={{ fontSize: 12, color: '#475569', margin: 0, fontStyle: 'italic' }}>
-                    "{axis.developmentalMilestones[0].milestone}" 
+                    &quot;{axis.developmentalMilestones[0].milestone}&quot;
                     <br />
                     <span style={{ fontSize: 10, color: '#94a3b8' }}>({axis.developmentalMilestones[0].evidence})</span>
                   </p>

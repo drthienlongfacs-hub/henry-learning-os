@@ -3,6 +3,14 @@ import { GRADE3_UNITS, type UnitData } from './english-units-g3';
 import { GRADE4_UNITS } from './english-units-g4';
 import { GRADE5_UNITS } from './english-units-g5';
 import { GRAMMAR_TOPICS, PHONICS_LEVELS, READING_PASSAGES, SIGHT_WORDS } from './english-international';
+import { MATH_TOPICS } from '../lib/content/math-generator';
+import { VIETNAMESE_TOPICS } from '../lib/content/vietnamese-generator';
+import { ENGLISH_TOPICS } from '../lib/content/english-generator';
+import { SCIENCE_TOPICS } from '../lib/content/science-generator';
+import { HISGEO_TOPICS } from '../lib/content/history-geo-generator';
+import { COMPUTING_TOPICS } from '../lib/content/computing-generator';
+import { ETHICS_TOPICS } from '../lib/content/ethics-generator';
+import { ART_TOPICS } from '../lib/content/art-generator';
 
 export type PrimaryCurriculumSubjectKey =
     | 'math'
@@ -309,7 +317,7 @@ const ENGLISH_INTERNATIONAL_TOPIC_MAPS = [
     ...([1, 2, 3, 4, 5] as const).map(englishSightWordMap),
 ];
 
-export const PRIMARY_CURRICULUM_TOPIC_MAP: PrimaryCurriculumTopicMap[] = [
+const EXPLICIT_PRIMARY_CURRICULUM_TOPIC_MAP: PrimaryCurriculumTopicMap[] = [
     math(1, 'add_sub_10', 'Cộng trừ trong 10', 'Số và phép tính', 'Cộng, trừ trong phạm vi 10 và nói được cách đếm thêm hoặc đếm lùi.', 'Con dùng que tính hoặc chấm tròn để giải 6 + 3, sau đó nói vì sao kết quả là 9.', ['Đếm vẹt nhưng không hiểu thêm/bớt', 'Nhầm dấu cộng và dấu trừ']),
     math(1, 'add_sub_20', 'Cộng trừ trong 20', 'Số và phép tính', 'Cộng, trừ trong phạm vi 20, bước đầu biết tách số qua 10.', 'Con giải 8 + 5 bằng cách tách 5 thành 2 và 3 để làm tròn 10.', ['Qua 10 nhưng không biết tách số', 'Đếm lại từ 1 quá lâu']),
     math(1, 'number_bonds', 'Tách-ghép số', 'Số và phép tính', 'Nhìn một số như tổng của hai phần và dùng được để cộng/trừ.', 'Con tách số 9 thành 4 và 5, rồi nói 9 bớt 4 còn 5.', ['Chỉ thuộc phép tính đơn lẻ', 'Không thấy quan hệ cộng-trừ']),
@@ -389,6 +397,90 @@ export const PRIMARY_CURRICULUM_TOPIC_MAP: PrimaryCurriculumTopicMap[] = [
     art(4, 'music_instruments', 'Nhạc cụ Việt Nam', 'Âm nhạc', 'Nhận biết và phân loại các nhạc cụ truyền thống Việt Nam theo bộ dây, hơi, gõ.', 'Con nhận diện đàn tranh là nhạc cụ dây và sáo trúc là nhạc cụ hơi.', ['Nhầm nhạc cụ Việt Nam với nhạc cụ phương Tây', 'Không phân biệt nhạc cụ gõ và nhạc cụ dây']),
     art(5, 'art_appreciation', 'Cảm thụ nghệ thuật', 'Mĩ thuật & Âm nhạc', 'Biết quan sát, cảm nhận và nêu ý kiến về tác phẩm nghệ thuật (tranh, nhạc).', 'Con nêu cảm nhận khi xem tranh phố cổ Bùi Xuân Phái: màu sắc trầm, gợi nỗi nhớ.', ['Chỉ nói thích/không thích mà không giải thích', 'Không phân biệt màu ấm và màu lạnh']),
 ];
+
+type ActiveGeneratorTopic = {
+    key: string;
+    name: string;
+    gradeLevel: number;
+};
+
+const ACTIVE_GENERATOR_TOPIC_SETS: { subject: PrimaryCurriculumSubjectKey; topics: ActiveGeneratorTopic[] }[] = [
+    { subject: 'math', topics: MATH_TOPICS },
+    { subject: 'vietnamese', topics: VIETNAMESE_TOPICS },
+    { subject: 'english', topics: ENGLISH_TOPICS },
+    { subject: 'science', topics: SCIENCE_TOPICS },
+    { subject: 'hisgeo', topics: HISGEO_TOPICS },
+    { subject: 'computing', topics: COMPUTING_TOPICS },
+    { subject: 'ethics', topics: ETHICS_TOPICS },
+    { subject: 'art', topics: ART_TOPICS },
+];
+
+const SUBJECT_LABELS: Record<PrimaryCurriculumSubjectKey, string> = {
+    math: 'Toán',
+    vietnamese: 'Tiếng Việt',
+    english: 'Ngoại ngữ 1',
+    science: 'Tự nhiên - Khoa học',
+    hisgeo: 'Lịch sử và Địa lý',
+    computing: 'Tin học và Công nghệ',
+    ethics: 'Đạo đức',
+    art: 'Nghệ thuật',
+};
+
+const FALLBACK_STRANDS: Record<PrimaryCurriculumSubjectKey, string> = {
+    math: 'Số, hình học, đo lường và dữ liệu theo mạch Toán tiểu học',
+    vietnamese: 'Đọc, viết, nói và nghe theo mạch Tiếng Việt tiểu học',
+    english: 'Nghe, nói, đọc, viết và dùng tiếng Anh trong tình huống quen thuộc',
+    science: 'Quan sát, tìm hiểu tự nhiên, sức khỏe, vật chất, năng lượng và môi trường',
+    hisgeo: 'Bản đồ, dòng thời gian, địa danh, nhân vật, sự kiện và đời sống Việt Nam',
+    computing: 'Thiết bị số, dữ liệu, thuật toán, sản phẩm số và an toàn trong môi trường số',
+    ethics: 'Hành vi, cảm xúc, trách nhiệm, quyền trẻ em và quan hệ xã hội',
+    art: 'Nhận biết, thể hiện, sáng tạo và cảm thụ âm nhạc, mĩ thuật',
+};
+
+const FALLBACK_SOURCE_IDS: Partial<Record<PrimaryCurriculumSubjectKey, string[]>> = {
+    english: ['cambridge-primary-esl', 'cambridge-young-learners', 'ies-foundational-reading'],
+    science: ['ngss-three-dimensional', 'eef-metacognition'],
+    hisgeo: ['moet-tt17-2025', 'wikimedia-commons'],
+    computing: ['csta-k12-standards', 'unicef-ai-children'],
+    ethics: ['casel-framework', 'oecd-learning-compass'],
+    art: ['cast-udl', 'eef-metacognition'],
+};
+
+function asPrimaryGrade(gradeLevel: number): 1 | 2 | 3 | 4 | 5 {
+    if ([1, 2, 3, 4, 5].includes(gradeLevel)) return gradeLevel as 1 | 2 | 3 | 4 | 5;
+    return 1;
+}
+
+function fallbackTopicMap(subject: PrimaryCurriculumSubjectKey, topic: ActiveGeneratorTopic): PrimaryCurriculumTopicMap {
+    const grade = asPrimaryGrade(topic.gradeLevel);
+    return mapTopic(
+        subject,
+        SUBJECT_LABELS[subject],
+        grade,
+        topic.key,
+        topic.name,
+        FALLBACK_STRANDS[subject],
+        `Học sinh hoàn thành chủ đề "${topic.name}" ở lớp ${grade} bằng cách hiểu ý chính, làm nhiệm vụ cốt lõi, giải thích được lựa chọn và chuyển sang một ví dụ gần đời sống.`,
+        `Ở lớp ${grade}, chủ đề "${topic.name}" cần được học như một nhiệm vụ thật: con trả lời đúng, nói được vì sao, nhận ra lỗi thường gặp và thử lại sau phản hồi.`,
+        `Con làm một bài thuộc "${topic.name}", giải thích một bước hoặc một bằng chứng, sau đó tự tạo một ví dụ tương tự để kiểm tra đã hiểu thật.`,
+        ['topicKey', 'gradeLevel', 'attempt result', 'support level', 'child explanation', 'source version'],
+        ['Chọn đáp án đúng nhưng chưa giải thích được vì sao', 'Học thuộc mẫu cũ và không chuyển được sang ví dụ mới'],
+        'Trước khi claim item bank phủ chuẩn 100%, chủ đề này phải có curriculumMapId, source version, dữ liệu attempt, lỗi thường gặp và trạng thái needs_human_review.',
+        FALLBACK_SOURCE_IDS[subject] ?? [],
+    );
+}
+
+function buildPrimaryCurriculumTopicMap(): PrimaryCurriculumTopicMap[] {
+    const explicitByKey = new Map(
+        EXPLICIT_PRIMARY_CURRICULUM_TOPIC_MAP.map((item) => [`${item.subject}:${item.topicKey}`, item]),
+    );
+
+    return ACTIVE_GENERATOR_TOPIC_SETS.flatMap(({ subject, topics }) =>
+        topics.map((topic) => explicitByKey.get(`${subject}:${topic.key}`) ?? fallbackTopicMap(subject, topic)),
+    );
+}
+
+export const PRIMARY_CURRICULUM_TOPIC_MAP: PrimaryCurriculumTopicMap[] = buildPrimaryCurriculumTopicMap();
 
 export const PRIMARY_CURRICULUM_MAP_STATS = {
     sourceVersion: CT_VERSION,

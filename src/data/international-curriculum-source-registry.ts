@@ -1,4 +1,5 @@
 import type { InternationalFrameworkKey } from './international-curriculum-coverage';
+export type { InternationalFrameworkKey } from './international-curriculum-coverage';
 
 export type SourceUse =
   | 'official-standard'

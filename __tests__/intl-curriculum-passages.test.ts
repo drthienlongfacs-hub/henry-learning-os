@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import { buildIntlLessonFromData } from '@/components/LessonPhase';
 import { getUnitSections } from '@/data/intl-curriculum-passages';
+import { getAllInternationalUnits } from '@/data/international-unit-manifests';
 import { generateInternationalTopicExercises } from '@/lib/content/english-intl-generator';
 
 const intlData = {
@@ -92,5 +93,17 @@ describe('Cambridge G1 Unit 3 curriculum passages', () => {
         expect(allText).toContain('Fire! Fire!');
         expect(allText).not.toContain('focuses on which skill');
         expect(allText).not.toContain('This unit practices: Reading, Writing, Speaking, Listening');
+    });
+
+    it('provides multi-section lessons and non-generic benchmark quizzes for every international unit', () => {
+        for (const unit of getAllInternationalUnits()) {
+            const sections = getUnitSections(unit.unitId, unit.title, unit.titleVi, ['read', 'write'], ['đọc', 'viết']);
+            const exercises = generateInternationalTopicExercises(unit.unitId, 12);
+            const allQuestionText = exercises.map(exercise => exercise.question).join('\n');
+
+            expect(sections.length, unit.unitId).toBeGreaterThanOrEqual(7);
+            expect(exercises.length, unit.unitId).toBeGreaterThanOrEqual(16);
+            expect(allQuestionText, unit.unitId).not.toContain('focuses on which skill');
+        }
     });
 });

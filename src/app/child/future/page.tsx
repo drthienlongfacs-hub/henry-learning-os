@@ -8,6 +8,9 @@ import { ACTIVITY_GAMES, ACTIVITY_SAMPLES } from '@/data/future-skills-games';
 import { SortingGame, SequenceGame, MatchingGame, DebateGame, ProgressRing, SampleGallery, StarRating } from '@/components/future/InteractiveGames';
 
 type View = 'home' | 'axis' | 'activity';
+type FutureCompetition = (typeof FUTURE_SKILL_AXES)[number]['competitions'][number];
+type FutureFramework = (typeof FUTURE_SKILL_AXES)[number]['frameworks'][number];
+type FutureMilestone = (typeof FUTURE_SKILL_AXES)[number]['developmentalMilestones'][number];
 type SortingGameConfig = Omit<React.ComponentProps<typeof SortingGame>, 'onComplete'>;
 type SequenceGameConfig = Omit<React.ComponentProps<typeof SequenceGame>, 'onComplete'>;
 type MatchingGameConfig = Omit<React.ComponentProps<typeof MatchingGame>, 'onComplete'>;
@@ -35,9 +38,9 @@ export default function FutureSkillsPage() {
   const [progress, setProgress] = useState<Record<string, boolean>>(() => getProgress());
   const [grade] = useState(() => getGrade());
   const [gameScore, setGameScore] = useState<number | null>(null);
-  const [selectedCompetition, setSelectedCompetition] = useState<any>(null);
-  const [selectedFramework, setSelectedFramework] = useState<any>(null);
-  const [selectedMilestone, setSelectedMilestone] = useState<any>(null);
+  const [selectedCompetition, setSelectedCompetition] = useState<FutureCompetition | null>(null);
+  const [selectedFramework, setSelectedFramework] = useState<FutureFramework | null>(null);
+  const [selectedMilestone, setSelectedMilestone] = useState<FutureMilestone | null>(null);
 
   const axis = FUTURE_SKILL_AXES.find(a => a.id === axisId);
   const content = actKey ? (ACTIVITY_CONTENT[actKey] || {
