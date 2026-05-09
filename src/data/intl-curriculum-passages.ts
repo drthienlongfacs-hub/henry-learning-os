@@ -36,7 +36,7 @@ export interface AuthenticSection {
 
 export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
   // ══════════════════════════════════════════════════════════════
-  // CAMBRIDGE G1 U03: Rhyme time — 7 sections from Learner's Book
+  // CAMBRIDGE G1 U03: Nursery-rhyme time
   // ══════════════════════════════════════════════════════════════
   'cam_g1_u03': [
     {
@@ -132,7 +132,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
     },
   ],
   // ══════════════════════════════════════════════════════════════
-  // CAMBRIDGE G1 U01: Friends & Playground
+  // CAMBRIDGE G1 U01: Playing with friends
   // ══════════════════════════════════════════════════════════════
   'cam_g1_u01': [
     {
@@ -221,7 +221,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
     }
   ],
   // ══════════════════════════════════════════════════════════════
-  // CAMBRIDGE G1 U02: Making Things
+  // CAMBRIDGE G1 U02: Finding out and making
   // ══════════════════════════════════════════════════════════════
   'cam_g1_u02': [
     {
@@ -310,7 +310,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
     }
   ],
   // ══════════════════════════════════════════════════════════════
-  // CAMBRIDGE G1 U04: Traditional Tales
+  // CAMBRIDGE G1 U04: Joining-in stories
   // ══════════════════════════════════════════════════════════════
   'cam_g1_u04': [
     {
@@ -399,7 +399,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
     }
   ],
   // ══════════════════════════════════════════════════════════════
-  // CAMBRIDGE G1 U05: Animals & Information
+  // CAMBRIDGE G1 U05: Reading to find out
   // ══════════════════════════════════════════════════════════════
   'cam_g1_u05': [
     {
@@ -488,7 +488,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
     }
   ],
   // ══════════════════════════════════════════════════════════════
-  // CAMBRIDGE G1 U06: Nursery Rhymes
+  // CAMBRIDGE G1 U06: Rhyme time (2)
   // ══════════════════════════════════════════════════════════════
   'cam_g1_u06': [
     {
@@ -577,7 +577,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
     }
   ],
   // ══════════════════════════════════════════════════════════════
-  // CAMBRIDGE G1 U07: Imagination Stories
+  // CAMBRIDGE G1 U07: Make-believe stories
   // ══════════════════════════════════════════════════════════════
   'cam_g1_u07': [
     {
@@ -666,7 +666,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
     }
   ],
   // ══════════════════════════════════════════════════════════════
-  // CAMBRIDGE G1 U08: Personal Recounts
+  // CAMBRIDGE G1 U08: Things that have happened
   // ══════════════════════════════════════════════════════════════
   'cam_g1_u08': [
     {
@@ -755,7 +755,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
     }
   ],
   // ══════════════════════════════════════════════════════════════
-  // CAMBRIDGE G1 U09: Weather Poems
+  // CAMBRIDGE G1 U09: Poems and rhymes on a theme
   // ══════════════════════════════════════════════════════════════
   'cam_g1_u09': [
     {
