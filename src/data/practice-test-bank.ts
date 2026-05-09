@@ -197,9 +197,22 @@ const FLYERS_RW: PracticeTest = {
   ],
 };
 
-export const PRACTICE_TESTS: PracticeTest[] = [STARTERS_RW, MOVERS_RW, FLYERS_RW];
+// Import expansion packs
+import { STARTERS_RW_2, STARTERS_RW_3 } from './practice-tests-starters-2';
+import { MOVERS_RW_2, MOVERS_RW_3 } from './practice-tests-movers-2';
+import { FLYERS_RW_2 } from './practice-tests-flyers-2';
+
+export const PRACTICE_TESTS: PracticeTest[] = [
+  STARTERS_RW, STARTERS_RW_2, STARTERS_RW_3,
+  MOVERS_RW, MOVERS_RW_2, MOVERS_RW_3,
+  FLYERS_RW, FLYERS_RW_2,
+];
 
 export function getTestByLevel(level: string): PracticeTest | undefined {
   return PRACTICE_TESTS.find(t => t.level === level);
+}
+
+export function getAllTestsByLevel(level: string): PracticeTest[] {
+  return PRACTICE_TESTS.filter(t => t.level === level);
 }
 

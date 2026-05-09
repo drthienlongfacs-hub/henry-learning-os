@@ -333,27 +333,31 @@ export function speak(
 
   const key = cacheKey(text, accent);
 
-  // FAST PATH: try cache synchronously via async check
-  // We use a microtask to check cache, but play Web Speech immediately
-  // if cache check takes > 0ms. In practice, IndexedDB is ~1-3ms.
+  // CHECK CACHE FIRST → Kokoro priority
   getCachedAudio(key).then(cached => {
     if (cached && cached.byteLength > 0) {
-      // Cache HIT — play Kokoro audio (natural quality, instant)
+      // Cache HIT — play Kokoro audio ONLY (no Web Speech)
       playCachedAudio(cached, onEnd);
+    } else if (kokoroReady) {
+      // Kokoro ready but not cached — generate + play live
+      generateAndCache(text, accent).then(() => {
+        getCachedAudio(key).then(fresh => {
+          if (fresh && fresh.byteLength > 0) {
+            playCachedAudio(fresh, onEnd);
+          } else {
+            // Generation failed — fall back to Web Speech
+            speakWebSpeech(text, accent, rate, onEnd);
+          }
+        });
+      });
     } else {
-      // Cache MISS — Web Speech API is already playing (instant)
-      // Queue background generation for next time
-      if (kokoroReady) {
-        generateAndCache(text, accent);
-      }
+      // Kokoro not ready — Web Speech fallback ONLY
+      speakWebSpeech(text, accent, rate, onEnd);
     }
   }).catch(() => {
-    // IndexedDB failed — Web Speech is already playing
+    // IndexedDB failed — Web Speech fallback
+    speakWebSpeech(text, accent, rate, onEnd);
   });
-
-  // ALWAYS play Web Speech API immediately (15ms)
-  // If cache hits, playCachedAudio() will cancel this and play neural instead
-  speakWebSpeech(text, accent, rate, onEnd);
 }
 
 // Alias for long passages

@@ -56,7 +56,7 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
         🎯 Thi thử Cambridge YLE
       </h2>
       <p style={{ textAlign: 'center', fontSize: 12, color: '#a0aec0', margin: '0 0 16px' }}>
-        Mô phỏng 100% đề thi thật — có đáp án chi tiết & chiến lược làm bài
+        {availableTests.length} đề thi • {availableTests.reduce((s,t) => s + t.parts.flatMap(p=>p.questions).length, 0)} câu — có đáp án chi tiết & chiến lược
       </p>
       {availableTests.map(t => (
         <div key={t.id} style={{ ...card, cursor: 'pointer' }} onClick={() => startTest(t)}>
