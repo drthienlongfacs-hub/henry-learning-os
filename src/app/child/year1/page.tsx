@@ -2,70 +2,68 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { Home, BookOpen, RotateCcw, Brain, Trophy, ChevronRight, ArrowLeft, CheckCircle2, BookMarked } from 'lucide-react';
+import Image from 'next/image';
+import { Home, BookOpen, RotateCcw, Brain, Trophy, ChevronRight, ArrowLeft, CheckCircle2, BookMarked, ChevronDown } from 'lucide-react';
 import { LangToggle } from '@/components/LangToggle';
 import { useTranslation } from '@/lib/i18n';
 import { YEAR1_CURRICULUM, YEAR1_STATS, type CurriculumUnit, type CurriculumTopic } from '@/data/year1-integrated-curriculum';
 import { Year1LessonModal } from '@/components/Year1LessonModal';
+import { YEAR1_INTERACTIVE } from '@/data/year1-interactive-content';
 
-type SubjectFilter = 'all' | 'english' | 'math' | 'science';
-type TermFilter = 0 | 1 | 2 | 3;
+/* ─── Book definitions ─── */
+const BOOKS = [
+  { id: 'macmillan', name: 'Macmillan English 1', subject: 'english' as const, cover: '/henry-learning-os/year1-assets/english-cover.png', color: '#3b82f6', gradient: 'linear-gradient(135deg,#3b82f6,#60a5fa)', desc: 'Fluency + Language + Practice', bookKey: 'Macmillan English 1' },
+  { id: 'abacus1', name: 'Abacus Math — WB 1', subject: 'math' as const, cover: '/henry-learning-os/year1-assets/math-cover.png', color: '#f59e0b', gradient: 'linear-gradient(135deg,#f59e0b,#fbbf24)', desc: 'Counting & Place Value', bookKey: 'Abacus Workbook 1' },
+  { id: 'abacus2', name: 'Abacus Math — WB 2', subject: 'math' as const, cover: '/henry-learning-os/year1-assets/math-cover.png', color: '#f97316', gradient: 'linear-gradient(135deg,#f97316,#fb923c)', desc: 'Addition & Subtraction', bookKey: 'Abacus Workbook 2' },
+  { id: 'abacus3', name: 'Abacus Math — WB 3', subject: 'math' as const, cover: '/henry-learning-os/year1-assets/math-cover.png', color: '#ef4444', gradient: 'linear-gradient(135deg,#ef4444,#f87171)', desc: 'Measurement & Data', bookKey: 'Abacus Workbook 3' },
+  { id: 'sciencebug', name: 'Science Bug Year 1', subject: 'science' as const, cover: '/henry-learning-os/year1-assets/science-cover.png', color: '#22c55e', gradient: 'linear-gradient(135deg,#22c55e,#4ade80)', desc: 'Pupil Book', bookKey: 'Science Bug Year 1' },
+];
 
-const SUB_META: Record<string, { emoji: string; color: string; bg: string; label: string; labelEn: string }> = {
-  english: { emoji: '🌍', color: '#10b981', bg: 'linear-gradient(135deg,#10b981,#34d399)', label: 'Tiếng Anh', labelEn: 'English' },
-  math:    { emoji: '🔢', color: '#6366f1', bg: 'linear-gradient(135deg,#6366f1,#818cf8)', label: 'Toán', labelEn: 'Math' },
-  science: { emoji: '🔬', color: '#f59e0b', bg: 'linear-gradient(135deg,#f59e0b,#fbbf24)', label: 'Khoa học', labelEn: 'Science' },
+const SUB_META: Record<string, { emoji: string; color: string; label: string }> = {
+  english: { emoji: '📖', color: '#3b82f6', label: 'Tiếng Anh' },
+  math:    { emoji: '🔢', color: '#f59e0b', label: 'Toán' },
+  science: { emoji: '🔬', color: '#22c55e', label: 'Khoa học' },
 };
-
-const TERM_LABELS = ['Cả năm','Học kỳ 1','Học kỳ 2','Học kỳ 3'];
 
 export default function Year1Page() {
   const { t, lang } = useTranslation();
-  const [subFilter, setSubFilter] = useState<SubjectFilter>('all');
-  const [termFilter, setTermFilter] = useState<TermFilter>(0);
+  const [activeBook, setActiveBook] = useState<string | null>(null);
   const [expandedUnit, setExpandedUnit] = useState<string | null>(null);
-  const [completedTopics, setCompletedTopics] = useState<Set<string>>(new Set());
+  const [completedTopics, setCompletedTopics] = useState<Set<string>>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('y1_progress');
+      return saved ? new Set(JSON.parse(saved)) : new Set<string>();
+    }
+    return new Set<string>();
+  });
   const [activeTopic, setActiveTopic] = useState<{topic: CurriculumTopic; color: string} | null>(null);
-  const [bookFilter, setBookFilter] = useState<string>('all');
-
-  const allBooks = useMemo(() => {
-    const books = new Set<string>();
-    [...YEAR1_CURRICULUM.english.units, ...YEAR1_CURRICULUM.math.units, ...YEAR1_CURRICULUM.science.units].forEach(u => books.add(u.book));
-    return Array.from(books);
-  }, []);
-
-  const allUnits = useMemo(() => {
-    let units = [...YEAR1_CURRICULUM.english.units, ...YEAR1_CURRICULUM.math.units, ...YEAR1_CURRICULUM.science.units];
-    if (subFilter !== 'all') units = units.filter(u => u.subject === subFilter);
-    if (termFilter > 0) units = units.filter(u => u.term === termFilter);
-    if (bookFilter !== 'all') units = units.filter(u => u.book === bookFilter);
-    return units;
-  }, [subFilter, termFilter, bookFilter]);
 
   const markComplete = (topicId: string) => {
     setCompletedTopics(prev => {
       const next = new Set(prev);
       next.add(topicId);
+      if (typeof window !== 'undefined') localStorage.setItem('y1_progress', JSON.stringify([...next]));
       return next;
     });
   };
 
-  const toggleTopic = (topicId: string) => {
-    setCompletedTopics(prev => {
-      const next = new Set(prev);
-      if (next.has(topicId)) next.delete(topicId); else next.add(topicId);
-      return next;
-    });
+  // Get units for a specific book
+  const getBookUnits = (bookKey: string, subject: string) => {
+    const subData = YEAR1_CURRICULUM[subject as keyof typeof YEAR1_CURRICULUM];
+    if (!subData) return [];
+    return subData.units.filter((u: CurriculumUnit) => u.book === bookKey);
   };
 
+  // Global stats
+  const allUnits = [...YEAR1_CURRICULUM.english.units, ...YEAR1_CURRICULUM.math.units, ...YEAR1_CURRICULUM.science.units];
   const totalTopics = allUnits.reduce((s, u) => s + u.topics.length, 0);
   const doneTopics = allUnits.reduce((s, u) => s + u.topics.filter(t => completedTopics.has(t.id)).length, 0);
   const progressPct = totalTopics > 0 ? Math.round((doneTopics / totalTopics) * 100) : 0;
 
   return (
-    <div style={{ paddingBottom: '5.5rem', minHeight: '100dvh', background: 'linear-gradient(180deg, #eef2ff 0%, #f0f4ff 40%, #faf5ff 100%)' }}>
+    <div style={{ paddingBottom: '5.5rem', minHeight: '100dvh', background: 'linear-gradient(180deg, #f0f4ff 0%, #faf5ff 50%, #fff 100%)' }}>
       <div className="page-container">
-        {/* Header */}
+        {/* ═══ Header ═══ */}
         <div className="animate-fade-in" style={{ marginBottom: '1rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Link href="/child" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#6366f1', textDecoration: 'none', fontWeight: 700, fontSize: '0.85rem' }}>
@@ -73,210 +71,218 @@ export default function Year1Page() {
             </Link>
             <LangToggle />
           </div>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 900, background: 'linear-gradient(135deg,#4f46e5,#7c3aed)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', margin: '0.5rem 0 0.2rem' }}>
+          <h1 style={{ fontSize: '1.5rem', fontWeight: 900, background: 'linear-gradient(135deg,#4f46e5,#7c3aed)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', margin: '0.5rem 0 0.15rem' }}>
             📚 Chương trình Lớp 1
           </h1>
-          <p style={{ fontSize: '0.78rem', color: 'var(--color-text-secondary)', margin: 0 }}>
-            Tích hợp Pearson • Macmillan English + Abacus Math + Science Bug
+          <p style={{ fontSize: '0.75rem', color: '#94a3b8', margin: 0 }}>
+            Cambridge Integrated — Macmillan English • Pearson Abacus • Science Bug
           </p>
         </div>
 
-        {/* Subject hero cards */}
-        <div className="animate-fade-in" style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem', overflowX: 'auto', scrollbarWidth: 'none' }}>
-          {[
-            { sub: 'english' as const, img: '/exam-images/year1-english-hero.png', title: 'English', desc: 'Macmillan English 1' },
-            { sub: 'math' as const, img: '/exam-images/year1-math-hero.png', title: 'Toán', desc: 'Pearson Abacus' },
-            { sub: 'science' as const, img: '/exam-images/year1-science-hero.png', title: 'Khoa học', desc: 'Science Bug' },
-          ].map(c => (
-            <button key={c.sub} onClick={() => setSubFilter(subFilter === c.sub ? 'all' : c.sub)} style={{
-              flex: '0 0 42%', border: subFilter === c.sub ? `2px solid ${SUB_META[c.sub].color}` : '2px solid transparent',
-              borderRadius: 'var(--radius-xl)', overflow: 'hidden', cursor: 'pointer',
-              background: 'white', boxShadow: '0 2px 12px rgba(0,0,0,0.06)', transition: 'all 0.25s', padding: 0,
-            }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={c.img} alt={c.title} style={{ width: '100%', height: 100, objectFit: 'cover' }} />
-              <div style={{ padding: '0.4rem 0.5rem' }}>
-                <div style={{ fontWeight: 800, fontSize: '0.75rem', color: SUB_META[c.sub].color }}>{c.title}</div>
-                <div style={{ fontSize: '0.6rem', color: 'var(--color-text-muted)' }}>{c.desc}</div>
-              </div>
-            </button>
-          ))}
-        </div>
-
-        {/* Progress bar */}
-        <div className="card animate-fade-in" style={{ padding: '0.85rem 1rem', marginBottom: '0.75rem', background: 'linear-gradient(135deg,rgba(99,102,241,0.06),rgba(139,92,246,0.06))' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem' }}>
-            <span style={{ fontWeight: 800, fontSize: '0.8rem', color: 'var(--color-text-primary)' }}>Tiến độ tổng</span>
-            <span style={{ fontWeight: 900, fontSize: '0.85rem', color: '#6366f1' }}>{doneTopics}/{totalTopics} bài • {progressPct}%</span>
+        {/* ═══ Progress Overview ═══ */}
+        <div className="card animate-fade-in" style={{ padding: '0.8rem 1rem', marginBottom: '1rem', background: 'white', border: '1px solid rgba(99,102,241,0.1)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+            <span style={{ fontWeight: 800, fontSize: '0.82rem', color: '#1e293b' }}>📊 Tiến độ tổng</span>
+            <span style={{ fontWeight: 900, fontSize: '0.9rem', color: progressPct > 50 ? '#22c55e' : '#6366f1' }}>
+              {doneTopics}/{totalTopics} • {progressPct}%
+            </span>
           </div>
-          <div style={{ height: 8, borderRadius: 99, background: 'rgba(99,102,241,0.12)', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${progressPct}%`, borderRadius: 99, background: 'linear-gradient(90deg,#6366f1,#8b5cf6)', transition: 'width 0.5s ease' }} />
+          <div style={{ height: 10, borderRadius: 99, background: '#f1f5f9', overflow: 'hidden' }}>
+            <div style={{ height: '100%', width: `${progressPct}%`, borderRadius: 99, background: 'linear-gradient(90deg,#6366f1,#8b5cf6,#a78bfa)', transition: 'width 0.6s ease', boxShadow: progressPct > 0 ? '0 0 8px rgba(99,102,241,0.4)' : 'none' }} />
           </div>
-          <div style={{ display: 'flex', gap: '0.6rem', marginTop: '0.5rem' }}>
+          <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.6rem' }}>
             {(['english','math','science'] as const).map(s => {
-              const m = SUB_META[s];
               const sub = YEAR1_STATS[s];
+              const meta = SUB_META[s];
+              const subDone = YEAR1_CURRICULUM[s].units.reduce((c: number, u: CurriculumUnit) => c + u.topics.filter(t => completedTopics.has(t.id)).length, 0);
               return (
-                <div key={s} style={{ flex: 1, textAlign: 'center' }}>
-                  <div style={{ fontSize: '1rem' }}>{m.emoji}</div>
-                  <div style={{ fontWeight: 800, fontSize: '0.65rem', color: m.color }}>{m.label}</div>
-                  <div style={{ fontSize: '0.58rem', color: 'var(--color-text-muted)' }}>{sub.units} bài • {sub.topics} mục</div>
+                <div key={s} style={{ flex: 1, padding: '0.5rem', borderRadius: 12, background: `${meta.color}08`, textAlign: 'center' }}>
+                  <div style={{ fontSize: '1.1rem' }}>{meta.emoji}</div>
+                  <div style={{ fontWeight: 800, fontSize: '0.68rem', color: meta.color }}>{meta.label}</div>
+                  <div style={{ fontSize: '0.6rem', color: '#64748b', marginTop: 2 }}>{subDone}/{sub.topics} bài</div>
                 </div>
               );
             })}
           </div>
         </div>
 
-        {/* Book list — clickable filter */}
-        <div className="card animate-fade-in" style={{ padding: '0.7rem 0.85rem', marginBottom: '0.75rem' }}>
-          <div style={{ fontWeight: 800, fontSize: '0.78rem', color: 'var(--color-text-primary)', marginBottom: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-            <BookMarked size={14} color="#6366f1" /> Sách giáo khoa {bookFilter !== 'all' && <button onClick={() => setBookFilter('all')} style={{ fontSize:'0.6rem', padding:'0.1rem 0.4rem', borderRadius:99, border:'none', background:'#fee2e2', color:'#ef4444', cursor:'pointer', fontWeight:700, marginLeft:4 }}>✕ Bỏ lọc</button>}
-          </div>
-          <div style={{ display: 'grid', gap: '0.25rem' }}>
-            {[
-              { n: 1, t: 'Macmillan English 1', s: 'english', book: 'Macmillan English 1' },
-              { n: 2, t: 'Abacus Workbook 1', s: 'math', book: 'Abacus Workbook 1' },
-              { n: 3, t: 'Abacus Workbook 2', s: 'math', book: 'Abacus Workbook 2' },
-              { n: 4, t: 'Abacus Workbook 3', s: 'math', book: 'Abacus Workbook 3' },
-              { n: 5, t: 'Science Bug Year 1', s: 'science', book: 'Science Bug Year 1' },
-            ].map(b => (
-              <button key={b.n} onClick={() => setBookFilter(bookFilter === b.book ? 'all' : b.book)} style={{
-                display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.35rem 0.5rem',
-                borderBottom: '1px solid rgba(0,0,0,0.04)', border: bookFilter === b.book ? `2px solid ${SUB_META[b.s].color}` : '2px solid transparent',
-                borderRadius: 10, background: bookFilter === b.book ? `${SUB_META[b.s].color}08` : 'transparent', cursor: 'pointer', width: '100%', textAlign: 'left',
-              }}>
-                <span style={{ width: 22, height: 22, borderRadius: 6, background: SUB_META[b.s].bg, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.55rem', fontWeight: 900, flexShrink: 0 }}>{b.n}</span>
-                <span style={{ fontSize: '0.72rem', fontWeight: bookFilter === b.book ? 800 : 600, color: bookFilter === b.book ? SUB_META[b.s].color : 'var(--color-text-primary)' }}>{b.t}</span>
-              </button>
-            ))}
-          </div>
-        </div>
+        {/* ═══ Book Shelf ═══ */}
+        <div style={{ marginBottom: '0.5rem' }}>
+          <h2 style={{ fontSize: '0.9rem', fontWeight: 900, color: '#1e293b', margin: '0 0 0.6rem', display: 'flex', alignItems: 'center', gap: 6 }}>
+            <BookMarked size={16} color="#6366f1" /> Chọn sách để học
+          </h2>
 
-        {/* Filters */}
-        <div className="animate-fade-in" style={{ display: 'flex', gap: '0.35rem', marginBottom: '0.5rem', flexWrap: 'wrap' }}>
-          {(['all','english','math','science'] as SubjectFilter[]).map(f => {
-            const label = f === 'all' ? 'Tất cả' : SUB_META[f].label;
-            const emoji = f === 'all' ? '📋' : SUB_META[f].emoji;
-            const active = subFilter === f;
-            return (
-              <button key={f} onClick={() => setSubFilter(f)} style={{
-                padding: '0.4rem 0.7rem', borderRadius: 99, border: 'none', cursor: 'pointer',
-                background: active ? (f === 'all' ? '#6366f1' : SUB_META[f].color) : 'rgba(0,0,0,0.05)',
-                color: active ? '#fff' : 'var(--color-text-secondary)',
-                fontWeight: 700, fontSize: '0.72rem', transition: 'all 0.2s',
-              }}>
-                {emoji} {label}
-              </button>
-            );
-          })}
-        </div>
-        <div className="animate-fade-in" style={{ display: 'flex', gap: '0.3rem', marginBottom: '1rem' }}>
-          {([0,1,2,3] as TermFilter[]).map(t => (
-            <button key={t} onClick={() => setTermFilter(t)} style={{
-              padding: '0.3rem 0.6rem', borderRadius: 99, border: 'none', cursor: 'pointer',
-              background: termFilter === t ? '#8b5cf6' : 'rgba(0,0,0,0.04)',
-              color: termFilter === t ? '#fff' : 'var(--color-text-muted)',
-              fontWeight: 600, fontSize: '0.65rem', transition: 'all 0.2s',
-            }}>
-              {TERM_LABELS[t]}
-            </button>
-          ))}
-        </div>
+          {/* Book cards grid */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.6rem', marginBottom: '0.6rem' }}>
+            {BOOKS.map(book => {
+              const units = getBookUnits(book.bookKey, book.subject);
+              const bookTopics = units.reduce((s: number, u: CurriculumUnit) => s + u.topics.length, 0);
+              const bookDone = units.reduce((s: number, u: CurriculumUnit) => s + u.topics.filter(t => completedTopics.has(t.id)).length, 0);
+              const isActive = activeBook === book.id;
+              const pct = bookTopics > 0 ? Math.round((bookDone / bookTopics) * 100) : 0;
 
-        {/* Unit cards */}
-        <div className="stagger" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-          {allUnits.map(unit => {
-            const meta = SUB_META[unit.subject];
-            const isOpen = expandedUnit === unit.id;
-            const unitDone = unit.topics.filter(t => completedTopics.has(t.id)).length;
-            const unitPct = Math.round((unitDone / unit.topics.length) * 100);
-            return (
-              <div key={unit.id} className="card animate-fade-scale" style={{ overflow: 'hidden', borderLeft: `3px solid ${meta.color}` }}>
-                <button onClick={() => setExpandedUnit(isOpen ? null : unit.id)} style={{
-                  width: '100%', padding: '0.75rem 0.85rem', border: 'none', cursor: 'pointer',
-                  background: 'transparent', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '0.6rem',
-                }}>
-                  <span style={{ fontSize: '1.4rem' }}>{unit.iconEmoji}</span>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-                      <span style={{ fontSize: '0.58rem', padding: '0.1rem 0.4rem', borderRadius: 99, background: `${meta.color}15`, color: meta.color, fontWeight: 700 }}>
-                        {meta.label} • Unit {unit.unitNumber}
-                      </span>
-                      <span style={{ fontSize: '0.55rem', color: 'var(--color-text-muted)' }}>HK{unit.term}</span>
-                    </div>
-                    <div style={{ fontWeight: 800, fontSize: '0.82rem', color: 'var(--color-text-primary)', marginTop: '0.15rem' }}>
-                      {unit.titleEn}
-                    </div>
-                    <div style={{ fontSize: '0.68rem', color: 'var(--color-text-secondary)' }}>{unit.titleVi}</div>
-                    {/* Mini progress */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '0.3rem' }}>
-                      <div style={{ flex: 1, height: 4, borderRadius: 99, background: `${meta.color}15`, overflow: 'hidden' }}>
-                        <div style={{ height: '100%', width: `${unitPct}%`, borderRadius: 99, background: meta.color, transition: 'width 0.3s' }} />
+              return (
+                <button
+                  key={book.id}
+                  onClick={() => { setActiveBook(isActive ? null : book.id); setExpandedUnit(null); }}
+                  style={{
+                    padding: 0, border: isActive ? `2.5px solid ${book.color}` : '2px solid #e2e8f0',
+                    borderRadius: 16, overflow: 'hidden', cursor: 'pointer',
+                    background: 'white', boxShadow: isActive ? `0 4px 20px ${book.color}30` : '0 2px 8px rgba(0,0,0,0.04)',
+                    transition: 'all 0.3s ease', transform: isActive ? 'scale(1.02)' : 'scale(1)',
+                    gridColumn: book.id === 'macmillan' ? 'span 2' : 'auto',
+                  }}
+                >
+                  {/* Cover image */}
+                  <div style={{ position: 'relative', height: book.id === 'macmillan' ? 100 : 90, overflow: 'hidden', background: book.gradient }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={book.cover} alt={book.name} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.9, mixBlendMode: 'multiply' }} />
+                    {pct > 0 && (
+                      <div style={{ position: 'absolute', top: 6, right: 6, padding: '0.15rem 0.4rem', borderRadius: 99, background: 'rgba(255,255,255,0.95)', fontSize: '0.55rem', fontWeight: 800, color: pct === 100 ? '#22c55e' : book.color }}>
+                        {pct === 100 ? '✅' : `${pct}%`}
                       </div>
-                      <span style={{ fontSize: '0.58rem', fontWeight: 700, color: meta.color }}>{unitDone}/{unit.topics.length}</span>
+                    )}
+                  </div>
+                  {/* Info */}
+                  <div style={{ padding: '0.5rem 0.6rem 0.6rem' }}>
+                    <div style={{ fontWeight: 800, fontSize: '0.72rem', color: '#1e293b', textAlign: 'left', lineHeight: 1.2 }}>{book.name}</div>
+                    <div style={{ fontSize: '0.58rem', color: '#94a3b8', textAlign: 'left', marginTop: 2 }}>{book.desc}</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginTop: 6 }}>
+                      <div style={{ flex: 1, height: 4, borderRadius: 99, background: '#f1f5f9', overflow: 'hidden' }}>
+                        <div style={{ height: '100%', width: `${pct}%`, background: book.gradient, borderRadius: 99, transition: 'width 0.5s' }} />
+                      </div>
+                      <span style={{ fontSize: '0.52rem', fontWeight: 700, color: '#94a3b8' }}>{bookDone}/{bookTopics}</span>
                     </div>
                   </div>
-                  <ChevronRight size={16} style={{ color: 'var(--color-text-muted)', transform: isOpen ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }} />
                 </button>
-
-                {/* Expanded topics */}
-                {isOpen && (
-                  <div style={{ padding: '0 0.85rem 0.75rem', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
-                    <div style={{ fontSize: '0.62rem', color: 'var(--color-text-muted)', marginBottom: '0.15rem', fontWeight: 600 }}>
-                      📖 {unit.book}
-                    </div>
-                    {unit.topics.map(topic => {
-                      const isDone = completedTopics.has(topic.id);
-                      const typeColors: Record<string, string> = { lesson: '#3b82f6', activity: '#10b981', practice: '#f59e0b', review: '#8b5cf6' };
-                      const typeLabels: Record<string, string> = { lesson: 'Bài học', activity: 'Hoạt động', practice: 'Luyện tập', review: 'Ôn tập' };
-                      return (
-                        <button key={topic.id} onClick={() => setActiveTopic({ topic, color: meta.color })} style={{
-                          width: '100%', padding: '0.55rem 0.65rem', border: 'none', cursor: 'pointer',
-                          borderRadius: 'var(--radius-md)', textAlign: 'left',
-                          background: isDone ? `${meta.color}08` : 'rgba(0,0,0,0.02)',
-                          display: 'flex', alignItems: 'flex-start', gap: '0.5rem',
-                          transition: 'all 0.2s',
-                        }}>
-                          <CheckCircle2 size={16} style={{ color: isDone ? meta.color : '#d1d5db', marginTop: '0.05rem', flexShrink: 0 }} />
-                          <div style={{ flex: 1 }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                              <span style={{ fontSize: '0.52rem', padding: '0.05rem 0.3rem', borderRadius: 99, background: `${typeColors[topic.type]}15`, color: typeColors[topic.type], fontWeight: 700 }}>
-                                {typeLabels[topic.type]}
-                              </span>
-                            </div>
-                            <div style={{ fontWeight: 700, fontSize: '0.75rem', color: isDone ? meta.color : 'var(--color-text-primary)', textDecoration: isDone ? 'line-through' : 'none', marginTop: '0.1rem' }}>
-                              {topic.titleEn}
-                            </div>
-                            <div style={{ fontSize: '0.65rem', color: 'var(--color-text-secondary)' }}>{topic.titleVi}</div>
-                            {topic.keyVocab && topic.keyVocab.length > 0 && (
-                              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.2rem', marginTop: '0.25rem' }}>
-                                {topic.keyVocab.slice(0, 6).map(v => (
-                                  <span key={v} style={{ fontSize: '0.55rem', padding: '0.1rem 0.35rem', borderRadius: 99, background: 'rgba(99,102,241,0.08)', color: '#6366f1', fontWeight: 600 }}>{v}</span>
-                                ))}
-                              </div>
-                            )}
-                            {topic.objectives && (
-                              <div style={{ marginTop: '0.2rem' }}>
-                                {topic.objectives.map((o, i) => (
-                                  <div key={i} style={{ fontSize: '0.6rem', color: 'var(--color-text-muted)', paddingLeft: '0.5rem', borderLeft: `2px solid ${meta.color}30` }}>• {o}</div>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
 
-        {allUnits.length === 0 && (
-          <div className="card" style={{ textAlign: 'center', padding: '2rem', marginTop: '1rem' }}>
-            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📭</div>
-            <div style={{ fontWeight: 700, color: 'var(--color-text-secondary)' }}>Không có bài nào trong bộ lọc này</div>
+        {/* ═══ Active Book Content ═══ */}
+        {activeBook && (() => {
+          const book = BOOKS.find(b => b.id === activeBook)!;
+          const units = getBookUnits(book.bookKey, book.subject);
+          const meta = SUB_META[book.subject];
+
+          return (
+            <div className="animate-fade-in" style={{ marginBottom: '1rem' }}>
+              {/* Book header */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: '0.6rem', padding: '0.6rem 0.8rem', borderRadius: 14, background: `${book.color}08`, border: `1px solid ${book.color}15` }}>
+                <div style={{ width: 36, height: 36, borderRadius: 10, background: book.gradient, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', color: '#fff', fontWeight: 900, flexShrink: 0 }}>
+                  {meta.emoji}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 800, fontSize: '0.82rem', color: '#1e293b' }}>{book.name}</div>
+                  <div style={{ fontSize: '0.62rem', color: '#64748b' }}>{units.length} bài • {units.reduce((s: number, u: CurriculumUnit) => s + u.topics.length, 0)} mục</div>
+                </div>
+              </div>
+
+              {/* Units list */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
+                {units.map((unit: CurriculumUnit) => {
+                  const isExpanded = expandedUnit === unit.id;
+                  const unitDone = unit.topics.filter(t => completedTopics.has(t.id)).length;
+                  const unitPct = unit.topics.length > 0 ? Math.round((unitDone / unit.topics.length) * 100) : 0;
+
+                  return (
+                    <div key={unit.id} style={{ borderRadius: 14, overflow: 'hidden', border: isExpanded ? `1.5px solid ${book.color}30` : '1px solid #e2e8f0', background: 'white', transition: 'all 0.3s' }}>
+                      {/* Unit header */}
+                      <button onClick={() => setExpandedUnit(isExpanded ? null : unit.id)} style={{
+                        width: '100%', padding: '0.65rem 0.8rem', border: 'none', cursor: 'pointer',
+                        background: isExpanded ? `${book.color}05` : 'white', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                      }}>
+                        {/* Unit number badge */}
+                        <div style={{
+                          width: 30, height: 30, borderRadius: 10, background: unitPct === 100 ? '#dcfce7' : book.gradient,
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          fontSize: unitPct === 100 ? '0.85rem' : '0.7rem', fontWeight: 900, color: unitPct === 100 ? '#22c55e' : '#fff', flexShrink: 0,
+                        }}>
+                          {unitPct === 100 ? '✓' : unit.unitNumber}
+                        </div>
+                        <div style={{ flex: 1, textAlign: 'left' }}>
+                          <div style={{ fontWeight: 700, fontSize: '0.76rem', color: '#1e293b', lineHeight: 1.2 }}>{unit.titleEn}</div>
+                          <div style={{ fontSize: '0.62rem', color: '#94a3b8', marginTop: 1 }}>{unit.titleVi} • {unit.topics.length} mục</div>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                          <span style={{ fontSize: '0.55rem', fontWeight: 700, color: unitPct === 100 ? '#22c55e' : '#94a3b8' }}>{unitDone}/{unit.topics.length}</span>
+                          <ChevronDown size={14} style={{ color: '#94a3b8', transition: 'transform 0.3s', transform: isExpanded ? 'rotate(180deg)' : 'rotate(0)' }} />
+                        </div>
+                      </button>
+
+                      {/* Topics */}
+                      {isExpanded && (
+                        <div style={{ padding: '0 0.6rem 0.6rem', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                          {unit.topics.map(topic => {
+                            const isDone = completedTopics.has(topic.id);
+                            const hasContent = !!YEAR1_INTERACTIVE[topic.id];
+                            const typeIcons: Record<string, string> = { lesson: '📖', activity: '🎯', practice: '✏️', review: '🔄' };
+                            const typeLabels: Record<string, string> = { lesson: 'Bài học', activity: 'Hoạt động', practice: 'Luyện tập', review: 'Ôn tập' };
+
+                            return (
+                              <button key={topic.id} onClick={() => setActiveTopic({ topic, color: book.color })} style={{
+                                width: '100%', padding: '0.6rem 0.7rem', border: isDone ? `1.5px solid ${book.color}20` : '1px solid #f1f5f9',
+                                borderRadius: 12, background: isDone ? `${book.color}05` : '#fafbfc', cursor: 'pointer',
+                                display: 'flex', alignItems: 'center', gap: '0.5rem', transition: 'all 0.2s',
+                                textAlign: 'left',
+                              }}>
+                                {/* Status icon */}
+                                <div style={{
+                                  width: 28, height: 28, borderRadius: 99,
+                                  background: isDone ? '#dcfce7' : hasContent ? `${book.color}10` : '#f8fafc',
+                                  border: isDone ? '2px solid #22c55e' : hasContent ? `2px solid ${book.color}30` : '2px solid #e2e8f0',
+                                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                  fontSize: '0.7rem', flexShrink: 0,
+                                }}>
+                                  {isDone ? '✅' : typeIcons[topic.type] || '📖'}
+                                </div>
+                                {/* Content */}
+                                <div style={{ flex: 1, minWidth: 0 }}>
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                                    <span style={{ fontSize: '0.5rem', padding: '0.1rem 0.35rem', borderRadius: 99, background: `${book.color}10`, color: book.color, fontWeight: 700 }}>
+                                      {typeLabels[topic.type]}
+                                    </span>
+                                    {hasContent && !isDone && (
+                                      <span style={{ fontSize: '0.45rem', padding: '0.08rem 0.3rem', borderRadius: 99, background: '#dbeafe', color: '#3b82f6', fontWeight: 700 }}>
+                                        Tương tác
+                                      </span>
+                                    )}
+                                  </div>
+                                  <div style={{ fontWeight: 700, fontSize: '0.72rem', color: isDone ? '#22c55e' : '#1e293b', marginTop: 2, textDecoration: isDone ? 'line-through' : 'none', lineHeight: 1.25, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                    {topic.titleEn}
+                                  </div>
+                                  <div style={{ fontSize: '0.6rem', color: '#94a3b8', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{topic.titleVi}</div>
+                                  {/* Vocab preview */}
+                                  {topic.keyVocab && topic.keyVocab.length > 0 && (
+                                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 3, marginTop: 4 }}>
+                                      {topic.keyVocab.slice(0, 4).map(v => (
+                                        <span key={v} style={{ fontSize: '0.5rem', padding: '0.08rem 0.3rem', borderRadius: 99, background: '#f1f5f9', color: '#64748b', fontWeight: 600 }}>{v}</span>
+                                      ))}
+                                      {topic.keyVocab.length > 4 && <span style={{ fontSize: '0.5rem', color: '#94a3b8' }}>+{topic.keyVocab.length - 4}</span>}
+                                    </div>
+                                  )}
+                                </div>
+                                <ChevronRight size={14} style={{ color: '#cbd5e1', flexShrink: 0 }} />
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })()}
+
+        {/* ═══ Empty state ═══ */}
+        {!activeBook && (
+          <div className="animate-fade-in" style={{ textAlign: 'center', padding: '2rem 1rem', borderRadius: 16, background: 'white', border: '1px dashed #e2e8f0' }}>
+            <div style={{ fontSize: '2.5rem', marginBottom: 8 }}>👆</div>
+            <div style={{ fontWeight: 800, fontSize: '0.85rem', color: '#1e293b' }}>Chọn một cuốn sách để bắt đầu</div>
+            <div style={{ fontSize: '0.7rem', color: '#94a3b8', marginTop: 4 }}>Nhấn vào bìa sách phía trên để xem nội dung bài học</div>
           </div>
         )}
       </div>
