@@ -407,6 +407,61 @@ function buildGeneratedQuestions(
 }
 
 // ══════════════════════════════════════════════════════════════
+// EXAM STRATEGY FRAMEWORK — systematic thinking for each part
+// ══════════════════════════════════════════════════════════════
+
+const EXAM_STRATEGIES: Record<string, { strategyVi: string; rubricVi: string[] }> = {
+  'true_false': {
+    strategyVi: '🧠 KHUNG TƯ DUY 3 BƯỚC:\n① Nhìn tranh → gọi tên đồ vật/con vật bằng tiếng Anh trong đầu.\n② Đọc từ bên dưới → so sánh với tên vừa nghĩ.\n③ Khớp → ✓. Không khớp → ✗.\n\n💡 MẸO KHI KHÔNG CHẮC:\n• Nếu từ và tranh cùng chủ đề (VD: cả hai đều là động vật) → kiểm tra kỹ hơn, có thể là bẫy (VD: tranh "cat" nhưng từ viết "dog").\n• Đếm chữ cái: nếu từ quá dài/ngắn so với vật trong tranh, có thể sai.\n• Nhớ: bài này kiểm tra VOCABULARY — con chỉ cần biết từ đó nghĩa là gì.',
+    rubricVi: ['Nhận diện đúng đồ vật trong tranh.', 'So sánh chính xác tranh với từ viết.', 'Không bị đánh lừa bởi từ cùng chủ đề nhưng khác nghĩa.'],
+  },
+  'yes_no': {
+    strategyVi: '🧠 KHUNG TƯ DUY 4 BƯỚC:\n① Nhìn tranh tổng thể → liệt kê 3-4 chi tiết chính (ai, ở đâu, làm gì, màu gì).\n② Đọc câu → gạch chân từ khóa quan trọng.\n③ Đối chiếu TỪNG từ khóa với tranh: tất cả đúng → Yes. Chỉ 1 chi tiết sai → No.\n④ Cẩn thận với số lượng và màu sắc — đây là bẫy phổ biến nhất!\n\n💡 MẸO KHI KHÔNG CHẮC:\n• Nếu câu nói "There are THREE..." → đếm trong tranh. Sai số = No.\n• Nếu câu dùng từ con không biết → nhìn tranh xem có thứ gì lạ/mới không.\n• Câu phủ định (no, not, never) → đọc chậm lại, dễ nhầm.',
+    rubricVi: ['Quan sát kỹ mọi chi tiết trong tranh.', 'Đọc câu chậm, gạch chân từ khóa.', 'Đối chiếu từng chi tiết — chỉ cần 1 sai là No.', 'Cẩn thận bẫy số lượng và màu sắc.'],
+  },
+  'jumbled': {
+    strategyVi: '🧠 KHUNG TƯ DUY 3 BƯỚC:\n① Nhìn tranh → đoán từ tiếng Anh.\n② Kiểm tra các chữ cái có sẵn → xem có khớp với từ đoán không.\n③ Nếu đúng → sắp xếp lại. Nếu chưa chắc → thử ghép từ nguyên âm (a, e, i, o, u) với phụ âm.\n\n💡 MẸO KHI KHÔNG CHẮC:\n• Tìm nguyên âm trước (a, e, i, o, u) — mỗi từ tiếng Anh đều có ít nhất 1 nguyên âm.\n• Thử ghép 2-3 chữ cái quen: th, ch, sh, oo, ee, ea.\n• Nếu có 3 chữ cái → từ ngắn như cat, dog, bus. Nếu 4-5 chữ → từ dài hơn.\n• Đọc to kết quả — nếu nghe tự nhiên thì đúng.',
+    rubricVi: ['Nhận diện đồ vật trong tranh.', 'Biết đánh vần từ cơ bản.', 'Sử dụng quy tắc ghép phụ âm-nguyên âm.'],
+  },
+  'gap_fill_wordbank': {
+    strategyVi: '🧠 KHUNG TƯ DUY 5 BƯỚC:\n① Đọc TOÀN BỘ đoạn văn trước — đừng vội điền.\n② Đọc lại câu có chỗ trống → xác định LOẠI TỪ cần điền (danh từ? động từ? tính từ?).\n③ Nhìn word bank → loại bỏ từ sai loại (VD: cần danh từ mà từ đó là động từ).\n④ Thử lần lượt các từ còn lại vào chỗ trống → đọc thầm cả câu.\n⑤ Chọn từ làm câu có nghĩa nhất.\n\n💡 MẸO KHI KHÔNG CHẮC:\n• Đọc câu TRƯỚC và SAU chỗ trống — ngữ cảnh xung quanh là manh mối lớn nhất.\n• Nếu trước chỗ trống là "a/an/the" → cần DANH TỪ. Nếu là "is/are/was" → cần TÍNH TỪ hoặc V-ing.\n• Mỗi từ trong word bank chỉ dùng 1 lần — nếu đã dùng từ nào rồi → loại bỏ.\n• Khi còn 2 từ phân vân → đọc to cả câu với từng từ, từ nào nghe tự nhiên hơn thì chọn.',
+    rubricVi: ['Đọc toàn bộ bài trước khi điền.', 'Xác định đúng loại từ cần điền.', 'Sử dụng ngữ cảnh câu trước/sau.', 'Mỗi từ trong word bank chỉ dùng 1 lần.'],
+  },
+  'one_word_story': {
+    strategyVi: '🧠 KHUNG TƯ DUY 4 BƯỚC:\n① Đọc CÂU HỎI trước — biết mình cần tìm gì.\n② Đọc đoạn văn → tìm CÂU chứa thông tin liên quan.\n③ Câu trả lời thường NẰM NGUYÊN trong bài — chỉ cần chép lại 1 từ.\n④ Kiểm tra chính tả — sai chính tả = mất điểm.\n\n💡 MẸO KHI KHÔNG CHẮC:\n• Câu hỏi "How did X feel?" → tìm từ chỉ cảm xúc: happy, sad, tired, excited, proud.\n• Câu hỏi "Where/When/Who" → tìm tên riêng, số, nơi chốn.\n• Đáp án 90% là từ CÓ SẴN trong bài — không cần nghĩ từ mới.\n• Nếu câu hỏi hỏi "How many?" → đáp án là SỐ, tìm số trong bài.',
+    rubricVi: ['Đọc câu hỏi trước bài.', 'Tìm câu trả lời trực tiếp trong bài.', 'Chỉ viết 1 từ, kiểm tra chính tả.', 'Dùng từ có sẵn trong đoạn văn.'],
+  },
+  'definition': {
+    strategyVi: '🧠 KHUNG TƯ DUY 3 BƯỚC:\n① Đọc định nghĩa → tìm TỪ KHÓA CHÍNH (VD: "flies a plane" → liên quan đến máy bay).\n② Hình dung trong đầu đồ vật/người/nơi chốn được mô tả.\n③ Chọn từ khớp nhất với hình ảnh vừa tưởng tượng.\n\n💡 MẸO KHI KHÔNG BIẾT NGHĨA CÁC TỪ:\n• Dùng LOẠI TRỪ: nếu định nghĩa nói "a place" → loại từ chỉ người/đồ vật.\n• Nếu định nghĩa nói "a person who..." → loại từ chỉ nơi chốn/đồ vật.\n• Tìm gốc từ quen: nếu thấy "hospital" có "hospit-" giống "host" = chủ nhà → nơi chăm sóc.\n• Khi 2 đáp án đều có thể đúng → đọc lại TOÀN BỘ định nghĩa, từ nào khớp 100% mới chọn.',
+    rubricVi: ['Xác định từ khóa chính trong định nghĩa.', 'Phân loại: người / nơi chốn / đồ vật.', 'Dùng loại trừ khi không chắc.', 'Đọc lại toàn bộ định nghĩa trước khi chọn.'],
+  },
+  'conversation': {
+    strategyVi: '🧠 KHUNG TƯ DUY 4 BƯỚC:\n① Đọc câu hỏi/câu nói của A → xác định A đang HỎI GÌ hoặc NÓI VỀ GÌ.\n② Nghĩ: "Nếu mình là B, mình sẽ trả lời gì?" → hình dung câu trả lời trong đầu.\n③ Đọc 3 đáp án → tìm đáp án GẦN NHẤT với câu trả lời vừa nghĩ.\n④ Kiểm tra: đáp án có ĐÚNG CHỦ ĐỀ không? (A hỏi về thời gian → B phải trả lời về thời gian).\n\n💡 MẸO KHI KHÔNG CHẮC:\n• Nếu A hỏi "What/Where/When/Who" → B phải trả lời ĐÚNG loại thông tin đó.\n• Nếu A hỏi "Do you...?" → B phải trả lời "Yes/No" trước.\n• LOẠI ngay đáp án LẠC ĐỀ: A hỏi về đồ uống, B nói về bơi lội → SAI.\n• Đọc to cả đoạn hội thoại (A + B) — nếu nghe tự nhiên như 2 người nói chuyện thật thì đúng.',
+    rubricVi: ['Xác định chủ đề câu hỏi của A.', 'Loại đáp án lạc đề ngay.', 'Đáp án phải trả lời đúng dạng câu hỏi (What→vật, Where→nơi, When→giờ).', 'Đọc to để kiểm tra tự nhiên.'],
+  },
+  'story_completion': {
+    strategyVi: '🧠 KHUNG TƯ DUY 4 BƯỚC:\n① Đọc câu hỏi/câu cần điền TRƯỚC.\n② Đọc đoạn văn → đánh dấu câu chứa thông tin liên quan.\n③ Viết 1-3 từ dựa trên thông tin trong bài — KHÔNG bịa thêm.\n④ Đọc lại câu hoàn chỉnh → kiểm tra ngữ pháp + nghĩa.\n\n💡 MẸO KHI KHÔNG CHẮC:\n• Đáp án hầu như luôn CÓ SẴN trong bài — chỉ cần tìm và chép.\n• Nếu câu cần điền bắt đầu bằng "He/She was..." → cần tính từ hoặc V-ing.\n• Nếu câu cần điền bắt đầu bằng "They went to the..." → cần danh từ chỉ nơi chốn.\n• Đếm số từ: đề yêu cầu 1-3 từ → không viết cả câu dài.',
+    rubricVi: ['Tìm thông tin trong bài, không bịa.', 'Viết đúng số từ yêu cầu.', 'Kiểm tra ngữ pháp câu hoàn chỉnh.', 'Chính tả đúng — chép từ bài nếu cần.'],
+  },
+  'reading_mc': {
+    strategyVi: '🧠 KHUNG TƯ DUY 5 BƯỚC:\n① Đọc CÂU HỎI trước — biết mình cần tìm gì.\n② Đọc đoạn văn 1 lần nhanh (skim) → nắm ý chính.\n③ Đọc lại → tìm CÂU chứa đáp án (thường có từ khóa giống câu hỏi).\n④ So sánh thông tin tìm được với 3 đáp án → chọn đáp án khớp nhất.\n⑤ Kiểm tra 2 đáp án còn lại có bị "gần đúng" không — bẫy phổ biến!\n\n💡 MẸO LOẠI TRỪ KHI KHÔNG CHẮC:\n• Đáp án có từ KHÔNG xuất hiện trong bài → thường SAI.\n• Đáp án "quá tuyệt đối" (always, never, all, none) → thường SAI.\n• Đáp án dùng lại ĐÚNG từ trong bài nhưng ĐỔI NGHĨA → bẫy! Đọc lại nguyên câu.\n• Khi 2 đáp án gần giống nhau → đáp án đúng thường là cái CỤ THỂ hơn.\n• Nếu hoàn toàn không biết → chọn đáp án DÀI NHẤT (thường chứa thông tin chính xác hơn).',
+    rubricVi: ['Đọc câu hỏi trước bài.', 'Tìm câu chứa đáp án bằng từ khóa.', 'Loại đáp án có từ không xuất hiện trong bài.', 'Cẩn thận đáp án "gần đúng" — bẫy phổ biến.', 'Chọn đáp án cụ thể nhất khi phân vân.'],
+  },
+  'listening_general': {
+    strategyVi: '🧠 KHUNG TƯ DUY NGHE 4 BƯỚC:\n① TRƯỚC khi nghe: đọc câu hỏi + xem tranh → dự đoán nội dung.\n② Lần nghe 1: nghe TỔNG THỂ → chọn đáp án sơ bộ.\n③ Lần nghe 2: kiểm tra đáp án → đặc biệt chú ý số, tên, màu sắc.\n④ Nếu không chắc → chọn đáp án nghe được RÕ NHẤT trong bài.\n\n💡 MẸO KHI NGHE KHÔNG KỊP:\n• Viết chữ cái đầu tiên của từ nghe được → hoàn thiện sau.\n• Số thường được nhắc lại 2 lần — lần 2 mới là đáp án chính xác.\n• Nếu speaker tự sửa ("No, wait, it is...") → đáp án là phần SAU khi sửa.\n• Tên riêng thường được ĐÁNH VẦN — nghe từng chữ cái.',
+    rubricVi: ['Đọc câu hỏi trước khi nghe.', 'Nghe lần 1 chọn, lần 2 kiểm tra.', 'Chú ý khi speaker tự sửa lại.', 'Ghi nhanh chữ cái đầu để nhớ.'],
+  },
+  'open_gap': {
+    strategyVi: '🧠 KHUNG TƯ DUY 4 BƯỚC:\n① Đọc cả câu có chỗ trống → xác định LOẠI TỪ (danh từ? giới từ? động từ?).\n② Nhìn từ TRƯỚC chỗ trống: "a/an/the" → cần DANH TỪ. "is/are" → TÍNH TỪ hoặc V-ing. "to" → ĐỘNG TỪ nguyên mẫu.\n③ Nhìn từ SAU chỗ trống: để xác định nghĩa.\n④ Nghĩ từ phù hợp → kiểm tra chính tả.\n\n💡 MẸO KHI KHÔNG CHẮC:\n• Các từ hay xuất hiện ở open gap: is, are, was, were, the, a, an, in, on, at, to, for, with, and, but, or, not.\n• Nếu câu thiếu ĐỘNG TỪ "to be" → thử is/are/was/were.\n• Nếu câu thiếu GIỚI TỪ → thử in/on/at.\n• Đọc to cả câu với từ đã điền — phải nghe tự nhiên.',
+    rubricVi: ['Xác định loại từ cần điền.', 'Dùng manh mối từ trước/sau chỗ trống.', 'Ưu tiên từ chức năng phổ biến.', 'Đọc to kiểm tra.'],
+  },
+  'mc_cloze': {
+    strategyVi: '🧠 KHUNG TƯ DUY 3 BƯỚC:\n① Đọc cả câu → hiểu NGHĨA tổng thể.\n② Xác định bài đang kiểm tra NGỮ PHÁP gì (thì? giới từ? từ nối?).\n③ Thử từng đáp án → chọn đáp án đúng ngữ pháp VÀ đúng nghĩa.\n\n💡 MẸO KHI KHÔNG CHẮC:\n• Nếu 3 đáp án cùng nghĩa nhưng khác dạng (go/went/going) → bài kiểm tra THÌ → tìm từ chỉ thời gian (yesterday, now, tomorrow).\n• Nếu 3 đáp án là giới từ (in/on/at) → nhớ: AT + giờ/tuổi, ON + ngày/thứ, IN + tháng/năm/buổi.\n• "Much" + danh từ không đếm được. "Many" + danh từ đếm được.\n• Khi phân vân → đọc to 3 phiên bản — tai sẽ chọn được câu tự nhiên nhất.',
+    rubricVi: ['Hiểu nghĩa tổng thể câu.', 'Xác định điểm ngữ pháp được kiểm tra.', 'Dùng manh mối thời gian/số lượng.', 'Đọc to để kiểm tra.'],
+  },
+};
+
+// ══════════════════════════════════════════════════════════════
 // PART-SPECIFIC QUESTION BUILDER — matches real Cambridge format
 // ══════════════════════════════════════════════════════════════
 
@@ -477,18 +532,18 @@ function buildPartSpecificQuestion(base: any, levelId: CambridgeExamLevelId, set
       const names = ['Tom', 'Anna', 'Sam', 'Grace', 'Ben'];
       const items = ['the tall boy with glasses', 'the girl with a red hat', 'the child next to the tree', 'the woman with a bag', 'the boy holding a ball'];
       const ni = (setNo + questionNo - 1) % names.length;
-      return { ...base, prompt: `🔊 Listen. Which person is ${names[ni]}?\n\n"${names[ni]} is ${items[ni]}."`, options: items.map((_, i) => `Person ${i + 1}`), answer: `Person ${ni + 1}`, audioTranscript: `Woman: Where is ${names[ni]}?\nMan: ${names[ni]} is ${items[ni]}.`, explanationVi: `${names[ni]} được mô tả là "${items[ni]}".`, strategyVi: 'Nghe tên người trước, sau đó nghe mô tả ngoại hình/vị trí.' };
+      return { ...base, prompt: `🔊 Listen. Which person is ${names[ni]}?\n\n"${names[ni]} is ${items[ni]}."`, options: items.map((_, i) => `Person ${i + 1}`), answer: `Person ${ni + 1}`, audioTranscript: `Woman: Where is ${names[ni]}?\nMan: ${names[ni]} is ${items[ni]}.`, explanationVi: `${names[ni]} được mô tả là "${items[ni]}". Khi nghe, chú ý mô tả ngoại hình (tall, short, glasses, hat) và vị trí (next to, behind, near) — đây là manh mối chính để nối tên với người.`, ...EXAM_STRATEGIES.listening_general };
     }
     if (title.includes('write') || title.includes('number')) {
       // Listening Part 2: Write name/number
       const answer = selectGapAnswer(questionNo, theme);
-      return { ...base, prompt: `🔊 Listen and write the missing word or number.\n\n${theme.person}'s note:\nActivity: ${theme.activity}\nPlace: ${theme.place}\nTime: ____`, options: [], answer, audioTranscript: buildListeningTranscript(theme, answer, questionNo), explanationVi: `Đáp án là "${answer}" — nghe kỹ số/tên được đánh vần.`, strategyVi: 'Viết chữ cái đầu tiên nghe được, sau đó hoàn thiện từ.' };
+      return { ...base, prompt: `🔊 Listen and write the missing word or number.\n\n${theme.person}'s note:\nActivity: ${theme.activity}\nPlace: ${theme.place}\nTime: ____`, options: [], answer, audioTranscript: buildListeningTranscript(theme, answer, questionNo), explanationVi: `Đáp án là "${answer}". Trong bài nghe, thông tin này được nói rõ — chú ý phân biệt số dễ nhầm (13/30, 14/40, 15/50) và tên riêng được đánh vần từng chữ cái.`, ...EXAM_STRATEGIES.listening_general };
     }
     if (title.includes('multiple choice') || title.includes('picture')) {
       // Listening Part 3: Picture MC
       const tq = theme.questions;
       const qi = (questionNo - 1) % tq.length;
-      return { ...base, prompt: `🔊 Listen to the conversation. Choose the correct picture.\n\n${tq[qi].q}`, options: tq[qi].opts, answer: tq[qi].a, audioTranscript: buildListeningTranscript(theme, tq[qi].a, questionNo), explanationVi: `Đáp án "${tq[qi].a}" — thông tin được nói rõ trong đoạn hội thoại.`, strategyVi: 'Xem 3 tranh trước khi nghe. Nghe lần 1 chọn, lần 2 kiểm tra.' };
+      return { ...base, prompt: `🔊 Listen to the conversation. Choose the correct picture.\n\n${tq[qi].q}`, options: tq[qi].opts, answer: tq[qi].a, audioTranscript: buildListeningTranscript(theme, tq[qi].a, questionNo), explanationVi: `Đáp án "${tq[qi].a}". Bẫy phổ biến: speakers thường nhắc đến cả 3 đáp án nhưng chỉ XÁC NHẬN 1 cái. Chú ý từ khóa "actually", "no wait", "I mean" — đáp án đúng là phần SAU khi sửa.`, ...EXAM_STRATEGIES.listening_general };
     }
     if (title.includes('colour')) {
       // Listening Part 4: Colouring
@@ -496,11 +551,11 @@ function buildPartSpecificQuestion(base: any, levelId: CambridgeExamLevelId, set
       const objects = ['the ball', 'the hat', 'the bag', 'the flower', 'the car'];
       const ci = (setNo + questionNo) % colours.length;
       const oi = (setNo + questionNo) % objects.length;
-      return { ...base, prompt: `🔊 Listen and colour. What colour is ${objects[oi]}?\n\nColour ${objects[oi]} ____`, options: [colours[ci], colours[(ci + 2) % colours.length], colours[(ci + 4) % colours.length]], answer: colours[ci], audioTranscript: `Woman: Can you see ${objects[oi]}? Colour it ${colours[ci]}, please.\nChild: ${colours[ci]}?\nWoman: Yes, ${colours[ci]}.`, explanationVi: `Tô ${objects[oi]} màu ${colours[ci]}.`, strategyVi: 'Nghe tên đồ vật trước, sau đó nghe màu sắc.' };
+      return { ...base, prompt: `🔊 Listen and colour. What colour is ${objects[oi]}?\n\nColour ${objects[oi]} ____`, options: [colours[ci], colours[(ci + 2) % colours.length], colours[(ci + 4) % colours.length]], answer: colours[ci], audioTranscript: `Woman: Can you see ${objects[oi]}? Colour it ${colours[ci]}, please.\nChild: ${colours[ci]}?\nWoman: Yes, ${colours[ci]}.`, explanationVi: `Tô ${objects[oi]} màu ${colours[ci]}. Trong bài nghe, người lớn sẽ nói tên đồ vật TRƯỚC, rồi mới nói màu — nghe 2 thông tin theo thứ tự.`, ...EXAM_STRATEGIES.listening_general };
     }
     // Default listening
     const answer = selectGapAnswer(questionNo, theme);
-    return { ...base, prompt: `🔊 Listen and answer.\n\n${theme.questions[(questionNo - 1) % theme.questions.length].q}`, options: theme.questions[(questionNo - 1) % theme.questions.length].opts, answer: theme.questions[(questionNo - 1) % theme.questions.length].a, audioTranscript: buildListeningTranscript(theme, answer, questionNo), explanationVi: `Nghe kỹ đoạn hội thoại để tìm đáp án.`, strategyVi: 'Đọc câu hỏi trước khi nghe. Nghe 2 lần.' };
+    return { ...base, prompt: `🔊 Listen and answer.\n\n${theme.questions[(questionNo - 1) % theme.questions.length].q}`, options: theme.questions[(questionNo - 1) % theme.questions.length].opts, answer: theme.questions[(questionNo - 1) % theme.questions.length].a, audioTranscript: buildListeningTranscript(theme, answer, questionNo), explanationVi: `Đáp án nằm trong đoạn hội thoại. Khi nghe, tập trung vào câu trả lời trực tiếp của nhân vật — bỏ qua phần chào hỏi và câu lặp lại.`, ...EXAM_STRATEGIES.listening_general };
   }
 
   // ── READING & WRITING: TRUE/FALSE (Starters P1) ──
@@ -509,14 +564,14 @@ function buildPartSpecificQuestion(base: any, levelId: CambridgeExamLevelId, set
     const isTrue = questionNo % 2 === 1;
     const wrongWord = PICTURE_WORDS[(setNo + questionNo + 3) % PICTURE_WORDS.length];
     const shownWord = isTrue ? pw.word : wrongWord.word;
-    return { ...base, imageEmoji: pw.emoji, prompt: `Look at the picture. Read the word.\n\n${pw.emoji}  →  "${shownWord}"\n\nIs this correct? ✓ (tick) or ✗ (cross)?`, options: ['✓ (Yes — correct)', '✗ (No — wrong)'], answer: isTrue ? '✓ (Yes — correct)' : '✗ (No — wrong)', explanationVi: isTrue ? `Đúng — tranh là ${pw.word} và từ viết "${shownWord}" khớp nhau.` : `Sai — tranh là ${pw.word} nhưng từ viết "${shownWord}" không khớp.`, strategyVi: 'Nhìn tranh kỹ, đọc từ, so sánh. Nếu tranh và từ khớp → tick. Nếu không → cross.' };
+    return { ...base, imageEmoji: pw.emoji, prompt: `Look at the picture. Read the word.\n\n${pw.emoji}  →  "${shownWord}"\n\nIs this correct? ✓ (tick) or ✗ (cross)?`, options: ['✓ (Yes — correct)', '✗ (No — wrong)'], answer: isTrue ? '✓ (Yes — correct)' : '✗ (No — wrong)', explanationVi: isTrue ? `Đúng — tranh là ${pw.word} và từ viết "${shownWord}" khớp nhau. Bài này kiểm tra con có BIẾT TỪ VỰNG cơ bản không.` : `Sai — tranh là ${pw.word} nhưng từ viết "${shownWord}" không khớp. Cả hai đều là từ quen thuộc — bẫy là chúng cùng chủ đề (${pw.category}) nên dễ nhầm.`, ...EXAM_STRATEGIES.true_false };
   }
 
   // ── READING & WRITING: YES/NO PICTURE SENTENCES (Starters P2, Movers P2, Flyers P2) ──
   if (title.includes('yes/no') || title.includes('yes or no')) {
     const sceneData = SCENE_SENTENCES[(setNo + questionNo) % SCENE_SENTENCES.length];
     const sent = sceneData.sentences[(questionNo - 1) % sceneData.sentences.length];
-    return { ...base, imageEmoji: sceneData.emoji, prompt: `Look at the picture: ${sceneData.scene}\n\n${sceneData.emoji}\n\n"${sent.text}"\n\nIs this sentence correct? Choose Yes or No.`, options: ['Yes', 'No'], answer: sent.answer, explanationVi: sent.answer === 'Yes' ? `Đúng — câu mô tả khớp với tranh.` : `Sai — câu mô tả không khớp với tranh.`, strategyVi: 'Đọc câu, nhìn tranh, kiểm tra từng chi tiết trong câu có đúng với tranh không.' };
+    return { ...base, imageEmoji: sceneData.emoji, prompt: `Look at the picture: ${sceneData.scene}\n\n${sceneData.emoji}\n\n"${sent.text}"\n\nIs this sentence correct? Choose Yes or No.`, options: ['Yes', 'No'], answer: sent.answer, explanationVi: sent.answer === 'Yes' ? `Đúng — câu "${sent.text}" mô tả chính xác chi tiết trong tranh ${sceneData.scene}. Mỗi từ khóa trong câu đều khớp với tranh.` : `Sai — câu "${sent.text}" có chi tiết KHÔNG khớp với tranh ${sceneData.scene}. Bẫy phổ biến: câu ĐÚNG một phần nhưng SAI ở 1 chi tiết nhỏ (số lượng, màu sắc, hành động).`, ...EXAM_STRATEGIES.yes_no };
   }
 
   // ── READING & WRITING: JUMBLED LETTERS (Starters P3) ──
@@ -526,7 +581,7 @@ function buildPartSpecificQuestion(base: any, levelId: CambridgeExamLevelId, set
     // Shuffle deterministically based on setNo
     const shuffled = [...letters].sort((a, b) => ((setNo + letters.indexOf(a)) % 3) - ((setNo + letters.indexOf(b)) % 3));
     const jumbledDisplay = shuffled.join('  ').toUpperCase();
-    return { ...base, taskTypeEn: 'Spell', imageEmoji: pw.emoji, prompt: `Look at the picture. Put the letters in the right order.\n\n${pw.emoji}\n\n${jumbledDisplay}`, options: [], answer: pw.word, explanationVi: `Từ đúng là "${pw.word}". Sắp xếp lại các chữ cái: ${jumbledDisplay} → ${pw.word}.`, strategyVi: 'Nhìn tranh để đoán từ. Sau đó sắp xếp chữ cái cho đúng.' };
+    return { ...base, taskTypeEn: 'Spell', imageEmoji: pw.emoji, prompt: `Look at the picture. Put the letters in the right order.\n\n${pw.emoji}\n\n${jumbledDisplay}`, options: [], answer: pw.word, explanationVi: `Từ đúng là "${pw.word}" (${pw.category}). Các chữ cái ${jumbledDisplay} sắp xếp lại thành ${pw.word}. Nhớ: mỗi từ tiếng Anh phải có ít nhất 1 nguyên âm (a/e/i/o/u).`, ...EXAM_STRATEGIES.jumbled };
   }
 
   // ── READING & WRITING: WORD-BOX GAP FILL (Starters P4, Movers P4, Flyers P4) ──
@@ -534,14 +589,14 @@ function buildPartSpecificQuestion(base: any, levelId: CambridgeExamLevelId, set
     const answer = selectGapAnswer(questionNo, theme);
     const passageWithGap = theme.passage.replace(new RegExp(answer, 'i'), '____');
     const wordBank = [answer, theme.object.split(' ')[0], theme.color, theme.person, theme.place.split(' ')[0]].filter((v, i, a) => a.indexOf(v) === i).slice(0, 5);
-    return { ...base, prompt: `📖 Read the text. Choose the correct word to fill the gap.\n\nWord bank: ${wordBank.join(' | ')}\n\n"${passageWithGap}"`, options: wordBank.slice(0, 3), answer, explanationVi: `Đáp án "${answer}" phù hợp ngữ cảnh đoạn văn.`, strategyVi: 'Đọc cả đoạn văn trước. Thử từng từ trong word bank vào chỗ trống. Chọn từ hợp nghĩa nhất.' };
+    return { ...base, prompt: `📖 Read the text. Choose the correct word to fill the gap.\n\nWord bank: ${wordBank.join(' | ')}\n\n"${passageWithGap}"`, options: wordBank.slice(0, 3), answer, explanationVi: `Đáp án "${answer}" — từ này phù hợp vì câu trước/sau nói về ${theme.title}. Các từ khác trong word bank sai vì không khớp ngữ cảnh (loại từ hoặc nghĩa). Luôn đọc CẢ CÂU sau khi điền để kiểm tra.`, ...EXAM_STRATEGIES.gap_fill_wordbank };
   }
 
   // ── READING & WRITING: ONE-WORD STORY ANSWERS (Starters P5) ──
   if (title.includes('one-word') || title.includes('story answer')) {
     const tq = theme.questions;
     const qi = (questionNo - 1) % tq.length;
-    return { ...base, prompt: `📖 Read the story and answer with ONE word.\n\n"${theme.passage}"\n\n${tq[qi].q}`, options: [], answer: tq[qi].a.split(' ')[0], explanationVi: `Đáp án: "${tq[qi].a}". Tìm thông tin trực tiếp trong đoạn văn.`, strategyVi: 'Đọc câu hỏi trước. Tìm câu trả lời trong đoạn văn. Chỉ viết 1 từ.' };
+    return { ...base, prompt: `📖 Read the story and answer with ONE word.\n\n"${theme.passage}"\n\n${tq[qi].q}`, options: [], answer: tq[qi].a.split(' ')[0], explanationVi: `Đáp án: "${tq[qi].a}". Câu trả lời nằm trực tiếp trong đoạn văn — tìm câu có từ khóa giống câu hỏi ("${tq[qi].q.split(' ').slice(0, 3).join(' ')}..."). Chỉ cần chép lại 1 từ, kiểm tra chính tả kỹ.`, ...EXAM_STRATEGIES.one_word_story };
   }
 
   // ── READING & WRITING: DEFINITIONS (Movers P1, Flyers P1) ──
@@ -557,49 +612,49 @@ function buildPartSpecificQuestion(base: any, levelId: CambridgeExamLevelId, set
     ];
     const di = (setNo + questionNo - 1) % defItems.length;
     const d = defItems[di];
-    return { ...base, prompt: `Read the definition. Choose the correct word.\n\n"${d.def}"`, options: rotateOptions([d.word, ...d.distractors], questionNo), answer: d.word, explanationVi: `"${d.def}" → đáp án là "${d.word}".`, strategyVi: 'Đọc định nghĩa kỹ. Hình dung đồ vật/người/nơi chốn. Chọn từ phù hợp nhất.' };
+    return { ...base, prompt: `Read the definition. Choose the correct word.\n\n"${d.def}"`, options: rotateOptions([d.word, ...d.distractors], questionNo), answer: d.word, explanationVi: `"${d.def}" → đáp án là "${d.word}". Loại trừ: "${d.distractors[0]}" sai vì không khớp đặc điểm chính trong định nghĩa, "${d.distractors[1]}" cũng sai vì khác loại/chức năng.`, ...EXAM_STRATEGIES.definition };
   }
 
   // ── READING & WRITING: CONVERSATION (Movers P3, Flyers P3) ──
   if (title.includes('conversation')) {
     const ci = (setNo + questionNo - 1) % CONVERSATION_EXCHANGES.length;
     const conv = CONVERSATION_EXCHANGES[ci];
-    return { ...base, prompt: `Read the conversation. Choose the best answer for B.\n\n${conv.setup}`, options: rotateOptions(conv.options, questionNo), answer: conv.answer, explanationVi: `Câu trả lời phù hợp nhất: "${conv.answer}" — đúng ngữ cảnh hội thoại.`, strategyVi: 'Đọc câu hỏi của A. Nghĩ xem B nên trả lời gì. Loại đáp án lạc đề.' };
+    return { ...base, prompt: `Read the conversation. Choose the best answer for B.\n\n${conv.setup}`, options: rotateOptions(conv.options, questionNo), answer: conv.answer, explanationVi: `"${conv.answer}" đúng vì trả lời ĐÚNG CHỦ ĐỀ mà A hỏi. Các đáp án sai bị lạc đề — "${conv.options.find(o => o !== conv.answer)}" nói về chủ đề hoàn toàn khác, không liên quan đến câu hỏi của A.`, ...EXAM_STRATEGIES.conversation };
   }
 
   // ── READING & WRITING: STORY COMPLETION (Movers P5, Flyers P5) ──
   if (title.includes('story') && !title.includes('one-word') && part.mode !== 'writing') {
     const tq = theme.questions;
     const qi = (questionNo - 1) % tq.length;
-    return { ...base, prompt: `📖 Read the story. Write ONE to THREE words to complete the sentence.\n\n"${theme.passage}"\n\n${tq[qi].q} ____`, options: [], answer: tq[qi].a, explanationVi: `Đáp án: "${tq[qi].a}". Dựa trên thông tin trong đoạn văn.`, strategyVi: 'Đọc đoạn văn kỹ. Tìm thông tin liên quan đến câu hỏi. Viết 1-3 từ ngắn gọn.' };
+    return { ...base, prompt: `📖 Read the story. Write ONE to THREE words to complete the sentence.\n\n"${theme.passage}"\n\n${tq[qi].q} ____`, options: [], answer: tq[qi].a, explanationVi: `Đáp án: "${tq[qi].a}". Thông tin nằm trong đoạn văn — tìm câu chứa từ khóa giống câu hỏi. Đáp án phải khớp ngữ pháp: kiểm tra chủ ngữ-động từ, thì, và số ít/số nhiều.`, ...EXAM_STRATEGIES.story_completion };
   }
 
   // ── READING & WRITING: OPEN GAP FILL (Flyers P6, KET P5, PET P6) ──
   if (title.includes('open') && title.includes('gap')) {
     const answer = selectGapAnswer(questionNo, theme);
     const passageWithGap = theme.passage.replace(new RegExp(answer, 'i'), '____');
-    return { ...base, prompt: `📖 Read the text. Write ONE word to fill the gap. No word bank.\n\n"${passageWithGap}"`, options: [], answer, explanationVi: `Đáp án "${answer}" — dựa trên ngữ cảnh và ngữ pháp.`, strategyVi: 'Đọc cả câu. Xác định loại từ (noun/verb/adj). Nghĩ từ phù hợp ngữ cảnh.' };
+    return { ...base, prompt: `📖 Read the text. Write ONE word to fill the gap. No word bank.\n\n"${passageWithGap}"`, options: [], answer, explanationVi: `Đáp án "${answer}". Manh mối: từ TRƯỚC chỗ trống cho biết loại từ cần điền, từ SAU cho biết nghĩa. Nếu trước là "a/the" → cần danh từ. Nếu trước là "is/are" → cần tính từ hoặc V-ing.`, ...EXAM_STRATEGIES.open_gap };
   }
 
   // ── READING: SHORT TEXT MC (KET P1, PET P1) ──
   if (title.includes('short text') || title.includes('notices') || title.includes('signs')) {
     const tq = theme.questions;
     const qi = (questionNo - 1) % tq.length;
-    return { ...base, prompt: `📖 Read the short text, then answer the question.\n\n"${theme.passage}"\n\n${tq[qi].q}`, options: tq[qi].opts, answer: tq[qi].a, explanationVi: `Đáp án: "${tq[qi].a}". Thông tin nằm rõ trong đoạn văn.`, strategyVi: 'Đọc kỹ cả đoạn văn ngắn. Gạch chân từ khóa. Đối chiếu với các đáp án.' };
+    return { ...base, prompt: `📖 Read the short text, then answer the question.\n\n"${theme.passage}"\n\n${tq[qi].q}`, options: tq[qi].opts, answer: tq[qi].a, explanationVi: `Đáp án: "${tq[qi].a}". Đoạn văn ngắn nên đáp án nằm trong 1-2 câu then chốt. Loại trừ: đáp án có từ KHÔNG xuất hiện trong bài thường sai. Đáp án dùng lại từ trong bài nhưng đổi nghĩa là BẪY phổ biến.`, ...EXAM_STRATEGIES.reading_mc };
   }
 
   // ── READING: LONG TEXT MC (KET P3, PET P3) ──
   if (title.includes('long text') || title.includes('detailed')) {
     const tq = theme.questions;
     const qi = (questionNo - 1) % tq.length;
-    return { ...base, prompt: `📖 Read the text carefully, then answer the question.\n\n"${theme.passage}"\n\n${tq[qi].q}`, options: tq[qi].opts, answer: tq[qi].a, explanationVi: `Đáp án: "${tq[qi].a}". Đọc kỹ bài dài để tìm chi tiết.`, strategyVi: 'Skim đoạn văn trước. Đọc câu hỏi. Quay lại tìm đoạn liên quan. Đối chiếu đáp án.' };
+    return { ...base, prompt: `📖 Read the text carefully, then answer the question.\n\n"${theme.passage}"\n\n${tq[qi].q}`, options: tq[qi].opts, answer: tq[qi].a, explanationVi: `Đáp án: "${tq[qi].a}". Với bài dài, dùng kỹ thuật SCAN: tìm từ khóa trong câu hỏi → quét bài tìm từ đó → đọc kỹ câu chứa từ khóa → đối chiếu đáp án. Đáp án "quá tuyệt đối" (always, never, all) thường SAI.`, ...EXAM_STRATEGIES.reading_mc };
   }
 
   // ── READING: MATCHING (KET P2, PET P2) ──
   if (title.includes('matching') || title.includes('multiple matching')) {
     const tq = theme.questions;
     const qi = (questionNo - 1) % tq.length;
-    return { ...base, prompt: `📖 Read the descriptions. Match each one to the correct answer.\n\n"${theme.passage}"\n\n${tq[qi].q}`, options: tq[qi].opts, answer: tq[qi].a, explanationVi: `"${tq[qi].a}" khớp với mô tả trong bài.`, strategyVi: 'Đọc mô tả kỹ. Gạch chân từ khóa. So sánh từng đáp án.' };
+    return { ...base, prompt: `📖 Read the descriptions. Match each one to the correct answer.\n\n"${theme.passage}"\n\n${tq[qi].q}`, options: tq[qi].opts, answer: tq[qi].a, explanationVi: `"${tq[qi].a}" khớp vì có cùng từ khóa/ý nghĩa với mô tả. Kỹ thuật: gạch chân 2-3 từ quan trọng nhất trong mô tả → tìm đáp án chứa từ đồng nghĩa (synonym) hoặc cùng ý.`, ...EXAM_STRATEGIES.reading_mc };
   }
 
   // ── READING: MC CLOZE (KET P4, PET P5) ──
@@ -613,20 +668,20 @@ function buildPartSpecificQuestion(base: any, levelId: CambridgeExamLevelId, set
     ];
     const gi = (setNo + questionNo - 1) % grammarItems.length;
     const g = grammarItems[gi];
-    return { ...base, prompt: `📖 Choose the correct word to complete the sentence.\n\n"${g.sentence}"`, options: g.options, answer: g.answer, explanationVi: `"${g.answer}" — đúng ngữ pháp trong ngữ cảnh này.`, strategyVi: 'Đọc cả câu. Xác định thì/ngữ pháp. Thử từng đáp án vào chỗ trống.' };
+    return { ...base, prompt: `📖 Choose the correct word to complete the sentence.\n\n"${g.sentence}"`, options: g.options, answer: g.answer, explanationVi: `"${g.answer}" đúng ngữ pháp. Phân tích: 3 đáp án ${g.options.join('/')} kiểm tra ${g.options[0] === 'went' ? 'THÌ động từ (yesterday → past simple → went)' : g.options[0] === 'were' ? 'chia to be (many people → số nhiều → were)' : g.options[0] === 'on' ? 'GIỚI TỪ (trên bề mặt → on)' : 'dạng động từ phù hợp ngữ cảnh'}. Tìm manh mối thời gian/số lượng trong câu.`, ...EXAM_STRATEGIES.mc_cloze };
   }
 
   // ── READING: GAPPED TEXT (PET P4) ──
   if (title.includes('gapped text')) {
     const tq = theme.questions;
     const qi = (questionNo - 1) % tq.length;
-    return { ...base, prompt: `📖 Read the text. Choose the correct sentence for each gap.\n\n"${theme.passage}"\n\nWhich sentence fits gap ${questionNo}?`, options: tq[qi].opts, answer: tq[qi].a, explanationVi: `"${tq[qi].a}" phù hợp ngữ cảnh đoạn văn.`, strategyVi: 'Đọc trước và sau chỗ trống. Tìm câu nối mạch lạc nhất.' };
+    return { ...base, prompt: `📖 Read the text. Choose the correct sentence for each gap.\n\n"${theme.passage}"\n\nWhich sentence fits gap ${questionNo}?`, options: tq[qi].opts, answer: tq[qi].a, explanationVi: `"${tq[qi].a}" phù hợp vì NỐI mạch lạc với câu trước và câu sau. Kỹ thuật: đọc câu TRƯỚC gap → xác định chủ đề → đọc câu SAU gap → tìm câu nối logic. Chú ý đại từ (he/she/it/they) phải khớp với danh từ trước đó.`, ...EXAM_STRATEGIES.reading_mc };
   }
 
   // ── DEFAULT FALLBACK: Reading passage + MC ──
   const tq = theme.questions;
   const qi = (questionNo - 1) % tq.length;
-  return { ...base, prompt: `📖 Read the text, then answer the question.\n\n"${theme.passage}"\n\n${tq[qi].q}`, options: tq[qi].opts, answer: tq[qi].a, explanationVi: `Đáp án: "${tq[qi].a}". Đọc kỹ đoạn văn để tìm thông tin.`, strategyVi: 'Đọc kỹ toàn bộ đoạn văn. Gạch chân từ khóa. Loại trừ đáp án sai.' };
+  return { ...base, prompt: `📖 Read the text, then answer the question.\n\n"${theme.passage}"\n\n${tq[qi].q}`, options: tq[qi].opts, answer: tq[qi].a, explanationVi: `Đáp án: "${tq[qi].a}". Thông tin nằm trong đoạn văn — tìm câu có từ khóa giống câu hỏi. Khi 2 đáp án gần giống → chọn cái CỤ THỂ hơn. Nếu hoàn toàn không biết → chọn đáp án DÀI NHẤT (thường chứa thông tin chính xác hơn).`, ...EXAM_STRATEGIES.reading_mc };
 }
 
 function selectGapAnswer(questionNo: number, theme: typeof EXAM_THEMES[number]): string {
