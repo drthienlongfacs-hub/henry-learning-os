@@ -637,34 +637,82 @@ function buildPartSpecificQuestion(base: any, levelId: CambridgeExamLevelId, set
     return { ...base, prompt: `📖 Read the story and answer with ONE word.\n\n"${theme.passage}"\n\n${tq[qi].q}`, options: [], answer: tq[qi].a.split(' ')[0], explanationVi: `Đáp án: "${tq[qi].a}". Câu trả lời nằm trực tiếp trong đoạn văn — tìm câu có từ khóa giống câu hỏi ("${tq[qi].q.split(' ').slice(0, 3).join(' ')}..."). Chỉ cần chép lại 1 từ, kiểm tra chính tả kỹ.`, ...EXAM_STRATEGIES.one_word_story };
   }
 
-  // ── READING & WRITING: COMPLETE THE TEXT (Movers P6) ──
-  if (title.includes('complete the text')) {
+  // == READING & WRITING: STORY WORD-BOX CLOZE (Movers P3) ==
+  // Real exam: Read a story, choose words from a box to fill 5 gaps + choose best title
+  if (title.includes('story word-box')) {
     const answer = selectGapAnswer(questionNo, theme);
     const passageWithGap = theme.passage.replace(new RegExp(answer, 'i'), '____');
-    return { ...base, prompt: `📖 Read the text about the picture. Write the correct word on each line.\n\n"${passageWithGap}"`, options: [], answer, explanationVi: `Đáp án "${answer}". Đây là bài viết — không có hộp từ. Đọc cả câu, xác định loại từ cần điền (danh từ/động từ/tính từ), sau đó viết từ phù hợp ngữ cảnh. Kiểm tra chính tả cẩn thận.`, ...EXAM_STRATEGIES.open_gap };
+    const wordBank = [answer, theme.object.split(' ')[0], theme.color, theme.person, theme.place.split(' ')[0], theme.activity].filter((v, i, a) => a.indexOf(v) === i).slice(0, 8);
+    if (questionNo <= 5) {
+      return { ...base, prompt: `Read the story. Choose a word from the box. Write the correct word next to number ${questionNo}.\n\nWord box: ${wordBank.join(' | ')}\n\n"${passageWithGap}"`, options: wordBank.slice(0, 4), answer, explanationVi: `"${answer}". Doc ca cau chua cho trong, xac dinh loai tu can dien. Thu tung tu con lai trong hop tu, chi 1 tu vua dung nghia vua dung ngu phap. Meo: gach bo tu da dung.`, ...EXAM_STRATEGIES.gap_fill_wordbank };
+    }
+    const titles = [`${theme.title}`, `A day at the ${theme.place}`, `${theme.person}'s adventure`];
+    return { ...base, prompt: `Now choose the best name for the story. Tick one box.\n\nA) ${titles[0]}\nB) ${titles[1]}\nC) ${titles[2]}`, options: titles, answer: titles[0], explanationVi: `"${titles[0]}" phu hop nhat vi bao quat noi dung chinh cua toan bo truyen.`, ...EXAM_STRATEGIES.mc_cloze };
   }
 
-  // ── READING & WRITING: DEFINITIONS (Movers P1, Flyers P1) ──
+  // == READING & WRITING: FACTUAL MC CLOZE (Movers P4) ==
+  // Real exam: Read factual text, choose the right word from 3 options per gap
+  if (title.includes('factual mc')) {
+    const grammarItems = [
+      { sentence: `${theme.person} went to the ${theme.place}. It was bigger ____ the one near home.`, options: ['than', 'then', 'that'], answer: 'than', rule: 'SO SANH HON: bigger + than' },
+      { sentence: `The ${theme.object} moved very ____ across the ${theme.place}.`, options: ['quickly', 'quick', 'quicker'], answer: 'quickly', rule: 'TRANG TU: bo nghia cho dong tu -> dung -ly' },
+      { sentence: `${theme.person} looked ____ of the window and saw the ${theme.place}.`, options: ['out', 'on', 'up'], answer: 'out', rule: 'GIOI TU: look out of = nhin ra ngoai' },
+      { sentence: `The people ____ live near the ${theme.place} are very friendly.`, options: ['who', 'which', 'where'], answer: 'who', rule: 'DAI TU QUAN HE: people = nguoi -> who' },
+      { sentence: `Some ${theme.object}s can ____ very fast in the water.`, options: ['swim', 'swims', 'swimming'], answer: 'swim', rule: 'DONG TU NGUYEN MAU: can + V-nguyen mau' },
+    ];
+    const gi = (setNo + questionNo - 1) % grammarItems.length;
+    const g = grammarItems[gi];
+    return { ...base, prompt: `Read the text. Choose the right words and write them on the lines.\n\n"${g.sentence}"\n\nA) ${g.options[0]}   B) ${g.options[1]}   C) ${g.options[2]}`, options: g.options, answer: g.answer, explanationVi: `"${g.answer}" dung. Quy tac: ${g.rule}. Doc CA CAU, tim manh moi ngu phap. Loai dap an sai ngu phap truoc, roi chon dap an dung nghia.`, ...EXAM_STRATEGIES.mc_cloze };
+  }
+
+  // == READING & WRITING: LOOK READ AND WRITE (Movers P6) ==
+  // Real exam: 3 sub-tasks from a picture: 1-word answers, sentence answers, write 2 sentences
+  if (title.includes('look read and write')) {
+    const sceneData = SCENE_SENTENCES[(setNo + questionNo) % SCENE_SENTENCES.length];
+    if (questionNo <= 2) {
+      const oneWordQs = [
+        { q: `What colour is the ${theme.object}?`, a: theme.color },
+        { q: `How many ${theme.object}s can you see?`, a: 'two' },
+      ];
+      const qItem = oneWordQs[(questionNo - 1) % oneWordQs.length];
+      return { ...base, prompt: `Look at the picture. Answer the question.\n\n${sceneData.emoji}\n\n${qItem.q}\n\nWrite ONE word.`, options: [], answer: qItem.a, explanationVi: `"${qItem.a}". Bai nay yeu cau CHI 1 TU. Nhin ky tranh, tim doi tuong duoc hoi, viet chinh xac 1 tu.`, ...EXAM_STRATEGIES.one_word_story };
+    } else if (questionNo <= 4) {
+      const sentQs = [
+        { q: `What is ${theme.person} doing?`, a: `${theme.person} is ${theme.activity.toLowerCase()}.` },
+        { q: `Where are the ${theme.object}s?`, a: `The ${theme.object}s are in the ${theme.place.toLowerCase()}.` },
+      ];
+      const qItem = sentQs[(questionNo - 3) % sentQs.length];
+      return { ...base, prompt: `Look at the picture. Answer the question.\n\n${sceneData.emoji}\n\n${qItem.q}\n\nWrite a COMPLETE sentence.`, options: [], answer: qItem.a, explanationVi: `"${qItem.a}". Bai nay yeu cau CAU DAY DU: chu ngu + dong tu. Kiem tra thi, chinh ta.`, ...EXAM_STRATEGIES.open_gap };
+    }
+    return { ...base, prompt: `Now write TWO sentences about the picture.\n\n${sceneData.emoji}\n\nWrite about what you can see.`, options: [], answer: `There is a ${theme.object} in the ${theme.place}. ${theme.person} is ${theme.activity.toLowerCase()}.`, explanationVi: `Viet 2 cau don gian mo ta tranh. Cau 1 = mo ta do vat ("There is/are..."). Cau 2 = mo ta hanh dong ("... is/are doing...").`, ...EXAM_STRATEGIES.open_gap };
+  }
+
+  // == READING & WRITING: DEFINITIONS WITH PICTURES (Movers P1, Flyers P1) ==
+  // Real exam: Look at picture + read definition, write the correct word on the line
   if (title.includes('definition')) {
     const defItems: { word: string; def: string; distractors: string[] }[] = [
+      { word: 'nurse', def: 'a person who works in a hospital and helps sick people', distractors: ['teacher', 'farmer'] },
+      { word: 'tea', def: 'a hot drink made by putting leaves in boiling water', distractors: ['coffee', 'juice'] },
+      { word: 'city', def: 'a very big town where many people live and work', distractors: ['village', 'forest'] },
+      { word: 'sandwich', def: 'you can put cheese or meat between bread to make this', distractors: ['salad', 'soup'] },
+      { word: 'field', def: 'this is part of a farm where you often see animals or crops', distractors: ['garden', 'kitchen'] },
       { word: 'hospital', def: 'a place where sick people go to see a doctor', distractors: ['supermarket', 'cinema'] },
       { word: 'dictionary', def: 'a book that tells you what words mean', distractors: ['newspaper', 'envelope'] },
       { word: 'island', def: 'a piece of land with water all around it', distractors: ['mountain', 'forest'] },
       { word: 'pilot', def: 'a person who flies a plane', distractors: ['farmer', 'dentist'] },
       { word: 'umbrella', def: 'you hold this over your head when it rains', distractors: ['scarf', 'mirror'] },
-      { word: 'breakfast', def: 'the first meal of the day', distractors: ['supper', 'snack'] },
-      { word: 'kangaroo', def: 'an animal that jumps and carries its baby in a pocket', distractors: ['parrot', 'whale'] },
     ];
     const di = (setNo + questionNo - 1) % defItems.length;
     const d = defItems[di];
-    return { ...base, prompt: `Read the definition. Choose the correct word.\n\n"${d.def}"`, options: rotateOptions([d.word, ...d.distractors], questionNo), answer: d.word, explanationVi: `"${d.def}" → đáp án là "${d.word}". Loại trừ: "${d.distractors[0]}" sai vì không khớp đặc điểm chính trong định nghĩa, "${d.distractors[1]}" cũng sai vì khác loại/chức năng.`, ...EXAM_STRATEGIES.definition };
+    return { ...base, prompt: `Look and read. Choose the correct word and write it on the line.\n\n"${d.def}"`, options: rotateOptions([d.word, ...d.distractors], questionNo), answer: d.word, explanationVi: `"${d.def}" -> "${d.word}". Tim TU KHOA trong dinh nghia de xac dinh dap an. Loai tru: "${d.distractors[0]}" sai vi khong khop dac diem chinh, "${d.distractors[1]}" cung sai vi khac loai/chuc nang.`, ...EXAM_STRATEGIES.definition };
   }
 
-  // ── READING & WRITING: CONVERSATION GAP FILL (Movers P3) ──
+  // == READING & WRITING: CONVERSATION BEST ANSWER (Movers P2) ==
+  // Real exam: Read a text (conversation), choose the best answer A, B, or C for each turn
   if (title.includes('conversation')) {
     const ci = (setNo + questionNo - 1) % CONVERSATION_EXCHANGES.length;
     const conv = CONVERSATION_EXCHANGES[ci];
-    return { ...base, prompt: `Read the conversation. Choose the best answer for B.\n\n${conv.setup}`, options: rotateOptions(conv.options, questionNo), answer: conv.answer, explanationVi: `"${conv.answer}" đúng vì trả lời ĐÚNG CHỦ ĐỀ mà A hỏi. Các đáp án sai bị lạc đề — "${conv.options.find(o => o !== conv.answer)}" nói về chủ đề hoàn toàn khác, không liên quan đến câu hỏi của A.`, ...EXAM_STRATEGIES.conversation };
+    return { ...base, prompt: `Read the text and choose the best answer.\n\n${conv.setup}`, options: rotateOptions(conv.options, questionNo), answer: conv.answer, explanationVi: `"${conv.answer}" dung vi tra loi DUNG CHU DE ma A hoi. Cac dap an sai bi lac de. Meo: xac dinh A hoi ve GI (thoi gian? noi chon? hoat dong?) -> chi chon dap an tra loi DUNG loai thong tin do.`, ...EXAM_STRATEGIES.conversation };
   }
 
   // ── READING & WRITING: STORY COMPLETION (Movers P5, Flyers P5) ──

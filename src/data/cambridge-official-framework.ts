@@ -187,7 +187,7 @@ export const CAMBRIDGE_EXAM_SPECS: Record<CambridgeExamLevelId, CambridgeOfficia
         partSpecs: [
           { partNumber: 1, titleEn: 'Draw lines', titleVi: 'Nối tên với người', questionCount: 5, mode: 'objective', taskFocusVi: 'Nghe mô tả người trong tranh' },
           { partNumber: 2, titleEn: 'Write words or numbers', titleVi: 'Viết từ hoặc số', questionCount: 5, mode: 'gap', taskFocusVi: 'Nghe biểu mẫu, số, tên, địa điểm' },
-          { partNumber: 3, titleEn: 'Match pictures', titleVi: 'Nối hai nhóm tranh', questionCount: 5, mode: 'objective', taskFocusVi: 'Nghe lựa chọn đúng trong nhiều lựa chọn' },
+          { partNumber: 3, titleEn: 'Match with letters A-H', titleVi: 'Noi nguoi/chu de voi tranh A-H', questionCount: 5, mode: 'objective', taskFocusVi: 'Nghe va noi nguoi/chu de voi tranh so thich/do vat bang chu cai A-H' },
           { partNumber: 4, titleEn: 'Picture multiple choice', titleVi: 'Chọn tranh đúng', questionCount: 5, mode: 'objective', taskFocusVi: 'Nghe thông tin cụ thể' },
           { partNumber: 5, titleEn: 'Colour and write', titleVi: 'Tô màu và viết', questionCount: 5, mode: 'objective', taskFocusVi: 'Nghe màu sắc, vị trí, đồ vật' },
         ],
@@ -202,12 +202,12 @@ export const CAMBRIDGE_EXAM_SPECS: Record<CambridgeExamLevelId, CambridgeOfficia
         questions: 35,
         weight: 'up to 5 shields',
         partSpecs: [
-          { partNumber: 1, titleEn: 'Definitions', titleVi: 'Nối định nghĩa với từ', questionCount: 6, mode: 'objective', taskFocusVi: 'Từ vựng qua định nghĩa' },
-          { partNumber: 2, titleEn: 'Picture yes/no', titleVi: 'Yes/No theo tranh', questionCount: 6, mode: 'objective', taskFocusVi: 'Đọc hiểu câu về tranh' },
-          { partNumber: 3, titleEn: 'Conversation gap fill', titleVi: 'Hoàn thành hội thoại', questionCount: 6, mode: 'objective', taskFocusVi: 'Chọn câu trả lời phù hợp' },
-          { partNumber: 4, titleEn: 'Text gap fill', titleVi: 'Điền đoạn văn', questionCount: 6, mode: 'objective', taskFocusVi: 'Đọc đoạn văn và chọn từ đúng' },
-          { partNumber: 5, titleEn: 'Story completion', titleVi: 'Hoàn thành câu theo truyện', questionCount: 7, mode: 'gap', taskFocusVi: 'Viết 1-3 từ dựa trên bài đọc' },
-          { partNumber: 6, titleEn: 'Complete the text', titleVi: 'Hoàn thành đoạn văn', questionCount: 4, mode: 'gap', taskFocusVi: 'Đọc đoạn văn về tranh, chọn và viết từ đúng vào chỗ trống' },
+          { partNumber: 1, titleEn: 'Definitions with pictures', titleVi: 'Đọc định nghĩa, viết từ đúng', questionCount: 5, mode: 'gap', taskFocusVi: 'Nhìn tranh + đọc định nghĩa → viết từ trên dòng kẻ' },
+          { partNumber: 2, titleEn: 'Conversation best answer', titleVi: 'Đọc hội thoại, chọn đáp án hay nhất', questionCount: 6, mode: 'objective', taskFocusVi: 'Chọn A/B/C phản hồi phù hợp nhất trong đoạn hội thoại' },
+          { partNumber: 3, titleEn: 'Story word-box cloze', titleVi: 'Đọc truyện, điền từ từ hộp từ', questionCount: 6, mode: 'gap', taskFocusVi: 'Chọn từ đúng từ hộp từ điền vào truyện (5 gap + 1 chọn tên truyện)' },
+          { partNumber: 4, titleEn: 'Factual MC cloze', titleVi: 'Đọc bài thông tin, chọn từ đúng', questionCount: 5, mode: 'objective', taskFocusVi: 'Chọn từ đúng trong 3 lựa chọn để hoàn thành đoạn văn thông tin' },
+          { partNumber: 5, titleEn: 'Story comprehension write', titleVi: 'Đọc truyện tranh, viết 1-3 từ', questionCount: 7, mode: 'gap', taskFocusVi: 'Đọc truyện kèm tranh, viết 1-3 từ hoàn thành câu' },
+          { partNumber: 6, titleEn: 'Look read and write', titleVi: 'Nhìn tranh, đọc và viết', questionCount: 6, mode: 'writing', taskFocusVi: 'Trả lời câu hỏi về tranh (1 từ + câu đầy đủ) + viết 2 câu mô tả tranh' },
         ],
       },
       {
