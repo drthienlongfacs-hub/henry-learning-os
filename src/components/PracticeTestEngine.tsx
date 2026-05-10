@@ -276,9 +276,17 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
         Câu {currentQ + 1}/{total} • {currentPart?.instructionVi}
       </p>
 
+      {/* Part illustration image */}
+      {currentPart?.partImage && (
+        <div style={{ marginBottom: 12, borderRadius: 14, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)' }}>
+          <img src={currentPart.partImage} alt={currentPart.titleVi} style={{ width: '100%', maxHeight: 240, objectFit: 'contain', background: 'rgba(255,255,255,0.04)' }} />
+        </div>
+      )}
+
       {/* Question */}
       <div style={{ ...card, padding: 16 }}>
-        {q.imageEmoji && <div style={{ fontSize: 48, textAlign: 'center', marginBottom: 8 }}>{q.imageEmoji}</div>}
+        {q.imagePath && <img src={q.imagePath} alt={q.prompt} style={{ width: '100%', maxHeight: 280, objectFit: 'contain', borderRadius: 12, marginBottom: 10, border: '1px solid rgba(255,255,255,0.1)' }} />}
+        {q.imageEmoji && !q.imagePath && <div style={{ fontSize: 48, textAlign: 'center', marginBottom: 8 }}>{q.imageEmoji}</div>}
         <p style={{ fontSize: 16, fontWeight: 600, margin: '0 0 12px', lineHeight: 1.5, whiteSpace: 'pre-line' }}>{q.prompt}</p>
 
         {q.audioTranscript && (

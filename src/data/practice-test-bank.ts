@@ -14,6 +14,8 @@ export interface PracticeQuestion {
   options?: string[];
   answer: string;
   imageEmoji?: string;
+  /** Path to illustration image in /public/exam-images/ */
+  imagePath?: string;
   hint?: string;
   /** Giải thích đáp án chi tiết bằng tiếng Việt */
   explanationVi: string;
@@ -53,6 +55,9 @@ export interface PracticeTestPart {
   titleEn: string;
   titleVi: string;
   instructionVi: string;
+  sourcePages?: string[]; // paths to original exam page images
+  /** Illustration image for this part (scene picture, etc.) */
+  partImage?: string;
   questions: PracticeQuestion[];
 }
 
@@ -219,10 +224,23 @@ const FLYERS_RW: PracticeTest = {
 import { STARTERS_RW_2, STARTERS_RW_3 } from './practice-tests-starters-2';
 import { MOVERS_RW_2, MOVERS_RW_3 } from './practice-tests-movers-2';
 import { FLYERS_RW_2 } from './practice-tests-flyers-2';
+import { KET_RW_2 } from './practice-tests-ket-1';
 import { KET_RW_1, PET_RW_1 } from './practice-tests-ket-pet';
+import { PET_1_TEST_1 } from './practice-tests-pet-1';
+import { PET_1_TEST_1_LISTENING } from './practice-tests-pet-1-listening';
+import { PET_1_TEST_2 } from './practice-tests-pet-1-test2';
+import { PET_1_TEST_2_LISTENING } from './practice-tests-pet-1-test2-listening';
 import { KET_LISTENING_1, PET_LISTENING_1 } from './practice-tests-ket-pet-listening';
-import { STARTERS_LISTENING } from './practice-tests-yle-listening';
+import { STARTERS_LISTENING, MOVERS_LISTENING_1 } from './practice-tests-yle-listening';
+import { STARTERS_LISTENING_AUTHENTIC, STARTERS_RW_AUTHENTIC } from './practice-tests-starters-authentic';
+import { MOVERS_LISTENING_2 } from './practice-tests-movers-listening-2';
+import { MOVERS_LISTENING_3 } from './practice-tests-movers-listening-3';
+import { MOVERS_RW_AUTHENTIC_1 } from './practice-tests-movers-rw-authentic';
+import { MOVERS_RW_AUTHENTIC_2, MOVERS_RW_AUTHENTIC_3 } from './practice-tests-movers-rw-authentic-2-3';
+import { KET_LISTENING_AUTHENTIC } from './practice-tests-ket-listening-authentic';
 import { STARTERS_SPEAKING, KET_SPEAKING, PET_SPEAKING } from './practice-tests-speaking';
+import { FLYERS_LISTENING_AUTHENTIC_1 } from './practice-tests-flyers-listening-authentic';
+import { FLYERS_RW_AUTHENTIC_1 } from './practice-tests-flyers-rw-authentic';
 import {
   CAMBRIDGE_EXAM_CLAIM_GUARDRAIL,
   CAMBRIDGE_EXAM_SPECS,
@@ -903,11 +921,11 @@ function buildSpeakingModelAnswer(part: CambridgeOfficialPartSpec, theme: typeof
 
 export const PRACTICE_TESTS: PracticeTest[] = [
   ...buildOfficialFormatPracticeTests(),
-  STARTERS_RW, STARTERS_RW_2, STARTERS_RW_3, STARTERS_LISTENING, STARTERS_SPEAKING,
-  MOVERS_RW, MOVERS_RW_2, MOVERS_RW_3,
-  FLYERS_RW, FLYERS_RW_2,
-  KET_RW_1, KET_LISTENING_1, KET_SPEAKING,
-  PET_RW_1, PET_LISTENING_1, PET_SPEAKING,
+  STARTERS_RW, STARTERS_RW_2, STARTERS_RW_3, STARTERS_RW_AUTHENTIC, STARTERS_LISTENING, STARTERS_LISTENING_AUTHENTIC, STARTERS_SPEAKING,
+  MOVERS_RW, MOVERS_RW_2, MOVERS_RW_3, MOVERS_RW_AUTHENTIC_1, MOVERS_RW_AUTHENTIC_2, MOVERS_RW_AUTHENTIC_3, MOVERS_LISTENING_1, MOVERS_LISTENING_2, MOVERS_LISTENING_3,
+  FLYERS_RW, FLYERS_RW_2, FLYERS_RW_AUTHENTIC_1, FLYERS_LISTENING_AUTHENTIC_1,
+  KET_RW_1, KET_RW_2, KET_LISTENING_1, KET_LISTENING_AUTHENTIC, KET_SPEAKING,
+  PET_RW_1, PET_LISTENING_1, PET_SPEAKING, PET_1_TEST_1, PET_1_TEST_1_LISTENING, PET_1_TEST_2, PET_1_TEST_2_LISTENING,
 ];
 
 export const OFFICIAL_FORMAT_PRACTICE_TESTS = PRACTICE_TESTS.filter((test) => test.setNo !== undefined);

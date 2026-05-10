@@ -307,6 +307,7 @@ export default function ChildDashboard() {
                 {/* ═══ Explore Row ═══ */}
                 <div className="animate-fade-in" style={{ display: 'flex', gap: '0.45rem', marginBottom: '1.25rem' }}>
                     {[
+                        { href: '/child/year1', icon: '🎒', name: 'Lớp 1', desc: '3 môn', color: '#059669' },
                         { href: '/child/library', icon: '📚', name: 'Thư viện', desc: 'Sách', color: '#7c3aed' },
                         { href: '/child/exams', icon: '🏆', name: 'Luyện thi', desc: 'Cambridge', color: '#ef4444' },
                         { href: '/child/international', icon: '🌍', name: 'Quốc tế', desc: '6 nước', color: '#3b82f6' },
