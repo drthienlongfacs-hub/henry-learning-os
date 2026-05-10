@@ -1,7 +1,49 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { Star, RotateCcw, Volume2, Check, X, Sparkles, Trophy } from 'lucide-react';
+
+// Inject keyframes for vocab game animations
+function useVocabAnimations() {
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    if (document.getElementById('vocab-game-keyframes')) return;
+    const style = document.createElement('style');
+    style.id = 'vocab-game-keyframes';
+    style.textContent = `
+      @keyframes vg-card-flip { 0%{transform:rotateY(0)} 50%{transform:rotateY(90deg)} 100%{transform:rotateY(0)} }
+      @keyframes vg-pop { 0%{transform:scale(0.6);opacity:0} 60%{transform:scale(1.15)} 100%{transform:scale(1);opacity:1} }
+      @keyframes vg-confetti { 0%{transform:translateY(0) rotate(0);opacity:1} 100%{transform:translateY(-60px) rotate(360deg);opacity:0} }
+      @keyframes vg-ring-fill { from{stroke-dashoffset:var(--vg-circ)} to{stroke-dashoffset:var(--vg-offset)} }
+      @keyframes vg-bounce { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
+      @keyframes vg-glow { 0%,100%{box-shadow:0 0 8px rgba(34,197,94,0.2)} 50%{box-shadow:0 0 20px rgba(34,197,94,0.5)} }
+      @keyframes vg-shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+    `;
+    document.head.appendChild(style);
+  }, []);
+}
+
+function ScoreRing({ score, total }: { score: number; total: number }) {
+  const size = 120, stroke = 8, r = (size - stroke) / 2;
+  const circ = 2 * Math.PI * r;
+  const pct = total > 0 ? score / total : 0;
+  const offset = circ - pct * circ;
+  const color = pct >= 0.9 ? '#22c55e' : pct >= 0.7 ? '#f59e0b' : pct >= 0.5 ? '#3b82f6' : '#ef4444';
+  return (
+    <div style={{ position: 'relative', width: size, height: size, margin: '0 auto 16px' }}>
+      <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
+        <circle cx={size/2} cy={size/2} r={r} stroke="#e2e8f0" strokeWidth={stroke} fill="none" />
+        <circle cx={size/2} cy={size/2} r={r} stroke={color} strokeWidth={stroke} fill="none"
+          strokeDasharray={circ} strokeDashoffset={offset} strokeLinecap="round"
+          style={{ '--vg-circ': circ, '--vg-offset': offset, animation: 'vg-ring-fill 1.5s cubic-bezier(0.4,0,0.2,1) forwards' } as React.CSSProperties} />
+      </svg>
+      <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <span style={{ fontSize: 32, fontWeight: 900, color }}>{Math.round(pct * 100)}%</span>
+        <span style={{ fontSize: 12, color: '#94a3b8' }}>{score}/{total}</span>
+      </div>
+    </div>
+  );
+}
 
 interface VocabPair { en: string; vi: string; }
 
@@ -14,6 +56,7 @@ interface InteractiveVocabGameProps {
 type GameMode = 'menu' | 'flashcard' | 'match' | 'spell' | 'results';
 
 export function InteractiveVocabGame({ words, unitTitle, onComplete }: InteractiveVocabGameProps) {
+  useVocabAnimations();
   const [mode, setMode] = useState<GameMode>('menu');
   const [score, setScore] = useState(0);
   const [round, setRound] = useState(0);
@@ -166,7 +209,9 @@ export function InteractiveVocabGame({ words, unitTitle, onComplete }: Interacti
             ...glass, padding: 40, textAlign: 'center', cursor: 'pointer',
             background: showAnswer ? 'linear-gradient(135deg, #ede9fe, #fce7f3)' : 'linear-gradient(135deg, #eef2ff, #e0e7ff)',
             minHeight: 180, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-            transition: 'all 0.4s', transform: showAnswer ? 'rotateY(0deg)' : 'rotateY(0deg)',
+            transition: 'background 0.4s, box-shadow 0.3s',
+            animation: showAnswer ? 'vg-card-flip 0.5s ease' : undefined,
+            boxShadow: showAnswer ? '0 8px 30px rgba(124, 58, 237, 0.15)' : '0 4px 16px rgba(0,0,0,0.06)',
           }}
         >
           <div style={{ fontSize: 36, fontWeight: 900, color: '#1e1b4b', marginBottom: 8 }}>
@@ -229,8 +274,11 @@ export function InteractiveVocabGame({ words, unitTitle, onComplete }: Interacti
                 border: card.selected ? '3px solid #6366f1' : card.matched ? '2px solid #22c55e' : '2px solid #e2e8f0',
                 background: card.matched ? '#dcfce7' : card.selected ? '#eef2ff' : '#fff',
                 color: card.matched ? '#16a34a' : card.type === 'en' ? '#1e1b4b' : '#7c3aed',
-                opacity: card.matched ? 0.6 : 1,
-                transition: 'all 0.2s', minHeight: 56, wordBreak: 'break-word',
+                opacity: card.matched ? 0.7 : 1,
+                transition: 'all 0.25s',
+                animation: card.matched ? 'vg-pop 0.4s ease-out' : card.selected ? 'vg-bounce 0.6s ease-in-out infinite' : undefined,
+                minHeight: 56, wordBreak: 'break-word',
+                boxShadow: card.selected ? '0 0 16px rgba(99,102,241,0.3)' : card.matched ? '0 0 12px rgba(34,197,94,0.2)' : 'none',
               }}
             >
               {card.text}
@@ -316,24 +364,40 @@ export function InteractiveVocabGame({ words, unitTitle, onComplete }: Interacti
   // ── RESULTS ──
   const pct = totalRounds > 0 ? Math.round((score / totalRounds) * 100) : 0;
   const emoji = pct >= 90 ? '🏆' : pct >= 70 ? '⭐' : pct >= 50 ? '👍' : '💪';
+  const confettiColors = ['#f59e0b', '#22c55e', '#6366f1', '#ec4899', '#3b82f6'];
 
   return (
-    <div style={{ ...glass, padding: 32, textAlign: 'center' }}>
-      <Trophy size={48} style={{ color: '#f59e0b', marginBottom: 12 }} />
-      <h3 style={{ fontSize: 24, fontWeight: 900, color: '#1e1b4b', marginBottom: 4 }}>
+    <div style={{ ...glass, padding: 32, textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+      {/* Confetti burst */}
+      {pct >= 70 && (
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, pointerEvents: 'none', display: 'flex', justifyContent: 'center' }}>
+          {confettiColors.map((c, i) => (
+            <span key={i} style={{
+              display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: c,
+              animation: `vg-confetti 1.5s ease-out ${i * 0.15}s forwards`,
+              marginLeft: (i - 2) * 24, marginTop: 20,
+            }} />
+          ))}
+        </div>
+      )}
+
+      <div style={{ animation: 'vg-pop 0.6s ease-out' }}>
+        <ScoreRing score={score} total={totalRounds} />
+      </div>
+
+      <h3 style={{ fontSize: 24, fontWeight: 900, color: '#1e1b4b', marginBottom: 4, animation: 'vg-pop 0.5s ease-out 0.3s both' }}>
         {emoji} Kết quả!
       </h3>
-      <div style={{ fontSize: 48, fontWeight: 900, color: pct >= 70 ? '#22c55e' : '#f59e0b', margin: '12px 0' }}>
-        {score}/{totalRounds}
-      </div>
-      <div style={{ fontSize: 16, color: '#64748b', marginBottom: 20 }}>
+      <div style={{ fontSize: 16, color: '#64748b', marginBottom: 20, animation: 'vg-pop 0.5s ease-out 0.5s both' }}>
         {pct >= 90 ? 'Xuất sắc! Bạn đã thành thạo!' : pct >= 70 ? 'Rất tốt! Gần hoàn hảo!' : pct >= 50 ? 'Khá tốt! Cố thêm nữa nhé!' : 'Hãy ôn lại và thử lại!'}
       </div>
 
-      <div style={{ display: 'flex', gap: 10 }}>
+      <div style={{ display: 'flex', gap: 10, animation: 'vg-pop 0.5s ease-out 0.7s both' }}>
         <button
           onClick={() => { setMode('menu'); setScore(0); setRound(0); setStreak(0); setShowAnswer(false); setSpellInput(''); setSpellFeedback(null); setTotalAttempts(0); }}
-          style={{ flex: 1, padding: '14px', borderRadius: 14, border: 'none', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
+          style={{ flex: 1, padding: '14px', borderRadius: 14, border: 'none', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, transition: 'transform 0.2s' }}
+          onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.04)'}
+          onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
         >
           <RotateCcw size={16} /> Chơi lại
         </button>
@@ -341,7 +405,9 @@ export function InteractiveVocabGame({ words, unitTitle, onComplete }: Interacti
       {onComplete && (
         <button
           onClick={() => onComplete(score)}
-          style={{ width: '100%', marginTop: 10, padding: '14px', borderRadius: 14, border: '2px solid #e2e8f0', background: '#fff', color: '#1e1b4b', fontSize: 15, fontWeight: 700, cursor: 'pointer' }}
+          style={{ width: '100%', marginTop: 10, padding: '14px', borderRadius: 14, border: '2px solid #e2e8f0', background: '#fff', color: '#1e1b4b', fontSize: 15, fontWeight: 700, cursor: 'pointer', transition: 'all 0.2s' }}
+          onMouseEnter={e => { e.currentTarget.style.background = '#f8fafc'; e.currentTarget.style.borderColor = '#6366f1'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.borderColor = '#e2e8f0'; }}
         >
           Tiếp tục bài học →
         </button>
