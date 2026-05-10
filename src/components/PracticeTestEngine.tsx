@@ -276,10 +276,19 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
         Câu {currentQ + 1}/{total} • {currentPart?.instructionVi}
       </p>
 
-      {/* Part illustration image */}
-      {currentPart?.partImage && (
-        <div style={{ marginBottom: 12, borderRadius: 14, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)' }}>
-          <img src={currentPart.partImage} alt={currentPart.titleVi} style={{ width: '100%', maxHeight: 240, objectFit: 'contain', background: 'rgba(255,255,255,0.04)' }} />
+      {/* Part illustration images (Source Pages) */}
+      {(currentPart?.sourcePages?.length || currentPart?.partImage) && (
+        <div style={{ marginBottom: 16, display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {currentPart?.sourcePages?.map((pageSrc, idx) => (
+            <div key={idx} style={{ width: '100%', borderRadius: 14, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', background: '#fff' }}>
+              <img src={pageSrc} alt={`Source page ${idx + 1}`} style={{ width: '100%', height: 'auto', display: 'block' }} />
+            </div>
+          ))}
+          {(!currentPart?.sourcePages || currentPart.sourcePages.length === 0) && currentPart?.partImage && (
+            <div style={{ borderRadius: 14, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)' }}>
+              <img src={currentPart.partImage} alt={currentPart.titleVi} style={{ width: '100%', maxHeight: 240, objectFit: 'contain', background: 'rgba(255,255,255,0.04)' }} />
+            </div>
+          )}
         </div>
       )}
 
