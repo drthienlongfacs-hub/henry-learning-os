@@ -79,9 +79,9 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
     { key: 'ket', label: '🔑 KET (Key)', cefr: 'A2+', color: '#fc8181' },
     { key: 'pet', label: '📋 PET (Preliminary)', cefr: 'B1', color: '#b794f4' },
   ];
-  const officialFormatTests = PRACTICE_TESTS.filter(t => t.level === selectedLevel && t.setNo !== undefined);
-  const availableSetNumbers = Array.from(new Set(officialFormatTests.map(t => t.setNo ?? 1))).sort((a, b) => a - b);
-  const availableTests = officialFormatTests.filter(t => t.setNo === selectedSetNo);
+  const levelTests = PRACTICE_TESTS.filter(t => t.level === selectedLevel);
+  const availableSetNumbers = Array.from(new Set(levelTests.map(t => t.setNo ?? 0))).sort((a, b) => a - b);
+  const availableTests = levelTests.filter(t => (t.setNo ?? 0) === selectedSetNo);
   const activeSpec = CAMBRIDGE_EXAM_SPECS[selectedLevel as CambridgeExamLevelId];
 
   const card = { background: 'rgba(255,255,255,0.06)', borderRadius: 14, padding: 14, border: '1px solid rgba(255,255,255,0.08)', marginBottom: 10 };
@@ -128,7 +128,7 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
             background: selectedSetNo === setNo ? 'rgba(249,212,35,0.18)' : 'rgba(255,255,255,0.06)',
             color: selectedSetNo === setNo ? '#f9d423' : '#cbd5e0',
           }}>
-            Bộ {setNo}
+            {setNo === 0 ? 'Đề gốc' : `Bộ ${setNo}`}
           </button>
         ))}
       </div>
@@ -276,6 +276,13 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
         Câu {currentQ + 1}/{total} • {currentPart?.instructionVi}
       </p>
 
+      {/* Part Audio (if any) */}
+      {currentPart?.audioUrl && (
+        <div style={{ marginBottom: 16 }}>
+          <audio controls src={currentPart.audioUrl} style={{ width: '100%', borderRadius: 8 }} />
+        </div>
+      )}
+
       {/* Part illustration images (Source Pages) */}
       {(currentPart?.sourcePages?.length || currentPart?.partImage) && (
         <div style={{ marginBottom: 16, display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -298,7 +305,11 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
         {q.imageEmoji && !q.imagePath && <div style={{ fontSize: 48, textAlign: 'center', marginBottom: 8 }}>{q.imageEmoji}</div>}
         <p style={{ fontSize: 16, fontWeight: 600, margin: '0 0 12px', lineHeight: 1.5, whiteSpace: 'pre-line' }}>{q.prompt}</p>
 
-        {q.audioTranscript && (
+        {q.audioUrl ? (
+          <div style={{ marginBottom: 16 }}>
+            <audio controls src={q.audioUrl} style={{ width: '100%', borderRadius: 8 }} />
+          </div>
+        ) : q.audioTranscript ? (
           <button 
             disabled={loadingAudioId === q.id}
             onClick={() => {
@@ -316,7 +327,7 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
           >
             {loadingAudioId === q.id ? '⏳ Đang tải audio...' : playingAudioId === q.id ? '🔊 Đang phát...' : '🔊 Nghe đoạn hội thoại (Audio)'}
           </button>
-        )}
+        ) : null}
 
         {/* === ANSWER INPUT SECTION === */}
         {/* Type 1: Spell (Starters — unscramble letters) */}

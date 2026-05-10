@@ -23,6 +23,8 @@ export interface PracticeQuestion {
   strategyVi: string;
   /** Script audio cho bài Listening (nếu có) */
   audioTranscript?: string;
+  /** Link file audio thực tế cho bài nghe chuẩn (nếu có) */
+  audioUrl?: string;
   /** Self-assessed prompt for writing/speaking tasks. */
   selfAssessment?: boolean;
   /** Rubric shown after the learner attempts an open writing/speaking task. */
@@ -56,6 +58,8 @@ export interface PracticeTestPart {
   titleVi: string;
   instructionVi: string;
   sourcePages?: string[]; // paths to original exam page images
+  /** Đường dẫn file âm thanh thực tế áp dụng cho toàn bộ phần thi (VD: 1 audio file cho cả Part) */
+  audioUrl?: string;
   /** Illustration image for this part (scene picture, etc.) */
   partImage?: string;
   questions: PracticeQuestion[];
@@ -230,6 +234,8 @@ import { PET_1_TEST_1 } from './practice-tests-pet-1';
 import { PET_1_TEST_1_LISTENING } from './practice-tests-pet-1-listening';
 import { PET_1_TEST_2 } from './practice-tests-pet-1-test2';
 import { PET_1_TEST_2_LISTENING } from './practice-tests-pet-1-test2-listening';
+import { PET_1_TEST_3_LISTENING } from './practice-tests-pet-1-test3-listening';
+import { PET_1_TEST_3 } from './practice-tests-pet-1-test3';
 import { KET_LISTENING_1, PET_LISTENING_1 } from './practice-tests-ket-pet-listening';
 import { STARTERS_LISTENING, MOVERS_LISTENING_1 } from './practice-tests-yle-listening';
 import { STARTERS_LISTENING_AUTHENTIC, STARTERS_RW_AUTHENTIC } from './practice-tests-starters-authentic';
@@ -550,7 +556,7 @@ function buildPartSpecificQuestion(base: any, levelId: CambridgeExamLevelId, set
       const names = ['Tom', 'Anna', 'Sam', 'Grace', 'Ben'];
       const items = ['the tall boy with glasses', 'the girl with a red hat', 'the child next to the tree', 'the woman with a bag', 'the boy holding a ball'];
       const ni = (setNo + questionNo - 1) % names.length;
-      return { ...base, prompt: `🔊 Listen. Which person is ${names[ni]}?\n\n"${names[ni]} is ${items[ni]}."`, options: items.map((_, i) => `Person ${i + 1}`), answer: `Person ${ni + 1}`, audioTranscript: `Woman: Where is ${names[ni]}?\nMan: ${names[ni]} is ${items[ni]}.`, explanationVi: `${names[ni]} được mô tả là "${items[ni]}". Khi nghe, chú ý mô tả ngoại hình (tall, short, glasses, hat) và vị trí (next to, behind, near) — đây là manh mối chính để nối tên với người.`, ...EXAM_STRATEGIES.listening_general };
+      return { ...base, prompt: `🔊 Listen. Which person is ${names[ni]}?`, options: items.map((_, i) => `Person ${i + 1}`), answer: `Person ${ni + 1}`, audioTranscript: `Woman: Where is ${names[ni]}?\nMan: ${names[ni]} is ${items[ni]}.`, explanationVi: `${names[ni]} được mô tả là "${items[ni]}". Khi nghe, chú ý mô tả ngoại hình (tall, short, glasses, hat) và vị trí (next to, behind, near) — đây là manh mối chính để nối tên với người.`, ...EXAM_STRATEGIES.listening_general };
     }
     if (title.includes('write') || title.includes('number')) {
       // Listening Part 2: Write name/number
@@ -925,7 +931,7 @@ export const PRACTICE_TESTS: PracticeTest[] = [
   MOVERS_RW, MOVERS_RW_2, MOVERS_RW_3, MOVERS_RW_AUTHENTIC_1, MOVERS_RW_AUTHENTIC_2, MOVERS_RW_AUTHENTIC_3, MOVERS_LISTENING_1, MOVERS_LISTENING_2, MOVERS_LISTENING_3,
   FLYERS_RW, FLYERS_RW_2, FLYERS_RW_AUTHENTIC_1, FLYERS_LISTENING_AUTHENTIC_1,
   KET_RW_1, KET_RW_2, KET_LISTENING_1, KET_LISTENING_AUTHENTIC, KET_SPEAKING,
-  PET_RW_1, PET_LISTENING_1, PET_SPEAKING, PET_1_TEST_1, PET_1_TEST_1_LISTENING, PET_1_TEST_2, PET_1_TEST_2_LISTENING,
+  PET_RW_1, PET_LISTENING_1, PET_SPEAKING, PET_1_TEST_1, PET_1_TEST_1_LISTENING, PET_1_TEST_2, PET_1_TEST_2_LISTENING, PET_1_TEST_3, PET_1_TEST_3_LISTENING,
 ];
 
 export const OFFICIAL_FORMAT_PRACTICE_TESTS = PRACTICE_TESTS.filter((test) => test.setNo !== undefined);
