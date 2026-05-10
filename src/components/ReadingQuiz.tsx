@@ -92,6 +92,7 @@ export default function ReadingQuiz({lang}:{lang:string}){
   const[speakingIdx,setSpeakingIdx]=useState<number|null>(null);
   const[isPaused,setIsPaused]=useState(false);
   const[isFullPlaying,setIsFullPlaying]=useState(false);
+  const[voiceDebugInfo,setVoiceDebugInfo]=useState('');
   const speakingRef=useRef(false);
 
   const p=passages[idx%passages.length]??null;
@@ -148,6 +149,13 @@ export default function ReadingQuiz({lang}:{lang:string}){
     },0);
     return ()=>window.clearTimeout(timeout);
   },[]);
+
+  useEffect(()=>{
+    const timeout=window.setTimeout(()=>{
+      setVoiceDebugInfo(getVoiceDebugInfo(accent));
+    },0);
+    return ()=>window.clearTimeout(timeout);
+  },[accent]);
 
   if(!p||!evidenceProfile) return null;
 
@@ -218,7 +226,7 @@ export default function ReadingQuiz({lang}:{lang:string}){
       {/* Voice indicator */}
       <div style={{padding:'0 1.25rem',marginTop:'2px'}}>
         <span style={{fontSize:'0.48rem',color:'#94a3b8',fontStyle:'italic'}}>
-          {getVoiceDebugInfo(accent)}
+          {voiceDebugInfo || (vi ? 'Đang kiểm tra giọng đọc...' : 'Checking voice engine...')}
         </span>
       </div>
 

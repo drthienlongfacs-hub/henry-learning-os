@@ -9,6 +9,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "health:live": "node scripts/live-health-check.mjs",
     "smoke:ui": "playwright test --config=playwright.config.ts",
     "smoke:ui:build": "npm run build && npm run smoke:ui"
   },

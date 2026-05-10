@@ -5,9 +5,8 @@
 // Benchmark: Epic! "Read to Me" free library
 // ========================================
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { BookOpen, Globe, ExternalLink, RefreshCw } from 'lucide-react';
-import { searchStoryWeaver, type StoryWeaverBook } from '@/lib/resources/adapters/storyweaver-adapter';
+import React, { useMemo, useState } from 'react';
+import { BookOpen, Globe, ExternalLink } from 'lucide-react';
 
 interface FreeStoriesShelfProps {
     lang: string;
@@ -20,7 +19,92 @@ const READING_LEVELS = [
     { value: '4', label: 'Level 4 — Nâng cao', emoji: '🏆' },
 ];
 
-function StoryCard({ story }: { story: StoryWeaverBook }) {
+type CuratedStory = {
+    id: string;
+    title: string;
+    language: 'English' | 'Vietnamese';
+    level: '1' | '2' | '3' | '4';
+    synopsis: string;
+    authors: string[];
+    readUrl: string;
+};
+
+const CURATED_STORY_LINKS: CuratedStory[] = [
+    {
+        id: 'storyweaver-en-l1',
+        title: 'StoryWeaver Level 1 stories',
+        language: 'English',
+        level: '1',
+        synopsis: 'Short illustrated stories for early readers. Open on StoryWeaver when the child wants a fresh free story.',
+        authors: ['Pratham Books / StoryWeaver'],
+        readUrl: 'https://storyweaver.org.in/en/stories?level=1&language=English',
+    },
+    {
+        id: 'storyweaver-en-l2',
+        title: 'StoryWeaver Level 2 stories',
+        language: 'English',
+        level: '2',
+        synopsis: 'Simple English stories with more sentences per page for daily reading practice.',
+        authors: ['Pratham Books / StoryWeaver'],
+        readUrl: 'https://storyweaver.org.in/en/stories?level=2&language=English',
+    },
+    {
+        id: 'storyweaver-en-l3',
+        title: 'StoryWeaver Level 3 stories',
+        language: 'English',
+        level: '3',
+        synopsis: 'Longer stories for vocabulary, retelling, and parent-child discussion.',
+        authors: ['Pratham Books / StoryWeaver'],
+        readUrl: 'https://storyweaver.org.in/en/stories?level=3&language=English',
+    },
+    {
+        id: 'storyweaver-en-l4',
+        title: 'StoryWeaver Level 4 stories',
+        language: 'English',
+        level: '4',
+        synopsis: 'Chapter-style free reading links for confident readers.',
+        authors: ['Pratham Books / StoryWeaver'],
+        readUrl: 'https://storyweaver.org.in/en/stories?level=4&language=English',
+    },
+    {
+        id: 'storyweaver-vi-l1',
+        title: 'Truyện tiếng Việt Level 1',
+        language: 'Vietnamese',
+        level: '1',
+        synopsis: 'Truyện ngắn minh họa cho trẻ mới đọc, mở trực tiếp trên StoryWeaver.',
+        authors: ['Pratham Books / StoryWeaver'],
+        readUrl: 'https://storyweaver.org.in/en/stories?level=1&language=Vietnamese',
+    },
+    {
+        id: 'storyweaver-vi-l2',
+        title: 'Truyện tiếng Việt Level 2',
+        language: 'Vietnamese',
+        level: '2',
+        synopsis: 'Truyện tiếng Việt đơn giản để luyện đọc thành tiếng và kể lại.',
+        authors: ['Pratham Books / StoryWeaver'],
+        readUrl: 'https://storyweaver.org.in/en/stories?level=2&language=Vietnamese',
+    },
+    {
+        id: 'storyweaver-vi-l3',
+        title: 'Truyện tiếng Việt Level 3',
+        language: 'Vietnamese',
+        level: '3',
+        synopsis: 'Truyện dài hơn để luyện hiểu ý chính, nhân vật và bằng chứng trong câu.',
+        authors: ['Pratham Books / StoryWeaver'],
+        readUrl: 'https://storyweaver.org.in/en/stories?level=3&language=Vietnamese',
+    },
+    {
+        id: 'storyweaver-vi-l4',
+        title: 'Truyện tiếng Việt Level 4',
+        language: 'Vietnamese',
+        level: '4',
+        synopsis: 'Nguồn đọc mở rộng cho trẻ đã đọc tốt, dùng như thư viện ngoài app.',
+        authors: ['Pratham Books / StoryWeaver'],
+        readUrl: 'https://storyweaver.org.in/en/stories?level=4&language=Vietnamese',
+    },
+];
+
+function StoryCard({ story }: { story: CuratedStory }) {
     const [hovered, setHovered] = useState(false);
 
     return (
@@ -50,11 +134,14 @@ function StoryCard({ story }: { story: StoryWeaverBook }) {
             <div style={{
                 width: '100%',
                 aspectRatio: '4/3',
-                background: story.coverUrl
-                    ? `url(${story.coverUrl}) center/cover`
-                    : 'linear-gradient(135deg, #ddd6fe, #c4b5fd)',
+                background: 'linear-gradient(135deg, #ddd6fe, #c4b5fd)',
                 position: 'relative',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '2.2rem',
             }}>
+                📖
                 {/* Level badge */}
                 <span style={{
                     position: 'absolute',
@@ -107,6 +194,15 @@ function StoryCard({ story }: { story: StoryWeaverBook }) {
                         {story.authors.slice(0, 2).join(', ')}
                     </div>
                 )}
+                <p style={{
+                    fontSize: '0.58rem',
+                    color: '#64748b',
+                    lineHeight: 1.35,
+                    margin: '0 0 0.3rem',
+                    minHeight: 32,
+                }}>
+                    {story.synopsis}
+                </p>
                 <div style={{
                     display: 'flex', alignItems: 'center', gap: '4px',
                     fontSize: '0.55rem', color: '#6366f1', fontWeight: 600,
@@ -120,35 +216,12 @@ function StoryCard({ story }: { story: StoryWeaverBook }) {
 }
 
 export default function FreeStoriesShelf({ lang }: FreeStoriesShelfProps) {
-    const [stories, setStories] = useState<StoryWeaverBook[]>([]);
-    const [loading, setLoading] = useState(false);
     const [selectedLang, setSelectedLang] = useState<'English' | 'Vietnamese'>('English');
     const [selectedLevel, setSelectedLevel] = useState<string>('1');
-    const [error, setError] = useState('');
 
-    const fetchStories = useCallback(async () => {
-        setLoading(true);
-        setError('');
-        try {
-            const result = await searchStoryWeaver({
-                language: selectedLang,
-                level: selectedLevel as '1' | '2' | '3' | '4',
-                limit: 8,
-            });
-            setStories(result);
-            if (result.length === 0) setError(lang === 'vi' ? 'Không tìm thấy truyện' : 'No stories found');
-        } catch {
-            setError(lang === 'vi' ? 'Lỗi kết nối' : 'Connection error');
-        }
-        setLoading(false);
-    }, [lang, selectedLang, selectedLevel]);
-
-    useEffect(() => {
-        const timer = window.setTimeout(() => {
-            void fetchStories();
-        }, 0);
-        return () => window.clearTimeout(timer);
-    }, [fetchStories]);
+    const stories = useMemo(() => CURATED_STORY_LINKS.filter((story) =>
+        story.language === selectedLang && story.level === selectedLevel
+    ), [selectedLang, selectedLevel]);
 
     return (
         <div style={{
@@ -180,8 +253,8 @@ export default function FreeStoriesShelf({ lang }: FreeStoriesShelfProps) {
                     </div>
                     <p style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.85)', margin: 0 }}>
                         {lang === 'vi'
-                            ? 'Pratham Books / StoryWeaver • CC-BY 4.0 • Tiếng Anh & Tiếng Việt'
-                            : 'Pratham Books / StoryWeaver • CC-BY 4.0 • English & Vietnamese'}
+                            ? 'Pratham Books / StoryWeaver • CC-BY 4.0 • link tĩnh không auto-fetch'
+                            : 'Pratham Books / StoryWeaver • CC-BY 4.0 • static links, no auto-fetch'}
                     </p>
                 </div>
             </div>
@@ -236,29 +309,15 @@ export default function FreeStoriesShelf({ lang }: FreeStoriesShelfProps) {
 
             {/* Stories Grid */}
             <div style={{ padding: '0 1.5rem 1.5rem' }}>
-                {loading ? (
-                    <div style={{
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        gap: '0.5rem', padding: '2rem', color: '#94a3b8',
-                    }}>
-                        <RefreshCw size={16} style={{ animation: 'spin 1s linear infinite' }} />
-                        <span style={{ fontSize: '0.8rem' }}>{lang === 'vi' ? 'Đang tải...' : 'Loading...'}</span>
-                    </div>
-                ) : error ? (
-                    <div style={{ textAlign: 'center', padding: '1.5rem', color: '#94a3b8', fontSize: '0.8rem' }}>
-                        {error}
-                    </div>
-                ) : (
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
-                        gap: '0.75rem',
-                    }}>
-                        {stories.map(story => (
-                            <StoryCard key={story.id} story={story} />
-                        ))}
-                    </div>
-                )}
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
+                    gap: '0.75rem',
+                }}>
+                    {stories.map(story => (
+                        <StoryCard key={story.id} story={story} />
+                    ))}
+                </div>
 
                 {/* Attribution */}
                 <div style={{
@@ -268,12 +327,10 @@ export default function FreeStoriesShelf({ lang }: FreeStoriesShelfProps) {
                     lineHeight: 1.5,
                 }}>
                     📋 {lang === 'vi'
-                        ? 'Truyện từ StoryWeaver (storyweaver.org.in) — Pratham Books. Giấy phép CC-BY 4.0. Đọc miễn phí, chia sẻ tự do.'
-                        : 'Stories from StoryWeaver (storyweaver.org.in) — Pratham Books. CC-BY 4.0 License. Free to read and share.'}
+                        ? 'StoryWeaver không được auto-fetch trên GitHub Pages để tránh CORS/lag; các thẻ này là link tĩnh tới nguồn CC-BY 4.0.'
+                        : 'StoryWeaver is not auto-fetched on GitHub Pages to avoid CORS/lag; these are static links to the CC-BY 4.0 source.'}
                 </div>
             </div>
-
-            <style>{`@keyframes spin { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }`}</style>
         </div>
     );
 }

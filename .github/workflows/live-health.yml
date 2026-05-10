@@ -1,0 +1,36 @@
+name: Live Health
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 05:17 Asia/Ho_Chi_Minh daily. Keep this separate from deploy so Pages can
+    # be monitored even when no code is pushed.
+    - cron: "17 22 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "live-health"
+  cancel-in-progress: false
+
+jobs:
+  live-health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - run: npx playwright install --with-deps chromium
+
+      - name: Probe live Pages routes
+        env:
+          LIVE_BASE_URL: https://drthienlongfacs-hub.github.io/henry-learning-os
+        run: npm run health:live

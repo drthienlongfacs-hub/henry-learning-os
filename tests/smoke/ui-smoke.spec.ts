@@ -177,11 +177,17 @@ async function hydrateProfileThroughOnboarding(page: Page) {
 for (const route of UI_SMOKE_ROUTES) {
     test(`${route.label} renders and passes basic WCAG smoke`, async ({ page }) => {
         const badLocalResponses: string[] = [];
+        const consoleErrors: string[] = [];
+        const pageErrors: string[] = [];
         page.on('response', (response) => {
             if (response.url().startsWith(baseUrl) && response.status() >= 400) {
                 badLocalResponses.push(`${response.status()} ${response.url()}`);
             }
         });
+        page.on('console', (message) => {
+            if (message.type() === 'error') consoleErrors.push(message.text());
+        });
+        page.on('pageerror', (error) => pageErrors.push(error.message));
 
         if (route.requiresHydratedProfile) {
             await hydrateProfileThroughOnboarding(page);
@@ -244,6 +250,8 @@ for (const route of UI_SMOKE_ROUTES) {
 
         expect(focusState, `${route.path} should expose keyboard focus`).toBeTruthy();
         expect(focusState?.isVisible).toBe(true);
+        expect(consoleErrors).toEqual([]);
+        expect(pageErrors).toEqual([]);
         expect(badLocalResponses).toEqual([]);
     });
 }
