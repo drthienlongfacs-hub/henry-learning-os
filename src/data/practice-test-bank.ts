@@ -234,16 +234,86 @@ import {
 const GENERATED_SET_COUNT = 10;
 
 const EXAM_THEMES = [
-  { title: 'Library project', scene: '📚🧒🎒', place: 'school library', person: 'Mia', object: 'library card', activity: 'reading club', answer: 'library', distractors: ['market', 'station'], color: 'blue', time: '3.30' },
-  { title: 'Park picnic', scene: '🧺🌳👧', place: 'city park', person: 'Ben', object: 'water bottle', activity: 'class picnic', answer: 'park', distractors: ['museum', 'hospital'], color: 'green', time: '10.15' },
-  { title: 'Science morning', scene: '🌱🔎📝', place: 'science room', person: 'Noah', object: 'notebook', activity: 'plant experiment', answer: 'plant', distractors: ['ticket', 'menu'], color: 'yellow', time: '9.20' },
-  { title: 'Museum trip', scene: '🏛️🎟️🚌', place: 'history museum', person: 'Emma', object: 'ticket', activity: 'class trip', answer: 'museum', distractors: ['library', 'beach'], color: 'red', time: '8.45' },
-  { title: 'Sports fair', scene: '🏀🏃👟', place: 'sports hall', person: 'Jack', object: 'sports shoes', activity: 'basketball game', answer: 'sports', distractors: ['music', 'cooking'], color: 'orange', time: '4.00' },
-  { title: 'Art workshop', scene: '🎨✏️🖼️', place: 'art room', person: 'Ruby', object: 'coloured pencils', activity: 'poster workshop', answer: 'pencils', distractors: ['gloves', 'keys'], color: 'purple', time: '2.10' },
-  { title: 'Music practice', scene: '🎵🎤📄', place: 'music room', person: 'Lily', object: 'song sheet', activity: 'school concert', answer: 'music', distractors: ['science', 'sport'], color: 'pink', time: '5.05' },
-  { title: 'Weekend market', scene: '🍎🛍️👨', place: 'weekend market', person: 'Henry', object: 'shopping bag', activity: 'buying fruit', answer: 'market', distractors: ['classroom', 'cinema'], color: 'brown', time: '11.30' },
-  { title: 'Beach clean-up', scene: '🏖️♻️🧤', place: 'small beach', person: 'Sofia', object: 'gloves', activity: 'clean-up', answer: 'beach', distractors: ['zoo', 'library'], color: 'white', time: '7.50' },
-  { title: 'Cafe project', scene: '☕🥪📋', place: 'school cafe', person: 'Oliver', object: 'menu', activity: 'charity cafe', answer: 'cafe', distractors: ['farm', 'pool'], color: 'black', time: '1.25' },
+  { title: 'Library project', scene: '📚🧒🎒', place: 'school library', person: 'Mia', object: 'library card', activity: 'reading club', answer: 'library', distractors: ['market', 'station'], color: 'blue', time: '3.30',
+    passage: 'Last Tuesday, Mia went to the school library with her class. The teacher said they could each choose two books. Mia found a book about animals and another about space. She sat in the reading corner and started to read. At 3.30, the bell rang and it was time to go home. Mia took her books to the desk and showed her library card. She was very happy with her new books.',
+    questions: [
+      { q: 'Where did Mia go with her class?', opts: ['the school library', 'the market', 'the station'], a: 'the school library' },
+      { q: 'How many books could each child choose?', opts: ['two', 'three', 'one'], a: 'two' },
+      { q: 'What time did the bell ring?', opts: ['3.30', '2.30', '4.00'], a: '3.30' },
+    ],
+  },
+  { title: 'Park picnic', scene: '🧺🌳👧', place: 'city park', person: 'Ben', object: 'water bottle', activity: 'class picnic', answer: 'class picnic', distractors: ['museum', 'hospital'], color: 'green', time: '10.15',
+    passage: 'On Saturday morning, Ben and his friends went to the city park for a class picnic. They arrived at 10.15 and put a big blanket on the grass under a tree. Everyone brought food to share. Ben brought sandwiches and a water bottle. They played football after lunch. It started to rain at 2 o\'clock, so they packed up and went home. It was a great day!',
+    questions: [
+      { q: 'Why did Ben go to the park?', opts: ['for a class picnic', 'to visit the museum', 'to go to hospital'], a: 'for a class picnic' },
+      { q: 'What did Ben bring to share?', opts: ['sandwiches', 'cake', 'fruit'], a: 'sandwiches' },
+      { q: 'Why did they go home?', opts: ['it started to rain', 'it was dark', 'they were bored'], a: 'it started to rain' },
+    ],
+  },
+  { title: 'Science morning', scene: '🌱🔎📝', place: 'science room', person: 'Noah', object: 'notebook', activity: 'plant experiment', answer: 'plant', distractors: ['ticket', 'menu'], color: 'yellow', time: '9.20',
+    passage: 'Noah\'s class did a plant experiment on Monday morning. The teacher gave each child a small pot and some seeds. Noah put his seeds in the pot and added water. He wrote the date in his notebook: 9.20 am. The teacher told them to put the pots near the window so the plants could get sunlight. After two weeks, Noah\'s plant was the tallest in the class!',
+    questions: [
+      { q: 'What did each child get from the teacher?', opts: ['a small pot and some seeds', 'a ticket and a menu', 'a book and a pen'], a: 'a small pot and some seeds' },
+      { q: 'Where did they put the pots?', opts: ['near the window', 'on the floor', 'in the cupboard'], a: 'near the window' },
+      { q: 'What happened after two weeks?', opts: ['Noah\'s plant was the tallest', 'the plants died', 'they moved the pots'], a: 'Noah\'s plant was the tallest' },
+    ],
+  },
+  { title: 'Museum trip', scene: '🏛️🎟️🚌', place: 'history museum', person: 'Emma', object: 'ticket', activity: 'class trip', answer: 'museum', distractors: ['library', 'beach'], color: 'red', time: '8.45',
+    passage: 'Emma\'s class went on a trip to the history museum. They left school by bus at 8.45. At the museum, a guide showed them old clothes, toys and tools from 100 years ago. Emma liked the old dolls best. She drew pictures of them in her notebook. They had lunch in the museum cafe and bought postcards from the gift shop before going home.',
+    questions: [
+      { q: 'How did Emma\'s class get to the museum?', opts: ['by bus', 'by train', 'on foot'], a: 'by bus' },
+      { q: 'What did Emma like best?', opts: ['the old dolls', 'the old tools', 'the old clothes'], a: 'the old dolls' },
+      { q: 'What did they buy from the gift shop?', opts: ['postcards', 'tickets', 'books'], a: 'postcards' },
+    ],
+  },
+  { title: 'Sports fair', scene: '🏀🏃👟', place: 'sports hall', person: 'Jack', object: 'sports shoes', activity: 'basketball game', answer: 'sports', distractors: ['music', 'cooking'], color: 'orange', time: '4.00',
+    passage: 'Jack was excited about the school sports fair on Friday. He put on his new sports shoes and went to the sports hall at 4 o\'clock. There were many activities: running races, a basketball game and a long jump competition. Jack played in the basketball game with his friends. His team won! The teacher gave everyone an orange juice at the end.',
+    questions: [
+      { q: 'When was the school sports fair?', opts: ['on Friday', 'on Monday', 'on Sunday'], a: 'on Friday' },
+      { q: 'Which sport did Jack play?', opts: ['basketball', 'football', 'tennis'], a: 'basketball' },
+      { q: 'What did the teacher give everyone?', opts: ['an orange juice', 'a medal', 'new shoes'], a: 'an orange juice' },
+    ],
+  },
+  { title: 'Art workshop', scene: '🎨✏️🖼️', place: 'art room', person: 'Ruby', object: 'coloured pencils', activity: 'poster workshop', answer: 'pencils', distractors: ['gloves', 'keys'], color: 'purple', time: '2.10',
+    passage: 'Ruby went to an art workshop in the art room after school. It started at 2.10. The art teacher showed the children how to make posters. Ruby used her coloured pencils to draw a picture of a rainbow. She wrote "Save Our Planet" in big purple letters at the top. The teacher put all the posters on the wall. Ruby\'s poster was the most colourful one.',
+    questions: [
+      { q: 'What did the children learn to make?', opts: ['posters', 'gloves', 'keys'], a: 'posters' },
+      { q: 'What did Ruby draw?', opts: ['a rainbow', 'a house', 'a cat'], a: 'a rainbow' },
+      { q: 'Where did the teacher put the posters?', opts: ['on the wall', 'on the floor', 'in a box'], a: 'on the wall' },
+    ],
+  },
+  { title: 'Music practice', scene: '🎵🎤📄', place: 'music room', person: 'Lily', object: 'song sheet', activity: 'school concert', answer: 'music', distractors: ['science', 'sport'], color: 'pink', time: '5.05',
+    passage: 'Lily was practising for the school concert every day after school. She went to the music room at 5.05 and the music teacher gave her a song sheet. Lily sang the songs and played the piano. The concert was on Saturday evening. Lily wore a pink dress. Her parents came to watch. When Lily finished singing, everyone clapped. She felt very proud.',
+    questions: [
+      { q: 'What was Lily practising for?', opts: ['the school concert', 'a science test', 'a sport day'], a: 'the school concert' },
+      { q: 'What instrument did Lily play?', opts: ['the piano', 'the guitar', 'the drums'], a: 'the piano' },
+      { q: 'How did Lily feel at the end?', opts: ['very proud', 'very tired', 'very sad'], a: 'very proud' },
+    ],
+  },
+  { title: 'Weekend market', scene: '🍎🛍️👨', place: 'weekend market', person: 'Henry', object: 'shopping bag', activity: 'buying fruit', answer: 'market', distractors: ['classroom', 'cinema'], color: 'brown', time: '11.30',
+    passage: 'Every Sunday, Henry goes to the weekend market with his dad. They leave home at 11.30 and walk there. Henry carries a big shopping bag. His dad buys fruit and vegetables. Henry always chooses the apples because they are his favourite. Sometimes they stop at a stall that sells fresh bread. Henry likes the market because it is busy and friendly.',
+    questions: [
+      { q: 'Who does Henry go to the market with?', opts: ['his dad', 'his mum', 'his friends'], a: 'his dad' },
+      { q: 'What is Henry\'s favourite fruit?', opts: ['apples', 'oranges', 'bananas'], a: 'apples' },
+      { q: 'How do they get to the market?', opts: ['they walk', 'they drive', 'they take the bus'], a: 'they walk' },
+    ],
+  },
+  { title: 'Beach clean-up', scene: '🏖️♻️🧤', place: 'small beach', person: 'Sofia', object: 'gloves', activity: 'clean-up', answer: 'beach', distractors: ['zoo', 'library'], color: 'white', time: '7.50',
+    passage: 'Sofia and her family joined a beach clean-up on Sunday morning. They arrived at the small beach at 7.50 and put on gloves. They picked up plastic bottles, bags and old cans from the sand. After two hours, they filled five big bags with rubbish. A man from the town hall thanked everyone and gave them all a drink. Sofia felt happy because the beach looked beautiful and clean again.',
+    questions: [
+      { q: 'What did Sofia pick up from the beach?', opts: ['plastic bottles, bags and cans', 'shells and stones', 'books and toys'], a: 'plastic bottles, bags and cans' },
+      { q: 'How many bags of rubbish did they fill?', opts: ['five', 'three', 'ten'], a: 'five' },
+      { q: 'How did Sofia feel afterwards?', opts: ['happy', 'tired', 'angry'], a: 'happy' },
+    ],
+  },
+  { title: 'Cafe project', scene: '☕🥪📋', place: 'school cafe', person: 'Oliver', object: 'menu', activity: 'charity cafe', answer: 'cafe', distractors: ['farm', 'pool'], color: 'black', time: '1.25',
+    passage: 'Oliver\'s class opened a charity cafe at school to raise money for new books. Oliver helped write the menu. They sold sandwiches, cakes and juice. The cafe opened at 1.25 after lunch. Many parents and teachers came. Oliver served the drinks and his friend Zara made the sandwiches. By the end of the day, they had raised enough money to buy 30 new books for the school library.',
+    questions: [
+      { q: 'Why did the class open a cafe?', opts: ['to raise money for new books', 'to have a party', 'to learn cooking'], a: 'to raise money for new books' },
+      { q: 'What did Oliver do at the cafe?', opts: ['served the drinks', 'made sandwiches', 'wrote a story'], a: 'served the drinks' },
+      { q: 'How many new books could they buy?', opts: ['30', '10', '50'], a: '30' },
+    ],
+  },
 ];
 
 const componentMinutes = (duration: string): number => {
@@ -376,15 +446,26 @@ function buildGeneratedQuestions(
     }
 
     const answer = buildObjectiveAnswer(theme, questionNo);
-    const options = [answer, ...theme.distractors].slice(0, 3);
+    // Use passage-based options from theme.questions when available
+    const tq = theme.questions;
+    let options: string[];
+    let explanation: string;
+    if (tq && tq.length > 0) {
+      const qi = (questionNo - 1) % tq.length;
+      options = rotateOptions(tq[qi].opts, questionNo);
+      explanation = `Đáp án đúng là "${answer}". Đọc kỹ đoạn văn về ${theme.title} — thông tin nằm rõ trong bài đọc.`;
+    } else {
+      options = rotateOptions([answer, ...theme.distractors].slice(0, 3), questionNo);
+      explanation = `Đáp án đúng là "${answer}" vì dữ kiện chính của tình huống là ${theme.person} ở ${theme.place} với hoạt động ${theme.activity}.`;
+    }
     return {
       ...base,
       prompt: buildObjectivePrompt(component, part, theme, questionNo),
-      options: rotateOptions(options, questionNo),
+      options,
       answer,
       audioTranscript: component.skill === 'listening' ? buildListeningTranscript(theme, answer, questionNo) : undefined,
-      explanationVi: `Đáp án đúng là "${answer}" vì dữ kiện chính của tình huống là ${theme.person} ở ${theme.place} với hoạt động ${theme.activity}.`,
-      strategyVi: 'Tìm từ khóa trước, loại trừ hai đáp án sai, rồi kiểm tra lại với tranh/ngữ cảnh.',
+      explanationVi: explanation,
+      strategyVi: 'Đọc kỹ toàn bộ đoạn văn trước. Gạch chân từ khóa trong câu hỏi. Tìm thông tin tương ứng trong bài. Loại trừ đáp án sai rồi chọn.',
     };
   });
 }
@@ -395,6 +476,10 @@ function selectGapAnswer(questionNo: number, theme: typeof EXAM_THEMES[number]):
 }
 
 function buildObjectiveAnswer(theme: typeof EXAM_THEMES[number], questionNo: number): string {
+  const tq = theme.questions;
+  if (tq && tq.length > 0) {
+    return tq[(questionNo - 1) % tq.length].a;
+  }
   const answers = [theme.answer, theme.activity, theme.place];
   return answers[questionNo % answers.length];
 }
@@ -422,7 +507,14 @@ function buildObjectivePrompt(
     return `${theme.person}: Would you like to join the ${theme.activity}?`;
   }
 
-  return `Read the short text about ${theme.title}. Which answer is correct?`;
+  // Embed the full passage so the learner can actually read before answering
+  const tq = theme.questions;
+  if (tq && tq.length > 0) {
+    const qi = (questionNo - 1) % tq.length;
+    return `📖 Read the text, then answer the question.\n\n"${theme.passage}"\n\n${tq[qi].q}`;
+  }
+
+  return `📖 Read the text, then answer the question.\n\n"${theme.passage}"\n\nWhat is this text mainly about?`;
 }
 
 function buildGapPrompt(
@@ -432,18 +524,28 @@ function buildGapPrompt(
   questionNo: number,
 ): string {
   if (component.skill === 'listening') {
-    return `Listen and write the missing word or number. ${theme.person}'s note: ${part.taskFocusVi}. Answer ${questionNo}: ____`;
+    return `🔊 Listen and write the missing word or number.\n\n${theme.person}'s note about the ${theme.activity}:\nPlace: ${theme.place}\nTime: ____\nBring: ____\n\nAnswer ${questionNo}: ____`;
   }
 
   if (part.titleEn.toLowerCase().includes('jumbled')) {
-    return `Unscramble this word from ${theme.title}: ${selectGapAnswer(questionNo, theme).split('').reverse().join('-')}`;
+    const word = selectGapAnswer(questionNo, theme);
+    const shuffled = word.split('').sort(() => Math.random() - 0.5).join(' ');
+    return `🔤 Look at the picture ${theme.scene}. Put the letters in the right order to spell the word.\n\n${shuffled.toUpperCase()}`;
   }
 
-  return `${theme.person} went to the ${theme.place}. The missing word for question ${questionNo} is ____ .`;
+  // Reading gap-fill: embed passage with a blank
+  const answer = selectGapAnswer(questionNo, theme);
+  const passageWithGap = theme.passage.replace(new RegExp(answer, 'i'), '____');
+  return `📖 Read the text and write the missing word.\n\n"${passageWithGap}"\n\nThe missing word is: ____`;
 }
 
 function buildListeningTranscript(theme: typeof EXAM_THEMES[number], answer: string, questionNo: number): string {
-  return `Question ${questionNo}. Adult: Hello ${theme.person}. Are you ready for the ${theme.activity}? Child: Yes. Please write ${answer}. The time is ${theme.time}. Adult: Good. The important answer is ${answer}.`;
+  const dialogues = [
+    `Woman: Hello, ${theme.person}! What are you doing today?\n${theme.person}: I'm going to the ${theme.place} for the ${theme.activity}.\nWoman: That sounds fun! What time does it start?\n${theme.person}: It starts at ${theme.time}.\nWoman: And what do you need to bring?\n${theme.person}: I need to bring my ${theme.object}.`,
+    `Man: Good morning, ${theme.person}. Where are you going?\n${theme.person}: I'm going to the ${theme.place}.\nMan: What colour is your ${theme.object}?\n${theme.person}: It's ${theme.color}.\nMan: And what will you do there?\n${theme.person}: We're having a ${theme.activity}. It starts at ${theme.time}.`,
+    `Woman: ${theme.person}, can you help me? I'm looking for the ${theme.place}.\n${theme.person}: Yes, it's near the ${theme.activity} area.\nWoman: What time is it open?\n${theme.person}: From ${theme.time}. You should bring a ${theme.object}.\nWoman: Thank you! That's very helpful.`,
+  ];
+  return dialogues[(questionNo - 1) % dialogues.length];
 }
 
 function buildWritingPrompt(levelId: CambridgeExamLevelId, part: CambridgeOfficialPartSpec, theme: typeof EXAM_THEMES[number]): string {
