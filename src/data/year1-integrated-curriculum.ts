@@ -15,6 +15,27 @@ export interface CurriculumUnit {
   iconEmoji: string;
 }
 
+export interface VocabItem {
+  word: string;
+  meaning: string;
+  example?: string;
+  imageEmoji?: string;
+}
+
+export interface QuizItem {
+  question: string;
+  options: string[];
+  answer: string;
+  explanationVi?: string;
+}
+
+export interface InteractiveContent {
+  vocabCards?: VocabItem[];
+  quizzes?: QuizItem[];
+  readingText?: string;
+  instructions?: string[];
+}
+
 export interface CurriculumTopic {
   id: string;
   titleEn: string;
@@ -23,6 +44,7 @@ export interface CurriculumTopic {
   keyVocab?: string[];
   objectives?: string[];
   completed?: boolean;
+  interactive?: InteractiveContent;
 }
 
 // ═══ ENGLISH — Macmillan English 1 ═══

@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { Home, BookOpen, RotateCcw, Brain, Trophy, ChevronRight, ArrowLeft, CheckCircle2, BookMarked } from 'lucide-react';
 import { LangToggle } from '@/components/LangToggle';
 import { useTranslation } from '@/lib/i18n';
-import { YEAR1_CURRICULUM, YEAR1_STATS, type CurriculumUnit } from '@/data/year1-integrated-curriculum';
+import { YEAR1_CURRICULUM, YEAR1_STATS, type CurriculumUnit, type CurriculumTopic } from '@/data/year1-integrated-curriculum';
+import { Year1LessonModal } from '@/components/Year1LessonModal';
 
 type SubjectFilter = 'all' | 'english' | 'math' | 'science';
 type TermFilter = 0 | 1 | 2 | 3;
@@ -24,13 +25,30 @@ export default function Year1Page() {
   const [termFilter, setTermFilter] = useState<TermFilter>(0);
   const [expandedUnit, setExpandedUnit] = useState<string | null>(null);
   const [completedTopics, setCompletedTopics] = useState<Set<string>>(new Set());
+  const [activeTopic, setActiveTopic] = useState<{topic: CurriculumTopic; color: string} | null>(null);
+  const [bookFilter, setBookFilter] = useState<string>('all');
+
+  const allBooks = useMemo(() => {
+    const books = new Set<string>();
+    [...YEAR1_CURRICULUM.english.units, ...YEAR1_CURRICULUM.math.units, ...YEAR1_CURRICULUM.science.units].forEach(u => books.add(u.book));
+    return Array.from(books);
+  }, []);
 
   const allUnits = useMemo(() => {
     let units = [...YEAR1_CURRICULUM.english.units, ...YEAR1_CURRICULUM.math.units, ...YEAR1_CURRICULUM.science.units];
     if (subFilter !== 'all') units = units.filter(u => u.subject === subFilter);
     if (termFilter > 0) units = units.filter(u => u.term === termFilter);
+    if (bookFilter !== 'all') units = units.filter(u => u.book === bookFilter);
     return units;
-  }, [subFilter, termFilter]);
+  }, [subFilter, termFilter, bookFilter]);
+
+  const markComplete = (topicId: string) => {
+    setCompletedTopics(prev => {
+      const next = new Set(prev);
+      next.add(topicId);
+      return next;
+    });
+  };
 
   const toggleTopic = (topicId: string) => {
     setCompletedTopics(prev => {
@@ -109,25 +127,27 @@ export default function Year1Page() {
           </div>
         </div>
 
-        {/* Book list */}
+        {/* Book list — clickable filter */}
         <div className="card animate-fade-in" style={{ padding: '0.7rem 0.85rem', marginBottom: '0.75rem' }}>
           <div style={{ fontWeight: 800, fontSize: '0.78rem', color: 'var(--color-text-primary)', marginBottom: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-            <BookMarked size={14} color="#6366f1" /> Sách giáo khoa
+            <BookMarked size={14} color="#6366f1" /> Sách giáo khoa {bookFilter !== 'all' && <button onClick={() => setBookFilter('all')} style={{ fontSize:'0.6rem', padding:'0.1rem 0.4rem', borderRadius:99, border:'none', background:'#fee2e2', color:'#ef4444', cursor:'pointer', fontWeight:700, marginLeft:4 }}>✕ Bỏ lọc</button>}
           </div>
           <div style={{ display: 'grid', gap: '0.25rem' }}>
             {[
-              { n: 1, t: 'Macmillan English 1 Fluency Book', s: 'english' },
-              { n: 2, t: 'Macmillan English 1 Language Book', s: 'english' },
-              { n: 3, t: 'Macmillan English Practice Book + CD', s: 'english' },
-              { n: 4, t: 'Pearson Abacus Year 1 Workbook 1', s: 'math' },
-              { n: 5, t: 'Pearson Abacus Year 1 Workbook 2', s: 'math' },
-              { n: 6, t: 'Pearson Abacus Year 1 Workbook 3', s: 'math' },
-              { n: 7, t: 'Science Bug Pupil Book Year 1', s: 'science' },
+              { n: 1, t: 'Macmillan English 1', s: 'english', book: 'Macmillan English 1' },
+              { n: 2, t: 'Abacus Workbook 1', s: 'math', book: 'Abacus Workbook 1' },
+              { n: 3, t: 'Abacus Workbook 2', s: 'math', book: 'Abacus Workbook 2' },
+              { n: 4, t: 'Abacus Workbook 3', s: 'math', book: 'Abacus Workbook 3' },
+              { n: 5, t: 'Science Bug Year 1', s: 'science', book: 'Science Bug Year 1' },
             ].map(b => (
-              <div key={b.n} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.25rem 0', borderBottom: '1px solid rgba(0,0,0,0.04)' }}>
-                <span style={{ width: 20, height: 20, borderRadius: 6, background: SUB_META[b.s].bg, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.55rem', fontWeight: 900, flexShrink: 0 }}>{b.n}</span>
-                <span style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--color-text-primary)' }}>{b.t}</span>
-              </div>
+              <button key={b.n} onClick={() => setBookFilter(bookFilter === b.book ? 'all' : b.book)} style={{
+                display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.35rem 0.5rem',
+                borderBottom: '1px solid rgba(0,0,0,0.04)', border: bookFilter === b.book ? `2px solid ${SUB_META[b.s].color}` : '2px solid transparent',
+                borderRadius: 10, background: bookFilter === b.book ? `${SUB_META[b.s].color}08` : 'transparent', cursor: 'pointer', width: '100%', textAlign: 'left',
+              }}>
+                <span style={{ width: 22, height: 22, borderRadius: 6, background: SUB_META[b.s].bg, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.55rem', fontWeight: 900, flexShrink: 0 }}>{b.n}</span>
+                <span style={{ fontSize: '0.72rem', fontWeight: bookFilter === b.book ? 800 : 600, color: bookFilter === b.book ? SUB_META[b.s].color : 'var(--color-text-primary)' }}>{b.t}</span>
+              </button>
             ))}
           </div>
         </div>
@@ -210,7 +230,7 @@ export default function Year1Page() {
                       const typeColors: Record<string, string> = { lesson: '#3b82f6', activity: '#10b981', practice: '#f59e0b', review: '#8b5cf6' };
                       const typeLabels: Record<string, string> = { lesson: 'Bài học', activity: 'Hoạt động', practice: 'Luyện tập', review: 'Ôn tập' };
                       return (
-                        <button key={topic.id} onClick={() => toggleTopic(topic.id)} style={{
+                        <button key={topic.id} onClick={() => setActiveTopic({ topic, color: meta.color })} style={{
                           width: '100%', padding: '0.55rem 0.65rem', border: 'none', cursor: 'pointer',
                           borderRadius: 'var(--radius-md)', textAlign: 'left',
                           background: isDone ? `${meta.color}08` : 'rgba(0,0,0,0.02)',
@@ -269,6 +289,16 @@ export default function Year1Page() {
         <Link href="/child/review" className="nav-item"><RotateCcw size={20} /><span>Ôn tập</span></Link>
         <Link href="/child/mistakes" className="nav-item"><Brain size={20} /><span>Lỗi sai</span></Link>
       </nav>
+
+      {/* Interactive Lesson Modal */}
+      {activeTopic && (
+        <Year1LessonModal
+          topic={activeTopic.topic}
+          subjectColor={activeTopic.color}
+          onClose={() => setActiveTopic(null)}
+          onComplete={markComplete}
+        />
+      )}
     </div>
   );
 }
