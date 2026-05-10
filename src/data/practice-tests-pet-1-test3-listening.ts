@@ -1,10 +1,17 @@
 import type { PracticeTest } from './practice-test-bank';
 
-// Answer Key — Cambridge Preliminary English Test 1, Test 3
-// Part 1: 1A 2B 3C 4A 5C 6B 7A
-// Part 2: 8B 9A 10C 11B 12C 13A
-// Part 3: 14 cycling/bike, 15 12/twelve, 16 newspaper, 17 website, 18 Saturday, 19 café/cafe
-// Part 4: 20A 21B 22A 23B 24A 25B
+// ═══════════════════════════════════════════════════════════════════════
+// VERIFIED Answer Key — Cambridge Preliminary English Test 1, Test 3
+// Source: Book page 135, PDF page 144 (key-p144.png)
+// ═══════════════════════════════════════════════════════════════════════
+// Part 1 (Picture MCQ):  1A  2C  3C  4B  5C  6A  7B
+// Part 2 (MCQ – Abby):  8B  9C  10A 11B 12C 13A
+// Part 3 (Gap-fill):    14 rope  15 20/twenty  16 tall  17 band  18 rabbit  19 ice(-)cream
+// Part 4 (Yes/No):      20B 21B 22B 23A 24B 25A
+// ═══════════════════════════════════════════════════════════════════════
+// Question paper pages: 064-070 (book pages 64-70)
+// Audioscript pages:    136-140 (book pages 136-140)
+// ═══════════════════════════════════════════════════════════════════════
 
 export const PET_1_TEST_3_LISTENING: PracticeTest = {
   id: 'pet_1_test_3_listening',
@@ -16,62 +23,325 @@ export const PET_1_TEST_3_LISTENING: PracticeTest = {
     {
       partNumber: 1,
       titleEn: 'Listening Part 1: Multiple-choice pictures',
-      titleVi: 'Nghe Phần 1: Chọn tranh đúng',
-      instructionVi: 'Nghe 7 đoạn hội thoại ngắn. Với mỗi câu, chọn tranh đúng (A, B hoặc C).',
-      sourcePages: ['/exam-assets/pet1/test3/page-071.png', '/exam-assets/pet1/test3/page-072.png'],
+      titleVi: 'Nghe Phần 1: Chọn tranh đúng (Questions 1–7)',
+      instructionVi: 'Có 7 câu hỏi. Mỗi câu có 3 bức tranh và một đoạn ghi âm ngắn. Chọn đáp án đúng A, B hoặc C.',
+      sourcePages: [
+        '/exam-assets/pet1/test3/page-065.png',
+        '/exam-assets/pet1/test3/page-066.png',
+        '/exam-assets/pet1/test3/page-067.png'
+      ],
       questions: [
-        { id: 'pet_1_t3_l1', partNumber: 1, taskTypeVi: 'Chọn tranh', taskTypeEn: 'Picture MCQ', prompt: '1. What sport will the boy do at the sports centre?', options: ['A. Swimming (bơi lội)', 'B. Tennis (quần vợt)', 'C. Basketball (bóng rổ)'], answer: 'A', explanationVi: 'Cậu bé sẽ đi bơi tại trung tâm thể thao.', strategyVi: 'Nghe từ khóa xác nhận cuối cùng sau khi loại bỏ các môn thể thao được đề cập ban đầu.' },
-        { id: 'pet_1_t3_l2', partNumber: 1, taskTypeVi: 'Chọn tranh', taskTypeEn: 'Picture MCQ', prompt: '2. What did the woman leave on the bus?', options: ['A. Laptop (máy tính xách tay)', 'B. Handbag (túi xách)', 'C. Jacket (áo khoác)'], answer: 'B', explanationVi: 'Người phụ nữ để quên túi xách trên xe buýt.', strategyVi: 'Nghe kỹ: \"I left my...\" — đáp án cuối cùng là đúng sau khi sửa.' },
-        { id: 'pet_1_t3_l3', partNumber: 1, taskTypeVi: 'Chọn tranh', taskTypeEn: 'Picture MCQ', prompt: '3. Which musical instrument does the girl play?', options: ['A. Guitar (đàn guitar)', 'B. Piano (đàn piano)', 'C. Violin (đàn violin)'], answer: 'C', explanationVi: 'Cô gái chơi đàn violin.', strategyVi: 'Phân biệt nhạc cụ: guitar (đàn gảy), piano (đàn phím), violin (đàn kéo).' },
-        { id: 'pet_1_t3_l4', partNumber: 1, taskTypeVi: 'Chọn tranh', taskTypeEn: 'Picture MCQ', prompt: '4. What will the weather be like at the weekend?', options: ['A. Sunny and hot (nắng và nóng)', 'B. Cloudy and cool (mây và mát)', 'C. Rainy (mưa)'], answer: 'A', explanationVi: 'Cuối tuần sẽ có nắng và nóng.', strategyVi: 'Chú ý: \"at the weekend\" — không nhầm với thời tiết ngày hôm nay.' },
-        { id: 'pet_1_t3_l5', partNumber: 1, taskTypeVi: 'Chọn tranh', taskTypeEn: 'Picture MCQ', prompt: '5. Which photo will the boy use for the project?', options: ['A. City skyline (đường chân trời thành phố)', 'B. Park scene (cảnh công viên)', 'C. Beach photo (ảnh bãi biển)'], answer: 'C', explanationVi: 'Cậu bé sẽ dùng ảnh bãi biển cho dự án.', strategyVi: 'Nghe lý do chọn lựa cuối cùng: \"I think I\'ll use the one of...\"' },
-        { id: 'pet_1_t3_l6', partNumber: 1, taskTypeVi: 'Chọn tranh', taskTypeEn: 'Picture MCQ', prompt: '6. Where does the family decide to eat tonight?', options: ['A. At home (ở nhà)', 'B. At a restaurant (ở nhà hàng)', 'C. At a friend\'s house (ở nhà bạn)'], answer: 'B', explanationVi: 'Gia đình quyết định ăn tối tại nhà hàng.', strategyVi: 'Nghe thỏa thuận cuối: \"OK, let\'s go to...\"' },
-        { id: 'pet_1_t3_l7', partNumber: 1, taskTypeVi: 'Chọn tranh', taskTypeEn: 'Picture MCQ', prompt: '7. Which bag has the girl bought?', options: ['A. Backpack (ba lô)', 'B. Shoulder bag (túi đeo vai)', 'C. Suitcase (vali)'], answer: 'A', explanationVi: 'Cô gái đã mua ba lô.', strategyVi: 'Phân biệt 3 loại túi. Nghe mô tả hình dạng và cách mang.' }
+        {
+          id: 'pet_1_t3_l1', partNumber: 1,
+          taskTypeVi: 'Chọn tranh', taskTypeEn: 'Picture MCQ',
+          prompt: '1. Which T-shirt does the boy decide to buy?',
+          options: [
+            'A. White T-shirt with short sleeves and round neck',
+            'B. Dark V-neck T-shirt with short sleeves',
+            'C. Dark long-sleeved round-neck top'
+          ],
+          answer: 'A',
+          explanationVi: 'Cậu bé muốn áo đen tay ngắn nhưng chỉ còn tay dài. Áo tay ngắn chỉ có màu nhạt. Cậu chọn áo tay ngắn cổ tròn màu nhạt (A) vì "colour\'s not so important".',
+          strategyVi: 'Nghe đến quyết định cuối cùng: "I\'ll take one of the short-sleeved ones" → đáp án A.'
+        },
+        {
+          id: 'pet_1_t3_l2', partNumber: 1,
+          taskTypeVi: 'Chọn tranh', taskTypeEn: 'Picture MCQ',
+          prompt: '2. Who will be on the stage next?',
+          options: [
+            'A. Solo female pianist',
+            'B. Band with instruments',
+            'C. Band with female singer and drums'
+          ],
+          answer: 'C',
+          explanationVi: 'MC giới thiệu ban nhạc Subway — gồm tay trống và tay guitar, nhưng hôm nay có thêm Sarah Ireland (em gái tay trống) hát cùng → ban nhạc có nữ ca sĩ hát (C).',
+          strategyVi: 'Chú ý "here are Subway... singing here with them for the first time is Sarah Ireland, the drummer\'s sister" → C.'
+        },
+        {
+          id: 'pet_1_t3_l3', partNumber: 1,
+          taskTypeVi: 'Chọn tranh', taskTypeEn: 'Picture MCQ',
+          prompt: '3. What time will the pie be ready?',
+          options: [
+            'A. Clock showing 3:00 (ba giờ)',
+            'B. Clock showing 12:00/1:00',
+            'C. Clock showing 4:20-5:00 range'
+          ],
+          answer: 'C',
+          explanationVi: 'Bây giờ là 4:35. Bánh vào lò lúc 4:15. Mẹ nói "don\'t take it out until twenty past" (5:20 giờ) → 45 phút nữa. Đáp án C (đồng hồ chỉ khoảng 5:20).',
+          strategyVi: 'Nghe phép tính giờ: 4:35 hiện tại + "forty-five minutes to go" ≈ 5:20 → C.'
+        },
+        {
+          id: 'pet_1_t3_l4', partNumber: 1,
+          taskTypeVi: 'Chọn tranh', taskTypeEn: 'Picture MCQ',
+          prompt: '4. Which photo does the girl dislike?',
+          options: [
+            'A. Beach photo with two people walking',
+            'B. Beach photo with two people under palm tree',
+            'C. Boat/sailing photo'
+          ],
+          answer: 'B',
+          explanationVi: 'Cô gái nói "that dress I\'m wearing looks awful. I only bought it because it was half-price" → cô không thích bức ảnh mình mặc váy xấu (B).',
+          strategyVi: 'Nghe từ tiêu cực: "looks awful" → bức ảnh cô gái không thích là B.'
+        },
+        {
+          id: 'pet_1_t3_l5', partNumber: 1,
+          taskTypeVi: 'Chọn tranh', taskTypeEn: 'Picture MCQ',
+          prompt: '5. What should the students take on the school trip?',
+          options: [
+            'A. Water bottle and coins',
+            'B. Banana and fruit',
+            'C. Banana and coloured pencils'
+          ],
+          answer: 'C',
+          explanationVi: 'Cô giáo nói mang hoa quả (trái cây) vì chuyến đi dài, và cần mang bút màu (coloured pencils) cho bài tập → C.',
+          strategyVi: 'Nghe hai thứ cần mang: "Bring some... fruit" + "bring all your coloured pencils" → C.'
+        },
+        {
+          id: 'pet_1_t3_l6', partNumber: 1,
+          taskTypeVi: 'Chọn tranh', taskTypeEn: 'Picture MCQ',
+          prompt: '6. Where do the boys decide to go?',
+          options: [
+            'A. Cinema (rạp chiếu phim)',
+            'B. Computer/game shop',
+            'C. Skateboarding park'
+          ],
+          answer: 'A',
+          explanationVi: 'Bạn 1 không đủ tiền mua game → "Let\'s go and watch the film". Bạn 2 đồng ý: "We can go skateboarding any time" → đi xem phim (A).',
+          strategyVi: 'Nghe quyết định cuối cùng sau khi loại các phương án khác → cinema (A).'
+        },
+        {
+          id: 'pet_1_t3_l7', partNumber: 1,
+          taskTypeVi: 'Chọn tranh', taskTypeEn: 'Picture MCQ',
+          prompt: '7. What has the girl lost?',
+          options: [
+            'A. Mobile phone (điện thoại)',
+            'B. Purse (ví tiền)',
+            'C. Pen (bút)'
+          ],
+          answer: 'B',
+          explanationVi: 'Cô gái lấy điện thoại ra khỏi cặp, cần bút để ghi → ví tiền rơi ra: "I think my purse fell out. I can\'t find it now" → B.',
+          strategyVi: 'Phân biệt: phone và pen được nhắc đến nhưng KHÔNG bị mất. Purse mới là thứ bị mất → B.'
+        }
       ]
     },
     {
       partNumber: 2,
-      titleEn: 'Listening Part 2: MCQ — Youth Club Interview',
-      titleVi: 'Nghe Phần 2: Trắc nghiệm — Phỏng vấn câu lạc bộ thanh thiếu niên',
-      instructionVi: 'Nghe phỏng vấn Emma về câu lạc bộ thanh thiếu niên mới. Chọn A, B hoặc C.',
-      sourcePages: ['/exam-assets/pet1/test3/page-073.png'],
+      titleEn: 'Listening Part 2: MCQ — Interview with Abby Fielding (Teenage Surfer)',
+      titleVi: 'Nghe Phần 2: Trắc nghiệm — Phỏng vấn Abby Fielding (Vận động viên lướt sóng tuổi teen)',
+      instructionVi: 'Nghe phỏng vấn trên radio với Abby Fielding, vận động viên lướt sóng tuổi teen. Chọn đáp án đúng A, B hoặc C cho mỗi câu.',
+      sourcePages: [
+        '/exam-assets/pet1/test3/page-068.png',
+        '/exam-assets/pet1/test3/page-069.png'
+      ],
       questions: [
-        { id: 'pet_1_t3_l8', partNumber: 2, taskTypeVi: 'Trắc nghiệm', taskTypeEn: 'MCQ', prompt: '8. How did Emma first hear about the youth club?', options: ['A. from a friend', 'B. from a poster', 'C. from the internet'], answer: 'B', explanationVi: 'Emma biết về câu lạc bộ qua tờ áp phích (poster).', strategyVi: 'Nghe nguồn thông tin: friend/poster/internet — chọn cái được xác nhận cuối.' },
-        { id: 'pet_1_t3_l9', partNumber: 2, taskTypeVi: 'Trắc nghiệm', taskTypeEn: 'MCQ', prompt: '9. What does Emma say about the location of the club?', options: ['A. It is easy to get to by bus.', 'B. It is very close to her school.', 'C. It is difficult to find the first time.'], answer: 'A', explanationVi: 'Emma nói câu lạc bộ dễ đến bằng xe buýt.', strategyVi: 'Nghe đánh giá về vị trí: easy/difficult to get to, close to...' },
-        { id: 'pet_1_t3_l10', partNumber: 2, taskTypeVi: 'Trắc nghiệm', taskTypeEn: 'MCQ', prompt: '10. What activity does Emma enjoy most at the club?', options: ['A. painting', 'B. cooking', 'C. drama'], answer: 'C', explanationVi: 'Emma thích hoạt động kịch nghệ (drama) nhất.', strategyVi: 'Nghe superlative hoặc từ nhấn mạnh: \"most\", \"favourite\", \"best thing\".' },
-        { id: 'pet_1_t3_l11', partNumber: 2, taskTypeVi: 'Trắc nghiệm', taskTypeEn: 'MCQ', prompt: '11. What does Emma think about the club leader?', options: ['A. She is too strict.', 'B. She is very encouraging.', 'C. She is sometimes unfair.'], answer: 'B', explanationVi: 'Emma nghĩ người dẫn dắt câu lạc bộ rất khích lệ động viên.', strategyVi: 'Nghe nhận xét tích cực/tiêu cực về người lãnh đạo.' },
-        { id: 'pet_1_t3_l12', partNumber: 2, taskTypeVi: 'Trắc nghiệm', taskTypeEn: 'MCQ', prompt: '12. What problem does Emma mention about the club?', options: ['A. It closes too early.', 'B. There are not enough activities.', 'C. It can be crowded at times.'], answer: 'C', explanationVi: 'Vấn đề của câu lạc bộ là đôi khi quá đông người.', strategyVi: 'Nghe từ chỉ vấn đề/nhược điểm. "crowded" = đông người.' },
-        { id: 'pet_1_t3_l13', partNumber: 2, taskTypeVi: 'Trắc nghiệm', taskTypeEn: 'MCQ', prompt: '13. What does Emma plan to do at the club next month?', options: ['A. take part in a competition', 'B. help organise an event', 'C. teach a new skill to others'], answer: 'A', explanationVi: 'Emma có kế hoạch tham gia cuộc thi tháng tới.', strategyVi: 'Nghe kế hoạch tương lai: \"I\'m going to...\", \"I\'m planning to...\", \"next month\".' }
+        {
+          id: 'pet_1_t3_l8', partNumber: 2,
+          taskTypeVi: 'Trắc nghiệm', taskTypeEn: 'MCQ',
+          prompt: '8. Abby first decided to go surfing when',
+          options: [
+            'A. her dad offered to teach her.',
+            'B. she saw some local competitions.',
+            'C. her mother gave her money for a surfboard.'
+          ],
+          answer: 'B',
+          explanationVi: 'Bố muốn dạy (A đúng nhưng Abby vẫn chưa quyết). Mẹ cho tiền mua ván (C sai — mẹ đề nghị mua). Abby quyết định khi xem thi đấu: "I saw the standard... I just felt I could do better!" → B.',
+          strategyVi: 'Nghe thứ tự sự kiện: dad offered → mum offered board → watched competitions = decided → B.'
+        },
+        {
+          id: 'pet_1_t3_l9', partNumber: 2,
+          taskTypeVi: 'Trắc nghiệm', taskTypeEn: 'MCQ',
+          prompt: '9. What did Abby discover when she started surfing?',
+          options: [
+            'A. Her local surfing school was expensive.',
+            'B. She needed more equipment than she\'d expected.',
+            'C. It was good to try different surfboards.'
+          ],
+          answer: 'C',
+          explanationVi: 'Abby nói: "I went to the local surfing school... I was lent some boards before I bought one, to see which type I liked best — that was useful" → thử nhiều ván khác nhau là tốt (C).',
+          strategyVi: 'Nghe "lent some boards... to see which type I liked best" → C.'
+        },
+        {
+          id: 'pet_1_t3_l10', partNumber: 2,
+          taskTypeVi: 'Trắc nghiệm', taskTypeEn: 'MCQ',
+          prompt: '10. What does Abby say about surfing in the winter?',
+          options: [
+            'A. The sea is warm enough where she lives.',
+            'B. She wears a special suit for winter surfing.',
+            'C. The beaches are very quiet then.'
+          ],
+          answer: 'A',
+          explanationVi: 'Abby nói: "The sea is actually warmer than the land. I just wear the same wetsuit as I do in the summer" → biển đủ ấm (A).',
+          strategyVi: 'Nghe "the sea is actually warmer than the land" → A. B sai vì "same wetsuit". C không được đề cập.'
+        },
+        {
+          id: 'pet_1_t3_l11', partNumber: 2,
+          taskTypeVi: 'Trắc nghiệm', taskTypeEn: 'MCQ',
+          prompt: '11. How did Abby feel about surfing the enormous wave?',
+          options: [
+            'A. disappointed she didn\'t have the right board',
+            'B. worried at first by the size of the wave',
+            'C. scared about falling off her board'
+          ],
+          answer: 'B',
+          explanationVi: 'Abby nói: "I was nervous — the waves were a lot bigger than they look from the beach" → lo lắng ban đầu vì kích thước sóng (B).',
+          strategyVi: 'Nghe cảm xúc: "nervous" = worried → B. A sai (mượn ván lớn hơn). C sai ("I didn\'t have time to think about that").'
+        },
+        {
+          id: 'pet_1_t3_l12', partNumber: 2,
+          taskTypeVi: 'Trắc nghiệm', taskTypeEn: 'MCQ',
+          prompt: '12. What advice does Abby give to teenagers interested in surfing?',
+          options: [
+            'A. don\'t start until you\'re a very strong swimmer',
+            'B. find a good surfing teacher',
+            'C. learn to surf in different conditions'
+          ],
+          answer: 'C',
+          explanationVi: 'Abby khuyên: "you need to know how to surf whatever the waves are like — good and bad" → học lướt trong mọi điều kiện (C).',
+          strategyVi: 'Nghe lời khuyên: "whatever the waves are like — good and bad" = different conditions → C.'
+        },
+        {
+          id: 'pet_1_t3_l13', partNumber: 2,
+          taskTypeVi: 'Trắc nghiệm', taskTypeEn: 'MCQ',
+          prompt: '13. What does Abby want to do next?',
+          options: [
+            'A. find out about surfing as a career',
+            'B. study surfing science at university',
+            'C. train for the next surfing competition'
+          ],
+          answer: 'A',
+          explanationVi: 'Abby nói: "my future\'s definitely in surfing, so I need to investigate what opportunities there are" → tìm hiểu cơ hội nghề nghiệp lướt sóng (A).',
+          strategyVi: 'Nghe "investigate what opportunities" = find out about career → A. B sai ("not sure that\'s the right path"). C sai (chấn thương mắt cá).'
+        }
       ]
     },
     {
       partNumber: 3,
-      titleEn: 'Listening Part 3: Gap-fill — Community Park Project',
-      titleVi: 'Nghe Phần 3: Điền từ — Dự án công viên cộng đồng',
-      instructionVi: 'Nghe người phụ nữ giới thiệu về dự án công viên cộng đồng. Điền thông tin còn thiếu.',
-      sourcePages: ['/exam-assets/pet1/test3/page-074.png'],
+      titleEn: 'Listening Part 3: Gap-fill — Caspar and the Circus Family',
+      titleVi: 'Nghe Phần 3: Điền từ — Caspar và Gia đình Xiếc (Questions 14–19)',
+      instructionVi: 'Nghe cậu bé Caspar, thành viên một gia đình xiếc, kể về cuộc sống của mình. Điền thông tin còn thiếu vào chỗ trống.',
+      sourcePages: [
+        '/exam-assets/pet1/test3/page-070.png'
+      ],
       questions: [
-        { id: 'pet_1_t3_l14', partNumber: 3, taskTypeVi: 'Điền từ', taskTypeEn: 'Gap-fill', prompt: 'Main activity planned for the park: (14) ____________ track', options: [], answer: 'cycling/bike', explanationVi: 'Hoạt động chính được lên kế hoạch là đường đua xe đạp (cycling track).', strategyVi: 'Nghe danh từ sau \"track\" để biết loại đường: cycling/bike/running...' },
-        { id: 'pet_1_t3_l15', partNumber: 3, taskTypeVi: 'Điền từ', taskTypeEn: 'Gap-fill', prompt: 'Number of volunteers needed to start the project: (15) ____________', options: [], answer: '12/twelve', explanationVi: 'Dự án cần 12 tình nguyện viên để bắt đầu.', strategyVi: 'Nghe số: twelve/12. Ghi nhanh khi nghe số đề phòng nhầm (12/20, 12/13).' },
-        { id: 'pet_1_t3_l16', partNumber: 3, taskTypeVi: 'Điền từ', taskTypeEn: 'Gap-fill', prompt: 'Find updates about the project in the local (16) ____________', options: [], answer: 'newspaper', explanationVi: 'Tìm cập nhật về dự án trên báo địa phương.', strategyVi: 'Nghe phương tiện truyền thông: newspaper/radio/website/social media.' },
-        { id: 'pet_1_t3_l17', partNumber: 3, taskTypeVi: 'Điền từ', taskTypeEn: 'Gap-fill', prompt: 'Sign up for the project on the council (17) ____________', options: [], answer: 'website', explanationVi: 'Đăng ký tham gia dự án trên trang web của hội đồng.', strategyVi: 'Nghe cách thức đăng ký: website/phone/email/in person.' },
-        { id: 'pet_1_t3_l18', partNumber: 3, taskTypeVi: 'Điền từ', taskTypeEn: 'Gap-fill', prompt: 'First volunteer meeting: (18) ____________ morning at 10am', options: [], answer: 'Saturday', explanationVi: 'Buổi họp tình nguyện đầu tiên vào sáng thứ Bảy lúc 10 giờ.', strategyVi: 'Nghe ngày trong tuần: Saturday/Sunday/Monday... Viết hoa chữ cái đầu.' },
-        { id: 'pet_1_t3_l19', partNumber: 3, taskTypeVi: 'Điền từ', taskTypeEn: 'Gap-fill', prompt: 'Refreshments will be available at the (19) ____________ next to the park', options: [], answer: 'café/cafe', explanationVi: 'Đồ ăn nhẹ sẽ có tại quán cà phê cạnh công viên.', strategyVi: 'Nghe địa điểm: café/shop/centre. Cả hai cách viết đều chấp nhận.' }
+        {
+          id: 'pet_1_t3_l14', partNumber: 3,
+          taskTypeVi: 'Điền từ', taskTypeEn: 'Gap-fill',
+          prompt: "Caspar's mother dances across a (14) ____________ in the circus.",
+          options: [],
+          answer: 'rope',
+          explanationVi: 'Mẹ Caspar mặc trang phục đẹp và nhảy múa trên dây (rope) cách mặt đất 15 mét.',
+          strategyVi: 'Nghe "dances across a rope about fifteen metres above the ground" → rope.'
+        },
+        {
+          id: 'pet_1_t3_l15', partNumber: 3,
+          taskTypeVi: 'Điền từ', taskTypeEn: 'Gap-fill',
+          prompt: "Caspar's brother is in an act where as many as (15) ____________ people balance on a motorbike.",
+          options: [],
+          answer: '20/twenty',
+          explanationVi: 'Anh trai Caspar tham gia tiết mục có tới 20 người giữ thăng bằng trên xe máy.',
+          strategyVi: 'Nghe số: "up to twenty people balance on a motorbike" → 20/twenty.'
+        },
+        {
+          id: 'pet_1_t3_l16', partNumber: 3,
+          taskTypeVi: 'Điền từ', taskTypeEn: 'Gap-fill',
+          prompt: "Caspar's dad is a good circus boss because he is (16) ____________ and has a strong voice.",
+          options: [],
+          answer: 'tall',
+          explanationVi: 'Bố Caspar là ông bầu rạp xiếc giỏi vì ông cao (tall) và có giọng to.',
+          strategyVi: 'Nghe tính từ mô tả: "He\'s good at his job because he\'s tall and has a loud voice" → tall.'
+        },
+        {
+          id: 'pet_1_t3_l17', partNumber: 3,
+          taskTypeVi: 'Điền từ', taskTypeEn: 'Gap-fill',
+          prompt: "Caspar starts the show by marching in front of the (17) ____________.",
+          options: [],
+          answer: 'band',
+          explanationVi: 'Caspar bắt đầu buổi diễn bằng cách diễu hành phía trước ban nhạc (band).',
+          strategyVi: 'Nghe "I march beside my dad ahead of the band" → band.'
+        },
+        {
+          id: 'pet_1_t3_l18', partNumber: 3,
+          taskTypeVi: 'Điền từ', taskTypeEn: 'Gap-fill',
+          prompt: "There are no animals in the show except a (18) ____________.",
+          options: [],
+          answer: 'rabbit',
+          explanationVi: 'Rạp xiếc không có ngựa hay chó, chỉ có một con thỏ (rabbit) — luôn là ngôi sao của buổi diễn.',
+          strategyVi: 'Nghe "the only animal in the circus is a rabbit" → rabbit.'
+        },
+        {
+          id: 'pet_1_t3_l19', partNumber: 3,
+          taskTypeVi: 'Điền từ', taskTypeEn: 'Gap-fill',
+          prompt: "One of Caspar's jobs is selling (19) ____________.",
+          options: [],
+          answer: 'ice cream',
+          explanationVi: 'Một trong các công việc của Caspar là bán kem (ice-cream) giờ giải lao.',
+          strategyVi: 'Nghe "sell ice-cream at half-time" → ice cream / ice-cream.'
+        }
       ]
     },
     {
       partNumber: 4,
-      titleEn: 'Listening Part 4: Yes/No — School Magazine',
-      titleVi: 'Nghe Phần 4: Đúng/Sai — Tạp chí học sinh',
-      instructionVi: 'Nghe Sara và Tom nói về tạp chí của trường. Chọn A (YES) hoặc B (NO).',
-      sourcePages: ['/exam-assets/pet1/test3/page-075.png'],
+      titleEn: 'Listening Part 4: Yes/No — Book Discussion (Lime County)',
+      titleVi: 'Nghe Phần 4: Đúng/Sai — Thảo luận về sách "Lime County" (Questions 20–25)',
+      instructionVi: 'Nghe Lisa và Sam nói về cuốn sách "Lime County" mà cả hai đã đọc. Nếu câu đúng, chọn A (YES). Nếu sai, chọn B (NO).',
+      sourcePages: [
+        '/exam-assets/pet1/test3/page-071.png'
+      ],
       questions: [
-        { id: 'pet_1_t3_l20', partNumber: 4, taskTypeVi: 'Đúng/Sai', taskTypeEn: 'Yes/No', prompt: '20. Sara thinks the magazine needs more interesting articles.', options: ['A. YES', 'B. NO'], answer: 'A', explanationVi: 'Sara nghĩ tạp chí cần có các bài viết thú vị hơn → ĐÚNG.', strategyVi: 'Nghe ý kiến của Sara: \"I think\", \"In my opinion\", \"We should\".' },
-        { id: 'pet_1_t3_l21', partNumber: 4, taskTypeVi: 'Đúng/Sai', taskTypeEn: 'Yes/No', prompt: '21. Tom is happy with the photos currently used in the magazine.', options: ['A. YES', 'B. NO'], answer: 'B', explanationVi: 'Tom KHÔNG hài lòng với ảnh hiện tại trong tạp chí → SAI.', strategyVi: 'Chú ý phủ định hoặc ý kiến không hài lòng của Tom.' },
-        { id: 'pet_1_t3_l22', partNumber: 4, taskTypeVi: 'Đúng/Sai', taskTypeEn: 'Yes/No', prompt: '22. Both Sara and Tom agree that more students should contribute to the magazine.', options: ['A. YES', 'B. NO'], answer: 'A', explanationVi: 'Cả Sara và Tom đều đồng ý rằng cần nhiều học sinh đóng góp hơn → ĐÚNG.', strategyVi: '\"Both agree\" = cả hai cùng ý kiến. Nghe xác nhận từ phía Tom sau khi Sara nói.' },
-        { id: 'pet_1_t3_l23', partNumber: 4, taskTypeVi: 'Đúng/Sai', taskTypeEn: 'Yes/No', prompt: '23. Tom suggests that the magazine should be published more often.', options: ['A. YES', 'B. NO'], answer: 'B', explanationVi: 'Tom KHÔNG đề nghị tăng tần suất xuất bản → SAI.', strategyVi: 'Nghe kỹ: Tom có nói \"more often\", \"more frequently\" không?' },
-        { id: 'pet_1_t3_l24', partNumber: 4, taskTypeVi: 'Đúng/Sai', taskTypeEn: 'Yes/No', prompt: '24. Sara wants to include a section about students\' future plans.', options: ['A. YES', 'B. NO'], answer: 'A', explanationVi: 'Sara muốn thêm mục về kế hoạch tương lai của học sinh → ĐÚNG.', strategyVi: 'Nghe đề nghị của Sara: \"I\'d like to...\", \"What about adding...\"' },
-        { id: 'pet_1_t3_l25', partNumber: 4, taskTypeVi: 'Đúng/Sai', taskTypeEn: 'Yes/No', prompt: '25. Tom thinks that finding advertisers for the magazine will be easy.', options: ['A. YES', 'B. NO'], answer: 'B', explanationVi: 'Tom KHÔNG nghĩ việc tìm nhà quảng cáo là dễ dàng → SAI.', strategyVi: 'Nghe đánh giá độ khó: \"easy\" trái ngược với \"difficult\", \"hard\", \"not easy\".' }
+        {
+          id: 'pet_1_t3_l20', partNumber: 4,
+          taskTypeVi: 'Đúng/Sai', taskTypeEn: 'Yes/No',
+          prompt: '20. Lisa disliked the book when she first started reading it.',
+          options: ['A. YES', 'B. NO'],
+          answer: 'B',
+          explanationVi: 'Lisa nói: "I liked it from the first page" → Lisa THÍCH sách ngay từ đầu, không phải ghét → B (NO).',
+          strategyVi: 'Nghe Lisa: "I liked it from the first page" trái ngược với "disliked" → NO.'
+        },
+        {
+          id: 'pet_1_t3_l21', partNumber: 4,
+          taskTypeVi: 'Đúng/Sai', taskTypeEn: 'Yes/No',
+          prompt: '21. Sam and Lisa felt sorry for Paul, the main character in the book.',
+          options: ['A. YES', 'B. NO'],
+          answer: 'B',
+          explanationVi: 'Sam nói Paul bị đau chân, nhưng "the author didn\'t make you feel pity for him" và Lisa xác nhận "he was such a strong character" → KHÔNG thấy thương hại → B (NO).',
+          strategyVi: 'Nghe "didn\'t make you feel pity" = didn\'t feel sorry → NO.'
+        },
+        {
+          id: 'pet_1_t3_l22', partNumber: 4,
+          taskTypeVi: 'Đúng/Sai', taskTypeEn: 'Yes/No',
+          prompt: '22. Sam was interested in the mystery about Paul and his brother.',
+          options: ['A. YES', 'B. NO'],
+          answer: 'B',
+          explanationVi: 'Sam nói: "I didn\'t care so much about that. It was the football matches I liked" → Sam KHÔNG quan tâm bí ẩn → B (NO).',
+          strategyVi: 'Nghe "I didn\'t care so much about that" → Sam không quan tâm mystery → NO.'
+        },
+        {
+          id: 'pet_1_t3_l23', partNumber: 4,
+          taskTypeVi: 'Đúng/Sai', taskTypeEn: 'Yes/No',
+          prompt: '23. Lisa thought the author helped the reader to understand Paul.',
+          options: ['A. YES', 'B. NO'],
+          answer: 'A',
+          explanationVi: 'Lisa nói: "The author was clever because when Paul was unhappy, the whole story — the weather, the background — sort of got darker, so the reader could feel what Paul was feeling" → tác giả giúp người đọc hiểu Paul → A (YES).',
+          strategyVi: 'Nghe Lisa khen tác giả: "the reader could feel what Paul was feeling" = helped understand → YES.'
+        },
+        {
+          id: 'pet_1_t3_l24', partNumber: 4,
+          taskTypeVi: 'Đúng/Sai', taskTypeEn: 'Yes/No',
+          prompt: '24. Sam wished there was more information about football in the book.',
+          options: ['A. YES', 'B. NO'],
+          answer: 'B',
+          explanationVi: 'Sam nói: "I think the author got that just right" → Sam hài lòng với lượng thông tin bóng đá, KHÔNG muốn thêm → B (NO).',
+          strategyVi: 'Nghe "just right" = vừa đủ, không cần thêm → NO.'
+        },
+        {
+          id: 'pet_1_t3_l25', partNumber: 4,
+          taskTypeVi: 'Đúng/Sai', taskTypeEn: 'Yes/No',
+          prompt: '25. Lisa liked the way the author developed Paul\'s character.',
+          options: ['A. YES', 'B. NO'],
+          answer: 'A',
+          explanationVi: 'Lisa nói: "the best part was that Paul realised what\'s important in life and how to deal with tough situations. He really grew as a person" → Lisa thích cách tác giả phát triển nhân vật → A (YES).',
+          strategyVi: 'Nghe "He really grew as a person" = character development → YES.'
+        }
       ]
     }
   ]
