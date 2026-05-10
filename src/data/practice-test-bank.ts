@@ -395,79 +395,238 @@ function buildGeneratedQuestions(
     };
 
     if (part.mode === 'speaking') {
-      return {
-        ...base,
-        prompt: buildSpeakingPrompt(levelId, part, theme),
-        options: [],
-        answer: 'self-assessed',
-        selfAssessment: true,
-        explanationVi: buildSpeakingModelAnswer(part, theme),
-        modelAnswer: buildSpeakingModelAnswer(part, theme),
-        strategyVi: 'Nói chậm, trả lời đúng trọng tâm, thêm một lý do bằng because, và không học thuộc nguyên văn.',
-        rubricVi: [
-          'Trả lời đúng câu hỏi, không lạc đề.',
-          'Dùng câu đầy đủ hoặc cụm rõ nghĩa phù hợp trình độ.',
-          'Phát âm đủ nghe; nếu sai thì tự sửa và nói lại.',
-          'Thêm lý do/ví dụ ngắn khi trình độ yêu cầu.',
-        ],
-      };
+      return { ...base, prompt: buildSpeakingPrompt(levelId, part, theme), options: [], answer: 'self-assessed', selfAssessment: true, explanationVi: buildSpeakingModelAnswer(part, theme), modelAnswer: buildSpeakingModelAnswer(part, theme), strategyVi: 'Nói chậm, trả lời đúng trọng tâm, thêm một lý do bằng because.', rubricVi: ['Trả lời đúng câu hỏi.', 'Dùng câu đầy đủ phù hợp trình độ.', 'Phát âm đủ nghe.', 'Thêm lý do/ví dụ ngắn.'] };
     }
-
     if (part.mode === 'writing') {
-      return {
-        ...base,
-        prompt: buildWritingPrompt(levelId, part, theme),
-        options: [],
-        answer: 'self-assessed',
-        selfAssessment: true,
-        explanationVi: buildWritingModelAnswer(levelId, part, theme),
-        modelAnswer: buildWritingModelAnswer(levelId, part, theme),
-        strategyVi: 'Trước khi viết: xác định người nhận, mục đích, đủ ý bắt buộc, độ dài, rồi kiểm tra thì động từ và chính tả.',
-        rubricVi: [
-          'Đủ ý theo đề, không bỏ bullet/ghi chú.',
-          'Tổ chức mạch lạc: mở đầu, ý chính, kết thúc.',
-          'Ngữ pháp và chính tả phù hợp cấp độ.',
-          'Dùng từ nối tự nhiên: and, but, because, then, after that.',
-        ],
-      };
+      return { ...base, prompt: buildWritingPrompt(levelId, part, theme), options: [], answer: 'self-assessed', selfAssessment: true, explanationVi: buildWritingModelAnswer(levelId, part, theme), modelAnswer: buildWritingModelAnswer(levelId, part, theme), strategyVi: 'Xác định mục đích, đủ ý, kiểm tra chính tả.', rubricVi: ['Đủ ý theo đề.', 'Mạch lạc.', 'Ngữ pháp phù hợp.', 'Dùng từ nối tự nhiên.'] };
     }
 
-    if (part.mode === 'gap') {
-      const answer = selectGapAnswer(questionNo, theme);
-      return {
-        ...base,
-        prompt: buildGapPrompt(component, part, theme, questionNo),
-        options: [],
-        answer,
-        audioTranscript: component.skill === 'listening' ? buildListeningTranscript(theme, answer, questionNo) : undefined,
-        explanationVi: `Đáp án là "${answer}" vì thông tin then chốt trong ngữ cảnh là ${theme.place}, ${theme.object} hoặc thời gian ${theme.time}.`,
-        strategyVi: 'Với gap-fill, đọc/nghe cả câu trước và sau chỗ trống; dự đoán loại từ rồi mới điền.',
-      };
-    }
-
-    const answer = buildObjectiveAnswer(theme, questionNo);
-    // Use passage-based options from theme.questions when available
-    const tq = theme.questions;
-    let options: string[];
-    let explanation: string;
-    if (tq && tq.length > 0) {
-      const qi = (questionNo - 1) % tq.length;
-      options = rotateOptions(tq[qi].opts, questionNo);
-      explanation = `Đáp án đúng là "${answer}". Đọc kỹ đoạn văn về ${theme.title} — thông tin nằm rõ trong bài đọc.`;
-    } else {
-      options = rotateOptions([answer, ...theme.distractors].slice(0, 3), questionNo);
-      explanation = `Đáp án đúng là "${answer}" vì dữ kiện chính của tình huống là ${theme.person} ở ${theme.place} với hoạt động ${theme.activity}.`;
-    }
-    return {
-      ...base,
-      prompt: buildObjectivePrompt(component, part, theme, questionNo),
-      options,
-      answer,
-      audioTranscript: component.skill === 'listening' ? buildListeningTranscript(theme, answer, questionNo) : undefined,
-      explanationVi: explanation,
-      strategyVi: 'Đọc kỹ toàn bộ đoạn văn trước. Gạch chân từ khóa trong câu hỏi. Tìm thông tin tương ứng trong bài. Loại trừ đáp án sai rồi chọn.',
-    };
+    // ══ PART-SPECIFIC DISPATCH — match exact Cambridge format ══
+    return buildPartSpecificQuestion(base, levelId, setNo, component, part, theme, questionNo);
   });
+}
+
+// ══════════════════════════════════════════════════════════════
+// PART-SPECIFIC QUESTION BUILDER — matches real Cambridge format
+// ══════════════════════════════════════════════════════════════
+
+// Word banks for true/false and yes/no parts
+const PICTURE_WORDS = [
+  { word: 'dog', emoji: '🐕', category: 'animal' }, { word: 'cat', emoji: '🐈', category: 'animal' },
+  { word: 'bird', emoji: '🐦', category: 'animal' }, { word: 'fish', emoji: '🐟', category: 'animal' },
+  { word: 'horse', emoji: '🐴', category: 'animal' }, { word: 'frog', emoji: '🐸', category: 'animal' },
+  { word: 'apple', emoji: '🍎', category: 'food' }, { word: 'banana', emoji: '🍌', category: 'food' },
+  { word: 'bread', emoji: '🍞', category: 'food' }, { word: 'cake', emoji: '🎂', category: 'food' },
+  { word: 'ball', emoji: '⚽', category: 'toy' }, { word: 'kite', emoji: '🪁', category: 'toy' },
+  { word: 'car', emoji: '🚗', category: 'transport' }, { word: 'bus', emoji: '🚌', category: 'transport' },
+  { word: 'boat', emoji: '⛵', category: 'transport' }, { word: 'bike', emoji: '🚲', category: 'transport' },
+  { word: 'pen', emoji: '🖊️', category: 'school' }, { word: 'book', emoji: '📖', category: 'school' },
+  { word: 'chair', emoji: '🪑', category: 'furniture' }, { word: 'table', emoji: '🪑', category: 'furniture' },
+];
+
+const SCENE_SENTENCES: { scene: string; emoji: string; sentences: { text: string; answer: 'Yes' | 'No' }[] }[] = [
+  { scene: 'a park with children playing', emoji: '🏞️🧒⚽', sentences: [
+    { text: 'There are three children in the park.', answer: 'Yes' },
+    { text: 'The children are playing football.', answer: 'Yes' },
+    { text: 'It is raining in the picture.', answer: 'No' },
+    { text: 'There is a dog in the park.', answer: 'No' },
+    { text: 'The children look happy.', answer: 'Yes' },
+  ]},
+  { scene: 'a classroom with a teacher', emoji: '🏫👩‍🏫📚', sentences: [
+    { text: 'The teacher is standing next to the board.', answer: 'Yes' },
+    { text: 'The children are sitting at their desks.', answer: 'Yes' },
+    { text: 'There are books on the table.', answer: 'Yes' },
+    { text: 'The teacher is cooking food.', answer: 'No' },
+    { text: 'The classroom has no windows.', answer: 'No' },
+  ]},
+  { scene: 'a kitchen with a family cooking', emoji: '🍳👨‍👩‍👧🥗', sentences: [
+    { text: 'The family is in the kitchen.', answer: 'Yes' },
+    { text: 'Mum is making a salad.', answer: 'Yes' },
+    { text: 'The children are watching TV.', answer: 'No' },
+    { text: 'There is food on the table.', answer: 'Yes' },
+    { text: 'Dad is reading a newspaper.', answer: 'No' },
+  ]},
+  { scene: 'a beach with people swimming', emoji: '🏖️🏊🌊', sentences: [
+    { text: 'Some people are swimming in the sea.', answer: 'Yes' },
+    { text: 'There is a boat on the water.', answer: 'Yes' },
+    { text: 'It is snowing at the beach.', answer: 'No' },
+    { text: 'A child is building a sandcastle.', answer: 'Yes' },
+    { text: 'Everyone is wearing coats.', answer: 'No' },
+  ]},
+];
+
+const CONVERSATION_EXCHANGES: { setup: string; options: string[]; answer: string }[] = [
+  { setup: 'A: What would you like to drink?\nB:', options: ['Orange juice, please.', 'I like swimming.', 'It is Monday.'], answer: 'Orange juice, please.' },
+  { setup: 'A: Where is the supermarket?\nB:', options: ['It is next to the bank.', 'I have two brothers.', 'She is nine years old.'], answer: 'It is next to the bank.' },
+  { setup: 'A: Can I have a pencil, please?\nB:', options: ['Yes, here you are.', 'No, I do not like pens.', 'It is in the garden.'], answer: 'Yes, here you are.' },
+  { setup: 'A: How old is your sister?\nB:', options: ['She is seven.', 'She likes cats.', 'She is at school.'], answer: 'She is seven.' },
+  { setup: 'A: What is your favourite subject?\nB:', options: ['I like maths.', 'I have a red bag.', 'It is three o\'clock.'], answer: 'I like maths.' },
+  { setup: 'A: Do you want to play football?\nB:', options: ['Yes, that sounds fun!', 'No, it is raining cats.', 'I ate lunch already.'], answer: 'Yes, that sounds fun!' },
+  { setup: 'A: What time does school start?\nB:', options: ['At eight thirty.', 'I like my teacher.', 'There are twenty children.'], answer: 'At eight thirty.' },
+  { setup: 'A: Where did you go on holiday?\nB:', options: ['We went to the beach.', 'I have a new book.', 'My dog is brown.'], answer: 'We went to the beach.' },
+];
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function buildPartSpecificQuestion(base: any, levelId: CambridgeExamLevelId, setNo: number, component: CambridgeOfficialComponentSpec, part: CambridgeOfficialPartSpec, theme: typeof EXAM_THEMES[number], questionNo: number) {
+  const title = part.titleEn.toLowerCase();
+
+  // ── LISTENING PARTS ──
+  if (component.skill === 'listening') {
+    if (title.includes('draw lines') || title.includes('matching')) {
+      // Listening Part 1: Match names to people
+      const names = ['Tom', 'Anna', 'Sam', 'Grace', 'Ben'];
+      const items = ['the tall boy with glasses', 'the girl with a red hat', 'the child next to the tree', 'the woman with a bag', 'the boy holding a ball'];
+      const ni = (setNo + questionNo - 1) % names.length;
+      return { ...base, prompt: `🔊 Listen. Which person is ${names[ni]}?\n\n"${names[ni]} is ${items[ni]}."`, options: items.map((_, i) => `Person ${i + 1}`), answer: `Person ${ni + 1}`, audioTranscript: `Woman: Where is ${names[ni]}?\nMan: ${names[ni]} is ${items[ni]}.`, explanationVi: `${names[ni]} được mô tả là "${items[ni]}".`, strategyVi: 'Nghe tên người trước, sau đó nghe mô tả ngoại hình/vị trí.' };
+    }
+    if (title.includes('write') || title.includes('number')) {
+      // Listening Part 2: Write name/number
+      const answer = selectGapAnswer(questionNo, theme);
+      return { ...base, prompt: `🔊 Listen and write the missing word or number.\n\n${theme.person}'s note:\nActivity: ${theme.activity}\nPlace: ${theme.place}\nTime: ____`, options: [], answer, audioTranscript: buildListeningTranscript(theme, answer, questionNo), explanationVi: `Đáp án là "${answer}" — nghe kỹ số/tên được đánh vần.`, strategyVi: 'Viết chữ cái đầu tiên nghe được, sau đó hoàn thiện từ.' };
+    }
+    if (title.includes('multiple choice') || title.includes('picture')) {
+      // Listening Part 3: Picture MC
+      const tq = theme.questions;
+      const qi = (questionNo - 1) % tq.length;
+      return { ...base, prompt: `🔊 Listen to the conversation. Choose the correct picture.\n\n${tq[qi].q}`, options: tq[qi].opts, answer: tq[qi].a, audioTranscript: buildListeningTranscript(theme, tq[qi].a, questionNo), explanationVi: `Đáp án "${tq[qi].a}" — thông tin được nói rõ trong đoạn hội thoại.`, strategyVi: 'Xem 3 tranh trước khi nghe. Nghe lần 1 chọn, lần 2 kiểm tra.' };
+    }
+    if (title.includes('colour')) {
+      // Listening Part 4: Colouring
+      const colours = ['red', 'blue', 'green', 'yellow', 'orange', 'purple', 'pink', 'brown'];
+      const objects = ['the ball', 'the hat', 'the bag', 'the flower', 'the car'];
+      const ci = (setNo + questionNo) % colours.length;
+      const oi = (setNo + questionNo) % objects.length;
+      return { ...base, prompt: `🔊 Listen and colour. What colour is ${objects[oi]}?\n\nColour ${objects[oi]} ____`, options: [colours[ci], colours[(ci + 2) % colours.length], colours[(ci + 4) % colours.length]], answer: colours[ci], audioTranscript: `Woman: Can you see ${objects[oi]}? Colour it ${colours[ci]}, please.\nChild: ${colours[ci]}?\nWoman: Yes, ${colours[ci]}.`, explanationVi: `Tô ${objects[oi]} màu ${colours[ci]}.`, strategyVi: 'Nghe tên đồ vật trước, sau đó nghe màu sắc.' };
+    }
+    // Default listening
+    const answer = selectGapAnswer(questionNo, theme);
+    return { ...base, prompt: `🔊 Listen and answer.\n\n${theme.questions[(questionNo - 1) % theme.questions.length].q}`, options: theme.questions[(questionNo - 1) % theme.questions.length].opts, answer: theme.questions[(questionNo - 1) % theme.questions.length].a, audioTranscript: buildListeningTranscript(theme, answer, questionNo), explanationVi: `Nghe kỹ đoạn hội thoại để tìm đáp án.`, strategyVi: 'Đọc câu hỏi trước khi nghe. Nghe 2 lần.' };
+  }
+
+  // ── READING & WRITING: TRUE/FALSE (Starters P1) ──
+  if (title.includes('true/false') || title.includes('true or false')) {
+    const pw = PICTURE_WORDS[(setNo + questionNo - 1) % PICTURE_WORDS.length];
+    const isTrue = questionNo % 2 === 1;
+    const wrongWord = PICTURE_WORDS[(setNo + questionNo + 3) % PICTURE_WORDS.length];
+    const shownWord = isTrue ? pw.word : wrongWord.word;
+    return { ...base, imageEmoji: pw.emoji, prompt: `Look at the picture. Read the word.\n\n${pw.emoji}  →  "${shownWord}"\n\nIs this correct? ✓ (tick) or ✗ (cross)?`, options: ['✓ (Yes — correct)', '✗ (No — wrong)'], answer: isTrue ? '✓ (Yes — correct)' : '✗ (No — wrong)', explanationVi: isTrue ? `Đúng — tranh là ${pw.word} và từ viết "${shownWord}" khớp nhau.` : `Sai — tranh là ${pw.word} nhưng từ viết "${shownWord}" không khớp.`, strategyVi: 'Nhìn tranh kỹ, đọc từ, so sánh. Nếu tranh và từ khớp → tick. Nếu không → cross.' };
+  }
+
+  // ── READING & WRITING: YES/NO PICTURE SENTENCES (Starters P2, Movers P2, Flyers P2) ──
+  if (title.includes('yes/no') || title.includes('yes or no')) {
+    const sceneData = SCENE_SENTENCES[(setNo + questionNo) % SCENE_SENTENCES.length];
+    const sent = sceneData.sentences[(questionNo - 1) % sceneData.sentences.length];
+    return { ...base, imageEmoji: sceneData.emoji, prompt: `Look at the picture: ${sceneData.scene}\n\n${sceneData.emoji}\n\n"${sent.text}"\n\nIs this sentence correct? Choose Yes or No.`, options: ['Yes', 'No'], answer: sent.answer, explanationVi: sent.answer === 'Yes' ? `Đúng — câu mô tả khớp với tranh.` : `Sai — câu mô tả không khớp với tranh.`, strategyVi: 'Đọc câu, nhìn tranh, kiểm tra từng chi tiết trong câu có đúng với tranh không.' };
+  }
+
+  // ── READING & WRITING: JUMBLED LETTERS (Starters P3) ──
+  if (title.includes('jumbled')) {
+    const pw = PICTURE_WORDS[(setNo * 3 + questionNo) % PICTURE_WORDS.length];
+    const letters = pw.word.split('');
+    // Shuffle deterministically based on setNo
+    const shuffled = [...letters].sort((a, b) => ((setNo + letters.indexOf(a)) % 3) - ((setNo + letters.indexOf(b)) % 3));
+    const jumbledDisplay = shuffled.join('  ').toUpperCase();
+    return { ...base, taskTypeEn: 'Spell', imageEmoji: pw.emoji, prompt: `Look at the picture. Put the letters in the right order.\n\n${pw.emoji}\n\n${jumbledDisplay}`, options: [], answer: pw.word, explanationVi: `Từ đúng là "${pw.word}". Sắp xếp lại các chữ cái: ${jumbledDisplay} → ${pw.word}.`, strategyVi: 'Nhìn tranh để đoán từ. Sau đó sắp xếp chữ cái cho đúng.' };
+  }
+
+  // ── READING & WRITING: WORD-BOX GAP FILL (Starters P4, Movers P4, Flyers P4) ──
+  if (title.includes('gap fill') || title.includes('word-box') || title.includes('cloze')) {
+    const answer = selectGapAnswer(questionNo, theme);
+    const passageWithGap = theme.passage.replace(new RegExp(answer, 'i'), '____');
+    const wordBank = [answer, theme.object.split(' ')[0], theme.color, theme.person, theme.place.split(' ')[0]].filter((v, i, a) => a.indexOf(v) === i).slice(0, 5);
+    return { ...base, prompt: `📖 Read the text. Choose the correct word to fill the gap.\n\nWord bank: ${wordBank.join(' | ')}\n\n"${passageWithGap}"`, options: wordBank.slice(0, 3), answer, explanationVi: `Đáp án "${answer}" phù hợp ngữ cảnh đoạn văn.`, strategyVi: 'Đọc cả đoạn văn trước. Thử từng từ trong word bank vào chỗ trống. Chọn từ hợp nghĩa nhất.' };
+  }
+
+  // ── READING & WRITING: ONE-WORD STORY ANSWERS (Starters P5) ──
+  if (title.includes('one-word') || title.includes('story answer')) {
+    const tq = theme.questions;
+    const qi = (questionNo - 1) % tq.length;
+    return { ...base, prompt: `📖 Read the story and answer with ONE word.\n\n"${theme.passage}"\n\n${tq[qi].q}`, options: [], answer: tq[qi].a.split(' ')[0], explanationVi: `Đáp án: "${tq[qi].a}". Tìm thông tin trực tiếp trong đoạn văn.`, strategyVi: 'Đọc câu hỏi trước. Tìm câu trả lời trong đoạn văn. Chỉ viết 1 từ.' };
+  }
+
+  // ── READING & WRITING: DEFINITIONS (Movers P1, Flyers P1) ──
+  if (title.includes('definition')) {
+    const defItems: { word: string; def: string; distractors: string[] }[] = [
+      { word: 'hospital', def: 'a place where sick people go to see a doctor', distractors: ['supermarket', 'cinema'] },
+      { word: 'dictionary', def: 'a book that tells you what words mean', distractors: ['newspaper', 'envelope'] },
+      { word: 'island', def: 'a piece of land with water all around it', distractors: ['mountain', 'forest'] },
+      { word: 'pilot', def: 'a person who flies a plane', distractors: ['farmer', 'dentist'] },
+      { word: 'umbrella', def: 'you hold this over your head when it rains', distractors: ['scarf', 'mirror'] },
+      { word: 'breakfast', def: 'the first meal of the day', distractors: ['supper', 'snack'] },
+      { word: 'kangaroo', def: 'an animal that jumps and carries its baby in a pocket', distractors: ['parrot', 'whale'] },
+    ];
+    const di = (setNo + questionNo - 1) % defItems.length;
+    const d = defItems[di];
+    return { ...base, prompt: `Read the definition. Choose the correct word.\n\n"${d.def}"`, options: rotateOptions([d.word, ...d.distractors], questionNo), answer: d.word, explanationVi: `"${d.def}" → đáp án là "${d.word}".`, strategyVi: 'Đọc định nghĩa kỹ. Hình dung đồ vật/người/nơi chốn. Chọn từ phù hợp nhất.' };
+  }
+
+  // ── READING & WRITING: CONVERSATION (Movers P3, Flyers P3) ──
+  if (title.includes('conversation')) {
+    const ci = (setNo + questionNo - 1) % CONVERSATION_EXCHANGES.length;
+    const conv = CONVERSATION_EXCHANGES[ci];
+    return { ...base, prompt: `Read the conversation. Choose the best answer for B.\n\n${conv.setup}`, options: rotateOptions(conv.options, questionNo), answer: conv.answer, explanationVi: `Câu trả lời phù hợp nhất: "${conv.answer}" — đúng ngữ cảnh hội thoại.`, strategyVi: 'Đọc câu hỏi của A. Nghĩ xem B nên trả lời gì. Loại đáp án lạc đề.' };
+  }
+
+  // ── READING & WRITING: STORY COMPLETION (Movers P5, Flyers P5) ──
+  if (title.includes('story') && !title.includes('one-word') && part.mode !== 'writing') {
+    const tq = theme.questions;
+    const qi = (questionNo - 1) % tq.length;
+    return { ...base, prompt: `📖 Read the story. Write ONE to THREE words to complete the sentence.\n\n"${theme.passage}"\n\n${tq[qi].q} ____`, options: [], answer: tq[qi].a, explanationVi: `Đáp án: "${tq[qi].a}". Dựa trên thông tin trong đoạn văn.`, strategyVi: 'Đọc đoạn văn kỹ. Tìm thông tin liên quan đến câu hỏi. Viết 1-3 từ ngắn gọn.' };
+  }
+
+  // ── READING & WRITING: OPEN GAP FILL (Flyers P6, KET P5, PET P6) ──
+  if (title.includes('open') && title.includes('gap')) {
+    const answer = selectGapAnswer(questionNo, theme);
+    const passageWithGap = theme.passage.replace(new RegExp(answer, 'i'), '____');
+    return { ...base, prompt: `📖 Read the text. Write ONE word to fill the gap. No word bank.\n\n"${passageWithGap}"`, options: [], answer, explanationVi: `Đáp án "${answer}" — dựa trên ngữ cảnh và ngữ pháp.`, strategyVi: 'Đọc cả câu. Xác định loại từ (noun/verb/adj). Nghĩ từ phù hợp ngữ cảnh.' };
+  }
+
+  // ── READING: SHORT TEXT MC (KET P1, PET P1) ──
+  if (title.includes('short text') || title.includes('notices') || title.includes('signs')) {
+    const tq = theme.questions;
+    const qi = (questionNo - 1) % tq.length;
+    return { ...base, prompt: `📖 Read the short text, then answer the question.\n\n"${theme.passage}"\n\n${tq[qi].q}`, options: tq[qi].opts, answer: tq[qi].a, explanationVi: `Đáp án: "${tq[qi].a}". Thông tin nằm rõ trong đoạn văn.`, strategyVi: 'Đọc kỹ cả đoạn văn ngắn. Gạch chân từ khóa. Đối chiếu với các đáp án.' };
+  }
+
+  // ── READING: LONG TEXT MC (KET P3, PET P3) ──
+  if (title.includes('long text') || title.includes('detailed')) {
+    const tq = theme.questions;
+    const qi = (questionNo - 1) % tq.length;
+    return { ...base, prompt: `📖 Read the text carefully, then answer the question.\n\n"${theme.passage}"\n\n${tq[qi].q}`, options: tq[qi].opts, answer: tq[qi].a, explanationVi: `Đáp án: "${tq[qi].a}". Đọc kỹ bài dài để tìm chi tiết.`, strategyVi: 'Skim đoạn văn trước. Đọc câu hỏi. Quay lại tìm đoạn liên quan. Đối chiếu đáp án.' };
+  }
+
+  // ── READING: MATCHING (KET P2, PET P2) ──
+  if (title.includes('matching') || title.includes('multiple matching')) {
+    const tq = theme.questions;
+    const qi = (questionNo - 1) % tq.length;
+    return { ...base, prompt: `📖 Read the descriptions. Match each one to the correct answer.\n\n"${theme.passage}"\n\n${tq[qi].q}`, options: tq[qi].opts, answer: tq[qi].a, explanationVi: `"${tq[qi].a}" khớp với mô tả trong bài.`, strategyVi: 'Đọc mô tả kỹ. Gạch chân từ khóa. So sánh từng đáp án.' };
+  }
+
+  // ── READING: MC CLOZE (KET P4, PET P5) ──
+  if (title.includes('mc cloze') || title.includes('multiple-choice cloze') || (title.includes('cloze') && part.mode === 'objective')) {
+    const grammarItems = [
+      { sentence: `${theme.person} ____ to the ${theme.place} yesterday.`, options: ['went', 'go', 'going'], answer: 'went' },
+      { sentence: `There ____ many people at the ${theme.activity}.`, options: ['were', 'was', 'is'], answer: 'were' },
+      { sentence: `${theme.person} has ____ been to the ${theme.place} before.`, options: ['never', 'ever', 'always'], answer: 'never' },
+      { sentence: `The ${theme.object} was ____ the table.`, options: ['on', 'at', 'to'], answer: 'on' },
+      { sentence: `${theme.person} ____ like to try the ${theme.activity}.`, options: ['would', 'will', 'is'], answer: 'would' },
+    ];
+    const gi = (setNo + questionNo - 1) % grammarItems.length;
+    const g = grammarItems[gi];
+    return { ...base, prompt: `📖 Choose the correct word to complete the sentence.\n\n"${g.sentence}"`, options: g.options, answer: g.answer, explanationVi: `"${g.answer}" — đúng ngữ pháp trong ngữ cảnh này.`, strategyVi: 'Đọc cả câu. Xác định thì/ngữ pháp. Thử từng đáp án vào chỗ trống.' };
+  }
+
+  // ── READING: GAPPED TEXT (PET P4) ──
+  if (title.includes('gapped text')) {
+    const tq = theme.questions;
+    const qi = (questionNo - 1) % tq.length;
+    return { ...base, prompt: `📖 Read the text. Choose the correct sentence for each gap.\n\n"${theme.passage}"\n\nWhich sentence fits gap ${questionNo}?`, options: tq[qi].opts, answer: tq[qi].a, explanationVi: `"${tq[qi].a}" phù hợp ngữ cảnh đoạn văn.`, strategyVi: 'Đọc trước và sau chỗ trống. Tìm câu nối mạch lạc nhất.' };
+  }
+
+  // ── DEFAULT FALLBACK: Reading passage + MC ──
+  const tq = theme.questions;
+  const qi = (questionNo - 1) % tq.length;
+  return { ...base, prompt: `📖 Read the text, then answer the question.\n\n"${theme.passage}"\n\n${tq[qi].q}`, options: tq[qi].opts, answer: tq[qi].a, explanationVi: `Đáp án: "${tq[qi].a}". Đọc kỹ đoạn văn để tìm thông tin.`, strategyVi: 'Đọc kỹ toàn bộ đoạn văn. Gạch chân từ khóa. Loại trừ đáp án sai.' };
 }
 
 function selectGapAnswer(questionNo: number, theme: typeof EXAM_THEMES[number]): string {
