@@ -207,7 +207,7 @@ export const CAMBRIDGE_EXAM_SPECS: Record<CambridgeExamLevelId, CambridgeOfficia
           { partNumber: 3, titleEn: 'Conversation gap fill', titleVi: 'Hoàn thành hội thoại', questionCount: 6, mode: 'objective', taskFocusVi: 'Chọn câu trả lời phù hợp' },
           { partNumber: 4, titleEn: 'Text gap fill', titleVi: 'Điền đoạn văn', questionCount: 6, mode: 'objective', taskFocusVi: 'Đọc đoạn văn và chọn từ đúng' },
           { partNumber: 5, titleEn: 'Story completion', titleVi: 'Hoàn thành câu theo truyện', questionCount: 7, mode: 'gap', taskFocusVi: 'Viết 1-3 từ dựa trên bài đọc' },
-          { partNumber: 6, titleEn: 'Picture writing', titleVi: 'Viết theo tranh', questionCount: 4, mode: 'writing', taskFocusVi: 'Viết từ/câu ngắn về tranh' },
+          { partNumber: 6, titleEn: 'Complete the text', titleVi: 'Hoàn thành đoạn văn', questionCount: 4, mode: 'gap', taskFocusVi: 'Đọc đoạn văn về tranh, chọn và viết từ đúng vào chỗ trống' },
         ],
       },
       {
@@ -268,9 +268,9 @@ export const CAMBRIDGE_EXAM_SPECS: Record<CambridgeExamLevelId, CambridgeOfficia
         weight: 'up to 5 shields',
         partSpecs: [
           { partNumber: 1, titleEn: 'Definitions', titleVi: 'Định nghĩa từ vựng', questionCount: 10, mode: 'objective', taskFocusVi: 'Từ vựng nâng cao qua định nghĩa' },
-          { partNumber: 2, titleEn: 'Picture yes/no', titleVi: 'Yes/No theo tranh', questionCount: 7, mode: 'objective', taskFocusVi: 'Đọc chi tiết tranh' },
-          { partNumber: 3, titleEn: 'Conversation completion', titleVi: 'Hoàn thành hội thoại', questionCount: 5, mode: 'objective', taskFocusVi: 'Chọn phản hồi phù hợp' },
-          { partNumber: 4, titleEn: 'Text gap fill', titleVi: 'Điền đoạn văn', questionCount: 6, mode: 'objective', taskFocusVi: 'Từ vựng và ngữ pháp trong ngữ cảnh' },
+          { partNumber: 2, titleEn: 'Dialogue completion', titleVi: 'Hoàn thành hội thoại (chọn A-H)', questionCount: 7, mode: 'objective', taskFocusVi: 'Đọc đoạn hội thoại, chọn phản hồi phù hợp từ danh sách A-H' },
+          { partNumber: 3, titleEn: 'Word-bank gap fill', titleVi: 'Điền từ từ hộp từ', questionCount: 5, mode: 'objective', taskFocusVi: 'Chọn từ đúng từ hộp từ để điền vào đoạn văn thông tin' },
+          { partNumber: 4, titleEn: 'MC grammar cloze', titleVi: 'Trắc nghiệm ngữ pháp', questionCount: 6, mode: 'objective', taskFocusVi: 'Chọn A/B/C dạng ngữ pháp đúng để hoàn thành đoạn văn' },
           { partNumber: 5, titleEn: 'Story comprehension', titleVi: 'Hoàn thành câu theo truyện', questionCount: 7, mode: 'gap', taskFocusVi: 'Viết 1-4 từ dựa vào bài đọc' },
           { partNumber: 6, titleEn: 'Open gap fill', titleVi: 'Điền từ tự do', questionCount: 5, mode: 'gap', taskFocusVi: 'Ngữ pháp chức năng không có hộp từ' },
           { partNumber: 7, titleEn: 'Picture story writing', titleVi: 'Viết truyện theo tranh', questionCount: 4, mode: 'writing', taskFocusVi: 'Viết truyện ngắn mạch lạc' },
