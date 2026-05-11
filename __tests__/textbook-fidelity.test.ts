@@ -14,7 +14,7 @@ describe('textbook fidelity gate', () => {
 
         expect(actualRows).toEqual(expectedRows);
         expect(TEXTBOOK_FIDELITY_STATS.sgkCatalogRecords).toBe(SGK_CATALOG.length);
-        expect(TEXTBOOK_FIDELITY_STATS.noOverclaim).toContain('Chua duoc goi 100%');
+        expect(TEXTBOOK_FIDELITY_STATS.noOverclaim).toContain('Chưa được gọi 100%');
         expect(TEXTBOOK_REPLACEMENT_POLICY.claim).toBe('not_100_percent_textbook_replacement_yet');
 
         TEXTBOOK_FIDELITY_ROWS.forEach((row) => {
@@ -22,7 +22,7 @@ describe('textbook fidelity gate', () => {
             expect(row.canClaimTextbookReplacement).toBe(false);
             if (row.appSubject) {
                 expect(row.assetGate).toBe('licensed_private_import_required');
-                expect(row.nextAction).toContain('PDF/EPUB/anh SGK co quyen');
+                expect(row.nextAction).toContain('PDF/EPUB/ảnh SGK có quyền');
             }
         });
     });
@@ -43,6 +43,6 @@ describe('textbook fidelity gate', () => {
         expect(grade1.interactiveTopicCount).toBeGreaterThan(0);
         expect(grade2.interactiveTopicCount).toBeGreaterThan(0);
         expect(grade1.privateImportRequired).toBe(true);
-        expect(grade2.replacementLabel).toContain('can file/anh SGK co quyen');
+        expect(grade2.replacementLabel).toContain('file/ảnh SGK có quyền');
     });
 });

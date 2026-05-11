@@ -117,24 +117,24 @@ function buildRow(grade: 1 | 2 | 3 | 4 | 5, sgkSubject: string, books: SGKBook[]
         readiness,
         canClaimTextbookReplacement: false,
         learnerUpgrade: hasInteractivePractice
-            ? 'Co bai hoc tuong tac, goi y, on lai va luu bang chung hoc thay vi chi doc sach tinh.'
+            ? 'Có bài học tương tác, gợi ý, ôn lại và lưu bằng chứng học thay vì chỉ đọc sách tĩnh.'
             : isInLearn
-                ? 'Da co catalog SGK nhung can bo sung topic tuong tac truoc khi goi la hoc thay duoc.'
-                : 'Can mo module rieng hoac lien ket sang hoat dong ngoai man hinh truoc khi dua vao Learn.',
+                ? 'Đã có catalog SGK nhưng cần bổ sung topic tương tác trước khi gọi là học thay được.'
+                : 'Cần mở module riêng hoặc liên kết sang hoạt động ngoài màn hình trước khi đưa vào Learn.',
         nextAction: isInLearn
-            ? 'Nhap PDF/EPUB/anh SGK co quyen vao Thu vien rieng tu, sau do doi chieu tung bai va anh minh hoa.'
-            : 'Giu trong catalog phu huynh; chua hien thanh mon rieng trong Child Learn.',
+            ? 'Nhập PDF/EPUB/ảnh SGK có quyền vào Thư viện riêng tư, sau đó đối chiếu từng bài và ảnh minh họa.'
+            : 'Giữ trong catalog phụ huynh; chưa hiện thành môn riêng trong Child Learn.',
     };
 }
 
 export const TEXTBOOK_REPLACEMENT_POLICY = {
     claim: 'not_100_percent_textbook_replacement_yet',
     publicAssetRule:
-        'Public GitHub Pages chi duoc dung anh mo, anh tu tao, hoac metadata/link chinh thuc. Anh/trang SGK goc can file co quyen va nhung rieng tu bang LocalVault.',
+        'Public GitHub Pages chỉ được dùng ảnh mở, ảnh tự tạo, hoặc metadata/link chính thức. Ảnh/trang SGK gốc cần file có quyền và nhúng riêng tư bằng LocalVault.',
     replacementGate:
-        'Chi duoc goi 100% thay SGK khi moi bai co map nguon, thu tu bai, media co quyen, bai tap tuong tac, review cua nguoi lon va live/render evidence.',
+        'Chỉ được gọi 100% thay SGK khi mỗi bài có map nguồn, thứ tự bài, media có quyền, bài tập tương tác, review của người lớn và live/render evidence.',
     familyWorkflow:
-        'Gia dinh dua file PDF/EPUB/anh da mua hoac duoc truong cap quyen vao /child/library; app doc trong trinh duyet va khong public lai noi dung ban quyen.',
+        'Gia đình đưa file PDF/EPUB/ảnh đã mua hoặc được trường cấp quyền vào /child/library; app đọc trong trình duyệt và không public lại nội dung bản quyền.',
 };
 
 export const TEXTBOOK_FIDELITY_ROWS: TextbookFidelityRow[] = Array.from(groupBooksByGradeSubject().entries())
@@ -158,7 +158,7 @@ export const TEXTBOOK_FIDELITY_STATS = {
     rowsNotInLearnYet: missingSubjectRows.length,
     notInLearnLabels: [...new Set(missingSubjectRows.map((row) => row.sgkSubjectLabel))],
     noOverclaim:
-        'Chua duoc goi 100% thay SGK goc: public app chua co toan bo trang/anh SGK duoc cap quyen va tat ca row van can private import hoac review.',
+        'Chưa được gọi 100% thay SGK gốc: public app chưa có toàn bộ trang/ảnh SGK được cấp quyền và tất cả row vẫn cần private import hoặc review.',
 };
 
 export function getTextbookFidelityRowsForSubject(appSubject: LearningSubjectKey, grade?: number): TextbookFidelityRow[] {
@@ -181,9 +181,9 @@ export function getSubjectTextbookFidelitySummary(appSubject: LearningSubjectKey
         interactiveTopicCount,
         privateImportRequired,
         replacementLabel: privateImportRequired
-            ? 'Co the hoc tuong tac theo chuan; can file/anh SGK co quyen de thay sach goc 100%.'
-            : 'Chi dung noi dung mo/tu tao trong public build.',
+            ? 'Có thể học tương tác theo chuẩn; cần file/ảnh SGK có quyền để thay sách gốc 100%.'
+            : 'Chỉ dùng nội dung mở/tự tạo trong public build.',
         learnerUpgrade:
-            'Moi phien hoc uu tien: doc muc tieu, xem hinh/ngu lieu hop phap, lam cau hoi, nhan goi y dung luc, luu loi sai va hen on lai.',
+            'Mỗi phiên học ưu tiên: đọc mục tiêu, xem hình/ngữ liệu hợp pháp, làm câu hỏi, nhận gợi ý đúng lúc, lưu lỗi sai và hẹn ôn lại.',
     };
 }

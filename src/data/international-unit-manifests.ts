@@ -66,11 +66,11 @@ const FRAMEWORK_LABEL: Record<InternationalFrameworkKey, string> = {
 
 const FRAMEWORK_LABEL_VI: Record<InternationalFrameworkKey, string> = {
   cambridge: 'Cambridge Primary English',
-  common_core: 'Common Core ELA Hoa Ky',
+  common_core: 'Common Core ELA Hoa Kỳ',
   australian: 'Australian Curriculum English',
-  finnish: 'Chuong trinh loi quoc gia Phan Lan',
-  singapore: 'Tieng Anh Singapore/STELLAR',
-  canadian: 'Chuong trinh ngon ngu Ontario/Canada',
+  finnish: 'Chương trình lõi quốc gia Phần Lan',
+  singapore: 'Tiếng Anh Singapore/STELLAR',
+  canadian: 'Chương trình ngôn ngữ Ontario/Canada',
 };
 
 function getFrameworkForUnit(unitId: string): InternationalFrameworkKey {
@@ -132,7 +132,7 @@ function buildCoreText(unit: CountryUnit, framework: InternationalFrameworkKey, 
   const [a, b, c, d] = keywords;
   return {
     en: `This ${label} unit is about "${unit.title}". The main learning path is ${genre}: first notice the topic, then read a short model, talk about the idea, write a small response, and review by retrieval. Key words for this unit include ${a}, ${b}, ${c}, and ${d}. A strong learner does not only remember the words; the learner explains the idea, uses one sentence aloud, writes one clear example, and checks the answer against the source goal.`,
-    vi: `Unit ${labelVi} nay hoc ve "${unit.titleVi}". Lo trinh chinh la ${genre}: dau tien nhan dien chu de, sau do doc mau ngan, noi ve y chinh, viet phan hoi ngan, va on lai bang truy hoi chu dong. Tu khoa cua unit gom ${a}, ${b}, ${c}, va ${d}. Nguoi hoc tot khong chi nho tu; can giai thich y, noi duoc mot cau, viet mot vi du ro rang, va doi chieu cau tra loi voi muc tieu nguon.`,
+    vi: `Unit ${labelVi} này học về "${unit.titleVi}". Lộ trình chính là ${genre}: đầu tiên nhận diện chủ đề, sau đó đọc mẫu ngắn, nói về ý chính, viết phản hồi ngắn, và ôn lại bằng truy hồi chủ động. Từ khóa của unit gồm ${a}, ${b}, ${c}, và ${d}. Người học tốt không chỉ nhớ từ; cần giải thích ý, nói được một câu, viết một ví dụ rõ ràng, và đối chiếu câu trả lời với mục tiêu nguồn.`,
   };
 }
 
@@ -147,16 +147,16 @@ function buildSections(unit: CountryUnit, framework: InternationalFrameworkKey, 
   return [
     {
       sectionTitle: `${prefix}.1 Source map and goal`,
-      sectionTitleVi: `${prefix}.1 Ban do nguon va muc tieu`,
+      sectionTitleVi: `${prefix}.1 Bản đồ nguồn và mục tiêu`,
       type: 'getting_started',
       skillRefs: objectives,
       sourceIds,
       text: `Source benchmark: ${FRAMEWORK_LABEL[framework]}. Unit focus: ${unit.title}. By the end, the learner should understand the topic, use key words, answer text-based questions, speak one idea aloud, and produce a short written response. Learning routine: preview, read, retrieve, explain, apply.`,
-      textVi: `Benchmark nguon: ${FRAMEWORK_LABEL_VI[framework]}. Trong tam unit: ${unit.titleVi}. Cuoi bai, be can hieu chu de, dung tu khoa, tra loi cau hoi dua tren van ban, noi mot y thanh tieng, va viet mot phan hoi ngan. Cach hoc: xem truoc, doc, truy hoi, giai thich, ap dung.`,
+      textVi: `Chuẩn nguồn: ${FRAMEWORK_LABEL_VI[framework]}. Trọng tâm unit: ${unit.titleVi}. Cuối bài, bé cần hiểu chủ đề, dùng từ khóa, trả lời câu hỏi dựa trên văn bản, nói một ý thành tiếng, và viết một phản hồi ngắn. Cách học: xem trước, đọc, truy hồi, giải thích, áp dụng.`,
     },
     {
       sectionTitle: `${prefix}.2 Core reading`,
-      sectionTitleVi: `${prefix}.2 Bai doc cot loi`,
+      sectionTitleVi: `${prefix}.2 Bài đọc cốt lõi`,
       type: 'reading',
       skillRefs: [objectives[0]],
       sourceIds,
@@ -165,48 +165,48 @@ function buildSections(unit: CountryUnit, framework: InternationalFrameworkKey, 
     },
     {
       sectionTitle: `${prefix}.3 Word study`,
-      sectionTitleVi: `${prefix}.3 Hoc tu va mau tu`,
+      sectionTitleVi: `${prefix}.3 Học từ và mẫu từ`,
       type: 'word_work',
       skillRefs: [objectives[3] ?? objectives[0]],
       sourceIds,
       text: `Study these unit words: ${a}, ${b}, ${c}, ${d}, ${e}, ${f}. Say each word, connect it to the unit title, and make one sentence. Word families and meaning links help memory: group similar ideas, draw one picture, and test yourself after a short break.`,
-      textVi: `Hoc cac tu cua unit: ${a}, ${b}, ${c}, ${d}, ${e}, ${f}. Doc tung tu, noi no lien quan the nao den ten unit, va dat mot cau. Nhom tu cung y, ve mot hinh, va tu kiem tra lai sau mot khoang nghi de nho lau.`,
+      textVi: `Học các từ của unit: ${a}, ${b}, ${c}, ${d}, ${e}, ${f}. Đọc từng từ, nối nó liên quan thế nào đến tên unit, và đặt một câu. Nhóm từ cùng ý, vẽ một hình, và tự kiểm tra lại sau một khoảng nghỉ để nhớ lâu.`,
     },
     {
       sectionTitle: `${prefix}.4 Comprehension`,
-      sectionTitleVi: `${prefix}.4 Doc hieu`,
+      sectionTitleVi: `${prefix}.4 Đọc hiểu`,
       type: 'comprehension',
       skillRefs: [objectives[0]],
       sourceIds,
       text: `Answer with evidence. 1. What is the unit mainly about? 2. Which key word best matches the topic? 3. What is one detail from the reading? 4. How can this idea be used in real life? Good answers point back to the text, not only memory.`,
-      textVi: `Tra loi bang bang chung. 1. Unit noi chinh ve dieu gi? 2. Tu khoa nao hop chu de nhat? 3. Mot chi tiet trong bai doc la gi? 4. Y nay dung trong doi song the nao? Cau tra loi tot phai quay lai van ban, khong chi doan theo tri nho.`,
+      textVi: `Trả lời bằng bằng chứng. 1. Unit nói chính về điều gì? 2. Từ khóa nào hợp chủ đề nhất? 3. Một chi tiết trong bài đọc là gì? 4. Ý này dùng trong đời sống thế nào? Câu trả lời tốt phải quay lại văn bản, không chỉ đoán theo trí nhớ.`,
     },
     {
       sectionTitle: `${prefix}.5 Talk and listen`,
-      sectionTitleVi: `${prefix}.5 Noi va nghe`,
+      sectionTitleVi: `${prefix}.5 Nói và nghe`,
       type: 'talk_about',
       skillRefs: [objectives[2] ?? objectives[0]],
       sourceIds,
       text: `Talk routine: I notice..., I think..., My evidence is.... Partner routine: listen without interrupting, repeat one idea, then ask one question. This turns the unit into communication practice instead of silent memorising.`,
-      textVi: `Cach noi: Con thay..., Con nghi..., Bang chung cua con la.... Cach nghe ban: khong ngat loi, nhac lai mot y, roi hoi mot cau. Nhu vay unit tro thanh luyen giao tiep, khong phai chi hoc thuoc im lang.`,
+      textVi: `Cách nói: Con thấy..., Con nghĩ..., Bằng chứng của con là.... Cách nghe bạn: không ngắt lời, nhắc lại một ý, rồi hỏi một câu. Như vậy unit trở thành luyện giao tiếp, không phải chỉ học thuộc im lặng.`,
     },
     {
       sectionTitle: `${prefix}.6 Write or create`,
-      sectionTitleVi: `${prefix}.6 Viet hoac tao san pham`,
+      sectionTitleVi: `${prefix}.6 Viết hoặc tạo sản phẩm`,
       type: 'writing',
       skillRefs: [objectives[1] ?? objectives[0]],
       sourceIds,
       text: `Write three clear sentences about "${unit.title}". Sentence 1 names the topic. Sentence 2 gives one detail. Sentence 3 gives your response or example. Improve it by checking capital letters, full stops, and one stronger word.`,
-      textVi: `Viet ba cau ro ve "${unit.titleVi}". Cau 1 goi ten chu de. Cau 2 dua mot chi tiet. Cau 3 neu phan hoi hoac vi du cua con. Sua lai bang cach kiem tra chu hoa, dau cham, va mot tu manh hon.`,
+      textVi: `Viết ba câu rõ về "${unit.titleVi}". Câu 1 gọi tên chủ đề. Câu 2 đưa một chi tiết. Câu 3 nêu phản hồi hoặc ví dụ của con. Sửa lại bằng cách kiểm tra chữ hoa, dấu chấm, và một từ mạnh hơn.`,
     },
     {
       sectionTitle: `${prefix}.7 Review and transfer`,
-      sectionTitleVi: `${prefix}.7 On tap va chuyen giao`,
+      sectionTitleVi: `${prefix}.7 Ôn tập và chuyển giao`,
       type: 'review',
       skillRefs: objectives,
       sourceIds,
       text: `Review with the evidence-based routine: retrieve without looking, check the source text, explain the idea to someone, space the next review, and use the idea in a new example. Mastery means the learner can read, say, write, and transfer the unit idea.`,
-      textVi: `On theo cach co bang chung: tu nho lai khi chua nhin, kiem tra lai van ban nguon, giai thich cho nguoi khac, hen lan on tiep theo, va dung y do trong vi du moi. Dat la khi be doc duoc, noi duoc, viet duoc, va chuyen giao duoc y cua unit.`,
+      textVi: `Ôn theo cách có bằng chứng: tự nhớ lại khi chưa nhìn, kiểm tra lại văn bản nguồn, giải thích cho người khác, hẹn lần ôn tiếp theo, và dùng ý đó trong ví dụ mới. Đạt là khi bé đọc được, nói được, viết được, và chuyển giao được ý của unit.`,
     },
   ];
 }
