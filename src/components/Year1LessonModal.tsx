@@ -213,7 +213,7 @@ export function Year1LessonModal({ topic, subjectColor, onClose, onComplete }: P
 
                 {/* Example sentence listen */}
                 {card.example && (
-                  <button onClick={(e) => { e.stopPropagation(); handleSpeak(card.example, 0.82); }} disabled={isSpeaking}
+                  <button onClick={(e) => { e.stopPropagation(); handleSpeak(card.example!, 0.82); }} disabled={isSpeaking}
                     style={{ display:'flex', alignItems:'center', gap:4, padding:'0.4rem 0.8rem', borderRadius:99, border:'1px solid #e2e8f0', background:'white', color:'#64748b', fontWeight:600, cursor:'pointer', fontSize:'0.62rem', margin:'6px auto 0' }}>
                     {`🔊 Nghe câu ví dụ: "${card.example}"`}
                   </button>
