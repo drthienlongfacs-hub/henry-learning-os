@@ -2,7 +2,6 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Home, BookOpen, RotateCcw, Brain, Trophy, ChevronRight, ArrowLeft, CheckCircle2, BookMarked, ChevronDown } from 'lucide-react';
 import { LangToggle } from '@/components/LangToggle';
 import { useTranslation } from '@/lib/i18n';
@@ -11,13 +10,16 @@ import { Year1LessonModal } from '@/components/Year1LessonModal';
 import { YEAR1_INTERACTIVE } from '@/data/year1-interactive-content';
 import { CROSS_DOMAIN_LINKS } from '@/data/year1-cross-domain-links';
 
+/* ─── Base path for assets ─── */
+const BASE = process.env.NODE_ENV === 'production' ? '/henry-learning-os' : '';
+
 /* ─── Book definitions ─── */
 const BOOKS = [
-  { id: 'macmillan', name: 'Macmillan English 1', subject: 'english' as const, cover: '/henry-learning-os/year1-assets/english-cover.png', color: '#3b82f6', gradient: 'linear-gradient(135deg,#3b82f6,#60a5fa)', desc: 'Fluency + Language + Practice', bookKey: 'Macmillan English 1' },
-  { id: 'abacus1', name: 'Abacus Math — WB 1', subject: 'math' as const, cover: '/henry-learning-os/year1-assets/math-cover.png', color: '#f59e0b', gradient: 'linear-gradient(135deg,#f59e0b,#fbbf24)', desc: 'Counting & Place Value', bookKey: 'Abacus Workbook 1' },
-  { id: 'abacus2', name: 'Abacus Math — WB 2', subject: 'math' as const, cover: '/henry-learning-os/year1-assets/math-cover.png', color: '#f97316', gradient: 'linear-gradient(135deg,#f97316,#fb923c)', desc: 'Addition & Subtraction', bookKey: 'Abacus Workbook 2' },
-  { id: 'abacus3', name: 'Abacus Math — WB 3', subject: 'math' as const, cover: '/henry-learning-os/year1-assets/math-cover.png', color: '#ef4444', gradient: 'linear-gradient(135deg,#ef4444,#f87171)', desc: 'Measurement & Data', bookKey: 'Abacus Workbook 3' },
-  { id: 'sciencebug', name: 'Science Bug Year 1', subject: 'science' as const, cover: '/henry-learning-os/year1-assets/science-cover.png', color: '#22c55e', gradient: 'linear-gradient(135deg,#22c55e,#4ade80)', desc: 'Pupil Book', bookKey: 'Science Bug Year 1' },
+  { id: 'macmillan', name: 'Macmillan English 1', subject: 'english' as const, cover: `${BASE}/year1-assets/english-cover.png`, color: '#3b82f6', gradient: 'linear-gradient(135deg,#3b82f6,#60a5fa)', desc: 'Fluency + Language + Practice', bookKey: 'Macmillan English 1' },
+  { id: 'abacus1', name: 'Abacus Math — WB 1', subject: 'math' as const, cover: `${BASE}/year1-assets/math-cover.png`, color: '#f59e0b', gradient: 'linear-gradient(135deg,#f59e0b,#fbbf24)', desc: 'Counting & Place Value', bookKey: 'Abacus Workbook 1' },
+  { id: 'abacus2', name: 'Abacus Math — WB 2', subject: 'math' as const, cover: `${BASE}/year1-assets/math-cover.png`, color: '#f97316', gradient: 'linear-gradient(135deg,#f97316,#fb923c)', desc: 'Addition & Subtraction', bookKey: 'Abacus Workbook 2' },
+  { id: 'abacus3', name: 'Abacus Math — WB 3', subject: 'math' as const, cover: `${BASE}/year1-assets/math-cover.png`, color: '#ef4444', gradient: 'linear-gradient(135deg,#ef4444,#f87171)', desc: 'Measurement & Data', bookKey: 'Abacus Workbook 3' },
+  { id: 'sciencebug', name: 'Science Bug Year 1', subject: 'science' as const, cover: `${BASE}/year1-assets/science-cover.png`, color: '#22c55e', gradient: 'linear-gradient(135deg,#22c55e,#4ade80)', desc: 'Pupil Book', bookKey: 'Science Bug Year 1' },
 ];
 
 const SUB_META: Record<string, { emoji: string; color: string; label: string }> = {
