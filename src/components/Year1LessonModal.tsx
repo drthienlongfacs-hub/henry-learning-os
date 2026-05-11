@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import type { CurriculumTopic, InteractiveContent } from '@/data/year1-integrated-curriculum';
 import { YEAR1_INTERACTIVE } from '@/data/year1-interactive-content';
+import { getVisualScene } from '@/data/year1-visual-scenes';
 import { speak, stopSpeech } from '@/lib/voiceEngine';
 import { getOfflineIPA } from '@/data/ipaDatabase';
 
@@ -140,23 +141,43 @@ export function Year1LessonModal({ topic, subjectColor, onClose, onComplete }: P
   };
 
   return (
-    <div style={{ position:'fixed', inset:0, zIndex:9999, background:'rgba(0,0,0,0.6)', display:'flex', alignItems:'center', justifyContent:'center', padding:'1rem' }} onClick={onClose}>
-      <div style={{ background:'#fff', borderRadius:20, maxWidth:480, width:'100%', maxHeight:'85vh', overflow:'auto', boxShadow:'0 20px 60px rgba(0,0,0,0.3)' }} onClick={e => e.stopPropagation()}>
-        {/* Header */}
-        <div style={{ padding:'1rem 1.2rem', borderBottom:'1px solid #f0f0f0', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-          <div>
-            <div style={{ fontSize:'0.65rem', fontWeight:700, color:subjectColor, textTransform:'uppercase', letterSpacing:1 }}>{topic.type}</div>
-            <div style={{ fontSize:'1rem', fontWeight:900, color:'#1a1a2e', marginTop:2 }}>{topic.titleEn}</div>
-            <div style={{ fontSize:'0.75rem', color:'#666' }}>{topic.titleVi}</div>
+    <div style={{ position:'fixed', inset:0, zIndex:9999, background:'rgba(0,0,0,0.55)', display:'flex', alignItems:'center', justifyContent:'center', padding:'1rem' }} onClick={onClose}>
+      <div style={{ background:'#fff', borderRadius:24, maxWidth:500, width:'100%', maxHeight:'90vh', overflow:'auto', boxShadow:'0 25px 80px rgba(0,0,0,0.35)' }} onClick={e => e.stopPropagation()}>
+        {/* ── Visual Hero Scene ── */}
+        {(() => { const scene = getVisualScene(topic.id); return (
+          <div style={{ position:'relative', background: scene.bgGradient, borderRadius:'24px 24px 0 0', padding:'1.5rem 1.2rem 1rem', overflow:'hidden', minHeight: 140 }}>
+            {/* Floating decorations */}
+            {scene.floatingIcons.map((icon, i) => (
+              <span key={i} style={{ position:'absolute', fontSize: `${1.2 + (i % 2) * 0.5}rem`, opacity: 0.35, top: `${10 + i * 18}%`, right: `${5 + i * 12}%`, animation: `float${i % 3} ${3 + i}s ease-in-out infinite`, pointerEvents:'none' }}>{icon}</span>
+            ))}
+            {/* Close button */}
+            <button onClick={onClose} style={{ position:'absolute', top:12, right:12, width:32, height:32, borderRadius:99, border:'none', background:'rgba(255,255,255,0.7)', backdropFilter:'blur(8px)', cursor:'pointer', fontSize:'1rem', display:'flex', alignItems:'center', justifyContent:'center', zIndex:2 }}>✕</button>
+            {/* Scene illustration */}
+            <div style={{ display:'flex', justifyContent:'center', gap:6, marginBottom:8 }}>
+              {scene.sceneEmojis.map((e, i) => (
+                <span key={i} style={{ fontSize: i === 1 ? '3rem' : '2.2rem', filter:'drop-shadow(0 2px 4px rgba(0,0,0,0.15))', animation: `bounce${i % 2} 2s ease-in-out infinite ${i * 0.3}s` }}>{e}</span>
+              ))}
+            </div>
+            {/* Title */}
+            <div style={{ textAlign:'center', position:'relative', zIndex:1 }}>
+              <div style={{ fontSize:'0.6rem', fontWeight:800, color: scene.accentColor, textTransform:'uppercase', letterSpacing:2, marginBottom:2 }}>{topic.type === 'lesson' ? '📖 Bài học' : topic.type === 'practice' ? '✏️ Luyện tập' : topic.type === 'activity' ? '🎨 Hoạt động' : '📝 Ôn tập'}</div>
+              <div style={{ fontSize:'1.1rem', fontWeight:900, color:'#1a1a2e', lineHeight:1.3 }}>{topic.titleEn}</div>
+              <div style={{ fontSize:'0.8rem', color:'#555', marginTop:2 }}>{topic.titleVi}</div>
+            </div>
+            {/* Visual tip */}
+            {scene.visualTip && (
+              <div style={{ marginTop:8, padding:'0.4rem 0.7rem', borderRadius:10, background:'rgba(255,255,255,0.7)', backdropFilter:'blur(4px)', fontSize:'0.65rem', color:'#555', textAlign:'center', display:'flex', alignItems:'center', gap:4, justifyContent:'center' }}>
+                <span>💡</span> {scene.visualTip}
+              </div>
+            )}
           </div>
-          <button onClick={onClose} style={{ width:32, height:32, borderRadius:99, border:'none', background:'#f5f5f5', cursor:'pointer', fontSize:'1rem', display:'flex', alignItems:'center', justifyContent:'center' }}>✕</button>
-        </div>
+        ); })()}
 
         {/* Tabs */}
         <div style={{ display:'flex', gap:4, padding:'0.5rem 1rem', borderBottom:'1px solid #f5f5f5' }}>
-          {hasVocab && <button onClick={() => { setMode('vocab'); setFlipped(false); setPronScore(null); }} style={{ flex:1, padding:'0.4rem', borderRadius:10, border:'none', cursor:'pointer', background: mode==='vocab' ? subjectColor : '#f5f5f5', color: mode==='vocab' ? '#fff' : '#666', fontWeight:700, fontSize:'0.72rem', transition:'all 0.2s' }}>🃏 Flashcards</button>}
-          {hasQuiz && <button onClick={() => setMode('quiz')} style={{ flex:1, padding:'0.4rem', borderRadius:10, border:'none', cursor:'pointer', background: mode==='quiz' ? subjectColor : '#f5f5f5', color: mode==='quiz' ? '#fff' : '#666', fontWeight:700, fontSize:'0.72rem', transition:'all 0.2s' }}>📝 Quiz</button>}
-          <button onClick={() => setMode('overview')} style={{ flex:1, padding:'0.4rem', borderRadius:10, border:'none', cursor:'pointer', background: mode==='overview' ? subjectColor : '#f5f5f5', color: mode==='overview' ? '#fff' : '#666', fontWeight:700, fontSize:'0.72rem', transition:'all 0.2s' }}>📋 Tổng quan</button>
+          {hasVocab && <button onClick={() => { setMode('vocab'); setFlipped(false); setPronScore(null); }} style={{ flex:1, padding:'0.5rem', borderRadius:12, border:'none', cursor:'pointer', background: mode==='vocab' ? subjectColor : '#f5f5f5', color: mode==='vocab' ? '#fff' : '#666', fontWeight:700, fontSize:'0.75rem', transition:'all 0.2s' }}>🃏 Thẻ từ vựng</button>}
+          {hasQuiz && <button onClick={() => setMode('quiz')} style={{ flex:1, padding:'0.5rem', borderRadius:12, border:'none', cursor:'pointer', background: mode==='quiz' ? subjectColor : '#f5f5f5', color: mode==='quiz' ? '#fff' : '#666', fontWeight:700, fontSize:'0.75rem', transition:'all 0.2s' }}>📝 Trắc nghiệm</button>}
+          <button onClick={() => setMode('overview')} style={{ flex:1, padding:'0.5rem', borderRadius:12, border:'none', cursor:'pointer', background: mode==='overview' ? subjectColor : '#f5f5f5', color: mode==='overview' ? '#fff' : '#666', fontWeight:700, fontSize:'0.75rem', transition:'all 0.2s' }}>📋 Tổng quan</button>
         </div>
 
         {/* Content */}
@@ -171,25 +192,26 @@ export function Year1LessonModal({ topic, subjectColor, onClose, onComplete }: P
                   Thẻ {vocabIdx + 1} / {vocabCards.length}
                 </div>
 
-                {/* Flashcard */}
+                {/* Flashcard — large visual */}
                 <button onClick={() => setFlipped(!flipped)} style={{
-                  width:'100%', minHeight:160, borderRadius:16, border:`2px solid ${subjectColor}20`,
-                  background: flipped ? `linear-gradient(135deg, ${subjectColor}08, ${subjectColor}15)` : '#fafafe',
-                  cursor:'pointer', padding:'1.2rem', transition:'all 0.3s',
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
-                  display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:4,
+                  width:'100%', minHeight:180, borderRadius:20, border:`3px solid ${subjectColor}25`,
+                  background: flipped ? `linear-gradient(135deg, ${subjectColor}05, ${subjectColor}12)` : 'linear-gradient(135deg, #fafafe, #f5f7ff)',
+                  cursor:'pointer', padding:'1.5rem 1.2rem', transition:'all 0.4s ease',
+                  boxShadow: flipped ? `0 8px 30px ${subjectColor}20` : '0 4px 20px rgba(0,0,0,0.06)',
+                  display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:6,
+                  transform: flipped ? 'scale(1.02)' : 'scale(1)',
                 }}>
-                  <span style={{ fontSize:'2.2rem' }}>{card.imageEmoji}</span>
-                  <span style={{ fontSize:'1.4rem', fontWeight:900, color: flipped ? subjectColor : '#1a1a2e' }}>{card.word}</span>
-                  {/* IPA Pronunciation */}
-                  {ipa && <span style={{ fontSize:'0.82rem', color:'#8b5cf6', fontFamily:'serif', fontWeight:600, letterSpacing:0.5 }}>{ipa}</span>}
+                  <span style={{ fontSize:'3.5rem', filter:'drop-shadow(0 3px 6px rgba(0,0,0,0.15))', transition:'all 0.3s', transform: flipped ? 'scale(0.8)' : 'scale(1)' }}>{card.imageEmoji}</span>
+                  <span style={{ fontSize:'1.6rem', fontWeight:900, color: flipped ? subjectColor : '#1a1a2e', letterSpacing:1 }}>{card.word}</span>
+                  {ipa && <span style={{ fontSize:'0.85rem', color:'#8b5cf6', fontFamily:'serif', fontWeight:600, letterSpacing:0.5, background:'#f5f3ff', padding:'2px 10px', borderRadius:99 }}>{ipa}</span>}
                   {flipped && (
                     <>
-                      <span style={{ fontSize:'1rem', fontWeight:700, color:'#333', marginTop:4 }}>{card.meaning}</span>
-                      {card.example && <span style={{ fontSize:'0.78rem', color:'#666', fontStyle:'italic', marginTop:2 }}>{`"${card.example}"`}</span>}
+                      <div style={{ width:40, height:2, background:`${subjectColor}30`, borderRadius:2, margin:'4px 0' }} />
+                      <span style={{ fontSize:'1.15rem', fontWeight:800, color:'#333' }}>{card.meaning}</span>
+                      {card.example && <span style={{ fontSize:'0.82rem', color:'#666', fontStyle:'italic', marginTop:2, background:'#f8fafc', padding:'4px 12px', borderRadius:8 }}>{`"${card.example}"`}</span>}
                     </>
                   )}
-                  {!flipped && <span style={{ fontSize:'0.62rem', color:'#bbb' }}>Nhấn để lật</span>}
+                  {!flipped && <span style={{ fontSize:'0.65rem', color:'#bbb', marginTop:4 }}>👆 Nhấn để lật thẻ</span>}
                 </button>
 
                 {/* ── Pronunciation Controls ── */}
@@ -335,37 +357,51 @@ export function Year1LessonModal({ topic, subjectColor, onClose, onComplete }: P
           {/* ── OVERVIEW with pronunciation ── */}
           {mode === 'overview' && (
             <div>
+              {/* Instructions (for activity topics) */}
+              {content?.instructions && content.instructions.length > 0 && (
+                <div style={{ marginBottom:16, padding:'0.8rem', borderRadius:14, background:'linear-gradient(135deg,#fef3c7,#fffbeb)', border:'1.5px solid #fde68a' }}>
+                  <div style={{ fontWeight:800, fontSize:'0.82rem', color:'#92400e', marginBottom:8, display:'flex', alignItems:'center', gap:6 }}>📝 Hướng dẫn hoạt động</div>
+                  {content.instructions.map((inst, i) => (
+                    <div key={i} style={{ fontSize:'0.78rem', color:'#78350f', padding:'0.35rem 0', paddingLeft:16, display:'flex', gap:8, alignItems:'flex-start' }}>
+                      <span style={{ fontSize:'1rem', minWidth:24 }}>{['1️⃣','2️⃣','3️⃣','4️⃣','5️⃣'][i] || '▪️'}</span>
+                      <span>{inst}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
               {topic.objectives && topic.objectives.length > 0 && (
                 <div style={{ marginBottom:16 }}>
-                  <div style={{ fontWeight:800, fontSize:'0.8rem', color:'#1a1a2e', marginBottom:8 }}>🎯 Mục tiêu bài học</div>
+                  <div style={{ fontWeight:800, fontSize:'0.82rem', color:'#1a1a2e', marginBottom:8, display:'flex', alignItems:'center', gap:6 }}>🎯 Mục tiêu bài học</div>
                   {topic.objectives.map((o, i) => (
-                    <div key={i} style={{ fontSize:'0.75rem', color:'#555', padding:'0.4rem 0', paddingLeft:12, borderLeft:`3px solid ${subjectColor}30`, marginBottom:4 }}>• {o}</div>
+                    <div key={i} style={{ fontSize:'0.78rem', color:'#444', padding:'0.45rem 0.6rem', paddingLeft:14, borderLeft:`3px solid ${subjectColor}40`, marginBottom:4, background:'#fafafa', borderRadius:'0 8px 8px 0', display:'flex', alignItems:'center', gap:6 }}>
+                      <span style={{ color: subjectColor }}>✦</span> {o}
+                    </div>
                   ))}
                 </div>
               )}
               {topic.keyVocab && topic.keyVocab.length > 0 && (
                 <div style={{ marginBottom:16 }}>
-                  <div style={{ fontWeight:800, fontSize:'0.8rem', color:'#1a1a2e', marginBottom:8 }}>📖 Từ vựng chính — Nhấn để nghe</div>
-                  <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
+                  <div style={{ fontWeight:800, fontSize:'0.82rem', color:'#1a1a2e', marginBottom:8, display:'flex', alignItems:'center', gap:6 }}>📖 Từ vựng chính — Nhấn để nghe 🔊</div>
+                  <div style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
                     {topic.keyVocab.map(v => {
                       const ipa = getIPA(v);
                       return (
-                        <button key={v} onClick={() => handleSpeak(v, 0.8)} style={{ padding:'0.3rem 0.6rem', borderRadius:99, background:`${subjectColor}10`, color:subjectColor, fontWeight:700, fontSize:'0.72rem', border:'none', cursor:'pointer', display:'flex', alignItems:'center', gap:4 }}>
-                          🔈 {v} {ipa && <span style={{ color:'#8b5cf6', fontFamily:'serif', fontSize:'0.6rem' }}>{ipa}</span>}
+                        <button key={v} onClick={() => handleSpeak(v, 0.8)} style={{ padding:'0.4rem 0.8rem', borderRadius:12, background:`${subjectColor}08`, color:subjectColor, fontWeight:700, fontSize:'0.78rem', border:`1.5px solid ${subjectColor}20`, cursor:'pointer', display:'flex', alignItems:'center', gap:5, transition:'all 0.2s', boxShadow:'0 2px 6px rgba(0,0,0,0.04)' }}>
+                          🔈 {v} {ipa && <span style={{ color:'#8b5cf6', fontFamily:'serif', fontSize:'0.65rem', background:'#f5f3ff', padding:'1px 6px', borderRadius:6 }}>{ipa}</span>}
                         </button>
                       );
                     })}
                   </div>
                 </div>
               )}
-              {!hasVocab && !hasQuiz && (
+              {!hasVocab && !hasQuiz && !content?.instructions && (
                 <div style={{ textAlign:'center', padding:'2rem 0' }}>
-                  <div style={{ fontSize:'2rem', marginBottom:8 }}>📚</div>
-                  <div style={{ fontSize:'0.8rem', color:'#999' }}>Nội dung tương tác đang được bổ sung...</div>
+                  <div style={{ fontSize:'2.5rem', marginBottom:8 }}>📚</div>
+                  <div style={{ fontSize:'0.82rem', color:'#999' }}>Nội dung tương tác đang được bổ sung...</div>
                 </div>
               )}
-              <button onClick={() => { onComplete(topic.id); onClose(); }} style={{ width:'100%', marginTop:16, padding:'0.6rem', borderRadius:10, border:'none', background:subjectColor, color:'#fff', fontWeight:700, cursor:'pointer', fontSize:'0.85rem' }}>
-                ✅ Đánh dấu đã học
+              <button onClick={() => { onComplete(topic.id); onClose(); }} style={{ width:'100%', marginTop:16, padding:'0.7rem', borderRadius:14, border:'none', background:`linear-gradient(135deg, ${subjectColor}, ${subjectColor}dd)`, color:'#fff', fontWeight:800, cursor:'pointer', fontSize:'0.9rem', boxShadow:`0 4px 15px ${subjectColor}40`, transition:'all 0.2s' }}>
+                ⭐ Đánh dấu đã học xong!
               </button>
             </div>
           )}
@@ -378,6 +414,11 @@ export function Year1LessonModal({ topic, subjectColor, onClose, onComplete }: P
           0%, 100% { transform: scale(1); opacity: 1; }
           50% { transform: scale(1.05); opacity: 0.8; }
         }
+        @keyframes float0 { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-8px) rotate(5deg); } }
+        @keyframes float1 { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-12px) rotate(-5deg); } }
+        @keyframes float2 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+        @keyframes bounce0 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+        @keyframes bounce1 { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-4px) scale(1.05); } }
       `}</style>
     </div>
   );
