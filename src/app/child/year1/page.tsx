@@ -9,6 +9,7 @@ import { useTranslation } from '@/lib/i18n';
 import { YEAR1_CURRICULUM, YEAR1_STATS, type CurriculumUnit, type CurriculumTopic } from '@/data/year1-integrated-curriculum';
 import { Year1LessonModal } from '@/components/Year1LessonModal';
 import { YEAR1_INTERACTIVE } from '@/data/year1-interactive-content';
+import { CROSS_DOMAIN_LINKS } from '@/data/year1-cross-domain-links';
 
 /* ─── Book definitions ─── */
 const BOOKS = [
@@ -285,6 +286,43 @@ export default function Year1Page() {
             <div style={{ fontSize: '0.7rem', color: '#94a3b8', marginTop: 4 }}>Nhấn vào bìa sách phía trên để xem nội dung bài học</div>
           </div>
         )}
+
+        {/* ═══ Cross-Domain Learning ═══ */}
+        <div style={{ marginTop: '1.2rem' }}>
+          <h2 style={{ fontSize: '0.9rem', fontWeight: 900, color: '#1e293b', margin: '0 0 0.6rem', display: 'flex', alignItems: 'center', gap: 6 }}>
+            🔗 Học liên môn
+            <span style={{ fontSize: '0.55rem', fontWeight: 600, color: '#94a3b8', marginLeft: 4 }}>{CROSS_DOMAIN_LINKS.length} chủ đề</span>
+          </h2>
+          <div style={{ display: 'flex', gap: '0.5rem', overflowX: 'auto', scrollbarWidth: 'none', paddingBottom: 4 }}>
+            {CROSS_DOMAIN_LINKS.map(link => (
+              <div key={link.id} style={{ flex: '0 0 260px', borderRadius: 14, border: '1px solid #e2e8f0', background: 'white', overflow: 'hidden' }}>
+                <div style={{ padding: '0.6rem 0.7rem', background: 'linear-gradient(135deg,#f8fafc,#eef2ff)', borderBottom: '1px solid #f1f5f9' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <span style={{ fontSize: '1.2rem' }}>{link.themeEmoji}</span>
+                    <div>
+                      <div style={{ fontWeight: 800, fontSize: '0.72rem', color: '#1e293b' }}>{link.theme}</div>
+                      <div style={{ fontSize: '0.58rem', color: '#94a3b8' }}>{link.themeVi}</div>
+                    </div>
+                  </div>
+                </div>
+                <div style={{ padding: '0.5rem 0.7rem' }}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 3, marginBottom: 6 }}>
+                    {link.connections.map((c, i) => (
+                      <span key={i} style={{ fontSize: '0.48rem', padding: '0.1rem 0.3rem', borderRadius: 99, background: `${SUB_META[c.subject]?.color || '#666'}12`, color: SUB_META[c.subject]?.color || '#666', fontWeight: 700 }}>
+                        {SUB_META[c.subject]?.emoji} {c.relevanceVi}
+                      </span>
+                    ))}
+                  </div>
+                  {link.suggestedActivityVi && (
+                    <div style={{ fontSize: '0.58rem', color: '#64748b', padding: '0.4rem', borderRadius: 8, background: '#fef3c7', border: '1px solid #fde68a', lineHeight: 1.4 }}>
+                      💡 {link.suggestedActivityVi}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Bottom nav */}
