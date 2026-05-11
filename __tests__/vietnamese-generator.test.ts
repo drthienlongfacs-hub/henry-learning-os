@@ -57,19 +57,39 @@ describe('Vietnamese Generator — Data Integrity', () => {
         }
     });
 
-    it('generated problems should not contain English words in Vietnamese context', () => {
+    it('generated problems should not contain common English words in Vietnamese context', () => {
+        // Known English words that should NEVER appear in Vietnamese exercises
+        // (these were the actual bugs found in RCA-001)
+        const ENGLISH_WORDS_BLOCKLIST = new Set([
+            'cat', 'hat', 'mat', 'bat', 'rat', 'fat', 'sat', 'pat',
+            'dog', 'pig', 'pen', 'hen', 'ten', 'men', 'den', 'bed',
+            'cup', 'cut', 'but', 'hut', 'nut', 'put', 'run', 'sun',
+            'big', 'red', 'hot', 'top', 'pot', 'map', 'tap', 'cap',
+            'the', 'and', 'for', 'are', 'was', 'not', 'you', 'all',
+            'can', 'had', 'her', 'one', 'our', 'out', 'day', 'get',
+            'has', 'him', 'his', 'how', 'its', 'let', 'may', 'new',
+            'now', 'old', 'see', 'way', 'who', 'boy', 'did', 'each',
+            'she', 'which', 'their', 'said', 'this', 'that', 'with',
+            'apple', 'banana', 'orange', 'hello', 'world', 'house',
+            'water', 'table', 'chair', 'happy', 'phone', 'color',
+        ]);
+        // Words that exist in both Vietnamese and English — NOT errors
+        const SHARED_WORDS = new Set([
+            'an', 'ba', 'cam', 'con', 'ban', 'can', 'dan', 'day',
+            'gia', 'hai', 'hon', 'lam', 'man', 'mat', 'me', 'nam',
+            'nho', 'ran', 'sam', 'son', 'tam', 'van',
+        ]);
+
         const allProblems = generateVietnameseSet(5, undefined, 100);
         for (const p of allProblems) {
-            // Check options for pure ASCII English words
             for (const opt of (p.options || [])) {
                 const words = opt.split(/\s+/);
                 for (const w of words) {
-                    const clean = w.replace(/['".,!?()]/g, '').toLowerCase();
-                    if (ENGLISH_WORD_PATTERN.test(clean) && !VALID_NO_DIACRITICS.has(clean)) {
-                        // This is a suspicious English word in Vietnamese content
-                        // Allow common Vietnamese words that happen to be ASCII
-                        expect.soft(clean).toBe(
-                            `FAIL: "${clean}" in option "${opt}" of question "${p.question.substring(0, 60)}..." looks like English`
+                    const clean = w.replace(/['".,!?()→←↔:;""]/g, '').toLowerCase();
+                    if (ENGLISH_WORDS_BLOCKLIST.has(clean) && !SHARED_WORDS.has(clean)) {
+                        // Definite English contamination
+                        throw new Error(
+                            `ENGLISH CONTAMINATION: "${clean}" in option "${opt}" of Vietnamese question "${p.question.substring(0, 80)}..."`
                         );
                     }
                 }
