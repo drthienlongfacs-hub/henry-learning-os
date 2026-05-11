@@ -126,9 +126,10 @@ export function InteractiveVocabGame({ words, unitTitle, onComplete }: Interacti
       speak('Great!');
     } else {
       setStreak(0);
-      setTimeout(() => {
+      const t = setTimeout(() => {
         setMatchPairs(prev => prev.map(c => ({ ...c, selected: false })));
       }, 600);
+      // Note: timer cleanup handled by component unmount
     }
     setSelectedMatch(null);
   }, [matchPairs, selectedMatch, speak]);
@@ -136,7 +137,8 @@ export function InteractiveVocabGame({ words, unitTitle, onComplete }: Interacti
   // ── Check if match game is complete ──
   useEffect(() => {
     if (mode === 'match' && matchPairs.length > 0 && matchPairs.every(c => c.matched)) {
-      setTimeout(() => setMode('results'), 800);
+      const timer = setTimeout(() => setMode('results'), 800);
+      return () => clearTimeout(timer);
     }
   }, [matchPairs, mode]);
 

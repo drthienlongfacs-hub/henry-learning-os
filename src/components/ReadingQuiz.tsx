@@ -32,7 +32,9 @@ function WordPopup({word,onClose}:{word:string;onClose:()=>void}){
   const[entry,setEntry]=useState<DictionaryEntry|null>(null);
   const[loading,setLoading]=useState(true);
   React.useEffect(()=>{
-    lookupWord(word.replace(/[^a-zA-Z'-]/g,'').toLowerCase()).then(r=>{setEntry(r);setLoading(false);});
+    let active = true;
+    lookupWord(word.replace(/[^a-zA-Z'-]/g,'').toLowerCase()).then(r=>{if(active){setEntry(r);setLoading(false);}});
+    return () => { active = false; };
   },[word]);
   return(
     <div style={{position:'fixed',inset:0,zIndex:1000,display:'flex',alignItems:'center',justifyContent:'center',background:'rgba(0,0,0,0.35)',backdropFilter:'blur(3px)'}} onClick={onClose}>
