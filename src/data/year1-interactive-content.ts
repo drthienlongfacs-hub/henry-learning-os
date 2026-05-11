@@ -348,6 +348,32 @@ export const YEAR1_INTERACTIVE: Record<string, InteractiveContent> = {
       { question: "'Where is the cat?' asks about ___", options: ['time','place','colour','name'], answer: "place", explanationVi: "Where = hỏi về nơi chốn." },
     ],
   },
+  "en5_3": {
+    vocabCards: [
+      { word: "the", meaning: "cái, con (mạo từ)", example: "The cat is big.", imageEmoji: "📝" },
+      { word: "is", meaning: "là, thì", example: "It is red.", imageEmoji: "✅" },
+      { word: "my", meaning: "của tôi", example: "This is my bag.", imageEmoji: "🎒" },
+      { word: "and", meaning: "và", example: "Mum and Dad.", imageEmoji: "🤝" },
+      { word: "in", meaning: "trong", example: "The ball is in the box.", imageEmoji: "📦" },
+      { word: "on", meaning: "trên", example: "The cup is on the table.", imageEmoji: "☕" },
+      { word: "at", meaning: "ở, tại", example: "I am at school.", imageEmoji: "🏫" },
+    ],
+    quizzes: [
+      { question: "Fill in: ___ cat is sleeping.", options: ['The','My','In','At'], answer: "The", explanationVi: "'The' đứng trước danh từ xác định." },
+      { question: "The ball is ___ the box.", options: ['in','at','my','is'], answer: "in", explanationVi: "'In' = ở trong." },
+      { question: "Build the word: c + a + t = ___", options: ['cat','bat','hat','mat'], answer: "cat", explanationVi: "Ghép: c + a + t = cat." },
+    ],
+  },
+  "en5_4": {
+    instructions: [
+      'Draw your dream island.',
+      'Write 3 sentences: "My island has... / I can see... / I like my island because..."',
+      'Label: trees, sea, sand, animals.',
+    ],
+    quizzes: [
+      { question: "Which sentence describes an island?", options: ['It has sand and sea.','It has snow.','It is in the sky.','It is under the ground.'], answer: "It has sand and sea.", explanationVi: "Đảo có cát và biển bao quanh." },
+    ],
+  },
   "en5_r": {
     quizzes: [
       { question: "The shell is ___ the sand.", options: ['on','swim','fly','eat'], answer: "on", explanationVi: "On = ở trên." },
@@ -373,6 +399,23 @@ export const YEAR1_INTERACTIVE: Record<string, InteractiveContent> = {
     ],
     quizzes: [
       { question: "The opposite of happy is ___", options: ['big','sad','fast','hot'], answer: "sad", explanationVi: "Happy ↔ sad." },
+    ],
+  },
+  "en6_3": {
+    instructions: [
+      'Pretend you are at the beach. Write a postcard to a friend.',
+      'Start with: "Dear [name], I am at the beach!"',
+      'Write 2-3 sentences: "I can see... / I played with... / The weather is..."',
+      'End with: "Wish you were here! From, [your name]"',
+    ],
+    quizzes: [
+      { question: "A postcard starts with ___", options: ['Dear...','Once upon a time...','1, 2, 3...','The end.'], answer: "Dear...", explanationVi: "Bưu thiếp bắt đầu bằng 'Dear...' (Gửi...)." },
+      { question: "'I saw a crab at the beach.' This tells about ___", options: ['a feeling','a place','a number','a colour'], answer: "a place", explanationVi: "Câu này nói về nơi chốn (the beach)." },
+    ],
+  },
+  "en6_4": {
+    quizzes: [
+      { question: "Put in order: beach / the / to / We / went", options: ['We went to the beach.','To the beach we went.','Beach the we went to.','Went we the beach to.'], answer: "We went to the beach.", explanationVi: "Thứ tự: Chủ ngữ + Động từ + Tân ngữ." },
     ],
   },
   "en6_r": {
@@ -401,6 +444,17 @@ export const YEAR1_INTERACTIVE: Record<string, InteractiveContent> = {
       { question: "'Be careful' means ___", options: ['chạy nhanh','cẩn thận','ngủ ngon','ăn nhiều'], answer: "cẩn thận", explanationVi: "Be careful = cẩn thận." },
     ],
   },
+  "en7_3": {
+    instructions: [
+      'Design a "Class Rules" poster.',
+      'Write 4 rules: 2 using "Do" and 2 using "Don\'t".',
+      'Example: "Do listen to the teacher." / "Don\'t run in the classroom."',
+      'Draw pictures for each rule.',
+    ],
+    quizzes: [
+      { question: "Which is a 'Do' rule?", options: ['Do listen carefully.','Don\'t be quiet.','Don\'t read books.','Do run in class.'], answer: "Do listen carefully.", explanationVi: "'Do listen' = quy tắc nên làm." },
+    ],
+  },
   "en7_r": {
     quizzes: [
       { question: "Don't ___ in the classroom.", options: ['read','write','run','sit'], answer: "run", explanationVi: "Don't run = không chạy trong lớp." },
@@ -425,6 +479,17 @@ export const YEAR1_INTERACTIVE: Record<string, InteractiveContent> = {
     ],
     quizzes: [
       { question: "Where do fish live?", options: ['trees','water','sky','desert'], answer: "water", explanationVi: "Fish live in water." },
+    ],
+  },
+  "en8_3": {
+    instructions: [
+      'Choose your favourite animal.',
+      'Draw it and write 3-4 sentences:',
+      '"My favourite animal is a ___. It is ___ (big/small/fast). It lives in ___ (the jungle/the sea/the farm). I like it because ___."',
+      'Label the parts: head, body, legs, tail.',
+    ],
+    quizzes: [
+      { question: "'My favourite animal is a giraffe. It is tall.' How many adjectives?", options: ['0','1','2','3'], answer: "1", explanationVi: "'Tall' là tính từ duy nhất." },
     ],
   },
   "en8_r": {
@@ -453,6 +518,19 @@ export const YEAR1_INTERACTIVE: Record<string, InteractiveContent> = {
     ],
     quizzes: [
       { question: "The opposite of big is ___", options: ['tall','small','fast','hot'], answer: "small", explanationVi: "Big ↔ small." },
+    ],
+  },
+  "en9_3": {
+    instructions: [
+      'Write a short adventure story (5-6 sentences).',
+      'Start: "One day, I went to a ___. First, I saw..."',
+      'Middle: "Then, I found... Next, I..."',
+      'End: "Finally, I... It was a great adventure!"',
+      'Use time words: first, then, next, finally.',
+    ],
+    quizzes: [
+      { question: "Which word comes FIRST in a story?", options: ['Finally','Then','Next','First'], answer: "First", explanationVi: "'First' = đầu tiên, mở đầu câu chuyện." },
+      { question: "A story has a beginning, ___, and end.", options: ['morning','middle','Monday','mouth'], answer: "middle", explanationVi: "Câu chuyện có: mở đầu, diễn biến (middle), kết thúc." },
     ],
   },
   "en9_r": {
@@ -635,20 +713,39 @@ export const YEAR1_INTERACTIVE: Record<string, InteractiveContent> = {
   "ma10_1": {
     vocabCards: [
       { word: "coin", meaning: "đồng xu", example: "A shiny coin.", imageEmoji: "🪙" },
-      { word: "pound", meaning: "bảng Anh", example: "One pound.", imageEmoji: "💷" },
+      { word: "pound", meaning: "bảng Anh (£)", example: "One pound = 100 pence.", imageEmoji: "💷" },
+      { word: "pence", meaning: "xu Anh (p)", example: "This costs 50p.", imageEmoji: "🪙" },
     ],
     quizzes: [
-      { question: "Which coin is worth the most?", options: ['1p','5p','10p','50p'], answer: "50p", explanationVi: "50p is the most valuable." },
+      { question: "Which coin is worth the most?", options: ['1p','5p','10p','50p'], answer: "50p", explanationVi: "50p có giá trị lớn nhất trong các lựa chọn." },
+      { question: "How many pence in one pound?", options: ['10','50','100','200'], answer: "100", explanationVi: "1 pound = 100 pence." },
+    ],
+  },
+  "ma10_1b": {
+    vocabCards: [
+      { word: "tiền giấy", meaning: "banknote", example: "Tờ 10.000đ màu vàng.", imageEmoji: "💵" },
+      { word: "1.000đ", meaning: "one thousand đồng", example: "Mua kẹo giá 1.000đ.", imageEmoji: "🍬" },
+      { word: "5.000đ", meaning: "five thousand đồng", example: "Mua bút giá 5.000đ.", imageEmoji: "✏️" },
+      { word: "10.000đ", meaning: "ten thousand đồng", example: "Mua vở giá 10.000đ.", imageEmoji: "📓" },
+      { word: "20.000đ", meaning: "twenty thousand đồng", example: "Mua sách giá 20.000đ.", imageEmoji: "📕" },
+      { word: "50.000đ", meaning: "fifty thousand đồng", example: "Tờ 50.000đ màu xanh lá.", imageEmoji: "💵" },
+    ],
+    quizzes: [
+      { question: "Tờ tiền nào có giá trị lớn nhất?", options: ['5.000đ','10.000đ','20.000đ','50.000đ'], answer: "50.000đ", explanationVi: "50.000đ là tờ tiền có giá trị lớn nhất trong các lựa chọn." },
+      { question: "Em mua vở 10.000đ, trả bằng tờ 20.000đ. Tiền thối là bao nhiêu?", options: ['5.000đ','10.000đ','15.000đ','20.000đ'], answer: "10.000đ", explanationVi: "20.000đ − 10.000đ = 10.000đ tiền thối." },
+      { question: "Which Vietnamese banknote is green?", options: ['10.000đ','20.000đ','50.000đ','100.000đ'], answer: "50.000đ", explanationVi: "Tờ 50.000đ có màu xanh lá cây." },
     ],
   },
   "ma10_2": {
     quizzes: [
       { question: "5p + 5p = ___", options: ['5p','10p','15p','20p'], answer: "10p", explanationVi: "5p + 5p = 10p." },
+      { question: "5.000đ + 5.000đ = ___", options: ['5.000đ','10.000đ','15.000đ','20.000đ'], answer: "10.000đ", explanationVi: "5.000đ + 5.000đ = 10.000đ." },
     ],
   },
   "ma10_3": {
     quizzes: [
-      { question: "An apple costs 20p. You pay with 50p. Change = ___", options: ['20p','30p','40p','10p'], answer: "30p", explanationVi: "50p - 20p = 30p change." },
+      { question: "An apple costs 20p. You pay with 50p. Change = ___", options: ['20p','30p','40p','10p'], answer: "30p", explanationVi: "50p − 20p = 30p tiền thối." },
+      { question: "Một quả táo giá 5.000đ. Em trả 10.000đ. Tiền thối = ___", options: ['3.000đ','5.000đ','7.000đ','10.000đ'], answer: "5.000đ", explanationVi: "10.000đ − 5.000đ = 5.000đ tiền thối." },
     ],
   },
   "ma11_1": {

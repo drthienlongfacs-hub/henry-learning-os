@@ -79,34 +79,41 @@ const ENGLISH_UNITS: CurriculumUnit[] = [
       {id:'en4_3',titleEn:'Phonics: Letter sounds s-z',titleVi:'Phát âm: s đến z',type:'practice',keyVocab:['sun','tiger','umbrella','van','watch','xylophone','yo-yo','zebra']},
       {id:'en4_r',titleEn:'Practice Book exercises',titleVi:'Bài tập thực hành',type:'practice'},
     ]},
-  { id:'en_u5', unitNumber:5, titleEn:"Sam's Island / Where is my house?", titleVi:'Đảo của Sam', subject:'english', book:'Macmillan English 1', term:2, iconEmoji:'🏝️',
+  { id:'en_u5', unitNumber:5, titleEn:"Sam's Island / Where is my house?", titleVi:'Đảo của Sam / Nhà tôi ở đâu?', subject:'english', book:'Macmillan English 1', term:2, iconEmoji:'🏝️',
     topics:[
       {id:'en5_1',titleEn:"Sam's island (Fluency)",titleVi:'Đảo của Sam',type:'lesson',keyVocab:['island','sea','sand','shell','boat','swim']},
-      {id:'en5_2',titleEn:'Where is my house? (Puzzle poem)',titleVi:'Nhà tôi ở đâu?',type:'lesson',objectives:['Prepositions of place','Question: Where is...?','Puzzle-solving']},
+      {id:'en5_2',titleEn:'Where is my house? (Puzzle poem)',titleVi:'Nhà tôi ở đâu? (Thơ đố)',type:'lesson',objectives:['Prepositions of place','Question: Where is...?','Puzzle-solving']},
+      {id:'en5_3',titleEn:'Sight words & word building',titleVi:'Từ thông dụng & ghép từ',type:'practice',keyVocab:['the','is','my','on','in','at','it','and'],objectives:['Recognise high-frequency words','Build CVC words','Read sight words fluently']},
+      {id:'en5_4',titleEn:'Writing: Describe your island',titleVi:'Viết: Mô tả hòn đảo của em',type:'activity',objectives:['Use adjectives','Write 3-4 sentences','Draw and label']},
       {id:'en5_r',titleEn:'Practice Book exercises',titleVi:'Bài tập thực hành',type:'practice'},
     ]},
   { id:'en_u6', unitNumber:6, titleEn:'On the Beach / We love the beach', titleVi:'Trên bãi biển', subject:'english', book:'Macmillan English 1', term:2, iconEmoji:'🏖️',
     topics:[
       {id:'en6_1',titleEn:'On the beach (Fluency)',titleVi:'Trên bãi biển',type:'lesson',keyVocab:['beach','wave','crab','seagull','sunhat','towel']},
       {id:'en6_2',titleEn:'We love the beach (Story)',titleVi:'Chúng ta thích biển',type:'lesson',objectives:['Story elements','Past tense intro','Feelings vocabulary']},
+      {id:'en6_3',titleEn:'Writing: Beach postcard',titleVi:'Viết: Bưu thiếp từ biển',type:'activity',objectives:['Postcard format','Use I saw... I liked...','Descriptive sentences']},
+      {id:'en6_4',titleEn:'Practice Book exercises',titleVi:'Bài tập thực hành',type:'practice'},
       {id:'en6_r',titleEn:'Revision Units 4-6',titleVi:'Ôn tập bài 4-6',type:'review'},
     ]},
   { id:'en_u7', unitNumber:7, titleEn:"Do or Don't?", titleVi:'Nên và Không nên', subject:'english', book:'Macmillan English 1', term:3, iconEmoji:'✅',
     topics:[
       {id:'en7_1',titleEn:"Do or don't? (Fluency)",titleVi:'Nên hay không nên',type:'lesson',keyVocab:['do','dont','must','rules','careful','safe']},
       {id:'en7_2',titleEn:'Imperatives & Rules (Language)',titleVi:'Câu mệnh lệnh & Luật lệ',type:'lesson',objectives:['Imperatives: Do/Don\'t','School rules','Safety rules']},
+      {id:'en7_3',titleEn:'Writing: Class rules poster',titleVi:'Viết: Áp phích nội quy lớp',type:'activity',objectives:['Write rules with Do/Don\'t','Design a poster','Use imperative sentences']},
       {id:'en7_r',titleEn:'Practice Book exercises',titleVi:'Bài tập thực hành',type:'practice'},
     ]},
   { id:'en_u8', unitNumber:8, titleEn:'Monkey Fun / Where are the animals?', titleVi:'Khỉ vui nhộn / Thú ở đâu?', subject:'english', book:'Macmillan English 1', term:3, iconEmoji:'🐒',
     topics:[
       {id:'en8_1',titleEn:'Monkey fun (Fluency)',titleVi:'Khỉ vui nhộn',type:'lesson',keyVocab:['monkey','elephant','giraffe','lion','parrot','snake']},
       {id:'en8_2',titleEn:'Where are the animals? (Information)',titleVi:'Thú ở đâu?',type:'lesson',objectives:['Animal habitats','Plural nouns','Information text reading']},
+      {id:'en8_3',titleEn:'Writing: My favourite animal',titleVi:'Viết: Con vật em yêu thích',type:'activity',objectives:['Write 3-4 sentences about an animal','Use adjectives (big, small, fast)','Draw and label animal parts']},
       {id:'en8_r',titleEn:'Practice Book exercises',titleVi:'Bài tập thực hành',type:'practice'},
     ]},
   { id:'en_u9', unitNumber:9, titleEn:'In the Cave / Playtime', titleVi:'Trong hang / Giờ chơi', subject:'english', book:'Macmillan English 1', term:3, iconEmoji:'🕳️',
     topics:[
       {id:'en9_1',titleEn:'In the cave (Fluency)',titleVi:'Trong hang động',type:'lesson',keyVocab:['cave','dark','torch','explore','adventure','treasure']},
-      {id:'en9_2',titleEn:'Playtime (Descriptive text)',titleVi:'Giờ chơi',type:'lesson',objectives:['Descriptive writing','Adjectives','End-of-year review']},
+      {id:'en9_2',titleEn:'Playtime (Descriptive text)',titleVi:'Giờ chơi (Văn miêu tả)',type:'lesson',objectives:['Descriptive writing','Adjectives','End-of-year review']},
+      {id:'en9_3',titleEn:'Writing: My adventure story',titleVi:'Viết: Câu chuyện phiêu lưu của em',type:'activity',objectives:['Story beginning, middle, end','Use time words (first, then, finally)','Creative writing']},
       {id:'en9_r',titleEn:'Revision Units 7-9',titleVi:'Ôn tập bài 7-9',type:'review'},
     ]},
 ];
@@ -171,9 +178,10 @@ const MATH_UNITS: CurriculumUnit[] = [
     ]},
   { id:'ma_u10', unitNumber:10, titleEn:'Money', titleVi:'Tiền tệ', subject:'math', book:'Abacus Workbook 3', term:3, iconEmoji:'💰',
     topics:[
-      {id:'ma10_1',titleEn:'Recognise coins',titleVi:'Nhận biết tiền xu',type:'lesson',keyVocab:['1p','2p','5p','10p','20p','50p','£1']},
-      {id:'ma10_2',titleEn:'Counting coins',titleVi:'Đếm tiền xu',type:'practice'},
-      {id:'ma10_3',titleEn:'Simple shopping problems',titleVi:'Bài toán mua sắm đơn giản',type:'activity'},
+      {id:'ma10_1',titleEn:'Recognise coins (UK)',titleVi:'Nhận biết tiền xu (Anh)',type:'lesson',keyVocab:['1p','2p','5p','10p','20p','50p','£1'],objectives:['Identify UK coins by value','Sort coins by size and colour']},
+      {id:'ma10_1b',titleEn:'Recognise money (Vietnam)',titleVi:'Nhận biết tiền Việt Nam',type:'lesson',keyVocab:['1.000đ','2.000đ','5.000đ','10.000đ','20.000đ','50.000đ','100.000đ'],objectives:['Identify Vietnamese banknotes','Compare values','Match amount to item']},
+      {id:'ma10_2',titleEn:'Counting coins & notes',titleVi:'Đếm tiền xu và tiền giấy',type:'practice',objectives:['Count mixed coins (UK)','Count mixed banknotes (VN)','Write total amounts']},
+      {id:'ma10_3',titleEn:'Simple shopping problems',titleVi:'Bài toán mua sắm đơn giản',type:'activity',objectives:['Calculate total cost','Work out change','Use both £/p and VNĐ']},
     ]},
   { id:'ma_u11', unitNumber:11, titleEn:'Fractions: Halves & Quarters', titleVi:'Phân số: Một nửa & Một phần tư', subject:'math', book:'Abacus Workbook 3', term:3, iconEmoji:'🍕',
     topics:[
@@ -184,7 +192,8 @@ const MATH_UNITS: CurriculumUnit[] = [
   { id:'ma_u12', unitNumber:12, titleEn:'Position & Direction', titleVi:'Vị trí & Hướng', subject:'math', book:'Abacus Workbook 3', term:3, iconEmoji:'🧭',
     topics:[
       {id:'ma12_1',titleEn:'Left, right, above, below',titleVi:'Trái, phải, trên, dưới',type:'lesson',keyVocab:['left','right','above','below','between','next to']},
-      {id:'ma12_2',titleEn:'Turns: whole, half, quarter',titleVi:'Xoay: cả vòng, nửa, phần tư',type:'lesson'},
+      {id:'ma12_2',titleEn:'Turns: whole, half, quarter',titleVi:'Xoay: cả vòng, nửa, phần tư',type:'lesson',objectives:['Whole turn, half turn, quarter turn','Clockwise and anti-clockwise']},
+      {id:'ma12_3',titleEn:'Giving directions',titleVi:'Chỉ đường',type:'activity',objectives:['Use position words in sentences','Follow and give simple directions','Draw a route on a grid']},
     ]},
 ];
 
