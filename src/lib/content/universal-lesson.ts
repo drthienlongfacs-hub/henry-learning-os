@@ -972,14 +972,14 @@ const SUBJECT_LESSONS: Record<
     van: {
       concepts: [
         "Vần = nguyên âm + phụ âm cuối: an, at, am, ap...",
-        "Vần mở: ba, me, chi (kết thúc nguyên âm)",
-        "Vần đóng: ban, met, chin (kết thúc phụ âm)",
+        "Vần mở: ba, me, chị (kết thúc nguyên âm)",
+        "Vần đóng: bàn, mắt, chín (kết thúc phụ âm)",
       ],
       examples: [
-        "vần AN: ban, can, dan, fan, gan",
-        "vần AT: bat, cat, hat, mat",
+        "vần AN: bàn, cán, đàn, gan, lan, man, tan",
+        "vần AT: bát, cát, hát, mát, nhạt, sát",
       ],
-      tips: ["Đọc các từ cùng vần", "Tìm vần trong bài thơ"],
+      tips: ["Đọc các từ cùng vần", "Tìm vần trong bài thơ", "Ghép phụ âm đầu + vần để tạo từ mới"],
     },
     phu_am_ghep: {
       concepts: [

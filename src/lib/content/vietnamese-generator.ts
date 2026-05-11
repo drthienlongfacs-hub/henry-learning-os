@@ -93,16 +93,16 @@ export function genTones(): VietnameseProblem {
 
 // ── NEW G1: Vần (Syllable/Rhyme Recognition) — CT 2018 Core ──
 const VANS = [
-    { van: 'an', words: ['ban', 'man', 'tan', 'can'] },
-    { van: 'at', words: ['bat', 'mat', 'hat', 'cat'] },
-    { van: 'am', words: ['cam', 'dam', 'ham', 'lam'] },
-    { van: 'ong', words: ['bong', 'cong', 'dong', 'song'] },
-    { van: 'en', words: ['ben', 'den', 'hen', 'ken'] },
-    { van: 'in', words: ['bin', 'din', 'kin', 'tin'] },
-    { van: 'oi', words: ['boi', 'coi', 'doi', 'goi'] },
-    { van: 'ai', words: ['bai', 'cai', 'dai', 'hai'] },
-    { van: 'uon', words: ['buon', 'cuon', 'muon', 'luon'] },
-    { van: 'ien', words: ['bien', 'chien', 'dien', 'kien'] },
+    { van: 'an', words: ['bàn', 'cán', 'đàn', 'lan'] },
+    { van: 'at', words: ['bát', 'cát', 'hát', 'mát'] },
+    { van: 'am', words: ['cảm', 'đám', 'hàm', 'lắm'] },
+    { van: 'ong', words: ['bông', 'công', 'đông', 'sông'] },
+    { van: 'en', words: ['bến', 'đèn', 'hẹn', 'kẹn'] },
+    { van: 'in', words: ['bìn', 'đĩnh', 'kín', 'tín'] },
+    { van: 'oi', words: ['bối', 'cối', 'đổi', 'gối'] },
+    { van: 'ai', words: ['bài', 'cải', 'dài', 'hải'] },
+    { van: 'uon', words: ['buồn', 'cuốn', 'muốn', 'luôn'] },
+    { van: 'ien', words: ['biển', 'chiến', 'diện', 'kiến'] },
 ];
 
 export function genVan(): VietnameseProblem {
@@ -221,18 +221,18 @@ export function genPhuAmGhep(): VietnameseProblem {
 const VANS_EXTENDED = [
     // Vần có âm cuối -n/-m
     { van: 'ân', words: ['cân', 'dân', 'lân', 'tân'] },
-    { van: 'ôn', words: ['bôn', 'côn', 'hôn', 'tôn'] },
+    { van: 'ôn', words: ['bốn', 'côn', 'hôn', 'tôn'] },
     { van: 'ơn', words: ['bơn', 'đơn', 'hơn', 'mơn'] },
-    { van: 'un', words: ['bun', 'cun', 'lun', 'tun'] },
-    { van: 'om', words: ['bom', 'com', 'dom', 'hom'] },
-    { van: 'ôm', words: ['bôm', 'côm', 'đôm', 'ôm'] },
-    { van: 'êm', words: ['bêm', 'đêm', 'hêm', 'kêm'] },
-    { van: 'im', words: ['bim', 'dim', 'kim', 'tim'] },
+    { van: 'un', words: ['bún', 'cún', 'lùn', 'tún'] },
+    { van: 'om', words: ['bóm', 'com', 'đóm', 'hòm'] },
+    { van: 'ôm', words: ['bốm', 'côm', 'đôm', 'ôm'] },
+    { van: 'êm', words: ['bêm', 'đêm', 'kêm', 'êm'] },
+    { van: 'im', words: ['bím', 'dìm', 'kim', 'tím'] },
     // Vần có âm cuối -t/-c
-    { van: 'ot', words: ['bot', 'cot', 'got', 'hot'] },
+    { van: 'ot', words: ['bọt', 'cọt', 'gọt', 'hột'] },
     { van: 'ăt', words: ['bắt', 'cắt', 'hắt', 'mắt'] },
     { van: 'ât', words: ['bật', 'hất', 'lật', 'mật'] },
-    { van: 'ut', words: ['but', 'cut', 'hut', 'tut'] },
+    { van: 'ut', words: ['bút', 'cút', 'hút', 'tụt'] },
     { van: 'ac', words: ['bác', 'các', 'hạc', 'tạc'] },
     { van: 'uc', words: ['bục', 'cục', 'đục', 'lục'] },
     { van: 'ôc', words: ['bốc', 'cốc', 'đốc', 'tốc'] },
@@ -240,7 +240,7 @@ const VANS_EXTENDED = [
     { van: 'ang', words: ['bàng', 'đàng', 'hàng', 'nàng'] },
     { van: 'ông', words: ['bông', 'công', 'đông', 'sông'] },
     { van: 'ăng', words: ['băng', 'hăng', 'măng', 'năng'] },
-    { van: 'ung', words: ['bung', 'dung', 'lung', 'sung'] },
+    { van: 'ung', words: ['bùng', 'dung', 'lùng', 'sùng'] },
     { van: 'anh', words: ['bạnh', 'đạnh', 'hạnh', 'nhanh'] },
     { van: 'inh', words: ['bình', 'đình', 'kính', 'tình'] },
     { van: 'ênh', words: ['bệnh', 'đệnh', 'hềnh', 'kênh'] },
