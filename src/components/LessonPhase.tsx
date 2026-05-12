@@ -14,6 +14,7 @@ const withBasePath = (src: string) =>
 
 // ── Lesson content generator for international units ──
 export interface LessonContent {
+  unitId?: string;
   unitTitle: string;
   unitTitleVi: string;
   grade: number;
@@ -173,7 +174,7 @@ export function generateLessonContent(unitId: string, title: string, titleVi: st
       : `Learn new words about: ${title}`;
 
     return {
-      unitTitle: title, unitTitleVi: titleVi, grade, framework,
+      unitId, unitTitle: title, unitTitleVi: titleVi, grade, framework,
       sections: [
         {
           type: 'vocabulary', title: '📚 Key Vocabulary', titleVi: '📚 Từ vựng chính',
@@ -401,30 +402,24 @@ export function LessonPhase({ lesson, onStartQuiz, lang = 'vi' }: LessonPhasePro
     tip: <Lightbulb size={20} />,
   };
 
-  // Get unit image if available
-  const unitImage = getUnitImage(lesson.unitTitle.toLowerCase().includes('family') ? 'en_u1' 
-    : lesson.unitTitle.toLowerCase().includes('house') ? 'en_u2'
-    : lesson.unitTitle.toLowerCase().includes('moon') ? 'en_u3'
-    : lesson.unitTitle.toLowerCase().includes('garden') ? 'en_u4'
-    : lesson.unitTitle.toLowerCase().includes('island') ? 'en_u5'
-    : lesson.unitTitle.toLowerCase().includes('beach') ? 'en_u6'
-    : lesson.unitTitle.toLowerCase().includes('don\'t') ? 'en_u7'
-    : lesson.unitTitle.toLowerCase().includes('monkey') ? 'en_u8'
-    : lesson.unitTitle.toLowerCase().includes('cave') || lesson.unitTitle.toLowerCase().includes('playtime') ? 'en_u9'
-    : '');
-
-  // Get writing exercises for the current unit
-  const writingExercises = getWritingExercises(
+  // Resolve unitId — from lesson data or from title-based fallback for Y1 units
+  const resolvedUnitId = lesson.unitId || (
     lesson.unitTitle.toLowerCase().includes('family') ? 'en_u1'
     : lesson.unitTitle.toLowerCase().includes('house') ? 'en_u2'
     : lesson.unitTitle.toLowerCase().includes('moon') ? 'en_u3'
     : lesson.unitTitle.toLowerCase().includes('garden') ? 'en_u4'
     : lesson.unitTitle.toLowerCase().includes('island') ? 'en_u5'
     : lesson.unitTitle.toLowerCase().includes('beach') ? 'en_u6'
-    : lesson.unitTitle.toLowerCase().includes('don\'t') ? 'en_u7'
+    : lesson.unitTitle.toLowerCase().includes("don't") ? 'en_u7'
     : lesson.unitTitle.toLowerCase().includes('monkey') ? 'en_u8'
     : lesson.unitTitle.toLowerCase().includes('cave') || lesson.unitTitle.toLowerCase().includes('playtime') ? 'en_u9'
     : '');
+
+  // Get unit image if available (Y1 images currently)
+  const unitImage = getUnitImage(resolvedUnitId);
+
+  // Get writing exercises for any grade via unified lookup
+  const writingExercises = getWritingExercises(resolvedUnitId);
 
   return (
     <div>
