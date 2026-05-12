@@ -1,6 +1,6 @@
 // ========================================
 // Henry Learning OS — Zustand Store
-// State management with localStorage persistence
+// State management with localStorage + IndexedDB persistence
 // ========================================
 
 import { create } from 'zustand';
@@ -8,6 +8,7 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import { generateId } from '@/lib/utils';
 import { calculateNextReview } from '@/lib/spaced-repetition';
 import { competencies, lessons, parentMissions } from '@/data/seed';
+import { scheduleSave, createAutoBackup } from '@/lib/data/data-service';
 import type {
     ChildProfile,
     ParentProfile,
@@ -83,6 +84,9 @@ interface AppState {
 
     updateReviewResult: (reviewId: string, result: 'correct' | 'incorrect' | 'hint_needed') => void;
 }
+
+// Keys that should NOT be serialized (functions, static data)
+const NON_PERSIST_KEYS = ['lessons', 'competencies', 'parentMissions'];
 
 export const useAppStore = create<AppState>()(
     persist(
@@ -222,11 +226,41 @@ export const useAppStore = create<AppState>()(
                 })),
         }),
         {
-            name: 'henry-os-v2', // bumped version to wipe old cached lessons
+            name: 'henry-os-v3', // Bumped for IndexedDB sync
             storage: createJSONStorage(() => localStorage),
             partialize: (state) => Object.fromEntries(
-                Object.entries(state).filter(([key]) => !['lessons', 'competencies', 'parentMissions'].includes(key))
+                Object.entries(state).filter(([key]) => !NON_PERSIST_KEYS.includes(key))
             ),
+            // Auto-sync to IndexedDB after rehydration
+            onRehydrateStorage: () => {
+                return (state) => {
+                    if (state) {
+                        // Schedule IndexedDB backup after successful rehydration
+                        const serializable = Object.fromEntries(
+                            Object.entries(state).filter(
+                                ([key]) => !NON_PERSIST_KEYS.includes(key) && typeof (state as unknown as Record<string, unknown>)[key] !== 'function'
+                            )
+                        );
+                        createAutoBackup(serializable, null).catch(() => {});
+                    }
+                };
+            },
         }
     )
 );
+
+// ── IndexedDB Auto-Sync Subscriber ──
+// Debounced save to IndexedDB on every state change (2s delay)
+if (typeof window !== 'undefined') {
+    useAppStore.subscribe(() => {
+        scheduleSave(() => {
+            const state = useAppStore.getState();
+            return Object.fromEntries(
+                Object.entries(state).filter(
+                    ([key]) => !NON_PERSIST_KEYS.includes(key) && typeof state[key as keyof AppState] !== 'function'
+                )
+            );
+        });
+    });
+}
+

@@ -4,6 +4,7 @@ import { useAppStore } from '@/stores/app-store';
 import Link from 'next/link';
 import { ArrowLeft, Shield, Eye, Clock, ExternalLink, Lock, Database, Download, Trash2 } from 'lucide-react';
 import { buildPrivacyEvidencePanel } from '@/lib/privacy/privacy-evidence';
+import { DataManager } from '@/components/DataManager';
 
 export default function SettingsPage() {
     const {
@@ -169,6 +170,11 @@ export default function SettingsPage() {
                         ))}
                     </div>
                 )}
+
+                {/* Data Management — Export/Import/Health */}
+                <div style={{ marginTop: '1.5rem', marginBottom: '1.5rem' }}>
+                    <DataManager />
+                </div>
 
                 {/* Data policy */}
                 <div className="card" style={{ marginTop: '1.5rem', background: 'var(--color-bg-warm)' }}>
