@@ -524,15 +524,13 @@ function LearnPageContent() {
         ? activeMode.phases[Math.min(activeMode.phases.length - 1, Math.floor(index / Math.max(1, Math.ceil(problems.length / activeMode.phases.length))))]
         : activeMode.phases[0];
     const topics = subject === 'math' ? MATH_TOPICS.filter(t => t.gradeLevel === grade)
-        : subject === 'vietnamese' ? VIETNAMESE_TOPICS.filter(t => t.gradeLevel <= grade)
-            : subject === 'english' ? ENGLISH_TOPICS.filter(t =>
-                ('isUnit' in t && t.isUnit) || ('isIntl' in t && t.isIntl) ? t.gradeLevel === grade : t.gradeLevel <= grade
-              )
-                : subject === 'science' ? SCIENCE_TOPICS.filter(t => t.gradeLevel <= grade)
-                    : subject === 'hisgeo' ? HISGEO_TOPICS.filter(t => t.gradeLevel <= grade)
-                        : subject === 'computing' ? COMPUTING_TOPICS.filter(t => t.gradeLevel <= grade)
-                            : subject === 'ethics' ? ETHICS_TOPICS.filter(t => t.gradeLevel <= grade)
-                                : subject === 'art' ? ART_TOPICS.filter(t => t.gradeLevel <= grade)
+        : subject === 'vietnamese' ? VIETNAMESE_TOPICS.filter(t => t.gradeLevel === grade)
+            : subject === 'english' ? ENGLISH_TOPICS.filter(t => t.gradeLevel === grade)
+                : subject === 'science' ? SCIENCE_TOPICS.filter(t => t.gradeLevel === grade)
+                    : subject === 'hisgeo' ? HISGEO_TOPICS.filter(t => t.gradeLevel === grade)
+                        : subject === 'computing' ? COMPUTING_TOPICS.filter(t => t.gradeLevel === grade)
+                            : subject === 'ethics' ? ETHICS_TOPICS.filter(t => t.gradeLevel === grade)
+                                : subject === 'art' ? ART_TOPICS.filter(t => t.gradeLevel === grade)
                                     : [];
     const activeSubjectSummary = subject
         ? summarizeSubjectPlan(SUBJECT_ENRICHMENT_KEY[subject], topics.map(t => t.key), attempts)

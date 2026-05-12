@@ -142,7 +142,7 @@ const WEATHER_EARTH_QS = [
     { q: 'Ngày và đêm xảy ra do đâu?', a: 'Trái Đất tự quay quanh trục', opts: ['Trái Đất tự quay quanh trục', 'Mặt Trời quay quanh Trái Đất', 'Mặt Trăng che', 'Mây che'], e: 'Trái Đất tự quay 1 vòng/24h: nửa hướng Mặt Trời = ngày, nửa kia = đêm.', grade: 4, illustration: '/images/core/science.svg'},
     { q: 'Nhiệt kế dùng đo gì?', a: 'Nhiệt độ', opts: ['Nhiệt độ', 'Trọng lượng', 'Chiều dài', 'Thời gian'], e: 'Nhiệt kế đo nhiệt độ, đơn vị °C (Celsius) hoặc °F (Fahrenheit).', grade: 3, illustration: '/images/core/science.svg'},
     { q: 'Vì sao có 4 mùa?', a: 'Trục Trái Đất nghiêng khi quay quanh Mặt Trời', opts: ['Trục Trái Đất nghiêng khi quay quanh Mặt Trời', 'Mặt Trời thay đổi nhiệt', 'Mặt Trăng ảnh hưởng', 'Gió thay đổi'], e: 'Trục Trái Đất nghiêng 23.5° → các bán cầu nhận lượng ánh sáng khác nhau.', grade: 4, illustration: '/images/core/science.svg'},
-    { q: 'Âm thanh truyền qua môi trường nào?', a: 'Rắn, lỏng, và khí', opts: ['Rắn, lỏng, và khí', 'Chỉ không khí', 'Chỉ nước', 'Chân không'], e: 'Âm thanh cần môi trường vật chất: truyền nhanh nhất qua rắn, chậm nhất qua khí. Không truyền trong chân không.', grade: 4, illustration: '/images/core/science.svg'},
+    { q: 'Vì sao ban đêm trời lạnh hơn ban ngày?', a: 'Không có ánh sáng mặt trời sưởi ấm', opts: ['Không có ánh sáng mặt trời sưởi ấm', 'Mặt Trăng làm lạnh', 'Gió mạnh hơn', 'Mây che nắng'], e: 'Ban đêm Trái Đất quay mặt khuất Mặt Trời, không nhận nhiệt → lạnh hơn.', grade: 4, illustration: '/images/core/science.svg'},
 ];
 
 export function genWeatherEarth(): ScienceProblem {
@@ -227,7 +227,7 @@ export function genSafetyHome(): ScienceProblem {
 // ── NEW: Âm thanh & Ánh sáng — Khoa học L4 ──
 const SOUND_LIGHT_QS = [
     { q: 'Âm thanh truyền được qua môi trường nào?', a: 'Chất rắn, lỏng và khí', opts: ['Chất rắn, lỏng và khí', 'Chỉ chất khí', 'Chỉ chất rắn', 'Chân không'], e: 'Âm thanh là sóng cơ học, truyền qua rắn, lỏng, khí nhưng KHÔNG truyền qua chân không.' },
-    { q: 'Ánh sáng truyền theo đường nào?', a: 'Đường thẳng', opts: ['Đường thẳng', 'Đường cong', 'Đường xoắn', 'Đường gấp khúc'], e: 'Ánh sáng truyền theo đường thẳng. Vì vậy ta thấy bóng đổ khi có vật cản.' },
+    { q: 'Bóng đổ hình thành khi nào?', a: 'Vật cản ánh sáng truyền thẳng', opts: ['Vật cản ánh sáng truyền thẳng', 'Trời mưa', 'Gió thổi', 'Ban đêm'], e: 'Ánh sáng truyền thẳng, khi bị vật cản → tạo bóng phía sau. Bóng to khi vật gần nguồn sáng.' },
     { q: 'Vật nào trong suốt cho ánh sáng truyền qua?', a: 'Kính cửa sổ', opts: ['Kính cửa sổ', 'Tấm gỗ', 'Tờ giấy dày', 'Bức tường'], e: 'Vật trong suốt (kính, nước) cho ánh sáng truyền qua hoàn toàn.' },
     { q: 'Tiếng sấm nghe sau ánh chớp vì:', a: 'Ánh sáng truyền nhanh hơn âm thanh', opts: ['Ánh sáng truyền nhanh hơn âm thanh', 'Âm thanh nhanh hơn', 'Chúng xảy ra cùng lúc', 'Sấm ở xa hơn'], e: 'Ánh sáng: 300.000 km/s. Âm thanh: ~340 m/s. Nên ta thấy chớp trước khi nghe sấm.' },
     { q: 'Gương phẳng phản xạ ánh sáng như thế nào?', a: 'Góc phản xạ bằng góc tới', opts: ['Góc phản xạ bằng góc tới', 'Góc phản xạ lớn hơn', 'Không phản xạ', 'Góc phản xạ nhỏ hơn'], e: 'Định luật phản xạ ánh sáng: góc phản xạ = góc tới.' },
@@ -364,8 +364,8 @@ export function genThoiTietMua(): ScienceProblem {
 
 // ── BATCH 12: Cây cối quanh em (G2) ──
 const CAY_COI = [
-    { q: 'Cây xanh cần gì để sống?', a: 'Nước, ánh sáng, đất', opts: ['Nước, ánh sáng, đất', 'Chỉ cần nước', 'Chỉ cần đất', 'Không cần gì'], e: 'Cây cần nước + ánh sáng + chất dinh dưỡng (đất) + không khí để quang hợp.' },
-    { q: 'Phần nào của cây hút nước từ đất?', a: 'Rễ', opts: ['Rễ', 'Lá', 'Hoa', 'Quả'], e: 'Rễ cây hút nước và chất khoáng từ đất lên nuôi cây.' },
+    { q: 'Hạt cây phát tán bằng những cách nào?', a: 'Gió, nước, động vật, tự nứt', opts: ['Gió, nước, động vật, tự nứt', 'Chỉ nhờ gió', 'Chỉ nhờ người', 'Không phát tán'], e: 'Hạt phát tán nhờ gió (bồ công anh), nước (dừa), động vật (chim ăn quả), tự nứt (đậu).' },
+    { q: 'Thân cây có nhiệm vụ gì?', a: 'Vận chuyển nước và chất dinh dưỡng', opts: ['Vận chuyển nước và chất dinh dưỡng', 'Quang hợp', 'Hấp thụ nước', 'Sinh sản'], e: 'Thân cây như đường ống, đưa nước từ rễ lên lá và chất dinh dưỡng từ lá xuống.' },
     { q: 'Lá cây có màu xanh vì chứa chất gì?', a: 'Diệp lục (chất xanh lá)', opts: ['Diệp lục (chất xanh lá)', 'Nước', 'Đường', 'Muối'], e: 'Diệp lục (chlorophyll) hấp thụ ánh sáng để quang hợp, tạo màu xanh cho lá.' },
     { q: 'Hoa có vai trò gì cho cây?', a: 'Sinh sản (tạo quả và hạt)', opts: ['Sinh sản (tạo quả và hạt)', 'Hút nước', 'Quang hợp', 'Giữ cây đứng thẳng'], e: 'Hoa → thụ phấn → quả → hạt → cây con mới.' },
     { q: 'Cây nào KHÔNG phải cây ăn quả?', a: 'Cây bàng', opts: ['Cây bàng', 'Cây xoài', 'Cây cam', 'Cây ổi'], e: 'Cây bàng là cây bóng mát, không phải cây ăn quả.' },
@@ -385,7 +385,7 @@ export function genCayCoi(): ScienceProblem {
 // ── BATCH 12: Điện cơ bản (G5) ──
 const DIEN_CO_BAN = [
     { q: 'Dòng điện chạy trong mạch kín nhờ thiết bị nào?', a: 'Pin hoặc ổ cắm (nguồn điện)', opts: ['Pin hoặc ổ cắm (nguồn điện)', 'Bóng đèn', 'Dây dẫn', 'Công tắc'], e: 'Nguồn điện (pin, ổ cắm) cung cấp năng lượng cho mạch điện hoạt động.' },
-    { q: 'Vật nào dẫn điện tốt?', a: 'Kim loại (đồng, sắt, nhôm)', opts: ['Kim loại (đồng, sắt, nhôm)', 'Gỗ', 'Nhựa', 'Cao su'], e: 'Kim loại dẫn điện tốt. Gỗ, nhựa, cao su là chất cách điện.' },
+    { q: 'Mạch điện nối tiếp khác mạch song song thế nào?', a: 'Nối tiếp: 1 bóng tắt → tất cả tắt', opts: ['Nối tiếp: 1 bóng tắt → tất cả tắt', 'Giống nhau hoàn toàn', 'Song song yếu hơn', 'Nối tiếp sáng hơn'], e: 'Mạch nối tiếp: dòng chạy qua từng bóng → 1 hỏng = tất cả tắt. Song song: mỗi bóng có đường riêng.' },
     { q: 'Khi thấy dây điện đứt rơi, em nên:', a: 'Tránh xa và báo người lớn', opts: ['Tránh xa và báo người lớn', 'Nhặt lên', 'Giẫm lên', 'Cắm lại'], e: 'Dây điện đứt rất nguy hiểm, có thể gây giật chết người. Tránh xa + gọi người lớn.' },
     { q: 'Công tắc dùng để:', a: 'Đóng/mở mạch điện', opts: ['Đóng/mở mạch điện', 'Tạo ra điện', 'Đo điện', 'Sửa dây điện'], e: 'Công tắc ON = mạch kín → dòng điện chạy. OFF = mạch hở → dòng điện ngừng.' },
     { q: 'Để tiết kiệm điện, ta nên:', a: 'Tắt thiết bị khi không dùng', opts: ['Tắt thiết bị khi không dùng', 'Bật đèn suốt ngày', 'Mở quạt khi đi ra ngoài', 'Dùng nhiều thiết bị cùng lúc'], e: 'Tiết kiệm điện: tắt khi không dùng, dùng đèn LED, điều hòa 26°C.' },
@@ -496,7 +496,7 @@ export const SCIENCE_TOPICS: SciTopicInfo[] = [
 ];
 
 export function generateScienceSet(grade: number, topicKey?: string, count: number = 10): ScienceProblem[] {
-    const topics = SCIENCE_TOPICS.filter(t => t.gradeLevel <= grade && (!topicKey || t.key === topicKey));
+    const topics = SCIENCE_TOPICS.filter(t => t.gradeLevel === grade && (!topicKey || t.key === topicKey));
     if (topics.length === 0) return [];
     return Array.from({ length: count }, () => {
         const t = topics[rand(0, topics.length - 1)];

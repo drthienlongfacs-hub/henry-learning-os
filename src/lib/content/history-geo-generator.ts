@@ -304,7 +304,7 @@ export const HISGEO_TOPICS: HisGeoTopicInfo[] = [
 ];
 
 export function generateHisGeoSet(grade: number, topicKey?: string, count: number = 10): HisGeoProblem[] {
-    const topics = HISGEO_TOPICS.filter(t => t.gradeLevel <= grade && (!topicKey || t.key === topicKey));
+    const topics = HISGEO_TOPICS.filter(t => t.gradeLevel === grade && (!topicKey || t.key === topicKey));
     if (topics.length === 0) return [];
     return Array.from({ length: count }, () => {
         const t = topics[rand(0, topics.length - 1)];

@@ -251,7 +251,7 @@ export const COMPUTING_TOPICS: CompTopicInfo[] = [
 ];
 
 export function generateComputingSet(grade: number, topicKey?: string, count: number = 10): ComputingProblem[] {
-    const topics = COMPUTING_TOPICS.filter(t => t.gradeLevel <= grade && (!topicKey || t.key === topicKey));
+    const topics = COMPUTING_TOPICS.filter(t => t.gradeLevel === grade && (!topicKey || t.key === topicKey));
     if (topics.length === 0) return [];
     return Array.from({ length: count }, () => {
         const t = topics[rand(0, topics.length - 1)];

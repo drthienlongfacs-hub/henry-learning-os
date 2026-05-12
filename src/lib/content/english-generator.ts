@@ -677,7 +677,7 @@ export function generateEnglishSet(grade: number, topicKey?: string, count: numb
     if (topicKey?.startsWith('wr_') || topicKey?.startsWith('ls_') || topicKey?.startsWith('vt_') || topicKey?.startsWith('cc_')) {
         return generateInternationalTopicExercises(topicKey, count);
     }
-    const topics = ENGLISH_TOPICS.filter(t => t.gradeLevel <= grade && (!topicKey || t.key === topicKey));
+    const topics = ENGLISH_TOPICS.filter(t => t.gradeLevel === grade && (!topicKey || t.key === topicKey));
     if (topics.length === 0) return [];
     return Array.from({ length: count }, () => {
         const t = topics[rand(0, topics.length - 1)];

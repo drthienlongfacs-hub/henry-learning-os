@@ -61,11 +61,28 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
     setAnswers(prev => ({ ...prev, [qId]: ans }));
   };
 
+  const isCorrectAnswer = (userAns: string, correctAns: string) => {
+    const u = (userAns || '').trim().toLowerCase();
+    const c = correctAns.trim().toLowerCase();
+    if (!u) return false;
+    // Exact match
+    if (u === c) return true;
+    // User selected full option text like "A. Swimming..." but answer is just "A"
+    // Extract leading letter from both and compare
+    const uLetter = u.match(/^([a-z])[\.\)\s]/)?.[1];
+    const cLetter = c.match(/^([a-z])[\.\)\s]/)?.[1] || (c.length === 1 ? c : null);
+    if (uLetter && cLetter && uLetter === cLetter) return true;
+    // Answer is full text "A. YES" and user stored "A. YES"
+    if (u.startsWith(c + '.') || u.startsWith(c + ' ')) return true;
+    // Gap-fill: accept alternate answers separated by /
+    const alts = c.split('/').map(s => s.trim());
+    if (alts.some(alt => u === alt)) return true;
+    return false;
+  };
+
   const score = allQuestions.filter(q => {
     if (isSelfAssessmentQuestion(q)) return Boolean(answers[q.id]);
-    const userAns = (answers[q.id] || '').trim().toLowerCase();
-    const correctAns = q.answer.trim().toLowerCase();
-    return userAns === correctAns;
+    return isCorrectAnswer(answers[q.id] || '', q.answer);
   }).length;
   const shields = total > 0 ? Math.round((score / total) * 5) : 0;
   const mins = Math.floor(timeLeft / 60);
@@ -149,8 +166,10 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
         </div>
       )}
 
-      {availableTests.map(t => (
-        <div key={t.id} style={{ ...card, cursor: 'pointer' }} onClick={() => startTest(t)}>
+      {availableTests.map(t => {
+        const hasSourcePages = t.parts.some(p => p.sourcePages && p.sourcePages.length > 0);
+        return (
+        <div key={t.id} style={{ ...card, cursor: 'pointer', borderLeft: hasSourcePages ? '3px solid #68d391' : '3px solid rgba(246,173,85,0.4)' }} onClick={() => startTest(t)}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
               <h4 style={{ margin: 0, fontSize: 15, color: '#f9d423' }}>📝 {t.skillVi}</h4>
@@ -160,7 +179,17 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
             </div>
             <span style={{ fontSize: 24 }}>▶️</span>
           </div>
-          <div style={{ display: 'flex', gap: 4, marginTop: 6, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: 4, marginTop: 6, flexWrap: 'wrap', alignItems: 'center' }}>
+            {hasSourcePages && (
+              <span style={{ fontSize: 10, padding: '2px 8px', background: 'rgba(72,187,120,0.15)', color: '#68d391', borderRadius: 4, fontWeight: 700 }}>
+                📘 Đề gốc đầy đủ
+              </span>
+            )}
+            {!hasSourcePages && (
+              <span style={{ fontSize: 10, padding: '2px 8px', background: 'rgba(246,173,85,0.12)', color: '#f6ad55', borderRadius: 4, fontWeight: 600 }}>
+                📝 Tự luyện (text-only)
+              </span>
+            )}
             {t.parts.map(p => (
               <span key={p.partNumber} style={{ fontSize: 10, padding: '2px 6px', background: 'rgba(99,179,237,0.15)', color: '#63b3ed', borderRadius: 4 }}>
                 Part {p.partNumber}: {p.titleVi}
@@ -168,7 +197,8 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
             ))}
           </div>
         </div>
-      ))}
+        );
+      })}
       <p style={{ fontSize: 10, color: '#a0aec0', textAlign: 'center', marginTop: 8 }}>
         📊 Practice theo format Cambridge • audio TTS tức thì • đáp án/giải thích/rubric • không copy đề chính thức
       </p>
@@ -197,7 +227,7 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
             const userAns = answers[q.id];
             const correct = isSelfAssessmentQuestion(q)
               ? Boolean(userAns)
-              : (userAns || '').trim().toLowerCase() === q.answer.trim().toLowerCase();
+              : isCorrectAnswer(userAns || '', q.answer);
             return (
               <div key={q.id} style={{ ...card, borderLeft: `3px solid ${correct ? '#68d391' : '#fc8181'}` }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -255,6 +285,15 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
   const isOpenGapFill = !isSpellType && (!q.options || q.options.length === 0);
   const isSelfAssessmentType = isSelfAssessmentQuestion(q);
 
+  // Visual-dependency detection: warn when question requires images but part has none
+  const VISUAL_TASK_TYPES = ['Draw lines', 'Draw Lines', 'Colour', 'Color', 'Colour and write', 'Tô màu', 'Nối tranh', 'Matching'];
+  const isVisualDependent = VISUAL_TASK_TYPES.some(t =>
+    q.taskTypeEn?.toLowerCase().includes(t.toLowerCase()) ||
+    q.taskTypeVi?.toLowerCase().includes(t.toLowerCase())
+  );
+  const partHasImages = Boolean(currentPart?.sourcePages?.length || currentPart?.partImage || q.imagePath);
+  const showVisualWarning = isVisualDependent && !partHasImages;
+
   return (
     <div style={{ background: 'linear-gradient(135deg, #0f0c29, #302b63, #24243e)', borderRadius: 20, padding: 16, color: '#fff', fontFamily: "'Inter',sans-serif" }}>
       {/* Header: timer + progress */}
@@ -275,6 +314,22 @@ export default function PracticeTestEngine({ grade = 1 }: { grade?: number }) {
       <p style={{ fontSize: 11, color: '#a0aec0', margin: '0 0 8px' }}>
         Câu {currentQ + 1}/{total} • {currentPart?.instructionVi}
       </p>
+
+      {/* ⚠️ Visual Dependency Warning — RCA systemic fix */}
+      {showVisualWarning && (
+        <div style={{
+          marginBottom: 12, padding: '10px 14px', borderRadius: 12,
+          background: 'linear-gradient(135deg, rgba(246,173,85,0.15), rgba(237,137,54,0.1))',
+          border: '1px solid rgba(246,173,85,0.3)',
+        }}>
+          <p style={{ margin: 0, fontSize: 12, color: '#f6ad55', fontWeight: 600 }}>
+            🖼️ Câu hỏi này yêu cầu quan sát tranh trong sách. Hãy mở sách bài thi gốc để xem tranh minh họa.
+          </p>
+          <p style={{ margin: '4px 0 0', fontSize: 11, color: '#ed8936' }}>
+            Dạng bài: {q.taskTypeVi} — cần hình ảnh gốc từ đề thi Cambridge.
+          </p>
+        </div>
+      )}
 
       {/* Part Audio (if any) */}
       {currentPart?.audioUrl && (
