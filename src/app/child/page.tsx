@@ -375,12 +375,12 @@ export default function ChildDashboard() {
             </div>
 
             {/* ═══ Bottom Navigation ═══ */}
-            <nav className="bottom-nav">
-                <Link href="/child" className="nav-item active"><Home size={20} /><span>{t('nav_home')}</span></Link>
-                <Link href="/child/learn" className="nav-item"><BookOpen size={20} /><span>Học</span></Link>
-                <Link href="/child/exams" className="nav-item"><Trophy size={20} /><span>Exams</span></Link>
-                <Link href="/child/review" className="nav-item"><RotateCcw size={20} /><span>{t('nav_review')}</span></Link>
-                <Link href="/child/mistakes" className="nav-item"><Brain size={20} /><span>{t('nav_mistakes')}</span></Link>
+            <nav className="bottom-nav" role="navigation" aria-label="Menu chính">
+                <Link href="/child" className="nav-item active" aria-label="Trang chủ" aria-current="page"><Home size={20} /><span>{t('nav_home')}</span></Link>
+                <Link href="/child/learn" className="nav-item" aria-label="Bài học"><BookOpen size={20} /><span>Học</span></Link>
+                <Link href="/child/exams" className="nav-item" aria-label="Luyện thi"><Trophy size={20} /><span>Exams</span></Link>
+                <Link href="/child/review" className="nav-item" aria-label="Ôn tập"><RotateCcw size={20} /><span>{t('nav_review')}</span></Link>
+                <Link href="/child/mistakes" className="nav-item" aria-label="Sửa lỗi"><Brain size={20} /><span>{t('nav_mistakes')}</span></Link>
             </nav>
         </div>
     );

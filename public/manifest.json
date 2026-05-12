@@ -1,0 +1,29 @@
+{
+  "name": "Henry Learning OS",
+  "short_name": "HenryOS",
+  "description": "Hệ thống học tập cá nhân hóa cho trẻ em — AI tutor, adaptive learning, đo tiến bộ thật",
+  "start_url": "/henry-learning-os/",
+  "scope": "/henry-learning-os/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#faf5ff",
+  "theme_color": "#6366f1",
+  "categories": ["education", "kids"],
+  "lang": "vi",
+  "icons": [
+    {
+      "src": "/henry-learning-os/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/henry-learning-os/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false
+}
