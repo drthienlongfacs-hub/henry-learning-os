@@ -82,10 +82,13 @@ export const YEAR1_WRITING_EXERCISES: Record<string, WritingExercise[]> = {
 
 // ── Import other grade exercise banks ──
 import { GRADE3_WRITING_EXERCISES } from './grade3-writing-exercises';
+import { GRADE4_WRITING_EXERCISES, GRADE5_WRITING_EXERCISES } from './grade4-5-writing-exercises';
 
 // Unified helper — searches all grade banks
 export function getWritingExercises(unitId: string): WritingExercise[] {
   return YEAR1_WRITING_EXERCISES[unitId] 
     || GRADE3_WRITING_EXERCISES[unitId] 
+    || GRADE4_WRITING_EXERCISES[unitId]
+    || GRADE5_WRITING_EXERCISES[unitId]
     || [];
 }
