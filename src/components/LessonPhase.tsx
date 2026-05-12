@@ -3,6 +3,10 @@
 import { useState } from 'react';
 import { BookOpen, Lightbulb, Volume2, ChevronRight, Star, Brain, Pencil } from 'lucide-react';
 import { InteractiveVocabGame } from './InteractiveVocabGame';
+import { TextToSpeech, ReadAlong } from './TextToSpeech';
+import { WritingExerciseEngine } from './WritingExercise';
+import { getWritingExercises } from '@/data/year1-writing-exercises';
+import { getUnitImage } from '@/data/year1-english-images';
 
 /** Prefix basePath for GitHub Pages subdirectory deployment */
 const withBasePath = (src: string) =>
@@ -397,18 +401,57 @@ export function LessonPhase({ lesson, onStartQuiz, lang = 'vi' }: LessonPhasePro
     tip: <Lightbulb size={20} />,
   };
 
+  // Get unit image if available
+  const unitImage = getUnitImage(lesson.unitTitle.toLowerCase().includes('family') ? 'en_u1' 
+    : lesson.unitTitle.toLowerCase().includes('house') ? 'en_u2'
+    : lesson.unitTitle.toLowerCase().includes('moon') ? 'en_u3'
+    : lesson.unitTitle.toLowerCase().includes('garden') ? 'en_u4'
+    : lesson.unitTitle.toLowerCase().includes('island') ? 'en_u5'
+    : lesson.unitTitle.toLowerCase().includes('beach') ? 'en_u6'
+    : lesson.unitTitle.toLowerCase().includes('don\'t') ? 'en_u7'
+    : lesson.unitTitle.toLowerCase().includes('monkey') ? 'en_u8'
+    : lesson.unitTitle.toLowerCase().includes('cave') || lesson.unitTitle.toLowerCase().includes('playtime') ? 'en_u9'
+    : '');
+
+  // Get writing exercises for the current unit
+  const writingExercises = getWritingExercises(
+    lesson.unitTitle.toLowerCase().includes('family') ? 'en_u1'
+    : lesson.unitTitle.toLowerCase().includes('house') ? 'en_u2'
+    : lesson.unitTitle.toLowerCase().includes('moon') ? 'en_u3'
+    : lesson.unitTitle.toLowerCase().includes('garden') ? 'en_u4'
+    : lesson.unitTitle.toLowerCase().includes('island') ? 'en_u5'
+    : lesson.unitTitle.toLowerCase().includes('beach') ? 'en_u6'
+    : lesson.unitTitle.toLowerCase().includes('don\'t') ? 'en_u7'
+    : lesson.unitTitle.toLowerCase().includes('monkey') ? 'en_u8'
+    : lesson.unitTitle.toLowerCase().includes('cave') || lesson.unitTitle.toLowerCase().includes('playtime') ? 'en_u9'
+    : '');
+
   return (
     <div>
-      {/* Unit Header */}
-      <div style={{ ...glass.card, marginBottom: 16, background: 'linear-gradient(135deg, rgba(99,102,241,0.15), rgba(168,85,247,0.1))' }}>
-        <div style={{ fontSize: 11, fontWeight: 700, color: '#7c3aed', textTransform: 'uppercase', letterSpacing: 1 }}>
-          {isVi ? 'BÀI HỌC' : 'LESSON'} — Grade {lesson.grade}
-        </div>
-        <div style={{ fontSize: 22, fontWeight: 900, color: '#1e1b4b', marginTop: 4 }}>
-          {lesson.unitTitle}
-        </div>
-        <div style={{ fontSize: 14, color: '#6366f1', marginTop: 2 }}>
-          {lesson.unitTitleVi}
+      {/* Unit Header with Image */}
+      <div style={{ ...glass.card, marginBottom: 16, background: 'linear-gradient(135deg, rgba(99,102,241,0.15), rgba(168,85,247,0.1))', overflow: 'hidden', padding: 0 }}>
+        {unitImage && (
+          <div style={{ position: 'relative', width: '100%', maxHeight: 220, overflow: 'hidden' }}>
+            <img
+              src={withBasePath(unitImage.imagePath)}
+              alt={isVi ? unitImage.imageAltVi : unitImage.imageAlt}
+              style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover' }}
+              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+            />
+            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 60, background: 'linear-gradient(transparent, rgba(255,255,255,0.9))' }} />
+          </div>
+        )}
+        <div style={{ padding: '16px 24px 20px' }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: '#7c3aed', textTransform: 'uppercase', letterSpacing: 1 }}>
+            {isVi ? 'BÀI HỌC' : 'LESSON'} — Grade {lesson.grade}
+          </div>
+          <div style={{ fontSize: 22, fontWeight: 900, color: '#1e1b4b', marginTop: 4, display: 'flex', alignItems: 'center', gap: 10 }}>
+            {lesson.unitTitle}
+            <TextToSpeech text={lesson.unitTitle} lang="en-US" />
+          </div>
+          <div style={{ fontSize: 14, color: '#6366f1', marginTop: 2 }}>
+            {lesson.unitTitleVi}
+          </div>
         </div>
       </div>
 
@@ -458,9 +501,12 @@ export function LessonPhase({ lesson, onStartQuiz, lang = 'vi' }: LessonPhasePro
               {section.content.map((item, i) => {
                 const [en, vi] = item.split(' — ');
                 return (
-                  <div key={i} style={{ background: '#f8fafc', borderRadius: 12, padding: '12px 14px', border: '1px solid #e2e8f0' }}>
-                    <div style={{ fontSize: 16, fontWeight: 700, color: '#1e1b4b' }}>{en}</div>
-                    <div style={{ fontSize: 13, color: '#6366f1', marginTop: 2 }}>{vi}</div>
+                  <div key={i} style={{ background: '#f8fafc', borderRadius: 12, padding: '12px 14px', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div>
+                      <div style={{ fontSize: 16, fontWeight: 700, color: '#1e1b4b' }}>{en}</div>
+                      <div style={{ fontSize: 13, color: '#6366f1', marginTop: 2 }}>{vi}</div>
+                    </div>
+                    <TextToSpeech text={en?.trim() || ''} lang={lesson.framework?.includes('intl') ? 'en-GB' : 'en-US'} />
                   </div>
                 );
               })}
@@ -483,11 +529,14 @@ export function LessonPhase({ lesson, onStartQuiz, lang = 'vi' }: LessonPhasePro
                 <img src={withBasePath(section.imageUrl)} alt="Lesson illustration" style={{ width: '100%', height: 'auto', display: 'block' }} />
               </div>
             )}
-            <div style={{ background: '#fefce8', borderRadius: 14, padding: 20, fontSize: 16, lineHeight: 2, color: '#1e1b4b', whiteSpace: 'pre-line', border: '1px solid #fde68a', marginBottom: 12 }}>
-              {section.content[0]}
-            </div>
+            {/* ReadAlong with word-by-word highlighting */}
+            <ReadAlong
+              text={section.content[0] || ''}
+              lang={lesson.framework?.includes('intl') ? 'en-GB' : 'en-US'}
+              rate={0.7}
+            />
             {section.contentVi?.[0] && (
-              <details style={{ marginTop: 8 }}>
+              <details style={{ marginTop: 12 }}>
                 <summary style={{ cursor: 'pointer', color: '#6366f1', fontSize: 13, fontWeight: 600 }}>
                   {isVi ? '📖 Xem bản dịch tiếng Việt' : '📖 Vietnamese translation'}
                 </summary>
@@ -521,14 +570,15 @@ export function LessonPhase({ lesson, onStartQuiz, lang = 'vi' }: LessonPhasePro
                 <div style={{ width: 30, height: 30, borderRadius: '50%', background: '#7c3aed', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, flexShrink: 0 }}>
                   {i + 1}
                 </div>
-                <div>
+                <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 15, fontWeight: 600, color: '#1e1b4b' }}>{sentence}</div>
                   {section.contentVi?.[i] && <div style={{ fontSize: 13, color: '#7c3aed', marginTop: 2 }}>{section.contentVi[i]}</div>}
                 </div>
+                <TextToSpeech text={sentence} lang={lesson.framework?.includes('intl') ? 'en-GB' : 'en-US'} rate={0.75} />
               </div>
             ))}
             <div style={{ textAlign: 'center', fontSize: 13, color: '#64748b', marginTop: 4 }}>
-              🎤 {isVi ? 'Đọc to từng câu 3 lần!' : 'Read each sentence aloud 3 times!'}
+              🎤 {isVi ? 'Bấm 🔊 để nghe, rồi đọc theo 3 lần!' : 'Tap 🔊 to listen, then read along 3 times!'}
             </div>
           </div>
         )}
@@ -536,6 +586,19 @@ export function LessonPhase({ lesson, onStartQuiz, lang = 'vi' }: LessonPhasePro
         {section.type === 'tip' && (
           <div style={{ background: 'linear-gradient(135deg, #fef3c7, #fde68a)', borderRadius: 14, padding: 20, fontSize: 16, lineHeight: 1.7, color: '#92400e', fontWeight: 600 }}>
             {isVi ? section.contentVi?.[0] : section.content[0]}
+          </div>
+        )}
+
+        {/* Writing Exercises Section — only if available for this unit */}
+        {isLast && writingExercises.length > 0 && (
+          <div style={{ marginTop: 20 }}>
+            <WritingExerciseEngine
+              exercises={writingExercises}
+              unitTitle={isVi ? lesson.unitTitleVi : lesson.unitTitle}
+              onComplete={(score, total) => {
+                console.log(`Writing completed: ${score}/${total}`);
+              }}
+            />
           </div>
         )}
 
