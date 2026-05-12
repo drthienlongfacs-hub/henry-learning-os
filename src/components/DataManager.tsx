@@ -24,9 +24,14 @@ export function DataManager() {
         }
     }, []);
 
+    // Load health on mount — use a ref to avoid the set-state-in-effect warning
+    const didMountRef = useRef(false);
     useEffect(() => {
-        refreshHealth();
-    }, [refreshHealth]);
+        if (!didMountRef.current) {
+            didMountRef.current = true;
+            checkDataHealth().then(setHealth).catch(() => setHealth(null));
+        }
+    }, []);
 
     const handleExport = async () => {
         setIsExporting(true);

@@ -198,7 +198,7 @@ export async function applyRetentionPolicy(retentionDays = 90): Promise<number> 
  * Each migration is additive — never removes data.
  */
 function migrateState(state: Record<string, unknown>, fromVersion: number): Record<string, unknown> {
-    let current = { ...state };
+    const current = { ...state };
 
     // v2 → v3: Add skillStates, accelerationRecommendations if missing
     if (fromVersion < 3) {
