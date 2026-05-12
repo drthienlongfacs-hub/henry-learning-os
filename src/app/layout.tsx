@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { DataErrorBoundary } from "@/components/DataErrorBoundary";
 
 export const metadata: Metadata = {
   title: "Long Learning OS — Hệ thống học tập cho Henry",
@@ -19,7 +20,9 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
       </head>
       <body className="bg-[var(--color-bg-warm)] text-[var(--color-text-primary)] antialiased">
-        {children}
+        <DataErrorBoundary>
+          {children}
+        </DataErrorBoundary>
       </body>
     </html>
   );

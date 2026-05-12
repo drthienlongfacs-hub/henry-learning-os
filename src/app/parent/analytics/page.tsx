@@ -4,6 +4,7 @@ import { useAppStore } from '@/stores/app-store';
 import { computeEliteAnalytics } from '@/lib/variation-engine';
 import { ArrowLeft, Download, TrendingUp, Target, Clock, AlertTriangle } from 'lucide-react';
 import Link from 'next/link';
+import { ActivityTimeline } from '@/components/ActivityTimeline';
 
 /* ─── iOS 26 Liquid Glass Tokens ─── */
 const ios = {
@@ -34,6 +35,7 @@ const PILLAR_LABELS: Record<string, { label: string; color: string; icon: string
 export default function AnalyticsPage() {
     const attempts = useAppStore((s) => s.attempts);
     const mistakes = useAppStore((s) => s.mistakes);
+    const childProfile = useAppStore((s) => s.childProfile);
     const analytics = computeEliteAnalytics(attempts);
 
     const handleExport = () => {
@@ -262,6 +264,16 @@ export default function AnalyticsPage() {
                         )}
                     </div>
                 </div>
+
+                {/* ─── Activity Timeline (from IndexedDB) ─── */}
+                {childProfile && (
+                    <div style={card}>
+                        <h2 style={{ fontWeight: 700, fontSize: '1.05rem', color: ios.text, marginBottom: '12px' }}>
+                            📅 Lịch sử hoạt động
+                        </h2>
+                        <ActivityTimeline childId={childProfile.id} />
+                    </div>
+                )}
             </div>
         </div>
     );

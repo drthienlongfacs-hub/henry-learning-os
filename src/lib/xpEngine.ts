@@ -2,7 +2,11 @@
  * xpEngine.ts — XP & Gamification Engine
  * Ported from LinguaKids — Streak, Badges, Levels (Duolingo-inspired)
  * Adapted for Henry Learning OS multi-subject (Math, Vietnamese, English, Science, etc.)
+ *
+ * UPGRADED (Phase 2): Dual persistence — localStorage (sync fast) + IndexedDB (durable)
  */
+
+import { saveXPData as saveXPToIDB, loadXPData as loadXPFromIDB } from '@/lib/data/data-service';
 
 const STORAGE_KEY = 'henry-xp-data';
 
@@ -61,6 +65,10 @@ export interface XPData {
   xpHistory: { date: string; xp: number }[];
 }
 
+/**
+ * Load XP data — tries localStorage first (fast), falls back to defaults.
+ * IndexedDB hydration happens asynchronously via hydrateFromIDB().
+ */
 function loadXPData(): XPData {
   if (typeof window === 'undefined') return getDefaultXPData();
   try {
@@ -79,9 +87,34 @@ function getDefaultXPData(): XPData {
   };
 }
 
-function saveXPData(data: XPData) {
+/**
+ * Save XP data — writes to BOTH localStorage (sync) and IndexedDB (async, durable).
+ * Dual-write ensures no data loss if either storage fails.
+ */
+function saveXPDataDual(data: XPData) {
   if (typeof window === 'undefined') return;
+  // Sync write to localStorage (fast path)
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch {}
+  // Async write to IndexedDB (durable path, fire-and-forget)
+  saveXPToIDB(data).catch(err => {
+    console.warn('[XPEngine] IndexedDB save failed:', err);
+  });
+}
+
+/**
+ * Hydrate from IndexedDB on app startup.
+ * If IndexedDB has newer data than localStorage, use that.
+ */
+export async function hydrateXPFromIDB(): Promise<void> {
+  try {
+    const idbData = await loadXPFromIDB();
+    if (!idbData) return;
+    const localData = loadXPData();
+    // Use whichever has more total XP (conservative merge — never lose progress)
+    if (idbData.totalXP > localData.totalXP) {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(idbData)); } catch {}
+    }
+  } catch {}
 }
 
 export interface XPResult {
@@ -131,7 +164,7 @@ export function awardXP(activityType: string, count = 1): XPResult {
 
   // Check new badges
   const newBadges = checkNewBadges(data);
-  saveXPData(data);
+  saveXPDataDual(data);
 
   return { earnedXP, totalXP: data.totalXP, level: getLevel(data.totalXP), newBadges, streak: data.streak };
 }
