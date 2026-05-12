@@ -2,11 +2,10 @@ import type {
     Competency,
     Lesson,
     Exercise,
-    ContentBlock,
     ParentMission,
 } from '@/types';
 
-import { allMathExercises, subtractionWithin10, mathLessons } from './exercises-math';
+import { allMathExercises, subtractionWithin10 as _subtractionWithin10, mathLessons } from './exercises-math';
 import { allVietnameseExercises } from './exercises-vietnamese';
 import { englishExercises } from './exercises-english';
 import { eliteExercises } from './exercises-elite';

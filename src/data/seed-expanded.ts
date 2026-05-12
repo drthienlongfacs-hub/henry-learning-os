@@ -3,9 +3,11 @@
 // Combines static curriculum with dynamic generation
 // =====================================================
 
-import { generateDailyMathSet, MathProblem } from '../lib/content/math-generator';
-import { fetchTriviaQuestions, EducationalQuestion } from '../lib/content/trivia-api';
-import type { Lesson, ContentBlock, Exercise } from '../types';
+import { generateDailyMathSet } from '../lib/content/math-generator';
+import type { MathProblem as _MathProblem } from '../lib/content/math-generator';
+import { fetchTriviaQuestions } from '../lib/content/trivia-api';
+import type { EducationalQuestion as _EducationalQuestion } from '../lib/content/trivia-api';
+import type { Lesson } from '../types';
 import { generateId } from '../lib/utils';
 
 /**
@@ -28,7 +30,7 @@ export function createDynamicMathLesson(grade: number): Lesson {
                 content: `Chào Henry! Hôm nay chúng ta có ${problems.length} câu hỏi thử thách. Cố gắng hết sức nhé!`,
             }
         ],
-        exercises: problems.map((p, index) => ({
+        exercises: problems.map((p, _index) => ({
             id: p.id,
             question: p.question,
             type: p.type === 'word_problem' ? 'free_text' : 'multiple_choice',

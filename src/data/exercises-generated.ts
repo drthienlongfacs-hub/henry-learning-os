@@ -1,4 +1,4 @@
-/* eslint-disable */
+// Auto-generated exercise bank — no manual edits
 import type { Exercise } from '@/types';
 
 export const massiveMathGenerated: Exercise[] = [

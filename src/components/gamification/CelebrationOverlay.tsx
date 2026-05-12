@@ -53,7 +53,7 @@ interface Props {
   xpGained?: number;
 }
 
-export default function CelebrationOverlay({ type = 'correct', message = '', messageVi = '', onDone, xpGained = 0 }: Props) {
+export default function CelebrationOverlay({ type = 'correct', message = '', messageVi: _messageVi = '', onDone, xpGained = 0 }: Props) {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {

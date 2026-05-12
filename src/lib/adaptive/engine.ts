@@ -43,7 +43,7 @@ export function getChallengeFitBand(score: number): string {
 // --- Acceleration Status ---
 
 export function computeAccelerationStatus(state: SkillState): AccelerationStatus {
-    const cfs = computeChallengeFitScore(state);
+    const _cfs = computeChallengeFitScore(state);
 
     if (state.frustrationSignal > 0.7) return 'overchallenged';
     if (state.boredomSignal > 0.7 && state.independentAccuracy > 0.9) return 'underchallenged';

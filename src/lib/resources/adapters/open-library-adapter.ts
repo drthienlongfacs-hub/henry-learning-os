@@ -62,7 +62,7 @@ export const openLibraryAdapter: ExternalResourceAdapter = {
         const data = (await response.json()) as OpenLibrarySearchResponse;
 
         return data.docs.map((doc): NormalizedLearningResource => {
-            const coverUrl = doc.cover_i
+            const _coverUrl = doc.cover_i
                 ? `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`
                 : undefined;
 

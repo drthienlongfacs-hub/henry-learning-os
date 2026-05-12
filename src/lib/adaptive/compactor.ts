@@ -7,8 +7,6 @@
 import type { SkillState, MasteryState, Lesson, Competency } from '@/types';
 import {
     computeChallengeFitScore,
-    computeAccelerationStatus,
-    getChallengeFitBand,
 } from './engine';
 
 export interface CompactResult {
@@ -85,7 +83,7 @@ export function evaluateCompaction(
  */
 export function generateEnrichments(
     lesson: Lesson,
-    competencies: Competency[]
+    _competencies: Competency[]
 ): EnrichmentSuggestion[] {
     const subject = lesson.subject;
     const suggestions: EnrichmentSuggestion[] = [];

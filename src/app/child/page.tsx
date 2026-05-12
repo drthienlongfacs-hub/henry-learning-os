@@ -9,11 +9,11 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import {
     BookOpen, Brain, Clock, RotateCcw,
-    Home, Sparkles, ChevronRight, Play,
+    Home, ChevronRight, Play,
     Target, Flame, Trophy, Zap,
 } from 'lucide-react';
 const UniversalSearch = dynamic(() => import('@/components/UniversalSearch'), { ssr: false });
-import { buildWholeChildLearningPlan, getCardBenchmark } from '@/lib/whole-child-learning-plan';
+import { buildWholeChildLearningPlan } from '@/lib/whole-child-learning-plan';
 import XPDashboard from '@/components/gamification/XPDashboard';
 import WordOfDay from '@/components/gamification/WordOfDay';
 

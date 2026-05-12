@@ -3,7 +3,8 @@
 // Sources: CASEL, Jump\$tart/CFPB, Harvard PON, Kohlberg, Alliance for Decision Ed
 // DO NOT EDIT MANUALLY
 
-import type { AgeGroup, LikelihoodLevel } from "./engine";
+// Types from engine.ts used at runtime via data shape only
+// import type { AgeGroup, LikelihoodLevel } from "./engine";
 
 export const EXPANDED_PROBABILITY = [
   {

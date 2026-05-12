@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import { Home, BookOpen, RotateCcw, Brain, Trophy, ChevronRight, ArrowLeft, CheckCircle2, BookMarked, ChevronDown } from 'lucide-react';
+import { Home, BookOpen, RotateCcw, Brain, Trophy, ChevronRight, ArrowLeft, BookMarked, ChevronDown } from 'lucide-react';
 import { LangToggle } from '@/components/LangToggle';
 import { useTranslation } from '@/lib/i18n';
 import { YEAR1_CURRICULUM, YEAR1_STATS, type CurriculumUnit, type CurriculumTopic } from '@/data/year1-integrated-curriculum';
@@ -29,7 +29,7 @@ const SUB_META: Record<string, { emoji: string; color: string; label: string }> 
 };
 
 export default function Year1Page() {
-  const { t, lang } = useTranslation();
+  const { t: _t, lang: _lang } = useTranslation();
   const [activeBook, setActiveBook] = useState<string | null>(null);
   const [expandedUnit, setExpandedUnit] = useState<string | null>(null);
   const [completedTopics, setCompletedTopics] = useState<Set<string>>(() => {

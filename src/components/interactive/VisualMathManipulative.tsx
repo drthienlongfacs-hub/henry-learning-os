@@ -25,7 +25,7 @@ export function VisualMathManipulative({ question }: { question: string }) {
 }
 
 function BlocksRenderer({ a, b, type, question }: { a: number, b: number, type: 'add' | 'sub', question: string }) {
-    const [poppedCount, setPoppedCount] = useState(0);
+    const [, setPoppedCount] = useState(0);
 
     const handlePop = () => {
         setPoppedCount(c => c + 1);
@@ -34,9 +34,9 @@ function BlocksRenderer({ a, b, type, question }: { a: number, b: number, type: 
     // Cap at 20 to avoid freezing the UI for big numbers
     const renderBlocks = (count: number, color: string, isCrossedOut = false) => {
         const capped = Math.min(count, 50);
-        return Array.from({ length: capped }).map((_, i) => (
+        return Array.from({ length: capped }).map((_, idx) => (
             <motion.div
-                key={`\${color}-\${i}`}
+                key={`${color}-${idx}`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={type === 'sub' && isCrossedOut ? handlePop : undefined}

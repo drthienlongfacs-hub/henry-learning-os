@@ -231,7 +231,7 @@ export function genCountTo100(): MathProblem {
 
 // ── NEW G1: Cộng trừ trong 100 không nhớ — SGK Tập 2 Bài 26-30 ──
 export function genAddSub100(): MathProblem {
-    const type = rand(0, 1);
+    const _type = rand(0, 1);
     const templates: MathTemplateFactory[] = [
         () => { const a = rand(10, 60), b = rand(1, 9); return { q: `${a} + ${b} = ?`, a: String(a + b), e: `${a} + ${b} = ${a + b}. Cộng đơn vị: ${a % 10} + ${b} = ${a % 10 + b}.` }; },
         () => { const a = rand(20, 80), b = rand(10, 40); return { q: `${a} + ${b} = ?`, a: String(a + b), e: `${a} + ${b} = ${a + b}. Cộng chục với chục, đơn vị với đơn vị.` }; },
@@ -680,7 +680,7 @@ export function genBasicStats(): MathProblem {
 // ── NEW G3: Số đến 10.000 — CT 2018 ──
 export function genNumbersTo10000(): MathProblem {
     const n = rand(100, 9999);
-    const thousands = Math.floor(n / 1000);
+    const _thousands = Math.floor(n / 1000);
     const hundreds = Math.floor((n % 1000) / 100);
     const templates = [
         { q: `Số ${n.toLocaleString('vi')}: chữ số hàng trăm là bao nhiêu?`, a: String(hundreds), e: `Trong số ${n}, chữ số hàng trăm là ${hundreds}.` },
@@ -1027,7 +1027,7 @@ export function genParallelogramShapes(): MathProblem {
 export function genCircleArea(): MathProblem {
     const r = rand(2, 10);
     const templates: MathTemplateFactory[] = [
-        () => { const area = +(Math.PI * r * r).toFixed(2); return { q: `Hình tròn bán kính ${r} cm. Tính diện tích (π ≈ 3,14).`, a: `${(3.14 * r * r).toFixed(2)} cm²`, e: `S = π × r² = 3,14 × ${r}² = ${(3.14 * r * r).toFixed(2)} cm².` }; },
+        () => { const _area = +(Math.PI * r * r).toFixed(2); return { q: `Hình tròn bán kính ${r} cm. Tính diện tích (π ≈ 3,14).`, a: `${(3.14 * r * r).toFixed(2)} cm²`, e: `S = π × r² = 3,14 × ${r}² = ${(3.14 * r * r).toFixed(2)} cm².` }; },
         () => { const circumference = +(2 * 3.14 * r).toFixed(2); return { q: `Hình tròn bán kính ${r} cm. Tính chu vi (π ≈ 3,14).`, a: `${circumference} cm`, e: `C = 2 × π × r = 2 × 3,14 × ${r} = ${circumference} cm.` }; },
         () => { const d = r * 2; return { q: `Đường kính hình tròn = ${d} cm. Bán kính = ?`, a: `${r} cm`, e: `r = d ÷ 2 = ${d} ÷ 2 = ${r} cm.` }; },
     ];

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowLeft, BookOpen, Calculator, Globe2, FlaskConical, Brain, ChevronRight, RotateCcw, CheckCircle2, XCircle, Lightbulb } from 'lucide-react';
-import { LessonPhase, generateLessonContent, buildIntlLessonFromData, type LessonContent } from '@/components/LessonPhase';
+import { LessonPhase, buildIntlLessonFromData, type LessonContent } from '@/components/LessonPhase';
 import { getUniversalLesson, type UniversalLesson } from '@/lib/content/universal-lesson';
 import { MATH_TOPICS, generateMathSet, type MathProblem } from '@/lib/content/math-generator';
 import { VIETNAMESE_TOPICS, generateVietnameseSet, type VietnameseProblem } from '@/lib/content/vietnamese-generator';
@@ -982,7 +982,7 @@ function LearnPageContent() {
                                         </div>
                                     )}
                                     {topics.filter(t => subject !== 'english' || (!('isUnit' in t && t.isUnit) && !('isIntl' in t && t.isIntl))).map(t => {
-                                        const enrich = getTopicEnrichment(t.key, SUBJECT_ENRICHMENT_KEY[subject]);
+                                        const _enrich = getTopicEnrichment(t.key, SUBJECT_ENRICHMENT_KEY[subject]);
                                         const plan = getTopicLearningPlan(t.key, SUBJECT_ENRICHMENT_KEY[subject], attempts);
                                     const evidence = buildTopicEvidenceProfile({
                                         topicKey: t.key,
@@ -1064,7 +1064,7 @@ function LearnPageContent() {
                                     )}
                                     {topics.filter(t => 'isIntl' in t && t.isIntl).map(t => {
                                         const plan = getTopicLearningPlan(t.key, SUBJECT_ENRICHMENT_KEY[subject], attempts);
-                                    const evidence = buildTopicEvidenceProfile({
+                                    const _evidence = buildTopicEvidenceProfile({
                                         topicKey: t.key, subject: SUBJECT_ENRICHMENT_KEY[subject], attempts, mistakes, reviewSchedules,
                                         });
                                         const statusColor = planColor[plan.status];

@@ -60,7 +60,7 @@ export const eliteExercises: Exercise[] = [
 
     // CIVICS & DISCIPLINE (Base Rules & Morale) - 25 exercises
     ...Array.from({ length: 25 }, (_, i) => {
-        const isGoodBehavior = i % 2 === 0;
+        const _isGoodBehavior = i % 2 === 0;
         const actions = [
             { action: 'Giúp đỡ đồng đội gác đêm', good: true },
             { action: 'Xả rác trong căn cứ', good: false },
@@ -87,7 +87,7 @@ export const eliteExercises: Exercise[] = [
 
     // STRATEGY & LOGIC (Battle Tactics) - 25 exercises
     ...Array.from({ length: 25 }, (_, i) => {
-        const attackLeft = i % 2 === 0;
+        const _attackLeft = i % 2 === 0;
         return {
             id: `elite-logic-${i}`,
             type: 'multiple_choice' as const,

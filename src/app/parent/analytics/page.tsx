@@ -57,7 +57,7 @@ export default function AnalyticsPage() {
     };
 
     const dayLabels = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
-    const today = new Date().getDay();
+    const _today = new Date().getDay();
     const weekLabels = Array.from({ length: 7 }, (_, i) => {
         const d = new Date();
         d.setDate(d.getDate() - (6 - i));

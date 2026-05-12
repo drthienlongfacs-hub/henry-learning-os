@@ -85,7 +85,6 @@ export default function XPDashboard({ lang = 'vi' }: { lang?: string }) {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setData(getXPData());
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setBadges(getAllBadges());
 
     // Inject keyframes once

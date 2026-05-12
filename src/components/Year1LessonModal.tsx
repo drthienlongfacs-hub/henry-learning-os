@@ -227,7 +227,7 @@ export function Year1LessonModal({ topic, subjectColor, onClose, onComplete }: P
                     🐢 Chậm
                   </button>
                   {/* Record & check */}
-                  <button onClick={(e) => { e.stopPropagation(); isListening ? stopListening() : handleRecord(card.word); }}
+                  <button onClick={(e) => { e.stopPropagation(); if (isListening) { stopListening(); } else { handleRecord(card.word); } }}
                     style={{ display:'flex', alignItems:'center', gap:4, padding:'0.45rem 0.8rem', borderRadius:99, border:'none', background: isListening ? '#fee2e2' : '#fce7f3', color: isListening ? '#ef4444' : '#ec4899', fontWeight:700, cursor:'pointer', fontSize:'0.7rem', animation: isListening ? 'pulse 1s ease-in-out infinite' : 'none' }}>
                     {isListening ? '⏹️ Đang nghe...' : '🎤 Đọc thử'}
                   </button>

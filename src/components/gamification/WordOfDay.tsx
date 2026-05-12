@@ -7,7 +7,7 @@
 import React, { useState, useMemo } from 'react';
 import { getOfflineIPA } from '@/data/ipaDatabase';
 import { speak, type Accent } from '@/lib/voiceEngine';
-import { Volume2, BookOpen, RefreshCw } from 'lucide-react';
+import { Volume2, BookOpen } from 'lucide-react';
 
 interface WordEntry {
   word: string;

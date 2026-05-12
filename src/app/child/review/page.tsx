@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Check, X, HelpCircle, RotateCcw, Home, Brain, BookOpen, Sparkles, Trophy, Flame, Target } from 'lucide-react';
+import { ArrowLeft, HelpCircle, RotateCcw, Home, Brain, BookOpen, Sparkles, Trophy, Flame, Target } from 'lucide-react';
 import { useAppStore } from '@/stores/app-store';
 import { useTranslation } from '@/lib/i18n';
 import { LangToggle } from '@/components/LangToggle';

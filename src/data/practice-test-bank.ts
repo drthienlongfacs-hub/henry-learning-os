@@ -808,7 +808,7 @@ function selectGapAnswer(questionNo: number, theme: typeof EXAM_THEMES[number]):
   return answers[questionNo % answers.length];
 }
 
-function buildObjectiveAnswer(theme: typeof EXAM_THEMES[number], questionNo: number): string {
+function _buildObjectiveAnswer(theme: typeof EXAM_THEMES[number], questionNo: number): string {
   const tq = theme.questions;
   if (tq && tq.length > 0) {
     return tq[(questionNo - 1) % tq.length].a;
@@ -822,7 +822,7 @@ function rotateOptions(options: string[], questionNo: number): string[] {
   return [...options.slice(offset), ...options.slice(0, offset)];
 }
 
-function buildObjectivePrompt(
+function _buildObjectivePrompt(
   component: CambridgeOfficialComponentSpec,
   part: CambridgeOfficialPartSpec,
   theme: typeof EXAM_THEMES[number],
@@ -850,7 +850,7 @@ function buildObjectivePrompt(
   return `📖 Read the text, then answer the question.\n\n"${theme.passage}"\n\nWhat is this text mainly about?`;
 }
 
-function buildGapPrompt(
+function _buildGapPrompt(
   component: CambridgeOfficialComponentSpec,
   part: CambridgeOfficialPartSpec,
   theme: typeof EXAM_THEMES[number],

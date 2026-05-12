@@ -33,7 +33,7 @@ function SessionContent() {
 
     const [stepIdx, setStepIdx] = useState(0);
     const [mood, setMood] = useState(3);
-    const [energy, setEnergy] = useState(3);
+    const [energy, _setEnergy] = useState(3);
     const [currentExIdx, setCurrentExIdx] = useState(0);
     const [answer, setAnswer] = useState('');
     const [showResult, setShowResult] = useState(false);

@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useCallback, useEffect } from 'react';
-import { Volume2, CheckCircle, RotateCcw, Star, Mic, ChevronRight } from 'lucide-react';
+import { Volume2, CheckCircle, RotateCcw, Mic, ChevronRight } from 'lucide-react';
 import { speak, preloadVocabulary, type Accent } from '@/lib/voiceEngine';
 
 const PHONICS_LESSONS = [

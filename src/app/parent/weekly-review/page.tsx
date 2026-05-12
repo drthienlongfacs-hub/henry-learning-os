@@ -16,7 +16,7 @@ const GUIDED_QUESTIONS = [
 ];
 
 export default function WeeklyReviewPage() {
-    const { childProfile, parentProfile, weeklyReviews, addWeeklyReview, masteryStates, attempts, mistakes } = useAppStore();
+    const { childProfile, parentProfile, weeklyReviews, addWeeklyReview, masteryStates: _masteryStates, attempts, mistakes } = useAppStore();
     const [childReflection, setChildReflection] = useState('');
     const [parentReflection, setParentReflection] = useState('');
     const [highlights, setHighlights] = useState('');

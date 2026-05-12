@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useCallback, useEffect, useRef } from 'react';
-import { Star, RotateCcw, Volume2, Check, X, Sparkles, Trophy } from 'lucide-react';
+import { useState, useCallback, useEffect } from 'react';
+import { Star, RotateCcw, Volume2, Check, X, Sparkles } from 'lucide-react';
 
 // Inject keyframes for vocab game animations
 function useVocabAnimations() {
@@ -66,7 +66,7 @@ export function InteractiveVocabGame({ words, unitTitle, onComplete }: Interacti
   const [spellInput, setSpellInput] = useState('');
   const [spellFeedback, setSpellFeedback] = useState<'correct' | 'wrong' | null>(null);
   const [streak, setStreak] = useState(0);
-  const [totalAttempts, setTotalAttempts] = useState(0);
+  const [, setTotalAttempts] = useState(0);
 
   const subset = words.slice(0, Math.min(8, words.length));
   const totalRounds = subset.length;
@@ -126,7 +126,7 @@ export function InteractiveVocabGame({ words, unitTitle, onComplete }: Interacti
       speak('Great!');
     } else {
       setStreak(0);
-      const t = setTimeout(() => {
+      const _t = setTimeout(() => {
         setMatchPairs(prev => prev.map(c => ({ ...c, selected: false })));
       }, 600);
       // Note: timer cleanup handled by component unmount
