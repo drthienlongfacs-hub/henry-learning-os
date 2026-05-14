@@ -9,23 +9,22 @@ import { allMathExercises, subtractionWithin10 as _subtractionWithin10, mathLess
 import { allVietnameseExercises } from './exercises-vietnamese';
 import { englishExercises } from './exercises-english';
 import { eliteExercises } from './exercises-elite';
-// Lazy-loaded to avoid 2MB static bundle bloat (P0 performance fix)
-const lazyGenerated = () => import('./exercises-generated');
+// Runtime-generated exercises — replaces 49K-line static file (P0 bundle fix)
+import { getMassiveMathGenerated, getMassiveEliteGenerated } from './exercises-generated-runtime';
+
 let _mathCache: Exercise[] | null = null;
 let _eliteCache: Exercise[] | null = null;
 
 async function getMassiveMath(): Promise<Exercise[]> {
     if (!_mathCache) {
-        const mod = await lazyGenerated();
-        _mathCache = mod.massiveMathGenerated;
+        _mathCache = getMassiveMathGenerated();
     }
     return _mathCache;
 }
 
 async function getMassiveElite(): Promise<Exercise[]> {
     if (!_eliteCache) {
-        const mod = await lazyGenerated();
-        _eliteCache = mod.massiveEliteGenerated;
+        _eliteCache = getMassiveEliteGenerated();
     }
     return _eliteCache;
 }

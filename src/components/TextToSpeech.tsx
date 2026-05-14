@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { Volume2, VolumeX, Pause, RotateCcw } from 'lucide-react';
 
 interface TextToSpeechProps {
@@ -13,13 +13,9 @@ interface TextToSpeechProps {
 
 export function TextToSpeech({ text, lang = 'en-US', rate = 0.85, label, variant = 'inline' }: TextToSpeechProps) {
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [isSupported, setIsSupported] = useState(true);
-
-  useEffect(() => {
-    if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
-      setIsSupported(false);
-    }
-  }, []);
+  const [isSupported] = useState(() =>
+    typeof window !== 'undefined' && 'speechSynthesis' in window
+  );
 
   const speak = useCallback(() => {
     if (!isSupported) return;

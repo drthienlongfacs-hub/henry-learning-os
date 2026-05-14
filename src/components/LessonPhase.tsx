@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import { useState } from 'react';
@@ -590,8 +591,8 @@ export function LessonPhase({ lesson, onStartQuiz, lang = 'vi' }: LessonPhasePro
             <WritingExerciseEngine
               exercises={writingExercises}
               unitTitle={isVi ? lesson.unitTitleVi : lesson.unitTitle}
-              onComplete={(score, total) => {
-                console.log(`Writing completed: ${score}/${total}`);
+              onComplete={(_score, _total) => {
+                // Writing phase completed
               }}
             />
           </div>

@@ -9,7 +9,7 @@ import { runSafetyGates } from '@/lib/resources/safety-gate';
 import {
     emitLearningEvent,
     getEvents,
-    clearEvents,
+    clearSessionCache as clearEvents,
     getEventCount,
 } from '@/lib/events/learning-events';
 import type { LicensePolicy } from '@/types/resource-types';

@@ -44,9 +44,20 @@ const SUBJECT_FILTERS: { key: SubjectKey | 'all'; label: string; icon: string }[
     { key: 'hisgeo', label: 'Sử/Địa', icon: '🌏' },
 ];
 
+interface GeneratedQuestion {
+    id: string;
+    question: string;
+    options?: string[];
+    correctAnswer: string;
+    explanation: string;
+    hints: string[];
+    topic: string;
+    topicKey: string;
+    gradeLevel: number;
+}
+
 function generateQuizSet(subject: SubjectKey, grade: number, count: number): QuizQuestion[] {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let raw: any[] = [];
+    let raw: GeneratedQuestion[] = [];
     switch (subject) {
         case 'math': raw = generateMathSet(grade, undefined, count); break;
         case 'vietnamese': raw = generateVietnameseSet(grade, undefined, count); break;
@@ -57,7 +68,7 @@ function generateQuizSet(subject: SubjectKey, grade: number, count: number): Qui
         case 'ethics': raw = generateEthicsSet(grade, undefined, count); break;
         case 'art': raw = generateArtSet(grade, undefined, count); break;
     }
-    return raw.map((q: Record<string, unknown>) => ({
+    return raw.map((q: GeneratedQuestion) => ({
         id: String(q.id || ''),
         question: String(q.question || ''),
         options: (q.options as string[]) || [],

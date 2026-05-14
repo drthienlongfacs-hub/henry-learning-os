@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useCallback } from 'react';
-import { Check, X, ChevronRight, RotateCcw, Pencil, Eye, EyeOff, Star, Sparkles, Volume2 } from 'lucide-react';
+import { Check, X, ChevronRight, Pencil, Eye, EyeOff, Star, Sparkles, Volume2 } from 'lucide-react';
 
 // ═══════════════════════════════════════════════════════
 // Interactive Writing Exercise — Like Writing in a Textbook

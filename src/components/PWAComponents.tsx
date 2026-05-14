@@ -8,14 +8,15 @@ import { Wifi, WifiOff, Download, X } from 'lucide-react';
  * Styled non-intrusively at the top of the screen.
  */
 export function OfflineBanner() {
-    const [isOffline, setIsOffline] = useState(false);
+    const [isOffline, setIsOffline] = useState(() =>
+        typeof navigator !== 'undefined' ? !navigator.onLine : false
+    );
     const [dismissed, setDismissed] = useState(false);
 
     useEffect(() => {
         const goOffline = () => setIsOffline(true);
         const goOnline = () => { setIsOffline(false); setDismissed(false); };
 
-        setIsOffline(!navigator.onLine);
         window.addEventListener('offline', goOffline);
         window.addEventListener('online', goOnline);
 
@@ -206,10 +207,11 @@ export function InstallPrompt() {
  * Used in parent dashboard header.
  */
 export function ConnectionStatus() {
-    const [isOnline, setIsOnline] = useState(true);
+    const [isOnline, setIsOnline] = useState(() =>
+        typeof navigator !== 'undefined' ? navigator.onLine : true
+    );
 
     useEffect(() => {
-        setIsOnline(navigator.onLine);
         const on = () => setIsOnline(true);
         const off = () => setIsOnline(false);
         window.addEventListener('online', on);

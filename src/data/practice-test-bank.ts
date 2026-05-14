@@ -547,8 +547,7 @@ const CONVERSATION_EXCHANGES: { setup: string; options: string[]; answer: string
   { setup: 'A: Where did you go on holiday?\nB:', options: ['We went to the beach.', 'I have a new book.', 'My dog is brown.'], answer: 'We went to the beach.' },
 ];
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function buildPartSpecificQuestion(base: any, levelId: CambridgeExamLevelId, setNo: number, component: CambridgeOfficialComponentSpec, part: CambridgeOfficialPartSpec, theme: typeof EXAM_THEMES[number], questionNo: number) {
+function buildPartSpecificQuestion(base: Omit<PracticeQuestion, 'prompt' | 'options' | 'answer'>, levelId: CambridgeExamLevelId, setNo: number, component: CambridgeOfficialComponentSpec, part: CambridgeOfficialPartSpec, theme: typeof EXAM_THEMES[number], questionNo: number) {
   const title = part.titleEn.toLowerCase();
 
   // ── LISTENING PARTS ──

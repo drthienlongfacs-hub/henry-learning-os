@@ -117,17 +117,25 @@ describe('useEffect Cleanup — Memory Leak Prevention', () => {
 });
 
 describe('Bundle Safety — Import Analysis', () => {
-    it('seed.ts should NOT statically import exercises-generated', () => {
+    it('seed.ts should NOT import the static 49K-line exercises-generated file', () => {
         const seedPath = path.resolve(SRC_DIR, 'data/seed.ts');
         const content = fs.readFileSync(seedPath, 'utf8');
-        const staticImport = /^import\s.*exercises-generated/m.test(content);
-        expect(staticImport, 'exercises-generated should be dynamically imported').toBe(false);
+        // Must NOT import the massive static file (old pattern)
+        const staticBloat = /exercises-generated['"](?!\-)/.test(content) || /import\(['"]\.\/exercises-generated['"]\)/.test(content);
+        expect(staticBloat, 'Should not import the 49K-line static exercises-generated.ts').toBe(false);
     });
 
-    it('exercises-generated should be lazy-loaded via dynamic import()', () => {
+    it('seed.ts should use the runtime exercise generator', () => {
         const seedPath = path.resolve(SRC_DIR, 'data/seed.ts');
         const content = fs.readFileSync(seedPath, 'utf8');
-        const dynamicImport = /import\(['"]\.\/exercises-generated['"]\)/.test(content);
-        expect(dynamicImport, 'Should use dynamic import() for exercises-generated').toBe(true);
+        const usesRuntime = /exercises-generated-runtime/.test(content);
+        expect(usesRuntime, 'Should import from exercises-generated-runtime').toBe(true);
+    });
+
+    it('runtime generator file should be small (< 500 lines)', () => {
+        const runtimePath = path.resolve(SRC_DIR, 'data/exercises-generated-runtime.ts');
+        const content = fs.readFileSync(runtimePath, 'utf8');
+        const lines = content.split('\n').length;
+        expect(lines).toBeLessThan(500);
     });
 });

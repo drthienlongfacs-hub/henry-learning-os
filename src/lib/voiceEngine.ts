@@ -196,8 +196,12 @@ async function setCachedAudio(key: string, data: ArrayBuffer): Promise<void> {
 // ================================================================
 // KOKORO NEURAL TTS — lazy-loaded, background generation
 // ================================================================
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let kokoroInstance: any = null;
+// Kokoro TTS instance type (external library)
+interface KokoroInstance {
+  generate(text: string, opts: { voice: string; speed: number }): Promise<{ toWav(): ArrayBuffer }>;
+}
+
+let kokoroInstance: KokoroInstance | null = null;
 let kokoroReady = false;
 let kokoroLoading = false;
 
@@ -210,12 +214,11 @@ async function ensureKokoroLoaded(): Promise<boolean> {
     const { KokoroTTS } = await import('kokoro-js');
     kokoroInstance = await KokoroTTS.from_pretrained(
       'onnx-community/Kokoro-82M-v1.0-ONNX',
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      { dtype: 'q8', device: 'wasm' as any }
-    );
+      { dtype: 'q8', device: 'wasm' } as Record<string, unknown>
+    ) as unknown as KokoroInstance;
     kokoroReady = true;
     kokoroLoading = false;
-    console.log('[VoiceEngine] ✅ Kokoro Neural TTS loaded — cached audio will be natural');
+    // Kokoro loaded successfully
     return true;
   } catch (e) {
     kokoroLoading = false;
@@ -241,7 +244,7 @@ async function generateAndCache(text: string, accent: Accent): Promise<void> {
     // Convert to WAV ArrayBuffer
     const wavData = audio.toWav();
     await setCachedAudio(key, wavData);
-    console.log(`[VoiceEngine] 📦 Cached: "${text}" (${accent})`);
+    // Audio cached successfully
   } catch (e) {
     console.warn('[VoiceEngine] Generation failed:', e);
   } finally {

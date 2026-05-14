@@ -5,6 +5,7 @@ import { YEAR1_INTERACTIVE } from '@/data/year1-interactive-content';
 import { getVisualScene } from '@/data/year1-visual-scenes';
 import { speak, stopSpeech } from '@/lib/voiceEngine';
 import { getOfflineIPA } from '@/data/ipaDatabase';
+import { analyzePronunciation, type PronunciationAnalysis } from '@/lib/pronunciationCoach';
 
 type Mode = 'vocab' | 'quiz' | 'overview';
 
@@ -26,8 +27,8 @@ function useSpeechRecognition() {
     if (typeof window === 'undefined') return null;
     const SR = (window as unknown as Record<string, unknown>).SpeechRecognition || (window as unknown as Record<string, unknown>).webkitSpeechRecognition;
     if (!SR) return null;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const r = new (SR as any)();
+    const SRConstructor = SR as new () => Record<string, unknown> & { lang: string; interimResults: boolean; maxAlternatives: number; onresult: ((e: Record<string, unknown>) => void) | null; onerror: (() => void) | null; onend: (() => void) | null; start: () => void; stop: () => void };
+    const r = new SRConstructor();
     r.lang = 'en-US';
     r.interimResults = false;
     r.maxAlternatives = 3;
@@ -42,13 +43,13 @@ function useSpeechRecognition() {
     setTranscript('');
     setConfidence(0);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    r.onresult = (e: any) => {
-      const results = e.results[0];
+    r.onresult = (e: Record<string, unknown>) => {
+      interface SpeechAlt { transcript: string; confidence: number }
+      const resultList = (e.results as { length: number; [key: number]: SpeechAlt[] })[0];
       let bestScore = 0;
       let bestText = '';
-      for (let i = 0; i < results.length; i++) {
-        const alt = results[i];
+      for (let i = 0; i < (resultList as unknown as SpeechAlt[]).length; i++) {
+        const alt = (resultList as unknown as SpeechAlt[])[i];
         const heard = alt.transcript.toLowerCase().trim();
         const target = targetWord.toLowerCase().trim();
         // Simple similarity: exact match = 100%, contains = 80%, first letter = 40%
@@ -94,6 +95,7 @@ export function Year1LessonModal({ topic, subjectColor, onClose, onComplete }: P
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [pronScore, setPronScore] = useState<number | null>(null);
   const [pronText, setPronText] = useState('');
+  const [pronAnalysis, setPronAnalysis] = useState<PronunciationAnalysis | null>(null);
 
   const { isListening, startListening, stopListening } = useSpeechRecognition();
 
@@ -109,13 +111,17 @@ export function Year1LessonModal({ topic, subjectColor, onClose, onComplete }: P
     speak(text, 'en-US', rate, () => setIsSpeaking(false));
   };
 
-  // Record & score pronunciation
+  // Record & score pronunciation with coaching analysis
   const handleRecord = (word: string) => {
     setPronScore(null);
     setPronText('');
+    setPronAnalysis(null);
     startListening(word, (s, heard) => {
       setPronScore(s);
       setPronText(heard);
+      // Run ELSA-style pronunciation analysis
+      const analysis = analyzePronunciation(word, heard, s);
+      setPronAnalysis(analysis);
     });
   };
 
@@ -136,9 +142,12 @@ export function Year1LessonModal({ topic, subjectColor, onClose, onComplete }: P
   const getPronFeedback = (s: number) => {
     if (s >= 90) return { emoji: '🌟', label: 'Tuyệt vời!', color: '#22c55e' };
     if (s >= 70) return { emoji: '👍', label: 'Khá tốt!', color: '#f59e0b' };
-    if (s >= 40) return { emoji: '💪', label: 'Cần luyện thêm', color: '#f97316' };
-    return { emoji: '🔄', label: 'Thử lại nhé', color: '#ef4444' };
+    if (s >= 40) return { emoji: '💪', label: 'Cố gắng thêm!', color: '#f97316' };
+    return { emoji: '🔄', label: 'Thử lại nhé!', color: '#ef4444' };
   };
+
+  // Reset analysis when changing cards
+  const resetPron = () => { setPronScore(null); setPronText(''); setPronAnalysis(null); };
 
   return (
     <div style={{ position:'fixed', inset:0, zIndex:9999, background:'rgba(0,0,0,0.55)', display:'flex', alignItems:'center', justifyContent:'center', padding:'1rem' }} onClick={onClose}>
@@ -241,35 +250,114 @@ export function Year1LessonModal({ topic, subjectColor, onClose, onComplete }: P
                   </button>
                 )}
 
-                {/* Pronunciation Feedback */}
-                {pronScore !== null && (
-                  <div style={{ marginTop:10, padding:'0.6rem 0.8rem', borderRadius:12, background: getPronFeedback(pronScore).color + '10', border: `1.5px solid ${getPronFeedback(pronScore).color}30`, textAlign:'center' }}>
-                    <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:6 }}>
-                      <span style={{ fontSize:'1.5rem' }}>{getPronFeedback(pronScore).emoji}</span>
-                      <div>
-                        <div style={{ fontWeight:800, fontSize:'0.82rem', color: getPronFeedback(pronScore).color }}>
-                          {getPronFeedback(pronScore).label} — {pronScore}%
+                {/* ── Pronunciation Coach Feedback (ELSA-style) ── */}
+                {pronScore !== null && pronAnalysis && (
+                  <div style={{ marginTop:10, borderRadius:16, overflow:'hidden', border: `2px solid ${pronAnalysis.overallFeedback.color}25` }}>
+                    {/* Score header */}
+                    <div style={{ padding:'0.6rem 0.8rem', background: `linear-gradient(135deg, ${pronAnalysis.overallFeedback.color}12, ${pronAnalysis.overallFeedback.color}06)`, display:'flex', alignItems:'center', gap:8 }}>
+                      <span style={{ fontSize:'1.8rem' }}>{pronAnalysis.overallFeedback.emoji}</span>
+                      <div style={{ flex:1 }}>
+                        <div style={{ fontWeight:800, fontSize:'0.85rem', color: pronAnalysis.overallFeedback.color }}>
+                          {pronAnalysis.overallFeedback.label} — {pronScore}%
+                        </div>
+                        <div style={{ fontSize:'0.65rem', color:'#64748b', marginTop:1 }}>
+                          {pronAnalysis.overallFeedback.encouragement}
+                        </div>
+                      </div>
+                      {/* Score ring */}
+                      <div style={{ width:40, height:40, borderRadius:'50%', border:`3px solid ${pronAnalysis.overallFeedback.color}`, display:'flex', alignItems:'center', justifyContent:'center', fontWeight:900, fontSize:'0.7rem', color: pronAnalysis.overallFeedback.color }}>
+                        {pronScore}%
+                      </div>
+                    </div>
+
+                    {/* IPA Phoneme breakdown (color-coded like ELSA) */}
+                    {pronAnalysis.phonemeBreakdown.length > 0 && pronScore < 90 && (
+                      <div style={{ padding:'0.5rem 0.8rem', borderTop:`1px solid ${pronAnalysis.overallFeedback.color}15` }}>
+                        <div style={{ fontSize:'0.6rem', color:'#999', marginBottom:4, fontWeight:700 }}>📊 Phân tích phát âm:</div>
+                        <div style={{ display:'flex', gap:3, flexWrap:'wrap', justifyContent:'center' }}>
+                          {pronAnalysis.phonemeBreakdown.map((p, i) => (
+                            <span key={i} style={{
+                              display:'inline-flex', alignItems:'center', justifyContent:'center',
+                              padding:'2px 6px', borderRadius:6, fontFamily:'serif', fontSize:'0.85rem', fontWeight:700,
+                              background: p.status === 'correct' ? '#dcfce7' : p.status === 'wrong' ? '#fee2e2' : '#fef3c7',
+                              color: p.status === 'correct' ? '#16a34a' : p.status === 'wrong' ? '#dc2626' : '#d97706',
+                              border: `1px solid ${p.status === 'correct' ? '#86efac' : p.status === 'wrong' ? '#fca5a5' : '#fde68a'}`,
+                            }}>
+                              {p.phoneme}
+                            </span>
+                          ))}
                         </div>
                         {pronText && (
-                          <div style={{ fontSize:'0.65rem', color:'#64748b', marginTop:2 }}>
-                            {`Nghe được: "${pronText}"`} {pronScore < 70 && ` → Thử nói rõ hơn: "${card.word}"`}
+                          <div style={{ fontSize:'0.6rem', color:'#94a3b8', marginTop:4, textAlign:'center' }}>
+                            Máy nghe: &quot;{pronText}&quot; → Cần nói: &quot;{card.word}&quot;
                           </div>
                         )}
                       </div>
-                    </div>
-                    {pronScore < 90 && (
-                      <button onClick={() => { setPronScore(null); handleSpeak(card.word, 0.6); }}
-                        style={{ marginTop:8, padding:'0.35rem 0.8rem', borderRadius:99, border:'none', background: getPronFeedback(pronScore).color, color:'#fff', fontWeight:700, cursor:'pointer', fontSize:'0.65rem' }}>
-                        🔁 Nghe lại & Thử lại
-                      </button>
                     )}
+
+                    {/* Vietnamese coaching tips (mouth position) */}
+                    {pronAnalysis.coachingTips.length > 0 && pronScore < 90 && (
+                      <div style={{ padding:'0.5rem 0.8rem', borderTop:`1px solid ${pronAnalysis.overallFeedback.color}15` }}>
+                        <div style={{ fontSize:'0.6rem', color:'#999', marginBottom:6, fontWeight:700 }}>🎓 Cách sửa âm:</div>
+                        {pronAnalysis.coachingTips.map((tip, i) => (
+                          <div key={i} style={{ marginBottom:8, padding:'0.45rem 0.6rem', borderRadius:10, background:'#f8fafc', border:'1px solid #e2e8f0' }}>
+                            <div style={{ display:'flex', alignItems:'center', gap:4, marginBottom:2 }}>
+                              <span style={{ fontSize:'1rem' }}>{tip.icon}</span>
+                              <span style={{ fontWeight:800, fontSize:'0.72rem', color:'#1e293b' }}>{tip.title}</span>
+                            </div>
+                            <div style={{ fontSize:'0.65rem', color:'#475569', lineHeight:1.4 }}>{tip.description}</div>
+                            {tip.mouthPosition && (
+                              <div style={{ fontSize:'0.6rem', color:'#8b5cf6', marginTop:3, fontWeight:600, background:'#f5f3ff', padding:'2px 8px', borderRadius:6, display:'inline-block' }}>
+                                {tip.mouthPosition}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Practice drill */}
+                    {pronAnalysis.practiceDrill && pronScore < 70 && (
+                      <div style={{ padding:'0.5rem 0.8rem', borderTop:`1px solid ${pronAnalysis.overallFeedback.color}15`, background:'#fffbeb' }}>
+                        <div style={{ fontSize:'0.6rem', color:'#92400e', fontWeight:700, marginBottom:4 }}>🏋️ Bài tập luyện âm:</div>
+                        <div style={{ fontSize:'0.65rem', color:'#78350f' }}>{pronAnalysis.practiceDrill.instruction}</div>
+                        <div style={{ display:'flex', gap:6, marginTop:4, flexWrap:'wrap' }}>
+                          {pronAnalysis.practiceDrill.words.map((w, i) => (
+                            <button key={i} onClick={() => handleSpeak(w.split('/')[0], 0.7)}
+                              style={{ padding:'3px 10px', borderRadius:8, border:'1px solid #fde68a', background:'white', color:'#92400e', fontSize:'0.65rem', fontWeight:700, cursor:'pointer' }}>
+                              🔊 {w}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Action buttons */}
+                    {pronScore < 90 && (
+                      <div style={{ padding:'0.5rem 0.8rem', display:'flex', gap:6, justifyContent:'center', borderTop:`1px solid ${pronAnalysis.overallFeedback.color}15` }}>
+                        <button onClick={() => { resetPron(); handleSpeak(card.word, 0.55); }}
+                          style={{ padding:'0.35rem 0.7rem', borderRadius:99, border:'none', background:'#fef3c7', color:'#f59e0b', fontWeight:700, cursor:'pointer', fontSize:'0.62rem' }}>
+                          🐢 Nghe chậm
+                        </button>
+                        <button onClick={() => { resetPron(); handleRecord(card.word); }}
+                          style={{ padding:'0.35rem 0.7rem', borderRadius:99, border:'none', background: pronAnalysis.overallFeedback.color, color:'#fff', fontWeight:700, cursor:'pointer', fontSize:'0.62rem' }}>
+                          🎤 Thử lại
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
+                {/* Fallback for score without analysis */}
+                {pronScore !== null && !pronAnalysis && (
+                  <div style={{ marginTop:10, padding:'0.5rem', borderRadius:12, background:'#f5f5f5', textAlign:'center', fontSize:'0.75rem', color:'#666' }}>
+                    {getPronFeedback(pronScore).emoji} {getPronFeedback(pronScore).label} — {pronScore}%
                   </div>
                 )}
 
                 {/* Nav */}
                 <div style={{ display:'flex', gap:8, marginTop:12, justifyContent:'center' }}>
-                  <button disabled={vocabIdx === 0} onClick={() => { setVocabIdx(vocabIdx - 1); setFlipped(false); setPronScore(null); }} style={{ padding:'0.5rem 1.2rem', borderRadius:10, border:'none', background: vocabIdx === 0 ? '#eee' : subjectColor, color: vocabIdx === 0 ? '#aaa' : '#fff', fontWeight:700, cursor: vocabIdx === 0 ? 'default' : 'pointer', fontSize:'0.8rem' }}>← Trước</button>
-                  <button disabled={vocabIdx === vocabCards.length - 1} onClick={() => { setVocabIdx(vocabIdx + 1); setFlipped(false); setPronScore(null); }} style={{ padding:'0.5rem 1.2rem', borderRadius:10, border:'none', background: vocabIdx === vocabCards.length - 1 ? '#eee' : subjectColor, color: vocabIdx === vocabCards.length - 1 ? '#aaa' : '#fff', fontWeight:700, cursor: vocabIdx === vocabCards.length - 1 ? 'default' : 'pointer', fontSize:'0.8rem' }}>Tiếp →</button>
+                  <button disabled={vocabIdx === 0} onClick={() => { setVocabIdx(vocabIdx - 1); setFlipped(false); resetPron(); }} style={{ padding:'0.5rem 1.2rem', borderRadius:10, border:'none', background: vocabIdx === 0 ? '#eee' : subjectColor, color: vocabIdx === 0 ? '#aaa' : '#fff', fontWeight:700, cursor: vocabIdx === 0 ? 'default' : 'pointer', fontSize:'0.8rem' }}>← Trước</button>
+                  <button disabled={vocabIdx === vocabCards.length - 1} onClick={() => { setVocabIdx(vocabIdx + 1); setFlipped(false); resetPron(); }} style={{ padding:'0.5rem 1.2rem', borderRadius:10, border:'none', background: vocabIdx === vocabCards.length - 1 ? '#eee' : subjectColor, color: vocabIdx === vocabCards.length - 1 ? '#aaa' : '#fff', fontWeight:700, cursor: vocabIdx === vocabCards.length - 1 ? 'default' : 'pointer', fontSize:'0.8rem' }}>Tiếp →</button>
                 </div>
               </div>
             );

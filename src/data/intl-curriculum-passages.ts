@@ -113,7 +113,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: '3.1 Thời gian vần điệu',
       type: 'poem',
       skillRefs: ['1Ri.01', '1Rw.01', '1Rw.02', '1SLp.02'],
-      imageUrl: '/images/english/cam_g1_u03_rhymes.png',
+      imageUrl: '/images/english/cam_g1_u03_rhymes.webp',
       text: "Hickory dickory dock,\nThe mouse ran up the clock.\nThe clock struck one,\nThe mouse ran down,\nHickory dickory dock.\n\nRhymes are words that sound the same at the end. Listen: 'dock' and 'clock' — they rhyme! Can you hear it? The sounds '-ock' are the same. Let's find more rhyming words:\n• cat — hat — mat — sat — bat\n• star — car — far — jar\n• rock — sock — lock — knock\n\nSay each pair aloud. Can you clap the rhythm?",
       textVi: "Hickory dickory dock,\nChú chuột chạy lên đồng hồ.\nĐồng hồ điểm một giờ,\nChú chuột chạy xuống,\nHickory dickory dock.\n\nVần là những từ có âm cuối giống nhau. Nghe nào: 'dock' và 'clock' — chúng vần với nhau! Bạn nghe thấy không? Âm '-ock' giống nhau. Hãy tìm thêm từ có vần:\n• cat — hat — mat — sat — bat\n• star — car — far — jar\n• rock — sock — lock — knock\n\nĐọc to từng cặp từ. Bạn có thể vỗ tay theo nhịp không?"
     },
@@ -122,7 +122,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: '3.2 Vần điệu với số',
       type: 'poem',
       skillRefs: ['1Ri.01', '1Rw.05', '1SLp.02'],
-      imageUrl: '/images/english/cam_g1_u03_nursery_rhymes.png',
+      imageUrl: '/images/english/cam_g1_u03_nursery_rhymes.webp',
       text: "One, two, buckle my shoe.\nThree, four, knock at the door.\nFive, six, pick up sticks.\nSeven, eight, lay them straight.\nNine, ten, a big fat hen!\n\nNumber rhymes help us count and learn new words at the same time. Can you find the rhyming pairs?\n• two — shoe\n• four — door\n• six — sticks\n• eight — straight\n• ten — hen\n\nNow try counting backwards! Ten, nine, eight, seven, six, five, four, three, two, one — BLAST OFF!",
       textVi: "Một, hai, cài khuy giày.\nBa, bốn, gõ cửa nhà.\nNăm, sáu, nhặt que nào.\nBảy, tám, xếp thẳng hàng.\nChín, mười, gà mập tròn!\n\nCác bài vần số giúp chúng ta vừa đếm vừa học từ mới cùng lúc. Bạn có tìm được các cặp vần không?\n• two — shoe (hai — giày)\n• four — door (bốn — cửa)\n• six — sticks (sáu — que)\n• eight — straight (tám — thẳng)\n• ten — hen (mười — gà mái)\n\nBây giờ hãy đếm ngược! Mười, chín, tám, bảy, sáu, năm, bốn, ba, hai, một — PHÓNG!"
     },
@@ -176,7 +176,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: '1.1 Khởi động',
       type: 'getting_started',
       skillRefs: ['1SLs.01', '1SLg.04', '1SLr.01'],
-      imageUrl: '/images/english/cam_g1_u01_playground.png',
+      imageUrl: '/images/english/cam_g1_u01_playground.webp',
       text: "Welcome to Unit 1! Let's talk about FRIENDS.\n\n🗣️ Talk with your partner:\n• Who is your best friend?\n• What do you like to play?\n• How do you make a new friend?\n\nLook at the picture. What can you see? Children are playing in the playground. They are having fun TOGETHER. Today we will learn about playing, sharing, and being kind.",
       textVi: "Chào mừng đến Bài 1! Hãy nói về BẠN BÈ.\n\n🗣️ Nói chuyện với bạn:\n• Bạn thân nhất của bạn là ai?\n• Bạn thích chơi gì?\n• Làm thế nào để kết bạn mới?\n\nNhìn bức tranh. Bạn thấy gì? Trẻ em đang chơi ở sân chơi. Họ đang vui vẻ CÙNG NHAU. Hôm nay chúng ta sẽ học về chơi đùa, chia sẻ và tử tế."
     },
@@ -185,7 +185,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: "1.1 Cùng chơi với nhau",
       type: "reading",
       skillRefs: ['1Ri.01', '1Ri.05', '1Rv.02', '1Rw.07'],
-      imageUrl: '/images/english/cam_g1_u01_playing_together.png',
+      imageUrl: '/images/english/cam_g1_u01_playing_together.webp',
       text: "Look at the children in the playground. What are they doing? Some children are running. Some children are jumping. Two children are on the swing. They are playing together. Playing together is fun. We can share our toys. We can take turns. It is good to share and take turns.",
       textVi: "Hãy nhìn những đứa trẻ ở sân chơi. Họ đang làm gì? Một vài đứa trẻ đang chạy. Một vài đứa trẻ đang nhảy. Hai đứa trẻ đang chơi xích đu. Họ đang chơi cùng nhau. Chơi cùng nhau rất vui. Chúng ta có thể chia sẻ đồ chơi. Chúng ta có thể thay phiên nhau. Chia sẻ và thay phiên nhau là điều tốt."
     },
@@ -194,7 +194,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: "1.2 Kết bạn",
       type: "information",
       skillRefs: ['1Ri.03', '1Ri.04', '1SLs.01'],
-      imageUrl: '/images/english/cam_g1_u01_making_friends.png',
+      imageUrl: '/images/english/cam_g1_u01_making_friends.webp',
       text: "How do you make a new friend? You can say, 'Hello, my name is...' You can ask, 'What is your name?' You can say, 'Do you want to play?' Smiling is a good way to make friends. Being kind is a good way to make friends. We use polite words. We say 'please' and 'thank you'.",
       textVi: "Làm thế nào để kết bạn mới? Bạn có thể nói, 'Xin chào, tên mình là...' Bạn có thể hỏi, 'Tên bạn là gì?' Bạn có thể nói, 'Bạn có muốn chơi không?' Mỉm cười là một cách tốt để kết bạn. Tử tế là một cách tốt để kết bạn. Chúng ta sử dụng từ ngữ lịch sự. Chúng ta nói 'làm ơn' và 'cảm ơn'."
     },
@@ -203,7 +203,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: "1.3 Hãy cùng chơi",
       type: "reading",
       skillRefs: ['1Ri.01', '1Ri.10', '1SLp.04', '1Rw.05'],
-      imageUrl: '/images/english/cam_g1_u01_lets_play.png',
+      imageUrl: '/images/english/cam_g1_u01_lets_play.webp',
       text: "Let's play a game. Let's play tag. I am 'it'. Run, run, run! I can catch you. Now you are 'it'. Let's play hide and seek. I will close my eyes and count to ten. One, two, three... ten! Ready or not, here I come! Where are you hiding? I found you!",
       textVi: "Hãy chơi một trò chơi. Hãy chơi trò đuổi bắt. Mình làm người bắt (it). Chạy, chạy, chạy! Mình có thể bắt được bạn. Bây giờ bạn làm người bắt. Hãy chơi trò trốn tìm. Mình sẽ nhắm mắt lại và đếm đến mười. Một, hai, ba... mười! Sẵn sàng hay chưa, mình đến đây! Bạn đang trốn ở đâu? Mình tìm thấy bạn rồi!"
     },
@@ -212,7 +212,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: "1.4 Từ chỉ hành động",
       type: "grammar",
       skillRefs: ['1Rv.01', '1Rw.04', '1Rw.07'],
-      imageUrl: '/images/english/cam_g1_u01_action_words.png',
+      imageUrl: '/images/english/cam_g1_u01_action_words.webp',
       text: "Action words tell us what we are doing. Run, jump, hop, skip, walk. We can run fast. We can jump high. We can hop on one leg. We can skip with a rope. We can walk slowly. What actions can you do? I can clap my hands. I can stomp my feet.",
       textVi: "Từ chỉ hành động cho chúng ta biết chúng ta đang làm gì. Chạy, nhảy, nhảy lò cò, nhảy dây, đi bộ. Chúng ta có thể chạy nhanh. Chúng ta có thể nhảy cao. Chúng ta có thể nhảy lò cò trên một chân. Chúng ta có thể nhảy với dây. Chúng ta có thể đi bộ chậm. Bạn có thể làm những hành động gì? Mình có thể vỗ tay. Mình có thể giậm chân."
     },
@@ -253,7 +253,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: "1.5 Sân chơi của chúng ta",
       type: "information",
       skillRefs: ['1Ri.03', '1Ri.08', '1Rv.01'],
-      imageUrl: '/images/english/cam_g1_u01_playground_equipment.png',
+      imageUrl: '/images/english/cam_g1_u01_playground_equipment.webp',
       text: "Our playground has many things. We have a slide. We slide down. We have a see-saw. We go up and down. We have a climbing frame. We climb up high. We have a sandbox. We build sandcastles. The playground is a busy place. We must be careful. We must not push.",
       textVi: "Sân chơi của chúng ta có rất nhiều thứ. Chúng ta có cầu trượt. Chúng ta trượt xuống. Chúng ta có bập bênh. Chúng ta đi lên và đi xuống. Chúng ta có khung leo trèo. Chúng ta trèo lên cao. Chúng ta có hộp cát. Chúng ta xây lâu đài cát. Sân chơi là một nơi nhộn nhịp. Chúng ta phải cẩn thận. Chúng ta không được xô đẩy."
     },
@@ -283,7 +283,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: '2.1 Khởi động',
       type: 'getting_started',
       skillRefs: ['1SLs.01', '1SLg.04', '1SLr.01'],
-      imageUrl: '/images/english/cam_g1_u02_crafts.png',
+      imageUrl: '/images/english/cam_g1_u02_crafts.webp',
       text: "Welcome to Unit 2 — Making Things!\n\n🗣️ Talk with your partner:\n• Have you ever made something? What was it?\n• What do you need to make a paper hat?\n• Do you like cutting, folding, or drawing best?\n\nToday we will learn how to MAKE things — from paper, with glue, and with our hands. We will also learn to follow INSTRUCTIONS step by step.",
       textVi: "Chào mừng đến Bài 2 — Làm đồ vật!\n\n🗣️ Nói chuyện với bạn:\n• Bạn đã bao giờ làm một thứ gì chưa? Đó là gì?\n• Bạn cần gì để làm một chiếc mũ giấy?\n• Bạn thích cắt, gấp, hay vẽ nhất?\n\nHôm nay chúng ta sẽ học cách LÀM đồ vật — từ giấy, với hồ dán, và bằng đôi tay. Chúng ta cũng sẽ học cách làm theo HƯỚNG DẪN từng bước."
     },
@@ -300,7 +300,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: "2.2 Làm theo hướng dẫn",
       type: "information",
       skillRefs: ['1Ri.03', '1Ri.04', '1SLs.01'],
-      imageUrl: '/images/english/cam_g1_u02_instructions.png',
+      imageUrl: '/images/english/cam_g1_u02_instructions.webp',
       text: "To make something, we follow instructions. Instructions tell us what to do step by step. We use order words. First, get a piece of paper. Next, fold the paper in half. Then, fold the corners. Finally, open it out. Now you have a hat! Following instructions is important.",
       textVi: "Để làm một cái gì đó, chúng ta làm theo hướng dẫn. Hướng dẫn cho chúng ta biết phải làm gì từng bước một. Chúng ta sử dụng từ chỉ thứ tự. Đầu tiên, lấy một tờ giấy. Tiếp theo, gấp đôi tờ giấy lại. Sau đó, gấp các góc. Cuối cùng, mở nó ra. Bây giờ bạn đã có một chiếc mũ! Việc làm theo hướng dẫn rất quan trọng."
     },
@@ -317,7 +317,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: "2.4 Câu chuyện chiếc thuyền giấy",
       type: "reading",
       skillRefs: ['1Ri.01', '1Ri.07', '1Ri.10', '1Rw.04'],
-      imageUrl: '/images/english/cam_g1_u02_crafts_making.png',
+      imageUrl: '/images/english/cam_g1_u02_crafts_making.webp',
       text: "A boy made a paper boat. He painted it red and blue. He took it to the river. He put the boat in the water. The boat floated. It sailed away. Goodbye, little boat! The boy was happy. He watched his boat sail far away. Where is the boat going?",
       textVi: "Một cậu bé làm một chiếc thuyền giấy. Cậu ấy tô nó màu đỏ và xanh lam. Cậu ấy mang nó ra sông. Cậu ấy đặt thuyền xuống nước. Chiếc thuyền nổi. Nó chèo đi. Tạm biệt, chiếc thuyền nhỏ! Cậu bé rất vui. Cậu ấy nhìn chiếc thuyền của mình trôi ra xa. Chiếc thuyền đang đi đâu?"
     },
@@ -387,7 +387,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: '4.1 Khởi động',
       type: 'getting_started',
       skillRefs: ['1SLs.01', '1SLg.04', '1SLr.01'],
-      imageUrl: '/images/english/cam_g1_u04_stories.png',
+      imageUrl: '/images/english/cam_g1_u04_stories.webp',
       text: "Welcome to Unit 4 — Traditional Tales!\n\n🗣️ Talk with your partner:\n• Do you know any fairy tales or old stories?\n• Who are the characters in your favourite story?\n• Do stories always end happily?\n\nTraditional tales are stories told again and again for many years. They often start with 'Once upon a time...' Today we will read a famous tale and learn about characters, settings, and teamwork.",
       textVi: "Chào mừng đến Bài 4 — Truyện cổ tích!\n\n🗣️ Nói chuyện với bạn:\n• Bạn có biết câu chuyện cổ tích nào không?\n• Nhân vật trong truyện yêu thích của bạn là ai?\n• Truyện có luôn kết thúc vui vẻ không?\n\nTruyện cổ tích là những câu chuyện được kể đi kể lại qua nhiều năm. Chúng thường bắt đầu bằng 'Ngày xửa ngày xưa...' Hôm nay chúng ta sẽ đọc một câu chuyện nổi tiếng và học về nhân vật, bối cảnh, và tinh thần đồng đội."
     },
@@ -396,7 +396,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: "4.1 Củ cải khổng lồ",
       type: "reading",
       skillRefs: ['1Ri.01', '1Ri.05', '1Rv.01', '1Rw.07'],
-      imageUrl: '/images/english/cam_g1_u04_enormous_turnip.png',
+      imageUrl: '/images/english/cam_g1_u04_enormous_turnip.webp',
       text: "Once upon a time, an old man planted a turnip. The turnip grew and grew. It was enormous! The old man pulled and pulled, but he could not pull it up. He called the old woman. They pulled and pulled, but they could not pull it up. They called a boy. They pulled and pulled. Pop! The enormous turnip came out.",
       textVi: "Ngày xửa ngày xưa, có một ông lão trồng một củ cải. Củ cải lớn dần, lớn dần. Nó trở nên khổng lồ! Ông lão kéo mãi, kéo mãi nhưng không thể nhổ nó lên. Ông gọi bà lão. Họ cùng nhau kéo mãi, kéo mãi nhưng không thể nhổ nó lên. Họ gọi một cậu bé. Họ cùng nhau kéo. Bụp! Củ cải khổng lồ đã được nhổ lên."
     },
@@ -490,7 +490,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: '5.1 Khởi động',
       type: 'getting_started',
       skillRefs: ['1SLs.01', '1SLg.04', '1SLr.01'],
-      imageUrl: '/images/english/cam_g1_u05_animals.png',
+      imageUrl: '/images/english/cam_g1_u05_animals.webp',
       text: "Welcome to Unit 5 — Animals!\n\n🗣️ Talk with your partner:\n• What is your favourite animal? Why?\n• Can you name 5 animals?\n• What can animals do that people cannot?\n\nIn this unit we will learn amazing FACTS about animals. We will find out about their bodies, where they live, and what they eat. We will also learn to write INFORMATION texts — writing that tells us true facts.",
       textVi: "Chào mừng đến Bài 5 — Động vật!\n\n🗣️ Nói chuyện với bạn:\n• Động vật yêu thích của bạn là gì? Tại sao?\n• Bạn có thể kể tên 5 loài động vật không?\n• Động vật làm được gì mà con người không thể?\n\nTrong bài này chúng ta sẽ học những SỰ THẬT tuyệt vời về động vật. Chúng ta sẽ tìm hiểu về cơ thể, nơi sống, và thức ăn của chúng. Chúng ta cũng sẽ học viết văn bản THÔNG TIN — bài viết cho ta biết sự thật."
     },
@@ -499,7 +499,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: "5.1 Sự thật về động vật",
       type: "reading",
       skillRefs: ['1Ri.01', '1Ri.05', '1Rv.01', '1Rw.07'],
-      imageUrl: '/images/english/cam_g1_u05_animals_nonfiction.png',
+      imageUrl: '/images/english/cam_g1_u05_animals_nonfiction.webp',
       text: "An elephant is a big animal. It has a long trunk. It has big ears. A mouse is a small animal. It has a long tail. It has small ears. Elephants cannot jump. Mice can run very fast. Birds can fly in the sky. Fish can swim in the water. Every animal is different.",
       textVi: "Voi là một loài động vật lớn. Nó có một cái vòi dài. Nó có đôi tai to. Chuột là một loài động vật nhỏ. Nó có một cái đuôi dài. Nó có đôi tai nhỏ. Voi không thể nhảy. Chuột có thể chạy rất nhanh. Chim có thể bay trên bầu trời. Cá có thể bơi dưới nước. Mỗi loài động vật đều khác nhau."
     },
@@ -593,7 +593,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: '6.1 Khởi động',
       type: 'getting_started',
       skillRefs: ['1SLs.01', '1SLg.04', '1SLr.01'],
-      imageUrl: '/images/english/cam_g1_u06_rhymes2.png',
+      imageUrl: '/images/english/cam_g1_u06_rhymes2.webp',
       text: "Welcome to Unit 6 — Nursery Rhymes!\n\n🗣️ Talk with your partner:\n• Do you know any nursery rhymes or songs?\n• Can you sing one for your partner?\n• What makes nursery rhymes fun?\n\nNursery rhymes are short poems and songs for children. They have RHYTHM (a beat you can clap) and RHYME (words that sound the same). Today we will read famous rhymes, learn old words, and sing together!",
       textVi: "Chào mừng đến Bài 6 — Đồng dao!\n\n🗣️ Nói chuyện với bạn:\n• Bạn có biết bài đồng dao hoặc bài hát nào không?\n• Bạn có thể hát một bài cho bạn nghe không?\n• Điều gì làm đồng dao vui?\n\nĐồng dao là những bài thơ và bài hát ngắn cho trẻ em. Chúng có NHỊP ĐIỆU (nhịp bạn có thể vỗ tay) và VẦN (từ nghe giống nhau). Hôm nay chúng ta sẽ đọc những bài đồng dao nổi tiếng, học từ cổ và cùng hát!"
     },
@@ -610,7 +610,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: "6.2 Nhịp điệu và vần",
       type: "information",
       skillRefs: ['1Ri.03', '1Ri.04', '1SLs.01'],
-      imageUrl: '/images/english/cam_g1_u06_rhyme_families.png',
+      imageUrl: '/images/english/cam_g1_u06_rhyme_families.webp',
       text: "Nursery rhymes have rhythm. Rhythm is like the beat of a drum. We can clap our hands to the rhythm. Clap, clap, clap. Rhymes also have words that sound the same at the end. Hill and Jill rhyme. Down and crown rhyme. Can you clap the rhythm of a rhyme?",
       textVi: "Các bài đồng dao có nhịp điệu. Nhịp điệu giống như nhịp trống. Chúng ta có thể vỗ tay theo nhịp điệu. Vỗ, vỗ, vỗ. Các bài đồng dao cũng có những từ phát âm giống nhau ở phần cuối. Hill và Jill có vần với nhau. Down và crown có vần với nhau. Bạn có thể vỗ tay theo nhịp điệu của một bài đồng dao không?"
     },
@@ -696,7 +696,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: '7.1 Khởi động',
       type: 'getting_started',
       skillRefs: ['1SLs.01', '1SLg.04', '1SLr.01'],
-      imageUrl: '/images/english/cam_g1_u07_makebelieve.png',
+      imageUrl: '/images/english/cam_g1_u07_makebelieve.webp',
       text: "Welcome to Unit 7 — Imagination Stories!\n\n🗣️ Talk with your partner:\n• If you could be any animal, what would you be?\n• Have you ever imagined something magical?\n• Can a bear really drink tea?\n\nImagination means making up things in your mind. Some stories are REAL (true things that happened). Some stories are MAKE-BELIEVE (things we imagine). Today we will explore the wonderful world of make-believe!",
       textVi: "Chào mừng đến Bài 7 — Truyện tưởng tượng!\n\n🗣️ Nói chuyện với bạn:\n• Nếu có thể là bất kỳ con vật nào, bạn muốn là gì?\n• Bạn đã bao giờ tưởng tượng điều gì kỳ diệu chưa?\n• Gấu có thể thật sự uống trà không?\n\nTưởng tượng nghĩa là nghĩ ra những điều trong đầu. Một số truyện là CÓ THẬT (điều thật sự xảy ra). Một số truyện là GIẢ TƯỞNG (điều chúng ta tưởng tượng). Hôm nay chúng ta sẽ khám phá thế giới tuyệt vời của giả tưởng!"
     },
@@ -705,7 +705,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: "7.1 Một chú gấu trong nhà",
       type: "reading",
       skillRefs: ['1Ri.01', '1Ri.05', '1Rv.01', '1Rw.07'],
-      imageUrl: '/images/english/cam_g1_u07_fairy_tale.png',
+      imageUrl: '/images/english/cam_g1_u07_fairy_tale.webp',
       text: "Imagine there is a bear in your house. He is wearing a blue jacket. He is very polite. He says, 'Hello, can I have some tea?' You make him some tea and give him a biscuit. The bear sits on the sofa. He drinks his tea and eats his biscuit. He says, 'Thank you very much.' Then he goes away.",
       textVi: "Hãy tưởng tượng có một chú gấu trong nhà bạn. Chú đang mặc một chiếc áo khoác màu xanh dương. Chú rất lịch sự. Chú nói, 'Xin chào, tôi có thể uống một chút trà không?' Bạn pha cho chú một ít trà và cho chú một cái bánh quy. Chú gấu ngồi trên ghế sô pha. Chú uống trà và ăn bánh quy. Chú nói, 'Cảm ơn bạn rất nhiều.' Sau đó chú rời đi."
     },
@@ -799,7 +799,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: '8.1 Khởi động',
       type: 'getting_started',
       skillRefs: ['1SLs.01', '1SLg.04', '1SLr.01'],
-      imageUrl: '/images/english/cam_g1_u08_zoo.png',
+      imageUrl: '/images/english/cam_g1_u08_zoo.webp',
       text: "Welcome to Unit 8 — Personal Recounts!\n\n🗣️ Talk with your partner:\n• What did you do last weekend?\n• Where did you go yesterday?\n• What was the BEST day you ever had?\n\nA RECOUNT is when you tell a true story about something that happened to YOU. Today we will learn how to write about our own experiences — in the right order, using past tense words, and adding our feelings!",
       textVi: "Chào mừng đến Bài 8 — Kể lại chuyện cá nhân!\n\n🗣️ Nói chuyện với bạn:\n• Cuối tuần trước bạn làm gì?\n• Hôm qua bạn đi đâu?\n• Ngày TỐT NHẤT bạn từng có là ngày nào?\n\nKỂ LẠI là khi bạn kể một câu chuyện có thật về điều xảy ra với CHÍNH BẠN. Hôm nay chúng ta sẽ học cách viết về trải nghiệm — theo đúng thứ tự, dùng từ thì quá khứ, và thêm cảm xúc!"
     },
@@ -808,7 +808,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: "8.1 Một chuyến đi đến sở thú",
       type: "reading",
       skillRefs: ['1Ri.01', '1Ri.05', '1Rv.01', '1Rw.07'],
-      imageUrl: '/images/english/cam_g1_u08_things_happened.png',
+      imageUrl: '/images/english/cam_g1_u08_things_happened.webp',
       text: "Yesterday, I went to the zoo with my family. First, we saw the tall giraffes. They were eating leaves from the trees. Next, we went to see the monkeys. The monkeys were very funny. They jumped and swung on the ropes. My brother laughed a lot. We had a great day at the zoo.",
       textVi: "Hôm qua, tôi đã đi sở thú với gia đình. Đầu tiên, chúng tôi nhìn thấy những con hươu cao cổ cao lêu nghêu. Chúng đang ăn lá trên cây. Tiếp theo, chúng tôi đi xem khỉ. Bầy khỉ rất vui nhộn. Chúng nhảy và đu trên dây. Em trai tôi cười rất nhiều. Chúng tôi đã có một ngày tuyệt vời ở sở thú."
     },
@@ -902,7 +902,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: '9.1 Khởi động',
       type: 'getting_started',
       skillRefs: ['1SLs.01', '1SLg.04', '1SLr.01'],
-      imageUrl: '/images/english/cam_g1_u09_weather.png',
+      imageUrl: '/images/english/cam_g1_u09_weather.webp',
       text: "Welcome to Unit 9 — Weather Poems!\n\n🗣️ Talk with your partner:\n• What is the weather like today?\n• What sounds does rain make?\n• Do you like sunny days or rainy days better?\n\nPoets write about the weather because it is all around us. Weather poems use special SOUND WORDS (onomatopoeia) — words that sound like what they describe. Today we will read poems, learn sound words, and write our own weather poetry!",
       textVi: "Chào mừng đến Bài 9 — Thơ thời tiết!\n\n🗣️ Nói chuyện với bạn:\n• Hôm nay thời tiết thế nào?\n• Mưa tạo ra âm thanh gì?\n• Bạn thích ngày nắng hay ngày mưa hơn?\n\nNhà thơ viết về thời tiết vì nó ở xung quanh ta. Thơ thời tiết dùng TỪ TƯỢNG THANH — từ nghe giống như điều chúng mô tả. Hôm nay chúng ta sẽ đọc thơ, học từ tượng thanh, và viết thơ thời tiết!"
     },
@@ -911,7 +911,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: "9.1 Mưa trên mái nhà",
       type: "reading",
       skillRefs: ['1Ri.01', '1Ri.05', '1Rv.01', '1Rw.07'],
-      imageUrl: '/images/english/cam_g1_u09_weather_poems.png',
+      imageUrl: '/images/english/cam_g1_u09_weather_poems.webp',
       text: "Pitter patter, pitter patter. The rain falls down. It falls on the trees. It falls on the town. Pitter patter, pitter patter. The rain hits the roof. I am warm inside. I am safe and dry. I like the sound of the rain.",
       textVi: "Lộp bộp, lộp bộp. Mưa rơi xuống. Mưa rơi trên cây cối. Mưa rơi xuống thị trấn. Lộp bộp, lộp bộp. Mưa rơi trên mái nhà. Tôi thấy ấm áp ở bên trong. Tôi an toàn và khô ráo. Tôi thích âm thanh của mưa."
     },
@@ -1005,7 +1005,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: "1.1 Gặp gỡ gia đình tôi",
       type: "reading",
       skillRefs: ['1Ri.01', '1Ri.05', '1Rv.01', '1Rw.07'],
-      imageUrl: '/images/english/cam_g2_u01_familiar.png',
+      imageUrl: '/images/english/cam_g2_u01_familiar.webp',
       text: "Hello! My name is Mia. I live with my mother, my father, and my little brother, Leo. We live in a house with a small garden. My grandmother and grandfather live near us. We visit them every Sunday. We eat dinner together. Family is very important to me. I love my family.",
       textVi: "Xin chào! Tên tôi là Mia. Tôi sống với mẹ, cha và em trai nhỏ của tôi, Leo. Chúng tôi sống trong một ngôi nhà có một khu vườn nhỏ. Bà và ông của tôi sống gần chúng tôi. Chúng tôi đến thăm họ vào mỗi Chủ nhật. Chúng tôi cùng nhau ăn tối. Gia đình rất quan trọng đối với tôi. Tôi yêu gia đình mình."
     },
@@ -1051,7 +1051,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: "2.1 Huy hiệu bảo tàng",
       type: "reading",
       skillRefs: ['1Ri.01', '1Ri.05', '1Rv.01', '1Rw.07'],
-      imageUrl: '/images/english/cam_g2_u02_instructions.png',
+      imageUrl: '/images/english/cam_g2_u02_instructions.webp',
       text: "Our class went to the museum today. The teacher gave everyone a red badge. The badge had my name on it. It also had the name of our school. The badge showed the museum guard that I was with a school group. I wore the badge on my shirt. It made me feel important.",
       textVi: "Lớp chúng tôi đã đi bảo tàng hôm nay. Giáo viên đưa cho mỗi người một huy hiệu màu đỏ. Huy hiệu có tên tôi trên đó. Nó cũng có tên trường của chúng tôi. Huy hiệu cho người bảo vệ bảo tàng thấy rằng tôi đi cùng một nhóm trường. Tôi đeo huy hiệu trên áo. Nó làm tôi cảm thấy quan trọng."
     },
@@ -1097,7 +1097,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: "3.1 Thành phố ồn ào",
       type: "reading",
       skillRefs: ['1Ri.01', '1Ri.05', '1Rv.01', '1Rw.07'],
-      imageUrl: '/images/english/cam_g2_u03_places.png',
+      imageUrl: '/images/english/cam_g2_u03_places.webp',
       text: "The city is full of sounds. Beep, beep! That is the sound of cars. Vroom! That is a bus. People are talking loudly on the street. A dog is barking. At a construction site, workers are hitting metal. Clang, clang! It is very noisy. I cover my ears. I like the city, but sometimes it is too loud.",
       textVi: "Thành phố tràn ngập âm thanh. Bíp, bíp! Đó là âm thanh của xe ô tô. Vù vù! Đó là một chiếc xe buýt. Mọi người đang nói chuyện ồn ào trên đường phố. Một con chó đang sủa. Tại một công trường xây dựng, công nhân đang đập kim loại. Keng, keng! Thật là ồn ào. Tôi bịt tai lại. Tôi thích thành phố, nhưng đôi khi nó quá ồn ào."
     },
@@ -1143,7 +1143,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: "4.1 Lâu đài cổ",
       type: "reading",
       skillRefs: ['1Ri.01', '1Ri.05', '1Rv.01', '1Rw.07'],
-      imageUrl: '/images/english/cam_g2_u04_world.png',
+      imageUrl: '/images/english/cam_g2_u04_world.webp',
       text: "Long ago, there were no tall glass buildings. Kings and queens lived in big stone castles. Castles had thick walls to keep people safe. Knights wore heavy metal armour and rode horses. They did not have cars or airplanes. They used candles for light because there was no electricity. Life was very different.",
       textVi: "Cách đây rất lâu, không có những tòa nhà cao tầng bằng kính. Các vị vua và hoàng hậu sống trong những lâu đài lớn bằng đá. Lâu đài có những bức tường dày để giữ an toàn cho mọi người. Các hiệp sĩ mặc áo giáp kim loại nặng và cưỡi ngựa. Họ không có ô tô hay máy bay. Họ sử dụng nến để thắp sáng vì không có điện. Cuộc sống lúc đó rất khác biệt."
     },
@@ -1189,7 +1189,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: "5.1 Chú robot hữu ích",
       type: "reading",
       skillRefs: ['1Ri.01', '1Ri.05', '1Rv.01', '1Rw.07'],
-      imageUrl: '/images/english/cam_g2_u05_houses.png',
+      imageUrl: '/images/english/cam_g2_u05_houses.webp',
       text: "My family bought a new robot. Its name is Sparky. Sparky has a screen for a face and wheels instead of legs. Sparky is very helpful. It can clean the floor and wash the windows. I can press buttons to give Sparky commands. Sometimes, Sparky gets confused and tries to wash the cat. The cat does not like that!",
       textVi: "Gia đình tôi đã mua một chú robot mới. Tên của nó là Sparky. Sparky có khuôn mặt là một màn hình và có bánh xe thay vì chân. Sparky rất hữu ích. Nó có thể lau nhà và lau cửa sổ. Tôi có thể nhấn nút để ra lệnh cho Sparky. Đôi khi, Sparky bị nhầm lẫn và cố gắng tắm cho con mèo. Con mèo không thích điều đó chút nào!"
     },
@@ -1235,7 +1235,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: "6.1 Chuyến đi lên núi",
       type: "reading",
       skillRefs: ['1Ri.01', '1Ri.05', '1Rv.01', '1Rw.07'],
-      imageUrl: '/images/english/cam_g2_u06_poets.png',
+      imageUrl: '/images/english/cam_g2_u06_poets.webp',
       text: "During the holidays, we went on a journey to the mountains. We packed our bags and put them in the car. The drive was very long. We drove on a winding road. We saw tall trees and a river. When we arrived, it was cold. We built a fire and roasted marshmallows. It was a wonderful adventure.",
       textVi: "Trong kỳ nghỉ, chúng tôi đã có một chuyến đi lên núi. Chúng tôi đóng gói đồ đạc và xếp vào xe. Chuyến đi xe rất dài. Chúng tôi lái xe trên một con đường quanh co. Chúng tôi nhìn thấy những cái cây cao và một con sông. Khi chúng tôi đến nơi, trời rất lạnh. Chúng tôi đã đốt lửa và nướng kẹo dẻo. Đó là một cuộc phiêu lưu tuyệt vời."
     },
@@ -1281,7 +1281,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: "7.1 Gặp gỡ một tác giả",
       type: "reading",
       skillRefs: ['1Ri.01', '1Ri.05', '1Rv.01', '1Rw.07'],
-      imageUrl: '/images/english/cam_g2_u07_writers.png',
+      imageUrl: '/images/english/cam_g2_u07_writers.webp',
       text: "Today, a famous author visited our school. Her name is Ms. Green. She writes stories about magical forests. She showed us her new book. She told us that writing a book takes a long time. First, she imagines the characters. Then, she writes many drafts. Finally, an illustrator draws the pictures. I want to be an author too.",
       textVi: "Hôm nay, một tác giả nổi tiếng đã đến thăm trường chúng tôi. Tên cô ấy là cô Green. Cô ấy viết những câu chuyện về những khu rừng phép thuật. Cô ấy cho chúng tôi xem cuốn sách mới của mình. Cô ấy nói với chúng tôi rằng việc viết một cuốn sách mất rất nhiều thời gian. Đầu tiên, cô ấy tưởng tượng ra các nhân vật. Sau đó, cô ấy viết nhiều bản nháp. Cuối cùng, một họa sĩ minh họa sẽ vẽ các bức tranh. Tôi cũng muốn trở thành một tác giả."
     },
@@ -1327,7 +1327,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: "8.1 Khám phá đại dương",
       type: "reading",
       skillRefs: ['1Ri.01', '1Ri.05', '1Rv.01', '1Rw.07'],
-      imageUrl: '/images/english/cam_g2_u08_sea.png',
+      imageUrl: '/images/english/cam_g2_u08_sea.webp',
       text: "The ocean is very deep and full of life. We took a boat out to see the coral reef. We wore masks and looked under the water. The coral was bright pink and yellow. Small fish swam everywhere. Suddenly, we saw a large sea turtle. It was swimming slowly. The ocean is a beautiful, busy place.",
       textVi: "Đại dương rất sâu và tràn đầy sự sống. Chúng tôi đi thuyền ra ngoài để ngắm rạn san hô. Chúng tôi đeo mặt nạ và nhìn xuống dưới nước. San hô có màu hồng và vàng tươi. Những con cá nhỏ bơi lội khắp nơi. Đột nhiên, chúng tôi nhìn thấy một con rùa biển lớn. Nó đang bơi từ từ. Đại dương là một nơi tuyệt đẹp, nhộn nhịp."
     },
@@ -1373,7 +1373,7 @@ export const AUTHENTIC_UNIT_SECTIONS: Record<string, AuthenticSection[]> = {
       sectionTitleVi: "9.1 Trong khu vườn",
       type: "reading",
       skillRefs: ['1Ri.01', '1Ri.05', '1Rv.01', '1Rw.07'],
-      imageUrl: '/images/english/cam_g2_u09_creatures.png',
+      imageUrl: '/images/english/cam_g2_u09_creatures.webp',
       text: "If you look closely in the garden, you will see many tiny creatures. A green caterpillar is eating a leaf. A spider is spinning a beautiful web to catch flies. Ants are working hard, carrying food to their home under the ground. A ladybird with red wings and black spots lands on my hand. Gardens are full of insects.",
       textVi: "Nếu bạn nhìn kỹ trong khu vườn, bạn sẽ thấy nhiều sinh vật nhỏ bé. Một con sâu bướm xanh đang ăn một chiếc lá. Một con nhện đang giăng một mạng nhện tuyệt đẹp để bắt ruồi. Những con kiến đang làm việc chăm chỉ, mang thức ăn về tổ dưới lòng đất. Một con bọ rùa có đôi cánh màu đỏ và những đốm đen đậu trên tay tôi. Những khu vườn đầy ắp côn trùng."
     },

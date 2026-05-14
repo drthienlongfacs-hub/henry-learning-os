@@ -1,8 +1,23 @@
 import type { Metadata, Viewport } from "next";
+import { Inter, Nunito } from "next/font/google";
 import "./globals.css";
 import { DataErrorBoundary } from "@/components/DataErrorBoundary";
 import { PWARegister } from "@/components/PWARegister";
 import { OfflineBanner, InstallPrompt } from "@/components/PWAComponents";
+
+const inter = Inter({
+  subsets: ["latin", "vietnamese"],
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+  variable: "--font-inter",
+});
+
+const nunito = Nunito({
+  subsets: ["latin", "vietnamese"],
+  weight: ["400", "600", "700", "800", "900"],
+  display: "swap",
+  variable: "--font-nunito",
+});
 
 export const metadata: Metadata = {
   title: "Henry Learning OS — Hệ thống học tập cá nhân hóa",
@@ -32,11 +47,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi">
+    <html lang="vi" className={`${inter.variable} ${nunito.variable}`}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
         <link rel="apple-touch-icon" href="/henry-learning-os/icons/icon-192.png" />
       </head>
       <body className="bg-[var(--color-bg-warm)] text-[var(--color-text-primary)] antialiased">

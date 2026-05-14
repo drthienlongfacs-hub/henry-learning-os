@@ -14,8 +14,8 @@ export function PWARegister() {
         // Register service worker
         navigator.serviceWorker
             .register('/henry-learning-os/sw.js')
-            .then((reg) => {
-                console.log('[PWA] Service Worker registered, scope:', reg.scope);
+            .then((_reg) => {
+                // SW registered successfully
             })
             .catch((err) => {
                 console.warn('[PWA] Service Worker registration failed:', err);

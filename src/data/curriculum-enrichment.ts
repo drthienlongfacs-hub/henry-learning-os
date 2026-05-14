@@ -591,7 +591,7 @@ export const SUBJECT_ENRICHMENT: Record<LearningSubjectKey, SubjectEnrichment> =
         label: 'Khoa học',
         headline: 'Quan sát, dự đoán, kiểm tra, giải thích bằng bằng chứng.',
         coverage: 'Cơ thể, sức khỏe, thực vật, động vật, thời tiết, Trái Đất, vật chất, môi trường.',
-        defaultVisual: '/images/science/USGS_WaterCycle_English_ONLINE_20221013.png',
+        defaultVisual: '/images/science/USGS_WaterCycle_English_ONLINE_20221013.webp',
         sourceIds: ['moet-ctgdpt-2018', 'sgk-ket-noi-tri-thuc', 'sgk-chan-troi-sang-tao', 'cambridge-primary-science', 'ngss-three-dimensional', 'wikimedia-commons', 'openverse', 'ies-study-learning', 'eef-metacognition', 'harvard-executive-function'],
         benchmarkPattern: ['NGSS 3D learning', 'Claim-Evidence-Reasoning', 'Hands-on science', 'Cambridge enquiry-based science'],
         sessionRhythm: ['Quan sát ảnh', 'Dự đoán', 'Chọn bằng chứng', 'Nói điều sẽ thử ở nhà'],
@@ -611,7 +611,7 @@ export const SUBJECT_ENRICHMENT: Record<LearningSubjectKey, SubjectEnrichment> =
         label: 'Tin học',
         headline: 'Tạo, thử, sai, sửa, kể lại thuật toán.',
         coverage: 'Phần cứng, thao tác cơ bản, an toàn mạng, tư duy thuật toán, dữ liệu và AI literacy.',
-        defaultVisual: '/images/computing/Scratch_editor_screenshot.png',
+        defaultVisual: '/images/computing/Scratch_editor_screenshot.webp',
         sourceIds: ['moet-ctgdpt-2018', 'csta-k12-standards', 'scratch', 'code-org', 'code-org-ai', 'unicef-ai-children', 'aap-family-media', 'harvard-executive-function', 'cast-udl'],
         benchmarkPattern: ['CSTA standards', 'Scratch create-first', 'Code.org CS pathway', 'Child-safe AI literacy'],
         sessionRhythm: ['Nêu mục tiêu', 'Kéo/thử bằng mô phỏng', 'Debug', 'Nói quy tắc an toàn'],
@@ -757,7 +757,7 @@ const TOPIC_OVERRIDES: Record<string, Partial<TopicEnrichment>> = {
         commonPitfalls: ['Nhớ tên cơ quan nhưng không biết chức năng', 'Chọn hành vi theo thói quen thay vì an toàn'],
     },
     weather_earth: {
-        visual: { src: '/images/science/USGS_WaterCycle_English_ONLINE_20221013.png', alt: 'Sơ đồ vòng tuần hoàn nước' },
+        visual: { src: '/images/science/USGS_WaterCycle_English_ONLINE_20221013.webp', alt: 'Sơ đồ vòng tuần hoàn nước' },
         masteryTargets: ['Mô tả chu trình quan sát được', 'Dự đoán thay đổi thời tiết', 'Nói bằng chứng từ hình'],
     },
     history_g4: {
@@ -769,12 +769,12 @@ const TOPIC_OVERRIDES: Record<string, Partial<TopicEnrichment>> = {
         masteryTargets: ['Đọc địa danh trên bản đồ', 'Gắn vùng miền với đặc điểm', 'Nói liên hệ đời sống'],
     },
     cyber_safety: {
-        visual: { src: '/images/computing/Internet_map_1024_-_transparent_inverted.png', alt: 'Bản đồ kết nối Internet' },
+        visual: { src: '/images/computing/Internet_map_1024_-_transparent_inverted.webp', alt: 'Bản đồ kết nối Internet' },
         masteryTargets: ['Nhận diện thông tin cá nhân', 'Biết hỏi người lớn trước khi tải/chia sẻ', 'Chọn hành động an toàn'],
         commonPitfalls: ['Tin người lạ vì lời hứa có thưởng', 'Nhầm mật khẩu với thông tin có thể chia sẻ'],
     },
     comp_logic: {
-        visual: { src: '/images/computing/Scratch_editor_screenshot.png', alt: 'Giao diện Scratch dạng khối lệnh' },
+        visual: { src: '/images/computing/Scratch_editor_screenshot.webp', alt: 'Giao diện Scratch dạng khối lệnh' },
         masteryTargets: ['Sắp xếp bước theo thứ tự', 'Nhận ra điều kiện và lặp', 'Debug bằng cách thử từng bước'],
     },
 
@@ -954,7 +954,7 @@ const TOPIC_OVERRIDES: Record<string, Partial<TopicEnrichment>> = {
         commonPitfalls: ['Nhầm thay đổi vật lý và hóa học', 'Không phân biệt nguồn năng lượng', 'Mô tả hiện tượng mà không giải thích nguyên nhân'],
     },
     ecosystem: {
-        visual: { src: '/images/science/USGS_WaterCycle_English_ONLINE_20221013.png', alt: 'Vòng tuần hoàn nước trong hệ sinh thái' },
+        visual: { src: '/images/science/USGS_WaterCycle_English_ONLINE_20221013.webp', alt: 'Vòng tuần hoàn nước trong hệ sinh thái' },
         masteryTargets: ['Nêu quan hệ sinh vật - môi trường', 'Dự đoán hệ quả khi mất một mắt xích', 'Đề xuất hành vi bảo vệ môi trường'],
         commonPitfalls: ['Nghĩ chuỗi thức ăn chỉ đi một chiều', 'Không thấy con người là phần của hệ sinh thái', 'Đề xuất bảo vệ chung chung không có hành động cụ thể'],
     },
