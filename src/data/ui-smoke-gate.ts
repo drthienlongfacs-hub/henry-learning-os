@@ -3,9 +3,8 @@ import { PRIMARY_CURRICULUM_MAP_STATS } from './primary-curriculum-map';
 export type UiSmokeRouteKey =
     | 'home'
     | 'child-learn'
-    | 'child-reading'
-    | 'child-exams'
     | 'child-library'
+    | 'child-cambridge-exams'
     | 'parent-dashboard'
     | 'parent-benchmark'
     | 'parent-foundation'
@@ -51,25 +50,18 @@ export const UI_SMOKE_ROUTES: UiSmokeRoute[] = [
         minimumBodyTextLength: 600,
     },
     {
-        key: 'child-reading',
-        path: '/child/reading/',
-        label: 'Child reading voice engine',
-        requiredText: ['Luyện Đọc & Phát Âm', 'Đọc toàn bài', 'Real data'],
-        minimumBodyTextLength: 1000,
-    },
-    {
-        key: 'child-exams',
-        path: '/child/exams/',
-        label: 'Child Cambridge exam prep',
-        requiredText: ['Nguồn Cambridge chính thức', '10 bộ đề mỗi cấp', 'Không sao chép đề chính thức', 'Format chính thức đã đối chiếu'],
-        minimumBodyTextLength: 1100,
-    },
-    {
         key: 'child-library',
         path: '/child/library/',
         label: 'Child bilingual textbook library',
         requiredText: ['Thư viện Sách', 'Nhúng sách trực tiếp vào app', 'Kệ SGK/textbook cứng', 'Đọc ngay: bài tự biên soạn'],
         minimumBodyTextLength: 1200,
+    },
+    {
+        key: 'child-cambridge-exams',
+        path: '/child/cambridge-exams/',
+        label: 'Child Cambridge KET/PET exam prep',
+        requiredText: ['Cambridge KET/PET', '10 bộ đề A2 Key/KET', 'Không sao chép đề chính thức', 'Format chính thức đã đối chiếu'],
+        minimumBodyTextLength: 1800,
     },
     {
         key: 'parent-dashboard',

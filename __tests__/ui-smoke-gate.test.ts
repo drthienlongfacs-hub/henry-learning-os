@@ -7,8 +7,8 @@ import {
 
 describe('UI smoke gate manifest', () => {
     it('defines a desktop/mobile route manifest for CI smoke testing', () => {
-        expect(UI_SMOKE_ROUTES).toHaveLength(11);
-        expect(UI_SMOKE_ROUTES.map((route) => route.key)).toContain('child-exams');
+        expect(UI_SMOKE_ROUTES).toHaveLength(10);
+        expect(UI_SMOKE_ROUTES.map((route) => route.key)).toContain('child-cambridge-exams');
         expect(UI_SMOKE_VIEWPORTS.map((viewport) => viewport.key)).toEqual(['desktop', 'mobile']);
         expect(UI_SMOKE_GATE.checkCount).toBe(UI_SMOKE_ROUTES.length * UI_SMOKE_VIEWPORTS.length);
         expect(UI_SMOKE_GATE.minimumTargetSizePx).toBeGreaterThanOrEqual(24);
