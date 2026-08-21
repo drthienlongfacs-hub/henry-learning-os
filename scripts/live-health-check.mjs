@@ -70,7 +70,7 @@ const routes = [
 
 function seededProfileScript() {
   const now = '2026-05-10T00:00:00.000Z';
-  window.localStorage.setItem('henry-os-v2', JSON.stringify({
+  window.localStorage.setItem('henry-os-v3', JSON.stringify({
     state: {
       childProfile: {
         id: 'child-live-health',
