@@ -76,7 +76,7 @@ export default function ExamPrepGuide({ grade = 1 }: { grade?: number }) {
       {activeTab === 'smart' && (
         <div>
           <p style={{ fontSize: 12, color: '#a0aec0', marginBottom: 12 }}>
-            💡 Phương pháp học được tổng hợp từ kinh nghiệm hàng nghìn phụ huynh & giáo viên — có căn cứ khoa học
+            💡 Lộ trình học vui & nhẹ nhàng từng bước cho con
           </p>
           {SMART_PATHS.map(path => (
             <div key={path.id} style={cardStyle()}>
@@ -111,23 +111,17 @@ export default function ExamPrepGuide({ grade = 1 }: { grade?: number }) {
                       </div>
                     </div>
                   ))}
-                  <div style={{ marginTop: 8, padding: '6px 10px', background: 'rgba(249,212,35,0.08)', borderRadius: 8, fontSize: 11, color: '#f9d423' }}>
-                    📊 Căn cứ: {path.evidenceVi}
-                  </div>
                 </div>
               )}
             </div>
           ))}
 
           {/* Quick learning strategies */}
-          <h4 style={{ fontSize: 14, color: '#68d391', margin: '16px 0 8px' }}>⚡ Chiến lược học nhanh (Evidence-Based)</h4>
+          <h4 style={{ fontSize: 14, color: '#68d391', margin: '16px 0 8px' }}>⚡ Mẹo học nhẹ nhàng & nhớ lâu</h4>
           {LEARNING_STRATEGIES.filter(s => s.gradeRange.includes(grade)).map(s => (
             <div key={s.id} style={cardStyle()}>
               <h5 style={{ margin: 0, fontSize: 14, color: '#f9d423' }}>{s.titleVi}</h5>
-              <p style={{ fontSize: 12, color: '#e2e8f0', margin: '4px 0' }}>{s.descriptionVi}</p>
-              <p style={{ fontSize: 11, color: '#a0aec0', margin: 0, padding: '3px 6px', background: 'rgba(255,255,255,0.04)', borderRadius: 4, fontStyle: 'italic' }}>
-                📊 {s.evidence}
-              </p>
+              <p style={{ fontSize: 12, color: '#e2e8f0', margin: '4px 0 0' }}>{s.descriptionVi}</p>
             </div>
           ))}
         </div>
@@ -186,7 +180,7 @@ export default function ExamPrepGuide({ grade = 1 }: { grade?: number }) {
             </div>
           ))}
           <p style={{ fontSize: 11, color: '#a0aec0', textAlign: 'center', marginTop: 8 }}>
-            📊 Nguồn: Cambridge Assessment — Starters ~100h, Movers ~175h, Flyers ~250h guided learning
+            🎯 Thời lượng ước tính: Starters ~100h • Movers ~175h • Flyers ~250h
           </p>
         </div>
       )}
@@ -278,7 +272,7 @@ export default function ExamPrepGuide({ grade = 1 }: { grade?: number }) {
       {activeTab === 'parent' && (
         <div>
           <p style={{ fontSize: 12, color: '#a0aec0', marginBottom: 12 }}>
-            👨‍👩‍👧 Kinh nghiệm thực tế từ hàng nghìn phụ huynh Việt Nam + nghiên cứu giáo dục quốc tế
+            👨‍👩‍👧 Kinh nghiệm thực tế đồng hành 10 phút mỗi ngày cùng con
           </p>
           {parentTips.map(tip => (
             <div key={tip.id} style={cardStyle()}>
@@ -290,11 +284,6 @@ export default function ExamPrepGuide({ grade = 1 }: { grade?: number }) {
                 {tip.categoryVi}
               </span>
               <p style={{ fontSize: 12, color: '#e2e8f0', margin: '6px 0 0', lineHeight: 1.5 }}>{tip.descriptionVi}</p>
-              {tip.evidence && (
-                <p style={{ fontSize: 10, color: '#68d391', margin: '4px 0 0', fontStyle: 'italic' }}>
-                  📊 {tip.evidence}
-                </p>
-              )}
             </div>
           ))}
         </div>
