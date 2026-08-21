@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from 'react';
 import { Volume2, VolumeX, Pause, RotateCcw } from 'lucide-react';
+import { speak as speakVoice, stopSpeech, findBestVoice, type Accent } from '@/lib/voiceEngine';
 
 interface TextToSpeechProps {
   text: string;
@@ -11,32 +12,27 @@ interface TextToSpeechProps {
   variant?: 'inline' | 'block';
 }
 
-export function TextToSpeech({ text, lang = 'en-US', rate = 0.85, label, variant = 'inline' }: TextToSpeechProps) {
+export function TextToSpeech({ text, lang = 'en-US', rate = 0.9, label, variant = 'inline' }: TextToSpeechProps) {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isSupported] = useState(() =>
-    typeof window !== 'undefined' && 'speechSynthesis' in window
+    typeof window !== 'undefined' && ('speechSynthesis' in window || 'indexedDB' in window)
   );
 
   const speak = useCallback(() => {
     if (!isSupported) return;
-    
-    // Cancel any ongoing speech
-    speechSynthesis.cancel();
-    
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = lang;
-    utterance.rate = rate;
-    utterance.pitch = 1.1; // Slightly higher pitch for children's content
-    
-    utterance.onstart = () => setIsSpeaking(true);
-    utterance.onend = () => setIsSpeaking(false);
-    utterance.onerror = () => setIsSpeaking(false);
-    
-    speechSynthesis.speak(utterance);
+    const accent: Accent = lang === 'en-GB' ? 'en-GB' : 'en-US';
+    setIsSpeaking(true);
+    speakVoice(
+      text,
+      accent,
+      rate,
+      () => setIsSpeaking(false),
+      () => setIsSpeaking(true)
+    );
   }, [text, lang, rate, isSupported]);
 
   const stop = useCallback(() => {
-    speechSynthesis.cancel();
+    stopSpeech();
     setIsSpeaking(false);
   }, []);
 
@@ -124,8 +120,14 @@ export function ReadAlong({ text, lang = 'en-US', rate = 0.7 }: ReadAlongProps) 
     speechSynthesis.cancel();
     
     const utterance = new SpeechSynthesisUtterance(text);
+    const accent: Accent = lang === 'en-GB' ? 'en-GB' : 'en-US';
+    const bestVoice = findBestVoice(accent);
+    if (bestVoice) {
+      utterance.voice = bestVoice;
+    }
     utterance.lang = lang;
     utterance.rate = rate;
+    utterance.pitch = 1.0; // Natural warm pitch
     
     // Word boundary events for highlighting
     let wordIdx = 0;
