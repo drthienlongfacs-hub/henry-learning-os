@@ -1,11 +1,10 @@
 'use client';
 
 import React, { useState, useCallback, useRef } from 'react';
-import { Volume2, Mic, MicOff, Award, Sparkles } from 'lucide-react';
-import { speak, type Accent } from '@/lib/voiceEngine';
+import { Volume2, Mic, MicOff, Award, Sparkles, RefreshCw } from 'lucide-react';
+import { speak, speakSlowly, type Accent } from '@/lib/voiceEngine';
 import { analyzePronunciation, type PronunciationAnalysis } from '@/lib/pronunciationCoach';
 
-// Levenshtein distance for fuzzy matching
 function levenshtein(a: string, b: string): number {
     const m = a.length, n = b.length;
     const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
@@ -33,6 +32,7 @@ function wordSimilarity(spoken: string, expected: string): number {
 
 interface VoicePracticeCardProps {
     targetText: string;
+    secondaryText?: string;
     lang?: 'en-US' | 'vi-VN';
     title?: string;
     onScoreAchieved?: (score: number) => void;
@@ -41,28 +41,37 @@ interface VoicePracticeCardProps {
 
 export default function VoicePracticeCard({
     targetText,
+    secondaryText,
     lang = 'en-US',
     title = 'Luyện đọc & Chấm điểm phát âm',
     onScoreAchieved,
     compact = false,
 }: VoicePracticeCardProps) {
+    const [selectedTarget, setSelectedTarget] = useState<'primary' | 'secondary'>('primary');
     const [isListening, setIsListening] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false);
     const [transcript, setTranscript] = useState('');
     const [score, setScore] = useState<number | null>(null);
     const [analysis, setAnalysis] = useState<PronunciationAnalysis | null>(null);
     const [wordMatches, setWordMatches] = useState<{ word: string; status: 'perfect' | 'close' | 'wrong' | 'missing'; color: string }[]>([]);
     const recognitionRef = useRef<any>(null);
 
-    // Clean target words
-    const targetWords = targetText
+    const activeText = selectedTarget === 'primary' ? targetText : (secondaryText || targetText);
+
+    // Clean active target words
+    const targetWords = activeText
         .toLowerCase()
         .replace(/[.,!?'"():;]/g, '')
         .split(/\s+/)
         .filter(w => w.length > 0);
 
     const handleSpeakSample = (slow = false) => {
-        const accent: Accent = lang === 'vi-VN' ? ('vi-VN' as any) : 'en-US';
-        speak(targetText, accent, slow ? 0.70 : 0.88);
+        setIsPlaying(true);
+        if (slow) {
+            speakSlowly(activeText, lang, () => setIsPlaying(false));
+        } else {
+            speak(activeText, lang, 0.90, () => setIsPlaying(false));
+        }
     };
 
     const evaluateSpeech = useCallback((heardText: string) => {
@@ -102,18 +111,18 @@ export default function VoicePracticeCard({
         setScore(finalScore);
 
         // Analyze deeper phonemes & coaching
-        const coachAnalysis = analyzePronunciation(targetText, cleanedHeard, finalScore);
+        const coachAnalysis = analyzePronunciation(activeText, cleanedHeard, finalScore);
         setAnalysis(coachAnalysis);
 
         if (onScoreAchieved) {
             onScoreAchieved(finalScore);
         }
-    }, [targetText, targetWords, onScoreAchieved]);
+    }, [activeText, targetWords, onScoreAchieved]);
 
     const startRecording = () => {
         const SpeechRecognition = typeof window !== 'undefined' ? ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition) : null;
         if (!SpeechRecognition) {
-            const simulated = prompt('🎤 Mic trình duyệt chưa cấp quyền. Con có thể gõ câu con vừa đọc:', targetText);
+            const simulated = prompt('🎤 Mic trình duyệt chưa cấp quyền. Con có thể gõ câu con vừa đọc:', activeText);
             if (simulated) {
                 setTranscript(simulated);
                 evaluateSpeech(simulated);
@@ -169,9 +178,9 @@ export default function VoicePracticeCard({
 
     return (
         <div style={{
-            background: 'linear-gradient(135deg, rgba(255,255,255,0.95), rgba(240,249,255,0.95))',
+            background: 'linear-gradient(135deg, rgba(255,255,255,0.98), rgba(240,249,255,0.95))',
             borderRadius: 20,
-            border: '2px solid rgba(59,130,246,0.25)',
+            border: '2px solid rgba(59,130,246,0.3)',
             boxShadow: '0 8px 24px rgba(59,130,246,0.12)',
             padding: compact ? '14px 16px' : '20px 22px',
             marginBottom: '1.25rem',
@@ -207,6 +216,38 @@ export default function VoicePracticeCard({
                 )}
             </div>
 
+            {/* Switch target text if secondaryText exists */}
+            {secondaryText && secondaryText !== targetText && (
+                <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
+                    <button
+                        type="button"
+                        onClick={() => { setSelectedTarget('primary'); setScore(null); setWordMatches([]); }}
+                        style={{
+                            padding: '6px 12px', borderRadius: 8,
+                            fontSize: '0.8rem', fontWeight: 800,
+                            background: selectedTarget === 'primary' ? '#3b82f6' : '#f1f5f9',
+                            color: selectedTarget === 'primary' ? '#fff' : '#475569',
+                            border: 'none', cursor: 'pointer',
+                        }}
+                    >
+                        🎯 Luyện Từ Khóa: "{targetText.slice(0, 18)}"
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => { setSelectedTarget('secondary'); setScore(null); setWordMatches([]); }}
+                        style={{
+                            padding: '6px 12px', borderRadius: 8,
+                            fontSize: '0.8rem', fontWeight: 800,
+                            background: selectedTarget === 'secondary' ? '#3b82f6' : '#f1f5f9',
+                            color: selectedTarget === 'secondary' ? '#fff' : '#475569',
+                            border: 'none', cursor: 'pointer',
+                        }}
+                    >
+                        📝 Luyện Cả Câu
+                    </button>
+                </div>
+            )}
+
             {/* Target sentence display with word breakdown colors */}
             <div style={{
                 background: '#ffffff',
@@ -230,7 +271,7 @@ export default function VoicePracticeCard({
                             </span>
                         ))
                     ) : (
-                        <span>{targetText}</span>
+                        <span>{activeText}</span>
                     )}
                 </div>
 
@@ -279,23 +320,25 @@ export default function VoicePracticeCard({
             <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
                 {/* 1. Nghe đọc mẫu chuẩn */}
                 <button
+                    type="button"
                     onClick={() => handleSpeakSample(false)}
                     style={{
-                        flex: 1, minWidth: 120, padding: '10px 14px', borderRadius: 14,
+                        flex: 1, minWidth: 120, padding: '12px 14px', borderRadius: 14,
                         background: 'linear-gradient(135deg, #3b82f6, #2563eb)',
-                        border: 'none', color: '#fff', fontWeight: 800, fontSize: '0.88rem',
+                        border: 'none', color: '#fff', fontWeight: 800, fontSize: '0.9rem',
                         cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
                         boxShadow: '0 4px 12px rgba(37,99,235,0.25)',
                     }}
                 >
-                    <Volume2 size={18} /> Nghe Mẫu
+                    <Volume2 size={18} /> {isPlaying ? 'Đang đọc...' : 'Nghe Mẫu'}
                 </button>
 
                 {/* 2. Nghe chậm */}
                 <button
+                    type="button"
                     onClick={() => handleSpeakSample(true)}
                     style={{
-                        padding: '10px 14px', borderRadius: 14,
+                        padding: '12px 14px', borderRadius: 14,
                         background: '#eff6ff', border: '1.5px solid #bfdbfe',
                         color: '#1d4ed8', fontWeight: 800, fontSize: '0.88rem',
                         cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4,
@@ -307,9 +350,10 @@ export default function VoicePracticeCard({
 
                 {/* 3. Ghi âm & Chấm điểm */}
                 <button
+                    type="button"
                     onClick={isListening ? stopRecording : startRecording}
                     style={{
-                        flex: 1.2, minWidth: 150, padding: '10px 16px', borderRadius: 14,
+                        flex: 1.2, minWidth: 150, padding: '12px 16px', borderRadius: 14,
                         background: isListening
                             ? 'linear-gradient(135deg, #ef4444, #dc2626)'
                             : 'linear-gradient(135deg, #10b981, #059669)',

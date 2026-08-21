@@ -1241,9 +1241,10 @@ function LearnPageContent() {
                             {/* Expandable Voice Practice Card */}
                             {showVoicePractice && (
                                 <VoicePracticeCard
-                                    targetText={currentProblem.question}
+                                    targetText={currentProblem.correctAnswer || currentProblem.question}
+                                    secondaryText={currentProblem.question}
                                     lang={subject === 'vietnamese' ? 'vi-VN' : 'en-US'}
-                                    title={lang === 'vi' ? 'Luyện phát âm câu này' : 'Practice pronunciation'}
+                                    title={lang === 'vi' ? 'Luyện đọc & Chấm điểm phát âm' : 'Practice pronunciation'}
                                     onScoreAchieved={(s) => {
                                         if (s >= 80) setScore(sc => sc + 5);
                                     }}
