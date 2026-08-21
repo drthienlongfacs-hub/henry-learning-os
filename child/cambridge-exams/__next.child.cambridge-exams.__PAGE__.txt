@@ -3,7 +3,7 @@
 3:I[88639,["/henry-learning-os/_next/static/chunks/14.6r0fvqi8zh.js","/henry-learning-os/_next/static/chunks/0d3shmwh5_nmn.js","/henry-learning-os/_next/static/chunks/03uuj7x6z39en.js","/henry-learning-os/_next/static/chunks/11590qu~0z-8g.js"],"default"]
 6:I[97367,["/henry-learning-os/_next/static/chunks/14.6r0fvqi8zh.js","/henry-learning-os/_next/static/chunks/0d3shmwh5_nmn.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/henry-learning-os/_next/static/chunks/03uuj7x6z39en.js","async":true}],["$","script","script-1",{"src":"/henry-learning-os/_next/static/chunks/11590qu~0z-8g.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"I72iV1iFJhPxH1Kbzlux8"}
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/henry-learning-os/_next/static/chunks/03uuj7x6z39en.js","async":true}],["$","script","script-1",{"src":"/henry-learning-os/_next/static/chunks/11590qu~0z-8g.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"Sd-JBvJxoEyljaFRTjSbI"}
 4:{}
 5:"$0:rsc:props:children:0:props:serverProvidedParams:params"
 8:null
