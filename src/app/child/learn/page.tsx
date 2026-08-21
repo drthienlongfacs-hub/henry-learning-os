@@ -5,9 +5,12 @@ import { useState, useCallback, useRef, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ArrowLeft, BookOpen, Calculator, Globe2, FlaskConical, Brain, ChevronRight, RotateCcw, CheckCircle2, XCircle, Lightbulb } from 'lucide-react';
+import { ArrowLeft, BookOpen, Calculator, Globe2, FlaskConical, Brain, ChevronRight, RotateCcw, CheckCircle2, XCircle, Lightbulb, Volume2, Mic, HeartHandshake } from 'lucide-react';
 import { LessonPhase, buildIntlLessonFromData, type LessonContent } from '@/components/LessonPhase';
 import { getUniversalLesson, type UniversalLesson } from '@/lib/content/universal-lesson';
+import { speak } from '@/lib/voiceEngine';
+import VoicePracticeCard from '@/components/VoicePracticeCard';
+import FeynmanTeachBackCard from '@/components/FeynmanTeachBackCard';
 import { MATH_TOPICS, generateMathSet, type MathProblem } from '@/lib/content/math-generator';
 import { VIETNAMESE_TOPICS, generateVietnameseSet, type VietnameseProblem } from '@/lib/content/vietnamese-generator';
 import { ENGLISH_TOPICS, generateEnglishSet, type EnglishProblem } from '@/lib/content/english-generator';
@@ -229,6 +232,8 @@ function LearnPageContent() {
     const [lessonContent, setLessonContent] = useState<LessonContent | null>(null);
     const [showingLesson, setShowingLesson] = useState(false);
     const [universalLesson, setUniversalLesson] = useState<UniversalLesson | null>(null);
+    const [showVoicePractice, setShowVoicePractice] = useState(false);
+    const [showFeynmanTeachBack, setShowFeynmanTeachBack] = useState(false);
 
     const { addAttempt, addMistake, addReviewSchedule, addAIInteractionLog, childProfile, attempts, mistakes, reviewSchedules } = useAppStore();
     const tx = useCallback((value: string | null | undefined) => translateLearningText(value, lang), [lang]);
@@ -259,8 +264,8 @@ function LearnPageContent() {
             setProblems(p as Problem[]);
         }
         setShowingLesson(false);
-        // Do NOT clear lesson state here so we can navigate back to it:
-        // setLessonContent(null);
+        setShowVoicePractice(false);
+        setShowFeynmanTeachBack(false);
         setIndex(0); setSelected(null); setScore(0); setShowHint(false); setHintLevelUsed(0);
         startTime.current = Date.now();
     }, [lessonDepth]);
@@ -418,6 +423,7 @@ function LearnPageContent() {
 
     const nextProblem = () => {
         setSelected(null); setShowHint(false); setHintLevelUsed(0);
+        setShowVoicePractice(false); setShowFeynmanTeachBack(false);
         setIndex(i => i + 1);
         startTime.current = Date.now();
     };
@@ -1198,9 +1204,51 @@ function LearnPageContent() {
                             )}
 
                             {/* Question */}
-                            <div style={{ fontSize: 21, fontWeight: 900, lineHeight: 1.45, marginBottom: 18, color: '#1e1b4b', textAlign: 'center' }}>
+                            <div style={{ fontSize: 21, fontWeight: 900, lineHeight: 1.45, marginBottom: 12, color: '#1e1b4b', textAlign: 'center' }}>
                                 {tx(currentProblem.question)}
                             </div>
+
+                            {/* Voice Model & Practice Action Row */}
+                            <div style={{ display: 'flex', justifyContent: 'center', gap: 10, marginBottom: 18, flexWrap: 'wrap' }}>
+                                <button
+                                    type="button"
+                                    onClick={() => speak(currentProblem.question, subject === 'vietnamese' ? 'vi-VN' : 'en-US')}
+                                    style={{
+                                        display: 'inline-flex', alignItems: 'center', gap: 6,
+                                        padding: '8px 14px', borderRadius: 999,
+                                        background: '#eff6ff', border: '1.5px solid #bfdbfe',
+                                        color: '#1d4ed8', fontSize: 13, fontWeight: 850, cursor: 'pointer',
+                                    }}
+                                >
+                                    <Volume2 size={16} /> {lang === 'vi' ? 'Nghe đọc mẫu' : 'Listen'}
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setShowVoicePractice(!showVoicePractice)}
+                                    style={{
+                                        display: 'inline-flex', alignItems: 'center', gap: 6,
+                                        padding: '8px 14px', borderRadius: 999,
+                                        background: showVoicePractice ? '#fef2f2' : '#ecfdf5',
+                                        border: `1.5px solid ${showVoicePractice ? '#fecaca' : '#a7f3d0'}`,
+                                        color: showVoicePractice ? '#dc2626' : '#047857',
+                                        fontSize: 13, fontWeight: 850, cursor: 'pointer',
+                                    }}
+                                >
+                                    <Mic size={16} /> {showVoicePractice ? (lang === 'vi' ? 'Đóng góc luyện đọc' : 'Close voice practice') : (lang === 'vi' ? '🎤 Luyện đọc & Chấm điểm' : '🎤 Practice Speaking')}
+                                </button>
+                            </div>
+
+                            {/* Expandable Voice Practice Card */}
+                            {showVoicePractice && (
+                                <VoicePracticeCard
+                                    targetText={currentProblem.question}
+                                    lang={subject === 'vietnamese' ? 'vi-VN' : 'en-US'}
+                                    title={lang === 'vi' ? 'Luyện phát âm câu này' : 'Practice pronunciation'}
+                                    onScoreAchieved={(s) => {
+                                        if (s >= 80) setScore(sc => sc + 5);
+                                    }}
+                                />
+                            )}
 
                             {/* Illustration */}
                             {currentVisual && (
@@ -1220,7 +1268,7 @@ function LearnPageContent() {
                                 </div>
                             )}
 
-                        {/* Options */}
+                        {/* Options with Voice Speaker Button */}
                         {currentProblem.options && (
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                                 {currentProblem.options.map((opt, i) => {
@@ -1232,12 +1280,27 @@ function LearnPageContent() {
                                     if (showResult && isCorrect) { bg = 'rgba(16,185,129,0.15)'; border = '2px solid #10b981'; }
                                     else if (showResult && isSelected && !isCorrect) { bg = 'rgba(239,68,68,0.12)'; border = '2px solid #ef4444'; }
                                     return (
-                                        <button key={i} disabled={!!selected} onClick={() => handleAnswer(opt)}
-                                            style={{ padding: '16px 20px', borderRadius: 16, border, background: bg, textAlign: 'left', fontSize: 17, cursor: selected ? 'default' : 'pointer', transition: 'all .2s ease', display: 'flex', alignItems: 'center', gap: 12, boxShadow: '0 2px 8px rgba(0,0,0,0.02)' }}>
-                                            {showResult && isCorrect ? <div style={{ width: 24, height: 24, borderRadius: 12, background: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><CheckCircle2 size={16} color="#fff" /></div> : null}
-                                            {showResult && isSelected && !isCorrect ? <div style={{ width: 24, height: 24, borderRadius: 12, background: '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><XCircle size={16} color="#fff" /></div> : null}
-                                            <span style={{ fontWeight: isSelected ? 800 : 600, color: '#334155' }}>{tx(opt)}</span>
-                                        </button>
+                                        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, width: '100%' }}>
+                                            <button disabled={!!selected} onClick={() => handleAnswer(opt)}
+                                                style={{ flex: 1, padding: '16px 20px', borderRadius: 16, border, background: bg, textAlign: 'left', fontSize: 17, cursor: selected ? 'default' : 'pointer', transition: 'all .2s ease', display: 'flex', alignItems: 'center', gap: 12, boxShadow: '0 2px 8px rgba(0,0,0,0.02)' }}>
+                                                {showResult && isCorrect ? <div style={{ width: 24, height: 24, borderRadius: 12, background: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><CheckCircle2 size={16} color="#fff" /></div> : null}
+                                                {showResult && isSelected && !isCorrect ? <div style={{ width: 24, height: 24, borderRadius: 12, background: '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><XCircle size={16} color="#fff" /></div> : null}
+                                                <span style={{ fontWeight: isSelected ? 800 : 600, color: '#334155', flex: 1 }}>{tx(opt)}</span>
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={(e) => { e.stopPropagation(); speak(opt, subject === 'vietnamese' ? 'vi-VN' : 'en-US'); }}
+                                                style={{
+                                                    padding: '14px', borderRadius: 14,
+                                                    background: 'rgba(255,255,255,0.85)', border: '1.5px solid #cbd5e1',
+                                                    color: '#4f46e5', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                    boxShadow: '0 2px 6px rgba(0,0,0,0.04)',
+                                                }}
+                                                title={lang === 'vi' ? 'Nghe phát âm' : 'Listen'}
+                                            >
+                                                <Volume2 size={18} />
+                                            </button>
+                                        </div>
                                     );
                                 })}
                             </div>
@@ -1264,13 +1327,42 @@ function LearnPageContent() {
                                 </div>
                         )}
 
-                        {/* Feedback + Next */}
+                        {/* Feedback + Feynman Teach-Back + Next */}
                             {selected && (
                                 <div style={{ marginTop: 24, padding: 20, borderRadius: 16, background: selected === currentProblem.correctAnswer ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.08)', border: `2px solid ${selected === currentProblem.correctAnswer ? 'rgba(16,185,129,0.4)' : 'rgba(239,68,68,0.3)'}`, position: 'relative' }}>
                                     <div style={{ fontWeight: 800, fontSize: 18, marginBottom: 8, color: selected === currentProblem.correctAnswer ? '#059669' : '#dc2626', textAlign: 'center' }}>
                                         {selected === currentProblem.correctAnswer ? tx('Đúng rồi.') : tx('Chưa đúng, mình xem lại.')}
                                     </div>
                                     <div style={{ fontSize: 16, color: '#475569', lineHeight: 1.6, textAlign: 'center', background: 'rgba(255,255,255,0.6)', padding: 12, borderRadius: 12, marginBottom: 16 }}>{tx(currentProblem.explanation)}</div>
+                                    
+                                    {/* Protégé / Feynman Teach-back trigger button */}
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowFeynmanTeachBack(!showFeynmanTeachBack)}
+                                        style={{
+                                            width: '100%', padding: '12px 16px', borderRadius: 14,
+                                            background: 'linear-gradient(135deg, #4f46e5, #7c3aed)',
+                                            color: '#ffffff', border: 'none', fontWeight: 850, fontSize: '0.92rem',
+                                            cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                                            marginBottom: 14, boxShadow: '0 4px 14px rgba(79,70,229,0.25)',
+                                        }}
+                                    >
+                                        <HeartHandshake size={18} />
+                                        {showFeynmanTeachBack ? 'Đóng góc giảng bài' : '🤖 Bé Dạy Lại Bạn Robot AI (Feynman Mode)'}
+                                    </button>
+
+                                    {/* Feynman Teach-Back Card Component */}
+                                    {showFeynmanTeachBack && (
+                                        <FeynmanTeachBackCard
+                                            conceptTitle={currentProblem.topic || 'Bài học'}
+                                            questionContext={currentProblem.question}
+                                            correctAnswer={currentProblem.correctAnswer}
+                                            explanation={currentProblem.explanation}
+                                            subject={subject || 'english'}
+                                            onCompleted={() => setScore(s => s + 20)}
+                                        />
+                                    )}
+
                                     {currentTutorFeedbackTurn && (
                                         <div style={{ textAlign: 'left', background: '#eef2ff', borderRadius: 14, padding: 14, border: '1px solid #c7d2fe', marginBottom: 16 }}>
                                             <div style={{ fontSize: 13, fontWeight: 900, color: '#3730a3', marginBottom: 6 }}>{tx('Bước tiếp theo')}</div>
@@ -1279,9 +1371,9 @@ function LearnPageContent() {
                                     )}
                                     <button onClick={nextProblem} style={{ ...glass.btn('#3b82f6'), width: '100%', justifyContent: 'center', padding: '14px', fontSize: 16, borderRadius: 16, boxShadow: '0 4px 14px rgba(59,130,246,0.3)' }}>
                                         {tx('Câu tiếp theo')} <ChevronRight size={20} />
-                                        </button>
-                                    </div>
-                                )}
+                                    </button>
+                                </div>
+                            )}
                             <ParentOnlyDetails label={tx('Phụ huynh xem chi tiết')} style={{ marginTop: 18 }}>
                                 <div style={{ display: 'grid', gap: 10 }}>
                                     {currentQuestionPlan && (

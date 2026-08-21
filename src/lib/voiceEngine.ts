@@ -17,7 +17,7 @@
  * Benchmark: ELSA Speak uses same pattern (pre-generated audio + API fallback)
  */
 
-export type Accent = 'en-US' | 'en-GB' | 'en-AU';
+export type Accent = 'en-US' | 'en-GB' | 'en-AU' | 'vi-VN';
 
 // ================================================================
 // ACCENT PROFILES
@@ -26,6 +26,7 @@ export const ACCENT_PROFILES = [
   { id: 'us', k: 'en-US' as Accent, flag: '🇺🇸', label: 'American', lang: 'en-US' },
   { id: 'uk', k: 'en-GB' as Accent, flag: '🇬🇧', label: 'British',  lang: 'en-GB' },
   { id: 'au', k: 'en-AU' as Accent, flag: '🇦🇺', label: 'Australian', lang: 'en-AU' },
+  { id: 'vi', k: 'vi-VN' as Accent, flag: '🇻🇳', label: 'Tiếng Việt', lang: 'vi-VN' },
 ];
 
 // ================================================================
@@ -35,6 +36,7 @@ const KOKORO_VOICES: Record<Accent, string> = {
   'en-US': 'af_heart',   // American female (natural, warm)
   'en-GB': 'bf_emma',    // British female
   'en-AU': 'af_heart',   // AU uses US voice (closest match)
+  'vi-VN': 'af_heart',   // Fallback for Kokoro
 };
 
 // ================================================================
@@ -45,21 +47,25 @@ const VOICE_DB: Record<string, Record<string, { female: string[]; male: string[]
     'en-US': { female: ['Google US English', 'Google US English Female'], male: ['Google US English Male'] },
     'en-GB': { female: ['Google UK English Female'], male: ['Google UK English Male'] },
     'en-AU': { female: ['Google Australian English Female'], male: ['Google Australian English Male'] },
+    'vi-VN': { female: ['Google Tiếng Việt', 'Vietnamese Female'], male: ['Vietnamese Male'] },
   },
   ios: {
     'en-US': { female: ['Samantha', 'Allison', 'Ava'], male: ['Aaron', 'Fred'] },
     'en-GB': { female: ['Serena', 'Kate'], male: ['Daniel', 'Oliver'] },
     'en-AU': { female: ['Karen'], male: ['Gordon'] },
+    'vi-VN': { female: ['Linh', 'Mai', 'An'], male: ['Nam'] },
   },
   macos: {
     'en-US': { female: ['Samantha', 'Allison', 'Ava'], male: ['Alex', 'Tom'] },
     'en-GB': { female: ['Kate', 'Serena'], male: ['Daniel', 'Oliver'] },
     'en-AU': { female: ['Karen'], male: ['Gordon'] },
+    'vi-VN': { female: ['Linh', 'Mai', 'An'], male: ['Nam'] },
   },
   windows: {
     'en-US': { female: ['Microsoft Aria', 'Microsoft Jenny'], male: ['Microsoft Mark', 'Microsoft Guy'] },
     'en-GB': { female: ['Microsoft Hazel', 'Microsoft Libby'], male: ['Microsoft Ryan'] },
     'en-AU': { female: ['Microsoft Natasha'], male: ['Microsoft William'] },
+    'vi-VN': { female: ['Microsoft An', 'Microsoft Linh'], male: ['Microsoft Nam'] },
   },
 };
 
