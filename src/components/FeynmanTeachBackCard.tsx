@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Sparkles, Star, Award, ChevronRight, Mic, CheckCircle2, HeartHandshake } from 'lucide-react';
-import { speak } from '@/lib/voiceEngine';
+import { Sparkles, Star, Award, Mic, CheckCircle2, HeartHandshake, Lightbulb, Volume2, ArrowRight } from 'lucide-react';
+import { speak, type Accent } from '@/lib/voiceEngine';
 
 interface FeynmanTeachBackCardProps {
     conceptTitle: string;
@@ -21,43 +21,106 @@ export default function FeynmanTeachBackCard({
     subject = 'english',
     onCompleted,
 }: FeynmanTeachBackCardProps) {
-    const [mode, setMode] = useState<'prompt' | 'teaching' | 'thanked'>('prompt');
-    const [childSpeech, setChildSpeech] = useState('');
+    // Stage: 'confused' (Robo asks help) -> 'teaching' (Child chooses method) -> 'eureka' (Robo understands)
+    const [stage, setStage] = useState<'confused' | 'teaching' | 'eureka'>('confused');
+    const [selectedTeachingMethod, setSelectedTeachingMethod] = useState<string | null>(null);
     const [isListening, setIsListening] = useState(false);
-    const [selectedTip, setSelectedTip] = useState<string | null>(null);
+    const [heardText, setHeardText] = useState('');
 
-    // Teach-back quick tips generator based on subject
-    const teachOptions = [
-        `Quy tắc chính: ${explanation.slice(0, 60)}`,
-        `Mẹo nhớ nhanh: Chú ý từ khóa quan trọng và kiểm tra lại!`,
-        `Thực hành: Làm thử một ví dụ tương tự sẽ hiểu ngay!`,
-    ];
+    const isEnglish = subject === 'english';
+    const isVietnamese = subject === 'vietnamese';
+    const voiceLang: Accent = isVietnamese ? 'vi-VN' : 'en-US';
 
-    const handleStartTeach = () => {
-        setMode('teaching');
-        speak('Henry ơi, Robo chưa hiểu câu này. Henry dạy lại cho Robo với nhé!', 'vi-VN', 0.9);
+    // ── Concrete Scaffolding: Kid-Friendly Teaching Tricks ──
+    const generateTeachingTricks = () => {
+        if (isEnglish) {
+            return [
+                {
+                    id: 'sound',
+                    icon: '🗣️',
+                    title: 'Dạy phát âm chuẩn',
+                    actionText: `Chỉ cho Robo phát âm đúng từ: "${correctAnswer}"`,
+                    detail: `Robo ơi, phải đọc là "${correctAnswer}" và nhớ bật âm cuối nhé!`,
+                },
+                {
+                    id: 'rule',
+                    icon: '💡',
+                    title: 'Dạy mẹo ghi nhớ',
+                    actionText: explanation.length > 55 ? `${explanation.slice(0, 55)}...` : explanation,
+                    detail: `Robo chú ý câu hỏi: ${questionContext} -> Đáp án chính là ${correctAnswer}!`,
+                },
+            ];
+        } else if (isVietnamese) {
+            return [
+                {
+                    id: 'spelling',
+                    icon: '📖',
+                    title: 'Dạy ghép vần & dấu',
+                    actionText: `Nhắc Robo quy tắc: ${correctAnswer}`,
+                    detail: `Robo nhớ đọc đúng chính tả: "${correctAnswer}"!`,
+                },
+                {
+                    id: 'meaning',
+                    icon: '💡',
+                    title: 'Giải thích ý nghĩa',
+                    actionText: explanation.length > 55 ? `${explanation.slice(0, 55)}...` : explanation,
+                    detail: explanation,
+                },
+            ];
+        } else {
+            return [
+                {
+                    id: 'logic',
+                    icon: '🔢',
+                    title: 'Chỉ cách tính nhanh',
+                    actionText: `Đáp án đúng là ${correctAnswer}`,
+                    detail: `Robo nhìn này: ${explanation || `Đáp án chính xác là ${correctAnswer}`}`,
+                },
+                {
+                    id: 'tip',
+                    icon: '💡',
+                    title: 'Mẹo không bị lừa',
+                    actionText: 'Đọc kỹ đề và làm từng bước',
+                    detail: 'Đừng vội vàng, kiểm tra lại phép tính là đúng ngay!',
+                },
+            ];
+        }
     };
 
-    const handleVoiceTeach = () => {
+    const teachingTricks = generateTeachingTricks();
+
+    // Guided Sentence Starter for child
+    const sentenceStarter = isEnglish
+        ? `Robo ơi, câu này là "${correctAnswer}"!`
+        : `Robo ơi, đáp án đúng là "${correctAnswer}" vì ${explanation.slice(0, 30)}...`;
+
+    const handleSelectTrick = (trick: typeof teachingTricks[0]) => {
+        setSelectedTeachingMethod(trick.title);
+        // Instant non-blocking sound bite
+        speak(trick.detail, 'vi-VN', 0.95);
+        triggerEureka();
+    };
+
+    const handleVoiceRecord = () => {
         const SpeechRecognition = typeof window !== 'undefined' ? ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition) : null;
         if (!SpeechRecognition) {
-            const input = prompt('🎤 Con muốn dạy gì cho bạn Robot AI:', explanation);
-            if (input) {
-                setChildSpeech(input);
-                finishTeaching();
+            const mock = prompt('🎤 Con muốn giảng gì cho bạn Robot:', sentenceStarter);
+            if (mock) {
+                setHeardText(mock);
+                triggerEureka();
             }
             return;
         }
 
         try {
             const rec = new SpeechRecognition();
-            rec.lang = 'vi-VN';
+            rec.lang = isEnglish ? 'en-US' : 'vi-VN';
             rec.onstart = () => setIsListening(true);
             rec.onresult = (e: any) => {
                 const text = e.results[0][0]?.transcript || '';
-                setChildSpeech(text);
+                setHeardText(text);
                 setIsListening(false);
-                finishTeaching();
+                triggerEureka();
             };
             rec.onerror = () => setIsListening(false);
             rec.onend = () => setIsListening(false);
@@ -67,9 +130,8 @@ export default function FeynmanTeachBackCard({
         }
     };
 
-    const finishTeaching = () => {
-        setMode('thanked');
-        speak('Cảm ơn Thầy Giáo Nhí Henry! Giờ thì Robo đã hiểu bài thật sâu rồi!', 'vi-VN', 0.92);
+    const triggerEureka = () => {
+        setStage('eureka');
         if (onCompleted) {
             onCompleted();
         }
@@ -77,30 +139,24 @@ export default function FeynmanTeachBackCard({
 
     return (
         <div style={{
-            background: 'linear-gradient(135deg, #4338ca 0%, #6366f1 50%, #8b5cf6 100%)',
+            background: 'linear-gradient(135deg, #312e81 0%, #4338ca 50%, #6366f1 100%)',
             borderRadius: 24,
-            padding: '22px 24px',
+            padding: '20px 22px',
             color: 'white',
-            boxShadow: '0 12px 32px rgba(99,102,241,0.35)',
-            marginBottom: '1.5rem',
+            boxShadow: '0 10px 30px rgba(67,56,202,0.35)',
+            marginBottom: '1.25rem',
             position: 'relative',
             overflow: 'hidden',
         }}>
-            {/* Soft decorative background circles */}
-            <div style={{
-                position: 'absolute', top: -30, right: -30, width: 140, height: 140,
-                borderRadius: '50%', background: 'rgba(255,255,255,0.12)', pointerEvents: 'none',
-            }} />
-
-            {/* Header Badge */}
+            {/* Header Pill */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
                 <div style={{
                     display: 'inline-flex', alignItems: 'center', gap: 6,
-                    padding: '6px 12px', borderRadius: 999,
+                    padding: '5px 12px', borderRadius: 999,
                     background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(8px)',
-                    fontSize: '0.82rem', fontWeight: 850, letterSpacing: '0.02em',
+                    fontSize: '0.82rem', fontWeight: 850,
                 }}>
-                    <HeartHandshake size={16} /> BÉ DẠY LẠI GIA SƯ AI (FEYNMAN MODE)
+                    <HeartHandshake size={16} /> BÉ DẠY LẠI CHO BẠN ROBOT (FEYNMAN)
                 </div>
 
                 <div style={{
@@ -113,123 +169,150 @@ export default function FeynmanTeachBackCard({
                 </div>
             </div>
 
-            {/* Stage 1: Invitation Prompt */}
-            {mode === 'prompt' && (
+            {/* ═══ BƯỚC 1: ROBOT BỐI RỐI & HỎI BÉ (CONFUSED STAGE) ═══ */}
+            {stage === 'confused' && (
                 <div>
-                    <div style={{ display: 'flex', gap: 14, alignItems: 'center', marginBottom: 14 }}>
+                    <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start', marginBottom: 16 }}>
                         <div style={{
-                            width: 56, height: 56, borderRadius: 18,
-                            background: 'rgba(255,255,255,0.25)',
+                            width: 60, height: 60, borderRadius: 20,
+                            background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)',
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            fontSize: '2rem', flexShrink: 0,
+                            fontSize: '2.4rem', flexShrink: 0,
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
                         }}>
-                            🤖
+                            🤔
                         </div>
-                        <div>
-                            <div style={{ fontSize: '1.15rem', fontWeight: 900 }}>
-                                Bạn Robot AI muốn xin Henry chỉ giáo!
+                        <div style={{ flex: 1 }}>
+                            <div style={{ fontSize: '1.2rem', fontWeight: 900, letterSpacing: '-0.01em' }}>
+                                Robot: "Sao câu này lại chọn {correctAnswer} nhỉ?"
                             </div>
-                            <div style={{ fontSize: '0.88rem', opacity: 0.92, marginTop: 4, lineHeight: 1.45 }}>
-                                "Henry vừa giải đúng câu <strong>{conceptTitle}</strong>. Con đóng vai thầy giáo dạy lại cho Robo để nhớ bài siêu lâu nhé!"
+                            <div style={{ fontSize: '0.88rem', opacity: 0.9, marginTop: 4, lineHeight: 1.45 }}>
+                                Robo chưa hiểu bí quyết. Henry đóng vai Thầy Giáo chỉ cho Robo 1 mẹo nhé!
                             </div>
                         </div>
                     </div>
 
                     <button
-                        onClick={handleStartTeach}
+                        onClick={() => setStage('teaching')}
                         style={{
-                            width: '100%', padding: '12px 18px', borderRadius: 16,
-                            background: '#ffffff', color: '#4338ca',
-                            border: 'none', fontWeight: 900, fontSize: '1rem',
+                            width: '100%', padding: '14px 20px', borderRadius: 16,
+                            background: '#ffffff', color: '#3730a3',
+                            border: 'none', fontWeight: 900, fontSize: '1.05rem',
                             cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-                            boxShadow: '0 4px 14px rgba(0,0,0,0.15)',
+                            boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
+                            transition: 'all 0.2s',
                         }}
                     >
-                        <span>🧑‍🏫 Con Đồng Ý Dạy Bạn Robot</span>
-                        <ChevronRight size={18} />
+                        <span>🧑‍🏫 Bắt Đầu Dạy Robo Ngay</span>
+                        <ArrowRight size={20} />
                     </button>
                 </div>
             )}
 
-            {/* Stage 2: Child Teaching Interaction */}
-            {mode === 'teaching' && (
+            {/* ═══ BƯỚC 2: BÉ CHỌN CÁCH GIẢNG BÀI (DẪN DẮT CỤ THỂ) ═══ */}
+            {stage === 'teaching' && (
                 <div>
-                    <div style={{ fontSize: '1.05rem', fontWeight: 900, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
-                        <span>🤖 Robot lắng nghe:</span>
-                        <span style={{ fontSize: '0.85rem', opacity: 0.85, fontWeight: 500 }}>"{questionContext}"</span>
-                    </div>
-
-                    <div style={{
-                        background: 'rgba(255,255,255,0.15)', padding: '12px 16px',
-                        borderRadius: 16, marginBottom: 14, fontSize: '0.9rem', lineHeight: 1.5,
-                    }}>
-                        👉 Đáp án chuẩn: <strong>{correctAnswer}</strong>
-                        <div style={{ opacity: 0.88, fontSize: '0.82rem', marginTop: 4 }}>
-                            {explanation}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+                        <span style={{ fontSize: '1.6rem' }}>🤖</span>
+                        <div style={{ fontSize: '0.95rem', fontWeight: 800 }}>
+                            Henry muốn dạy Robo bằng cách nào?
                         </div>
                     </div>
 
-                    <div style={{ fontSize: '0.88rem', fontWeight: 850, marginBottom: 8 }}>
-                        CHỌN CÁCH DẠY CHO ROBOT:
-                    </div>
-
-                    {/* Quick Logic Cards */}
-                    <div style={{ display: 'grid', gap: 8, marginBottom: 12 }}>
-                        {teachOptions.map((tip, idx) => (
+                    {/* Lựa chọn 1: Bấm thẻ mẹo có sẵn */}
+                    <div style={{ display: 'grid', gap: 8, marginBottom: 14 }}>
+                        {teachingTricks.map((trick) => (
                             <button
-                                key={idx}
-                                onClick={() => {
-                                    setSelectedTip(tip);
-                                    finishTeaching();
-                                }}
+                                key={trick.id}
+                                onClick={() => handleSelectTrick(trick)}
                                 style={{
-                                    padding: '10px 14px', borderRadius: 12,
-                                    background: selectedTip === tip ? '#ffffff' : 'rgba(255,255,255,0.2)',
-                                    color: selectedTip === tip ? '#4338ca' : '#ffffff',
-                                    border: 'none', textAlign: 'left',
-                                    fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer',
+                                    padding: '12px 14px', borderRadius: 14,
+                                    background: 'rgba(255,255,255,0.18)',
+                                    border: '1.5px solid rgba(255,255,255,0.3)',
+                                    color: '#ffffff', textAlign: 'left',
+                                    cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 12,
+                                    transition: 'all 0.2s',
                                 }}
                             >
-                                💡 {tip}
+                                <span style={{ fontSize: '1.8rem' }}>{trick.icon}</span>
+                                <div style={{ flex: 1 }}>
+                                    <div style={{ fontWeight: 900, fontSize: '0.95rem' }}>{trick.title}</div>
+                                    <div style={{ fontSize: '0.82rem', opacity: 0.88, marginTop: 2 }}>{trick.actionText}</div>
+                                </div>
+                                <ArrowRight size={18} style={{ opacity: 0.7 }} />
                             </button>
                         ))}
                     </div>
 
-                    {/* Or Speak with Mic */}
-                    <button
-                        onClick={handleVoiceTeach}
-                        style={{
-                            width: '100%', padding: '12px 16px', borderRadius: 14,
-                            background: isListening ? '#ef4444' : 'rgba(255,255,255,0.95)',
-                            color: isListening ? '#ffffff' : '#312e81',
-                            border: 'none', fontWeight: 900, fontSize: '0.92rem',
-                            cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-                        }}
-                    >
-                        <Mic size={18} />
-                        {isListening ? 'Đang nghe con giảng bài...' : '🎤 Hoặc Bấm Mic Giảng Bài Cho Robot'}
-                    </button>
+                    {/* Lựa chọn 2: Bé bấm Mic nói theo câu mồi gợi ý */}
+                    <div style={{
+                        background: 'rgba(0,0,0,0.2)', padding: '12px 14px', borderRadius: 16,
+                        border: '1px dashed rgba(255,255,255,0.3)',
+                    }}>
+                        <div style={{ fontSize: '0.78rem', color: '#fde047', fontWeight: 850, marginBottom: 4, display: 'flex', alignItems: 'center', gap: 4 }}>
+                            <Lightbulb size={14} /> GỢI Ý CÂU NÓI CHO BÉ:
+                        </div>
+                        <div style={{ fontSize: '0.85rem', fontStyle: 'italic', marginBottom: 10, opacity: 0.95 }}>
+                            "{sentenceStarter}"
+                        </div>
+
+                        <button
+                            onClick={handleVoiceRecord}
+                            style={{
+                                width: '100%', padding: '11px 14px', borderRadius: 12,
+                                background: isListening ? '#ef4444' : '#10b981',
+                                border: 'none', color: '#fff', fontWeight: 900, fontSize: '0.9rem',
+                                cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                                boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                            }}
+                        >
+                            <Mic size={18} />
+                            {isListening ? 'Đang nghe Henry giảng bài...' : '🎤 Bấm Mic & Giảng Cho Robo'}
+                        </button>
+                    </div>
                 </div>
             )}
 
-            {/* Stage 3: Gratitude & Junior Teacher Award */}
-            {mode === 'thanked' && (
+            {/* ═══ BƯỚC 3: ROBOT BỪNG SÁNG HIỂU BÀI (INSTANT EUREKA) ═══ */}
+            {stage === 'eureka' && (
                 <div style={{ textAlign: 'center', padding: '10px 0' }}>
-                    <div style={{ fontSize: '3rem', marginBottom: 6 }}>🎓</div>
-                    <div style={{ fontSize: '1.25rem', fontWeight: 900, letterSpacing: '-0.01em' }}>
-                        Tuyệt Vời Thầy Giáo Nhí Henry!
-                    </div>
-                    <div style={{ fontSize: '0.9rem', opacity: 0.92, marginTop: 6, maxWidth: 440, margin: '6px auto 14px', lineHeight: 1.5 }}>
-                        Robot AI đã ghi chép lại lời giảng của con. Khi con dạy lại cho người khác, kiến thức đã ngấm sâu vào trí nhớ dài hạn (Hiệu ứng Protégé)!
+                    <div style={{
+                        width: 72, height: 72, borderRadius: 24,
+                        background: 'rgba(255,255,255,0.25)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontSize: '3rem', margin: '0 auto 10px',
+                        boxShadow: '0 6px 20px rgba(0,0,0,0.2)',
+                    }}>
+                        💡
                     </div>
 
-                    <div style={{
-                        display: 'inline-flex', alignItems: 'center', gap: 8,
-                        background: '#fef3c7', color: '#92400e',
-                        padding: '8px 16px', borderRadius: 999,
-                        fontWeight: 900, fontSize: '0.92rem',
-                    }}>
-                        <Award size={18} /> Đạt Danh Hiệu: BẬC THẦY GIẢNG BÀI ⭐⭐⭐
+                    <div style={{ fontSize: '1.35rem', fontWeight: 900, letterSpacing: '-0.01em' }}>
+                        "Bíp Bíp! Robo Đã Hiểu Bài Rồi!"
+                    </div>
+
+                    <div style={{ fontSize: '0.9rem', opacity: 0.92, marginTop: 6, maxWidth: 420, margin: '6px auto 14px', lineHeight: 1.5 }}>
+                        Cảm ơn Thầy Giáo Nhí Henry! Khi con chỉ cho bạn khác hiểu, kiến thức đã được khắc sâu vào trí não của con.
+                    </div>
+
+                    {heardText && (
+                        <div style={{
+                            background: 'rgba(255,255,255,0.15)', padding: '6px 12px',
+                            borderRadius: 10, fontSize: '0.8rem', fontStyle: 'italic', marginBottom: 12, display: 'inline-block',
+                        }}>
+                            📝 Lời giảng của bé: "{heardText}"
+                        </div>
+                    )}
+
+                    <div>
+                        <div style={{
+                            display: 'inline-flex', alignItems: 'center', gap: 8,
+                            background: '#fef3c7', color: '#92400e',
+                            padding: '8px 18px', borderRadius: 999,
+                            fontWeight: 900, fontSize: '0.95rem',
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                        }}>
+                            <Award size={20} /> HUY HIỆU: BẬC THẦY GIẢNG BÀI ⭐⭐⭐
+                        </div>
                     </div>
                 </div>
             )}
