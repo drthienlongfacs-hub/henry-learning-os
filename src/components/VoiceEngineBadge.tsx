@@ -3,7 +3,7 @@
 import { useHenryVoiceEngine } from '@/hooks/useHenryVoiceEngine';
 import { Volume2, VolumeX, Loader2 } from 'lucide-react';
 
-export function VoiceEngineBadge({ lang, preload = true }: { lang: string; preload?: boolean }) {
+export function VoiceEngineBadge({ lang: _lang, preload = true }: { lang: string; preload?: boolean }) {
     const snapshot = useHenryVoiceEngine({ preload });
     const ready = snapshot.state === 'ready';
     const loading = snapshot.state === 'loading';

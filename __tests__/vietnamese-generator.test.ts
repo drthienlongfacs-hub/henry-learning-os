@@ -10,27 +10,6 @@ import {
     VIETNAMESE_TOPICS,
 } from '@/lib/content/vietnamese-generator';
 
-// Regex: strings that are pure ASCII lowercase with 3+ chars (likely English)
-const ENGLISH_WORD_PATTERN = /^[a-z]{3,}$/;
-
-// Known valid Vietnamese words without diacritics (including common loanwords)
-const VALID_NO_DIACRITICS = new Set([
-    // Family/pronouns
-    'ba', 'me', 'em', 'bo', 'co', 'di', 'an', 'cho', 'con', 'com', 'anh', 'chi',
-    // Common words naturally ASCII
-    'kho', 'ghi', 'ngon', 'chim', 'phim', 'xem', 'nem', 'hem', 'trong', 'gia',
-    'nam', 'cam', 'ham', 'lam', 'ram', 'sam', 'tam', 'van', 'nhanh', 'xinh',
-    'can', 'dan', 'man', 'nan', 'ran', 'tan', 'ban', 'hon', 'vui', 'nho',
-    // Loanwords used in Vietnamese
-    'tivi', 'game', 'pin', 'taxi', 'video', 'radio',
-    // Grammar/function words
-    'hay', 'nay', 'the', 'nao', 'sao', 'roi', 'day', 'voi', 'cua', 'cung',
-    'thi', 'nha', 'nhe', 'gio', 'lam', 'bao', 'con', 'len', 'tai',
-    // Common short content words
-    'mau', 'tai', 'mat', 'tay', 'vai', 'bong', 'cay', 'hoa', 'lua', 'mua',
-    'san', 'nui', 'bien', 'song', 'duong', 'nha', 'truong', 'lop',
-]);
-
 describe('Vietnamese Generator — Data Integrity', () => {
     it('should have at least 20 topics registered', () => {
         expect(VIETNAMESE_TOPICS.length).toBeGreaterThanOrEqual(20);

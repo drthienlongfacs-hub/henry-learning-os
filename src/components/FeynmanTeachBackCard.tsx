@@ -1,8 +1,32 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Sparkles, Star, Award, Mic, CheckCircle2, HeartHandshake, Lightbulb, Volume2, ArrowRight } from 'lucide-react';
-import { speak, type Accent } from '@/lib/voiceEngine';
+import { Star, Award, Mic, HeartHandshake, Lightbulb, ArrowRight } from 'lucide-react';
+import { speak } from '@/lib/voiceEngine';
+
+interface SpeechRecognitionResultAlternativeLike {
+    transcript?: string;
+}
+
+interface SpeechRecognitionResultEventLike {
+    results: ArrayLike<ArrayLike<SpeechRecognitionResultAlternativeLike>>;
+}
+
+interface SpeechRecognitionInstanceLike {
+    lang: string;
+    onstart: (() => void) | null;
+    onresult: ((event: SpeechRecognitionResultEventLike) => void) | null;
+    onerror: (() => void) | null;
+    onend: (() => void) | null;
+    start: () => void;
+}
+
+type SpeechRecognitionConstructorLike = new () => SpeechRecognitionInstanceLike;
+
+interface WindowWithSpeechRecognition extends Window {
+    SpeechRecognition?: SpeechRecognitionConstructorLike;
+    webkitSpeechRecognition?: SpeechRecognitionConstructorLike;
+}
 
 interface FeynmanTeachBackCardProps {
     conceptTitle: string;
@@ -14,7 +38,7 @@ interface FeynmanTeachBackCardProps {
 }
 
 export default function FeynmanTeachBackCard({
-    conceptTitle,
+    conceptTitle: _conceptTitle,
     questionContext,
     correctAnswer,
     explanation,
@@ -23,13 +47,11 @@ export default function FeynmanTeachBackCard({
 }: FeynmanTeachBackCardProps) {
     // Stage: 'confused' (Robo asks help) -> 'teaching' (Child chooses method) -> 'eureka' (Robo understands)
     const [stage, setStage] = useState<'confused' | 'teaching' | 'eureka'>('confused');
-    const [selectedTeachingMethod, setSelectedTeachingMethod] = useState<string | null>(null);
     const [isListening, setIsListening] = useState(false);
     const [heardText, setHeardText] = useState('');
 
     const isEnglish = subject === 'english';
     const isVietnamese = subject === 'vietnamese';
-    const voiceLang: Accent = isVietnamese ? 'vi-VN' : 'en-US';
 
     // ── Concrete Scaffolding: Kid-Friendly Teaching Tricks ──
     const generateTeachingTricks = () => {
@@ -95,14 +117,14 @@ export default function FeynmanTeachBackCard({
         : `Robo ơi, đáp án đúng là "${correctAnswer}" vì ${explanation.slice(0, 30)}...`;
 
     const handleSelectTrick = (trick: typeof teachingTricks[0]) => {
-        setSelectedTeachingMethod(trick.title);
         // Instant non-blocking sound bite
         speak(trick.detail, 'vi-VN', 0.95);
         triggerEureka();
     };
 
     const handleVoiceRecord = () => {
-        const SpeechRecognition = typeof window !== 'undefined' ? ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition) : null;
+        const win = typeof window !== 'undefined' ? (window as WindowWithSpeechRecognition) : null;
+        const SpeechRecognition = win ? (win.SpeechRecognition || win.webkitSpeechRecognition) : null;
         if (!SpeechRecognition) {
             const mock = prompt('🎤 Con muốn giảng gì cho bạn Robot:', sentenceStarter);
             if (mock) {
@@ -116,8 +138,8 @@ export default function FeynmanTeachBackCard({
             const rec = new SpeechRecognition();
             rec.lang = isEnglish ? 'en-US' : 'vi-VN';
             rec.onstart = () => setIsListening(true);
-            rec.onresult = (e: any) => {
-                const text = e.results[0][0]?.transcript || '';
+            rec.onresult = (e: SpeechRecognitionResultEventLike) => {
+                const text = e.results[0]?.[0]?.transcript || '';
                 setHeardText(text);
                 setIsListening(false);
                 triggerEureka();
@@ -184,7 +206,7 @@ export default function FeynmanTeachBackCard({
                         </div>
                         <div style={{ flex: 1 }}>
                             <div style={{ fontSize: '1.2rem', fontWeight: 900, letterSpacing: '-0.01em' }}>
-                                Robot: "Sao câu này lại chọn {correctAnswer} nhỉ?"
+                                Robot: &ldquo;Sao câu này lại chọn {correctAnswer} nhỉ?&rdquo;
                             </div>
                             <div style={{ fontSize: '0.88rem', opacity: 0.9, marginTop: 4, lineHeight: 1.45 }}>
                                 Robo chưa hiểu bí quyết. Henry đóng vai Thầy Giáo chỉ cho Robo 1 mẹo nhé!
@@ -253,7 +275,7 @@ export default function FeynmanTeachBackCard({
                             <Lightbulb size={14} /> GỢI Ý CÂU NÓI CHO BÉ:
                         </div>
                         <div style={{ fontSize: '0.85rem', fontStyle: 'italic', marginBottom: 10, opacity: 0.95 }}>
-                            "{sentenceStarter}"
+                            &ldquo;{sentenceStarter}&rdquo;
                         </div>
 
                         <button
@@ -287,7 +309,7 @@ export default function FeynmanTeachBackCard({
                     </div>
 
                     <div style={{ fontSize: '1.35rem', fontWeight: 900, letterSpacing: '-0.01em' }}>
-                        "Bíp Bíp! Robo Đã Hiểu Bài Rồi!"
+                        &ldquo;Bíp Bíp! Robo Đã Hiểu Bài Rồi!&rdquo;
                     </div>
 
                     <div style={{ fontSize: '0.9rem', opacity: 0.92, marginTop: 6, maxWidth: 420, margin: '6px auto 14px', lineHeight: 1.5 }}>
@@ -299,7 +321,7 @@ export default function FeynmanTeachBackCard({
                             background: 'rgba(255,255,255,0.15)', padding: '6px 12px',
                             borderRadius: 10, fontSize: '0.8rem', fontStyle: 'italic', marginBottom: 12, display: 'inline-block',
                         }}>
-                            📝 Lời giảng của bé: "{heardText}"
+                            📝 Lời giảng của bé: &ldquo;{heardText}&rdquo;
                         </div>
                     )}
 

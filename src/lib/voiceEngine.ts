@@ -24,12 +24,29 @@ export const ACCENT_PROFILES = [
   { id: 'vi', k: 'vi-VN' as Accent, flag: '🇻🇳', label: 'Tiếng Việt', lang: 'vi-VN' },
 ];
 
-const KOKORO_VOICES: Record<Accent, string> = {
-  'en-US': 'af_heart',
-  'en-GB': 'bf_emma',
-  'en-AU': 'af_heart',
-  'vi-VN': 'af_heart',
-};
+import { prefetchVietnameseSpeechToCache } from './voice/vn-neural-cache';
+
+function detectAudioMimeType(data: ArrayBuffer): string {
+  const bytes = new Uint8Array(data.slice(0, 4));
+  if (bytes.length >= 4) {
+    // RIFF -> WAV
+    if (bytes[0] === 0x52 && bytes[1] === 0x49 && bytes[2] === 0x46 && bytes[3] === 0x46) {
+      return 'audio/wav';
+    }
+    // OggS -> OGG
+    if (bytes[0] === 0x4f && bytes[1] === 0x67 && bytes[2] === 0x67 && bytes[3] === 0x53) {
+      return 'audio/ogg';
+    }
+    // ID3 or MPEG frame sync -> MP3
+    if (
+      (bytes[0] === 0x49 && bytes[1] === 0x44 && bytes[2] === 0x33) ||
+      (bytes[0] === 0xff && (bytes[1] & 0xe0) === 0xe0)
+    ) {
+      return 'audio/mpeg';
+    }
+  }
+  return 'audio/mpeg';
+}
 
 // ================================================================
 // PLATFORM VOICE DATABASE
@@ -198,7 +215,7 @@ function playCachedAudio(data: ArrayBuffer, onEnd?: () => void): void {
   }
   window.speechSynthesis?.cancel();
 
-  const blob = new Blob([data], { type: 'audio/wav' });
+  const blob = new Blob([data], { type: detectAudioMimeType(data) });
   const url = URL.createObjectURL(blob);
   const audio = new Audio(url);
   currentAudioEl = audio;
@@ -276,7 +293,8 @@ export function speak(
 ): void {
   if (typeof window === 'undefined' || !text) return;
 
-  const key = cacheKey(text, accent);
+  const effectiveLang = detectLanguage(text, accent);
+  const key = cacheKey(text, effectiveLang);
   const memoryAudio = memoryAudioCache.get(key);
 
   if (memoryAudio && memoryAudio.byteLength > 0) {
@@ -286,12 +304,20 @@ export function speak(
   }
 
   // Speak immediately via Web Speech API inside user gesture
-  speakWebSpeechSync(text, accent, rate, onEnd, onStart);
+  speakWebSpeechSync(text, effectiveLang, rate, onEnd, onStart);
 
-  // In background, populate cache for future use
-  getCachedAudio(key).then(cached => {
+  // In background, populate cache for future use without delaying the gesture speech
+  getCachedAudio(key).then(async cached => {
     if (cached) {
       memoryAudioCache.set(key, cached);
+      return;
+    }
+    if (effectiveLang === 'vi-VN') {
+      const prefetched = await prefetchVietnameseSpeechToCache(text, key, memoryAudioCache, { speed: rate });
+      const audioBuf = prefetched ? memoryAudioCache.get(key) : null;
+      if (audioBuf) {
+        await setCachedAudio(key, audioBuf);
+      }
     }
   });
 }
@@ -335,7 +361,7 @@ export function isSpeaking(): boolean {
 }
 
 // Background Kokoro loader (non-blocking)
-export function preloadVocabulary(words: string[], accent: Accent): void {
+export function preloadVocabulary(_words: string[], _accent: Accent): void {
   // Pre-warming
 }
 

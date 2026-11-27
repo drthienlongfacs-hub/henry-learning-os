@@ -16,7 +16,7 @@ import {
     computeAsynchronousProfile,
     generateEnrichments,
 } from '@/lib/adaptive/compactor';
-import type { SkillState, MasteryState, Lesson, Competency } from '@/types';
+import type { SkillState, MasteryState, Lesson } from '@/types';
 
 const makeSkillState = (overrides: Partial<SkillState> = {}): SkillState => ({
     id: 'ss-1',

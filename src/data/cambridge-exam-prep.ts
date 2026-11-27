@@ -302,6 +302,151 @@ export const CAMBRIDGE_EXAMS: ExamLevel[] = [
       { mistake: 'Not managing time in 40-min Reading & Writing', mistakeVi: 'Không quản lý thời gian trong 40 phút Đọc & Viết', fix: 'Allocate ~5 min per part, save 5 min for checking', fixVi: 'Phân bổ ~5 phút/phần, dành 5 phút kiểm tra' },
     ],
   },
+
+  // ── A2 KEY (KET) ──
+  {
+    id: 'main_ket',
+    name: 'A2 Key (KET)',
+    nameVi: 'A2 Key (KET — Chứng chỉ quốc tế đầu tiên)',
+    cefr: 'A2',
+    ageRange: '11-14',
+    gradeMapping: [5, 6],
+    structure: [
+      {
+        skill: 'reading_writing', skillVi: 'Đọc & Viết (Reading & Writing)', duration: '60 phút', parts: 7, questions: 32,
+        description: 'Signs/notices, multiple matching, longer reading text, MC cloze, open cloze, guided email and picture story',
+        descriptionVi: 'Biển báo ngắn, nối mô tả, đọc hiểu dài, điền từ trắc nghiệm, điền từ mở, viết email ngắn và viết truyện theo 3 tranh',
+        taskTypes: ['short-text-mc', 'matching', 'long-text-mc', 'mc-cloze', 'open-cloze', 'email-writing', 'picture-story'],
+        detailedParts: [
+          { partNumber: 1, taskType: 'Short texts & notices', taskTypeVi: 'Đọc biển báo & tin nhắn', questions: 6, description: 'Read 6 short notices/messages and choose A, B or C', descriptionVi: 'Đọc 6 thông báo/tin nhắn ngắn, chọn ý đúng nhất A, B hoặc C', tip: 'Chú ý thời gian, điều kiện ngoại lệ (only, except, before)' },
+          { partNumber: 2, taskType: 'Multiple matching', taskTypeVi: 'Nối 3 đoạn văn ngắn', questions: 7, description: 'Match 7 questions to 3 short texts (A, B or C)', descriptionVi: 'Đọc 3 bài giới thiệu và nối đúng với 7 câu hỏi', tip: 'Tìm từ đồng nghĩa (paraphrase), tránh bẫy trùng từ bề mặt' },
+          { partNumber: 3, taskType: 'Long text MC', taskTypeVi: 'Đọc hiểu bài dài', questions: 5, description: 'Read a longer article and answer 5 MC questions', descriptionVi: 'Đọc bài báo ngắn và trả lời 5 câu trắc nghiệm', tip: 'Đọc câu hỏi theo đúng thứ tự đoạn văn từ trên xuống' },
+          { partNumber: 4, taskType: 'Multiple-choice cloze', taskTypeVi: 'Điền từ vựng A/B/C', questions: 6, description: 'Choose best vocabulary/collocation option for 6 gaps', descriptionVi: 'Chọn từ vựng/cụm từ cố định đúng cho 6 chỗ trống', tip: 'Kiểm tra cụm đi kèm (collocation) và giới từ sau chỗ trống' },
+          { partNumber: 5, taskType: 'Open cloze', taskTypeVi: 'Điền 1 từ tự do', questions: 6, description: 'Write ONE grammatical word for each gap', descriptionVi: 'Tự nghĩ và điền 1 từ ngữ pháp vào mỗi chỗ trống', tip: '90% là từ chức năng: mạo từ, giới từ, trợ động từ, đại từ' },
+          { partNumber: 6, taskType: 'Guided email/note', taskTypeVi: 'Viết email ngắn (>=25 từ)', questions: 1, description: 'Write 25+ words covering 3 bullet points', descriptionVi: 'Viết email/tin nhắn từ 25 từ trở lên trả lời đủ 3 ý yêu cầu', tip: 'Đủ 3 ý quan trọng hơn câu dài; kiểm tra chào hỏi & kết thư' },
+          { partNumber: 7, taskType: 'Picture story', taskTypeVi: 'Viết truyện 3 tranh (>=35 từ)', questions: 1, description: 'Write a 35+ word story based on 3 pictures', descriptionVi: 'Kể câu chuyện từ 35 từ trở lên dựa theo 3 bức tranh', tip: 'Dùng thì quá khứ đơn nhất quán và từ nối First, Then, Finally' },
+        ],
+      },
+      {
+        skill: 'listening', skillVi: 'Nghe (Listening)', duration: '~30 phút', parts: 5, questions: 25,
+        description: 'Short dialogues, monologue note completion, longer dialogue, gist/attitude, matching',
+        descriptionVi: 'Hội thoại ngắn tranh, điền biểu mẫu, hội thoại dài, nghe thái độ/ý chính và nối thông tin',
+        taskTypes: ['picture-mc', 'gap-fill', 'dialogue-mc', 'gist-mc', 'matching'],
+        detailedParts: [
+          { partNumber: 1, taskType: 'Short dialogues (pictures)', taskTypeVi: 'Hội thoại ngắn chọn tranh', questions: 5, description: 'Choose A, B or C for 5 short dialogues', descriptionVi: 'Nghe 5 hội thoại ngắn và chọn tranh A, B hoặc C', tip: 'Cảnh giác khi nhân vật nói đổi ý giữa câu' },
+          { partNumber: 2, taskType: 'Monologue note completion', taskTypeVi: 'Điền ghi chú (1 từ/số)', questions: 5, description: 'Listen to monologue and write 1 word, number or date', descriptionVi: 'Nghe độc thoại và điền đúng 1 từ/số/ngày tháng', tip: 'Dự đoán loại từ (giờ, giá tiền, tên đánh vần) trước khi băng chạy' },
+          { partNumber: 3, taskType: 'Longer conversation MC', taskTypeVi: 'Hội thoại dài trắc nghiệm', questions: 5, description: '5 multiple-choice questions on a longer dialogue', descriptionVi: 'Trả lời 5 câu trắc nghiệm theo hội thoại dài', tip: 'Gạch từ khóa khác biệt giữa 3 đáp án A, B, C' },
+          { partNumber: 4, taskType: 'Attitude & main idea', taskTypeVi: 'Nghe ý chính & thái độ', questions: 5, description: '5 short monologues/dialogues testing speaker attitude or reason', descriptionVi: '5 đoạn ngắn kiểm tra lý do, ý định hoặc cảm xúc người nói' },
+          { partNumber: 5, taskType: 'Matching', taskTypeVi: 'Nối cặp thông tin A-H', questions: 5, description: 'Match 5 people/days to 8 options A-H', descriptionVi: 'Nối 5 mục bên trái với 8 lựa chọn bên phải (dư 3 lựa chọn)' },
+        ],
+      },
+      {
+        skill: 'speaking', skillVi: 'Nói (Speaking)', duration: '8-10 phút', parts: 2,
+        description: 'Personal questions with examiner + collaborative discussion using picture prompts',
+        descriptionVi: 'Hỏi đáp cá nhân với giám khảo + thảo luận cặp theo thẻ gợi ý',
+        taskTypes: ['personal-interview', 'collaborative-task'],
+        detailedParts: [
+          { partNumber: 1, taskType: 'Personal interview', taskTypeVi: 'Phỏng vấn cá nhân', questions: 1, description: 'Answer questions about daily life, school, hobbies, hometown', descriptionVi: 'Trả lời về trường học, gia đình, thói quen, quê hương', tip: 'Trả lời 2-3 câu hoàn chỉnh kèm lý do hoặc ví dụ' },
+          { partNumber: 2, taskType: 'Discussion & follow-up', taskTypeVi: 'Thảo luận cặp theo tranh', questions: 1, description: 'Discuss 5 activities with partner and answer why/why not', descriptionVi: 'Trao đổi với bạn thi về 5 hoạt động và giải thích thích/không thích', tip: 'Dùng mẫu câu tương tác: What about you? / I agree because...' },
+        ],
+      },
+    ],
+    scoring: 'Cambridge English Scale 100-150 (Pass A2 at 120+, Grade A/B1 at 140+).',
+    scoringVi: 'Thang điểm Cambridge 100–150 (Đạt A2 từ 120+, Grade A vượt cấp B1 từ 140+).',
+    vocabularyTopics: [
+      'Clothes & Accessories', 'Daily Life', 'Entertainment & Media', 'Food & Drink',
+      'Health & Exercise', 'Hobbies & Leisure', 'House & Home', 'Places & Buildings',
+      'School & Study', 'Services', 'Shopping', 'Sports', 'Travel & Holidays', 'Weather',
+    ],
+    officialResources: [
+      { title: 'A2 Key Preparation & Sample Papers', titleVi: 'Đề mẫu & hướng dẫn chính thức A2 Key', url: 'https://www.cambridgeenglish.org/exams-and-tests/key/preparation/', type: 'official_sample', free: true },
+      { title: 'A2 Key Exam Format', titleVi: 'Cấu trúc đề thi A2 Key chính thức', url: 'https://www.cambridgeenglish.org/exams-and-tests/qualifications/key/format/', type: 'handbook', free: true },
+    ],
+    communityResources: [
+      { title: 'British Council Teens A2 Reading & Listening', titleVi: 'Luyện đọc & nghe A2 — British Council', url: 'https://learnenglishteens.britishcouncil.org/skills', type: 'website', free: true },
+    ],
+    examTips: [
+      { tip: 'In Reading Part 2 & 3, match meanings via synonyms instead of identical words', tipVi: 'Ở Reading Part 2 & 3, đối chiếu bằng từ đồng nghĩa thay vì chọn đáp án lặp từ y hệt', category: 'reading', evidenceBased: true },
+      { tip: 'Cover all 3 bullet points clearly in Writing Part 6 before checking word count', tipVi: 'Viết đủ cả 3 gạch đầu dòng ở Writing Part 6 rồi mới kiểm đếm số từ và chính tả', category: 'writing', evidenceBased: true },
+    ],
+    commonMistakes: [
+      { mistake: 'Missing one of the 3 bullet points in Writing Part 6', mistakeVi: 'Bỏ sót 1 trong 3 ý bắt buộc ở bài viết email Part 6', fix: 'Tick off each bullet point as you draft it', fixVi: 'Đánh dấu kiểm từng gạch đầu dòng ngay khi viết nháp' },
+      { mistake: 'Writing more than one word in Reading Part 5 open cloze', mistakeVi: 'Điền 2 từ vào Reading Part 5 (chỉ cho phép 1 từ)', fix: 'Use single grammatical words only (no contractions except cannot)', fixVi: 'Chỉ điền duy nhất 1 từ ngữ pháp vào mỗi ô trống' },
+    ],
+  },
+
+  // ── B1 PRELIMINARY (PET) ──
+  {
+    id: 'main_pet',
+    name: 'B1 Preliminary (PET)',
+    nameVi: 'B1 Preliminary (PET — Giao tiếp độc lập)',
+    cefr: 'B1',
+    ageRange: '12-16',
+    gradeMapping: [7, 8, 9],
+    structure: [
+      {
+        skill: 'reading_writing', skillVi: 'Đọc & Viết (Reading 45m + Writing 45m)', duration: '90 phút (2 paper)', parts: 8, questions: 34,
+        description: 'Reading 6 parts (32 Qs: notices, matching, article, gapped text, MC cloze, open cloze) + Writing 2 parts (Email + Article/Story ~100 words each)',
+        descriptionVi: 'Đọc 6 phần (32 câu: biển báo, nối người, bài báo, chèn câu thiếu, điền từ vựng & ngữ pháp) + Viết 2 phần (Email + Bài viết/Truyện ~100 từ)',
+        taskTypes: ['short-text-mc', 'matching', 'long-text-mc', 'gapped-text', 'mc-cloze', 'open-cloze', 'email-writing', 'article-story'],
+        detailedParts: [
+          { partNumber: 1, taskType: 'Short texts & signs', taskTypeVi: 'Đọc thông báo & tin nhắn', questions: 5, description: 'Read 5 short texts and choose A, B or C', descriptionVi: 'Đọc 5 thông báo/tin nhắn, chọn ý chính xác A, B hoặc C' },
+          { partNumber: 2, taskType: 'Matching people to options', taskTypeVi: 'Nối 5 người với 8 lựa chọn', questions: 5, description: 'Match 5 profiles (each with 3 criteria) to 8 descriptions', descriptionVi: 'Khớp đủ cả 3 yêu cầu của 5 người với 8 mô tả (dư 3 mô tả)', tip: 'Phải thỏa mãn ĐỦ cả 3 điều kiện của người đó mới chọn' },
+          { partNumber: 3, taskType: 'Article comprehension', taskTypeVi: 'Đọc hiểu thái độ & chi tiết', questions: 5, description: '5 4-option MC questions including writer opinion/purpose', descriptionVi: '5 câu trắc nghiệm 4 lựa chọn về chi tiết, thái độ và mục đích tác giả' },
+          { partNumber: 4, taskType: 'Gapped text', taskTypeVi: 'Chèn 5 câu bị rút khỏi bài', questions: 5, description: 'Choose 5 removed sentences from 8 options (A-H)', descriptionVi: 'Chọn 5 câu từ danh sách A–H để nối mạch đoạn văn', tip: 'Kiểm tra đại từ thay thế (it, they, this, such) ở câu trước & sau chỗ trống' },
+          { partNumber: 5, taskType: 'Multiple-choice cloze', taskTypeVi: 'Điền từ vựng 4 lựa chọn', questions: 6, description: 'Choose best vocabulary/collocation among A, B, C, D', descriptionVi: 'Chọn từ vựng chính xác về nghĩa & kết hợp từ (collocation)' },
+          { partNumber: 6, taskType: 'Open cloze', taskTypeVi: 'Điền 1 từ ngữ pháp tự do', questions: 6, description: 'Write ONE grammatical word for each of 6 gaps', descriptionVi: 'Điền 1 từ chức năng ngữ pháp phù hợp ngữ cảnh' },
+          { partNumber: 7, taskType: 'Writing Part 1: Email', taskTypeVi: 'Viết Email (~100 từ)', questions: 1, description: 'Respond to an email covering 4 annotated notes', descriptionVi: 'Trả lời email bao gồm đủ 4 ghi chú gợi ý (~100 từ)' },
+          { partNumber: 8, taskType: 'Writing Part 2: Article/Story', taskTypeVi: 'Viết Article hoặc Story (~100 từ)', questions: 1, description: 'Choose either an article or a story (~100 words)', descriptionVi: 'Chọn viết 1 bài báo ngắn hoặc câu chuyện (~100 từ)' },
+        ],
+      },
+      {
+        skill: 'listening', skillVi: 'Nghe (Listening)', duration: '~30 phút', parts: 4, questions: 25,
+        description: '7 short picture dialogues, 6 dialogue attitude questions, 6 monologue gap-fill, 6 interview questions',
+        descriptionVi: '7 hội thoại ngắn tranh, 6 hội thoại thái độ/đồng thuận, 6 chỗ trống độc thoại, 6 câu phỏng vấn dài',
+        taskTypes: ['picture-mc', 'attitude-mc', 'gap-fill', 'interview-mc'],
+        detailedParts: [
+          { partNumber: 1, taskType: 'Short picture dialogues', taskTypeVi: 'Hội thoại ngắn chọn tranh', questions: 7, description: '7 short dialogues with 3 picture options each', descriptionVi: '7 hội thoại ngắn, mỗi câu chọn 1 trong 3 tranh' },
+          { partNumber: 2, taskType: 'Attitude & agreement', taskTypeVi: 'Nghe quan điểm & đồng thuận', questions: 6, description: '6 short dialogues focusing on feeling, agreement or gist', descriptionVi: '6 hội thoại kiểm tra cảm xúc, sự đồng tình hay bất đồng' },
+          { partNumber: 3, taskType: 'Note completion', taskTypeVi: 'Điền 1-2 từ/số vào ghi chú', questions: 6, description: 'Complete 6 gaps in a page of notes from a monologue', descriptionVi: 'Điền thông tin ngắn từ bài nói dài theo đúng thứ tự' },
+          { partNumber: 4, taskType: 'Interview MC', taskTypeVi: 'Nghe phỏng vấn dài', questions: 6, description: '6 3-option MC questions on an extended interview', descriptionVi: '6 câu trắc nghiệm theo bài phỏng vấn chi tiết' },
+        ],
+      },
+      {
+        skill: 'speaking', skillVi: 'Nói (Speaking)', duration: '10-12 phút', parts: 4,
+        description: 'Interview, extended photo description (1 min), collaborative discussion, general topic discussion',
+        descriptionVi: 'Phỏng vấn, mô tả ảnh 1 phút, thảo luận giải quyết tình huống theo cặp và trao đổi mở rộng',
+        taskTypes: ['interview', 'photo-description', 'collaborative-task', 'topic-discussion'],
+        detailedParts: [
+          { partNumber: 1, taskType: 'Interview', taskTypeVi: 'Phỏng vấn mở đầu', questions: 1, description: 'Personal questions about studies, free time and plans', descriptionVi: 'Câu hỏi về học tập, thói quen, kế hoạch tương lai' },
+          { partNumber: 2, taskType: 'Extended turn (photo)', taskTypeVi: 'Mô tả tranh 1 phút', questions: 1, description: 'Describe a colour photograph continuously for ~1 minute', descriptionVi: 'Mô tả liên tục bức ảnh trong khoảng 1 phút (người, hành động, bối cảnh)', tip: 'Đi từ tổng quát → người & hành động → trang phục/bối cảnh → phỏng đoán' },
+          { partNumber: 3, taskType: 'Collaborative discussion', taskTypeVi: 'Thảo luận cặp theo tình huống', questions: 1, description: 'Discuss options and agree on the best choice with partner', descriptionVi: 'Trao đổi ưu/nhược điểm các lựa chọn và thống nhất phương án tốt nhất' },
+          { partNumber: 4, taskType: 'General discussion', taskTypeVi: 'Thảo luận mở rộng', questions: 1, description: 'Answer opinion questions linked to Part 3 topic', descriptionVi: 'Trả lời câu hỏi quan điểm liên quan chủ đề Part 3' },
+        ],
+      },
+    ],
+    scoring: 'Cambridge English Scale 120-170 (Pass B1 at 140+, Grade A/B2 at 160+).',
+    scoringVi: 'Thang điểm Cambridge 120–170 (Đạt B1 từ 140+, Grade A vượt cấp B2 từ 160+).',
+    vocabularyTopics: [
+      'Education & Study', 'Environment & Nature', 'Feelings & Opinions', 'Health & Lifestyle',
+      'Media & Technology', 'People & Relationships', 'Services & Work', 'Sport & Leisure',
+      'Transport & Travel', 'Weather & Climate',
+    ],
+    officialResources: [
+      { title: 'B1 Preliminary Preparation & Sample Papers', titleVi: 'Đề mẫu & hướng dẫn chính thức B1 Preliminary', url: 'https://www.cambridgeenglish.org/exams-and-tests/preliminary/preparation/', type: 'official_sample', free: true },
+      { title: 'B1 Preliminary Exam Format', titleVi: 'Cấu trúc đề thi B1 Preliminary chính thức', url: 'https://www.cambridgeenglish.org/exams-and-tests/qualifications/preliminary/format/', type: 'handbook', free: true },
+    ],
+    communityResources: [
+      { title: 'British Council Teens B1 Practice', titleVi: 'Luyện kỹ năng B1 — British Council', url: 'https://learnenglishteens.britishcouncil.org/skills', type: 'website', free: true },
+    ],
+    examTips: [
+      { tip: 'In Reading Part 2, a choice is only right if ALL 3 requirements of the person are satisfied', tipVi: 'Ở Reading Part 2, một phương án chỉ đúng khi đáp ứng ĐỦ CẢ 3 tiêu chí của nhân vật (thiếu 1 ý là sai)', category: 'reading', evidenceBased: true },
+      { tip: 'Use linking devices (however, although, as a result) in Writing to lift Organisation band', tipVi: 'Dùng từ nối logic (however, although, therefore) trong bài viết để tăng điểm Mạch lạc (Organisation)', category: 'writing', evidenceBased: true },
+    ],
+    commonMistakes: [
+      { mistake: 'Picking Reading Part 2 matches on only 1-2 out of 3 criteria', mistakeVi: 'Chọn đáp án Reading Part 2 chỉ vì khớp 1–2 tiêu chí mà bỏ sót tiêu chí thứ 3', fix: 'Underline all 3 requirements per profile and cross-check every single one', fixVi: 'Gạch chân đủ 3 yêu cầu của mỗi người và kiểm chéo từng ý trước khi chốt' },
+    ],
+  },
 ];
 
 // ══════════════════════════════════════════════════════════════════
@@ -335,7 +480,7 @@ export const LEARNING_STRATEGIES: LearningStrategy[] = [
     description: '15 min daily beats 2 hours weekly. Review vocabulary at increasing intervals: 1 day → 3 days → 7 days → 14 days.',
     descriptionVi: '15 phút mỗi ngày hiệu quả hơn 2 giờ mỗi tuần. Ôn từ vựng theo khoảng cách tăng dần: 1 ngày → 3 ngày → 7 ngày → 14 ngày.',
     evidence: 'Ebbinghaus forgetting curve research; Pimsleur graduated interval recall; Leitner system studies.',
-    gradeRange: [1, 2, 3, 4, 5], category: 'vocabulary',
+    gradeRange: [1, 2, 3, 4, 5, 6, 7], category: 'vocabulary',
   },
   {
     id: 'ls_tpr', title: 'Total Physical Response (TPR)',
@@ -351,7 +496,7 @@ export const LEARNING_STRATEGIES: LearningStrategy[] = [
     description: 'Parent/teacher reads TO child → child reads WITH adult → child reads ALONE. Gradual release model builds fluency and comprehension.',
     descriptionVi: 'Phụ huynh/giáo viên đọc CHO con → con đọc CÙNG người lớn → con đọc MỘT MÌNH. Mô hình chuyển giao dần xây dựng trôi chảy và hiểu.',
     evidence: 'Jim Trelease "The Read-Aloud Handbook"; National Literacy Trust data: children read to daily are 13x more likely to read above expected level.',
-    gradeRange: [1, 2, 3, 4, 5], category: 'reading',
+    gradeRange: [1, 2, 3, 4, 5, 6, 7], category: 'reading',
   },
   {
     id: 'ls_meta', title: 'Metacognitive Self-Check',
@@ -359,7 +504,7 @@ export const LEARNING_STRATEGIES: LearningStrategy[] = [
     description: '"What did I learn? What was tricky? What will I try next?" — builds autonomous learners who can identify their own gaps.',
     descriptionVi: '"Tôi đã học gì? Cái gì khó? Lần sau tôi sẽ thử gì?" — xây dựng người học tự chủ nhận biết lỗ hổng.',
     evidence: 'Education Endowment Foundation: metacognition adds +7 months progress. Cambridge self-check aligns with this.',
-    gradeRange: [1, 2, 3, 4, 5], category: 'metacognition',
+    gradeRange: [1, 2, 3, 4, 5, 6, 7], category: 'metacognition',
   },
   {
     id: 'ls_exam', title: 'Exam Familiarization (not cramming)',
@@ -367,7 +512,23 @@ export const LEARNING_STRATEGIES: LearningStrategy[] = [
     description: 'Do 1 practice test per week in final month. Focus on FORMAT not memorization. Review mistakes, not just scores.',
     descriptionVi: 'Làm 1 đề thử/tuần trong tháng cuối. Tập trung HÌNH THỨC không phải học thuộc. Xem lại lỗi sai, không chỉ điểm.',
     evidence: 'Cambridge Assessment research: format familiarity reduces test anxiety by 30% and improves performance.',
-    gradeRange: [1, 2, 3, 4, 5], category: 'exam_prep',
+    gradeRange: [1, 2, 3, 4, 5, 6, 7], category: 'exam_prep',
+  },
+  {
+    id: 'ls_retrieval', title: 'Active Recall & Error-Log Retrieval',
+    titleVi: 'Gợi nhớ chủ động & Ôn tập theo sổ lỗi sai',
+    description: 'Testing yourself on weak question types and re-drilling mistakes produces far stronger long-term retention than re-reading notes.',
+    descriptionVi: 'Tự kiểm tra lại đúng dạng bài hay sai và luyện lại câu sai giúp nhớ sâu vượt trội so với chỉ đọc lại lý thuyết.',
+    evidence: 'Roediger & Karpicke (2006) Testing Effect; Dunlosky et al. (2013) Psychological Science in the Public Interest.',
+    gradeRange: [3, 4, 5, 6, 7], category: 'exam_prep',
+  },
+  {
+    id: 'ls_paraphrase', title: 'Distractor Elimination & Paraphrase Mapping',
+    titleVi: 'Loại trừ phương án nhiễu & Đối chiếu từ đồng nghĩa',
+    description: 'In Flyers, KET and PET, right answers paraphrase ideas from the passage while wrong options reuse surface keywords to trap hasty readers.',
+    descriptionVi: 'Ở Flyers, KET và PET, đáp án đúng thường diễn đạt lại ý bằng từ đồng nghĩa, còn bẫy hay lặp nguyên từ khóa bề mặt trong bài.',
+    evidence: 'Cambridge Assessment English Research Notes — Cognitive Processing in Reading & Listening Assessment.',
+    gradeRange: [4, 5, 6, 7], category: 'reading',
   },
 ];
 
@@ -381,6 +542,8 @@ export const EXAM_PATHWAY = {
   3: { current: 'yle_movers', preparing: 'A1 Movers', next: 'A2 Flyers' },
   4: { current: 'yle_flyers', preparing: 'A2 Flyers', next: 'A2 Key (KET)' },
   5: { current: 'yle_flyers', preparing: 'A2 Flyers → A2 Key', next: 'B1 Preliminary (PET)' },
+  6: { current: 'main_ket', preparing: 'A2 Key (KET)', next: 'B1 Preliminary (PET)' },
+  7: { current: 'main_pet', preparing: 'B1 Preliminary (PET)', next: 'B2 First (FCE)' },
 } as const;
 
 // ══════════════════════════════════════════════════════════════════
@@ -390,7 +553,7 @@ export const EXAM_PATHWAY = {
 
 export interface StudyPlan {
   id: string;
-  level: 'starters' | 'movers' | 'flyers';
+  level: 'starters' | 'movers' | 'flyers' | 'ket' | 'pet';
   titleVi: string;
   totalWeeks: number;
   hoursNeeded: number;
@@ -483,7 +646,29 @@ export const STUDY_PLANS: StudyPlan[] = [
       { weekRange: 'Tuần 1-3', titleVi: 'Nâng vốn từ + Ngữ pháp nâng cao', focus: ['vocabulary', 'grammar'], dailyMinutes: 30, activitiesVi: ['20 từ/ngày + word families', 'Ngữ pháp: thì tương lai, so sánh, câu điều kiện loại 1', 'Đọc sách thiếu nhi bằng tiếng Anh (10 phút/ngày)'] },
       { weekRange: 'Tuần 4-6', titleVi: 'Đọc hiểu + Viết truyện', focus: ['reading', 'writing'], dailyMinutes: 35, activitiesVi: ['Đọc đoạn văn dài, trả lời câu hỏi 1-4 từ', 'Viết truyện ngắn theo 3 tranh (dùng từ nối)', 'Điền từ tự do (không có danh sách)'] },
       { weekRange: 'Tuần 7-9', titleVi: 'Nghe nâng cao + Nói mở rộng', focus: ['listening', 'speaking'], dailyMinutes: 35, activitiesVi: ['Nghe hội thoại phức tạp, ghi chú thông tin', 'Nói: trao đổi thông tin, kể truyện mạch lạc', 'Trả lời câu hỏi cá nhân mở rộng với "because"'] },
-      { weekRange: 'Tuần 10-12', titleVi: 'Luyện đề toàn diện', focus: ['practice_test', 'time_management'], dailyMinutes: 40, activitiesVi: ['Làm 3 đề mẫu đầy đủ', 'Quản lý thời gian: ~5 phút/phần R&W', 'Ôn lỗi sai, strengthen điểm yếu'] },
+      { weekRange: 'Tuần 10-12', titleVi: 'Luyện đề toàn diện', focus: ['practice_test', 'time_management'], dailyMinutes: 40, activitiesVi: ['Làm 3 đề mẫu đầy đủ', 'Quản lý thời gian: ~5 phút/phần R&W', 'Ôn lỗi sai, củng cố điểm yếu'] },
+    ],
+  },
+  {
+    id: 'sp_ket', level: 'ket',
+    titleVi: 'Lộ trình ôn A2 Key (KET) — 12 tuần (tổng ~350 giờ tích lũy)',
+    totalWeeks: 12, hoursNeeded: 350,
+    phases: [
+      { weekRange: 'Tuần 1-3', titleVi: 'Từ vựng cốt lõi A2 & Ngữ pháp nền tảng', focus: ['vocabulary', 'grammar'], dailyMinutes: 35, activitiesVi: ['Ôn từ vựng A2 theo 14 chủ đề (Daily Life, Travel, School)', 'Chắc thì hiện tại hoàn thành, quá khứ đơn, câu điều kiện loại 1', 'Luyện Reading Part 1 & Part 4 (MC Cloze)'] },
+      { weekRange: 'Tuần 4-6', titleVi: 'Đọc hiểu Paraphrase & Điền từ mở', focus: ['reading', 'open_cloze'], dailyMinutes: 40, activitiesVi: ['Luyện Reading Part 2 & 3 tìm từ đồng nghĩa', 'Tập Part 5 Open Cloze (mạo từ, giới từ, trợ động từ)', 'Nghe Part 2 Note Completion (số, ngày, đánh vần tên)'] },
+      { weekRange: 'Tuần 7-9', titleVi: 'Viết Email/Truyện & Nói tương tác cặp', focus: ['writing', 'speaking'], dailyMinutes: 40, activitiesVi: ['Viết Email Part 6 đủ 3 ý (>=25 từ) và Story Part 7 (>=35 từ)', 'Luyện Speaking Part 2 trao đổi tự nhiên với câu hỏi mở', 'Ghi sổ lỗi sai & luyện lại đúng dạng bài yếu'] },
+      { weekRange: 'Tuần 10-12', titleVi: 'Thi thử bấm giờ Full KET', focus: ['practice_test', 'time_management'], dailyMinutes: 45, activitiesVi: ['Làm 3 bộ đề KET bấm giờ R&W 60p + Nghe 30p', 'Kiểm soát 10 phút cuối soát chính tả & số từ', 'Ôn chiến lược tránh bẫy tự sửa trong bài Nghe'] },
+    ],
+  },
+  {
+    id: 'sp_pet', level: 'pet',
+    titleVi: 'Lộ trình ôn B1 Preliminary (PET) — 16 tuần (tổng ~500 giờ tích lũy)',
+    totalWeeks: 16, hoursNeeded: 500,
+    phases: [
+      { weekRange: 'Tuần 1-4', titleVi: 'Đọc hiểu phân tích & Ngữ pháp B1', focus: ['reading', 'grammar'], dailyMinutes: 40, activitiesVi: ['Luyện Reading Part 2 khớp đủ 3 tiêu chí/người', 'Luyện Reading Part 4 Gapped Text (đại từ & mạch văn)', 'Hệ thống collocations & phrasal verbs B1 cho Part 5'] },
+      { weekRange: 'Tuần 5-8', titleVi: 'Viết học thuật 100 từ & Nghe thái độ', focus: ['writing', 'listening'], dailyMinutes: 45, activitiesVi: ['Viết Email 100 từ đủ 4 ghi chú + Article/Story mạch lạc', 'Nghe Part 2 & 4 phân biệt thái độ, sự đồng tình của người nói', 'Ghi chú nhanh từ khóa khi nghe độc thoại Part 3'] },
+      { weekRange: 'Tuần 9-12', titleVi: 'Nói mô tả ảnh 1 phút & Thảo luận', focus: ['speaking'], dailyMinutes: 45, activitiesVi: ['Luyện nói liên tục 1 phút mô tả tranh theo 4 lớp thông tin', 'Thảo luận cặp Part 3: đề xuất, đồng tình, phản hồi lịch sự', 'Luyện lại các câu hay sai trong Error-Focus Drill'] },
+      { weekRange: 'Tuần 13-16', titleVi: 'Tổng duyệt đề chuẩn PET', focus: ['practice_test', 'time_management'], dailyMinutes: 50, activitiesVi: ['Thi thử trọn bộ Reading 45p + Writing 45p + Listening 30p', 'Rà lỗi hệ thống theo từng Part yếu nhất', 'Giữ nhịp tâm lý ổn định trước ngày thi'] },
     ],
   },
 ];
@@ -494,9 +679,11 @@ export const RECOMMENDED_BOOKS: RecommendedBook[] = [
   { title: 'Storyfun for Starters/Movers/Flyers', publisher: 'Cambridge', levels: ['starters','movers','flyers'], bestFor: 'Story-based learning', bestForVi: 'Học qua truyện — thú vị, nhớ lâu', rating: 5, free: false },
   { title: "Kid's Box (Updated 2nd Ed)", publisher: 'Cambridge', levels: ['starters','movers','flyers'], bestFor: 'Full-year English course + exam prep', bestForVi: 'Giáo trình toàn diện cả năm + luyện thi', rating: 4, free: false },
   { title: 'Get Ready for Starters/Movers/Flyers', publisher: 'Oxford', levels: ['starters','movers','flyers'], bestFor: 'Grammar + vocab practice', bestForVi: 'Luyện ngữ pháp + từ vựng chuyên sâu', rating: 4, free: false },
-  { title: 'Authentic Practice Tests', publisher: 'Cambridge', levels: ['starters','movers','flyers'], bestFor: 'Final exam rehearsal', bestForVi: 'Luyện đề thi thật — bước cuối cùng', rating: 5, free: false },
+  { title: 'Authentic Practice Tests', publisher: 'Cambridge', levels: ['starters','movers','flyers','ket','pet'], bestFor: 'Final exam rehearsal', bestForVi: 'Luyện đề thi thật — bước cuối cùng', rating: 5, free: false },
   { title: 'Starters/Movers/Flyers Word List Picture Book', publisher: 'Cambridge', levels: ['starters','movers','flyers'], bestFor: 'Visual vocabulary', bestForVi: 'Học từ vựng qua hình ảnh (MIỄN PHÍ)', rating: 5, free: true, url: 'https://www.cambridgeenglish.org/exams-and-tests/starters/preparation/' },
   { title: 'Oxford Reading Tree', publisher: 'Oxford', levels: ['starters','movers'], bestFor: 'Graded readers for fluency', bestForVi: 'Sách đọc theo trình độ — xây dựng trôi chảy', rating: 5, free: false },
+  { title: 'Complete Key for Schools / A2 Key Trainer', publisher: 'Cambridge', levels: ['ket'], bestFor: 'Exam-focused A2 Key prep', bestForVi: 'Luyện chiến lược làm bài & đề chuẩn A2 Key (KET)', rating: 5, free: false },
+  { title: 'Complete Preliminary for Schools / B1 Preliminary Trainer', publisher: 'Cambridge', levels: ['pet'], bestFor: 'Exam-focused B1 Preliminary prep', bestForVi: 'Luyện chuyên sâu 4 kỹ năng & đề chuẩn B1 Preliminary (PET)', rating: 5, free: false },
 ];
 
 // ── YOUTUBE CHANNELS ──

@@ -1,18 +1,25 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import {
     ArrowLeft,
     BookOpen,
     CheckCircle2,
     FileText,
+    Globe2,
     GraduationCap,
     RotateCcw,
+    Square,
     Target,
+    Trophy,
     Volume2,
     XCircle,
 } from 'lucide-react';
+import { speak, speakSlowly, stopSpeech } from '@/lib/voiceEngine';
+import { emitLearningEvent } from '@/lib/events/learning-events';
+import { useAppStore } from '@/stores/app-store';
+import { recordExamAttempt, type ExamPartBreakdown } from '@/lib/exam-analytics';
 import {
     CAMBRIDGE_EXAM_PREP_STATS,
     CAMBRIDGE_EXAM_PROGRAMS,
@@ -69,15 +76,12 @@ function saveAttempts(next: Record<string, SavedAttempt>) {
     }
 }
 
-function speakTranscript(text: string) {
-    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
-
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-GB';
-    utterance.rate = 0.82;
-    utterance.pitch = 1;
-    window.speechSynthesis.speak(utterance);
+function speakTranscript(text: string, slow = false) {
+    if (slow) {
+        speakSlowly(text, 'en-GB');
+        return;
+    }
+    speak(text, 'en-GB', 0.88);
 }
 
 function getSourcePack(programId: CambridgeExamProgramId) {
@@ -105,6 +109,12 @@ export default function CambridgeExamsPage() {
     const [programId, setProgramId] = useState<CambridgeExamProgramId>('a2-key');
     const [setNo, setSetNo] = useState(1);
     const [savedAttempts, setSavedAttempts] = useState<Record<string, SavedAttempt>>(loadSavedAttempts);
+
+    useEffect(() => {
+        return () => {
+            stopSpeech();
+        };
+    }, []);
 
     const program = getCambridgeProgram(programId);
     const practiceSets = useMemo(() => getPracticeSetsForProgram(programId), [programId]);
@@ -153,6 +163,50 @@ export default function CambridgeExamsPage() {
 
     const markChecked = () => {
         updateAttempt(current => ({ ...current, checked: true, updatedAt: new Date().toISOString() }));
+        const totalObj = objectiveQuestions.length;
+        const correctObj = objectiveQuestions.filter(q => isCorrectExamAnswer(q, attempt.answers[q.id] ?? '')).length;
+        const accuracyPct = totalObj > 0 ? Math.round((correctObj / totalObj) * 100) : 0;
+        const partBreakdown: ExamPartBreakdown[] = selectedSet.components.flatMap(comp =>
+            comp.tasks.map((task, idx) => {
+                const objQs = task.questions.filter(q => q.correctAnswer && (q.mode === 'objective' || q.mode === 'gap'));
+                const okCount = objQs.filter(q => isCorrectExamAnswer(q, attempt.answers[q.id] ?? '')).length;
+                return {
+                    partNumber: idx + 1,
+                    partTitle: task.title,
+                    taskTypeVi: task.officialPart,
+                    correct: okCount,
+                    total: objQs.length,
+                    accuracyPct: objQs.length > 0 ? Math.round((okCount / objQs.length) * 100) : 0,
+                };
+            }).filter(item => item.total > 0),
+        );
+
+        recordExamAttempt({
+            source: 'cambridge-ket-pet',
+            level: programId === 'a2-key' ? 'ket' : 'pet',
+            testId: selectedSet.id,
+            testTitle: selectedSet.titleVi,
+            setNo: selectedSet.setNo,
+            skill: 'full-paper',
+            mode: 'guided',
+            score: correctObj,
+            total: totalObj,
+            accuracyPct,
+            shields: totalObj > 0 ? Math.round((correctObj / totalObj) * 5) : 0,
+            durationSec: 60,
+            partBreakdown,
+            wrongQuestionIds: wrongQuestions.map(q => q.id),
+        });
+
+        const childId = useAppStore.getState().childProfile?.id ?? 'henry';
+        emitLearningEvent({
+            childId,
+            verb: 'completed',
+            object: selectedSet.id,
+            module: 'cambridge-exams',
+            success: accuracyPct >= 70,
+            score: accuracyPct,
+        });
     };
 
     const resetSet = () => {
@@ -353,16 +407,24 @@ export default function CambridgeExamsPage() {
     return (
         <div style={{ minHeight: '100dvh', background: 'var(--color-bg-child)', paddingBottom: '4rem' }}>
             <div className="page-container">
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', marginBottom: '1.25rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', marginBottom: '1.25rem', flexWrap: 'wrap' }}>
                     <Link href="/child" style={{ textDecoration: 'none' }}>
-                        <button className="btn btn-ghost btn-sm">
+                        <button type="button" className="btn btn-ghost btn-sm">
                             <ArrowLeft size={18} />
                             Back
                         </button>
                     </Link>
-                    <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 850 }}>
-                        Cambridge KET/PET • real practice engine
-                    </span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                        <Link href="/child/exams" className="btn btn-ghost btn-sm" style={{ textDecoration: 'none', fontSize: '0.78rem' }}>
+                            <Trophy size={15} /> Starters → PET
+                        </Link>
+                        <Link href="/child/international" className="btn btn-ghost btn-sm" style={{ textDecoration: 'none', fontSize: '0.78rem' }}>
+                            <Globe2 size={15} /> International
+                        </Link>
+                        <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 850 }}>
+                            Cambridge KET/PET • real practice engine
+                        </span>
+                    </div>
                 </div>
 
                 <section
@@ -391,7 +453,7 @@ export default function CambridgeExamsPage() {
                         </div>
                         <div style={{ flex: 1, minWidth: 240 }}>
                             <h1 style={{ fontSize: '1.42rem', fontWeight: 950, color: '#0f172a', lineHeight: 1.2 }}>
-                                Cambridge KET/PET - giao trinh day va thi
+                                Cambridge KET/PET — Giáo trình dạy và thi
                             </h1>
                             <p style={{ color: '#334155', fontSize: '0.86rem', lineHeight: 1.55, marginTop: '0.45rem' }}>
                                 10 bộ đề A2 Key/KET và 10 bộ đề B1 Preliminary/PET, đủ cấu phần đọc, viết, nghe, nói,
@@ -634,14 +696,34 @@ export default function CambridgeExamsPage() {
                                                 <p style={{ color: '#475569', fontSize: '0.8rem', lineHeight: 1.5, marginTop: '0.3rem' }}>{task.instructions}</p>
                                             </div>
                                             {task.transcript && (
-                                                <button
-                                                    className="btn btn-ghost btn-sm"
-                                                    onClick={() => speakTranscript(task.transcript ?? '')}
-                                                    title="Play transcript with browser speech"
-                                                >
-                                                    <Volume2 size={16} />
-                                                    Play transcript
-                                                </button>
+                                                <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-ghost btn-sm"
+                                                        onClick={() => speakTranscript(task.transcript ?? '', false)}
+                                                        title="Nghe hội thoại bằng giọng đọc chuẩn"
+                                                    >
+                                                        <Volume2 size={16} />
+                                                        Nghe mẫu
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-ghost btn-sm"
+                                                        onClick={() => speakTranscript(task.transcript ?? '', true)}
+                                                        title="Nghe tốc độ chậm"
+                                                    >
+                                                        🐢 Chậm
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-ghost btn-sm"
+                                                        onClick={() => stopSpeech()}
+                                                        title="Dừng phát âm thanh"
+                                                    >
+                                                        <Square size={14} />
+                                                        Dừng
+                                                    </button>
+                                                </div>
                                             )}
                                         </div>
 
@@ -694,7 +776,31 @@ export default function CambridgeExamsPage() {
 
                 {attempt.checked && wrongQuestions.length > 0 && (
                     <section className="card" style={{ marginTop: '1rem', padding: '0.95rem', border: '1px solid rgba(220,38,38,0.18)' }}>
-                        <div style={{ fontWeight: 950, color: '#991b1b', marginBottom: '0.55rem' }}>Sổ kinh nghiệm cần ôn lại</div>
+                        <div style={{ fontWeight: 950, color: '#991b1b', marginBottom: '0.55rem' }}>
+                            📊 Phân tích kỹ năng cần ôn lại ({wrongQuestions.length} câu sai)
+                        </div>
+                        <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
+                            {Object.entries(
+                                wrongQuestions.reduce<Record<string, number>>((acc, q) => {
+                                    acc[q.skillFocus] = (acc[q.skillFocus] ?? 0) + 1;
+                                    return acc;
+                                }, {}),
+                            ).map(([focus, count]) => (
+                                <span
+                                    key={focus}
+                                    style={{
+                                        borderRadius: 999,
+                                        background: 'rgba(220,38,38,0.08)',
+                                        color: '#991b1b',
+                                        padding: '0.25rem 0.65rem',
+                                        fontSize: '0.74rem',
+                                        fontWeight: 800,
+                                    }}
+                                >
+                                    {focus}: {count} câu
+                                </span>
+                            ))}
+                        </div>
                         <div style={{ display: 'grid', gap: '0.5rem' }}>
                             {wrongQuestions.slice(0, 12).map(question => (
                                 <div key={`wrong-${question.id}`} style={{ color: '#334155', fontSize: '0.8rem', lineHeight: 1.5 }}>

@@ -54,6 +54,7 @@ export function OfflineBanner() {
             <WifiOff size={16} />
             <span>Không có kết nối mạng — dữ liệu đã lưu vẫn truy cập được</span>
             <button
+                type="button"
                 onClick={() => setDismissed(true)}
                 aria-label="Đóng thông báo"
                 style={{
@@ -63,6 +64,11 @@ export function OfflineBanner() {
                     cursor: 'pointer',
                     padding: '0.25rem',
                     marginLeft: '0.5rem',
+                    minWidth: 28,
+                    minHeight: 28,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                 }}
             >
                 <X size={14} />

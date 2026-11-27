@@ -1,23 +1,43 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 'use client';
 
-import { useState, Suspense } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import { useSearchParams } from 'next/navigation';
 import {
   ArrowLeft, Home, BookOpen, RotateCcw, Brain,
   Trophy, Target, Clock, ChevronRight, GraduationCap,
-  Zap, Award, Shield,
+  Zap, Award, Shield, Globe2, BarChart3,
 } from 'lucide-react';
 import { useTranslation } from '@/lib/i18n';
 import { LangToggle } from '@/components/LangToggle';
-import { CAMBRIDGE_EXAM_CLAIM_GUARDRAIL, CAMBRIDGE_EXAM_FRAMEWORK_STATS } from '@/data/cambridge-official-framework';
+import {
+  CAMBRIDGE_EXAM_CLAIM_GUARDRAIL,
+  CAMBRIDGE_EXAM_FRAMEWORK_STATS,
+  type CambridgeExamLevelId,
+} from '@/data/cambridge-official-framework';
 import { EXAM_PRACTICE_BANK_STATS } from '@/data/practice-test-bank';
+import { getOverallExamSummary, type OverallExamSummary } from '@/lib/exam-analytics';
 
 const ExamPrepGuide = dynamic(() => import('@/components/ExamPrepGuide'), { ssr: false });
 const PracticeTestEngine = dynamic(() => import('@/components/PracticeTestEngine'), { ssr: false });
 
-// ── Exam level config ──
-const EXAM_LEVELS = [
+const EXAM_LEVELS: ReadonlyArray<{
+  id: CambridgeExamLevelId;
+  name: string;
+  nameVi: string;
+  cefr: string;
+  icon: string;
+  color: string;
+  gradient: string;
+  ageRange: string;
+  gradeRange: string;
+  desc: string;
+  descEn: string;
+  skills: readonly string[];
+  totalHours: string;
+}> = [
   {
     id: 'starters',
     name: 'Starters',
@@ -28,8 +48,8 @@ const EXAM_LEVELS = [
     gradient: 'linear-gradient(135deg, #22c55e, #16a34a)',
     ageRange: '6-8',
     gradeRange: '1-2',
-    desc: 'Bước đầu tiên trong hành trình Cambridge',
-    descEn: 'First step in Cambridge journey',
+    desc: 'Bước đầu tiên trong hành trình Cambridge — 10 bộ đề đầy đủ',
+    descEn: 'First step in Cambridge journey — 10 full practice sets',
     skills: ['Listening', 'Reading & Writing', 'Speaking'],
     totalHours: '~100h',
   },
@@ -43,8 +63,8 @@ const EXAM_LEVELS = [
     gradient: 'linear-gradient(135deg, #3b82f6, #2563eb)',
     ageRange: '8-10',
     gradeRange: '3-4',
-    desc: 'Nâng cao kỹ năng với từ vựng phong phú',
-    descEn: 'Build skills with richer vocabulary',
+    desc: 'Nâng cao kỹ năng đọc hiểu & kể truyện — 10 bộ đề đầy đủ',
+    descEn: 'Build reading & story skills — 10 full practice sets',
     skills: ['Listening', 'Reading & Writing', 'Speaking'],
     totalHours: '~175h',
   },
@@ -58,7 +78,7 @@ const EXAM_LEVELS = [
     gradient: 'linear-gradient(135deg, #f59e0b, #d97706)',
     ageRange: '10-12',
     gradeRange: '4-5',
-    desc: 'Trình độ cao nhất của YLE — sẵn sàng KET',
+    desc: 'Trình độ cao nhất của YLE — bước đệm lên KET',
     descEn: 'Highest YLE level — KET ready',
     skills: ['Listening', 'Reading & Writing', 'Speaking'],
     totalHours: '~250h',
@@ -88,29 +108,45 @@ const EXAM_LEVELS = [
     gradient: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
     ageRange: '12-16',
     gradeRange: '6-9',
-    desc: 'Trình độ B1 — giao tiếp độc lập, du học sẵn sàng',
+    desc: 'Trình độ B1 — giao tiếp độc lập, sẵn sàng du học',
     descEn: 'B1 level — independent communication, study abroad ready',
     skills: ['Reading', 'Writing', 'Listening', 'Speaking'],
     totalHours: '~500h',
   },
-] as const;
+];
 
 type ExamView = 'hub' | 'guide' | 'practice';
 
+const levelToGrade: Record<CambridgeExamLevelId, number> = {
+  starters: 1,
+  movers: 3,
+  flyers: 5,
+  ket: 6,
+  pet: 7,
+};
+
 function ExamsPageContent() {
   const { t, lang } = useTranslation();
+  const searchParams = useSearchParams();
   const [view, setView] = useState<ExamView>('hub');
-  const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
+  const [selectedLevel, setSelectedLevel] = useState<CambridgeExamLevelId | null>(null);
   const [gradeForGuide, setGradeForGuide] = useState(1);
+  const [summary, setSummary] = useState<OverallExamSummary | null>(null);
 
-  // Map level to grade for ExamPrepGuide
-  const levelToGrade: Record<string, number> = {
-    starters: 1, movers: 3, flyers: 5, ket: 6, pet: 7,
-  };
+  useEffect(() => {
+    const rawLevel = searchParams.get('level') as CambridgeExamLevelId | null;
+    const rawMode = searchParams.get('mode') as ExamView | null;
+    if (rawLevel && EXAM_LEVELS.some(l => l.id === rawLevel)) {
+      setSelectedLevel(rawLevel);
+      setGradeForGuide(levelToGrade[rawLevel]);
+      setView(rawMode === 'guide' ? 'guide' : 'practice');
+    }
+    setSummary(getOverallExamSummary());
+  }, [searchParams]);
 
-  const handleSelectLevel = (levelId: string, viewMode: ExamView) => {
+  const handleSelectLevel = (levelId: CambridgeExamLevelId, viewMode: ExamView) => {
     setSelectedLevel(levelId);
-    setGradeForGuide(levelToGrade[levelId] || 1);
+    setGradeForGuide(levelToGrade[levelId]);
     setView(viewMode);
   };
 
@@ -124,7 +160,6 @@ function ExamsPageContent() {
       position: 'relative',
       overflow: 'hidden',
     }}>
-      {/* Decorative elements */}
       <div style={{
         position: 'absolute', top: -80, right: -60, width: 250, height: 250,
         borderRadius: '50%', background: 'rgba(99,102,241,0.08)',
@@ -136,7 +171,7 @@ function ExamsPageContent() {
         filter: 'blur(60px)', pointerEvents: 'none',
       }} />
 
-      <div style={{ maxWidth: 640, margin: '0 auto', padding: '0 1.25rem' }}>
+      <div style={{ maxWidth: 680, margin: '0 auto', padding: '0 1.25rem' }}>
         {/* ═══ Header ═══ */}
         <div style={{
           padding: '1.25rem 0',
@@ -147,20 +182,26 @@ function ExamsPageContent() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
             {view !== 'hub' ? (
               <button
-                onClick={() => { setView('hub'); setSelectedLevel(null); }}
+                type="button"
+                onClick={() => {
+                  setView('hub');
+                  setSelectedLevel(null);
+                  setSummary(getOverallExamSummary());
+                }}
+                aria-label="Quay lại danh sách cấp độ"
                 style={{
                   background: 'rgba(255,255,255,0.06)', border: 'none',
                   borderRadius: 10, padding: '0.5rem', cursor: 'pointer',
-                  color: '#94a3b8', display: 'flex',
+                  color: '#94a3b8', display: 'flex', minWidth: 36, minHeight: 36, alignItems: 'center', justifyContent: 'center',
                 }}
               >
                 <ArrowLeft size={20} />
               </button>
             ) : (
-              <Link href="/child" style={{
+              <Link href="/child" aria-label="Về trang chủ bé" style={{
                 background: 'rgba(255,255,255,0.06)', border: 'none',
                 borderRadius: 10, padding: '0.5rem', cursor: 'pointer',
-                color: '#94a3b8', display: 'flex', textDecoration: 'none',
+                color: '#94a3b8', display: 'flex', textDecoration: 'none', minWidth: 36, minHeight: 36, alignItems: 'center', justifyContent: 'center',
               }}>
                 <ArrowLeft size={20} />
               </Link>
@@ -176,27 +217,89 @@ function ExamsPageContent() {
               <p style={{ color: '#94a3b8', fontSize: '0.75rem', margin: '0.15rem 0 0' }}>
                 {view === 'hub'
                   ? (lang === 'vi' ? 'Luyện thi Cambridge — từ Starters đến PET' : 'Cambridge exam prep — Starters to PET')
-                  : level?.cefr + ' • ' + (lang === 'vi' ? level?.desc : level?.descEn)
-                }
+                  : `${level?.cefr ?? ''} • ${lang === 'vi' ? (level?.desc ?? '') : (level?.descEn ?? '')}`}
               </p>
             </div>
           </div>
-          <LangToggle />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            {view !== 'hub' && selectedLevel && (
+              <button
+                type="button"
+                onClick={() => setView(view === 'practice' ? 'guide' : 'practice')}
+                style={{
+                  minHeight: 34,
+                  padding: '5px 10px',
+                  borderRadius: 10,
+                  border: '1px solid rgba(255,255,255,0.16)',
+                  background: 'rgba(255,255,255,0.08)',
+                  color: '#fff',
+                  fontSize: 12,
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                }}
+              >
+                {view === 'practice' ? '📖 Hướng dẫn' : '⚡ Thi thử'}
+              </button>
+            )}
+            <LangToggle />
+          </div>
         </div>
 
-        {/* ═══ HUB VIEW — Exam Level Cards ═══ */}
+        {/* ═══ HUB VIEW ═══ */}
         {view === 'hub' && (
           <>
+            {/* Quick Cross-Navigation */}
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: '1rem' }}>
+              <Link
+                href="/child/international"
+                style={{
+                  minHeight: 34,
+                  padding: '6px 12px',
+                  borderRadius: 10,
+                  background: 'rgba(59,130,246,0.15)',
+                  border: '1px solid rgba(59,130,246,0.3)',
+                  color: '#93c5fd',
+                  textDecoration: 'none',
+                  fontSize: 12,
+                  fontWeight: 700,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 6,
+                }}
+              >
+                <Globe2 size={14} /> Giáo trình Quốc tế
+              </Link>
+              <Link
+                href="/child/cambridge-exams"
+                style={{
+                  minHeight: 34,
+                  padding: '6px 12px',
+                  borderRadius: 10,
+                  background: 'rgba(139,92,246,0.15)',
+                  border: '1px solid rgba(139,92,246,0.3)',
+                  color: '#d8b4fe',
+                  textDecoration: 'none',
+                  fontSize: 12,
+                  fontWeight: 700,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 6,
+                }}
+              >
+                📋 Full-Paper KET / PET
+              </Link>
+            </div>
+
             {/* Hero stats */}
             <div style={{
               display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.5rem',
-              marginBottom: '1.5rem',
+              marginBottom: '1.25rem',
             }}>
               {[
                 { icon: <GraduationCap size={16} />, val: '5', label: 'Trình độ', color: '#6366f1' },
                 { icon: <Target size={16} />, val: 'Pre-A1→B1', label: 'CEFR', color: '#22c55e' },
-                { icon: <Clock size={16} />, val: '~1375h', label: 'Tổng giờ học', color: '#f59e0b' },
-                { icon: <Award size={16} />, val: '5', label: 'Chứng chỉ', color: '#ef4444' },
+                { icon: <Clock size={16} />, val: '~1375h', label: 'Giờ tích lũy', color: '#f59e0b' },
+                { icon: <Award size={16} />, val: `${EXAM_PRACTICE_BANK_STATS.fullPracticeSetCount}`, label: 'Bộ đề thi', color: '#ef4444' },
               ].map((s, i) => (
                 <div key={i} style={{
                   textAlign: 'center', padding: '0.75rem 0.5rem',
@@ -205,7 +308,7 @@ function ExamsPageContent() {
                 }}>
                   <div style={{ color: s.color, marginBottom: '0.25rem', display: 'flex', justifyContent: 'center' }}>{s.icon}</div>
                   <div style={{ fontWeight: 900, fontSize: '0.85rem', color: '#fff' }}>{s.val}</div>
-                  <div style={{ fontSize: '0.6rem', color: '#94a3b8', marginTop: '0.1rem' }}>{s.label}</div>
+                  <div style={{ fontSize: '0.62rem', color: '#94a3b8', marginTop: '0.1rem' }}>{s.label}</div>
                 </div>
               ))}
             </div>
@@ -213,15 +316,13 @@ function ExamsPageContent() {
             {/* Pathway visualization */}
             <div style={{
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              gap: '0.25rem', marginBottom: '1.5rem', padding: '0.75rem',
+              gap: '0.25rem', marginBottom: '1.25rem', padding: '0.75rem',
               background: 'rgba(255,255,255,0.03)', borderRadius: 16,
               border: '1px solid rgba(255,255,255,0.06)',
             }}>
               {EXAM_LEVELS.map((lv, i) => (
                 <div key={lv.id} style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                  <div style={{
-                    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.15rem',
-                  }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.15rem' }}>
                     <span style={{ fontSize: '1.3rem' }}>{lv.icon}</span>
                     <span style={{ fontSize: '0.55rem', color: lv.color, fontWeight: 800 }}>{lv.cefr}</span>
                   </div>
@@ -234,7 +335,7 @@ function ExamsPageContent() {
 
             {/* Evidence and coverage gate */}
             <div style={{
-              marginBottom: '1.5rem',
+              marginBottom: '1.25rem',
               padding: '1rem',
               background: 'rgba(15,23,42,0.72)',
               border: '1px solid rgba(148,163,184,0.18)',
@@ -262,111 +363,113 @@ function ExamsPageContent() {
                 Format chính thức đã đối chiếu ngày {CAMBRIDGE_EXAM_FRAMEWORK_STATS.verifiedAt}. Không sao chép đề chính thức:
                 {' '}{CAMBRIDGE_EXAM_CLAIM_GUARDRAIL.allowedClaim}
               </p>
+              {summary && summary.totalAttempts > 0 && (
+                <div style={{ marginTop: 8, paddingTop: 8, borderTop: '1px solid rgba(148,163,184,0.16)', display: 'flex', alignItems: 'center', gap: 6, color: '#68d391', fontSize: 12, fontWeight: 700 }}>
+                  <BarChart3 size={14} />
+                  Dữ liệu thực tế đã lưu: {summary.totalAttempts} lượt thi ({summary.uniqueTestsCompleted} bài) • Chính xác TB {summary.averageAccuracyPct}%
+                </div>
+              )}
             </div>
 
             {/* Level cards */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              {EXAM_LEVELS.map((lv) => (
-                <div
-                  key={lv.id}
-                  style={{
-                    background: 'rgba(255,255,255,0.04)',
-                    borderRadius: 20, padding: '1.25rem',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    position: 'relative', overflow: 'hidden',
-                    transition: 'all 0.3s',
-                  }}
-                >
-                  {/* Background accent */}
-                  <div style={{
-                    position: 'absolute', top: -30, right: -30,
-                    width: 100, height: 100, borderRadius: '50%',
-                    background: `${lv.color}12`,
-                    filter: 'blur(20px)', pointerEvents: 'none',
-                  }} />
-
-                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', position: 'relative' }}>
-                    {/* Icon */}
+              {EXAM_LEVELS.map(lv => {
+                const lvStat = summary?.byLevel[lv.id];
+                return (
+                  <div
+                    key={lv.id}
+                    style={{
+                      background: 'rgba(255,255,255,0.04)',
+                      borderRadius: 20, padding: '1.25rem',
+                      border: '1px solid rgba(255,255,255,0.08)',
+                      position: 'relative', overflow: 'hidden',
+                      transition: 'all 0.3s',
+                    }}
+                  >
                     <div style={{
-                      width: 56, height: 56, borderRadius: 16,
-                      background: lv.gradient,
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      fontSize: '1.6rem',
-                      boxShadow: `0 4px 20px ${lv.color}30`,
-                      flexShrink: 0,
-                    }}>
-                      {lv.icon}
-                    </div>
+                      position: 'absolute', top: -30, right: -30,
+                      width: 100, height: 100, borderRadius: '50%',
+                      background: `${lv.color}12`,
+                      filter: 'blur(20px)', pointerEvents: 'none',
+                    }} />
 
-                    <div style={{ flex: 1 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.3rem' }}>
-                        <h3 style={{ color: '#fff', fontSize: '1.05rem', fontWeight: 800, margin: 0 }}>{lv.name}</h3>
-                        <span style={{
-                          background: `${lv.color}20`, color: lv.color,
-                          fontSize: '0.6rem', fontWeight: 800, padding: '0.15rem 0.5rem',
-                          borderRadius: 6,
-                        }}>{lv.cefr}</span>
+                    <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', position: 'relative' }}>
+                      <div style={{
+                        width: 56, height: 56, borderRadius: 16,
+                        background: lv.gradient,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontSize: '1.6rem',
+                        boxShadow: `0 4px 20px ${lv.color}30`,
+                        flexShrink: 0,
+                      }}>
+                        {lv.icon}
                       </div>
 
-                      <p style={{ color: '#94a3b8', fontSize: '0.75rem', margin: '0 0 0.5rem', lineHeight: 1.4 }}>
-                        {lang === 'vi' ? lv.desc : lv.descEn}
-                      </p>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.3rem', flexWrap: 'wrap' }}>
+                          <h3 style={{ color: '#fff', fontSize: '1.05rem', fontWeight: 800, margin: 0 }}>{lv.name}</h3>
+                          <span style={{
+                            background: `${lv.color}20`, color: lv.color,
+                            fontSize: '0.62rem', fontWeight: 800, padding: '0.15rem 0.5rem',
+                            borderRadius: 6,
+                          }}>{lv.cefr}</span>
+                          {lvStat && lvStat.attemptCount > 0 && (
+                            <span style={{ fontSize: '0.68rem', color: '#68d391', fontWeight: 700 }}>
+                              • {lvStat.attemptCount} lượt • TB {lvStat.averageAccuracyPct}% • {lvStat.bestShields}/5 🛡️
+                            </span>
+                          )}
+                        </div>
 
-                      <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '0.65rem' }}>
-                        <span style={{
-                          fontSize: '0.6rem', color: '#cbd5e1', padding: '0.15rem 0.4rem',
-                          background: 'rgba(255,255,255,0.06)', borderRadius: 4,
-                        }}>
-                          🎂 {lv.ageRange} tuổi
-                        </span>
-                        <span style={{
-                          fontSize: '0.6rem', color: '#cbd5e1', padding: '0.15rem 0.4rem',
-                          background: 'rgba(255,255,255,0.06)', borderRadius: 4,
-                        }}>
-                          📚 Lớp {lv.gradeRange}
-                        </span>
-                        <span style={{
-                          fontSize: '0.6rem', color: '#cbd5e1', padding: '0.15rem 0.4rem',
-                          background: 'rgba(255,255,255,0.06)', borderRadius: 4,
-                        }}>
-                          ⏱ {lv.totalHours}
-                        </span>
-                      </div>
+                        <p style={{ color: '#94a3b8', fontSize: '0.75rem', margin: '0 0 0.5rem', lineHeight: 1.4 }}>
+                          {lang === 'vi' ? lv.desc : lv.descEn}
+                        </p>
 
-                      {/* Action buttons */}
-                      <div style={{ display: 'flex', gap: '0.5rem' }}>
-                        <button
-                          onClick={() => handleSelectLevel(lv.id, 'guide')}
-                          style={{
-                            flex: 1, padding: '0.55rem 0.75rem', border: 'none',
-                            borderRadius: 10, cursor: 'pointer', fontSize: '0.72rem',
-                            fontWeight: 700, background: `${lv.color}18`,
-                            color: lv.color, display: 'flex', alignItems: 'center',
-                            justifyContent: 'center', gap: '0.35rem',
-                            transition: 'all 0.2s',
-                          }}
-                        >
-                          <BookOpen size={14} /> {lang === 'vi' ? 'Hướng dẫn' : 'Guide'}
-                        </button>
-                        <button
-                          onClick={() => handleSelectLevel(lv.id, 'practice')}
-                          style={{
-                            flex: 1, padding: '0.55rem 0.75rem', border: 'none',
-                            borderRadius: 10, cursor: 'pointer', fontSize: '0.72rem',
-                            fontWeight: 700, background: lv.gradient,
-                            color: '#fff', display: 'flex', alignItems: 'center',
-                            justifyContent: 'center', gap: '0.35rem',
-                            boxShadow: `0 2px 12px ${lv.color}30`,
-                            transition: 'all 0.2s',
-                          }}
-                        >
-                          <Zap size={14} /> {lang === 'vi' ? 'Thi thử' : 'Practice'}
-                        </button>
+                        <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '0.65rem' }}>
+                          <span style={{ fontSize: '0.62rem', color: '#cbd5e1', padding: '0.15rem 0.45rem', background: 'rgba(255,255,255,0.06)', borderRadius: 4 }}>
+                            🎂 {lv.ageRange} tuổi
+                          </span>
+                          <span style={{ fontSize: '0.62rem', color: '#cbd5e1', padding: '0.15rem 0.45rem', background: 'rgba(255,255,255,0.06)', borderRadius: 4 }}>
+                            📚 Lớp {lv.gradeRange}
+                          </span>
+                          <span style={{ fontSize: '0.62rem', color: '#cbd5e1', padding: '0.15rem 0.45rem', background: 'rgba(255,255,255,0.06)', borderRadius: 4 }}>
+                            ⏱ {lv.totalHours}
+                          </span>
+                        </div>
+
+                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                          <button
+                            type="button"
+                            onClick={() => handleSelectLevel(lv.id, 'guide')}
+                            style={{
+                              flex: 1, minHeight: 38, padding: '0.55rem 0.75rem', border: 'none',
+                              borderRadius: 10, cursor: 'pointer', fontSize: '0.75rem',
+                              fontWeight: 700, background: `${lv.color}18`,
+                              color: lv.color, display: 'flex', alignItems: 'center',
+                              justifyContent: 'center', gap: '0.35rem',
+                            }}
+                          >
+                            <BookOpen size={14} /> {lang === 'vi' ? 'Hướng dẫn' : 'Guide'}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleSelectLevel(lv.id, 'practice')}
+                            style={{
+                              flex: 1, minHeight: 38, padding: '0.55rem 0.75rem', border: 'none',
+                              borderRadius: 10, cursor: 'pointer', fontSize: '0.75rem',
+                              fontWeight: 700, background: lv.gradient,
+                              color: '#fff', display: 'flex', alignItems: 'center',
+                              justifyContent: 'center', gap: '0.35rem',
+                              boxShadow: `0 2px 12px ${lv.color}30`,
+                            }}
+                          >
+                            <Zap size={14} /> {lang === 'vi' ? 'Thi thử' : 'Practice'}
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* Cambridge info footer */}
@@ -393,14 +496,14 @@ function ExamsPageContent() {
         {/* ═══ GUIDE VIEW ═══ */}
         {view === 'guide' && (
           <div style={{ marginTop: '0.5rem' }}>
-            <ExamPrepGuide grade={gradeForGuide} />
+            <ExamPrepGuide key={`guide-${selectedLevel ?? gradeForGuide}`} grade={gradeForGuide} levelId={selectedLevel ?? undefined} />
           </div>
         )}
 
         {/* ═══ PRACTICE VIEW ═══ */}
         {view === 'practice' && (
           <div style={{ marginTop: '0.5rem' }}>
-            <PracticeTestEngine grade={gradeForGuide} />
+            <PracticeTestEngine key={`practice-${selectedLevel ?? gradeForGuide}`} grade={gradeForGuide} initialLevel={selectedLevel ?? undefined} />
           </div>
         )}
       </div>

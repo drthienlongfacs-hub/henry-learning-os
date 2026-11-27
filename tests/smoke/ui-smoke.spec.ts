@@ -122,7 +122,7 @@ test.afterAll(async () => {
 test.beforeEach(async ({ context }) => {
     await context.addInitScript(() => {
         const now = '2026-04-30T00:00:00.000Z';
-        localStorage.setItem('henry-os-v2', JSON.stringify({
+        localStorage.setItem('henry-os-v3', JSON.stringify({
             state: {
                 childProfile: {
                     id: 'child-smoke',
@@ -454,4 +454,51 @@ test('Child reading full-passage voice responds before Kokoro background renderi
     expect(voiceResult.delayMs ?? Infinity).toBeLessThan(250);
     expect(voiceResult.pitch).toBe(1);
     expect(voiceResult.textLength).toBeGreaterThan(80);
+});
+
+test('International page exposes Cambridge Starters-PET practice tests & deep-links cleanly', async ({ page }) => {
+    const badLocalResponses: string[] = [];
+    const pageErrors: string[] = [];
+    page.on('response', (response) => {
+        if (response.url().startsWith(baseUrl) && response.status() >= 400) {
+            badLocalResponses.push(`${response.status()} ${response.url()}`);
+        }
+    });
+    page.on('pageerror', (error) => pageErrors.push(error.message));
+
+    await page.goto(`${baseUrl}${UI_SMOKE_BASE_PATH}/child/international/`, { waitUntil: 'domcontentloaded' });
+    await page.waitForLoadState('networkidle', { timeout: 5_000 }).catch(() => undefined);
+
+    await expect(page.locator('body')).toContainText('Thi thử & Chiến lược giải đề Cambridge (Starters → PET)');
+    const startersLink = page.getByRole('link', { name: /Thi thử Starters/i }).first();
+    await expect(startersLink).toHaveAttribute('href', `${UI_SMOKE_BASE_PATH}/child/exams/?level=starters&mode=practice`);
+
+    await startersLink.click();
+    await page.waitForLoadState('networkidle', { timeout: 5_000 }).catch(() => undefined);
+    await expect(page).toHaveURL(new RegExp(`${UI_SMOKE_BASE_PATH}/child/exams/\\?level=starters&mode=practice$`));
+    await expect(page.locator('body')).toContainText('Thi thử Cambridge');
+    await expect(page.locator('body')).toContainText('Luyện có hướng dẫn');
+
+    await page.getByText('Đọc & Viết — Bộ 1').click();
+    await expect(page.locator('body')).toContainText('Câu 1/25');
+    await page.getByRole('button', { name: /Hướng dẫn cách giải/i }).click();
+    await expect(page.locator('body')).toContainText('Chiến lược giải dạng bài');
+
+    expect(pageErrors).toEqual([]);
+    expect(badLocalResponses).toEqual([]);
+});
+
+test('Cambridge KET exam guide route renders full KET structure and study plan', async ({ page }) => {
+    const pageErrors: string[] = [];
+    page.on('pageerror', (error) => pageErrors.push(error.message));
+
+    await page.goto(`${baseUrl}${UI_SMOKE_BASE_PATH}/child/exams/?level=ket&mode=guide`, { waitUntil: 'domcontentloaded' });
+    await page.waitForLoadState('networkidle', { timeout: 5_000 }).catch(() => undefined);
+
+    await expect(page.locator('body')).toContainText('Hướng dẫn & Chiến lược Cambridge — KET');
+    await expect(page.locator('body')).toContainText('Cách giải đề hiệu quả theo 4 kỹ năng');
+    await page.getByRole('button', { name: '📅 Lộ trình' }).click();
+    await expect(page.locator('body')).toContainText('Lộ trình ôn A2 Key (KET)');
+
+    expect(pageErrors).toEqual([]);
 });

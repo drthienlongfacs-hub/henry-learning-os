@@ -1,9 +1,41 @@
 'use client';
 
 import React, { useState, useCallback, useRef } from 'react';
-import { Volume2, Mic, MicOff, Award, Sparkles, RefreshCw } from 'lucide-react';
-import { speak, speakSlowly, type Accent } from '@/lib/voiceEngine';
+import { Volume2, Mic, MicOff, Award, Sparkles } from 'lucide-react';
+import { speak, speakSlowly } from '@/lib/voiceEngine';
 import { analyzePronunciation, type PronunciationAnalysis } from '@/lib/pronunciationCoach';
+
+interface SpeechRecognitionAlternativeLike {
+    transcript?: string;
+}
+
+interface SpeechRecognitionEventLike {
+    results: ArrayLike<ArrayLike<SpeechRecognitionAlternativeLike>>;
+}
+
+interface SpeechRecognitionErrorEventLike {
+    error?: string;
+}
+
+interface SpeechRecognitionInstanceLike {
+    lang: string;
+    continuous: boolean;
+    interimResults: boolean;
+    maxAlternatives: number;
+    onstart: (() => void) | null;
+    onresult: ((event: SpeechRecognitionEventLike) => void) | null;
+    onerror: ((event: SpeechRecognitionErrorEventLike) => void) | null;
+    onend: (() => void) | null;
+    start: () => void;
+    stop: () => void;
+}
+
+type SpeechRecognitionConstructorLike = new () => SpeechRecognitionInstanceLike;
+
+interface WindowWithSpeechRecognition extends Window {
+    SpeechRecognition?: SpeechRecognitionConstructorLike;
+    webkitSpeechRecognition?: SpeechRecognitionConstructorLike;
+}
 
 function levenshtein(a: string, b: string): number {
     const m = a.length, n = b.length;
@@ -54,7 +86,7 @@ export default function VoicePracticeCard({
     const [score, setScore] = useState<number | null>(null);
     const [analysis, setAnalysis] = useState<PronunciationAnalysis | null>(null);
     const [wordMatches, setWordMatches] = useState<{ word: string; status: 'perfect' | 'close' | 'wrong' | 'missing'; color: string }[]>([]);
-    const recognitionRef = useRef<any>(null);
+    const recognitionRef = useRef<SpeechRecognitionInstanceLike | null>(null);
 
     const activeText = selectedTarget === 'primary' ? targetText : (secondaryText || targetText);
 
@@ -120,7 +152,8 @@ export default function VoicePracticeCard({
     }, [activeText, targetWords, onScoreAchieved]);
 
     const startRecording = () => {
-        const SpeechRecognition = typeof window !== 'undefined' ? ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition) : null;
+        const win = typeof window !== 'undefined' ? (window as WindowWithSpeechRecognition) : null;
+        const SpeechRecognition = win ? (win.SpeechRecognition || win.webkitSpeechRecognition) : null;
         if (!SpeechRecognition) {
             const simulated = prompt('🎤 Mic trình duyệt chưa cấp quyền. Con có thể gõ câu con vừa đọc:', activeText);
             if (simulated) {
@@ -146,13 +179,13 @@ export default function VoicePracticeCard({
                 setTranscript('');
             };
 
-            rec.onresult = (event: any) => {
-                const heard = event.results[0][0]?.transcript || '';
+            rec.onresult = (event: SpeechRecognitionEventLike) => {
+                const heard = event.results[0]?.[0]?.transcript || '';
                 setTranscript(heard);
                 evaluateSpeech(heard);
             };
 
-            rec.onerror = (e: any) => {
+            rec.onerror = (e: SpeechRecognitionErrorEventLike) => {
                 console.warn('Speech recognition error:', e.error);
                 setIsListening(false);
             };
@@ -230,7 +263,7 @@ export default function VoicePracticeCard({
                             border: 'none', cursor: 'pointer',
                         }}
                     >
-                        🎯 Luyện Từ Khóa: "{targetText.slice(0, 18)}"
+                        🎯 Luyện Từ Khóa: &ldquo;{targetText.slice(0, 18)}&rdquo;
                     </button>
                     <button
                         type="button"
@@ -295,7 +328,7 @@ export default function VoicePracticeCard({
                     color: '#334155',
                 }}>
                     <span style={{ fontWeight: 700, color: '#64748b' }}>Máy nghe thấy: </span>
-                    <span style={{ fontStyle: 'italic', fontWeight: 600 }}>"{transcript}"</span>
+                    <span style={{ fontStyle: 'italic', fontWeight: 600 }}>&ldquo;{transcript}&rdquo;</span>
                 </div>
             )}
 

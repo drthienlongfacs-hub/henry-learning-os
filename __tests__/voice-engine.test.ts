@@ -7,6 +7,7 @@ class FakeSpeechSynthesisUtterance {
     pitch = 1;
     volume = 1;
     voice: SpeechSynthesisVoice | null = null;
+    onstart: (() => void) | null = null;
     onend: (() => void) | null = null;
     onerror: (() => void) | null = null;
 
@@ -17,6 +18,7 @@ class FakeSpeechSynthesisUtterance {
 
 function installSpeechSynthesisMock() {
     const speak = vi.fn((utterance: FakeSpeechSynthesisUtterance) => {
+        utterance.onstart?.();
         utterance.onend?.();
     });
     const cancel = vi.fn();
@@ -39,6 +41,13 @@ function installSpeechSynthesisMock() {
                     default: true,
                     voiceURI: 'Samantha',
                 } as SpeechSynthesisVoice,
+                {
+                    name: 'Linh',
+                    lang: 'vi-VN',
+                    localService: true,
+                    default: false,
+                    voiceURI: 'Linh',
+                } as SpeechSynthesisVoice,
             ],
             speak,
             cancel,
@@ -50,57 +59,50 @@ function installSpeechSynthesisMock() {
     return { speak, cancel, pause, resume };
 }
 
-// Helper: flush microtask queue (promises resolve before timers fire)
-const flushPromises = () => vi.advanceTimersByTimeAsync(0);
-
-describe('voice engine latency guard', () => {
+describe('voice engine synchronous gesture playback guard', () => {
     beforeEach(() => {
         vi.resetModules();
-        vi.useFakeTimers();
     });
 
     afterEach(() => {
-        vi.clearAllTimers();
-        vi.useRealTimers();
+        vi.restoreAllMocks();
     });
 
-    it('starts uncached long-passage playback through Web Speech after the 15ms cancel gap', async () => {
+    it('starts uncached long-passage playback synchronously within the user-gesture tick', async () => {
         const speech = installSpeechSynthesisMock();
         const { speakLongPassage, getEngineStatus } = await import('@/lib/voiceEngine');
 
         speakLongPassage('Life is like a box of chocolates. You never know what you will get.', 'en-US', 0.88);
 
-        // speak() is now async internally (IndexedDB cache check) — flush promise queue
-        await flushPromises();
-
-        expect(speech.cancel).toHaveBeenCalled();
-        expect(speech.speak).not.toHaveBeenCalled();
-
-        vi.advanceTimersByTime(14);
-        expect(speech.speak).not.toHaveBeenCalled();
-
-        vi.advanceTimersByTime(1);
+        expect(speech.cancel).toHaveBeenCalledTimes(1);
         expect(speech.speak).toHaveBeenCalledTimes(1);
+
         const utterance = speech.speak.mock.calls[0][0] as FakeSpeechSynthesisUtterance;
         expect(utterance.pitch).toBe(1);
-        expect(utterance.rate).toBeGreaterThanOrEqual(0.7);
-        expect(utterance.rate).toBeLessThanOrEqual(1.2);
-
-        vi.advanceTimersByTime(300);
+        expect(utterance.rate).toBeGreaterThanOrEqual(0.75);
+        expect(utterance.rate).toBeLessThanOrEqual(1.1);
+        expect(utterance.lang).toBe('en-US');
         expect(getEngineStatus().neuralLoading).toBe(false);
     });
 
-    it('uses the same instant path for word and sentence clicks', async () => {
+    it('uses the same synchronous path for single word clicks', async () => {
         const speech = installSpeechSynthesisMock();
         const { speak } = await import('@/lib/voiceEngine');
 
         speak('museum', 'en-US', 0.75);
 
-        // Flush async cache-check promise before advancing timers
-        await flushPromises();
-        vi.advanceTimersByTime(15);
-
         expect(speech.speak).toHaveBeenCalledTimes(1);
         expect((speech.speak.mock.calls[0][0] as FakeSpeechSynthesisUtterance).text).toBe('museum');
+    });
+
+    it('auto-detects Vietnamese diacritics and switches lang to vi-VN', async () => {
+        const speech = installSpeechSynthesisMock();
+        const { speak } = await import('@/lib/voiceEngine');
+
+        speak('Xin chào Việt Nam', 'en-US', 0.9);
+
+        expect(speech.speak).toHaveBeenCalledTimes(1);
+        const utterance = speech.speak.mock.calls[0][0] as FakeSpeechSynthesisUtterance;
+        expect(utterance.lang).toBe('vi-VN');
     });
 });

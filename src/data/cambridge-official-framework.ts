@@ -187,7 +187,7 @@ export const CAMBRIDGE_EXAM_SPECS: Record<CambridgeExamLevelId, CambridgeOfficia
         partSpecs: [
           { partNumber: 1, titleEn: 'Draw lines', titleVi: 'Nối tên với người', questionCount: 5, mode: 'objective', taskFocusVi: 'Nghe mô tả người trong tranh' },
           { partNumber: 2, titleEn: 'Write words or numbers', titleVi: 'Viết từ hoặc số', questionCount: 5, mode: 'gap', taskFocusVi: 'Nghe biểu mẫu, số, tên, địa điểm' },
-          { partNumber: 3, titleEn: 'Match with letters A-H', titleVi: 'Noi nguoi/chu de voi tranh A-H', questionCount: 5, mode: 'objective', taskFocusVi: 'Nghe va noi nguoi/chu de voi tranh so thich/do vat bang chu cai A-H' },
+          { partNumber: 3, titleEn: 'Match with letters A-H', titleVi: 'Nối người/chủ đề với tranh A-H', questionCount: 5, mode: 'objective', taskFocusVi: 'Nghe và nối người/chủ đề với tranh sở thích/đồ vật bằng chữ cái A-H' },
           { partNumber: 4, titleEn: 'Picture multiple choice', titleVi: 'Chọn tranh đúng', questionCount: 5, mode: 'objective', taskFocusVi: 'Nghe thông tin cụ thể' },
           { partNumber: 5, titleEn: 'Colour and write', titleVi: 'Tô màu và viết', questionCount: 5, mode: 'objective', taskFocusVi: 'Nghe màu sắc, vị trí, đồ vật' },
         ],
